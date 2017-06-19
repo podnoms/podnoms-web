@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <p>{{podcast | json}}</p>
+    <div class="col-md-4">
+        <form (submit)="submitForm()">
+            <div class="form-group">
+                <label for="podcast-name">Podcast Name</label>
+                <input id="podcast-name" name="podcast-name" class="form-control" placeholder="Podcast name"
+                       [(ngModel)]="podcast.title">
+            </div>
+            <div *ngIf="this.podcast.id">
+                <input type="file">
+            </div>
+            <br>
+            <button class="btn btn-primary" (change)="uploadPhoto()" #fileInput>Save</button>
+        </form>
+    </div>
+</div>
