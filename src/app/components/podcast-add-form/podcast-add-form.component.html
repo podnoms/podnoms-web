@@ -6,15 +6,12 @@
                     <form (submit)="submitForm()">
                         <div class="form-group">
                             <label for="podcast-name">Podcast Name</label>
-                            <input id="podcast-name" name="podcast-name" class="form-control" placeholder="Podcast name" [(ngModel)]="podcast.title">
+                            <input id="podcast-name" name="podcast-name" class="form-control"
+                                   placeholder="Podcast name" [(ngModel)]="podcast.title">
                         </div>
                         <div *ngIf="this.podcast.id">
-                            <label for="upload-input" class="custom-file">
-                                <input id="upload-input" class="custom-control-input" type="file">
-                            </label>
+                            <image-upload></image-upload>
                         </div>
-                        <br>
-                        <button class="btn btn-primary" (change)="uploadPhoto()" #fileInput>Save</button>
                     </form>
                 </div>
             </div>
