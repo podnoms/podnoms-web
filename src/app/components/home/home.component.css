@@ -1,11 +1,15 @@
 .jumbotron {
     margin-top: -24px; /*Urgh*/
-    background: url('../../../assets/images/robothand.jpg') no-repeat center center;
+    background: url('../../../assets/img/robothand.jpg') no-repeat center center;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    color: white !important;
+    text-shadow: #444 0 1px 1px !important;
+}
+.jumbotron > h2 {
     color: white;
-    text-shadow: #444 0 1px 1px;
 }

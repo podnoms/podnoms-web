@@ -1,38 +1,28 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top navbar-custom">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" [routerLink]="['/home']">Pod::Noms</a>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item" [routerLinkActive]="['active']">
-                <a [routerLink]="['/home']" class="nav-link"><i class="fa fa-home"></i> Home</a>
-            </li>
-            <li class="nav-item" [routerLinkActive]="['active']">
-                <a [routerLink]="['/podcasts']" class="nav-link"><i class="fa fa-podcast"></i> Podcasts</a>
-            </li>
-            <li class="nav-item" [routerLinkActive]="['active']" *ngIf="false">
-                <a [routerLink]="['/debug']" class="nav-link"><i class="fa fa-line-chart"></i> Debug</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav my-2 my-lg-0">
-            <li *ngIf="!loggedIn()">
-                <a *ngIf="!loggedIn()" class="nav-link active" (click)="login()">
-                    <i class="fa fa-sign-in"></i> Login
+<header class="app-header navbar">
+    <a class="navbar-brand" href="#" [routerLink]="['/home']"></a>
+    <ul class="nav navbar-nav hidden-md-down">
+        <li class="nav-item px-1" [routerLinkActive]="['active']">
+            <a href="#" [routerLink]="['/podcasts']" class="nav-link"><i class="fa fa-podcast"></i> Podcasts</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto" style="margin-right: 20px">
+        <li class="nav-item dropdown hidden-md-down" *ngIf="loggedIn()">
+            <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img [src]="user.picture" class="img-avatar" alt="{{user.email}}">
+                    <span class="hidden-md-down">{{user.name}}</span>
                 </a>
-            </li>
-            <li class="nav-item dropdown" *ngIf="loggedIn()">
-                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img [src]="user.picture" alt="user" class="profile-pic"></a>
-                <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                    <ul class="dropdown-user">
-                        <li><a (click)="logout()"><i class="fa fa-power-off"></i> Logout</a></li>
-                    </ul>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header text-center">
+                    <strong>Account</strong>
                 </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+                <a class="dropdown-item" (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
+                <a class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
+            </div>
+        </li>
+        <li class="nav-item" *ngIf="!loggedIn()">
+            <a *ngIf="!loggedIn()" class="nav-link active" (click)="login()">
+                <i class="fa fa-sign-in"></i> Login
+            </a>
+        </li>
+    </ul>
+</header>

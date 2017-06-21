@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, NgZone} from '@angular/core';
-import {PodcastEntryModel} from '../../models/podcasts.models';
-import {PodcastsService} from '../../services/podcasts.service';
-import {ToastyService} from 'ng2-toasty';
-import {PusherService} from '../../services/pusher.service';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { PodcastEntryModel } from '../../models/podcasts.models';
+import { PodcastsService } from '../../services/podcasts.service';
+import { ToastyService } from 'ng2-toasty';
+import { PusherService } from '../../services/pusher.service';
 
 @Component({
     selector: '[app-entry-list-item]',
@@ -13,10 +13,10 @@ export class EntryListItemComponent implements OnInit {
 
     @Input() entry: PodcastEntryModel;
     percentageProcessed = 0;
-    currentSpeed: string;
+    currentSpeed: '0 kb/s';
 
     constructor(private _service: PodcastsService, private _toastyService: ToastyService,
-                private _pusherService: PusherService, private _zone: NgZone) {
+        private _pusherService: PusherService, private _zone: NgZone) {
     }
 
     ngOnInit() {

@@ -1,45 +1,52 @@
 <div class="container-fluid">
-    <div class="row well">
-        <div class="col-md-6">
-            <div class="d-flex flex-row">
-                <div class="p-2">
-                    <div class="btn-group" role="group">
-                        <a *ngIf="podcasts != null && podcasts.length != 0"
-                           class="btn btn-warning" [href]="selectedPodcast.rssUrl" target="_blank"><i class="fa fa-rss"></i></a>
-                        <a class="btn btn-primary" [routerLink]="['/podcasts/add']"><i class="fa fa-plus"></i>Add</a>
-                    </div>
-                </div>
-                <div class="p-2" *ngIf="podcasts != null && podcasts.length != 0">
-                    <div class="btn-group" role="group">
-                        <select class="form-control" id="podcast" name="podcast" [(ngModel)]="selectedPodcastId"
-                                (change)="onPodcastChange()">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <select class="form-control" id="podcast" name="podcast" [(ngModel)]="selectedPodcastId" (change)="onPodcastChange()">
                             <option *ngFor="let p of podcasts" value="{{p.id}}">{{p.title}}</option>
                         </select>
-                        <a class="btn btn-outline-success" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']"><i class="fa fa-edit"></i></a>
-                        <button class="btn btn-outline-danger"><i class="fa fa-remove"></i></button>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a class="btn btn-outline-primary" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']" *ngIf="selectedPodcast">
+                                    <i class="icon-plus"></i> &nbsp; Edit
+                                </a>
+                                <button class="btn btn-outline-danger" *ngIf="selectedPodcast">
+                                    <i class="icon-plus"></i> &nbsp; Delete
+                                </button>
+                                <a class="btn btn-outline-success" [routerLink]="['/podcasts/add']">
+                                    <i class="icon-plus"></i> &nbsp; Add
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7" *ngIf="selectedPodcast">
+                        <a class="btn btn-outline-warning float-right" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/upload/']"><i class="fa fa-upload" aria-hidden="true"></i>Upload</a>
+                        <button type="submit" class="btn btn-outline-success float-right" (click)="addEntry()">
+                            <i class="fa fa-plus-circle"></i> Add
+                        </button>
+                        <fieldset class="form-group float-right">
+                            <div class="input-group float-right" style="width:320px;">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i>
+                                </span>
+                                <input type="text" class="form-control span6 input-large float-right" 
+                                        placeholder="New entry URL" aria-describedby="basic-addon2"
+                                        name="entry-url" [(ngModel)]="newEntrySourceUrl">
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
+                <hr class="m-0">
+                <br>
+                <table class="table table-hover table-outline mb-0 hidden-sm-down">
+                    <tbody>
+                        <tr *ngFor="let entry of entries" app-entry-list-item [entry]="entry"></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="col-md-6 pull-right">
-            <form class="form-inline pull-right">
-                <div class="input-group">
-                    <input type="text" class="form-control span6 input-large" placeholder="New entry URL"
-                           aria-describedby="basic-addon2"
-                           name="entry-url" [(ngModel)]="newEntrySourceUrl">
-                    <button type="submit" class="btn btn-success" (click)="addEntry()">
-                        <i class="fa fa-plus-circle"></i> Add
-                    </button>
-                    <a class="btn btn-warning" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/upload/']"><i class="fa fa-upload" aria-hidden="true"></i>Upload</a>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="table-responsive pt-3">
-        <table class="table table-hover">
-            <tbody>
-            <tr *ngFor="let entry of entries" app-entry-list-item [entry]="entry"></tr>
-            </tbody>
-        </table>
     </div>
 </div>
