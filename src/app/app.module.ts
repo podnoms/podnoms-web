@@ -15,7 +15,6 @@ import {PusherService} from './services/pusher.service';
 import {FilterEntryPipe} from './pipes/filter-entry.pipe';
 import {EntryListItemComponent} from './components/entry-list-item/entry-list-item.component';
 import {ProgressbarModule} from 'ngx-bootstrap/progressbar';
-import {ImageUploadModule} from 'angular2-image-upload';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {AuthGuard} from './services/auth.guard';
 import {AUTH_PROVIDERS, AuthConfig, AuthHttp} from 'angular2-jwt';
@@ -47,7 +46,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         HttpModule,
         FormsModule,
 
-        ImageUploadModule.forRoot(),
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),

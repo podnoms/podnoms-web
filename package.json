@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --proxy-config proxy.conf.json --public-host dev.podnoms.com:4200",
+        "start": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --public-host dev.podnoms.com:4200",
         "prod-start": "ng serve --public-host dev.podnoms.com",
         "build": "ng build",
         "test": "ng test",
@@ -22,7 +22,6 @@
         "@angular/platform-browser": "^4.0.0",
         "@angular/platform-browser-dynamic": "^4.0.0",
         "@angular/router": "^4.0.0",
-        "angular2-image-upload": "^0.6.3",
         "angular2-jwt": "^0.2.3",
         "angular2-uuid": "^1.1.1",
         "auth0-js": "^8.7.0",
