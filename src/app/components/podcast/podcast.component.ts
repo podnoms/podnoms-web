@@ -48,8 +48,15 @@ export class PodcastComponent implements OnInit {
             });
     }
 
-    addPodcast() {
 
+    deletePodcast() {
+        if (this.selectedPodcast.id) {
+            this._podcastService.deletePodcast(this.selectedPodcast.id)
+                .subscribe(r => {
+                    console.log('PodcastComponent', 'deletePodcast', r);
+                    this._getPodcasts();
+                });
+        }
     }
 
     addEntry() {

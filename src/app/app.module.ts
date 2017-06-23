@@ -66,4 +66,5 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }

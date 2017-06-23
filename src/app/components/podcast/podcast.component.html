@@ -14,9 +14,9 @@
                                 <a class="btn btn-outline-primary" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']" *ngIf="selectedPodcast">
                                     <i class="icon-plus"></i> &nbsp; Edit
                                 </a>
-                                <button class="btn btn-outline-danger" *ngIf="selectedPodcast">
+                                <a class="btn btn-outline-danger" *ngIf="selectedPodcast" (click)="deletePodcast()">
                                     <i class="icon-plus"></i> &nbsp; Delete
-                                </button>
+                                </a>
                                 <a class="btn btn-outline-success" [routerLink]="['/podcasts/add']">
                                     <i class="icon-plus"></i> &nbsp; Add
                                 </a>
