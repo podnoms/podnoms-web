@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {PodcastModel} from '../../models/podcasts.models';
-import {PodcastsService} from '../../services/podcasts.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {ImageService} from 'app/services/image.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PodcastModel } from '../../models/podcasts.models';
+import { PodcastsService } from '../../services/podcasts.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ImageService } from 'app/services/image.service';
 
 @Component({
     selector: 'app-podcast-add-form',
@@ -14,7 +14,7 @@ export class PodcastAddFormComponent implements OnInit {
     @ViewChild('fileInput') fileInput: ElementRef;
 
     constructor(private _service: PodcastsService, private _imageService: ImageService,
-                private _router: Router, private _route: ActivatedRoute) {
+        private _router: Router, private _route: ActivatedRoute) {
         this.podcast = new PodcastModel();
 
         _route.params.subscribe(p => {
@@ -40,5 +40,17 @@ export class PodcastAddFormComponent implements OnInit {
     uploadPhoto() {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
         this._imageService.upload(this.podcast.id, nativeElement.files[0]);
+    }
+
+    fileChangeEvent($event) {
+        const image: any = new Image();
+        const file: File = $event.target.files[0];
+        const myReader: FileReader = new FileReader();
+        const that = this;
+        myReader.onloadend = function (loadEvent: any) {
+            image.src = loadEvent.target.result;
+            that.podcast.image = image.src;
+        };
+        myReader.readAsDataURL(file);
     }
 }
