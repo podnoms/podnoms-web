@@ -21,6 +21,7 @@ import {AUTH_PROVIDERS, AuthConfig, AuthHttp} from 'angular2-jwt';
 import {PodcastAddFormComponent} from './components/podcast-add-form/podcast-add-form.component';
 import {ImageService} from './services/image.service';
 import {PodcastUploadFormComponent} from './components/podcast-upload-form/podcast-upload-form.component';
+import { DebugComponent } from './components/debug/debug.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
@@ -38,7 +39,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         FilterEntryPipe,
         EntryListItemComponent,
         PodcastAddFormComponent,
-        PodcastUploadFormComponent
+        PodcastUploadFormComponent,
+        DebugComponent
     ],
     imports: [
         BrowserModule,
