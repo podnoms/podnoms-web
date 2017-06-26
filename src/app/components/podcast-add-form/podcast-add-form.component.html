@@ -4,13 +4,30 @@
             <div class="card-block">
                 <div class="col-md-4">
                     <form (submit)="submitForm()">
-                        <div class="form-group">
-                            <label for="podcast-name">Podcast Name</label>
-                            <input id="podcast-name" name="podcast-name" class="form-control"
-                                   placeholder="Podcast name" [(ngModel)]="podcast.title">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="podcast-name">Podcast Name</label>
+                                <input id="podcast-name" name="podcast-name" class="form-control" placeholder="Podcast name" [(ngModel)]="podcast.title">
+                            </div>
+                            <div *ngIf="this.podcast.id">
+                                <div class="file-upload">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-default btn-file">
+                                                Browse…
+                                                <input type="file" id="imgInp" (change)="fileChangeEvent($event)">
+                                            </span>
+                                        </span>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
+                                    <br />
+                                    <img class='img-preview' [src]="podcast.image" />
+                                </div>
+                            </div>
                         </div>
-                        <div *ngIf="this.podcast.id">
-                            Edit image here
+                        <hr />
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Done!</button>
                         </div>
                     </form>
                 </div>
