@@ -9,7 +9,7 @@
                                 <label for="podcast-name">Podcast Name</label>
                                 <input id="podcast-name" name="podcast-name" class="form-control" placeholder="Podcast name" [(ngModel)]="podcast.title">
                             </div>
-                            <div *ngIf="this.podcast.id">
+                             <div *ngIf="this.podcast.id">
                                 <div class="file-upload">
                                     <div class="input-group">
                                         <span class="input-group-btn">
@@ -22,7 +22,7 @@
                                     <br />
                                     <img *ngIf="image.src" class='img-preview' [src]="image.src" />
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                         <hr />
                         <div class="form-actions">

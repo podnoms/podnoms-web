@@ -12,7 +12,7 @@ import { ImageService } from 'app/services/image.service';
 export class PodcastAddFormComponent implements OnInit {
     podcast: PodcastModel;
     @ViewChild('fileInput') fileInput: ElementRef;
-    private imageChanged = true;
+    private imageChanged = false;
     image: any = new Image();
 
     constructor(private _service: PodcastsService, private _imageService: ImageService,
@@ -25,14 +25,12 @@ export class PodcastAddFormComponent implements OnInit {
             this.podcast.slug = p['slug'];
         });
     }
-
     ngOnInit() {
         if (this.podcast && this.podcast.slug) {
             this._service.getPodcast(this.podcast.slug)
                 .subscribe(r => this.podcast = r);
         }
     }
-
     submitForm() {
         this._service.addPodcast(this.podcast)
             .subscribe(p => {
@@ -44,12 +42,10 @@ export class PodcastAddFormComponent implements OnInit {
                 }
             });
     }
-
     uploadPhoto() {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
         return this._imageService.upload(this.podcast.id, nativeElement.files[0]);
     }
-
     fileChangeEvent() {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
         const file: File = nativeElement.files[0];

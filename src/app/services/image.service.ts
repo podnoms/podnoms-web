@@ -1,10 +1,12 @@
+import { Http } from '@angular/http';
 import {Injectable} from '@angular/core';
 import {AuthHttp} from 'angular2-jwt';
 
 @Injectable()
 export class ImageService {
 
-    constructor(private _http: AuthHttp) {
+    //TODO: Change this to use AuthHttp when I can figure out why formData is null
+    constructor(private _http: Http) {
     }
 
     upload(podcastId, image) {
