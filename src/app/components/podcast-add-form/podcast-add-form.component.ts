@@ -12,11 +12,15 @@ import { ImageService } from 'app/services/image.service';
 export class PodcastAddFormComponent implements OnInit {
     podcast: PodcastModel;
     @ViewChild('fileInput') fileInput: ElementRef;
+    private imageChanged = true;
+    image: any = new Image();
 
     constructor(private _service: PodcastsService, private _imageService: ImageService,
         private _router: Router, private _route: ActivatedRoute) {
         this.podcast = new PodcastModel();
-
+        if (this.podcast.image) {
+            this.image.src = this.podcast.image;
+        }
         _route.params.subscribe(p => {
             this.podcast.slug = p['slug'];
         });
@@ -32,24 +36,29 @@ export class PodcastAddFormComponent implements OnInit {
     submitForm() {
         this._service.addPodcast(this.podcast)
             .subscribe(p => {
-                this.podcast = p;
-                this._router.navigateByUrl('/podcasts');
+                if (this.imageChanged) {
+                    this.uploadPhoto()
+                        .subscribe(r => this._router.navigateByUrl('/podcasts'));
+                } else {
+                    this._router.navigateByUrl('/podcasts');
+                }
             });
     }
 
     uploadPhoto() {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-        this._imageService.upload(this.podcast.id, nativeElement.files[0]);
+        return this._imageService.upload(this.podcast.id, nativeElement.files[0]);
     }
 
-    fileChangeEvent($event) {
-        const image: any = new Image();
-        const file: File = $event.target.files[0];
+    fileChangeEvent() {
+        const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+        const file: File = nativeElement.files[0];
         const myReader: FileReader = new FileReader();
         const that = this;
         myReader.onloadend = function (loadEvent: any) {
-            image.src = loadEvent.target.result;
-            that.podcast.image = image.src;
+            that.image = new Image();
+            that.image.src = loadEvent.target.result;
+            that.imageChanged = true;
         };
         myReader.readAsDataURL(file);
     }
