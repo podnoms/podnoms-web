@@ -1,9 +1,10 @@
-<td class="entry-component-image">
-    <i *ngIf="entry.processingStatus==='Downloading'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
-    <i *ngIf="entry.processingStatus==='Processing'" class="fa fa-cog fa-spin fa-2x fa-fw text-danger"></i>
-    <i *ngIf="entry.processingStatus==='Uploading'" class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i>
-    <img *ngIf="entry.processingStatus==='Processed'" class="rounded-circle podcast-entry-table-image"
-         [src]="entry.image">
+<td class="text-center">
+    <div class="avatar">
+        <i *ngIf="entry.processingStatus==='Downloading'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
+        <i *ngIf="entry.processingStatus==='Processing'" class="fa fa-cog fa-spin fa-2x fa-fw text-danger"></i>
+        <i *ngIf="entry.processingStatus==='Uploading'" class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i>
+        <img *ngIf="entry.processingStatus==='Processed'" class="rounded-circle podcast-entry-table-image" [src]="entry.image">
+    </div>
 </td>
 <td>
     <h4 *ngIf="entry.processingStatus==='Downloading'">{{entry.sourceUrl}}</h4>
@@ -14,66 +15,28 @@
 <td>
     <h4 *ngIf="entry.processingStatus==='Downloading'">Downloading..</h4>
     <h4 *ngIf="entry.processingStatus==='Processing'">
-        <progressbar class="progress-striped active"
-                     max="100"
-                     value="{{percentageProcessed}}"
-                     type="warning">
-            {{percentageProcessed}}% @ {{currentSpeed}}
-        </progressbar>
+        <div class="clearfix">
+            <div class="float-left">
+                <strong>{{percentageProcessed}}%</strong>
+            </div>
+            <div class="float-right">
+                <small class="text-muted">{{currentSpeed}}</small>
+            </div>
+        </div>
+        <div class="progress progress-xs">
+            <div class="progress-bar bg-success" role="progressbar"
+            [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed" aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
     </h4>
     <h4 *ngIf="entry.processingStatus==='Uploading'">Uploading..</h4>
     <h4 *ngIf="entry.processingStatus==='Processed'">
         <audio controls>
-            <source src="{{entry.audioUrl}}" type="audio/mpeg"/>
+            <source src="{{entry.audioUrl}}" type="audio/mpeg" />
             <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
         </audio>
     </h4>
 </td>
 <td>
-    <a (click)="removeEntry(entry.id)"><i class="fa fa-edit"></i></a>
-    <a (click)="removeEntry(entry.id)"><i class="fa fa-remove"></i></a>
+    <a class="btn btn-outline btn-outline-danger" (click)="removeEntry(entry.id)"><i class="fa fa-remove"></i></a>
 </td>
-
-<!--
-<span *ngIf="entry.processingStatus==='Downloading'">
-    <td>
-        <i class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
-        <span class="sr-only">Loading...</span>
-    </td>
-    <td>
-        <h4>Downloading..</h4>
-    </td>
-    <td class="pull-right">
-        <a (click)="removeEntry(entry.id)"><i class="fa fa-edit"></i></a>
-        <a (click)="removeEntry(entry.id)"><i class="fa fa-remove"></i></a>
-    </td>
-</span>
-
-<span *ngIf="entry.processingStatus==='Processing'">
-    <td>
-        <i class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i>
-        <span class="sr-only">Processing...</span>
-    </td>
-    <td>
-        <h4>{{entry.title}}</h4>
-    </td>
-    <td class="pull-right">
-        <a (click)="removeEntry(entry.id)"><i class="fa fa-edit"></i></a>
-        <a (click)="removeEntry(entry.id)"><i class="fa fa-remove"></i></a>
-    </td>
-</span>
-
-<span *ngIf="entry.processingStatus==='Processed'">
-    <td>
-        <img class="rounded-circle podcast-entry-table-image"
-             [src]="entry.image">
-    </td>
-    <td>
-        {{entry.title}}
-    </td>
-    <td class="pull-right">
-        <a (click)="removeEntry(entry.id)"><i class="fa fa-edit"></i></a>
-        <a (click)="removeEntry(entry.id)"><i class="fa fa-remove"></i></a>
-    </td>
-</span>
--->
