@@ -18,9 +18,6 @@ export class PodcastAddFormComponent implements OnInit {
     constructor(private _service: PodcastsService, private _imageService: ImageService,
         private _router: Router, private _route: ActivatedRoute) {
         this.podcast = new PodcastModel();
-        if (this.podcast.image) {
-            this.image.src = this.podcast.image;
-        }
         _route.params.subscribe(p => {
             this.podcast.slug = p['slug'];
         });
@@ -28,7 +25,12 @@ export class PodcastAddFormComponent implements OnInit {
     ngOnInit() {
         if (this.podcast && this.podcast.slug) {
             this._service.getPodcast(this.podcast.slug)
-                .subscribe(r => this.podcast = r);
+                .subscribe(r => {
+                    this.podcast = r;
+                    if (this.podcast.image) {
+                        this.image.src = this.podcast.image;
+                    }
+                });
         }
     }
     submitForm() {
@@ -36,7 +38,10 @@ export class PodcastAddFormComponent implements OnInit {
             .subscribe(p => {
                 if (this.imageChanged) {
                     this.uploadPhoto()
-                        .subscribe(r => this._router.navigateByUrl('/podcasts'));
+                        .subscribe(r => {
+                            console.log('PodcastAddForm', 'submitForm', r);
+                            this._router.navigateByUrl('/podcasts')
+                        });
                 } else {
                     this._router.navigateByUrl('/podcasts');
                 }

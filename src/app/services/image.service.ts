@@ -5,7 +5,7 @@ import {AuthHttp} from 'angular2-jwt';
 @Injectable()
 export class ImageService {
 
-    //TODO: Change this to use AuthHttp when I can figure out why formData is null
+    // TODO: Change this to use AuthHttp when I can figure out why formData is null
     constructor(private _http: Http) {
     }
 
