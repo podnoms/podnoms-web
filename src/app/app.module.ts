@@ -15,6 +15,7 @@ import { PusherService } from './services/pusher.service';
 import { FilterEntryPipe } from './pipes/filter-entry.pipe';
 import { EntryListItemComponent } from './components/entry-list-item/entry-list-item.component';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { DropzoneModule, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
@@ -47,6 +48,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AppRoutingModule,
         HttpModule,
         FormsModule,
+        DropzoneModule.forRoot(),
 
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),

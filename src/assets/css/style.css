@@ -14191,7 +14191,7 @@ only screen and (min-resolution: 2dppx) {
 *
 * @todo Since both Select2 and Bootstrap 3 only support IE8 and above,
 * we could use the :after-pseudo-element to display the loading indicator.
-* Alternatively, we could supply an altered loading indicator image which already
+* Alternatively, we could supply an altered loading indicator imageUrl which already
 * contains an offset to the right.
 */
 

@@ -9,10 +9,9 @@ export class ImageService {
     constructor(private _http: Http) {
     }
 
-    upload(podcastId, image) {
+    upload(podcastSlug: string, image) {
         const formData = new FormData();
         formData.append('file', image);
-        return this._http.post(`/api/podcast/${podcastId}/image`, formData)
-            .map(res => res.json());
+        return this._http.post(`/api/podcast/${podcastSlug}/imageupload`, formData);
     }
 }
