@@ -31,7 +31,7 @@
     </h4>
     <h4 *ngIf="entry.processingStatus==='Uploading'">Uploading..</h4>
     <h4 *ngIf="entry.processingStatus==='Processed'">
-        <audio controls>
+        <audio controls preload="none">
             <source src="{{entry.audioUrl}}" type="audio/mpeg" />
             <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
         </audio>

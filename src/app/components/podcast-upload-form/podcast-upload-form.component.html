@@ -1,7 +1,8 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-block">
-            <dropzone [config]="config" [message]="'Click or drag files here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
+            <dropzone [config]="config" [message]="'Click or drag files here to upload'"
+                      (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
             </dropzone>
         </div>
     </div>

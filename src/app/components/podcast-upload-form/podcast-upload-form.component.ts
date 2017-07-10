@@ -1,9 +1,9 @@
-import {Router, ActivatedRoute} from '@angular/router';
-import {ToastyService} from 'ng2-toasty';
-import {DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
-import {Component, OnInit} from '@angular/core';
-import {PodcastModel} from 'app/models/podcasts.models';
-import {PusherService} from '../../services/pusher.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastyService } from 'ng2-toasty';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { Component, OnInit } from '@angular/core';
+import { PodcastModel } from 'app/models/podcasts.models';
+import { PusherService } from '../../services/pusher.service';
 
 @Component({
     selector: 'app-podcast-upload-form',
@@ -12,12 +12,12 @@ import {PusherService} from '../../services/pusher.service';
 })
 export class PodcastUploadFormComponent implements OnInit {
     podcast: PodcastModel;
-    private config: DropzoneConfigInterface = {
+    config: DropzoneConfigInterface = {
         acceptedFiles: 'audio/*'
     };
 
     constructor(private _router: Router, private _route: ActivatedRoute,
-                private _toastyService: ToastyService, private _pusherService: PusherService) {
+        private _toastyService: ToastyService, private _pusherService: PusherService) {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
             this.podcast.slug = p['slug'];
@@ -28,12 +28,19 @@ export class PodcastUploadFormComponent implements OnInit {
     ngOnInit() {
     }
 
+    onUploadStart() {
+        this._pusherService.subscribeMessage(this.podcast.id + '__process_podcast', 'info_processed', t => {
+        });
+        this._pusherService.subscribeMessage(this.podcast.id + '__process_podcast', 'info_progress', t => {
+            console.log('EntryListItemComponent', 'info_progress', t);
+        });
+    }
+
     onUploadError(event) {
         this._toastyService.success(`Boo\n${event}`);
     }
 
     onUploadSuccess(event) {
-        debugger;
-        this._toastyService.success('Yay!');
+        this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
     }
 }

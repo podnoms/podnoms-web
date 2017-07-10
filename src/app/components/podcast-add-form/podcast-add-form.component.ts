@@ -1,9 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {PodcastModel} from '../../models/podcasts.models';
-import {PodcastsService} from '../../services/podcasts.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {ImageService} from 'app/services/image.service';
-import {ToastyService} from 'ng2-toasty';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PodcastModel } from '../../models/podcasts.models';
+import { PodcastsService } from '../../services/podcasts.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ImageService } from 'app/services/image.service';
+import { ToastyService } from 'ng2-toasty';
 
 @Component({
     selector: 'app-podcast-add-form',
@@ -17,7 +17,7 @@ export class PodcastAddFormComponent implements OnInit {
     image: any = new Image();
 
     constructor(private _service: PodcastsService, private _imageService: ImageService,
-                private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
+        private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
             this.podcast.slug = p['slug'];
@@ -44,10 +44,10 @@ export class PodcastAddFormComponent implements OnInit {
                         .subscribe(r => {
                             this._toastyService.info('Image successfully updated!');
                             console.log('PodcastAddForm', 'submitForm', r);
-                            this._router.navigateByUrl('/podcasts')
+                            this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
                         });
                 } else {
-                    this._router.navigateByUrl('/podcasts');
+                    this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
                 }
             });
     }
