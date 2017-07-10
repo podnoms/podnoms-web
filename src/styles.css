@@ -2,6 +2,7 @@
 @import "~ng2-toasty/bundles/style-bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 @import "~simple-line-icons/css/simple-line-icons.css";
+@import '~dropzone/dist/min/dropzone.min.css';
 a {
     cursor: pointer;
 }

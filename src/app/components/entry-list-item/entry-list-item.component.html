@@ -3,7 +3,7 @@
         <i *ngIf="entry.processingStatus==='Downloading'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
         <i *ngIf="entry.processingStatus==='Processing'" class="fa fa-cog fa-spin fa-2x fa-fw text-danger"></i>
         <i *ngIf="entry.processingStatus==='Uploading'" class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i>
-        <img *ngIf="entry.processingStatus==='Processed'" class="rounded-circle podcast-entry-table-image" [src]="entry.image">
+        <img *ngIf="entry.processingStatus==='Processed'" class="rounded-circle podcast-entry-table-image" [src]="entry.imageUrl">
     </div>
 </td>
 <td>
@@ -31,7 +31,7 @@
     </h4>
     <h4 *ngIf="entry.processingStatus==='Uploading'">Uploading..</h4>
     <h4 *ngIf="entry.processingStatus==='Processed'">
-        <audio controls>
+        <audio controls preload="none">
             <source src="{{entry.audioUrl}}" type="audio/mpeg" />
             <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
         </audio>

@@ -21,7 +21,7 @@ export class AuthService {
             responseType: 'token'
         },
         theme: {
-            logo: 'https://podnomscdn.blob.core.windows.net/static/logo.png',
+            logo: 'https://podnomscdn.blob.core.windows.net/static/images/logo.png',
             primaryColor: '#ff5500'
         },
     });

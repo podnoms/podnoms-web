@@ -5,7 +5,7 @@ export class PodcastModel {
     title: string;
     description?: string;
     slug?: string;
-    image?: string;
+    imageUrl?: string;
     rssUrl?: string;
     podcastEntries?: PodcastEntryModel[];
 }
@@ -20,7 +20,7 @@ export class PodcastEntryModel {
     description?: string;
     sourceUrl: string;
     audioUrl?: string;
-    image?: string;
+    imageUrl?: string;
     processed: boolean;
     processingStatus?: string;
     processingPayload?: string;
