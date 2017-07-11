@@ -42,6 +42,8 @@ export class PodcastComponent implements OnInit {
                 }
                 this.selectedPodcastId = this.selectedPodcast.id;
                 this.onPodcastChange();
+            } else {
+                this.isLoading = false;
             }
         });
     }
