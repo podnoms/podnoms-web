@@ -47,7 +47,7 @@ export class PodcastAddFormComponent implements OnInit {
                             this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
                         });
                 } else {
-                    this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
+                    this._router.navigateByUrl(`/podcasts#${p.slug}`);
                 }
             });
     }
