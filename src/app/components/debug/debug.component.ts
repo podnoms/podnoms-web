@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-debug',
-  templateUrl: './debug.component.html',
-  styleUrls: ['./debug.component.css']
+    selector: 'app-debug',
+    templateUrl: './debug.component.html',
+    styleUrls: ['./debug.component.css']
 })
 export class DebugComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
-
+    ngOnInit() {
+    }
+    doSomething() {
+        alert('doSomething was did');
+    }
 }

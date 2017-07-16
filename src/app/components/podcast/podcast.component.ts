@@ -67,7 +67,7 @@ export class PodcastComponent implements OnInit {
             this._podcastService.deletePodcast(this.selectedPodcast.id)
                 .subscribe(r => {
                     console.log('PodcastComponent', 'deletePodcast', r);
-                    this._getPodcasts(this.selectedPodcast.slug);
+                    this._getPodcasts(null);
                 });
         }
     }

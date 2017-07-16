@@ -37,8 +37,8 @@ export class EntryListItemComponent implements OnInit {
         }
     }
 
-    removeEntry(entryId) {
-        this._service.deletePodcastEntry(entryId)
+    deleteEntry() {
+        this._service.deletePodcastEntry(this.entry.id)
             .subscribe(result => {
                 console.log('Podcast entry removed succesfully', result);
                 this.entryRemoved.emit(this.entry);
