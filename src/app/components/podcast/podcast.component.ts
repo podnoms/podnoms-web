@@ -95,6 +95,7 @@ export class PodcastComponent implements OnInit {
 
     _processEntryCallback(entry: PodcastEntryModel) {
         this.entries.push(entry);
+        this.newEntrySourceUrl = '';
         console.log('PodcastEntryAddFormComponent: podcast entry added successfully', entry);
         if (entry.processingStatus !== 'Processing') {
             this._toastyService.warning({
