@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { PodcastsService } from '../../services/podcasts.service';
-import { PodcastEntryModel, PodcastModel } from '../../models/podcasts.models';
+import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { PusherService } from '../../services/pusher.service';
 
@@ -79,6 +79,18 @@ export class PodcastComponent implements OnInit {
             (entry) => this._processEntryCallback(entry),
             (error) => this._processEntryErrorCallback(error)
             );
+    }
+
+    deleteEntry(entry: PodcastEntryModel) {
+        console.log(entry);
+        console.log('PodcastComponent', 'deleteEntry', entry);
+        // this.selectedPodcast.podcastEntries = this.selectedPodcast.podcastEntries.filter(obj => obj.id !== entry.id);
+
+        const index = this.selectedPodcast.podcastEntries.indexOf(entry);
+        if (index === -1) {
+            return;
+        }
+        this.selectedPodcast.podcastEntries.splice(index, 1);
     }
 
     _processEntryCallback(entry: PodcastEntryModel) {

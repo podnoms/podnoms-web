@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { PodcastModel } from './../../models/podcasts.models';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PodcastEntryModel } from '../../models/podcasts.models';
 import { PodcastsService } from '../../services/podcasts.service';
 import { ToastyService } from 'ng2-toasty';
@@ -12,11 +13,13 @@ import { PusherService } from '../../services/pusher.service';
 export class EntryListItemComponent implements OnInit {
 
     @Input() entry: PodcastEntryModel;
+    @Output() entryRemoved = new EventEmitter<PodcastEntryModel>();
+
     percentageProcessed = 0;
     currentSpeed: '0 kb/s';
 
-    constructor(private _service: PodcastsService, private _toastyService: ToastyService,
-        private _pusherService: PusherService, private _zone: NgZone) {
+    constructor(private _service: PodcastsService,
+        private _toastyService: ToastyService, private _pusherService: PusherService) {
     }
 
     ngOnInit() {
@@ -38,6 +41,7 @@ export class EntryListItemComponent implements OnInit {
         this._service.deletePodcastEntry(entryId)
             .subscribe(result => {
                 console.log('Podcast entry removed succesfully', result);
+                this.entryRemoved.emit(this.entry);
             }, error => {
                 console.error(error);
                 this._toastyService.error({
