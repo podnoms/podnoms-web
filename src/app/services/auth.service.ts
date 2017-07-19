@@ -1,10 +1,10 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Auth0Vars } from '../constants/auth0';
-import { Router } from '@angular/router';
+import {Injectable, NgZone} from '@angular/core';
+import {Auth0Vars} from '../constants/auth0';
+import {Router} from '@angular/router';
 import Auth0Lock from 'auth0-lock';
 
-import { Observable } from 'rxjs/Observable';
-import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';
+import {Observable} from 'rxjs/Observable';
+import {AuthHttp, JwtHelper, tokenNotExpired} from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
@@ -52,6 +52,13 @@ export class AuthService {
             const decodedToken = jwtHelper.decodeToken(token);
             this.roles = decodedToken['https://vega.com/roles'] || [];
         }
+    }
+
+    public getToken() {
+        if (this.authenticated()) {
+            return localStorage.getItem('token');
+        }
+        return '';
     }
 
     public isInRole(roleName) {
