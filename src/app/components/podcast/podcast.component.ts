@@ -18,7 +18,6 @@ export class PodcastComponent implements OnInit {
     selectedPodcast: PodcastModel;
     selectedPodcastId: number;
     newEntrySourceUrl: string;
-    rssUrl: string;
     isLoading = true;
     constructor(private _route: ActivatedRoute, private _location: Location,
         private _podcastService: PodcastsService, private _toastyService: ToastyService) {
@@ -53,10 +52,6 @@ export class PodcastComponent implements OnInit {
         this.selectedPodcast = this.podcasts.find(p => p.id == this.selectedPodcastId);
         this.entries = this.selectedPodcast ? this.selectedPodcast.podcastEntries : null;
 
-        this._podcastService.getPodcastRssUrl(this.selectedPodcast.slug)
-            .subscribe(result => {
-                this.rssUrl = result.url;
-            });
         this._location.replaceState(`/podcasts#${this.selectedPodcast.slug}`);
         this.isLoading = false;
     }
