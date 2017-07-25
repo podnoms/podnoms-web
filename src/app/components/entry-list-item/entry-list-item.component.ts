@@ -19,7 +19,7 @@ export class EntryListItemComponent implements OnInit {
     currentSpeed: '0 kb/s';
 
     constructor(private _service: PodcastsService,
-        private _toastyService: ToastyService, private _pusherService: PusherService) {
+                private _toastyService: ToastyService, private _pusherService: PusherService) {
     }
 
     ngOnInit() {
@@ -52,5 +52,10 @@ export class EntryListItemComponent implements OnInit {
                     timeout: 5000
                 });
             });
+    }
+
+    saveTitle($event: Event) {
+        this._service.addPodcastEntry(this.entry)
+            .subscribe(e => this.entry = e);
     }
 }

@@ -24,9 +24,11 @@ import { PodcastAddFormComponent } from './components/podcast-add-form/podcast-a
 import { ImageService } from './services/image.service';
 import { PodcastUploadFormComponent } from './components/podcast-upload-form/podcast-upload-form.component';
 import { DebugComponent } from './components/debug/debug.component';
+import { InlineEditorModule } from '@qontu/ngx-inline-editor';
+
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
-        globalHeaders: [{ 'Content-Type': 'application/json' }]
+        globalHeaders: [{'Content-Type': 'application/json'}]
     }), http, options);
 }
 
@@ -48,6 +50,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AppRoutingModule,
         HttpModule,
         FormsModule,
+        InlineEditorModule,
         DropzoneModule.forRoot(),
 
         ModalModule.forRoot(),

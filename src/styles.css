@@ -1,8 +1,9 @@
-@import "assets/css/style.css";
-@import "~ng2-toasty/bundles/style-bootstrap.css";
-@import "~font-awesome/css/font-awesome.css";
-@import "~simple-line-icons/css/simple-line-icons.css";
+@import 'assets/css/style.css';
+@import '~ng2-toasty/bundles/style-bootstrap.css';
+@import '~font-awesome/css/font-awesome.css';
+@import '~simple-line-icons/css/simple-line-icons.css';
 @import '~dropzone/dist/min/dropzone.min.css';
+@import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
 a {
     cursor: pointer;
 }

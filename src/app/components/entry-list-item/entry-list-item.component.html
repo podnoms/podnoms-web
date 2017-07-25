@@ -10,7 +10,9 @@
     <h4 *ngIf="entry.processingStatus==='Downloading'">{{entry.sourceUrl}}</h4>
     <h4 *ngIf="entry.processingStatus==='Processing'">{{entry.title}}</h4>
     <h4 *ngIf="entry.processingStatus==='Uploading'">{{entry.title}}</h4>
-    <h4 *ngIf="entry.processingStatus==='Processed'">{{entry.title}}</h4>
+    <h4 *ngIf="entry.processingStatus==='Processed'">
+        <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="saveTitle($event)" size="50"></inline-editor>
+    </h4>
 </td>
 <td>
     <h4 *ngIf="entry.processingStatus==='Downloading'">Downloading..</h4>
