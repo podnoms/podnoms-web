@@ -34,8 +34,12 @@
                         <a *ngIf="podcasts != null && podcasts.length != 0" class="btn btn btn-outline-warning" [href]="selectedPodcast.rssUrl" target="_blank">
                             <i class="fa fa-rss"></i> &nbsp; Rss Url
                         </a>
+                        <a class="btn btn-outline-success" 
+                            href='http://cloud.feedly.com/#subscription/feed/{{selectedPodcast.rssUrl}}' target='blank'>
+                            Add in Feedly
+                        </a>
                         <a class="btn btn-outline-warning float-right" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/upload/']">
-                            <i class="fa fa-upload" aria-hidden="true"></i>Upload</a>
+                            <i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
                         <button type="submit" class="btn btn-outline-success float-right" (click)="addEntry()">
                             <i class="fa fa-plus-circle"></i> Add
                         </button>
