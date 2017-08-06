@@ -20,7 +20,7 @@ export class PodcastComponent implements OnInit {
     newEntrySourceUrl: string;
 
     isLoading = true;
-    uploadMode = true;
+    uploadMode = false;
 
     constructor(private _route: ActivatedRoute, private _location: Location, private zone: NgZone,
                 private _podcastService: PodcastsService, private _toastyService: ToastyService) {
