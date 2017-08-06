@@ -15,6 +15,7 @@ import { PusherService } from './services/pusher.service';
 import { FilterEntryPipe } from './pipes/filter-entry.pipe';
 import { EntryListItemComponent } from './components/entry-list-item/entry-list-item.component';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { DropzoneModule, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
@@ -23,9 +24,11 @@ import { PodcastAddFormComponent } from './components/podcast-add-form/podcast-a
 import { ImageService } from './services/image.service';
 import { PodcastUploadFormComponent } from './components/podcast-upload-form/podcast-upload-form.component';
 import { DebugComponent } from './components/debug/debug.component';
+import { InlineEditorModule } from '@qontu/ngx-inline-editor';
+
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
-        globalHeaders: [{ 'Content-Type': 'application/json' }]
+        globalHeaders: [{'Content-Type': 'application/json'}]
     }), http, options);
 }
 
@@ -47,6 +50,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AppRoutingModule,
         HttpModule,
         FormsModule,
+        InlineEditorModule,
+        DropzoneModule.forRoot(),
 
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),

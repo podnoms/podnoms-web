@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {PodcastsService} from '../../services/podcasts.service';
-import {PodcastEntryModel, PodcastModel} from '../../models/podcasts.models';
-import {ToastyService} from 'ng2-toasty';
-import {PusherService} from '../../services/pusher.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Location } from '@angular/common';
+import { PodcastsService } from '../../services/podcasts.service';
+import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
+import { ToastyService } from 'ng2-toasty';
+import { PusherService } from '../../services/pusher.service';
 
 @Component({
     selector: 'app-podcast',
@@ -16,23 +18,34 @@ export class PodcastComponent implements OnInit {
     selectedPodcast: PodcastModel;
     selectedPodcastId: number;
     newEntrySourceUrl: string;
-    rssUrl: string;
 
-    constructor(private _podcastService: PodcastsService,
-                private _toastyService: ToastyService) {
+    isLoading = true;
+    uploadMode = false;
+
+    constructor(private _route: ActivatedRoute, private _location: Location, private zone: NgZone,
+                private _podcastService: PodcastsService, private _toastyService: ToastyService) {
     }
 
     ngOnInit() {
-        this._getPodcasts();
+        this._route.fragment.subscribe((fragment: string) => {
+            console.log('My hash fragment is here => ', fragment)
+            this._getPodcasts(fragment);
+        });
     }
 
-    _getPodcasts() {
+    _getPodcasts(slug: String) {
         this._podcastService.getPodcasts().subscribe(podcasts => {
             this.podcasts = podcasts;
             if (this.podcasts.length != 0) {
-                this.selectedPodcast = this.podcasts[0];
+                if (slug == null) {
+                    this.selectedPodcast = this.podcasts[0];
+                } else {
+                    this.selectedPodcast = this.podcasts.find(e => e.slug === slug)
+                }
                 this.selectedPodcastId = this.selectedPodcast.id;
                 this.onPodcastChange();
+            } else {
+                this.isLoading = false;
             }
         });
     }
@@ -42,10 +55,8 @@ export class PodcastComponent implements OnInit {
         this.selectedPodcast = this.podcasts.find(p => p.id == this.selectedPodcastId);
         this.entries = this.selectedPodcast ? this.selectedPodcast.podcastEntries : null;
 
-        this._podcastService.getPodcastRssUrl(this.selectedPodcast.slug)
-            .subscribe(result => {
-                this.rssUrl = result.url;
-            });
+        this._location.replaceState(`/podcasts#${this.selectedPodcast.slug}`);
+        this.isLoading = false;
     }
 
 
@@ -54,7 +65,7 @@ export class PodcastComponent implements OnInit {
             this._podcastService.deletePodcast(this.selectedPodcast.id)
                 .subscribe(r => {
                     console.log('PodcastComponent', 'deletePodcast', r);
-                    this._getPodcasts();
+                    this._getPodcasts(null);
                 });
         }
     }
@@ -68,19 +79,26 @@ export class PodcastComponent implements OnInit {
             );
     }
 
-    _processEntryCallback(entry: PodcastEntryModel) {
-        this.entries.push(entry);
-        console.log('PodcastEntryAddFormComponent: podcast entry added successfully', entry);
-        if (entry.processingStatus !== 'Processing') {
-            this._toastyService.warning({
-                title: 'Warning',
-                msg: 'Podcast added successfully but unable to currently start processing. Check back again later.',
-                theme: 'bootstrap',
-                showClose: true,
-                timeout: 5000
-            });
+    deleteEntry(entry: PodcastEntryModel) {
+        const index = this.selectedPodcast.podcastEntries.indexOf(entry);
+        if (index === -1) {
+            return;
         }
-        console.log('PodcastComponent', '_processEntryCallback', entry);
+        this.selectedPodcast.podcastEntries.splice(index, 1);
+    }
+
+    onEntryUploadComplete($event) {
+        let entry = new PodcastEntryModel();
+        entry = $event[1];
+        this.uploadMode = false;
+        this._processEntryCallback(entry);
+    }
+
+    _processEntryCallback(entry: PodcastEntryModel) {
+        this.zone.run(() => {
+            this.entries.push(entry);
+            this.newEntrySourceUrl = '';
+        });
     }
 
     _processEntryErrorCallback(error) {
@@ -91,5 +109,9 @@ export class PodcastComponent implements OnInit {
             showClose: true,
             timeout: 5000
         });
+    }
+
+    startUpload() {
+        this.uploadMode = true;
     }
 }

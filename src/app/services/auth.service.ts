@@ -21,14 +21,13 @@ export class AuthService {
             responseType: 'token'
         },
         theme: {
-            logo: 'https://podnomscdn.blob.core.windows.net/static/logo.png',
+            logo: 'https://podnomscdn.blob.core.windows.net/static/images/logo.png',
             primaryColor: '#ff5500'
         },
     });
 
     constructor() {
         this.readUserFromLocalStorage();
-
         this.lock.on('authenticated', (authResult) => this.onUserAuthenticated(authResult));
     }
 
@@ -40,14 +39,13 @@ export class AuthService {
                 throw error;
             }
             localStorage.setItem('profile', JSON.stringify(profile));
-
             this.readUserFromLocalStorage();
+            window.location.reload();
         });
     }
 
     private readUserFromLocalStorage() {
         this.profile = JSON.parse(localStorage.getItem('profile'));
-
         const token = localStorage.getItem('token');
         if (token) {
             const jwtHelper = new JwtHelper();
@@ -56,23 +54,26 @@ export class AuthService {
         }
     }
 
+    public getToken() {
+        if (this.authenticated()) {
+            return localStorage.getItem('token');
+        }
+        return '';
+    }
+
     public isInRole(roleName) {
         return this.roles.indexOf(roleName) > -1;
     }
 
     public login() {
-        // Call the show method to display the widget.
         this.lock.show();
     }
 
     public authenticated() {
-        // Check if there's an unexpired JWT
-        // This searches for an item in localStorage with key == 'token'
         return tokenNotExpired('token');
     }
 
     public logout() {
-        // Remove token from localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         this.profile = null;
