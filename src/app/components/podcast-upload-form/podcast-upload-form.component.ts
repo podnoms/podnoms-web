@@ -1,8 +1,8 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-import { Component, OnInit } from '@angular/core';
-import { PodcastModel } from 'app/models/podcasts.models';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { PodcastEntryModel, PodcastModel } from 'app/models/podcasts.models';
 import { PusherService } from '../../services/pusher.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -12,7 +12,8 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./podcast-upload-form.component.css']
 })
 export class PodcastUploadFormComponent implements OnInit {
-    podcast: PodcastModel;
+    @Input() podcast: PodcastModel;
+    @Output() onUploadComplete: EventEmitter<any> = new EventEmitter();
     config: DropzoneConfigInterface = {
         acceptedFiles: 'audio/*',
         maxFilesize: 4000, // 4Gb
@@ -21,6 +22,7 @@ export class PodcastUploadFormComponent implements OnInit {
         }
     };
 
+<<<<<<< HEAD
     constructor(private _router: Router, private _route: ActivatedRoute,
         private _toastyService: ToastyService, private _pusherService: PusherService,
         private _auth: AuthService) {
@@ -29,24 +31,28 @@ export class PodcastUploadFormComponent implements OnInit {
             this.podcast.slug = p['slug'];
             this.config.url = `/api/podcast/${this.podcast.slug}/audioupload`;
         });
+=======
+    constructor(private _toastyService: ToastyService, private _pusherService: PusherService,
+                private _auth: AuthService) {
+>>>>>>> feature/integrate_uploader
     }
 
     ngOnInit() {
+        this.config.url = `/api/podcast/${this.podcast.slug}/audioupload`;
     }
 
     onUploadStart() {
-        this._pusherService.subscribeMessage(this.podcast.id + '__process_podcast', 'info_processed', t => {
-        });
         this._pusherService.subscribeMessage(this.podcast.id + '__process_podcast', 'info_progress', t => {
             console.log('EntryListItemComponent', 'info_progress', t);
         });
     }
 
     onUploadError(event) {
-        this._toastyService.success(`Boo\n${event}`);
+        this._toastyService.error(`Boo\n${event}`);
     }
 
     onUploadSuccess(event) {
-        this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
+        this._toastyService.success('Successfully uploaded audio');
+        this.onUploadComplete.emit(event);
     }
 }

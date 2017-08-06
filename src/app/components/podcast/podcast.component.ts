@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 import { PodcastsService } from '../../services/podcasts.service';
 import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
@@ -18,9 +18,12 @@ export class PodcastComponent implements OnInit {
     selectedPodcast: PodcastModel;
     selectedPodcastId: number;
     newEntrySourceUrl: string;
+
     isLoading = true;
-    constructor(private _route: ActivatedRoute, private _location: Location,
-        private _podcastService: PodcastsService, private _toastyService: ToastyService) {
+    uploadMode = true;
+
+    constructor(private _route: ActivatedRoute, private _location: Location, private zone: NgZone,
+                private _podcastService: PodcastsService, private _toastyService: ToastyService) {
     }
 
     ngOnInit() {
@@ -71,16 +74,12 @@ export class PodcastComponent implements OnInit {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
         this._podcastService.addPodcastEntry(model)
             .subscribe(
-            (entry) => this._processEntryCallback(entry),
-            (error) => this._processEntryErrorCallback(error)
+                (entry) => this._processEntryCallback(entry),
+                (error) => this._processEntryErrorCallback(error)
             );
     }
 
     deleteEntry(entry: PodcastEntryModel) {
-        console.log(entry);
-        console.log('PodcastComponent', 'deleteEntry', entry);
-        // this.selectedPodcast.podcastEntries = this.selectedPodcast.podcastEntries.filter(obj => obj.id !== entry.id);
-
         const index = this.selectedPodcast.podcastEntries.indexOf(entry);
         if (index === -1) {
             return;
@@ -88,20 +87,18 @@ export class PodcastComponent implements OnInit {
         this.selectedPodcast.podcastEntries.splice(index, 1);
     }
 
+    onEntryUploadComplete($event) {
+        let entry = new PodcastEntryModel();
+        entry = $event[1];
+        this.uploadMode = false;
+        this._processEntryCallback(entry);
+    }
+
     _processEntryCallback(entry: PodcastEntryModel) {
-        this.entries.push(entry);
-        this.newEntrySourceUrl = '';
-        console.log('PodcastEntryAddFormComponent: podcast entry added successfully', entry);
-        if (entry.processingStatus !== 'Processing') {
-            this._toastyService.warning({
-                title: 'Warning',
-                msg: 'Podcast added successfully but unable to currently start processing. Check back again later.',
-                theme: 'bootstrap',
-                showClose: true,
-                timeout: 5000
-            });
-        }
-        console.log('PodcastComponent', '_processEntryCallback', entry);
+        this.zone.run(() => {
+            this.entries.push(entry);
+            this.newEntrySourceUrl = '';
+        });
     }
 
     _processEntryErrorCallback(error) {
@@ -112,5 +109,9 @@ export class PodcastComponent implements OnInit {
             showClose: true,
             timeout: 5000
         });
+    }
+
+    startUpload() {
+        this.uploadMode = true;
     }
 }

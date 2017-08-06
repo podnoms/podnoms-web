@@ -25,7 +25,7 @@ export class PodcastEntryModel {
     processingStatus?: string;
     processingPayload?: string;
 
-    constructor(podcastId: number, sourceUrl: string) {
+    constructor(podcastId?: number, sourceUrl?: string) {
         this.podcastId = podcastId;
         this.sourceUrl = sourceUrl;
         this.processed = false;
