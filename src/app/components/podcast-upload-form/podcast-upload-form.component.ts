@@ -22,19 +22,8 @@ export class PodcastUploadFormComponent implements OnInit {
         }
     };
 
-<<<<<<< HEAD
-    constructor(private _router: Router, private _route: ActivatedRoute,
-        private _toastyService: ToastyService, private _pusherService: PusherService,
-        private _auth: AuthService) {
-        this.podcast = new PodcastModel();
-        _route.params.subscribe(p => {
-            this.podcast.slug = p['slug'];
-            this.config.url = `/api/podcast/${this.podcast.slug}/audioupload`;
-        });
-=======
     constructor(private _toastyService: ToastyService, private _pusherService: PusherService,
                 private _auth: AuthService) {
->>>>>>> feature/integrate_uploader
     }
 
     ngOnInit() {
