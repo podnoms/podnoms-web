@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * GenesisUI - Bootstrap 4 Admin Template
  * @version v1.8.1
@@ -5,7 +6,6 @@
  * Copyright (c) 2017 creativeLabs Ĺukasz Holeczek
  * @license Commercial
  */
-@charset "UTF-8";
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
