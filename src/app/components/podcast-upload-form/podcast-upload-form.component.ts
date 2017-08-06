@@ -27,7 +27,7 @@ export class PodcastUploadFormComponent implements OnInit {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
             this.podcast.slug = p['slug'];
-            this.config.server = `/api/podcast/${this.podcast.slug}/audioupload`;
+            this.config.url = `/api/podcast/${this.podcast.slug}/audioupload`;
         });
     }
 
