@@ -11,17 +11,21 @@
             <div class="card-block">
                 <div class="row">
                     <div class="col-sm-2">
-                        <select class="form-control" id="podcast" name="podcast" [(ngModel)]="selectedPodcastId" (change)="onPodcastChange()">
+                        <select class="form-control" id="podcast" name="podcast" [(ngModel)]="selectedPodcastId"
+                                (change)="onPodcastChange()">
                             <option *ngFor="let p of podcasts" value="{{p.id}}">{{p.title}}</option>
                         </select>
                     </div>
                     <div class="col-sm-3">
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group mr-2" role="group" aria-label="First group">
-                                <a class="btn btn-outline-primary" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']" *ngIf="selectedPodcast">
+                                <a class="btn btn-outline-primary"
+                                   [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']"
+                                   *ngIf="selectedPodcast">
                                     <i class="icon-plus"></i> &nbsp; Edit
                                 </a>
-                                <a class="btn btn-outline-danger" *ngIf="selectedPodcast" (click)="podcastDeleteDialog.show()">
+                                <a class="btn btn-outline-danger" *ngIf="selectedPodcast"
+                                   (click)="podcastDeleteDialog.show()">
                                     <i class="icon-plus"></i> &nbsp; Delete
                                 </a>
                                 <a class="btn btn-outline-success" [routerLink]="['/podcasts/add']">
@@ -31,14 +35,15 @@
                         </div>
                     </div>
                     <div class="col-sm-7" *ngIf="selectedPodcast">
-                        <a *ngIf="podcasts != null && podcasts.length != 0" class="btn btn btn-outline-warning" [href]="selectedPodcast.rssUrl" target="_blank">
+                        <a *ngIf="podcasts != null && podcasts.length != 0" class="btn btn btn-outline-warning"
+                           [href]="selectedPodcast.rssUrl" target="_blank">
                             <i class="fa fa-rss"></i> &nbsp; Rss Url
                         </a>
-                        <a class="btn btn-outline-success" 
-                            href='http://cloud.feedly.com/#subscription/feed/{{selectedPodcast.rssUrl}}' target='blank'>
+                        <a class="btn btn-outline-success"
+                           href='http://cloud.feedly.com/#subscription/feed/{{selectedPodcast.rssUrl}}' target='blank'>
                             Add in Feedly
                         </a>
-                        <a class="btn btn-outline-warning float-right" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/upload/']">
+                        <a class="btn btn-outline-warning float-right" (click)="startUpload()">
                             <i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
                         <button type="submit" class="btn btn-outline-success float-right" (click)="addEntry()">
                             <i class="fa fa-plus-circle"></i> Add
@@ -47,17 +52,24 @@
                             <div class="input-group float-right" style="width:320px;">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i>
                                 </span>
-                                <input type="text" class="form-control span6 input-large float-right" placeholder="New entry URL" aria-describedby="basic-addon2"
-                                    name="entry-url" [(ngModel)]="newEntrySourceUrl">
+                                <input type="text" class="form-control span6 input-large float-right"
+                                       placeholder="New entry URL" aria-describedby="basic-addon2"
+                                       name="entry-url" [(ngModel)]="newEntrySourceUrl">
                             </div>
                         </fieldset>
                     </div>
                 </div>
                 <hr class="m-0">
                 <br>
+                <div class="row" *ngIf="uploadMode">
+                    <app-podcast-upload-form [podcast]="selectedPodcast"
+                                             (onUploadComplete)="onEntryUploadComplete($event)">
+                    </app-podcast-upload-form>
+                </div>
                 <table class="table table-hover table-outline mb-0 hidden-sm-down">
                     <tbody>
-                        <tr *ngFor="let entry of entries" app-entry-list-item (entryRemoved)='deleteEntry(entry)' [entry]="entry"></tr>
+                    <tr *ngFor="let entry of entries" app-entry-list-item (entryRemoved)='deleteEntry(entry)'
+                        [entry]="entry"></tr>
                     </tbody>
                 </table>
             </div>
@@ -74,8 +86,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No</button>
-                <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes</button>
+                <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
+                </button>
+                <button type="button" class="btn btn-danger pull-right"
+                        (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
+                </button>
             </div>
         </div>
     </div>
