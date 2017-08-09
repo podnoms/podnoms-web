@@ -7,10 +7,23 @@
             <div class="sk-rect sk-rect4"></div>
             <div class="sk-rect sk-rect5"></div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"> 
+                <div class="tools"><span class="icon s7-upload"></span><span class="icon s7-edit"></span><span class="icon s7-close"></span></div><span class="title">Panel with tools</span>
+            </div>
+            <div class="panel-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur recusandae a mollitia magni in.</p>
+                <p>Velit numquam possimus eum delectus maiores dicta perspiciatis quae aperiam dolores facere, doloribus non, iusto, sit.</p>
+            </div>
+        </div>
+
+
         <div *ngIf="!isLoading" class="card">
             <div class="card-block">
                 <div class="row">
                     <div class="col-sm-2">
+                        <img class="img-avatar podcast-image" [src]="selectedPodcast.imageUrl"/>
                         <select class="form-control" id="podcast" name="podcast" [(ngModel)]="selectedPodcastId"
                                 (change)="onPodcastChange()">
                             <option *ngFor="let p of podcasts" value="{{p.id}}">{{p.title}}</option>
