@@ -1,14 +1,20 @@
 import 'rxjs/add/operator/map';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {PodcastEntryModel, PodcastModel} from '../models/podcasts.models';
-import {AuthHttp} from 'angular2-jwt';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { PodcastEntryModel, PodcastModel } from '../models/podcasts.models';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class PodcastsService {
 
     constructor(private _http: AuthHttp) {
 
+    }
+
+    //bit hacky but need to remove image as this will be uploaded separately.
+    _replacer(key, value) {
+        if (key === 'imageUrl') return undefined;
+        else return value;
     }
 
     getPodcasts(): Observable<PodcastModel[]> {
@@ -23,7 +29,7 @@ export class PodcastsService {
 
     addPodcast(podcast: PodcastModel): Observable<PodcastModel> {
         console.log('PodcastsService', 'addPodcast', podcast);
-        return this._http.post('api/podcast', JSON.stringify(podcast))
+        return this._http.post('api/podcast', JSON.stringify(podcast, this._replacer))
             .map(res => {
                 return res.json();
             });
