@@ -25,6 +25,7 @@ import { ImageService } from './services/image.service';
 import { PodcastUploadFormComponent } from './components/podcast-upload-form/podcast-upload-form.component';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
@@ -43,7 +44,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         EntryListItemComponent,
         PodcastAddFormComponent,
         PodcastUploadFormComponent,
-        DebugComponent
+        DebugComponent,
+        SidebarComponent
     ],
     imports: [
         BrowserModule,

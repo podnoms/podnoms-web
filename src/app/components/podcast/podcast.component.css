@@ -5,3 +5,6 @@ app-podcast-upload-form {
     height: 35px;
     margin: 0 10px;
 }
+.breadcrumb{
+    margin-bottom: 0px;
+}

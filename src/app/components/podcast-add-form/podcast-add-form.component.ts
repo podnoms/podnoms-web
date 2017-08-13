@@ -17,10 +17,11 @@ export class PodcastAddFormComponent implements OnInit {
     image: any = new Image();
 
     constructor(private _service: PodcastsService, private _imageService: ImageService,
-        private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
+                private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
-            this.podcast.slug = p['slug'];
+            if (p['slug'])
+                this.podcast.slug = p['slug'];
         });
     }
 
@@ -44,10 +45,10 @@ export class PodcastAddFormComponent implements OnInit {
                         .subscribe(r => {
                             this._toastyService.info('Image successfully updated!');
                             console.log('PodcastAddForm', 'submitForm', r);
-                            this._router.navigateByUrl(`/podcasts#${this.podcast.slug}`);
+                            this._router.navigateByUrl(`podcasts/${this.podcast.slug}`);
                         });
                 } else {
-                    this._router.navigateByUrl(`/podcasts#${p.slug}`);
+                    this._router.navigateByUrl(`podcasts/${p.slug}`);
                 }
             });
     }

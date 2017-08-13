@@ -1,0 +1,60 @@
+<div class="sidebar">
+    <div class="sidebar-header" *ngIf="selectedPodcast">
+        <img [src]="selectedPodcast.imageUrl" class="img-avatar" alt="Avatar">
+        <div>
+            <strong>{{selectedPodcast.title}}</strong>
+        </div>
+        <div class="btn-group" role="group">
+            <a class="btn btn-link" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']">
+                <i class="icon-pencil"></i>
+            </a>
+            <button type="button" class="btn btn-link" (click)="podcastDeleteDialog.show()">
+                <i class="icon-trash"></i>
+            </button>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-link">
+                    <i class="icon-user"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a type="button" [routerLink]="['add']" class="btn btn-primary " style="width: 100%;">
+                    <i class="fa fa-plus"></i> Add Podcast
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li class="nav-title">My Podcasts</li>
+            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts">
+                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/podcasts', podcast.slug]"
+                   (click)="selectPodcast(podcast.slug)">
+                    <img class="sidebar-icon" [src]="podcast.imageUrl">&nbsp;{{podcast.title}}
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Delete this podcast?</h4>
+                <button type="button" class="close pull-right" aria-label="Close"
+                        (click)="podcastDeleteDialog.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
+                </button>
+                <button type="button" class="btn btn-danger pull-right"
+                        (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

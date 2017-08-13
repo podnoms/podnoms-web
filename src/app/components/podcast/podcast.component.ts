@@ -5,6 +5,7 @@ import { PodcastsService } from '../../services/podcasts.service';
 import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { PusherService } from '../../services/pusher.service';
+import { AppComponent } from '../../app.component';
 
 @Component({
     selector: 'app-podcast',
@@ -22,14 +23,14 @@ export class PodcastComponent implements OnInit {
     isLoading = true;
     uploadMode = false;
 
-    constructor(private _route: ActivatedRoute, private _location: Location, private zone: NgZone,
+    constructor(private _rootComp: AppComponent, private _route: ActivatedRoute, private _location: Location, private zone: NgZone,
                 private _podcastService: PodcastsService, private _toastyService: ToastyService) {
+        this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
     }
 
     ngOnInit() {
-        this._route.fragment.subscribe((fragment: string) => {
-            console.log('My hash fragment is here => ', fragment)
-            this._getPodcasts(fragment);
+        this._route.params.subscribe(p => {
+            this._getPodcasts(p['slug']);
         });
     }
 
@@ -54,21 +55,9 @@ export class PodcastComponent implements OnInit {
         console.log('PodcastComponent', 'onPodcastChange', this.selectedPodcastId);
         this.selectedPodcast = this.podcasts.find(p => p.id == this.selectedPodcastId);
         this.entries = this.selectedPodcast ? this.selectedPodcast.podcastEntries : null;
-
-        this._location.replaceState(`/podcasts#${this.selectedPodcast.slug}`);
         this.isLoading = false;
     }
 
-
-    deletePodcast() {
-        if (this.selectedPodcast.id) {
-            this._podcastService.deletePodcast(this.selectedPodcast.id)
-                .subscribe(r => {
-                    console.log('PodcastComponent', 'deletePodcast', r);
-                    this._getPodcasts(null);
-                });
-        }
-    }
 
     addEntry() {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
@@ -112,6 +101,6 @@ export class PodcastComponent implements OnInit {
     }
 
     startUpload() {
-        this.uploadMode = true;
+        this.uploadMode = !this.uploadMode;
     }
 }

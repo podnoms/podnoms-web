@@ -10,9 +10,9 @@ const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuard]},
-    {path: 'podcasts/add', component: PodcastAddFormComponent, canActivate: [AuthGuard]},
+    {path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard]},
+    {path: 'podcasts/:slug', component: PodcastComponent, canActivate: [AuthGuard]},
     {path: 'podcasts/:slug/edit', component: PodcastAddFormComponent, canActivate: [AuthGuard]},
-    {path: 'podcasts/:slug/upload', component: PodcastUploadFormComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
