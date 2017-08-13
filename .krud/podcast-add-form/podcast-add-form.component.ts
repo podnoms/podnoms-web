@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { PodcastModel } from '../../models/podcasts.models';
-import { PodcastsService } from '../../services/podcasts.service';
+import { PodcastModel } from '../../src/app/models/podcasts.models';
+import { PodcastService } from '../../src/app/services/podcast.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
 import { ToastyService } from 'ng2-toasty';
@@ -16,7 +16,7 @@ export class PodcastAddFormComponent implements OnInit {
     private imageChanged = false;
     image: any = new Image();
 
-    constructor(private _service: PodcastsService, private _imageService: ImageService,
+    constructor(private _service: PodcastService, private _imageService: ImageService,
                 private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
