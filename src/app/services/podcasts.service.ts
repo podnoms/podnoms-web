@@ -8,7 +8,6 @@ import { AuthHttp } from 'angular2-jwt';
 export class PodcastsService {
 
     constructor(private _http: AuthHttp) {
-
     }
 
     //bit hacky but need to remove image as this will be uploaded separately.

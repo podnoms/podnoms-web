@@ -20,13 +20,14 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._router.events
-            .filter((event) => event instanceof NavigationEnd && event.url.substring(0, '/podcasts/'.length) === '/podcasts/')
-            .map(() => this._activatedRoute)
-            .subscribe((event) => {
-                console.log('SidebarComponent', 'routeChanged', event.routeConfig);
-                this._getPodcasts();
-            });
+        // this._router.events
+        //     .filter((event) => event instanceof NavigationEnd && event.url.substring(0, '/podcasts/'.length) === '/podcasts/')
+        //     .map(() => this._activatedRoute)
+        //     .subscribe((event) => {
+        //         console.log('SidebarComponent', 'routeChanged', event.routeConfig);
+        //         this._getPodcasts();
+        //     });
+        this._getPodcasts();
     }
 
     private _getPodcasts() {
