@@ -1,4 +1,4 @@
-export const podcasts = (state: any = [], {type, payload}) => {
+export function podcastsReducer(state: any = [], {type, payload}) {
     switch (type) {
         case 'ADD_ITEMS':
             debugger;

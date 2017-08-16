@@ -23,8 +23,8 @@ import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StoreModule } from "@ngrx/store";
-import { podcasts } from './stores/podcasts-store';
-import { selectedPodcast } from './stores/selected-podcast';
+import { podcastsReducer } from './stores/podcasts.reducer';
+import { selectedPodcastReducer } from './stores/selected-podcast.reducer';
 import { PodcastComponent } from './components/podcast/podcast.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -59,7 +59,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
 
-        StoreModule.forRoot({podcasts: selectedPodcast})
+        StoreModule.forRoot({podcasts: podcastsReducer, selectedPodcast: selectedPodcastReducer})
     ],
     providers: [
         AuthService,
