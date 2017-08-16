@@ -5,4 +5,4 @@ export function selectedPodcastReducer(state: any = null, {type, payload}) {
         default:
             return state;
     }
-};
+}

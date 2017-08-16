@@ -1,7 +1,6 @@
 export function podcastsReducer(state: any = [], {type, payload}) {
     switch (type) {
         case 'ADD_ITEMS':
-            debugger;
             return payload;
         case 'CREATE_ITEM':
             return [...state, payload];
@@ -16,4 +15,4 @@ export function podcastsReducer(state: any = [], {type, payload}) {
         default:
             return state;
     }
-};
+}
