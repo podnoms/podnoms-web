@@ -12,6 +12,10 @@ export function podcastsReducer(state: any = [], {type, payload}) {
             return state.filter(item => {
                 return item.id != payload.id;
             });
+        case 'GET_ITEM':
+            return state.filter(item => {
+                return item.slug == payload;
+            })[0];
         default:
             return state;
     }

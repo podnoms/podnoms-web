@@ -1,15 +1,13 @@
-<h1>Hello Sailor!</h1>
-<!--
-<div class="sk-wave" *ngIf="isLoading">
+<div class="sk-wave" *ngIf="!selectedPodcast">
     <div class="sk-rect sk-rect1"></div>
     <div class="sk-rect sk-rect2"></div>
     <div class="sk-rect sk-rect3"></div>
     <div class="sk-rect sk-rect4"></div>
     <div class="sk-rect sk-rect5"></div>
 </div>
-<div *ngIf="!isLoading">
+<div *ngIf="selectedPodcast">
     <ol class="breadcrumb" *ngIf="selectedPodcast">
-        <li class="breadcrumb-item active">&nbsp;</li>
+        <li class="breadcrumb-item active">{{selectedPodcast.title}}</li>
         <li class="breadcrumb-menu">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <a class="btn btn-secondary btn-outline-warning"
@@ -40,13 +38,17 @@
         </li>
     </ol>
     <div class="card">
+        <!--
         <app-podcast-upload-form *ngIf="uploadMode" [podcast]="selectedPodcast"
                                  (onUploadComplete)="onEntryUploadComplete($event)">
         </app-podcast-upload-form>
+        -->
         <table class="table table-hover table-outline mb-0 hidden-sm-down">
             <tbody>
-            <tr *ngFor="let entry of entries" app-entry-list-item (entryRemoved)='deleteEntry(entry)'
-                [entry]="entry"></tr>
+            <!--
+            <tr *ngFor="let entry of selectedPodcast.podcastEntries" app-entry-list-item
+                (entryRemoved)='deleteEntry(entry)' [entry]="entry"></tr>
+            -->
             </tbody>
         </table>
     </div>
@@ -71,4 +73,3 @@
         </div>
     </div>
 </div>
--->

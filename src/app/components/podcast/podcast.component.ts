@@ -1,11 +1,11 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Location } from '@angular/common';
-import { PodcastService } from '../../services/podcast.service';
-import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
-import { ToastyService } from 'ng2-toasty';
-import { PusherService } from '../../services/pusher.service';
-import { AppComponent } from '../../app.component';
+import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {PodcastService} from '../../services/podcast.service';
+import {PodcastModel, PodcastEntryModel} from '../../models/podcasts.models';
+import {ToastyService} from 'ng2-toasty';
+import {AppComponent} from '../../app.component';
+import {Store} from "@ngrx/store";
+import {AppStore} from "../../models/app.store";
 
 @Component({
     selector: 'app-podcast',
@@ -15,17 +15,24 @@ import { AppComponent } from '../../app.component';
 export class PodcastComponent implements OnInit {
 
     podcasts: PodcastModel[];
-    entries: PodcastEntryModel[];
     selectedPodcast: PodcastModel;
     selectedPodcastId: number;
     newEntrySourceUrl: string;
 
-    isLoading = true;
+
     uploadMode = false;
 
-    constructor(private _rootComp: AppComponent, private _route: ActivatedRoute, private _location: Location, private zone: NgZone,
-                private _podcastService: PodcastService, private _toastyService: ToastyService) {
+    constructor(private _rootComp: AppComponent,
+                private _store: Store<AppStore>,
+                private _route: ActivatedRoute,
+                private _podcastService: PodcastService,
+                private _toastyService: ToastyService) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
+        _store.select('selectedPodcast')
+            .subscribe(p => {
+                console.log('PodcastComponent', 'selectedPodcast', p);
+                this.selectedPodcast = p;
+            });
     }
 
     ngOnInit() {
@@ -34,31 +41,9 @@ export class PodcastComponent implements OnInit {
         // });
     }
 
-    _getPodcasts(slug: String) {
-        //this._podcastService.getPodcasts().subscribe(podcasts => {
-        // this._podcastService.podcasts.subscribe(podcasts => {
-        //     this.podcasts = podcasts;
-        //     if (this.podcasts.length != 0) {
-        //         if (slug == null) {
-        //             this.selectedPodcast = this.podcasts[0];
-        //         } else {
-        //             this.selectedPodcast = this.podcasts.find(e => e.slug === slug)
-        //         }
-        //         this.selectedPodcastId = this.selectedPodcast.id;
-        //         this.onPodcastChange();
-        //     } else {
-        //         this.isLoading = false;
-        //     }
-        // });
-    }
-
     onPodcastChange() {
         console.log('PodcastComponent', 'onPodcastChange', this.selectedPodcastId);
-        this.selectedPodcast = this.podcasts.find(p => p.id == this.selectedPodcastId);
-        this.entries = this.selectedPodcast ? this.selectedPodcast.podcastEntries : null;
-        this.isLoading = false;
     }
-
 
     addEntry() {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
@@ -85,10 +70,7 @@ export class PodcastComponent implements OnInit {
     }
 
     _processEntryCallback(entry: PodcastEntryModel) {
-        this.zone.run(() => {
-            this.entries.push(entry);
-            this.newEntrySourceUrl = '';
-        });
+
     }
 
     _processEntryErrorCallback(error) {

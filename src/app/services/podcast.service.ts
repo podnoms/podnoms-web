@@ -1,11 +1,11 @@
 import 'rxjs/add/operator/map';
-import { Injectable, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { PodcastEntryModel, PodcastModel } from '../models/podcasts.models';
-import { AuthHttp } from 'angular2-jwt';
-import { Subscription } from "rxjs";
-import { AppStore } from '../models/app.store';
-import { Store } from "@ngrx/store";
+import {Injectable, EventEmitter} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {PodcastEntryModel, PodcastModel} from '../models/podcasts.models';
+import {AuthHttp} from 'angular2-jwt';
+import {Subscription} from "rxjs";
+import {AppStore} from '../models/app.store';
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class PodcastService {
@@ -22,7 +22,7 @@ export class PodcastService {
         else return value;
     }
 
-    loadPodcasts(/*slug: string*/) {
+    loadPodcasts() {
         this._http.get('api/podcast/')
             .map(res => res.json())
             .map(payload => ({type: 'ADD_ITEMS', payload}))
