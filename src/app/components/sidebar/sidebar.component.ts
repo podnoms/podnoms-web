@@ -18,18 +18,11 @@ export class SidebarComponent implements OnInit {
     @Input() podcasts: PodcastModel[];
     @Input() selectedPodcast: PodcastModel;
 
-    routeSub: Subscription;
-
     constructor(private _store: Store<AppStore>, private _route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        if (!this.selectedPodcast) {
-            this.routeSub = this._route.params
-                .subscribe(slug => {
-                    this._store.dispatch({type: 'GET_ITEM', payload: slug})
-                });
-        }
+
     }
 
     deletePodcast(podcast) {

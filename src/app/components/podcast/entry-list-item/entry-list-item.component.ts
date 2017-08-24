@@ -1,9 +1,9 @@
-import { PodcastModel } from '../../src/app/models/podcasts.models';
+import { PodcastModel } from '../../../models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PodcastEntryModel } from '../../src/app/models/podcasts.models';
-import { PodcastService } from '../../src/app/services/podcast.service';
+import { PodcastEntryModel } from '../../../models/podcasts.models';
+import { PodcastService } from '../../../services/podcast.service';
 import { ToastyService } from 'ng2-toasty';
-import { PusherService } from '../../src/app/services/pusher.service';
+import { PusherService } from '../../../services/pusher.service';
 
 @Component({
     selector: '[app-entry-list-item]',

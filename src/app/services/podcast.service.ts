@@ -11,9 +11,17 @@ import {Store} from "@ngrx/store";
 export class PodcastService {
 
     podcasts: Observable<Array<PodcastModel>>;
+    selectedPodcast: Observable<PodcastModel>;
 
     constructor(private _http: AuthHttp, private _store: Store<AppStore>) {
         this.podcasts = _store.select('podcasts');
+        this.selectedPodcast = _store.select('selectedPodcast');
+
+        this.podcasts.subscribe(t => {
+            if (t && t.length != 0) {
+                this._store.dispatch({type: 'SELECT_ITEM', payload: t[0]});
+            }
+        });
     }
 
     //bit hacky but need to remove image as this will be uploaded separately.
@@ -26,7 +34,9 @@ export class PodcastService {
         this._http.get('api/podcast/')
             .map(res => res.json())
             .map(payload => ({type: 'ADD_ITEMS', payload}))
-            .subscribe(action => this._store.dispatch(action));
+            .subscribe(action => {
+                this._store.dispatch(action);
+            });
     }
 
     addPodcast(podcast: PodcastModel): Observable<PodcastModel> {
