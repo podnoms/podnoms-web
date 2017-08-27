@@ -37,7 +37,7 @@ export class PodcastComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.subscribe(p => {
-             p = this._store.dispatch({t})
+       //      p = this._store.dispatch({t})
         });
     }
 
