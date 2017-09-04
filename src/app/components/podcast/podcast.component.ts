@@ -1,11 +1,11 @@
-import {ActivatedRoute} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
-import {PodcastService} from '../../services/podcast.service';
-import {PodcastModel, PodcastEntryModel} from '../../models/podcasts.models';
-import {ToastyService} from 'ng2-toasty';
-import {AppComponent} from '../../app.component';
-import {Store} from "@ngrx/store";
-import {AppStore} from "../../models/app.store";
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { PodcastService } from '../../services/podcast.service';
+import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
+import { ToastyService } from 'ng2-toasty';
+import { AppComponent } from '../../app.component';
+import { Store } from '@ngrx/store';
+import { AppStore } from '../../models/app.store';
 
 @Component({
     selector: 'app-podcast',
@@ -23,10 +23,10 @@ export class PodcastComponent implements OnInit {
     uploadMode = false;
 
     constructor(private _rootComp: AppComponent,
-                private _store: Store<AppStore>,
-                private _route: ActivatedRoute,
-                private _podcastService: PodcastService,
-                private _toastyService: ToastyService) {
+        private _store: Store<AppStore>,
+        private _route: ActivatedRoute,
+        private _podcastService: PodcastService,
+        private _toastyService: ToastyService) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
         _store.select('selectedPodcast')
             .subscribe(p => {
@@ -36,9 +36,7 @@ export class PodcastComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._route.params.subscribe(p => {
-       //      p = this._store.dispatch({t})
-        });
+
     }
 
     onPodcastChange() {
@@ -49,8 +47,8 @@ export class PodcastComponent implements OnInit {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
         this._podcastService.addPodcastEntry(model)
             .subscribe(
-                (entry) => this._processEntryCallback(entry),
-                (error) => this._processEntryErrorCallback(error)
+            (entry) => this._processEntryCallback(entry),
+            (error) => this._processEntryErrorCallback(error)
             );
     }
 

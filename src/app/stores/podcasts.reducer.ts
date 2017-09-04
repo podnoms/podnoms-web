@@ -1,21 +1,25 @@
-export function podcastsReducer(state: any = [], {type, payload}) {
-    switch (type) {
+import { CustomAction } from './custom.action';
+import { Action } from '@ngrx/store';
+import { Reducer } from 'app/stores/reducer';
+import { PodcastModel } from './../models/podcasts.models';
+export const podcastsReducer: Reducer<PodcastModel[]> = (state: PodcastModel[] = [], action: CustomAction) => {
+    switch (action.type) {
         case 'ADD_ITEMS':
-            return payload;
+            return action.payload;
         case 'CREATE_ITEM':
-            return [...state, payload];
+            return [...state, action.payload];
         case 'UPDATE_ITEM':
             return state.map(item => {
-                return item.id == payload.id ? Object.assign({}, item, payload) : item;
+                return item.id == action.payload.id ? Object.assign({}, item, action.payload) : item;
             });
         case 'DELETE_ITEM':
             return state.filter(item => {
-                return item.id != payload.id;
+                return item.id != action.payload.id;
             });
-        case 'GET_ITEM':
+        case 'FIND_ITEM':
             return state.filter(item => {
-                return item.slug == payload;
-            })[0];
+                return item.slug === action.payload;
+            });
         default:
             return state;
     }

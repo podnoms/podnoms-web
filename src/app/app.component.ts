@@ -18,8 +18,6 @@ export class AppComponent {
 
     constructor(private _podcastService: PodcastService, private _store: Store<AppStore>) {
         this.podcasts = _podcastService.podcasts;
-        this.selectedPodcast = _store.select('selectedPodcast');
-        this.selectedPodcast.subscribe(v => console.log(v));
         _podcastService.loadPodcasts(); // "itemsService.loadItems" dispatches the "ADD_ITEMS" event to our store,
     }                           // which in turn updates the "items" collection
 }
