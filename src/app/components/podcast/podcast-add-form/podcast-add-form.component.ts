@@ -1,9 +1,9 @@
+import { PodcastModel } from './../../../models/podcasts.models';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { PodcastModel } from '../../src/app/models/podcasts.models';
-import { PodcastService } from '../../src/app/services/podcast.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
 import { ToastyService } from 'ng2-toasty';
+import { PodcastService } from 'app/services/podcast.service';
 
 @Component({
     selector: 'app-podcast-add-form',
@@ -17,28 +17,31 @@ export class PodcastAddFormComponent implements OnInit {
     image: any = new Image();
 
     constructor(private _service: PodcastService, private _imageService: ImageService,
-                private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
+        private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
-            if (p['slug'])
+            if (p['slug']) {
                 this.podcast.slug = p['slug'];
+            }
         });
     }
 
     ngOnInit() {
         if (this.podcast && this.podcast.slug) {
+            /*
             this._service.getPodcast(this.podcast.slug)
                 .subscribe(r => {
                     this.podcast = r;
                     if (this.podcast.imageUrl) {
                         this.image.src = this.podcast.imageUrl;
                     }
-                });
+                });*/
         }
     }
 
     submitForm() {
-        this._service.addPodcast(this.podcast)
+        this._service.addPodcast(this.podcast);
+        /*
             .subscribe(p => {
                 if (this.imageChanged) {
                     this.uploadPhoto()
@@ -50,7 +53,7 @@ export class PodcastAddFormComponent implements OnInit {
                 } else {
                     this._router.navigateByUrl(`podcasts/${p.slug}`);
                 }
-            });
+            });*/
     }
 
     uploadPhoto() {

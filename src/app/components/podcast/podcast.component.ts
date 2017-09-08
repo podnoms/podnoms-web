@@ -45,11 +45,13 @@ export class PodcastComponent implements OnInit {
 
     addEntry() {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
-        this._podcastService.addPodcastEntry(model)
+        this._podcastService.addPodcastEntry(model);
+        /*
             .subscribe(
             (entry) => this._processEntryCallback(entry),
             (error) => this._processEntryErrorCallback(error)
             );
+        */
     }
 
     deleteEntry(entry: PodcastEntryModel) {

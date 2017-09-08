@@ -10,22 +10,19 @@
         <li class="breadcrumb-item active">{{selectedPodcast.title}}</li>
         <li class="breadcrumb-menu">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <a class="btn btn-secondary btn-outline-warning"
-                   [href]="selectedPodcast.rssUrl" target="_blank">
+                <a class="btn btn-secondary btn-outline-warning" [href]="selectedPodcast.rssUrl" target="_blank">
                     <i class="fa fa-rss"></i>
                 </a>
                 <a class="btn btn-secondary" (click)="startUpload()"><i class="icon-cloud-upload"></i></a>
 
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="icon-plus"></i> &nbsp;Add entry
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-item">
                             <div class="input-group" style="width:420px;">
-                                <input type="email" id="input2-group2" name="entry-url" [(ngModel)]="newEntrySourceUrl"
-                                       class="form-control" placeholder="New entry URL">
+                                <input type="email" id="input2-group2" name="entry-url" [(ngModel)]="newEntrySourceUrl" class="form-control" placeholder="New entry URL">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-primary" (click)="addEntry()">
                                         <i class="fa fa-plus-circle"></i> Submit</button>
@@ -45,9 +42,10 @@
         -->
         <table class="table table-hover table-outline mb-0 hidden-sm-down">
             <tbody>
-            <tr *ngFor="let entry of selectedPodcast.podcastEntries" app-entry-list-item
-                (entryRemoved)='deleteEntry(entry)' [entry]="entry">
-            </tr>
+                <tr *ngFor="let entry of selectedPodcast.podcastEntries">
+                    <app-entry-list-item (entryRemoved)='deleteEntry(entry)' [entry]="entry">
+                    </app-entry-list-item>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -56,16 +54,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title pull-left">Delete this podcast?</h4>
-                    <button type="button" class="close pull-right" aria-label="Close"
-                            (click)="podcastDeleteDialog.hide()">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="podcastDeleteDialog.hide()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
                     </button>
-                    <button type="button" class="btn btn-danger pull-right"
-                            (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
+                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
                     </button>
                 </div>
             </div>

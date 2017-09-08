@@ -1,4 +1,4 @@
-<td class="text-center">
+<td class="text-center entry-avatar">
     <div class="avatar">
         <i *ngIf="entry.processingStatus==='Downloading'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
         <i *ngIf="entry.processingStatus==='Processing'" class="fa fa-cog fa-spin fa-2x fa-fw text-danger"></i>
@@ -7,15 +7,15 @@
              [src]="entry.imageUrl">
     </div>
 </td>
-<td>
+<td class="entry-title">
     <h4 *ngIf="entry.processingStatus==='Downloading'">{{entry.sourceUrl}}</h4>
     <h4 *ngIf="entry.processingStatus==='Processing'">{{entry.title}}</h4>
     <h4 *ngIf="entry.processingStatus==='Uploading'">{{entry.title}}</h4>
-    <h4 *ngIf="entry.processingStatus==='Processed'">
-        <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="saveTitle($event)" size="50"></inline-editor>
+    <h4 *ngIf="entry.processingStatus==='Processed'">{{entry.title}}
+        <!-- TODO: <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="saveTitle($event)" size="50"></inline-editor> -->
     </h4>
 </td>
-<td>
+<td class="entry-status">
     <h4 *ngIf="entry.processingStatus==='Downloading'">Downloading..</h4>
     <h4 *ngIf="entry.processingStatus==='Processing' || entry.processingStatus==='Uploading'">
         <div class="clearfix">
@@ -42,7 +42,7 @@
         </audio>
     </h4>
 </td>
-<td>
+<td  class="entry-tools">
     <a class="btn btn-outline btn-outline-danger" (click)="entryDeleteDialog.show()"><i class="fa fa-remove"></i></a>
 </td>
 

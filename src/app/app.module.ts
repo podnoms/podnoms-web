@@ -1,3 +1,4 @@
+import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastyModule } from 'ng2-toasty';
 import { PusherService } from './services/pusher.service';
 import { FilterEntryPipe } from './pipes/filter-entry.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
@@ -23,6 +25,8 @@ import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { podcastsReducer } from './stores/podcasts.reducer';
 import { selectedPodcastReducer } from './stores/selected-podcast.reducer';
 import { PodcastComponent } from './components/podcast/podcast.component';
@@ -45,8 +49,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         NavbarComponent,
 
         FilterEntryPipe,
+        OrderByPipe,
+
         EntryListItemComponent,
-        // PodcastAddFormComponent,
+        PodcastAddFormComponent,
         // PodcastUploadFormComponent,
         DebugComponent,
         SidebarComponent
@@ -67,6 +73,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
             podcasts: podcastsReducer,
             selectedPodcast: selectedPodcastReducer,
             routerReducer: routerReducer
+        }),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25 //  Retains last 25 states
         }),
         StoreRouterConnectingModule
     ],

@@ -6,7 +6,7 @@ import { ToastyService } from 'ng2-toasty';
 import { PusherService } from '../../../services/pusher.service';
 
 @Component({
-    selector: '[app-entry-list-item]',
+    selector: 'app-entry-list-item',
     templateUrl: './entry-list-item.component.html',
     styleUrls: ['./entry-list-item.component.css']
 })
@@ -19,7 +19,8 @@ export class EntryListItemComponent implements OnInit {
     currentSpeed: '0 kb/s';
 
     constructor(private _service: PodcastService,
-                private _toastyService: ToastyService, private _pusherService: PusherService) {
+        private _toastyService: ToastyService,
+        private _pusherService: PusherService) {
     }
 
     ngOnInit() {
@@ -55,7 +56,6 @@ export class EntryListItemComponent implements OnInit {
     }
 
     saveTitle($event: Event) {
-        this._service.addPodcastEntry(this.entry)
-            .subscribe(e => this.entry = e);
+        this._service.addPodcastEntry(this.entry);
     }
 }

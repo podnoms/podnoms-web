@@ -28,7 +28,7 @@
             </li>
             <li class="divider"></li>
             <li class="nav-title">My Podcasts</li>
-            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts">
+            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts | orderBy : '-id'">
                 <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/podcasts', podcast.slug]"
                    (click)="selectPodcast(podcast)">
                     <img class="sidebar-icon" [src]="podcast.imageUrl">&nbsp;{{podcast.title}}
