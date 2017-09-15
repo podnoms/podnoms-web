@@ -5,9 +5,9 @@
             <strong>{{selectedPodcast.title}}</strong>
         </div>
         <div class="btn-group" role="group">
-            <a class="btn btn-link" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']">
-                <i class="icon-pencil"></i>
-            </a>
+            <!--<a class="btn btn-link" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']">-->
+                <!--<i class="icon-pencil"></i>-->
+            <!--</a>-->
             <button type="button" class="btn btn-link" (click)="podcastDeleteDialog.show()">
                 <i class="icon-trash"></i>
             </button>
@@ -28,9 +28,9 @@
             </li>
             <li class="divider"></li>
             <li class="nav-title">My Podcasts</li>
-            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts">
+            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts | orderBy : '-id'">
                 <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/podcasts', podcast.slug]"
-                   (click)="selectPodcast(podcast.slug)">
+                   (click)="selectPodcast(podcast)">
                     <img class="sidebar-icon" [src]="podcast.imageUrl">&nbsp;{{podcast.title}}
                 </a>
             </li>

@@ -3,8 +3,8 @@ import { ToastyService } from 'ng2-toasty';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PodcastEntryModel, PodcastModel } from 'app/models/podcasts.models';
-import { PusherService } from '../../services/pusher.service';
-import { AuthService } from '../../services/auth.service';
+import { PusherService } from '../../src/app/services/pusher.service';
+import { AuthService } from '../../src/app/services/auth.service';
 
 @Component({
     selector: 'app-podcast-upload-form',
