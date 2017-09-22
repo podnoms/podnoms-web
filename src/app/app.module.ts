@@ -28,7 +28,6 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { podcastsReducer } from './stores/podcasts.reducer';
-import { selectedPodcastReducer } from './stores/selected-podcast.reducer';
 import { PodcastComponent } from './components/podcast/podcast.component';
 import { EntryListItemComponent } from './components/podcast/entry-list-item/entry-list-item.component';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
@@ -71,7 +70,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
         StoreModule.forRoot({
             podcasts: podcastsReducer,
-            selectedPodcast: selectedPodcastReducer,
             routerReducer: routerReducer
         }),
         StoreDevtoolsModule.instrument({
