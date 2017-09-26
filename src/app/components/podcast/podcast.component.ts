@@ -5,7 +5,6 @@ import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { AppComponent } from '../../app.component';
 import { Store } from '@ngrx/store';
-import { AppStore } from '../../models/app.store';
 
 @Component({
     selector: 'app-podcast',
@@ -23,16 +22,10 @@ export class PodcastComponent implements OnInit {
     uploadMode = false;
 
     constructor(private _rootComp: AppComponent,
-        private _store: Store<AppStore>,
         private _route: ActivatedRoute,
         private _podcastService: PodcastService,
         private _toastyService: ToastyService) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
-        _store.select('selectedPodcast')
-            .subscribe(p => {
-                console.log('PodcastComponent', 'selectedPodcast', p);
-                this.selectedPodcast = p;
-            });
     }
 
     ngOnInit() {

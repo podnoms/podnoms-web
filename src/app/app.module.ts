@@ -27,10 +27,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { podcastsReducer } from './stores/podcasts.reducer';
 import { PodcastComponent } from './components/podcast/podcast.component';
 import { EntryListItemComponent } from './components/podcast/entry-list-item/entry-list-item.component';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
@@ -68,14 +66,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
 
-        StoreModule.forRoot({
-            podcasts: podcastsReducer,
-            routerReducer: routerReducer
-        }),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
-        }),
-        StoreRouterConnectingModule
+        })
     ],
     providers: [
         AuthService,
