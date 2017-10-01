@@ -1,11 +1,19 @@
 <header class="app-header navbar">
-    <a class="navbar-brand" href="#" [routerLink]="['/home']"></a>
+    <a class="navbar-brand" [routerLink]="['/home']"></a>
+
+    <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item px-3">
+            <a class="nav-link" [routerLink]="['podcasts']"><i class="fa fa-podcast"></i>&nbsp;Podcasts</a>
+        </li>
+    </ul>
+
+
     <ul class="nav navbar-nav ml-auto" style="margin-right: 20px">
         <li class="nav-item dropdown hidden-md-down" *ngIf="loggedIn()">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img [src]="user.picture" class="img-avatar" alt="{{user.email}}">
-                    <span class="hidden-md-down">{{user.name}}</span>
-                </a>
+                <img [src]="user.picture" class="img-avatar" alt="{{user.email}}">
+                <span class="hidden-md-down">{{user.name}}</span>
+            </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">
                     <strong>Account</strong>

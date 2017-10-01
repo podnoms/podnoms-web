@@ -1,10 +1,12 @@
-import { ActivatedRoute } from '@angular/router';
+import { GetPodcastAction } from './../../actions/podcasts.actions';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { PodcastService } from '../../services/podcast.service';
 import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { AppComponent } from '../../app.component';
 import { Store } from '@ngrx/store';
+import { State } from 'app/reducers';
 
 @Component({
     selector: 'app-podcast',
@@ -12,20 +14,24 @@ import { Store } from '@ngrx/store';
     styleUrls: ['./podcast.component.css']
 })
 export class PodcastComponent implements OnInit {
-
-    podcasts: PodcastModel[];
     selectedPodcast: PodcastModel;
-    selectedPodcastId: number;
     newEntrySourceUrl: string;
-
 
     uploadMode = false;
 
     constructor(private _rootComp: AppComponent,
-        private _route: ActivatedRoute,
-        private _podcastService: PodcastService,
+        store: Store<State>,
+        router: ActivatedRoute,
         private _toastyService: ToastyService) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
+
+        store.select(p => p.podcasts.selectedPodcast)
+            .subscribe(p => this.selectedPodcast = p);
+
+        router.params.subscribe(params => {
+            console.log('PodcastComponent', 'router', params['slug']);
+            store.dispatch(new GetPodcastAction(params['slug']));
+        });
     }
 
     ngOnInit() {
@@ -33,26 +39,14 @@ export class PodcastComponent implements OnInit {
     }
 
     onPodcastChange() {
-        console.log('PodcastComponent', 'onPodcastChange', this.selectedPodcastId);
     }
 
     addEntry() {
-        const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
-        this._podcastService.addPodcastEntry(model);
-        /*
-            .subscribe(
-            (entry) => this._processEntryCallback(entry),
-            (error) => this._processEntryErrorCallback(error)
-            );
-        */
+        // const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
     }
 
     deleteEntry(entry: PodcastEntryModel) {
-        const index = this.selectedPodcast.podcastEntries.indexOf(entry);
-        if (index === -1) {
-            return;
-        }
-        this.selectedPodcast.podcastEntries.splice(index, 1);
+
     }
 
     onEntryUploadComplete($event) {
