@@ -14,4 +14,9 @@ export class PodcastsService {
         return this._http.get('api/podcast/' + slug)
             .map(res => res.json());
     }
+    // Entries
+    deleteEntry(slug: string) {
+        console.log('PodcastService: deletePodcastEntry', slug);
+        return this._http.delete('api/entry/' + slug);
+    }
 }

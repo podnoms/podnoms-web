@@ -38,7 +38,7 @@ export class EntryListItemComponent implements OnInit {
     }
 
     deleteEntry() {
-
+        this.entryRemoved.emit(this.entry);
     }
 
     saveTitle($event: Event) {

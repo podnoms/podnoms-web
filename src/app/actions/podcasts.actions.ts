@@ -8,9 +8,6 @@ export const GET_PODCAST = '[Podcasts] Get Podcast';
 export const GET_PODCAST_SUCCESS = '[Podcasts] Get Podcast Success';
 export const GET_PODCAST_FAIL = '[Podcasts] Get Podcast Fail';
 
-/**
- * Load Podcasts Actions
- */
 export class LoadPodcastsAction implements Action {
     readonly type = LOAD_PODCASTS;
 }
@@ -36,6 +33,7 @@ export class GetPodcastSuccessAction implements Action {
     readonly type = GET_PODCAST_SUCCESS;
     constructor(public payload: PodcastModel) { }
 }
+
 export type Actions =
     | LoadPodcastsAction
     | LoadPodcastsSuccessAction

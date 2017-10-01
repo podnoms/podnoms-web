@@ -1,3 +1,4 @@
+import { DeleteEntryAction } from './../../actions/podcast-entries.actions';
 import { GetPodcastAction } from './../../actions/podcasts.actions';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,50 +17,47 @@ import { State } from 'app/reducers';
 export class PodcastComponent implements OnInit {
     selectedPodcast: PodcastModel;
     newEntrySourceUrl: string;
-
     uploadMode = false;
 
-    constructor(private _rootComp: AppComponent,
-        store: Store<State>,
+    constructor(
+        private _rootComp: AppComponent,
+        private _store: Store<State>,
         router: ActivatedRoute,
         private _toastyService: ToastyService) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
 
-        store.select(p => p.podcasts.selectedPodcast)
+        _store.select(p => p.podcasts.selectedPodcast)
             .subscribe(p => this.selectedPodcast = p);
 
         router.params.subscribe(params => {
             console.log('PodcastComponent', 'router', params['slug']);
-            store.dispatch(new GetPodcastAction(params['slug']));
+            _store.dispatch(new GetPodcastAction(params['slug']));
         });
     }
-
     ngOnInit() {
 
     }
-
     onPodcastChange() {
     }
-
     addEntry() {
         // const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
     }
-
-    deleteEntry(entry: PodcastEntryModel) {
-
+    deletePodcast() {
+        console.log('PodcastComponent', 'deletePodcast');
     }
-
+    deleteEntry(entry: PodcastEntryModel) {
+        console.log('PodcastComponent', 'deleteEntry', entry);
+        this._store.dispatch(new DeleteEntryAction(entry.slug));
+    }
     onEntryUploadComplete($event) {
         let entry = new PodcastEntryModel();
         entry = $event[1];
         this.uploadMode = false;
         this._processEntryCallback(entry);
     }
-
     _processEntryCallback(entry: PodcastEntryModel) {
 
     }
-
     _processEntryErrorCallback(error) {
         this._toastyService.error({
             title: 'Error',
@@ -69,7 +67,6 @@ export class PodcastComponent implements OnInit {
             timeout: 5000
         });
     }
-
     startUpload() {
         this.uploadMode = !this.uploadMode;
     }
