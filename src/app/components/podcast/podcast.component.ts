@@ -1,4 +1,4 @@
-import { DeleteEntryAction } from './../../actions/podcast-entries.actions';
+import { DeleteEntryAction, AddEntryAction } from './../../actions/podcast-entries.actions';
 import { GetPodcastAction } from './../../actions/podcast.actions';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,7 +41,9 @@ export class PodcastComponent implements OnInit {
     }
     addEntry() {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
-        this._store.dispatch(new AddPodcast)
+        this._store.dispatch(new AddEntryAction({
+            podcastId: this.selectedPodcast.id, sourceUrl: this.newEntrySourceUrl
+        }));
         /*
         this._podcastService.addPodcastEntry(model);
             .subscribe(

@@ -1,3 +1,4 @@
+import { PodcastEntryModel } from 'app/models/podcasts.models';
 import { PodcastModel } from './../models/podcasts.models';
 import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
@@ -15,6 +16,11 @@ export class PodcastService {
             .map(res => res.json());
     }
     // Entries
+    addEntry(podcastId: number, sourceUrl: string) {
+        const entry = new PodcastEntryModel(podcastId, sourceUrl);
+        return this._http.post('api/entry', JSON.stringify(entry))
+            .map(res => res.json());
+    }
     deleteEntry(slug: string) {
         console.log('PodcastService: deletePodcastEntry', slug);
         return this._http.delete('api/entry/' + slug);
