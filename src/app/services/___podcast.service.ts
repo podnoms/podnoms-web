@@ -6,7 +6,7 @@ import { AuthHttp } from 'angular2-jwt';
 import { Store } from '@ngrx/store';
 
 @Injectable()
-export class PodcastService {
+export class ___PodcastService {
 
     podcasts: Observable<Array<PodcastModel>>;
     selectedPodcast: Observable<PodcastModel>;
@@ -30,7 +30,7 @@ export class PodcastService {
 
     addPodcast(podcast: PodcastModel) {
         console.log('PodcastService', 'addPodcast', podcast);
-        const data = JSON.stringify(podcast, PodcastService._replacer);
+        const data = JSON.stringify(podcast, ___PodcastService._replacer);
         this._http.post('api/podcast', data)
             .map(res => res.json())
             .map(payload => ({ type: 'CREATE_ITEM', payload: payload }));

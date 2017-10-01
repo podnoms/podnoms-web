@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class PodcastsService {
+export class PodcastService {
     constructor(private _http: AuthHttp) { }
     get(): Observable<PodcastModel[]> {
         return this._http.get('api/podcast/')

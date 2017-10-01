@@ -7,8 +7,7 @@ export const DELETE_ENTRY_FAIL = '[Entries] Delete Entry Fail';
 
 export class DeleteEntryAction implements Action {
     readonly type = DELETE_ENTRY;
-    constructor(public payload: string) { 
-        debugger;
+    constructor(public payload: string) {
         console.log(payload);
     }
 }
@@ -19,5 +18,5 @@ export class DeleteEntrySuccessAction implements Action {
 }
 
 export type Actions =
-| DeleteEntryAction
-| DeleteEntrySuccessAction;
+    | DeleteEntryAction
+    | DeleteEntrySuccessAction;

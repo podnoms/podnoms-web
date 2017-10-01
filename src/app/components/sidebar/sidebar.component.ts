@@ -7,7 +7,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import { State } from 'app/reducers';
-import { LoadPodcastsAction, GetPodcastAction } from 'app/actions/podcasts.actions';
+import { LoadPodcastsAction, GetPodcastAction } from 'app/actions/podcast.actions';
 
 @Component({
     selector: 'app-sidebar',

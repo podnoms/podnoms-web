@@ -31,8 +31,8 @@ import { PodcastComponent } from './components/podcast/podcast.component';
 import { EntryListItemComponent } from './components/podcast/entry-list-item/entry-list-item.component';
 
 import { reducers } from './reducers';
-import { PodcastsEffects } from './effects/podcasts.effects';
-import { PodcastsService } from './services/podcasts.service';
+import { PodcastsEffects } from './effects/podcast.effects';
+import { PodcastService } from './services/podcast.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
@@ -85,7 +85,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
             deps: [Http, RequestOptions]
         },
         ProfileService,
-        PodcastsService,
+        PodcastService,
         ImageService,
         PusherService,
     ],

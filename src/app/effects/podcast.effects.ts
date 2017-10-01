@@ -1,9 +1,9 @@
-import { GET_PODCAST } from './../actions/podcasts.actions';
+import { GET_PODCAST } from './../actions/podcast.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { PodcastsService } from '../services/podcasts.service';
-import * as podcasts from 'app/actions/podcasts.actions';
+import { PodcastService } from 'app/services/podcast.service';
+import * as podcasts from 'app/actions/podcast.actions';
 import * as entries from 'app/actions/podcast-entries.actions';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -26,7 +26,6 @@ export class PodcastsEffects {
             .map(res => ({ type: podcasts.GET_PODCAST_SUCCESS, payload: res }))
             .catch(() => Observable.of({ type: podcasts.GET_PODCAST_FAIL }))
         );
-
     @Effect()
     deleteEntry$ = this.actions$
         .ofType(entries.DELETE_ENTRY)
@@ -34,9 +33,8 @@ export class PodcastsEffects {
             .map(res => ({ type: entries.DELETE_ENTRY_SUCCESS, payload: res }))
             .catch(() => Observable.of({ type: podcasts }))
         );
-
     constructor(
-        private podcastsService: PodcastsService,
+        private podcastsService: PodcastService,
         private actions$: Actions
     ) { }
 }
