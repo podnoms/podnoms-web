@@ -1,11 +1,9 @@
-import { AddEntryAction, UPDATE_ENTRY } from './../actions/podcast-entries.actions';
 import { GET_PODCAST } from './../actions/podcast.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { PodcastService } from 'app/services/podcast.service';
 import * as podcasts from 'app/actions/podcast.actions';
-import * as entries from 'app/actions/podcast-entries.actions';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -26,20 +24,6 @@ export class PodcastsEffects {
         .switchMap((action: podcasts.GetPodcastAction) => this.podcastsService.getPodcast(action.payload)
             .map(res => ({ type: podcasts.GET_PODCAST_SUCCESS, payload: res }))
             .catch(() => Observable.of({ type: podcasts.GET_PODCAST_FAIL }))
-        );
-    @Effect()
-    deleteEntry$ = this.actions$
-        .ofType(entries.DELETE_ENTRY)
-        .switchMap((action: entries.DeleteEntryAction) => this.podcastsService.deleteEntry(action.payload)
-            .map(res => ({ type: entries.DELETE_ENTRY_SUCCESS, payload: res }))
-            .catch(() => Observable.of({ type: podcasts }))
-        );
-    @Effect()
-    addEntry$ = this.actions$
-        .ofType(entries.ADD_ENTRY)
-        .switchMap((action: entries.AddEntryAction) => this.podcastsService.addEntry(action.payload.podcastId, action.payload.sourceUrl)
-            .map(res => ({ type: entries.UPDATE_ENTRY, payload: res }))
-            .catch(() => Observable.of({ type: podcasts }))
         );
     constructor(
         private podcastsService: PodcastService,

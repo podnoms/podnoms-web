@@ -6,8 +6,8 @@ import { PodcastModel } from '../../models/podcasts.models';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import { State } from 'app/reducers';
-import { LoadPodcastsAction, GetPodcastAction } from 'app/actions/podcast.actions';
+import { AppState } from 'app/reducers';
+import * as fromPodcasts from 'app/actions/podcast.actions';
 
 @Component({
     selector: 'app-sidebar',
@@ -15,14 +15,14 @@ import { LoadPodcastsAction, GetPodcastAction } from 'app/actions/podcast.action
     styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-    podcasts$: Observable<PodcastModel[]>;
+    podcasts$: Observable<any[]>; // PodcastModel[]>;
     selectedPodcast: PodcastModel;
-    constructor(private _store: Store<State>) {
-        this.podcasts$ = this._store.select(p => p.podcasts.result);
-        this._store.dispatch(new LoadPodcastsAction());
+    constructor(private _store: Store<AppState>) {
+        this.podcasts$ = this._store.select('podcasts');
+        this._store.dispatch(new fromPodcasts.LoadPodcastsAction());
     }
     onSelect(podcast) {
-        this._store.dispatch(new GetPodcastAction(podcast.slug));
+        this._store.dispatch(new fromPodcasts.GetPodcastAction(podcast.slug));
         return false;
     }
     deletePodcast(podcast) {

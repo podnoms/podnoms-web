@@ -44,7 +44,7 @@ export class ___PodcastService {
         console.log('PodcastService: addPodcastEntry', entry);
         this._http.post('api/entry', JSON.stringify(entry))
             .map(res => res.json())
-            .map(payload => ({ type: 'ADD_ENTRY', payload: payload }));
+            .map(payload => ({ type: 'ADD', payload: payload }));
     }
 
     deletePodcastEntry(id: number) {

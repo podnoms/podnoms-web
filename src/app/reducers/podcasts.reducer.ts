@@ -4,7 +4,7 @@ import * as podcast from '../actions/podcast.actions';
 
 export interface State {
     loading: boolean;
-    entities: { [id: string]: PodcastModel };
+    entities: { [slug: string]: PodcastModel };
     result: PodcastModel[];
     selectedPodcast: PodcastModel
 }

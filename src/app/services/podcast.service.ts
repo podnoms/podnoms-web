@@ -4,6 +4,7 @@ import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+
 @Injectable()
 export class PodcastService {
     constructor(private _http: AuthHttp) { }
@@ -15,7 +16,11 @@ export class PodcastService {
         return this._http.get('api/podcast/' + slug)
             .map(res => res.json());
     }
-    // Entries
+    //#region Entries
+    getEntries(slug: string): any {
+        return this._http.get('api/entry/all/' + slug)
+            .map(res => res.json());
+    }
     addEntry(podcastId: number, sourceUrl: string) {
         const entry = new PodcastEntryModel(podcastId, sourceUrl);
         return this._http.post('api/entry', JSON.stringify(entry))
@@ -25,4 +30,5 @@ export class PodcastService {
         console.log('PodcastService: deletePodcastEntry', slug);
         return this._http.delete('api/entry/' + slug);
     }
+    //#endregion
 }

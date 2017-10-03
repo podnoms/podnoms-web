@@ -1,5 +1,3 @@
-import { DeleteEntryAction, AddEntryAction } from './../../actions/podcast-entries.actions';
-import { GetPodcastAction } from './../../actions/podcast.actions';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -9,6 +7,10 @@ import { AppComponent } from '../../app.component';
 import { Store } from '@ngrx/store';
 import { State } from 'app/reducers';
 
+
+import * as fromPodcast from './../../actions/podcast.actions';
+import * as fromEntries from './../../actions/entries.actions';
+
 @Component({
     selector: 'app-podcast',
     templateUrl: './podcast.component.html',
@@ -16,6 +18,7 @@ import { State } from 'app/reducers';
 })
 export class PodcastComponent implements OnInit {
     selectedPodcast: PodcastModel;
+    entries$: Observable<PodcastEntryModel[]>;
     newEntrySourceUrl: string;
     uploadMode = false;
 
@@ -27,55 +30,32 @@ export class PodcastComponent implements OnInit {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
 
         _store.select(p => p.podcasts.selectedPodcast)
-            .subscribe(p => this.selectedPodcast = p);
-
+            .subscribe(podcast => {
+                if (podcast != null) {
+                    this.selectedPodcast = podcast;
+                    _store.dispatch(new fromEntries.LoadAction(podcast.slug));
+                }
+            });
         router.params.subscribe(params => {
             console.log('PodcastComponent', 'router', params['slug']);
-            _store.dispatch(new GetPodcastAction(params['slug']));
+            _store.dispatch(new fromPodcast.GetPodcastAction(params['slug']));
         });
     }
     ngOnInit() {
 
     }
-    onPodcastChange() {
-    }
     addEntry() {
         const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
-        this._store.dispatch(new AddEntryAction({
+        this._store.dispatch(new fromEntries.AddAction({
             podcastId: this.selectedPodcast.id, sourceUrl: this.newEntrySourceUrl
         }));
-        /*
-        this._podcastService.addPodcastEntry(model);
-            .subscribe(
-            (entry) => this._processEntryCallback(entry),
-            (error) => this._processEntryErrorCallback(error)
-            );
-        */
     }
     deletePodcast() {
         console.log('PodcastComponent', 'deletePodcast');
     }
     deleteEntry(entry: PodcastEntryModel) {
         console.log('PodcastComponent', 'deleteEntry', entry);
-        this._store.dispatch(new DeleteEntryAction(entry.slug));
-    }
-    onEntryUploadComplete($event) {
-        let entry = new PodcastEntryModel();
-        entry = $event[1];
-        this.uploadMode = false;
-        this._processEntryCallback(entry);
-    }
-    _processEntryCallback(entry: PodcastEntryModel) {
-
-    }
-    _processEntryErrorCallback(error) {
-        this._toastyService.error({
-            title: 'Error',
-            msg: 'Error adding entry.\n' + error,
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 5000
-        });
+        this._store.dispatch(new fromEntries.DeleteAction(entry.slug));
     }
     startUpload() {
         this.uploadMode = !this.uploadMode;

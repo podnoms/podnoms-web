@@ -32,6 +32,7 @@ import { EntryListItemComponent } from './components/podcast/entry-list-item/ent
 
 import { reducers } from './reducers';
 import { PodcastsEffects } from './effects/podcast.effects';
+import { EntriesEffects } from './effects/entries.effects';
 import { PodcastService } from './services/podcast.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -71,7 +72,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ToastyModule.forRoot(),
 
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([PodcastsEffects]),
+        EffectsModule.forRoot([PodcastsEffects, EntriesEffects]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
         })
