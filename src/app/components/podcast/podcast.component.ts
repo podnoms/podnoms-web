@@ -1,23 +1,24 @@
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { PodcastModel, PodcastEntryModel } from '../../models/podcasts.models';
+import { Component } from '@angular/core';
+import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
-import { AppComponent } from '../../app.component';
+import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { State } from 'app/reducers';
 
 
-import * as fromPodcast from './../../actions/podcast.actions';
-import * as fromEntries from './../../actions/entries.actions';
+import * as fromPodcast from 'app/reducers';
+import * as fromPodcastActions from 'app/actions/podcast.actions';
+import * as fromEntriesActions from 'app/actions/entries.actions';
 
 @Component({
     selector: 'app-podcast',
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.css']
 })
-export class PodcastComponent implements OnInit {
-    selectedPodcast: PodcastModel;
+export class PodcastComponent  {
+    selectedPodcast$: Observable<PodcastModel>;
     entries$: Observable<PodcastEntryModel[]>;
     newEntrySourceUrl: string;
     uploadMode = false;
@@ -29,25 +30,18 @@ export class PodcastComponent implements OnInit {
         private _toastyService: ToastyService) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
 
-        _store.select(p => p.podcasts.selectedPodcast)
-            .subscribe(podcast => {
-                if (podcast != null) {
-                    this.selectedPodcast = podcast;
-                    _store.dispatch(new fromEntries.LoadAction(podcast.slug));
-                }
-            });
+        this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
+        this.entries$ = _store.select(fromPodcast.getEntries);
+
         router.params.subscribe(params => {
             console.log('PodcastComponent', 'router', params['slug']);
-            _store.dispatch(new fromPodcast.GetPodcastAction(params['slug']));
+            _store.dispatch(new fromPodcastActions.GetPodcastAction(params['slug']));
         });
     }
-    ngOnInit() {
-
-    }
-    addEntry() {
-        const model = new PodcastEntryModel(this.selectedPodcast.id, this.newEntrySourceUrl);
-        this._store.dispatch(new fromEntries.AddAction({
-            podcastId: this.selectedPodcast.id, sourceUrl: this.newEntrySourceUrl
+    addEntry(podcast) {
+        const model = new PodcastEntryModel(podcast.id, this.newEntrySourceUrl);
+        this._store.dispatch(new fromEntriesActions.AddAction({
+            podcastId: podcast.id, sourceUrl: this.newEntrySourceUrl
         }));
     }
     deletePodcast() {
@@ -55,7 +49,7 @@ export class PodcastComponent implements OnInit {
     }
     deleteEntry(entry: PodcastEntryModel) {
         console.log('PodcastComponent', 'deleteEntry', entry);
-        this._store.dispatch(new fromEntries.DeleteAction(entry.slug));
+        this._store.dispatch(new fromEntriesActions.DeleteAction(entry.slug));
     }
     startUpload() {
         this.uploadMode = !this.uploadMode;
