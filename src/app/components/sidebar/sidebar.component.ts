@@ -8,7 +8,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/skip';
-import { State } from 'app/reducers';
+import { ApplicationState } from 'app/store';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromPodcasts from 'app/reducers';
 
@@ -20,7 +20,7 @@ import * as fromPodcasts from 'app/reducers';
 export class SidebarComponent {
     podcasts$: Observable<PodcastModel[]>;
     selectedPodcast$: PodcastModel[];
-    constructor(private _store: Store<State>) {
+    constructor(private _store: Store<ApplicationState>) {
         this.podcasts$ = _store
             .skip(1)
             .map(s => s.podcasts.results);

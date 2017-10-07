@@ -27,15 +27,15 @@ export class EntriesEffects {
     //         .map(res => ({ type: entries.DELETE_SUCCESS, payload: res }))
     //         .catch(() => Observable.of({ type: entries.DELETE_FAIL }))
     //     );
-    // @Effect()
-    // add$ = this.actions$
-    //     .ofType(entries.ADD)
-    //     .switchMap((action: entries.AddAction) => this.podcastsService.addEntry(action.payload.podcastId, action.payload.sourceUrl)
-    //         .map(res => ({ type: entries.UPDATE, payload: res }))
-    //         .catch(() => Observable.of({ type: entries.ADD_FAIL }))
-    //     );
-    // constructor(
-    //     private podcastsService: PodcastService,
-    //     private actions$: Actions
-    // ) { }
+    @Effect()
+    add$ = this.actions$
+        .ofType(entries.ADD)
+        .switchMap((action: entries.AddAction) => this.podcastsService.addEntry(action.payload.podcastId, action.payload.sourceUrl)
+            .map(res => ({ type: entries.UPDATE, payload: res }))
+            .catch(() => Observable.of({ type: entries.ADD_FAIL }))
+        );
+    constructor(
+        private podcastsService: PodcastService,
+        private actions$: Actions
+    ) { }
 }

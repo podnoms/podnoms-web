@@ -2,7 +2,6 @@ import { PodcastModel } from '../../../models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PodcastEntryModel } from '../../../models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
-import { PusherService } from '../../../services/pusher.service';
 
 @Component({
     selector: 'app-entry-list-item',
@@ -18,14 +17,14 @@ export class EntryListItemComponent implements OnInit {
     currentSpeed: '0 kb/s';
 
     constructor(
-        private _toastyService: ToastyService,
-        private _pusherService: PusherService) {
+        private _toastyService: ToastyService) {
     }
 
     ngOnInit() {
         if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
             console.log('EntryListItemComponent', 'ngOnInit()', this.entry);
             const that = this;
+            /*
             this._pusherService.subscribeMessage(this.entry.uid + '__process_podcast', 'info_processed', t => {
                 this.entry = t;
             });
@@ -33,7 +32,7 @@ export class EntryListItemComponent implements OnInit {
                 console.log('EntryListItemComponent', 'info_progress', t);
                 this.percentageProcessed = t.percentage;
                 this.currentSpeed = t.currentSpeed;
-            });
+            });*/
         }
     }
 

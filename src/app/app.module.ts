@@ -24,7 +24,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
 import { ProfileService } from './services/profile.service';
-import { PusherService } from './services/pusher.service';
+// import { PusherService } from './services/pusher.service';
 import { FilterEntryPipe } from './pipes/filter-entry.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { PodcastComponent } from './components/podcast/podcast.component';
@@ -88,7 +88,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProfileService,
         PodcastService,
         ImageService,
-        PusherService,
+        // PusherService,
     ],
     bootstrap: [AppComponent]
 })
