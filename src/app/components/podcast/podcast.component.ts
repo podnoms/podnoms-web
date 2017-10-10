@@ -34,7 +34,6 @@ export class PodcastComponent  {
         this.entries$ = _store.select(fromPodcast.getEntries);
 
         router.params.subscribe(params => {
-            console.log('PodcastComponent', 'router', params['slug']);
             _store.dispatch(new fromPodcastActions.GetPodcastAction(params['slug']));
         });
     }

@@ -11,6 +11,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 import { ImageService } from './services/image.service';
+import { DebugService } from './services/debug.service';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -18,7 +19,6 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -34,6 +34,8 @@ import { reducers } from './reducers';
 import { PodcastsEffects } from './effects/podcast.effects';
 import { EntriesEffects } from './effects/entries.effects';
 import { PodcastService } from './services/podcast.service';
+import { SignalRService } from 'app/services/signalr.service';
+import { AppRoutingModule } from 'app/app.router';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
@@ -85,9 +87,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
             useFactory: authHttpServiceFactory,
             deps: [Http, RequestOptions]
         },
+        SignalRService,
         ProfileService,
         PodcastService,
         ImageService,
+        DebugService,
         // PusherService,
     ],
     bootstrap: [AppComponent]

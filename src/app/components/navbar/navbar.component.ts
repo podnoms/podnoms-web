@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
         if (this.loggedIn()) {
             this.user = this._authService.profile;
             this._profileService.getProfile().subscribe(p => {
-                console.log('NavbarComponent', 'getProfile()', p);
             });
         }
     }

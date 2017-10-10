@@ -31,7 +31,7 @@ export class EntriesEffects {
     add$ = this.actions$
         .ofType(entries.ADD)
         .switchMap((action: entries.AddAction) => this.podcastsService.addEntry(action.payload.podcastId, action.payload.sourceUrl)
-            .map(res => ({ type: entries.UPDATE, payload: res }))
+            .map(res => ({ type: entries.ADD_SUCCESS, payload: res }))
             .catch(() => Observable.of({ type: entries.ADD_FAIL }))
         );
     constructor(

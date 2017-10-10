@@ -1,4 +1,7 @@
+import { SignalRService } from './../../services/signalr.service';
+import { HubConnection } from '@aspnet/signalr-client';
 import { Component, OnInit } from '@angular/core';
+import { DebugService } from 'app/services/debug.service';
 
 @Component({
     selector: 'app-debug',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DebugComponent implements OnInit {
 
-    constructor() { }
+    realtimeMessage: string;
+    messagesReceived: string[] = [];
+    constructor(private _service: DebugService, private _srService: SignalRService) { }
 
     ngOnInit() {
+
+        this._srService.init('http://localhost:5000/hubs/debug');
+
+        this._srService.connection.on('Send', data => {
+            console.log('DebugService', 'signalr', data);
+            this.messagesReceived.push(data);
+            this.realtimeMessage = '';
+        });
+    }
+
+    sendMessage() {
+        this._service.sendRealtime(this.realtimeMessage)
+            .subscribe(r => console.log(r));
     }
     doSomething() {
         alert('doSomething was did');

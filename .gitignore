@@ -45,3 +45,4 @@ src/app/constants/auth0.ts
 .working
 .history
 TODO.md
+yarn-error.log

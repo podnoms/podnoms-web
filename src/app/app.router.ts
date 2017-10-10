@@ -1,3 +1,4 @@
+import { DebugComponent } from './components/debug/debug.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
     { path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard] },
     { path: 'podcasts/:slug', component: PodcastComponent, canActivate: [AuthGuard] },
     // {path: 'podcasts/:slug/edit', component: PodcastAddFormComponent, canActivate: [AuthGuard]},
+    { path: 'debug', component: DebugComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -1,3 +1,4 @@
+import { SignalRService } from './../../../services/signalr.service';
 import { PodcastModel } from '../../../models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PodcastEntryModel } from '../../../models/podcasts.models';
@@ -17,12 +18,12 @@ export class EntryListItemComponent implements OnInit {
     currentSpeed: '0 kb/s';
 
     constructor(
+        private _signalrService: SignalRService,
         private _toastyService: ToastyService) {
     }
 
     ngOnInit() {
         if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
-            console.log('EntryListItemComponent', 'ngOnInit()', this.entry);
             const that = this;
             /*
             this._pusherService.subscribeMessage(this.entry.uid + '__process_podcast', 'info_processed', t => {
