@@ -1,8 +1,8 @@
-import 'rxjs/add/operator/map';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ProfileModel} from '../models/profile.model';
 import {AuthHttp} from 'angular2-jwt';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProfileService {

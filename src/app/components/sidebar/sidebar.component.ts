@@ -1,44 +1,37 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PodcastModel } from '../../models/podcasts.models';
-
+import { PodcastAddFormComponent } from './../podcast/podcast-add-form/podcast-add-form.component';
 import { Store } from '@ngrx/store';
-import { AppStore } from '../../models/app.store';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PodcastModel } from '../../models/podcasts.models';
 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/skip';
+import { ApplicationState } from 'app/store';
+import * as fromPodcastActions from 'app/actions/podcast.actions';
+import * as fromPodcasts from 'app/reducers';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
-    @Input() podcasts: PodcastModel[];
-    selectedPodcast: PodcastModel;
+export class SidebarComponent {
+    podcasts$: Observable<PodcastModel[]>;
+    selectedPodcast$: PodcastModel[];
+    constructor(private _store: Store<ApplicationState>) {
+        this.podcasts$ = _store
+            .skip(1)
+            .map(s => s.podcasts.results);
 
-    constructor(private _store: Store<AppStore>, private _route: ActivatedRoute) {
-        _store.select('selectedPodcast')
-            .subscribe(p => {
-                console.log('PodcastComponent', 'selectedPodcast', p);
-                this.selectedPodcast = p;
-            });
+        this._store.dispatch(new fromPodcastActions.LoadPodcastsAction());
     }
-
-    ngOnInit() {
-        this._route.params.subscribe(p => {
-            this._store.dispatch({ type: 'FIND_ITEM', payload: p });
-        });
+    onSelect(podcast) {
+        this._store.dispatch(new fromPodcastActions.GetPodcastAction(podcast.slug));
+        return false;
     }
-
     deletePodcast(podcast) {
 
-    }
-
-    selectPodcast(podcast) {
-        console.log('SidebarComponent', 'selectePodcast', podcast);
-        this._store.dispatch({ type: 'SELECT_ITEM', payload: podcast });
     }
 }

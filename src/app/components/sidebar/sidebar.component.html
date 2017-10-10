@@ -6,7 +6,7 @@
         </div>
         <div class="btn-group" role="group">
             <!--<a class="btn btn-link" [routerLink]="['/podcasts/'+ selectedPodcast.slug + '/edit/']">-->
-                <!--<i class="icon-pencil"></i>-->
+            <!--<i class="icon-pencil"></i>-->
             <!--</a>-->
             <button type="button" class="btn btn-link" (click)="podcastDeleteDialog.show()">
                 <i class="icon-trash"></i>
@@ -28,10 +28,9 @@
             </li>
             <li class="divider"></li>
             <li class="nav-title">My Podcasts</li>
-            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts | orderBy : '-id'">
-                <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/podcasts', podcast.slug]"
-                   (click)="selectPodcast(podcast)">
-                    <img class="sidebar-icon" [src]="podcast.imageUrl">&nbsp;{{podcast.title}}
+            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts$ | async | orderBy : '-id'">
+                <a class="nav-link" href="#" [routerLinkActive]="['active']" [routerLink]="['/podcasts', podcast.slug]">
+                    <img class="sidebar-icon" [src]="podcast.imageUrl">&nbsp; {{podcast.title}}
                 </a>
             </li>
         </ul>
@@ -43,16 +42,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title pull-left">Delete this podcast?</h4>
-                <button type="button" class="close pull-right" aria-label="Close"
-                        (click)="podcastDeleteDialog.hide()">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="podcastDeleteDialog.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
                 </button>
-                <button type="button" class="btn btn-danger pull-right"
-                        (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
+                <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
                 </button>
             </div>
         </div>

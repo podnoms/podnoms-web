@@ -3,7 +3,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
 import { ToastyService } from 'ng2-toasty';
-import { PodcastService } from 'app/services/podcast.service';
 
 @Component({
     selector: 'app-podcast-add-form',
@@ -16,8 +15,11 @@ export class PodcastAddFormComponent implements OnInit {
     private imageChanged = false;
     image: any = new Image();
 
-    constructor(private _service: PodcastService, private _imageService: ImageService,
-        private _router: Router, private _route: ActivatedRoute, private _toastyService: ToastyService) {
+    constructor(
+        private _imageService: ImageService,
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _toastyService: ToastyService) {
         this.podcast = new PodcastModel();
         _route.params.subscribe(p => {
             if (p['slug']) {
@@ -27,33 +29,10 @@ export class PodcastAddFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.podcast && this.podcast.slug) {
-            /*
-            this._service.getPodcast(this.podcast.slug)
-                .subscribe(r => {
-                    this.podcast = r;
-                    if (this.podcast.imageUrl) {
-                        this.image.src = this.podcast.imageUrl;
-                    }
-                });*/
-        }
     }
 
     submitForm() {
-        this._service.addPodcast(this.podcast);
-        /*
-            .subscribe(p => {
-                if (this.imageChanged) {
-                    this.uploadPhoto()
-                        .subscribe(r => {
-                            this._toastyService.info('Image successfully updated!');
-                            console.log('PodcastAddForm', 'submitForm', r);
-                            this._router.navigateByUrl(`podcasts/${this.podcast.slug}`);
-                        });
-                } else {
-                    this._router.navigateByUrl(`podcasts/${p.slug}`);
-                }
-            });*/
+
     }
 
     uploadPhoto() {

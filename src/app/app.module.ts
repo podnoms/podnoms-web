@@ -2,18 +2,8 @@ import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/p
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { AuthService } from './services/auth.service';
-import { ProfileService } from './services/profile.service';
-import { PodcastService } from './services/podcast.service';
 import { FormsModule } from '@angular/forms';
 import { ToastyModule } from 'ng2-toasty';
-import { PusherService } from './services/pusher.service';
-import { FilterEntryPipe } from './pipes/filter-entry.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
@@ -21,16 +11,31 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 import { ImageService } from './services/image.service';
+import { DebugService } from './services/debug.service';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { podcastsReducer } from './stores/podcasts.reducer';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AuthService } from './services/auth.service';
+import { ProfileService } from './services/profile.service';
+// import { PusherService } from './services/pusher.service';
+import { FilterEntryPipe } from './pipes/filter-entry.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 import { PodcastComponent } from './components/podcast/podcast.component';
 import { EntryListItemComponent } from './components/podcast/entry-list-item/entry-list-item.component';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+
+import { reducers } from './reducers';
+import { PodcastsEffects } from './effects/podcast.effects';
+import { EntriesEffects } from './effects/entries.effects';
+import { PodcastService } from './services/podcast.service';
+import { SignalRService } from 'app/services/signalr.service';
+import { AppRoutingModule } from 'app/app.router';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
@@ -68,14 +73,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
 
-        StoreModule.forRoot({
-            podcasts: podcastsReducer,
-            routerReducer: routerReducer
-        }),
+        StoreModule.forRoot(reducers),
+        EffectsModule.forRoot([PodcastsEffects, EntriesEffects]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
-        }),
-        StoreRouterConnectingModule
+        })
     ],
     providers: [
         AuthService,
@@ -85,10 +87,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
             useFactory: authHttpServiceFactory,
             deps: [Http, RequestOptions]
         },
+        SignalRService,
         ProfileService,
         PodcastService,
         ImageService,
-        PusherService,
+        DebugService,
+        // PusherService,
     ],
     bootstrap: [AppComponent]
 })

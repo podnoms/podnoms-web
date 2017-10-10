@@ -1,16 +1,9 @@
-<div class="sk-wave" *ngIf="!selectedPodcast">
-    <div class="sk-rect sk-rect1"></div>
-    <div class="sk-rect sk-rect2"></div>
-    <div class="sk-rect sk-rect3"></div>
-    <div class="sk-rect sk-rect4"></div>
-    <div class="sk-rect sk-rect5"></div>
-</div>
-<div *ngIf="selectedPodcast">
-    <ol class="breadcrumb" *ngIf="selectedPodcast">
-        <li class="breadcrumb-item active">{{selectedPodcast.title}}</li>
+<div *ngIf="selectedPodcast$ | async; let podcast; else loading">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">{{podcast.title}}</li>
         <li class="breadcrumb-menu">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <a class="btn btn-secondary btn-outline-warning" [href]="selectedPodcast.rssUrl" target="_blank">
+                <a class="btn btn-secondary btn-outline-warning" [href]="podcast.rssUrl" target="_blank">
                     <i class="fa fa-rss"></i>
                 </a>
                 <a class="btn btn-secondary" (click)="startUpload()"><i class="icon-cloud-upload"></i></a>
@@ -24,7 +17,7 @@
                             <div class="input-group" style="width:420px;">
                                 <input type="email" id="input2-group2" name="entry-url" [(ngModel)]="newEntrySourceUrl" class="form-control" placeholder="New entry URL">
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-primary" (click)="addEntry()">
+                                    <button type="button" class="btn btn-primary" (click)="addEntry(podcast)">
                                         <i class="fa fa-plus-circle"></i> Submit</button>
                                 </span>
                             </div>
@@ -42,7 +35,7 @@
         -->
         <table class="table table-hover table-outline mb-0 hidden-sm-down">
             <tbody>
-                <tr *ngFor="let entry of selectedPodcast.podcastEntries">
+                <tr *ngFor="let entry of entries$ | async">
                     <app-entry-list-item (entryRemoved)='deleteEntry(entry)' [entry]="entry">
                     </app-entry-list-item>
                 </tr>
@@ -68,3 +61,12 @@
         </div>
     </div>
 </div>
+<ng-template #loading>
+    <div class="sk-wave" *ngIf="!selectedPodcast">
+        <div class="sk-rect sk-rect1"></div>
+        <div class="sk-rect sk-rect2"></div>
+        <div class="sk-rect sk-rect3"></div>
+        <div class="sk-rect sk-rect4"></div>
+        <div class="sk-rect sk-rect5"></div>
+    </div>
+</ng-template>
