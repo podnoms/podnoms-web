@@ -12,13 +12,13 @@ export class DebugComponent implements OnInit {
 
     realtimeMessage: string;
     messagesReceived: string[] = [];
-    constructor(private _service: DebugService, private _srService: SignalRService) { }
+    constructor(private _service: DebugService, private _signalRService: SignalRService) { }
 
     ngOnInit() {
 
-        this._srService.init('http://localhost:5000/hubs/debug');
+        this._signalRService.init('http://localhost:5000/hubs/debug');
 
-        this._srService.connection.on('Send', data => {
+        this._signalRService.connection.on('Send', data => {
             console.log('DebugService', 'signalr', data);
             this.messagesReceived.push(data);
             this.realtimeMessage = '';

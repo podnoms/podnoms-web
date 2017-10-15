@@ -55,18 +55,20 @@ export const DELETE_SUCCESS = '[Entries] Delete Entry Success';
 export const DELETE_FAIL = '[Entries] Delete Entry Fail';
 export class DeleteAction implements Action {
     readonly type = DELETE;
-    constructor(public payload: string) {
-        console.log(payload);
+    constructor(public payload: number) {
     }
 }
 export class DeleteSuccessAction implements Action {
     readonly type = DELETE_SUCCESS;
-    constructor(public payload: PodcastModel) { }
+    constructor(public payload: number) { }
 }
 //#endregion
 export type Actions =
     | LoadAction
     | LoadSuccessAction
     | LoadFailAction
+    | AddSuccessAction
+    | UpdateAction
+    | UpdateSuccessAction
     | DeleteAction
     | DeleteSuccessAction;

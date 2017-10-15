@@ -1,3 +1,7 @@
+import { AddPodcastAction } from './../../../actions/podcast.actions';
+import { AddAction } from './../../../actions/entries.actions';
+import { ApplicationState } from 'app/store';
+import { Store } from '@ngrx/store';
 import { PodcastModel } from './../../../models/podcasts.models';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,7 +13,7 @@ import { ToastyService } from 'ng2-toasty';
     templateUrl: './podcast-add-form.component.html',
     styleUrls: ['./podcast-add-form.component.css']
 })
-export class PodcastAddFormComponent implements OnInit {
+export class PodcastAddFormComponent {
     podcast: PodcastModel;
     @ViewChild('fileInput') fileInput: ElementRef;
     private imageChanged = false;
@@ -17,22 +21,13 @@ export class PodcastAddFormComponent implements OnInit {
 
     constructor(
         private _imageService: ImageService,
-        private _router: Router,
-        private _route: ActivatedRoute,
+        private _store: Store<ApplicationState>,
         private _toastyService: ToastyService) {
         this.podcast = new PodcastModel();
-        _route.params.subscribe(p => {
-            if (p['slug']) {
-                this.podcast.slug = p['slug'];
-            }
-        });
-    }
-
-    ngOnInit() {
     }
 
     submitForm() {
-
+        this._store.dispatch(new AddPodcastAction(this.podcast));
     }
 
     uploadPhoto() {

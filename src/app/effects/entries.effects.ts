@@ -1,4 +1,4 @@
-import { LoadAction } from './../actions/entries.actions';
+import { LoadAction, LOAD_FAIL, UpdateSuccessAction } from './../actions/entries.actions';
 import { PodcastService } from './../services/podcast.service';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
@@ -11,31 +11,45 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class EntriesEffects {
-    // @Effect()
-    // get$ = this.actions$
-    //     .ofType(entries.LOAD)
-    //     .switchMap((payload: entries.LoadAction) => this.podcastsService.getEntries(payload.podcast)
-    //         // If successful, dispatch success action with result
-    //         .map(res => ({ type: entries.LOAD_SUCCESS, payload: res.json() }))
-    //         // If request fails, dispatch failed action
-    //         .catch(() => Observable.of({ type: entries.LOAD_FAIL }))
-    //     );
-    // @Effect()
-    // delete$ = this.actions$
-    //     .ofType(entries.DELETE)
-    //     .switchMap((action: entries.DeleteAction) => this.podcastsService.deleteEntry(action.payload)
-    //         .map(res => ({ type: entries.DELETE_SUCCESS, payload: res }))
-    //         .catch(() => Observable.of({ type: entries.DELETE_FAIL }))
-    //     );
+    @Effect()
+    get$ = this.actions$
+        .ofType(entries.LOAD)
+        .switchMap((payload: entries.LoadAction) => this._service.getEntries(payload.podcast)
+            .map(res => ({ type: entries.LOAD_SUCCESS, payload: res }))
+            .catch((err) => {
+                console.error('EntriesEffects', 'add$', err);
+                return Observable.of({ type: entries.LOAD_FAIL });
+            })
+        );
     @Effect()
     add$ = this.actions$
         .ofType(entries.ADD)
-        .switchMap((action: entries.AddAction) => this.podcastsService.addEntry(action.payload.podcastId, action.payload.sourceUrl)
+        .switchMap((action: entries.AddAction) => this._service.addEntry(action.payload.podcastId, action.payload.sourceUrl)
             .map(res => ({ type: entries.ADD_SUCCESS, payload: res }))
-            .catch(() => Observable.of({ type: entries.ADD_FAIL }))
+            .catch((err) => {
+                console.error('EntriesEffects', 'add$', err);
+                return Observable.of({ type: entries.ADD_FAIL });
+            })
+        );
+    @Effect()
+    delete$ = this.actions$
+        .ofType(entries.DELETE)
+        .switchMap((action: entries.DeleteAction) => this._service.deleteEntry(action.payload)
+            .map(res => ({ type: entries.DELETE_SUCCESS, payload: action.payload }))
+            .catch(() => Observable.of({ type: entries.DELETE_FAIL }))
+        );
+    @Effect()
+    update$ = this.actions$
+        .ofType(entries.UPDATE)
+        .switchMap((action: entries.UpdateAction) => this._service.updateEntry(action.payload)
+            .map(res => ({ type: entries.UpdateSuccessAction, payload: res }))
+            .catch((err) => {
+                console.error('EntriesEffects', 'update$', err);
+                return Observable.of({ type: entries.ADD_FAIL });
+            })
         );
     constructor(
-        private podcastsService: PodcastService,
+        private _service: PodcastService,
         private actions$: Actions
     ) { }
 }

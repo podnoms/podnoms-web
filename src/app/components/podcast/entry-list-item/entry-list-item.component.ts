@@ -1,8 +1,12 @@
+import { ApplicationState } from './../../../store/index';
+import { Store } from '@ngrx/store';
 import { SignalRService } from './../../../services/signalr.service';
 import { PodcastModel } from '../../../models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PodcastEntryModel } from '../../../models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
+
+import * as fromEntriesActions from 'app/actions/entries.actions';
 
 @Component({
     selector: 'app-entry-list-item',
@@ -19,26 +23,32 @@ export class EntryListItemComponent implements OnInit {
 
     constructor(
         private _signalrService: SignalRService,
+        private _store: Store<ApplicationState>,
         private _toastyService: ToastyService) {
+        _signalrService.init('http://localhost:5000/hubs/audioprocessing');
     }
 
     ngOnInit() {
         if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
             const that = this;
-            /*
-            this._pusherService.subscribeMessage(this.entry.uid + '__process_podcast', 'info_processed', t => {
-                this.entry = t;
+
+            const progessEventName = `${this.entry.uid}__progress_update`;
+            this._signalrService.connection.on(progessEventName, (result) => {
+                console.log('EntryListItemComponent', progessEventName, result);
+                this.percentageProcessed = result.percentage;
+                this.currentSpeed = result.currentSpeed;
             });
-            this._pusherService.subscribeMessage(this.entry.uid + '__process_podcast', 'info_progress', t => {
-                console.log('EntryListItemComponent', 'info_progress', t);
-                this.percentageProcessed = t.percentage;
-                this.currentSpeed = t.currentSpeed;
-            });*/
+
+            const updateEventName = `${this.entry.uid}__info_processed`;
+            this._signalrService.connection.on(updateEventName, (result) => {
+                console.log('EntryListItemComponent', updateEventName, result);
+                this._store.dispatch(new fromEntriesActions.UpdateSuccessAction(result));
+            });
         }
     }
 
     deleteEntry() {
-        this.entryRemoved.emit(this.entry);
+        this._store.dispatch(new fromEntriesActions.DeleteAction(this.entry.id));
     }
 
     saveTitle($event: Event) {

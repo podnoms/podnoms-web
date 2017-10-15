@@ -9,7 +9,7 @@ export function getSelectedPodcast(state: ApplicationState): PodcastModel {
     return state.podcasts.selectedPodcast;
 }
 export function getEntries(state: ApplicationState): PodcastEntryModel[] {
-    return state.podcasts.selectedPodcast.podcastEntries;
+    return state.entries.result;
 }
 export const reducers: ActionReducerMap<ApplicationState> = {
     podcasts: fromPodcasts.reducer,

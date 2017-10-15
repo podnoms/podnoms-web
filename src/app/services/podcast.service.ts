@@ -7,7 +7,14 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PodcastService {
+    static _replacer(key, value) {
+        if (key === 'imageUrl') {
+            return undefined;
+        }
+        return value;
+    }
     constructor(private _http: AuthHttp) { }
+//#region Podcasts
     get(): Observable<PodcastModel[]> {
         return this._http.get('api/podcast/')
             .map(res => res.json());
@@ -16,7 +23,14 @@ export class PodcastService {
         return this._http.get('api/podcast/' + slug)
             .map(res => res.json());
     }
-    //#region Entries
+    addPodcast(podcast: PodcastModel): Observable<PodcastModel> {
+        console.log('PodcastService', 'addPodcast', podcast);
+        const data = JSON.stringify(podcast, PodcastService._replacer);
+        return this._http.post('api/podcast', data)
+            .map(res => res.json());
+    }
+//#endregion
+//#region Entries
     getEntries(slug: string): any {
         return this._http.get('api/entry/all/' + slug)
             .map(res => res.json());
@@ -26,9 +40,14 @@ export class PodcastService {
         return this._http.post('api/entry', JSON.stringify(entry))
             .map(res => res.json());
     }
-    deleteEntry(slug: string) {
-        console.log('PodcastService: deletePodcastEntry', slug);
-        return this._http.delete('api/entry/' + slug);
+    updateEntry(entry: PodcastEntryModel) {
+        console.log('PodcastService: addPodcastEntry', entry);
+        return this._http.post('api/entry', JSON.stringify(entry))
+            .map(res => res.json());
     }
-    //#endregion
+    deleteEntry(id: number) {
+        console.log('PodcastService: deletePodcastEntry', id);
+        return this._http.delete('api/entry/' + id);
+    }
+//#endregion
 }

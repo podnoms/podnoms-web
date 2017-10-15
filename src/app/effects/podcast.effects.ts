@@ -1,3 +1,4 @@
+import { PodcastModel } from 'app/models/podcasts.models';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
@@ -18,6 +19,11 @@ export class PodcastsEffects {
         .map(res => ({ type: podcasts.LOAD_PODCASTS_SUCCESS, payload: res }))
         .catch(() => Observable.of({ type: podcasts.LOAD_PODCASTS_FAIL }));
 
+    @Effect() addPodcast$ = this.actions$
+        .ofType(podcasts.ADD_PODCAST)
+        .switchMap((action: podcasts.AddPodcastAction) => this.podcastsService.addPodcast(action.payload))
+        .map(res => ({ type: podcasts.ADD_PODCAST_SUCCESS, payload: res }))
+        .catch(() => Observable.of({ type: podcasts.ADD_PODCAST_FAIL }));
     @Effect() getPodcast$ = this.actions$
         .ofType(podcasts.GET_PODCAST)
         .switchMap((action: podcasts.GetPodcastAction) => this.podcastsService.getPodcast(action.payload))
@@ -27,5 +33,5 @@ export class PodcastsEffects {
     constructor(
         private actions$: Actions,
         private podcastsService: PodcastService
-    ) {}
+    ) { }
 }
