@@ -1,5 +1,6 @@
 <td class="text-center entry-avatar">
     <div class="avatar">
+        <i *ngIf="entry.processingStatus==='Accepted'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
         <i *ngIf="entry.processingStatus==='Downloading'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
         <i *ngIf="entry.processingStatus==='Processing'" class="fa fa-cog fa-spin fa-2x fa-fw text-danger"></i>
         <i *ngIf="entry.processingStatus==='Uploading'" class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i>
@@ -8,6 +9,7 @@
     </div>
 </td>
 <td class="entry-title">
+    <h4 *ngIf="entry.processingStatus==='Accepted'">Accepted</h4>
     <h4 *ngIf="entry.processingStatus==='Downloading'">{{entry.sourceUrl}}</h4>
     <h4 *ngIf="entry.processingStatus==='Processing'">{{entry.title}}</h4>
     <h4 *ngIf="entry.processingStatus==='Uploading'">{{entry.title}}</h4>

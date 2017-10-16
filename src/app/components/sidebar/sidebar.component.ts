@@ -19,12 +19,10 @@ import * as fromPodcasts from 'app/reducers';
 })
 export class SidebarComponent {
     podcasts$: Observable<PodcastModel[]>;
-    selectedPodcast$: PodcastModel[];
     constructor(private _store: Store<ApplicationState>) {
         this.podcasts$ = _store
             .skip(1)
             .map(s => s.podcasts.results);
-
         this._store.dispatch(new fromPodcastActions.LoadPodcastsAction());
     }
     onSelect(podcast) {

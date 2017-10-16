@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { ApplicationState } from './../../../store/index';
 import { Store } from '@ngrx/store';
 import { SignalRService } from './../../../services/signalr.service';
@@ -25,32 +26,23 @@ export class EntryListItemComponent implements OnInit {
         private _signalrService: SignalRService,
         private _store: Store<ApplicationState>,
         private _toastyService: ToastyService) {
-        _signalrService.init('http://localhost:5000/hubs/audioprocessing');
-    }
 
+    }
     ngOnInit() {
         if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
-            const that = this;
-
-            const progessEventName = `${this.entry.uid}__progress_update`;
-            this._signalrService.connection.on(progessEventName, (result) => {
-                console.log('EntryListItemComponent', progessEventName, result);
+            this._signalrService.init(`${environment.apiHost}hubs/audioprocessing`);
+            this._signalrService.connection.on(`${this.entry.uid}__progress_update`, (result) => {
                 this.percentageProcessed = result.percentage;
                 this.currentSpeed = result.currentSpeed;
             });
-
-            const updateEventName = `${this.entry.uid}__info_processed`;
-            this._signalrService.connection.on(updateEventName, (result) => {
-                console.log('EntryListItemComponent', updateEventName, result);
+            this._signalrService.connection.on(`${this.entry.uid}__info_processed`, (result) => {
                 this._store.dispatch(new fromEntriesActions.UpdateSuccessAction(result));
             });
         }
     }
-
     deleteEntry() {
         this._store.dispatch(new fromEntriesActions.DeleteAction(this.entry.id));
     }
-
     saveTitle($event: Event) {
     }
 }

@@ -5,5 +5,12 @@
         "pathRewrite": {
             "^/api": ""
         }
+    },
+    "/hubs/*": {
+        "target": "http://localhost:5000/",
+        "secure": false,
+        "pathRewrite": {
+            "^/hubs": ""
+        }
     }
 }

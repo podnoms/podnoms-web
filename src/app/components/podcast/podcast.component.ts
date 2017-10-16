@@ -34,7 +34,6 @@ export class PodcastComponent  {
         this.entries$ = _store.select(fromPodcast.getEntries);
 
         router.params.subscribe(params => {
-            // _store.dispatch(new fromPodcastActions.GetPodcastAction(params['slug']));
             _store.dispatch(new fromEntriesActions.LoadAction(params['slug']));
         });
     }

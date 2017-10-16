@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { SignalRService } from './../../services/signalr.service';
 import { HubConnection } from '@aspnet/signalr-client';
 import { Component, OnInit } from '@angular/core';
@@ -16,8 +17,7 @@ export class DebugComponent implements OnInit {
 
     ngOnInit() {
 
-        this._signalRService.init('http://localhost:5000/hubs/debug');
-
+        this._signalRService.init(`${environment.apiHost}hubs/debug`);
         this._signalRService.connection.on('Send', data => {
             console.log('DebugService', 'signalr', data);
             this.messagesReceived.push(data);
