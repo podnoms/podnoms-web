@@ -1,5 +1,6 @@
+import { UpdateAction, AddAction } from './../../actions/entries.actions';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
@@ -17,17 +18,17 @@ import * as fromEntriesActions from 'app/actions/entries.actions';
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.css']
 })
-export class PodcastComponent  {
+export class PodcastComponent {
     selectedPodcast$: Observable<PodcastModel>;
     entries$: Observable<PodcastEntryModel[]>;
     newEntrySourceUrl: string;
     uploadMode = false;
+    addEntryMode = false;
 
     constructor(
         private _rootComp: AppComponent,
         private _store: Store<ApplicationState>,
-        router: ActivatedRoute,
-        private _toastyService: ToastyService) {
+        router: ActivatedRoute) {
         this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
 
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
@@ -39,9 +40,8 @@ export class PodcastComponent  {
     }
     addEntry(podcast) {
         const model = new PodcastEntryModel(podcast.id, this.newEntrySourceUrl);
-        this._store.dispatch(new fromEntriesActions.AddAction({
-            podcastId: podcast.id, sourceUrl: this.newEntrySourceUrl
-        }));
+        this._store.dispatch(new fromEntriesActions.AddAction(model));
+        this.addEntryMode = false;
     }
     deletePodcast() {
         console.log('PodcastComponent', 'deletePodcast');
@@ -51,5 +51,13 @@ export class PodcastComponent  {
     }
     startUpload() {
         this.uploadMode = !this.uploadMode;
+    }
+    startAddEntry() {
+        this.addEntryMode = !this.addEntryMode;
+    }
+    onEntryUploadComplete($event) {
+        this.uploadMode = false;
+        this._store.dispatch(new fromEntriesActions.AddSuccessAction($event[1]));
+        this._store.dispatch(new fromEntriesActions.UpdateAction($event[1]));
     }
 }

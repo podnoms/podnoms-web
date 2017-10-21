@@ -46,3 +46,4 @@ src/app/constants/auth0.ts
 .history
 TODO.md
 yarn-error.log
+.scratch

@@ -2,9 +2,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { PodcastEntryModel, PodcastModel } from 'app/models/podcasts.models';
-import { PusherService } from '../../src/app/services/pusher.service';
-import { AuthService } from '../../src/app/services/auth.service';
+
+import { AuthService } from 'app/services/auth.service';
+import { PodcastModel } from 'app/models/podcasts.models';
 
 @Component({
     selector: 'app-podcast-upload-form',
@@ -19,27 +19,18 @@ export class PodcastUploadFormComponent implements OnInit {
         maxFilesize: 4000, // 4Gb
         headers: {
             'Authorization': 'Bearer ' + this._auth.getToken()
-        }
+        },
+        maxFiles: 1
     };
-
-    constructor(private _toastyService: ToastyService, private _pusherService: PusherService,
-                private _auth: AuthService) {
+    constructor(private _toastyService: ToastyService,
+        private _auth: AuthService) {
     }
-
     ngOnInit() {
         this.config.url = `/api/podcast/${this.podcast.slug}/audioupload`;
     }
-
-    onUploadStart() {
-        this._pusherService.subscribeMessage(this.podcast.id + '__process_podcast', 'info_progress', t => {
-            console.log('EntryListItemComponent', 'info_progress', t);
-        });
-    }
-
     onUploadError(event) {
         this._toastyService.error(`Boo\n${event}`);
     }
-
     onUploadSuccess(event) {
         this._toastyService.success('Successfully uploaded audio');
         this.onUploadComplete.emit(event);

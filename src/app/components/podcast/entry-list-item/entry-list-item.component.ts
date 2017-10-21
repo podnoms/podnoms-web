@@ -10,7 +10,7 @@ import { ToastyService } from 'ng2-toasty';
 import * as fromEntriesActions from 'app/actions/entries.actions';
 
 @Component({
-    selector: 'app-entry-list-item',
+    selector: '[app-entry-list-item]',
     templateUrl: './entry-list-item.component.html',
     styleUrls: ['./entry-list-item.component.css']
 })
@@ -20,12 +20,11 @@ export class EntryListItemComponent implements OnInit {
     @Output() entryRemoved = new EventEmitter<PodcastEntryModel>();
 
     percentageProcessed = 0;
-    currentSpeed: '0 kb/s';
+    currentSpeed:string = '';
 
     constructor(
         private _signalrService: SignalRService,
-        private _store: Store<ApplicationState>,
-        private _toastyService: ToastyService) {
+        private _store: Store<ApplicationState>) {
 
     }
     ngOnInit() {

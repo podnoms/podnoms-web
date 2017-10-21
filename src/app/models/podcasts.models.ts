@@ -1,4 +1,3 @@
-import {UUID} from 'angular2-uuid';
 
 export class PodcastModel {
     id?: number;
@@ -15,6 +14,7 @@ export class PodcastEntryModel {
     podcastId: number;
     slug?: string;
     uid?: string;
+    createDate?: string;
     author?: string;
     title?: string;
     description?: string;
@@ -29,6 +29,5 @@ export class PodcastEntryModel {
         this.podcastId = podcastId;
         this.sourceUrl = sourceUrl;
         this.processed = false;
-        this.uid = UUID.UUID();
     }
 }
