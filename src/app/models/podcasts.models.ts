@@ -12,7 +12,6 @@ export class PodcastModel {
 export class PodcastEntryModel {
     id?: number;
     podcastId: number;
-    slug?: string;
     uid?: string;
     createDate?: string;
     author?: string;

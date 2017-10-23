@@ -20,7 +20,7 @@ export class EntryListItemComponent implements OnInit {
     @Output() entryRemoved = new EventEmitter<PodcastEntryModel>();
 
     percentageProcessed = 0;
-    currentSpeed:string = '';
+    currentSpeed: string = '';
 
     constructor(
         private _signalrService: SignalRService,
@@ -42,6 +42,7 @@ export class EntryListItemComponent implements OnInit {
     deleteEntry() {
         this._store.dispatch(new fromEntriesActions.DeleteAction(this.entry.id));
     }
-    saveTitle($event: Event) {
+    updateTitle($event: Event) {
+        this._store.dispatch(new fromEntriesActions.UpdateAction(this.entry));
     }
 }

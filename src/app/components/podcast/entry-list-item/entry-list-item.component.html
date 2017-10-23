@@ -5,7 +5,8 @@
     </div>
 </td>
 <td>
-    <div>{{entry.title}}</div>
+    <!-- <div>{{entry.title}}</div> -->
+    <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="updateTitle($event)" name="title" size="32"></inline-editor>
     <div class="small text-muted">
         <span>{{entry.processingStatus}}</span>| {{entry.createDate | amTimeAgo}}
     </div>
