@@ -46,6 +46,27 @@ export function reducer(state = initialState, action: podcastActions.Actions): S
                 selectedPodcast: action.payload
             };
         }
+        case podcastActions.SELECT: {
+            const podcast = state.results.filter(function (item) {
+                return item.slug === action.payload;
+            })[0];
+            return {
+                ...state,
+                selectedPodcast: podcast,
+                loading: false,
+            };
+        }
+        case podcastActions.DELETE_SUCCESS:
+            const dsNewEntities = state.results.filter(function (item) {
+                return item.id != action.payload;
+            });
+            return {
+                ...state,
+                entities: _.keyBy(dsNewEntities, 'id'),
+                results: dsNewEntities,
+                selectedPodcast: dsNewEntities[0],
+                loading: false,
+            };
         default: {
             return state;
         }

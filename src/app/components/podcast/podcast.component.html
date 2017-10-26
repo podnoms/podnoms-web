@@ -2,7 +2,16 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item active">{{podcast.title}}</li>
         <li class="breadcrumb-menu">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <div class="btn-group" role="group" aria-label="Podcast actions">
+                <a [routerLink]="['/podcasts', podcast.slug, 'edit']" class="btn btn-secondary btn-outline">
+                    <i class="icon-pencil" aria-hidden="true"></i>
+                </a>
+                <a (click)="podcastDeleteDialog.show()" class="btn btn-secondary btn-outline-danger">
+                    <i class="icon-close" aria-hidden="true"></i>
+                </a>
+            </div>
+            |
+            <div class="btn-group" role="group" aria-label="Podcast actions">
                 <a class="btn btn-secondary btn-outline-warning" [href]="podcast.rssUrl" target="_blank">
                     <i class="text-warning fa fa-rss"></i>
                 </a>
@@ -14,17 +23,11 @@
     <div class="card">
         <app-podcast-upload-form *ngIf="uploadMode" [podcast]="podcast" (onUploadComplete)="onEntryUploadComplete($event)">
         </app-podcast-upload-form>
-        <div class="input-group" *ngIf="addEntryMode">
-            <input type="text" id="input2-group2" name="entry-url" 
-            [(ngModel)]="newEntrySourceUrl" class="form-control" placeholder="New entry URL">
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-primary" (click)="addEntry(podcast)">
-                    <i class="fa fa-plus-circle"></i> Submit</button>
-            </span>
-        </div>
+        <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)">
+        </app-podcast-add-url-form>
         <table class="table table-hover table-outline mb-0 hidden-sm-down">
             <tbody>
-                <tr *ngFor="let e of entries$ | async" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
+                <tr *ngFor="let e of entries$ | async | orderBy : '-id'" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
                 </tr>
             </tbody>
         </table>
@@ -41,7 +44,7 @@
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
                     </button>
-                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(); podcastDeleteDialog.hide()">Yes
+                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
                     </button>
                 </div>
             </div>

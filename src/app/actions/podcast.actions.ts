@@ -48,9 +48,35 @@ export class AddPodcastSuccesAction implements Action {
     constructor(public payload: PodcastModel) {
     }
 }
+//#region Select
+export const SELECT = '[Podcasts] Select';
+export class SelectAction implements Action {
+    readonly type = SELECT;
+    constructor(public payload: string) {
+    }
+}
+//#endregion
+//#region Delete
+export const DELETE = '[Podcasts] Delete';
+export const DELETE_SUCCESS = '[Podcasts] Delete Success';
+export const DELETE_FAIL = '[Podcasts] Delete Fail';
+export class DeleteAction implements Action {
+    readonly type = DELETE;
+    constructor(public payload: number) {
+    }
+}
+export class DeleteSuccessAction implements Action {
+    readonly type = DELETE_SUCCESS;
+    constructor(public payload: number) { }
+}
+//#endregion
 export type Actions =
     | LoadPodcastsAction
     | LoadPodcastsSuccessAction
+    | LoadPodcastsFailAction
+    | SelectAction
+    | DeleteAction
+    | DeleteSuccessAction
     | LoadPodcastsFailAction
     | GetPodcastAction
     | GetPodcastSuccessAction;

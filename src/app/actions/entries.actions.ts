@@ -8,15 +8,15 @@ export const LOAD_SUCCESS = '[Entries] Load Success';
 export const LOAD_FAIL = '[Entries] Load Fail';
 export class LoadAction implements Action {
     readonly type = LOAD;
-    constructor(public podcast: string) { };
+    constructor(public podcast: string) {}
 }
 export class LoadSuccessAction implements Action {
     readonly type = LOAD_SUCCESS;
-    constructor(public payload: PodcastEntryModel[]) { }
+    constructor(public payload: PodcastEntryModel[]) {}
 }
 export class LoadFailAction implements Action {
     readonly type = LOAD_FAIL;
-    constructor(public payload: any) { }
+    constructor(public payload: any) {}
 }
 //#endregion
 //#region Add
@@ -26,12 +26,14 @@ export const ADD_FAIL = '[Entries] Add Entry Fail';
 export class AddAction implements Action {
     readonly type = ADD;
     constructor(public payload: any) {
-        console.log(payload);
+        console.log('EntryReducer', 'AddAction', payload);
     }
 }
 export class AddSuccessAction implements Action {
     readonly type = ADD_SUCCESS;
-    constructor(public payload: PodcastEntryModel) { }
+    constructor(public payload: PodcastEntryModel) {
+        console.log('EntryReducer', 'AddSuccessAction', payload);
+    }
 }
 //#endregion
 //#region Update
@@ -46,7 +48,7 @@ export class UpdateAction implements Action {
 }
 export class UpdateSuccessAction implements Action {
     readonly type = UPDATE_SUCCESS;
-    constructor(public payload: PodcastEntryModel) { }
+    constructor(public payload: PodcastEntryModel) {}
 }
 //#endregion
 //#region Delete
@@ -55,12 +57,11 @@ export const DELETE_SUCCESS = '[Entries] Delete Entry Success';
 export const DELETE_FAIL = '[Entries] Delete Entry Fail';
 export class DeleteAction implements Action {
     readonly type = DELETE;
-    constructor(public payload: number) {
-    }
+    constructor(public payload: number) {}
 }
 export class DeleteSuccessAction implements Action {
     readonly type = DELETE_SUCCESS;
-    constructor(public payload: number) { }
+    constructor(public payload: number) {}
 }
 //#endregion
 export type Actions =

@@ -33,6 +33,6 @@ export class PodcastUploadFormComponent implements OnInit {
     }
     onUploadSuccess(event) {
         this._toastyService.success('Successfully uploaded audio');
-        this.onUploadComplete.emit(event);
+        this.onUploadComplete.emit(event[1]);
     }
 }
