@@ -1,3 +1,5 @@
+import { PodcastUploadFormComponent } from './components/podcast/podcast-upload-form/podcast-upload-form.component';
+import { PodcastAddUrlFormComponent } from './components/podcast/podcast-add-url-form/podcast-add-url-form.component';
 import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,7 +26,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
 import { ProfileService } from './services/profile.service';
-// import { PusherService } from './services/pusher.service';
+import { MomentModule } from 'angular2-moment';
 import { FilterEntryPipe } from './pipes/filter-entry.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { PodcastComponent } from './components/podcast/podcast.component';
@@ -38,11 +40,15 @@ import { SignalRService } from 'app/services/signalr.service';
 import { AppRoutingModule } from 'app/app.router';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-    return new AuthHttp(new AuthConfig({
-        noClientCheck: true,
-        globalHeaders: [{ 'Content-Type': 'application/json' }],
-        tokenGetter: (() => localStorage.getItem('token')),
-    }), http, options);
+    return new AuthHttp(
+        new AuthConfig({
+            noClientCheck: true,
+            globalHeaders: [{ 'Content-Type': 'application/json' }],
+            tokenGetter: () => localStorage.getItem('token')
+        }),
+        http,
+        options
+    );
 }
 
 @NgModule({
@@ -57,7 +63,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
         EntryListItemComponent,
         PodcastAddFormComponent,
-        // PodcastUploadFormComponent,
+        PodcastUploadFormComponent,
+        PodcastAddUrlFormComponent,
         DebugComponent,
         SidebarComponent
     ],
@@ -68,7 +75,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         FormsModule,
         InlineEditorModule,
         DropzoneModule.forRoot(),
-
+        MomentModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
@@ -91,11 +98,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProfileService,
         PodcastService,
         ImageService,
-        DebugService,
+        DebugService
         // PusherService,
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule {}

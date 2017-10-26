@@ -1,12 +1,13 @@
+import { UpdateAction, AddAction } from './../../actions/entries.actions';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'app/store';
-
+import { HostListener } from '@angular/core';
 
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
@@ -17,39 +18,64 @@ import * as fromEntriesActions from 'app/actions/entries.actions';
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.css']
 })
-export class PodcastComponent  {
+export class PodcastComponent {
     selectedPodcast$: Observable<PodcastModel>;
     entries$: Observable<PodcastEntryModel[]>;
-    newEntrySourceUrl: string;
     uploadMode = false;
+    urlMode = false;
+
+    @HostListener('document:keyup', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            this.uploadMode = false;
+            this.urlMode = false;
+        }
+    }
 
     constructor(
         private _rootComp: AppComponent,
         private _store: Store<ApplicationState>,
-        router: ActivatedRoute,
-        private _toastyService: ToastyService) {
-        this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
+        route: ActivatedRoute
+    ) {
+        this._rootComp.cssClass =
+            'app header-fixed aside-menu-fixed aside-menu-hidden';
 
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
-        this.entries$ = _store.select(fromPodcast.getEntries);
+        this.entries$ = _store.select(fromPodcast.getEntries).do(p => {
+            console.log(p);
+        });
 
-        router.params.subscribe(params => {
+        route.params.subscribe(params => {
             _store.dispatch(new fromEntriesActions.LoadAction(params['slug']));
+            _store.dispatch(
+                new fromPodcastActions.SelectAction(params['slug'])
+            );
         });
     }
-    addEntry(podcast) {
-        const model = new PodcastEntryModel(podcast.id, this.newEntrySourceUrl);
-        this._store.dispatch(new fromEntriesActions.AddAction({
-            podcastId: podcast.id, sourceUrl: this.newEntrySourceUrl
-        }));
-    }
-    deletePodcast() {
+    deletePodcast(podcast: PodcastModel) {
         console.log('PodcastComponent', 'deletePodcast');
+        this._store.dispatch(new fromPodcastActions.DeleteAction(podcast.id));
     }
     deleteEntry(entry: PodcastEntryModel) {
         this._store.dispatch(new fromEntriesActions.DeleteAction(entry.id));
     }
     startUpload() {
+        this.urlMode = false;
         this.uploadMode = !this.uploadMode;
+    }
+    startAddEntry() {
+        this.uploadMode = false;
+        this.urlMode = !this.urlMode;
+    }
+    onEntryUploadComplete(entry: PodcastEntryModel) {
+        this.uploadMode = false;
+        // entry has already been added on the backend from the upload component
+        // so do a funky success/update dance
+        this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
+        this._store.dispatch(new fromEntriesActions.UpdateAction(entry));
+    }
+    onUrlAddComplete(entry: PodcastEntryModel) {
+        this.urlMode = false;
+        this._store.dispatch(new fromEntriesActions.AddAction(entry));
     }
 }

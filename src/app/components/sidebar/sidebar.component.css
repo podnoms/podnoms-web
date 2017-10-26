@@ -1,18 +1,31 @@
-img.sidebar-icon {
-    width: 32px;
-    height: 32px;
+ img.sidebar-icon {
+     width: 32px;
+     height: 32px;
+     margin: 0 10px;
+     border-radius: 50em;
+ }
 
-    margin: 0 10px;
-    border-radius: 50em;
-}
+ .nav-item li {
+     cursor: pointer;
+     position: relative;
+     left: 0;
+     background-color: #EEE;
+     margin: .5em;
+     padding: .3em 0;
+     height: 1.6em;
+     border-radius: 4px;
+ }
 
-.nav-item li {                                                                                                                                                                 
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    background-color: #EEE;
-    margin: .5em;
-    padding: .3em 0;
-    height: 1.6em;
-    border-radius: 4px;
-}
+ .list-inline,
+ .list-unstyled {
+     padding-left: 0;
+     list-style: none
+ }
+
+ .list-inline-item {
+     display: inline-block
+ }
+
+ .list-inline-item:not(:last-child) {
+     margin-right: 5px
+ }

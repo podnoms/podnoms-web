@@ -1,53 +1,40 @@
-<td class="text-center entry-avatar">
+<td class="text-center">
     <div class="avatar">
-        <i *ngIf="entry.processingStatus==='Accepted'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
-        <i *ngIf="entry.processingStatus==='Downloading'" class="fa fa-cog fa-spin fa-2x fa-fw text-warning"></i>
-        <i *ngIf="entry.processingStatus==='Processing'" class="fa fa-cog fa-spin fa-2x fa-fw text-danger"></i>
-        <i *ngIf="entry.processingStatus==='Uploading'" class="fa fa-cog fa-spin fa-2x fa-fw text-success"></i>
-        <img *ngIf="entry.processingStatus==='Processed'" class="rounded-circle podcast-entry-table-image"
-             [src]="entry.imageUrl">
+        <img [src]="entry.imageUrl" class="img-avatar" alt="">
+        <span class="avatar-status badge-success"></span>
     </div>
 </td>
-<td class="entry-title">
-    <h4 *ngIf="entry.processingStatus==='Accepted'">Accepted</h4>
-    <h4 *ngIf="entry.processingStatus==='Downloading'">{{entry.sourceUrl}}</h4>
-    <h4 *ngIf="entry.processingStatus==='Processing'">{{entry.title}}</h4>
-    <h4 *ngIf="entry.processingStatus==='Uploading'">{{entry.title}}</h4>
-    <h4 *ngIf="entry.processingStatus==='Processed'">{{entry.title}}
-        <!-- TODO: <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="saveTitle($event)" size="50"></inline-editor> -->
-    </h4>
+<td>
+    <!-- <div>{{entry.title}}</div> -->
+    <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="updateTitle($event)" name="title" size="32"></inline-editor>
+    <div class="small text-muted">
+        <span>{{entry.processingStatus}}</span>| {{entry.createDate | amTimeAgo}}
+    </div>
 </td>
-<td class="entry-status">
-    <h4 *ngIf="entry.processingStatus==='Downloading'">Downloading..</h4>
-    <h4 *ngIf="entry.processingStatus==='Processing' || entry.processingStatus==='Uploading'">
-        <div class="clearfix">
-            <div class="float-left">
-                <strong>{{percentageProcessed}}%</strong>
-            </div>
-            <div class="float-right">
-                <small class="text-muted">{{currentSpeed}}</small>
-            </div>
+<td *ngIf="entry.processingStatus!=='Processed'">
+    <div class="clearfix">
+        <div class="float-left">
+            <strong>{{percentageProcessed}}%</strong>
         </div>
-        <div class="progress progress-xs">
-            <div class="progress-bar bg-success" role="progressbar"
-                 [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed" aria-valuemin="0"
-                 aria-valuemax="100">
-            </div>
+        <div class="float-right">
+            <small class="text-muted">{{entry.processingStatus}}: {{currentSpeed}}</small>
         </div>
-        <small *ngIf="entry.processingStatus==='Processing'">Processing</small>
-        <small *ngIf="entry.processingStatus==='Uploading'">Uploading</small>
-    </h4>
-    <h4 *ngIf="entry.processingStatus==='Processed'">
-        <audio controls preload="none">
-            <source src="{{entry.audioUrl}}" type="audio/mpeg"/>
-            <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
-        </audio>
-    </h4>
+    </div>
+    <div class="progress progress-xs">
+        <div class="progress-bar bg-success" role="progressbar"
+             [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed"
+             aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
 </td>
-<td  class="entry-tools">
+<td *ngIf="entry.processingStatus==='Processed'">
+    <audio controls preload="none">
+        <source src="{{entry.audioUrl}}" type="audio/mpeg"/>
+        <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
+    </audio>
+</td>
+<td class="text-center">
     <a class="btn btn-outline btn-outline-danger" (click)="entryDeleteDialog.show()"><i class="fa fa-remove"></i></a>
 </td>
-
 
 <div class="modal fade" bsModal #entryDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">

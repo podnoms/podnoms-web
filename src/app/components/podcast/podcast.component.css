@@ -1,10 +1,12 @@
 app-podcast-upload-form {
-    width: 100%;
+    width: 60%;
 }
-.podcast-image{
+
+.podcast-image {
     height: 35px;
     margin: 0 10px;
 }
-.breadcrumb{
-    margin-bottom: 0px;
+
+ol {
+    margin-bottom: 0;
 }
