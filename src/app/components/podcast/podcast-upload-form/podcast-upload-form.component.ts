@@ -17,6 +17,7 @@ export class PodcastUploadFormComponent implements OnInit {
     config: DropzoneConfigInterface = {
         acceptedFiles: 'audio/*',
         maxFilesize: 4000, // 4Gb
+        timeout: 1000 * (60 * 120), /// 2 hours
         headers: {
             'Authorization': 'Bearer ' + this._auth.getToken()
         },
