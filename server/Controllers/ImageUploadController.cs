@@ -65,7 +65,7 @@ namespace PodNoms.Api.Controllers
                 var imageUrl = await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
                     destinationFile, (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
 
-                _repository.AddOrUpdateAsync(podcast);
+                await _repository.AddOrUpdateAsync(podcast);
 
                 await this._unitOfWork.CompleteAsync();
 
