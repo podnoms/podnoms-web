@@ -1,0 +1,18 @@
+version: '2'
+services:
+  nginx:
+    restart: "always"
+    build: ./nginx/
+    ports:
+        - "80:80"
+        - "443:443"
+    links:
+        - "api:api"
+    volumes:
+        - /etc/letsencrypt:/etc/letsencrypt
+        - /var/lib/letsencrypt:/var/lib/letsencrypt
+  api:
+    image: fergalmoran/podnoms.api
+    container_name: api
+    expose:
+        - 5000

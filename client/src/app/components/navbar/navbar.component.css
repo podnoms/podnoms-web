@@ -1,0 +1,9 @@
+.app-header.navbar .navbar-brand {
+    background-size: 90% !important;
+    background-color: #ffffff;
+    border-bottom: 1px solid #d1d4d7;
+}
+
+.btn {
+    padding-top: 0px !important;
+}

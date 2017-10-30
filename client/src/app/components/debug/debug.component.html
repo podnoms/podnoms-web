@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-block">
+                <input type="text" id="text" [(ngModel)]="realtimeMessage">
+                <button class="btn btn-primary" (click)="sendMessage()">Send Realtime</button>
+                <ul class="list-unstyled">
+                    <li *ngFor="let message of messagesReceived">
+                        {{message}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
