@@ -24,7 +24,7 @@ export class EntryListItemComponent implements OnInit {
     constructor(private _signalrService: SignalRService, private _store: Store<ApplicationState>) {}
     ngOnInit() {
         if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
-            this._signalrService.init(`${environment.apiHost}hubs/audioprocessing`);
+            this._signalrService.init(`${environment.signalRHost}hubs/audioprocessing`);
 
             const updateChannel: string = `${this.entry.uid}__progress_update`;
             const processedChannel: string = `${this.entry.uid}__info_processed`;

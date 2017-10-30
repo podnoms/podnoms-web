@@ -17,7 +17,7 @@ export class DebugComponent implements OnInit {
 
     ngOnInit() {
 
-        this._signalRService.init(`${environment.apiHost}hubs/debug`);
+        this._signalRService.init(`${environment.signalRHost}hubs/debug`);
         this._signalRService.connection.on('Send', data => {
             console.log('DebugService', 'signalr', data);
             this.messagesReceived.push(data);
