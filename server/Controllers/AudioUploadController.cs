@@ -73,7 +73,7 @@ namespace PodNoms.Api.Controllers
                 };
 
                 entry.AudioUrl = await CachedFormFileStorage.CacheItem(file);
-                _entryRepository.AddOrUpdateAsync(entry);
+                await _entryRepository.AddOrUpdateAsync(entry);
                 await _unitOfWork.CompleteAsync();
 
                 BackgroundJob.Enqueue<IAudioUploadProcessService>(service => service.UploadAudio(entry.Id));
