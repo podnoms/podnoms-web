@@ -57,10 +57,12 @@ namespace PodNoms.Api.Controllers
             }
         }
         [HttpGet("all/{podcastSlug}")]
-        public async Task<IEnumerable<PodcastEntryViewModel>> GetAllForSlug(string podcastSlug)
+        public async Task<IActionResult> GetAllForSlug(string podcastSlug)
         {
             var entries = await _repository.GetAllAsync(podcastSlug);
-            return _mapper.Map<List<PodcastEntry>, List<PodcastEntryViewModel>>(entries.ToList());
+            var results = _mapper.Map<List<PodcastEntry>, List<PodcastEntryViewModel>>(entries.ToList());
+
+            return Ok(results);
         }
 
         [HttpPost]
