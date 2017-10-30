@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/DTDs/Podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/">
+<channel>
+    <title> {{title}} </title>
+    <description> {{description}} </description>
+    <itunes:author>{{author}} </itunes:author>
+    <itunes:summary>Podcast {{title}} from PodNoms </itunes:summary>
+    <itunes:category>{{title}}</itunes:category>
+    <link>{{link}}</link>
+    <itunes:image href="{{image}}" />
+    <pubDate> {{publishDate}} </pubDate>
+    <language>{{language}}</language>
+    <copyright>{{copyright}}</copyright>
+    {{#each Items}}
+    <item>
+        <title> {{title}} </title>
+        <description>{{description}}</description>
+        <itunes:author>{{author}}</itunes:author>
+        <itunes:summary>{{description}}</itunes:summary>
+        <summary>{{description}}</summary>
+        <pubDate> {{updateDate}}</pubDate>
+        <enclosure url="{{audioUrl}}" length="{{audioFileSize}}" type="audio/mpeg" /> 
+    </item>
+    {{/each}}
+</channel>
+</rss>
