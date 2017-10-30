@@ -1,0 +1,18 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a type="button" [routerLink]="['add']" class="btn btn-primary " style="width: 100%;">
+                    <i class="fa fa-plus"></i> Add Podcast
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li class="nav-title">My Podcasts</li>
+            <li class="nav-item" [routerLinkActive]="['open']" *ngFor="let podcast of podcasts$ | async | orderBy : '-id'">
+                <a class="nav-link" href="#" [routerLinkActive]="['active']" [routerLink]="['/podcasts', podcast.slug]">
+                    <img class="sidebar-icon" [src]="podcast.imageUrl">&nbsp; {{podcast.title}}
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

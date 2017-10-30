@@ -1,0 +1,7 @@
+sudo npm uninstall -g @angular/cli
+sudo npm cache clean
+sudo npm install --unsafe-perm -g @angular/cli@latest
+
+rm -rf node_modules
+yarn add @angular/cli
+yarn install
