@@ -27,7 +27,7 @@ namespace PodNoms.Api.Providers
 
             CreateMap<PodcastEntry, PodcastEntryViewModel>()
                 .ForMember(
-                    v => v.AudioUrl,
+                    src => src.AudioUrl,
                     e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
                     
             CreateMap<User, ProfileViewModel>();
@@ -37,7 +37,6 @@ namespace PodNoms.Api.Providers
                 .ForMember(v => v.ImageUrl, opt => opt.Ignore())
             ;
             CreateMap<PodcastEntryViewModel, PodcastEntry>()
-                .ReverseMap()
                 .ForMember(
                     e => e.ImageUrl,
                     opt => opt.MapFrom(m => m.ImageUrl))
