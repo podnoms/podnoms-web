@@ -27,8 +27,8 @@ namespace PodNoms.Api.Providers
 
             CreateMap<PodcastEntry, PodcastEntryViewModel>()
                 .ForMember(
-                    v => v.AudioUrl,
-                    e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
+                    src => src.AudioUrl,
+                    e => e.MapFrom(m => $"ArgleBargle{m.AudioUrl}"));
                     
             CreateMap<User, ProfileViewModel>();
 
