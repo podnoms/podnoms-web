@@ -41,10 +41,7 @@ export class PodcastComponent {
             'app header-fixed aside-menu-fixed aside-menu-hidden';
 
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
-        this.entries$ = _store.select(fromPodcast.getEntries).do(p => {
-            console.log(p);
-        });
-
+        this.entries$ = _store.select(fromPodcast.getEntries);
         route.params.subscribe(params => {
             _store.dispatch(new fromEntriesActions.LoadAction(params['slug']));
             _store.dispatch(

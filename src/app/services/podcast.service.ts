@@ -29,6 +29,9 @@ export class PodcastService {
         return this._http.post('api/podcast', data)
             .map(res => res.json());
     }
+    updatePodcast(podcast: PodcastModel) {
+        return this._http.put('api/podcast/', podcast);
+    }
     deletePodcast(id: number) {
         return this._http.delete('api/podcast/' + id);
     }

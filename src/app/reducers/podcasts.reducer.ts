@@ -16,7 +16,7 @@ export const initialState: State = {
 }
 export function reducer(state = initialState, action: podcastActions.Actions): State {
     switch (action.type) {
-        case podcastActions.LOAD_PODCASTS: {
+        case podcastActions.LOAD: {
             return {
                 ...state,
                 entities: {},
@@ -25,7 +25,7 @@ export function reducer(state = initialState, action: podcastActions.Actions): S
                 selectedPodcast: null
             }
         }
-        case podcastActions.LOAD_PODCASTS_SUCCESS: {
+        case podcastActions.LOAD_SUCCESS: {
             const ret = {
                 loading: false,
                 entities: _.keyBy(action.payload, 'id'),
@@ -34,13 +34,13 @@ export function reducer(state = initialState, action: podcastActions.Actions): S
             };
             return ret;
         }
-        case podcastActions.LOAD_PODCASTS_FAIL: {
+        case podcastActions.LOAD_FAIL: {
             return {
                 ...state,
                 loading: false,
             };
         }
-        case podcastActions.GET_PODCAST_SUCCESS: {
+        case podcastActions.GET_SUCCESS: {
             return {
                 ...state,
                 selectedPodcast: action.payload

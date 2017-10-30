@@ -19,13 +19,14 @@ export class PodcastUploadFormComponent implements OnInit {
         maxFilesize: 4000, // 4Gb
         timeout: 1000 * (60 * 120), /// 2 hours
         headers: {
-            'Authorization': 'Bearer ' + this._auth.getToken()
+            Authorization: 'Bearer ' + this._auth.getToken()
         },
         maxFiles: 1
     };
-    constructor(private _toastyService: ToastyService,
-        private _auth: AuthService) {
-    }
+    constructor(
+        private _toastyService: ToastyService,
+        private _auth: AuthService
+    ) {}
     ngOnInit() {
         this.config.url = `/api/podcast/${this.podcast.slug}/audioupload`;
     }

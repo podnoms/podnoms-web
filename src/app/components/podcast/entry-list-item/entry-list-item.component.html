@@ -1,38 +1,45 @@
-<td class="text-center">
-    <div class="avatar">
+<td class="text-center d-inline-block col-1">
+    <div *ngIf="entry.processingStatus === 'Accepted'">
+        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+    <div class="avatar" *ngIf="entry.processingStatus !== 'Accepted'">
         <img [src]="entry.imageUrl" class="img-avatar" alt="">
         <span class="avatar-status badge-success"></span>
     </div>
 </td>
-<td>
-    <!-- <div>{{entry.title}}</div> -->
+<td class="d-inline-block col-7">
     <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="updateTitle($event)" name="title" size="32"></inline-editor>
     <div class="small text-muted">
         <span>{{entry.processingStatus}}</span>| {{entry.createDate | amTimeAgo}}
     </div>
 </td>
-<td *ngIf="entry.processingStatus!=='Processed'">
-    <div class="clearfix">
-        <div class="float-left">
-            <strong>{{percentageProcessed}}%</strong>
+<td class="d-inline-block col-3">
+    <span *ngIf="entry.processingStatus === 'Accepted'" style="width: 100%">
+        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+    </span>
+    <span *ngIf="entry.processingStatus!=='Processed' && entry.processingStatus !== 'Accepted'" style="width: 100%">
+        <div class="clearfix">
+            <div class="float-left">
+                <strong>{{percentageProcessed}}%</strong>
+            </div>
+            <div class="float-right">
+                <small class="text-muted">{{entry.processingStatus}}: {{currentSpeed}}</small>
+            </div>
         </div>
-        <div class="float-right">
-            <small class="text-muted">{{entry.processingStatus}}: {{currentSpeed}}</small>
+        <div class="progress progress-xs">
+            <div class="progress-bar bg-success" role="progressbar" [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed"
+                aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-    </div>
-    <div class="progress progress-xs">
-        <div class="progress-bar bg-success" role="progressbar"
-             [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed"
-             aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+    </span>
+    <span *ngIf="entry.processingStatus==='Processed'" style="width: 100%">
+        <audio controls preload="none">
+            <source src="{{entry.audioUrl}}" type="audio/mpeg" />
+            <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
+        </audio>
+    </span>
 </td>
-<td *ngIf="entry.processingStatus==='Processed'">
-    <audio controls preload="none">
-        <source src="{{entry.audioUrl}}" type="audio/mpeg"/>
-        <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
-    </audio>
-</td>
-<td class="text-center">
+
+<td class="text-center d-inline-block col-1">
     <a class="btn btn-outline btn-outline-danger" (click)="entryDeleteDialog.show()"><i class="fa fa-remove"></i></a>
 </td>
 
@@ -47,8 +54,7 @@
             </div>
             <div class="modal-body">
                 <button type="button" class="btn btn-primary pull-right" (click)="entryDeleteDialog.hide()">No</button>
-                <button type="button" class="btn btn-danger pull-right"
-                        (click)="deleteEntry(); entryDeleteDialog.hide()">Yes
+                <button type="button" class="btn btn-danger pull-right" (click)="deleteEntry(); entryDeleteDialog.hide()">Yes
                 </button>
             </div>
         </div>

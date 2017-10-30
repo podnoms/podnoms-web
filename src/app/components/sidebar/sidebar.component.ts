@@ -23,10 +23,10 @@ export class SidebarComponent {
         this.podcasts$ = _store
             .skip(1)
             .map(s => s.podcasts.results);
-        this._store.dispatch(new fromPodcastActions.LoadPodcastsAction());
+        this._store.dispatch(new fromPodcastActions.LoadAction());
     }
     onSelect(podcast) {
-        this._store.dispatch(new fromPodcastActions.GetPodcastAction(podcast.slug));
+        this._store.dispatch(new fromPodcastActions.GetAction(podcast.slug));
         return false;
     }
     deletePodcast(podcast) {

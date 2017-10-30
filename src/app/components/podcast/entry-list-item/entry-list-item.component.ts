@@ -1,10 +1,10 @@
-import { environment } from './../../../../environments/environment';
-import { ApplicationState } from './../../../store/index';
+import { environment } from 'environments/environment';
+import { ApplicationState } from 'app/store/index';
 import { Store } from '@ngrx/store';
-import { SignalRService } from './../../../services/signalr.service';
-import { PodcastModel } from '../../../models/podcasts.models';
+import { SignalRService } from 'app/services/signalr.service';
+import { PodcastModel } from 'app/models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PodcastEntryModel } from '../../../models/podcasts.models';
+import { PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 
 import * as fromEntriesActions from 'app/actions/entries.actions';
@@ -15,26 +15,27 @@ import * as fromEntriesActions from 'app/actions/entries.actions';
     styleUrls: ['./entry-list-item.component.css']
 })
 export class EntryListItemComponent implements OnInit {
-
     @Input() entry: PodcastEntryModel;
     @Output() entryRemoved = new EventEmitter<PodcastEntryModel>();
 
     percentageProcessed = 0;
     currentSpeed: string = '';
 
-    constructor(
-        private _signalrService: SignalRService,
-        private _store: Store<ApplicationState>) {
-
-    }
+    constructor(private _signalrService: SignalRService, private _store: Store<ApplicationState>) {}
     ngOnInit() {
         if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
             this._signalrService.init(`${environment.apiHost}hubs/audioprocessing`);
-            this._signalrService.connection.on(`${this.entry.uid}__progress_update`, (result) => {
+
+            const updateChannel: string = `${this.entry.uid}__progress_update`;
+            const processedChannel: string = `${this.entry.uid}__info_processed`;
+            console.log('EntryListItemComponent', 'updateChannel', updateChannel);
+            console.log('EntryListItemComponent', 'processedChannel', processedChannel);
+
+            this._signalrService.connection.on(updateChannel, result => {
                 this.percentageProcessed = result.percentage;
                 this.currentSpeed = result.currentSpeed;
             });
-            this._signalrService.connection.on(`${this.entry.uid}__info_processed`, (result) => {
+            this._signalrService.connection.on(processedChannel, result => {
                 this._store.dispatch(new fromEntriesActions.UpdateSuccessAction(result));
             });
         }

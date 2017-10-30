@@ -1,3 +1,4 @@
+import { UpdateAction, UPDATE_SUCCESS } from './../actions/entries.actions';
 import { Router } from '@angular/router';
 import { PodcastModel } from 'app/models/podcasts.models';
 import { Injectable } from '@angular/core';
@@ -15,42 +16,43 @@ import 'rxjs/add/operator/do';
 export class PodcastsEffects {
     @Effect()
     get$ = this.actions$
-        .ofType(podcasts.LOAD_PODCASTS)
+        .ofType(podcasts.LOAD)
         .switchMap(payload => this._service.get())
-        .map(res => ({ type: podcasts.LOAD_PODCASTS_SUCCESS, payload: res }))
+        .map(res => ({ type: podcasts.LOAD_SUCCESS, payload: res }))
         .do(res => this.router.navigate(['/podcasts', res.payload[0].slug]))
-        .catch(() => Observable.of({ type: podcasts.LOAD_PODCASTS_FAIL }));
+        .catch(() => Observable.of({ type: podcasts.LOAD_FAIL }));
     @Effect()
     addPodcast$ = this.actions$
-        .ofType(podcasts.ADD_PODCAST)
-        .switchMap((action: podcasts.AddPodcastAction) =>
-            this._service.addPodcast(action.payload)
-        )
-        .map(res => ({ type: podcasts.ADD_PODCAST_SUCCESS, payload: res }))
+        .ofType(podcasts.ADD)
+        .switchMap((action: podcasts.AddAction) => this._service.addPodcast(action.payload))
+        .map(res => ({ type: podcasts.ADD_SUCCESS, payload: res }))
         .do(res => this.router.navigate(['/podcasts', res.payload.slug]));
     @Effect()
     getPodcast$ = this.actions$
-        .ofType(podcasts.GET_PODCAST)
-        .switchMap((action: podcasts.GetPodcastAction) =>
-            this._service.getPodcast(action.payload)
-        )
-        .map(res => ({ type: podcasts.GET_PODCAST_SUCCESS, payload: res }))
-        .catch(() => Observable.of({ type: podcasts.GET_PODCAST_FAIL }));
+        .ofType(podcasts.GET)
+        .switchMap((action: podcasts.GetAction) => this._service.getPodcast(action.payload))
+        .map(res => ({ type: podcasts.GET_SUCCESS, payload: res }))
+        .catch(() => Observable.of({ type: podcasts.GET_FAIL }));
     @Effect()
-    delete$ = this.actions$
-        .ofType(podcasts.DELETE)
-        .switchMap((action: podcasts.DeleteAction) =>
-            this._service
-                .deletePodcast(action.payload)
-                .map(res => ({
-                    type: podcasts.DELETE_SUCCESS,
-                    payload: action.payload
-                }))
-                .catch(() => Observable.of({ type: podcasts.DELETE_FAIL }))
+    update$ = this.actions$.ofType(podcasts.UPDATE).switchMap((action: podcasts.UpdateAction) =>
+        this._service
+            .updatePodcast(action.payload)
+            .map(res => ({
+                type: podcasts.UPDATE_SUCCESS,
+                payload: action.payload
+            }))
+            .do(res => this.router.navigate(['/podcasts', res.payload.slug]))
+            .catch(() => Observable.of({ type: podcasts.UPDATE_FAIL }))
         );
-    constructor(
-        private actions$: Actions,
-        private router: Router,
-        private _service: PodcastService
-    ) {}
+    @Effect()
+    delete$ = this.actions$.ofType(podcasts.DELETE).switchMap((action: podcasts.DeleteAction) =>
+        this._service
+            .deletePodcast(action.payload)
+            .map(res => ({
+                type: podcasts.DELETE_SUCCESS,
+                payload: action.payload
+            }))
+            .catch(() => Observable.of({ type: podcasts.DELETE_FAIL }))
+    );
+    constructor(private actions$: Actions, private router: Router, private _service: PodcastService) {}
 }

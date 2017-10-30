@@ -36,7 +36,7 @@ export function reducer(state = initialState, action: entries.Actions): State {
             };
         }
         case entries.ADD_SUCCESS: {
-            const newResults = state.result;
+            const newResults = _.clone(state.result);
             newResults.push(action.payload);
             const newState = {
                 ...state,
@@ -46,16 +46,17 @@ export function reducer(state = initialState, action: entries.Actions): State {
             return newState;
         }
         case entries.UPDATE_SUCCESS: {
-            const usNewEntities = state.result.map(item => {
+            const newResults = state.result.map(item => {
                 return item.id == action.payload.id
                     ? Object.assign({}, item, action.payload)
                     : item;
             });
-            return {
+            const newState = {
                 ...state,
-                result: usNewEntities,
+                result: newResults,
                 loading: false
             };
+            return newState;
         }
         case entries.DELETE_SUCCESS:
             const dsNewEntities = state.result.filter(function(item) {

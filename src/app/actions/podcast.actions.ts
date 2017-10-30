@@ -1,53 +1,70 @@
 import { PodcastModel } from 'app/models/podcasts.models';
 import { Action } from '@ngrx/store';
 
-export const LOAD_PODCASTS = '[Podcasts] Load';
-export const LOAD_PODCASTS_SUCCESS = '[Podcasts] Load Success';
-export const LOAD_PODCASTS_FAIL = '[Podcasts] Load Fail';
-export const GET_PODCAST = '[Podcasts] Get Podcast';
-export const GET_PODCAST_SUCCESS = '[Podcasts] Get Podcast Success';
-export const GET_PODCAST_FAIL = '[Podcasts] Get Podcast Fail';
-
-export const ADD_PODCAST = '[Podcasts] Add Podcast';
-export const ADD_PODCAST_SUCCESS = '[Podcasts] Add Podcast Success';
-export const ADD_PODCAST_FAIL = '[Podcasts] Add Podcast Fail';
-
-export class LoadPodcastsAction implements Action {
-    readonly type = LOAD_PODCASTS;
+//#region Load
+export const LOAD = '[Podcasts] Load';
+export const LOAD_SUCCESS = '[Podcasts] Load Success';
+export const LOAD_FAIL = '[Podcasts] Load Fail';
+export class LoadAction implements Action {
+    readonly type = LOAD;
 }
 
-export class LoadPodcastsSuccessAction implements Action {
-    readonly type = LOAD_PODCASTS_SUCCESS;
+export class LoadSuccessAction implements Action {
+    readonly type = LOAD_SUCCESS;
 
     constructor(public payload: any) { }
 }
 
-export class LoadPodcastsFailAction implements Action {
-    readonly type = LOAD_PODCASTS_FAIL;
+export class LoadFailAction implements Action {
+    readonly type = LOAD_FAIL;
 
     constructor(public payload: any) { }
 }
-
-export class GetPodcastAction implements Action {
-    readonly type = GET_PODCAST;
+//#endregion
+//#region Get
+export const GET = '[Podcasts] Get Podcast';
+export const GET_SUCCESS = '[Podcasts] Get Podcast Success';
+export const GET_FAIL = '[Podcasts] Get Podcast Fail';
+export class GetAction implements Action {
+    readonly type = GET;
     constructor(public payload: string) { }
 }
 
-export class GetPodcastSuccessAction implements Action {
-    readonly type = GET_PODCAST_SUCCESS;
+export class GetSuccessAction implements Action {
+    readonly type = GET_SUCCESS;
     constructor(public payload: PodcastModel) { }
 }
-
-export class AddPodcastAction implements Action {
-    readonly type = ADD_PODCAST;
+//#endregion
+//#region Add
+export const ADD = '[Podcasts] Add Podcast';
+export const ADD_SUCCESS = '[Podcasts] Add Podcast Success';
+export const ADD_FAIL = '[Podcasts] Add Podcast Fail';
+export class AddAction implements Action {
+    readonly type = ADD;
     constructor(public payload: PodcastModel) {
     }
 }
-export class AddPodcastSuccesAction implements Action {
-    readonly type = ADD_PODCAST_SUCCESS;
+export class AddSuccesAction implements Action {
+    readonly type = ADD_SUCCESS;
     constructor(public payload: PodcastModel) {
     }
 }
+//#endregion
+//#region Update
+export const UPDATE = '[Podcasts] Update Podcast';
+export const UPDATE_SUCCESS = '[Podcasts] Update Podcast Success';
+export const UPDATE_FAIL = '[Podcasts] Update Podcast Fail';
+export class UpdateAction implements Action {
+    readonly type = UPDATE;
+    constructor(public payload: PodcastModel) {
+    }
+}
+export class UpdateSuccessAction implements Action {
+    readonly type = UPDATE_SUCCESS;
+    constructor(public payload: PodcastModel) {
+    }
+}
+//#endregion
 //#region Select
 export const SELECT = '[Podcasts] Select';
 export class SelectAction implements Action {
@@ -71,12 +88,14 @@ export class DeleteSuccessAction implements Action {
 }
 //#endregion
 export type Actions =
-    | LoadPodcastsAction
-    | LoadPodcastsSuccessAction
-    | LoadPodcastsFailAction
+    | LoadAction
+    | LoadSuccessAction
+    | LoadFailAction
     | SelectAction
+    | UpdateAction
+    | UpdateSuccessAction
     | DeleteAction
     | DeleteSuccessAction
-    | LoadPodcastsFailAction
-    | GetPodcastAction
-    | GetPodcastSuccessAction;
+    | LoadFailAction
+    | GetAction
+    | GetSuccessAction;

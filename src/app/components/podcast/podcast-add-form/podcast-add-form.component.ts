@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs/Observable';
-import { AddPodcastAction } from './../../../actions/podcast.actions';
 import { AddAction } from './../../../actions/entries.actions';
 import { ApplicationState } from 'app/store';
 import { Store } from '@ngrx/store';
@@ -35,18 +34,25 @@ export class PodcastAddFormComponent implements OnInit {
             if (params['slug'] === undefined) {
                 this.podcast$ = Observable.of(new PodcastModel());
             } else {
-                this.podcast$ = this._store.select(
-                    fromPodcast.getSelectedPodcast
-                );
-                this._store.dispatch(
-                    new fromPodcastActions.SelectAction(params['slug'])
-                );
+                this.podcast$ = this._store.select(fromPodcast.getSelectedPodcast);
+                this._store.dispatch(new fromPodcastActions.SelectAction(params['slug']));
             }
         });
+        this.podcast$.subscribe(p => {
+            this.image.src = p.imageUrl}
+        );
     }
 
-    submitForm(podcast) {
-        this._store.dispatch(new AddPodcastAction(podcast));
+    submitForm(podcast: PodcastModel) {
+        if (this.imageChanged) {
+            this.uploadPhoto(podcast).subscribe(r => {
+                this._toastyService.info('Image successfully updated!');
+                podcast.imageUrl = r.json().imageUrl;
+                this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
+            });
+        } else {
+            this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
+        }
     }
 
     uploadPhoto(podcast) {
