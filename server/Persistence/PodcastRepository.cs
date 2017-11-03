@@ -66,8 +66,10 @@ namespace PodNoms.Api.Persistence
                         from p in _context.Podcasts
                         select p.Slug);
                 }
+                item.ImageUrl = $"{item.Uid}.jpg";
                 _context.Podcasts.Add(item);
-                var file = await _fileUploader.UploadFile(localFile, _imageStorageSettings.ContainerName, $"{item.Uid}.jpg", null);
+                var file = await _fileUploader.UploadFile(
+                    localFile, _imageStorageSettings.ContainerName, item.ImageUrl, null);
             }
 
             return item;

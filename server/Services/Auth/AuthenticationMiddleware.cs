@@ -15,10 +15,10 @@ namespace PodNoms.Api.Services.Auth
             var userRepository = (IUserRepository)context.HttpContext.RequestServices.GetService(typeof(IUserRepository));
             var unitOfWork = (IUnitOfWork)context.HttpContext.RequestServices.GetService(typeof(IUnitOfWork));
             var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-            if (claimsIdentity != null)
+            if (claimsIdentity != null && context.Request.Headers.ContainsKey("Authorization"))
             {
-                claimsIdentity.AddClaim(new Claim("id_token",
-                    context.Request.Headers["Authorization"][0].Substring(context.Scheme.Name.Length + 1)));
+                var claimToken = context.Request.Headers["Authorization"][0].Substring(context.Scheme.Name.Length + 1);
+                claimsIdentity.AddClaim(new Claim("id_token", claimToken));
 
                 var picture = claimsIdentity.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
                 var name = claimsIdentity.Claims.FirstOrDefault(c => c.Type == "name")?.Value;

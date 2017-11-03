@@ -28,6 +28,8 @@ namespace PodNoms.Api.Services.Storage
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.ConnectionString);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference(containerName);
+            await container.CreateIfNotExistsAsync();
+
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(destinationFile);
 
             var blockSize = 256 * 1024;
@@ -38,7 +40,6 @@ namespace PodNoms.Api.Services.Storage
             if (bytesToUpload < blockSize)
             {
                 await blockBlob.UploadFromFileAsync(sourceFile);
-                Console.WriteLine("It is over"); //this is working OK
             }
             else
             {
