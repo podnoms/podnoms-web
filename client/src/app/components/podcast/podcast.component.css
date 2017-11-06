@@ -10,3 +10,7 @@ app-podcast-upload-form {
 ol {
     margin-bottom: 0;
 }
+
+.border{
+    background: red;
+}

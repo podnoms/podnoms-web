@@ -23,6 +23,7 @@ export class PodcastComponent {
     entries$: Observable<PodcastEntryModel[]>;
     uploadMode = false;
     urlMode = false;
+    firstRun = true;
 
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -32,21 +33,16 @@ export class PodcastComponent {
         }
     }
 
-    constructor(
-        private _rootComp: AppComponent,
-        private _store: Store<ApplicationState>,
-        route: ActivatedRoute
-    ) {
-        this._rootComp.cssClass =
-            'app header-fixed aside-menu-fixed aside-menu-hidden';
-
+    constructor(private _rootComp: AppComponent, private _store: Store<ApplicationState>, route: ActivatedRoute) {
+        this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
         this.entries$ = _store.select(fromPodcast.getEntries);
         route.params.subscribe(params => {
-            _store.dispatch(new fromEntriesActions.LoadAction(params['slug']));
-            _store.dispatch(
-                new fromPodcastActions.SelectAction(params['slug'])
-            );
+            if (params['slug'] !== undefined) {
+                this.firstRun = false;
+                _store.dispatch(new fromEntriesActions.LoadAction(params['slug']));
+                _store.dispatch(new fromPodcastActions.SelectAction(params['slug']));
+            }
         });
     }
     deletePodcast(podcast: PodcastModel) {
