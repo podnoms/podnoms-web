@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs/Observable';
-import { AddAction } from './../../../actions/entries.actions';
 import { ApplicationState } from 'app/store';
 import { Store } from '@ngrx/store';
 import { PodcastModel } from './../../../models/podcasts.models';
@@ -25,8 +24,7 @@ export class PodcastAddFormComponent implements OnInit {
     constructor(
         private _route: ActivatedRoute,
         private _imageService: ImageService,
-        private _store: Store<ApplicationState>,
-        private _toastyService: ToastyService
+        private _store: Store<ApplicationState>
     ) {}
 
     ngOnInit() {
@@ -39,19 +37,22 @@ export class PodcastAddFormComponent implements OnInit {
             }
         });
         this.podcast$.subscribe(p => {
-            this.image.src = p.imageUrl}
-        );
+            this.image.src = p.imageUrl;
+        });
     }
 
     submitForm(podcast: PodcastModel) {
         if (this.imageChanged) {
             this.uploadPhoto(podcast).subscribe(r => {
-                this._toastyService.info('Image successfully updated!');
                 podcast.imageUrl = r.json().imageUrl;
                 this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
             });
         } else {
-            this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
+            if (podcast.id) {
+                this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
+            } else {
+                this._store.dispatch(new fromPodcastActions.AddAction(podcast));
+            }
         }
     }
 

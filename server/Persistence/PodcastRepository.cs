@@ -36,18 +36,11 @@ namespace PodNoms.Api.Persistence
         {
             var ret = await _context.Podcasts
                 .Where(p => p.Slug == slug && p.User.EmailAddress == emailAddress)
+                .Include(p => p.PodcastEntries)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync();
 
             return ret;
-        }
-        public async Task<IEnumerable<Podcast>> GetAllAsync()
-        {
-            var ret = _context.Podcasts
-                .Include(p => p.User)
-                .OrderByDescending(e => e.Id);
-
-            return await ret.ToListAsync();
         }
         public async Task<IEnumerable<Podcast>> GetAllAsync(string emailAddress)
         {
@@ -73,8 +66,10 @@ namespace PodNoms.Api.Persistence
                         from p in _context.Podcasts
                         select p.Slug);
                 }
+                item.ImageUrl = $"{item.Uid}.jpg";
                 _context.Podcasts.Add(item);
-                var file = await _fileUploader.UploadFile(localFile, _imageStorageSettings.ContainerName, $"{item.Uid}.jpg", null);
+                var file = await _fileUploader.UploadFile(
+                    localFile, _imageStorageSettings.ContainerName, item.ImageUrl, null);
             }
 
             return item;

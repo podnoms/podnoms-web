@@ -86,7 +86,6 @@ namespace PodNoms.Api
                 {
                     OnTokenValidated = AuthenticationMiddleware.OnTokenValidated
                 };
-                options.Events = new JwtBearerEvents();
                 options.Events.OnMessageReceived = context =>
                 {
                     StringValues token;

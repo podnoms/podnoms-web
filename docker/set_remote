@@ -1,1 +1,0 @@
-export DOCKER_HOST=tcp://podnoms.com:4243 && export DOCKER_TLS_VERIFY=1
