@@ -33,8 +33,7 @@ export class PodcastComponent {
         }
     }
 
-    constructor(private _rootComp: AppComponent, private _store: Store<ApplicationState>, route: ActivatedRoute) {
-        this._rootComp.cssClass = 'app header-fixed aside-menu-fixed aside-menu-hidden';
+    constructor(private _store: Store<ApplicationState>, route: ActivatedRoute) {
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
         this.entries$ = _store.select(fromPodcast.getEntries);
         route.params.subscribe(params => {
