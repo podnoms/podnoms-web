@@ -26,7 +26,7 @@ export class AuthService {
         },
     });
 
-    constructor() {
+    constructor(private _router: Router) {
         this.readUserFromLocalStorage();
         this.lock.on('authenticated', (authResult) => this.onUserAuthenticated(authResult));
     }
@@ -78,5 +78,7 @@ export class AuthService {
         localStorage.removeItem('profile');
         this.profile = null;
         this.roles = [];
+
+        this._router.navigateByUrl('/');
     }
 }
