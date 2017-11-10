@@ -1,4 +1,4 @@
-<div *ngIf="selectedPodcast$ | async; let podcast; else loading">
+<div class="content" *ngIf="selectedPodcast$ | async; let podcast; else loading">
     <div class="block">
         <div class="block-header block-header-default">
             <h3 class="block-title">{{podcast.title}}</h3>
