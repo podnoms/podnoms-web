@@ -36,7 +36,6 @@ namespace PodNoms.Api.Services.Processor
 
         private async Task __downloader_progress(string userId, string uid, ProcessProgressEvent e)
         {
-            Console.WriteLine($"Progress: {e.Percentage}% Speed: {e.CurrentSpeed} Size: {e.TotalSize}");
             await _sendProgressUpdate(
                 userId,
                 uid,

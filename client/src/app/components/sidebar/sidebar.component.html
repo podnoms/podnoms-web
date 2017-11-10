@@ -24,9 +24,9 @@
             <li class="nav-main-heading">
                 <span>My Podcasts</span>
             </li>
-            <li [routerLinkActive]="['active']" *ngFor="let podcast of podcasts$ | async | orderBy : '-id'">
-                <a [routerLink]="['/podcasts', podcast.slug]">
-                    <i class="si si-cup"></i>
+            <li *ngFor="let podcast of podcasts$ | async | orderBy : '-id'">
+                <a [routerLink]="['/podcasts', podcast.slug]" [routerLinkActive]="['active']">
+                    <img class="sidebar-icon" [src]="podcast.imageUrl">
                     <span class="sidebar-mini-hide">{{podcast.title}}</span>
                 </a>
             </li>
