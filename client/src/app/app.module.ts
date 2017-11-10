@@ -38,6 +38,7 @@ import { EntriesEffects } from './effects/entries.effects';
 import { PodcastService } from './services/podcast.service';
 import { SignalRService } from 'app/services/signalr.service';
 import { AppRoutingModule } from 'app/app.router';
+import { PrettyPrintPipe } from 'app/pipes/pretty-print.pipe';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -60,6 +61,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
         FilterEntryPipe,
         OrderByPipe,
+        PrettyPrintPipe,
 
         EntryListItemComponent,
         PodcastAddFormComponent,
@@ -74,7 +76,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         HttpModule,
         FormsModule,
         InlineEditorModule,
-        DropzoneModule.forRoot(),
+        DropzoneModule,
         MomentModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
 using PodNoms.Api.Persistence;
+using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Services.Hubs;
 using PodNoms.Api.Services.Jobs;
 using PodNoms.Api.Services.Realtime;
@@ -28,7 +29,7 @@ namespace PodNoms.Api.Controllers
 
         public DebugController(IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
                                HubLifetimeManager<DebugHub> hubManager, IUserRepository userRepository,
-                               IOptions<AudioFileStorageSettings> audioFileStorageSettings, 
+                               IOptions<AudioFileStorageSettings> audioFileStorageSettings,
                                IOptions<ImageFileStorageSettings> imageFileStorageSettings)
         {
             this._appSettings = appSettings.Value;
@@ -48,6 +49,7 @@ namespace PodNoms.Api.Controllers
                 CdnUrl = _storageSettings.CdnUrl,
                 AudioContainer = _audioFileStorageSettings.ContainerName,
                 ImageContainer = _imageFileStorageSettings.ContainerName,
+                YouTubeDlVersion = AudioDownloader.GetVersion(),
                 RssUrl = _appSettings.RssUrl
             };
             return new OkObjectResult(config);

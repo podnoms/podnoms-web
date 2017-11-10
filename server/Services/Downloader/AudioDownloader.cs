@@ -8,7 +8,7 @@ using PodNoms.Api.Models.ViewModels;
 
 namespace PodNoms.Api.Services.Downloader
 {
-    public class AudioDownloader : IDisposable
+    public class AudioDownloader
     {
         private readonly string url;
         public dynamic Properties { get; private set; }
@@ -23,18 +23,26 @@ namespace PodNoms.Api.Services.Downloader
         {
             this.url = url;
         }
-        public void Dispose()
+        public static string GetVersion()
         {
-
-            var StartInfo = new ProcessStartInfo
+            var proc = new Process
             {
-                FileName = "pinfo",
-                Arguments = $"argie bargie",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "youtube-dl",
+                    Arguments = $"--version",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
             };
-
+            var br = new StringBuilder();
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                br.Append(proc.StandardOutput.ReadLine());
+            }
+            return br.ToString();
         }
         public string DownloadAudio(string uid)
         {

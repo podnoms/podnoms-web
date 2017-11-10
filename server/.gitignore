@@ -276,6 +276,7 @@ __pycache__/
 
 .vscode/
 .idea/
+krud/
 appsettings.Development.json
 appsettings.Production.json
 Persistence/TempContextFactory.cs
