@@ -2,6 +2,7 @@
 using System.Text;
 using AutoMapper;
 using Hangfire;
+using Hangfire.MemoryStorage;
 using Hangfire.Dashboard;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,6 +45,22 @@ namespace PodNoms.Api
             Configuration = configuration;
         }
 
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            ConfigureServices(services);
+            services.AddHangfire(config =>
+            {
+                config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
+            });
+        }
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            ConfigureServices(services);
+            services.AddHangfire(config =>
+            {
+                config.UseMemoryStorage();
+            });
+        }
         public void ConfigureServices(IServiceCollection services)
         {
             Console.WriteLine($"Configuring services: {Configuration.ToString()}");
@@ -127,12 +144,6 @@ namespace PodNoms.Api
             });
             services.AddSignalR(config =>
             {
-            });
-
-            services.AddHangfire(config =>
-            {
-                config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
-                config.UseColouredConsoleLogProvider();
             });
 
             services.AddCors(options =>
