@@ -21,6 +21,7 @@ namespace PodNoms.Api.Controllers
     {
         private readonly StorageSettings _storageSettings;
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
+        private readonly ApplicationsSettings _applicationsSettings;
         private readonly ImageFileStorageSettings _imageFileStorageSettings;
         private readonly HubLifetimeManager<DebugHub> _hubManager;
         private readonly IUserRepository _userRepository;
@@ -29,11 +30,13 @@ namespace PodNoms.Api.Controllers
 
         public DebugController(IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
                                HubLifetimeManager<DebugHub> hubManager, IUserRepository userRepository,
+                               IOptions<ApplicationsSettings> applicationsSettings,
                                IOptions<AudioFileStorageSettings> audioFileStorageSettings,
                                IOptions<ImageFileStorageSettings> imageFileStorageSettings)
         {
             this._appSettings = appSettings.Value;
             this._storageSettings = settings.Value;
+            this._applicationsSettings = applicationsSettings.Value;
             this._audioFileStorageSettings = audioFileStorageSettings.Value;
             this._imageFileStorageSettings = imageFileStorageSettings.Value;
             this._hubManager = hubManager;
@@ -49,7 +52,8 @@ namespace PodNoms.Api.Controllers
                 CdnUrl = _storageSettings.CdnUrl,
                 AudioContainer = _audioFileStorageSettings.ContainerName,
                 ImageContainer = _imageFileStorageSettings.ContainerName,
-                YouTubeDlVersion = AudioDownloader.GetVersion(),
+                YouTubeDlPath = _applicationsSettings.Downloader,
+                YouTubeDlVersion = AudioDownloader.GetVersion(_applicationsSettings.Downloader),
                 RssUrl = _appSettings.RssUrl
             };
             return new OkObjectResult(config);

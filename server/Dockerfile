@@ -1,12 +1,18 @@
-FROM microsoft/aspnetcore:latest
+FROM microsoft/aspnetcore-build:2.0 AS build-env
 WORKDIR /app
-COPY out .
-RUN apt-get update && apt-get -y upgrade
-# RUN pip install --upgrade youtube_dl
-RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-RUN chmod a+rx /usr/local/bin/youtube-dl
 
-ENV ASPNETCORE_URLS http://*:5000
-EXPOSE 5000
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+COPY NuGet.config ./
+RUN dotnet restore
 
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM fergalmoran/aspnetcore-podnoms
+WORKDIR /app
+
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "PodNoms.Api.dll"]

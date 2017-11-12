@@ -22,4 +22,8 @@ namespace PodNoms.Api.Models
             return AllowedFileTypes.Any(s => s == Path.GetExtension(fileName).ToLower());
         }
     }
+    public class ApplicationsSettings
+    {
+        public string Downloader { get; set; }
+    }
 }

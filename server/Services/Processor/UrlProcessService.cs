@@ -24,12 +24,13 @@ namespace PodNoms.Api.Services.Processor
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntryRepository _repository;
 
+        public ApplicationsSettings _applicationsSettings { get; }
 
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
-             IFileUploader fileUploader, IOptions<AudioFileStorageSettings> audioStorageSettings,
+             IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
              ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher)
         {
-            ;
+            this._applicationsSettings = applicationsSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
         }
@@ -50,7 +51,7 @@ namespace PodNoms.Api.Services.Processor
                 return false;
             }
 
-            var downloader = new AudioDownloader(entry.SourceUrl);
+            var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
             downloader.DownloadInfo();
             if (downloader.Properties != null)
             {
@@ -83,7 +84,7 @@ namespace PodNoms.Api.Services.Processor
             if (entry == null)
                 return false;
 
-            var downloader = new AudioDownloader(entry.SourceUrl);
+            var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
             var outputFile =
             Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 
