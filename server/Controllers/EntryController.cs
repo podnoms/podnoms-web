@@ -48,7 +48,7 @@ namespace PodNoms.Api.Controllers
             {
                 var infoJobId = BackgroundJob.Enqueue<IUrlProcessService>(service => service.GetInformation(entry.Id));
                 var extract = BackgroundJob.ContinueWith<IUrlProcessService>(infoJobId, service => service.DownloadAudio(entry.Id));
-                var upload = BackgroundJob.ContinueWith<IAudioUploadProcessService>(extract, service => service.UploadAudio(entry.Id));
+                var upload = BackgroundJob.ContinueWith<IAudioUploadProcessService>(extract, service => service.UploadAudio(entry.Id, entry.AudioUrl));
             }
             catch (InvalidOperationException ex)
             {

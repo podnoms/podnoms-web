@@ -30,7 +30,7 @@ namespace PodNoms.Api.Services.Processor
             this._fileUploader = fileUploader;
             this._audioStorageSettings = audioStorageSettings.Value;
         }
-        public async Task<bool> UploadAudio(int entryId)
+        public async Task<bool> UploadAudio(int entryId, string localFile)
         {
             var entry = await _repository.GetAsync(entryId);
             if (entry == null)
@@ -42,10 +42,10 @@ namespace PodNoms.Api.Services.Processor
             await _unitOfWork.CompleteAsync();
             try
             {
-                if (File.Exists(entry.AudioUrl))
+                if (File.Exists(localFile))
                 {
-                    var fileName = new FileInfo(entry.AudioUrl).Name;
-                    await _fileUploader.UploadFile(entry.AudioUrl, _audioStorageSettings.ContainerName, fileName,
+                    var fileName = new FileInfo(localFile).Name;
+                    await _fileUploader.UploadFile(localFile, _audioStorageSettings.ContainerName, fileName,
                     async (p, t) =>
                     {
                         if (p % 1 == 0)
