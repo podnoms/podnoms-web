@@ -38,10 +38,15 @@ namespace PodNoms.Api.Services.Processor
                 _logger.LogError($"Unable to find entry with id: {entryId}");
                 return false;
             }
-            entry.ProcessingStatus = ProcessingStatus.Uploading;
+            entry.ProcessingStatus = ProcessingStatus.Uploading;entry.ProcessingStatus = ProcessingStatus.Uploading;
             await _unitOfWork.CompleteAsync();
             try
             {
+                // bit messy but can't figure how to pass youtube-dl job result to this job
+                // so using AudioUrl as a proxy
+                if (string.IsNullOrEmpty(localFile))
+                    localFile = entry.AudioUrl;
+
                 if (File.Exists(localFile))
                 {
                     var fileName = new FileInfo(localFile).Name;
