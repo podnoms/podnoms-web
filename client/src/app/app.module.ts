@@ -7,7 +7,6 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ToastyModule } from 'ng2-toasty';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
@@ -31,7 +30,7 @@ import { FilterEntryPipe } from './pipes/filter-entry.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { PodcastComponent } from './components/podcast/podcast.component';
 import { EntryListItemComponent } from './components/podcast/entry-list-item/entry-list-item.component';
-
+import { DropzoneModule } from './components/shared/dropzone/dropzone.module';
 import { reducers } from './reducers';
 import { PodcastsEffects } from './effects/podcast.effects';
 import { EntriesEffects } from './effects/entries.effects';
@@ -62,7 +61,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         FilterEntryPipe,
         OrderByPipe,
         PrettyPrintPipe,
-
         EntryListItemComponent,
         PodcastAddFormComponent,
         PodcastUploadFormComponent,
@@ -76,11 +74,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         HttpModule,
         FormsModule,
         InlineEditorModule,
-        DropzoneModule,
         MomentModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
+        DropzoneModule,
 
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot([PodcastsEffects, EntriesEffects]),

@@ -3,7 +3,7 @@ import { ApplicationState } from 'app/store';
 import { Store } from '@ngrx/store';
 import { PodcastModel } from './../../../models/podcasts.models';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
 import { ToastyService } from 'ng2-toasty';
 
@@ -23,6 +23,7 @@ export class PodcastAddFormComponent implements OnInit {
 
     constructor(
         private _route: ActivatedRoute,
+        private _router: Router,
         private _imageService: ImageService,
         private _store: Store<ApplicationState>
     ) {}

@@ -26,7 +26,10 @@ export class PodcastsEffects {
         .ofType(podcasts.ADD)
         .switchMap((action: podcasts.AddAction) => this._service.addPodcast(action.payload))
         .map(res => ({ type: podcasts.ADD_SUCCESS, payload: res }))
-        .do(res => this.router.navigate(['/podcasts', res.payload.slug]));
+        .do(res => {
+            debugger;
+            this.router.navigate(['/podcasts', res.payload.slug]);
+        });
     @Effect()
     getPodcast$ = this.actions$
         .ofType(podcasts.GET)

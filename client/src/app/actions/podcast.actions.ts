@@ -44,7 +44,7 @@ export class AddAction implements Action {
     constructor(public payload: PodcastModel) {
     }
 }
-export class AddSuccesAction implements Action {
+export class AddSuccessAction implements Action {
     readonly type = ADD_SUCCESS;
     constructor(public payload: PodcastModel) {
     }
@@ -92,6 +92,8 @@ export type Actions =
     | LoadSuccessAction
     | LoadFailAction
     | SelectAction
+    | AddAction
+    | AddSuccessAction
     | UpdateAction
     | UpdateSuccessAction
     | DeleteAction
