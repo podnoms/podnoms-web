@@ -21,7 +21,8 @@
             </div>
         </div>
         <div class="block-content">
-            <app-podcast-upload-form *ngIf="uploadMode" [podcast]="podcast" (onUploadComplete)="onEntryUploadComplete($event)">
+            <app-podcast-upload-form *ngIf="uploadMode" [podcast]="podcast" 
+                    (onUploadComplete)="onEntryUploadComplete($event)">
             </app-podcast-upload-form>
             <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)">
             </app-podcast-add-url-form>
