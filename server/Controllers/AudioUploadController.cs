@@ -72,11 +72,11 @@ namespace PodNoms.Api.Controllers
                     Podcast = podcast
                 };
 
-                entry.AudioUrl = await CachedFormFileStorage.CacheItem(file);
+                var localFile = await CachedFormFileStorage.CacheItem(file);
                 await _entryRepository.AddOrUpdateAsync(entry);
                 await _unitOfWork.CompleteAsync();
 
-                BackgroundJob.Enqueue<IAudioUploadProcessService>(service => service.UploadAudio(entry.Id));
+                BackgroundJob.Enqueue<IAudioUploadProcessService>(service => service.UploadAudio(entry.Id, localFile));
                 return new OkObjectResult(_mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry));
             }
             return NotFound();

@@ -13,7 +13,7 @@ export const initialState: State = {
     entities: {},
     results: [],
     selectedPodcast: null
-}
+};
 export function reducer(state = initialState, action: podcastActions.Actions): State {
     switch (action.type) {
         case podcastActions.LOAD: {
@@ -23,7 +23,7 @@ export function reducer(state = initialState, action: podcastActions.Actions): S
                 results: [],
                 loading: true,
                 selectedPodcast: null
-            }
+            };
         }
         case podcastActions.LOAD_SUCCESS: {
             const ret = {
@@ -37,7 +37,7 @@ export function reducer(state = initialState, action: podcastActions.Actions): S
         case podcastActions.LOAD_FAIL: {
             return {
                 ...state,
-                loading: false,
+                loading: false
             };
         }
         case podcastActions.GET_SUCCESS: {
@@ -47,25 +47,31 @@ export function reducer(state = initialState, action: podcastActions.Actions): S
             };
         }
         case podcastActions.SELECT: {
-            const podcast = state.results.filter(function (item) {
+            const podcast = state.results.filter(function(item) {
                 return item.slug === action.payload;
             })[0];
             return {
                 ...state,
                 selectedPodcast: podcast,
-                loading: false,
+                loading: false
             };
         }
+        case podcastActions.ADD_SUCCESS: {
+            const newEntity = action.payload;
+            const newState = _.cloneDeep(state);
+            newState.results.push(newEntity);
+            return newState;
+        }
         case podcastActions.DELETE_SUCCESS:
-            const dsNewEntities = state.results.filter(function (item) {
+            const newEntities = state.results.filter(function(item) {
                 return item.id != action.payload;
             });
             return {
                 ...state,
-                entities: _.keyBy(dsNewEntities, 'id'),
-                results: dsNewEntities,
-                selectedPodcast: dsNewEntities[0],
-                loading: false,
+                entities: _.keyBy(newEntities, 'id'),
+                results: newEntities,
+                selectedPodcast: newEntities[0],
+                loading: false
             };
         default: {
             return state;

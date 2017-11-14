@@ -8,9 +8,10 @@ using PodNoms.Api.Models.ViewModels;
 
 namespace PodNoms.Api.Services.Downloader
 {
-    public class AudioDownloader : IDisposable
+    public class AudioDownloader
     {
-        private readonly string url;
+        private readonly string _url;
+        private readonly string _downloader;
         public dynamic Properties { get; private set; }
         protected const string DOWNLOADRATESTRING = "iB/s";
         protected const string DOWNLOADSIZESTRING = "iB";
@@ -19,22 +20,38 @@ namespace PodNoms.Api.Services.Downloader
 
         public event EventHandler<ProcessProgressEvent> DownloadProgress;
         public event EventHandler<String> PostProcessing;
-        public AudioDownloader(string url)
+        public AudioDownloader(string url, string downloader)
         {
-            this.url = url;
+            this._url = url;
+            this._downloader = downloader;
         }
-        public void Dispose()
+        public static string GetVersion(string downloader)
         {
-
-            var StartInfo = new ProcessStartInfo
+            try
             {
-                FileName = "pinfo",
-                Arguments = $"argie bargie",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true
-            };
-
+                var proc = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = downloader,
+                        Arguments = $"--version",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true
+                    }
+                };
+                var br = new StringBuilder();
+                proc.Start();
+                while (!proc.StandardOutput.EndOfStream)
+                {
+                    br.Append(proc.StandardOutput.ReadLine());
+                }
+                return br.ToString();
+            }
+            catch (Exception ex)
+            {
+                return $"{{\"Error\": \"{ex.Message}\"}}";
+            }
         }
         public string DownloadAudio(string uid)
         {
@@ -44,8 +61,8 @@ namespace PodNoms.Api.Services.Downloader
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "youtube-dl",
-                    Arguments = $"-o {outputFile} --audio-format mp3 -x \"{this.url}\"",
+                    FileName = this._downloader,
+                    Arguments = $"-o {outputFile} --audio-format mp3 -x \"{this._url}\"",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true
@@ -88,7 +105,7 @@ namespace PodNoms.Api.Services.Downloader
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "youtube-dl",
-                    Arguments = $"-j {this.url}",
+                    Arguments = $"-j {this._url}",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true

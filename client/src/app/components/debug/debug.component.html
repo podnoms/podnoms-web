@@ -1,14 +1,41 @@
-<div class="container-fluid">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-block">
-                <input type="text" id="text" [(ngModel)]="realtimeMessage">
-                <button class="btn btn-primary" (click)="sendMessage()">Send Realtime</button>
-                <ul class="list-unstyled">
-                    <li *ngFor="let message of messagesReceived">
-                        {{message}}
-                    </li>
-                </ul>
+<div class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="block">
+                    <div class="block-header">
+                        Realtime
+                    </div>
+                    <div class="block-content">
+                        <input type="text" id="text" [(ngModel)]="realtimeMessage">
+                        <button class="btn btn-primary" (click)="sendMessage()">Send Realtime</button>
+                        <ul class="list-unstyled">
+                            <li *ngFor="let message of messagesReceived">
+                                {{message}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="block">
+                    <div class="block-header">
+                        Dropzone
+                    </div>
+                    <div class="block-content">
+                        <app-dropzone class="dropzone" [config]="config" [message]="'Click or drag files here to upload'">
+                        </app-dropzone>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-header">Debug Info</div>
+                <div class="block-content">
+                    <pre [innerHtml]="(debugInfo$ | async) | prettyprint">
+                    </pre>
+                </div>
             </div>
         </div>
     </div>
