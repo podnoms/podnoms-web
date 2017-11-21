@@ -22,6 +22,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
 import { ProfileService } from './services/profile.service';
@@ -54,6 +55,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 @NgModule({
     declarations: [
         AppComponent,
+        LoginComponent,
         PodcastComponent,
         HomeComponent,
         NavbarComponent,
@@ -99,8 +101,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         PodcastService,
         ImageService,
         DebugService
-        // PusherService,
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

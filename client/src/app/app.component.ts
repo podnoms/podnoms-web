@@ -13,8 +13,4 @@ export class AppComponent {
     loggedIn() {
         return this._authService.authenticated();
     }
-
-    login() {
-        this._authService.login();
-    }
 }

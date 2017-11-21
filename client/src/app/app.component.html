@@ -1,28 +1,12 @@
 <body>
+    <div *ngIf="!loggedIn()">
+        <router-outlet></router-outlet>
+    </div>
     <div id="page-container" class="sidebar-o side-scroll side-trans-enabled" *ngIf="loggedIn()">
         <app-sidebar></app-sidebar>
         <app-navbar></app-navbar>
         <main id="main-container">
             <router-outlet></router-outlet>
-        </main>
-    </div>
-    <div id="page-container" *ngIf="!loggedIn()" class="">
-        <main id="main-container">
-            <div class="bg-image" style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
-                <div class="hero bg-primary-dark-op">
-                    <div class="hero-inner" style="margin-top: -500px;">
-                        <div class="content content-full text-center">
-                            <h1 class="display-4 font-w700 text-white mb-10 js-appear-enabled animated fadeInDown" data-toggle="appear" data-class="animated fadeInDown">Pod Noms</h1>
-                            <h2 class="font-w400 text-white-op mb-50 js-appear-enabled animated fadeInUp" data-toggle="appear" data-class="animated fadeInUp"
-                                data-timeout="250">Robot Powered Podcasts</h2>
-                            <a class="btn btn-hero btn-noborder btn-rounded btn-primary js-appear-enabled animated bounceIn" style="color: white!important;" data-toggle="appear" data-class="animated bounceIn"
-                                data-timeout="750" (click)="login()">
-                                <i class="fa fa-rocket mr-10"></i> Login
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </div>
 </body>
