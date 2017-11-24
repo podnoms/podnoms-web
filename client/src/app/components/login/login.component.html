@@ -1,0 +1,72 @@
+<div id="page-container"
+     class="main-content-boxed">
+    <main id="main-container">
+        <div class="bg-image"
+             style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
+            <div class="hero-static content content-full bg-white">
+                <div class="text-center">
+                    <a class="link-effect font-w700"
+                       href="index.php">
+                        <i class="si si-fire"></i>
+                        <span class="font-size-xl text-primary-dark">pod</span>
+                        <span class="font-size-xl">noms</span>
+                    </a>
+                    <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-8 col-md-6 col-xl-4">
+                        <form class="js-validation-signin"
+                              action="be_pages_auth_all.php"
+                              method="post">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="form-material floating">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="login-username"
+                                               name="login-username"
+                                               [(ngModel)]="username">
+                                        <label for="login-username">Username</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="form-material floating">
+                                        <input type="password"
+                                               class="form-control"
+                                               id="login-password"
+                                               name="login-password"
+                                               [(ngModel)]="password">
+                                        <label for="login-password">Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row gutters-tiny">
+                                <div class="col-12 mb-10">
+                                    <button type="submit"
+                                            (click)="login()"
+                                            class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
+                                        <i class="si si-login mr-10"></i> Sign In
+                                    </button>
+                                </div>
+                                <div class="col-sm-6 mb-5">
+                                    <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
+                                       href="op_auth_signup.php">
+                                        <i class="fa fa-plus text-muted mr-5"></i> New Account
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 mb-5">
+                                    <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
+                                       href="op_auth_reminder.php">
+                                        <i class="fa fa-warning text-muted mr-5"></i> Forgot password
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

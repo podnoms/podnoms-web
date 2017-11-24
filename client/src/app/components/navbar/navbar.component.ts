@@ -18,14 +18,12 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         if (this.loggedIn()) {
-            this.user = this._authService.profile;
             this._profileService.getProfile().subscribe(p => {
             });
         }
     }
 
     login() {
-        this._authService.login();
     }
 
     logout() {
@@ -33,6 +31,6 @@ export class NavbarComponent implements OnInit {
     }
 
     loggedIn() {
-        return this._authService.authenticated();
+        return this._authService.isAuthenticated();
     }
 }
