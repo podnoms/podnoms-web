@@ -1,84 +1,104 @@
-import {Injectable, NgZone} from '@angular/core';
-import {Auth0Vars} from '../constants/auth0';
-import {Router} from '@angular/router';
-import Auth0Lock from 'auth0-lock';
-
-import {Observable} from 'rxjs/Observable';
-import {AuthHttp, JwtHelper, tokenNotExpired} from 'angular2-jwt';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AUTH_CONFIG } from './../constants/auth0';
+import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
-    profile: any;
-    private roles: string[] = [];
-
-    lock = new Auth0Lock(Auth0Vars.AUTH0_CLIENT_ID, Auth0Vars.AUTH0_DOMAIN, {
-        auth: {
-            params: {
-                callbackURL: 'http://dev.podnoms.com:4200/',
-                responseType: 'token',
-                scope: 'openid name email picture'
-            },
-            responseType: 'token'
-        },
-        theme: {
-            logo: 'https://podnomscdn.blob.core.windows.net/static/images/logo.png',
-            primaryColor: '#ff5500'
-        },
+    // Configure Auth0
+    auth0 = new auth0.WebAuth({
+        domain: AUTH_CONFIG.domain,
+        clientID: AUTH_CONFIG.clientID,
+        redirectUri: AUTH_CONFIG.callbackURL,
+        audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+        responseType: 'token id_token',
+        scope: 'openid'
     });
 
-    constructor(private _router: Router) {
-        this.readUserFromLocalStorage();
-        this.lock.on('authenticated', (authResult) => this.onUserAuthenticated(authResult));
+    constructor(private router: Router) {}
+
+    public login(username: string, password: string, success, error): void {
+        this.auth0.client.login(
+            {
+                realm: 'podnoms-db-connection',
+                username,
+                password
+            },
+            (err, authResult) => {
+                if (err) {
+                    error(err);
+                    console.log(err);
+                    return;
+                } else if (authResult && authResult.accessToken && authResult.idToken) {
+                    this.setSession(authResult);
+                    success(authResult);
+                }
+            }
+        );
     }
 
-    private onUserAuthenticated(authResult) {
-        localStorage.setItem('token', authResult.idToken);
-
-        this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
-            if (error) {
-                throw error;
+    public signup(email: string, password: string): void {
+        this.auth0.redirect.signupAndLogin(
+            {
+                connection: 'podnoms-db-connection',
+                email,
+                password
+            },
+            err => {
+                if (err) {
+                    console.log(err);
+                    alert(`Error: ${err.description}. Check the console for further details.`);
+                    return;
+                }
             }
-            localStorage.setItem('profile', JSON.stringify(profile));
-            this.readUserFromLocalStorage();
-            window.location.reload();
+        );
+    }
+
+    public loginWithGoogle(): void {
+        this.auth0.authorize({
+            connection: 'google-oauth2'
         });
     }
 
-    private readUserFromLocalStorage() {
-        this.profile = JSON.parse(localStorage.getItem('profile'));
-        const token = localStorage.getItem('token');
-        if (token) {
-            const jwtHelper = new JwtHelper();
-            const decodedToken = jwtHelper.decodeToken(token);
-            this.roles = decodedToken['https://vega.com/roles'] || [];
-        }
+    public handleAuthentication(): void {
+        this.auth0.parseHash((err, authResult) => {
+            if (authResult && authResult.accessToken && authResult.idToken) {
+                this.setSession(authResult);
+            } else if (err) {
+                this.router.navigate(['/home']);
+                console.log(err);
+                alert(`Error: ${err.error}. Check the console for further details.`);
+            }
+        });
     }
 
-    public getToken() {
-        if (this.authenticated()) {
-            return localStorage.getItem('token');
-        }
+    public getToken(): String {
+        if (this.isAuthenticated()) return localStorage.getItem('access_token');
+
         return '';
     }
-
-    public isInRole(roleName) {
-        return this.roles.indexOf(roleName) > -1;
+    private setSession(authResult): void {
+        // Set the time that the access token will expire at
+        const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
+        localStorage.setItem('access_token', authResult.accessToken);
+        localStorage.setItem('id_token', authResult.idToken);
+        localStorage.setItem('expires_at', expiresAt);
+        this.router.navigate(['home']);
     }
 
-    public login() {
-        this.lock.show();
+    public logout(): void {
+        // Remove tokens and expiry time from localStorage
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('id_token');
+        localStorage.removeItem('expires_at');
+        // Go back to the home route
+        this.router.navigate(['/home']);
     }
 
-    public authenticated() {
-        return tokenNotExpired('token');
-    }
-
-    public logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        this.profile = null;
-        this.roles = [];
-
-        this._router.navigateByUrl('/');
+    public isAuthenticated(): boolean {
+        // Check whether the current time is past the
+        // access token's expiry time
+        const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+        return new Date().getTime() < expiresAt;
     }
 }

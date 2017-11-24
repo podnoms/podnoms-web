@@ -11,6 +11,6 @@ export class AppComponent {
     constructor(private _authService: AuthService) {}
 
     loggedIn() {
-        return this._authService.authenticated();
+        return this._authService.isAuthenticated();
     }
 }
