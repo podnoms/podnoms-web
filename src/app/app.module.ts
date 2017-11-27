@@ -1,3 +1,4 @@
+import { CallbackComponent } from './components/callback/callback.component';
 import { PodcastUploadFormComponent } from './components/podcast/podcast-upload-form/podcast-upload-form.component';
 import { PodcastAddUrlFormComponent } from './components/podcast/podcast-add-url-form/podcast-add-url-form.component';
 import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
@@ -45,7 +46,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         new AuthConfig({
             noClientCheck: true,
             globalHeaders: [{ 'Content-Type': 'application/json' }],
-            tokenGetter: () => localStorage.getItem('token')
+            tokenGetter: () => localStorage.getItem('id_token')
         }),
         http,
         options
@@ -68,7 +69,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         PodcastUploadFormComponent,
         PodcastAddUrlFormComponent,
         DebugComponent,
-        SidebarComponent
+        SidebarComponent,
+        CallbackComponent
     ],
     imports: [
         BrowserModule,
@@ -104,5 +106,4 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

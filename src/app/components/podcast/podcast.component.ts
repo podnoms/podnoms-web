@@ -35,6 +35,7 @@ export class PodcastComponent {
 
     constructor(private _store: Store<ApplicationState>, route: ActivatedRoute) {
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
+
         this.entries$ = _store.select(fromPodcast.getEntries);
         route.params.subscribe(params => {
             if (params['slug'] !== undefined) {

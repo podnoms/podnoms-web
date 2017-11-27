@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AUTH_CONFIG } from './../constants/auth0';
 import * as auth0 from 'auth0-js';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthService {
-    // Configure Auth0
     auth0 = new auth0.WebAuth({
         domain: AUTH_CONFIG.domain,
         clientID: AUTH_CONFIG.clientID,
         redirectUri: AUTH_CONFIG.callbackURL,
         audience: `https://${AUTH_CONFIG.domain}/userinfo`,
         responseType: 'token id_token',
-        scope: 'openid'
+        scope: 'openid profile email'
     });
 
-    constructor(private router: Router) {}
+    constructor(private _router: Router) {}
 
     public login(username: string, password: string, success, error): void {
         this.auth0.client.login(
@@ -65,7 +65,7 @@ export class AuthService {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
             } else if (err) {
-                this.router.navigate(['/home']);
+                this._router.navigate(['/']);
                 console.log(err);
                 alert(`Error: ${err.error}. Check the console for further details.`);
             }
@@ -73,31 +73,26 @@ export class AuthService {
     }
 
     public getToken(): String {
-        if (this.isAuthenticated()) return localStorage.getItem('access_token');
-
+        if (this.isAuthenticated()) return localStorage.getItem('id_token');
         return '';
     }
     private setSession(authResult): void {
-        // Set the time that the access token will expire at
         const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
-        this.router.navigate(['home']);
+        this._router.navigate(['/']);
     }
 
     public logout(): void {
-        // Remove tokens and expiry time from localStorage
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
-        // Go back to the home route
-        this.router.navigate(['/home']);
+
+        this._router.navigate(['/podcasts']);
     }
 
     public isAuthenticated(): boolean {
-        // Check whether the current time is past the
-        // access token's expiry time
         const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         return new Date().getTime() < expiresAt;
     }
