@@ -16,13 +16,21 @@ export class LoginComponent implements OnInit {
     constructor(private _authService: AuthService) {}
 
     ngOnInit() {}
-    login() {
-        this._authService.login(
-            this.username,
-            this.password,
-            success => this.loginSuccess(success),
-            error => this.loginError(error)
-        );
+    login(provider) {
+        if (!provider) {
+            this._authService.login(
+                this.username,
+                this.password,
+                success => this.loginSuccess(success),
+                error => this.loginError(error)
+            );
+        } else {
+            switch (provider) {
+                case 'google':
+                    this._authService.loginWithGoogle();
+                    break;
+            }
+        }
     }
     logout() {}
 

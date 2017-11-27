@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ProfileModel} from '../../models/profile.model';
-import {AuthService} from '../../services/auth.service';
-import {ProfileService} from '../../services/profile.service';
+import { Component, OnInit } from '@angular/core';
+import { ProfileModel } from '../../models/profile.model';
+import { AuthService } from '../../services/auth.service';
+import { ProfileService } from '../../services/profile.service';
+import { Observable } from '@aspnet/signalr-client/dist/src/Observable';
 
 @Component({
     selector: 'app-navbar',
@@ -9,21 +10,14 @@ import {ProfileService} from '../../services/profile.service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+    user$: Observable<any>;
 
-    user: any;
-
-    constructor(private _authService: AuthService, private _profileService: ProfileService) {
-
-    }
+    constructor(private _authService: AuthService, private _profileService: ProfileService) {}
 
     ngOnInit() {
         if (this.loggedIn()) {
-            this._profileService.getProfile().subscribe(p => {
-            });
+            this.user$ = this._profileService.getProfile();
         }
-    }
-
-    login() {
     }
 
     logout() {

@@ -30,7 +30,10 @@ namespace PodNoms.Api.Providers
                     src => src.AudioUrl,
                     e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
                     
-            CreateMap<User, ProfileViewModel>();
+            CreateMap<User, ProfileViewModel>()
+                .ForMember(
+                    src => src.Name,
+                    e => e.MapFrom(m => m.FullName));
 
             //API Resource to Domain
             CreateMap<PodcastViewModel, Podcast>()

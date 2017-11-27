@@ -55,14 +55,14 @@ namespace PodNoms.Api.Services.Downloader
         }
         public string DownloadAudio(string uid)
         {
-            var outputFileName = $"{uid}.mp3";
-            var outputFile = Path.Combine(Path.GetTempPath(), outputFileName);
+            var outputFile = Path.Combine(Path.GetTempPath(), $"{uid}.mp3");
+            var templateFile = Path.Combine(Path.GetTempPath(), $"{uid}.%(ext)s");
             var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = this._downloader,
-                    Arguments = $"-o {outputFile} --audio-format mp3 -x \"{this._url}\"",
+                    Arguments = $"-o \"{templateFile}\" --audio-format mp3 -x \"{this._url}\"",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true

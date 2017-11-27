@@ -14,9 +14,26 @@
                     <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
                 </div>
                 <div class="row justify-content-center">
+                    <div class="row">
+                        <div class="col-sm-4 mb-5">
+                            <button class="btn btn-facebook"
+                                    style="width: 100%"><i class="fa fa-facebook"></i>&nbsp;Facebook</button>
+                        </div>
+                        <div class="col-sm-4 mb-5">
+                            <button class="btn btn-google-plus"
+                                    (click)="login('google')"
+                                    style="width: 100%"><i class="fa fa-google"></i>&nbsp;Google</button>
+                        </div>
+                        <div class="col-sm-4 mb-5">
+                            <button class="btn btn-twitter"
+                                    style="width: 100%"><i class="fa fa-twitter"></i>&nbsp;Twitter</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
                     <div class="col-sm-8 col-md-6 col-xl-4">
                         <form class="js-validation-signin"
-                              action="be_pages_auth_all.php"
+                              action=""
                               method="post">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -45,20 +62,19 @@
                             <div class="form-group row gutters-tiny">
                                 <div class="col-12 mb-10">
                                     <button type="submit"
-                                            (click)="login()"
                                             class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
                                         <i class="si si-login mr-10"></i> Sign In
                                     </button>
                                 </div>
                                 <div class="col-sm-6 mb-5">
                                     <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                       href="op_auth_signup.php">
+                                       href="#">
                                         <i class="fa fa-plus text-muted mr-5"></i> New Account
                                     </a>
                                 </div>
                                 <div class="col-sm-6 mb-5">
                                     <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                       href="op_auth_reminder.php">
+                                       href="#">
                                         <i class="fa fa-warning text-muted mr-5"></i> Forgot password
                                     </a>
                                 </div>
