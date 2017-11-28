@@ -1,6 +1,5 @@
 export const environment = {
     production: true,
-    // protocol: 'https://',
-    // host: 'www.podnoms.com',
-    signalRHost: 'https://rt.podnoms.com/',
+    SIGNALR_HOST: 'https://rt.podnoms.com/',
+    AUTH0_REDIRECT_URL: 'https://podnoms.com:4200/callback'
 };
