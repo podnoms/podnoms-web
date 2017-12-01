@@ -18,21 +18,19 @@ export class LoginComponent implements OnInit {
     ngOnInit() {}
     login(provider) {
         if (!provider) {
-            this._authService.login(
+            this._authService.loginUsername(
                 this.username,
                 this.password,
                 success => this.loginSuccess(success),
                 error => this.loginError(error)
             );
         } else {
-            switch (provider) {
-                case 'google':
-                    this._authService.loginWithGoogle();
-                    break;
-            }
+            this._authService.loginSocial(provider);
         }
     }
-    logout() {}
+    logout() {
+        
+    }
 
     loginSuccess(data) {
         alert('Hello Sailor!!!');

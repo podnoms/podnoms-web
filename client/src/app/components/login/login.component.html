@@ -17,15 +17,17 @@
                     <div class="row">
                         <div class="col-sm-4 mb-5">
                             <button class="btn btn-facebook"
+                                    (click)="login('facebook')"
                                     style="width: 100%"><i class="fa fa-facebook"></i>&nbsp;Facebook</button>
                         </div>
                         <div class="col-sm-4 mb-5">
                             <button class="btn btn-google-plus"
-                                    (click)="login('google')"
+                                    (click)="login('google-oauth2')"
                                     style="width: 100%"><i class="fa fa-google"></i>&nbsp;Google</button>
                         </div>
                         <div class="col-sm-4 mb-5">
                             <button class="btn btn-twitter"
+                                    (click)="login('twitter')"
                                     style="width: 100%"><i class="fa fa-twitter"></i>&nbsp;Twitter</button>
                         </div>
                     </div>

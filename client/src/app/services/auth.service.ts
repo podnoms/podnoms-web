@@ -12,12 +12,11 @@ export class AuthService {
         redirectUri: AUTH_CONFIG.callbackURL,
         audience: `https://${AUTH_CONFIG.domain}/userinfo`,
         responseType: 'token id_token',
+        prompt: 'select_account',
         scope: 'openid profile email'
     });
-
     constructor(private _router: Router) {}
-
-    public login(username: string, password: string, success, error): void {
+    public loginUsername(username: string, password: string, success, error): void {
         this.auth0.client.login(
             {
                 realm: 'podnoms-db-connection',
@@ -36,7 +35,6 @@ export class AuthService {
             }
         );
     }
-
     public signup(email: string, password: string): void {
         this.auth0.redirect.signupAndLogin(
             {
@@ -53,13 +51,11 @@ export class AuthService {
             }
         );
     }
-
-    public loginWithGoogle(): void {
+    public loginSocial(provider: string): void {
         this.auth0.authorize({
-            connection: 'google-oauth2'
+            connection: provider
         });
     }
-
     public handleAuthentication(): void {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
@@ -71,7 +67,6 @@ export class AuthService {
             }
         });
     }
-
     public getToken(): String {
         if (this.isAuthenticated()) return localStorage.getItem('id_token');
         return '';
@@ -83,15 +78,13 @@ export class AuthService {
         localStorage.setItem('expires_at', expiresAt);
         this._router.navigate(['/']);
     }
-
     public logout(): void {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
 
-        this._router.navigate(['/podcasts']);
+        this._router.navigate(['/']);
     }
-
     public isAuthenticated(): boolean {
         const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         return new Date().getTime() < expiresAt;
