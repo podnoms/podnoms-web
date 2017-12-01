@@ -20,8 +20,8 @@ export class AuthService {
         this.auth0.client.login(
             {
                 realm: 'podnoms-db-connection',
-                username,
-                password
+                username: username,
+                password: password
             },
             (err, authResult) => {
                 if (err) {

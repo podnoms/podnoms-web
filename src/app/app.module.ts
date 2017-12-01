@@ -1,3 +1,4 @@
+import { GlobalsService } from './services/globals.service';
 import { CallbackComponent } from './components/callback/callback.component';
 import { PodcastUploadFormComponent } from './components/podcast/podcast-upload-form/podcast-upload-form.component';
 import { PodcastAddUrlFormComponent } from './components/podcast/podcast-add-url-form/podcast-add-url-form.component';
@@ -102,7 +103,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProfileService,
         PodcastService,
         ImageService,
-        DebugService
+        DebugService,
+        GlobalsService
     ],
     bootstrap: [AppComponent]
 })
