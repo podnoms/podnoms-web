@@ -1,22 +1,23 @@
 <header id="page-header">
     <div class="content-header">
         <div class="content-header-section">
-            <a [routerLink]="['add']">
+            <a [routerLink]="['podcasts/add']">
                 <i class="fa fa-plus"></i> Add Podcast
             </a>
             <a [routerLink]="['debug']">
                 <i class="fa fa-bug"></i> Debug
             </a>
         </div>
-        <div class="content-header-section">
+        <div class="content-header-section" *ngIf="user$ | async; let user; else loading">
+            <img [src]="user.profileImage"
+                 class="rounded-circle profile-img">
             <div class="btn-group"
-                 role="group"
-                 *ngIf="loggedIn()">
+                 role="group">
                 <button type="button"
                         class="btn btn-rounded btn-dual-secondary"
                         id="page-header-user-dropdown"
                         data-toggle="dropdown">
-                    {{(user$ | async).name}}<i class="fa fa-angle-down ml-5"></i>
+                    {{user.name}}<i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-150">
                     <a class="dropdown-item"><i class="si si-user mr-5"></i> Profile</a>
@@ -25,5 +26,6 @@
                 </div>
             </div>
         </div>
+        <ng-template #loading><i class="fa fa-sun-o fa-spin text-white"></i></ng-template>
     </div>
 </header>

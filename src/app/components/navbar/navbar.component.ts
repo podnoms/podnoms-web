@@ -25,6 +25,12 @@ export class NavbarComponent implements OnInit {
     }
 
     loggedIn() {
-        return this._authService.isAuthenticated();
+        if (this._authService.isAuthenticated()) {
+            console.log('NavbarComponent', 'loggedIn', 'Logged In');
+            return true;
+        } else {
+            console.log('NavbarComponent', 'loggedIn', 'Not logged In');
+            return false;
+        }
     }
 }
