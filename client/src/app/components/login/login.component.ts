@@ -12,24 +12,20 @@ export class LoginComponent implements OnInit {
 
     signIn;
     widget;
-
+    errorMessage: string = '';
     constructor(private _authService: AuthService) {}
 
     ngOnInit() {}
-    login(provider) {
+    login(provider?: string) {
         if (!provider) {
-            this._authService.login(
+            this._authService.loginUsername(
                 this.username,
                 this.password,
                 success => this.loginSuccess(success),
                 error => this.loginError(error)
             );
         } else {
-            switch (provider) {
-                case 'google':
-                    this._authService.loginWithGoogle();
-                    break;
-            }
+            this._authService.loginSocial(provider);
         }
     }
     logout() {}
@@ -38,6 +34,7 @@ export class LoginComponent implements OnInit {
         alert('Hello Sailor!!!');
     }
     loginError(error) {
+        this.errorMessage = 'Unknown username or password!';
         console.error('Error logging in', error);
     }
 }
