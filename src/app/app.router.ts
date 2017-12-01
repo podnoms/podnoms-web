@@ -1,3 +1,4 @@
+import { RegisterComponent } from './components/register/register.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { LoginComponent } from './components/login/login.component';
 import { DebugComponent } from './components/debug/debug.component';
@@ -11,10 +12,11 @@ import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/p
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'callback', component: CallbackComponent },
     { path: 'debug', component: DebugComponent, canActivate: [AuthGuard] },
     { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuard] },
-    { path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard] },
+    { path: 'podcasts/add', component: PodcastAddFormComponent, canActivate: [AuthGuard] },
     { path: 'podcasts/:slug', component: PodcastComponent, canActivate: [AuthGuard] },
     { path: 'podcasts/:slug/edit', component: PodcastAddFormComponent, canActivate: [AuthGuard] }
 ];
