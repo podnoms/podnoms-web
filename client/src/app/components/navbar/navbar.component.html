@@ -4,9 +4,6 @@
             <a [routerLink]="['podcasts/add']">
                 <i class="fa fa-plus"></i> Add Podcast
             </a>
-            <a [routerLink]="['debug']">
-                <i class="fa fa-bug"></i> Debug
-            </a>
         </div>
         <div class="content-header-section" *ngIf="user$ | async; let user; else loading">
             <img [src]="user.profileImage"
