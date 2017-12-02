@@ -6,7 +6,7 @@
             <div class="hero-static content content-full bg-white">
                 <div class="text-center">
                     <a class="link-effect font-w700">
-                        <i class="si si-fire"></i>
+                        <i class="login-fire"></i>
                         <span class="font-size-xl text-primary-dark">pod</span>
                         <span class="font-size-xl">noms</span>
                     </a>
@@ -54,11 +54,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="alert alert-danger"
+                                 *ngIf="errorMessage"
+                                 role="alert">
+                                {{errorMessage}}
+                            </div>
                             <div class="form-group row gutters-tiny">
                                 <div class="col-12 mb-10">
                                     <button type="submit"
                                             class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
-                                        <i class="si si-login mr-10"></i> Register
+                                        <i class="login-login mr-10"></i> Register
                                     </button>
                                 </div>
                             </div>

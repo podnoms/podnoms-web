@@ -14,11 +14,11 @@ const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'reset', component: ResetComponent },
+    { path: 'reset', component: ResetComponent, pathMatch: 'full' },
     { path: 'callback', component: CallbackComponent },
     { path: 'debug', component: DebugComponent, canActivate: [AuthGuard] },
     { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuard] },
-    { path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard] },
+    { path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard], pathMatch: 'full' },
     { path: 'podcasts/:slug', component: PodcastComponent, canActivate: [AuthGuard] },
     { path: 'podcasts/:slug/edit', component: PodcastAddFormComponent, canActivate: [AuthGuard] }
 ];

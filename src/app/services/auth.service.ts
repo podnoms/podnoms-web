@@ -38,42 +38,41 @@ export class AuthService {
             }
         );
     }
-    public signup(email: string, password: string): void {
-        this.auth0.redirect.signupAndLogin(
-            {
-                connection: 'podnoms-db-connection',
-                email,
-                password
-            },
-            err => {
-                if (err) {
-                    console.log(err);
-                    alert(`Error: ${err.description}. Check the console for further details.`);
-                    return;
+    public signup(email: string, password: string): Observable<any> {
+        return Observable.create(observer => {
+            this.auth0.redirect.signupAndLogin(
+                {
+                    connection: 'podnoms-db-connection',
+                    email,
+                    password
+                },
+                err => {
+                    if (err) {
+                        observer.error(err);
+                    } else observer.next();
                 }
-            }
-        );
+            );
+        });
     }
-    public resetPassword(email: string) {}
-    // public resetPassword(email: string): Observable<any> {
-    //     return Observable.create(observer => {
-    //         this.auth0.changePassword(
-    //             {
-    //                 connection: 'podnoms-db-connection',
-    //                 email
-    //             },
-    //             (err, resp) => {
-    //                 if (err) {
-    //                     console.error(err);
-    //                     alert(`Error: ${err.description}. Check the console for further details.`);
-    //                     Observable.throw(err);
-    //                 } else {
-    //                     observer.next('success');
-    //                 }
-    //             }
-    //         );
-    //     });
-    // }
+    public resetPassword(email: string): Observable<any> {
+        return Observable.create(observer => {
+            this.auth0.changePassword(
+                {
+                    connection: 'podnoms-db-connection',
+                    email
+                },
+                (err, resp) => {
+                    if (err) {
+                        console.error(err);
+                        alert(`Error: ${err.description}. Check the console for further details.`);
+                        Observable.throw(err);
+                    } else {
+                        observer.next('success');
+                    }
+                }
+            );
+        });
+    }
     public loginSocial(provider: string): void {
         this.auth0.authorize({
             connection: provider
