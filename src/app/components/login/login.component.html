@@ -45,7 +45,7 @@
                                                id="login-username"
                                                name="login-username"
                                                [(ngModel)]="username">
-                                        <label for="login-username">Username</label>
+                                        <label for="login-username">Email Address</label>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                             <div class="alert alert-danger"
-                            *ngIf="errorMessage"
+                                 *ngIf="errorMessage"
                                  role="alert">
                                 {{errorMessage}}
                             </div>
@@ -75,14 +75,13 @@
                                 </div>
                                 <div class="col-sm-6 mb-5">
                                     <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                       [routerLink]="['/register']"
-                                       href="#">
+                                       [routerLink]="['register']">
                                         <i class="fa fa-plus text-muted mr-5"></i> New Account
                                     </a>
                                 </div>
                                 <div class="col-sm-6 mb-5">
                                     <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                       href="#">
+                                       [routerLink]="['reset']">
                                         <i class="fa fa-warning text-muted mr-5"></i> Forgot password
                                     </a>
                                 </div>

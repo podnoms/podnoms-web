@@ -12,11 +12,11 @@
                     </a>
                     <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
                 </div>
-
                 <div class="row justify-content-center">
                     <div class="col-sm-8 col-md-6 col-xl-4">
                         <form class="js-validation-signin"
-                              (ngSubmit)="doRegister()"
+                              action=""
+                              (ngSubmit)="resetPassword()"
                               method="post">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -30,35 +30,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-12">
-                                    <div class="form-material floating">
-                                        <input type="password"
-                                               class="form-control"
-                                               id="login-password"
-                                               name="login-password"
-                                               [(ngModel)]="password">
-                                        <label for="login-password">Password</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-12">
-                                    <div class="form-material floating">
-                                        <input type="password"
-                                               class="form-control"
-                                               id="login-password2"
-                                               name="login-password2"
-                                               [(ngModel)]="passwordRepeat">
-                                        <label for="login-password">Repeat passord</label>
-                                    </div>
-                                </div>
+                            <div class="alert alert-danger"
+                                 *ngIf="errorMessage"
+                                 role="alert">
+                                {{errorMessage}}
                             </div>
                             <div class="form-group row gutters-tiny">
                                 <div class="col-12 mb-10">
                                     <button type="submit"
                                             class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
-                                        <i class="si si-login mr-10"></i> Register
+                                        <i class="si si-login mr-10"></i> Reset Password
                                     </button>
                                 </div>
                             </div>
