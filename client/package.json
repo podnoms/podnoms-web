@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --aot --proxy-config proxy.conf.json",
+        "start": "ng serve --proxy-config proxy.conf.json",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint"
@@ -42,7 +42,7 @@
         "ng2-toasty": "^4.0.3",
         "ngx-bootstrap": "^2.0.0-beta.8",
         "popper.js": "^1.12.9",
-        "rxjs": "5.5.2",
+        "rxjs": "^5.5.2",
         "simple-line-icons": "^2.4.1",
         "tether": "^1.4.1",
         "uglify-es": "3.2.0",

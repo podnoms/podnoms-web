@@ -41,6 +41,8 @@ import { PodcastService } from './services/podcast.service';
 import { SignalRService } from 'app/services/signalr.service';
 import { AppRoutingModule } from 'app/app.router';
 import { PrettyPrintPipe } from 'app/pipes/pretty-print.pipe';
+import { RegisterComponent } from './components/register/register.component';
+import { ResetComponent } from './components/reset/reset.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -71,7 +73,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         PodcastAddUrlFormComponent,
         DebugComponent,
         SidebarComponent,
-        CallbackComponent
+        CallbackComponent,
+        RegisterComponent,
+        ResetComponent
     ],
     imports: [
         BrowserModule,
