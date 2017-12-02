@@ -11,7 +11,7 @@ import { PodcastComponent } from './components/podcast/podcast.component';
 import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'reset', component: ResetComponent },
