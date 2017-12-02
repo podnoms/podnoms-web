@@ -7,10 +7,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class AuthService {
     auth0 = new auth0.WebAuth({
-        domain: AUTH_CONFIG.domain,
-        clientID: AUTH_CONFIG.clientID,
-        redirectUri: AUTH_CONFIG.callbackURL,
-        audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+        domain: AUTH_CONFIG.AUTH0_DOMAIN,
+        clientID: AUTH_CONFIG.AUTH0_CLIENT_ID,
+        redirectUri: AUTH_CONFIG.AUTH0_CALBACKURL,
+        audience: `https://${AUTH_CONFIG.AUTH0_DOMAIN}/userinfo`,
         responseType: 'token id_token',
         prompt: 'select_account',
         scope: 'openid profile email'
