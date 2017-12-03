@@ -29,9 +29,8 @@ export class LoginComponent implements OnInit {
         }
     }
     logout() {}
-
     loginSuccess(data) {
-        alert('Hello Sailor!!!');
+        console.log('LoginComponent', 'loginSuccess');
     }
     loginError(error) {
         this.errorMessage = 'Unknown username or password!';
