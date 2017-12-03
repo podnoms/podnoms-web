@@ -64,7 +64,6 @@ export class AuthService {
                 (err, resp) => {
                     if (err) {
                         console.error(err);
-                        alert(`Error: ${err.description}. Check the console for further details.`);
                         Observable.throw(err);
                     } else {
                         observer.next('success');
@@ -83,9 +82,10 @@ export class AuthService {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
             } else if (err) {
-                this._router.navigate(['/']);
+                this.logout();
+                this._router.navigate(['/'])
+                    .then(r => window.location.reload()); // TODO: Remove this for the love of baby Jesus!
                 console.log(err);
-                alert(`Error: ${err.error}. Check the console for further details.`);
             }
         });
     }

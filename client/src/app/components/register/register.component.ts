@@ -15,10 +15,6 @@ export class RegisterComponent implements OnInit {
     errorMessage: string;
     constructor(private _authService: AuthService) {}
 
-    _handleError(err) {
-        alert(err);
-        this.errorMessage = err;
-    }
     ngOnInit() {}
 
     doRegister() {
