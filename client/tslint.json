@@ -1,6 +1,6 @@
 {
     "rulesDirectory": ["node_modules/codelyzer"],
-    "defaultSeverity": "error",
+    "defaultSeverity": "warning",
     "rules": {
         "arrow-return-shorthand": true,
         "callable-types": true,

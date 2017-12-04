@@ -3,14 +3,17 @@ import { Router } from '@angular/router';
 import { AUTH_CONFIG } from './../constants/auth0';
 import * as auth0 from 'auth0-js';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AuthService {
+    errorMessage: string;
     auth0 = new auth0.WebAuth({
-        domain: AUTH_CONFIG.domain,
-        clientID: AUTH_CONFIG.clientID,
-        redirectUri: AUTH_CONFIG.callbackURL,
-        audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+        domain: AUTH_CONFIG.AUTH0_DOMAIN,
+        clientID: AUTH_CONFIG.AUTH0_CLIENT_ID,
+        redirectUri: AUTH_CONFIG.AUTH0_CALBACKURL,
+        audience: `https://${AUTH_CONFIG.AUTH0_DOMAIN}/userinfo`,
         responseType: 'token id_token',
         prompt: 'select_account',
         scope: 'openid profile email'
@@ -35,21 +38,39 @@ export class AuthService {
             }
         );
     }
-    public signup(email: string, password: string): void {
-        this.auth0.redirect.signupAndLogin(
-            {
-                connection: 'podnoms-db-connection',
-                email,
-                password
-            },
-            err => {
-                if (err) {
-                    console.log(err);
-                    alert(`Error: ${err.description}. Check the console for further details.`);
-                    return;
+    public signup(email: string, password: string): Observable<any> {
+        return Observable.create(observer => {
+            this.auth0.redirect.signupAndLogin(
+                {
+                    connection: 'podnoms-db-connection',
+                    email,
+                    password
+                },
+                err => {
+                    if (err) {
+                        observer.error(err);
+                    } else observer.next();
                 }
-            }
-        );
+            );
+        });
+    }
+    public resetPassword(email: string): Observable<any> {
+        return Observable.create(observer => {
+            this.auth0.changePassword(
+                {
+                    connection: 'podnoms-db-connection',
+                    email
+                },
+                (err, resp) => {
+                    if (err) {
+                        console.error(err);
+                        Observable.throw(err);
+                    } else {
+                        observer.next('success');
+                    }
+                }
+            );
+        });
     }
     public loginSocial(provider: string): void {
         this.auth0.authorize({
@@ -61,9 +82,10 @@ export class AuthService {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
             } else if (err) {
-                this._router.navigate(['/']);
+                this.logout();
+                this._router.navigate(['/'])
+                    .then(r => window.location.reload()); // TODO: Remove this for the love of baby Jesus!
                 console.log(err);
-                alert(`Error: ${err.error}. Check the console for further details.`);
             }
         });
     }

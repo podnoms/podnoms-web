@@ -12,30 +12,11 @@
                     </a>
                     <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="row">
-                        <div class="col-sm-4 mb-5">
-                            <button class="btn btn-facebook"
-                                    (click)="login('facebook')"
-                                    style="width: 100%"><i class="fa fa-facebook"></i>&nbsp;Facebook</button>
-                        </div>
-                        <div class="col-sm-4 mb-5">
-                            <button class="btn btn-google-plus"
-                                    (click)="login('google-oauth2')"
-                                    style="width: 100%"><i class="fa fa-google"></i>&nbsp;Google</button>
-                        </div>
-                        <div class="col-sm-4 mb-5">
-                            <button class="btn btn-twitter"
-                                    (click)="login('twitter')"
-                                    style="width: 100%"><i class="fa fa-twitter"></i>&nbsp;Twitter</button>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="row justify-content-center">
                     <div class="col-sm-8 col-md-6 col-xl-4">
                         <form class="js-validation-signin"
-                              action=""
-                              (ngSubmit)="login()"
+                              (ngSubmit)="doRegister()"
                               method="post">
                             <div class="form-group row">
                                 <div class="col-12">
@@ -61,6 +42,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="form-material floating">
+                                        <input type="password"
+                                               class="form-control"
+                                               id="login-password2"
+                                               name="login-password2"
+                                               [(ngModel)]="passwordRepeat">
+                                        <label for="login-password">Repeat password</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="alert alert-danger"
                                  *ngIf="errorMessage"
                                  role="alert">
@@ -70,20 +63,8 @@
                                 <div class="col-12 mb-10">
                                     <button type="submit"
                                             class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
-                                        <i class="icon-login mr-10"></i> Sign In
+                                        <i class="login-login mr-10"></i> Register
                                     </button>
-                                </div>
-                                <div class="col-sm-6 mb-5">
-                                    <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                       [routerLink]="['/register']">
-                                        <i class="fa fa-plus text-muted mr-5"></i> New Account
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 mb-5">
-                                    <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                       [routerLink]="['/reset']">
-                                        <i class="fa fa-warning text-muted mr-5"></i> Forgot password
-                                    </a>
                                 </div>
                             </div>
                         </form>
