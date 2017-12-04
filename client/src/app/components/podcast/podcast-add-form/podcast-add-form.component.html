@@ -1,12 +1,17 @@
 <div class="container-fluid">
-    <div class="card" *ngIf="podcast$ | async; let podcast; else loading">
+    <div class="card"
+         *ngIf="podcast$ | async; let podcast; else loading">
         <div class="card-block">
             <div class="col-md-4">
                 <form (submit)="submitForm(podcast)">
                     <div class="form-body">
                         <div class="form-group">
                             <label for="podcast-name">Podcast Name</label>
-                            <input id="podcast-name" name="podcast-name" class="form-control" placeholder="Podcast name" [(ngModel)]="podcast.title">
+                            <input id="podcast-name"
+                                   name="podcast-name"
+                                   class="form-control"
+                                   placeholder="Podcast name"
+                                   [(ngModel)]="podcast.title">
                         </div>
                         <div *ngIf="podcast.id">
                             <div class="file-upload">
@@ -14,18 +19,25 @@
                                     <span class="input-group-btn">
                                         <span class="btn btn-default btn-file">
                                             Choose image....
-                                            <input type="file" (change)="fileChangeEvent()" #fileInput>
+                                            <input type="file"
+                                                   (change)="fileChangeEvent()"
+                                                   #fileInput>
                                         </span>
                                     </span>
                                 </div>
                                 <br />
-                                <img *ngIf="image.src" class='img-preview' [src]="image.src" />
+                                <img *ngIf="image.src"
+                                     class='img-preview'
+                                     [src]="image.src" />
                             </div>
                         </div>
                     </div>
                     <hr />
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Done!</button>
+                        <button type="submit"
+                                [disabled]="sending"
+                                class="btn btn-success">
+                            <i class="fa fa-check"></i> Done!</button>
                     </div>
                 </form>
             </div>
@@ -33,7 +45,8 @@
     </div>
 </div>
 <ng-template #loading>
-    <div class="sk-wave" *ngIf="!selectedPodcast">
+    <div class="sk-wave"
+         *ngIf="!selectedPodcast">
         <div class="sk-rect sk-rect1"></div>
         <div class="sk-rect sk-rect2"></div>
         <div class="sk-rect sk-rect3"></div>

@@ -83,8 +83,7 @@ export class AuthService {
                 this.setSession(authResult);
             } else if (err) {
                 this.logout();
-                this._router.navigate(['/'])
-                    .then(r => window.location.reload()); // TODO: Remove this for the love of baby Jesus!
+                this._router.navigate(['/']).then(r => window.location.reload()); // TODO: Remove this for the love of baby Jesus!
                 console.log(err);
             }
         });
