@@ -20,6 +20,7 @@ export class PodcastAddFormComponent implements OnInit {
     @ViewChild('fileInput') fileInput: ElementRef;
     private imageChanged = false;
     image: any = new Image();
+    sending = false;
 
     constructor(
         private _route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class PodcastAddFormComponent implements OnInit {
     }
 
     submitForm(podcast: PodcastModel) {
+        this.sending = true;
         if (this.imageChanged) {
             this.uploadPhoto(podcast).subscribe(r => {
                 podcast.imageUrl = r.json().imageUrl;
