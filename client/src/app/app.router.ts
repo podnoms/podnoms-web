@@ -1,3 +1,4 @@
+import { ProfileComponent } from './components/profile/profile.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CallbackComponent } from './components/callback/callback.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'reset', component: ResetComponent, pathMatch: 'full' },
     { path: 'callback', component: CallbackComponent },
     { path: 'debug', component: DebugComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuard] },
     { path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard], pathMatch: 'full' },
     { path: 'podcasts/:slug', component: PodcastComponent, canActivate: [AuthGuard] },

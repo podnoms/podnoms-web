@@ -37,12 +37,14 @@ import { DropzoneModule } from './components/shared/dropzone/dropzone.module';
 import { reducers } from './reducers';
 import { PodcastsEffects } from './effects/podcast.effects';
 import { EntriesEffects } from './effects/entries.effects';
+import { ProfileEffects } from './effects/profile.effects';
 import { PodcastService } from './services/podcast.service';
 import { SignalRService } from 'app/services/signalr.service';
 import { AppRoutingModule } from 'app/app.router';
 import { PrettyPrintPipe } from 'app/pipes/pretty-print.pipe';
 import { RegisterComponent } from './components/register/register.component';
 import { ResetComponent } from './components/reset/reset.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -75,7 +77,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         SidebarComponent,
         CallbackComponent,
         RegisterComponent,
-        ResetComponent
+        ResetComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,
@@ -90,7 +93,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         DropzoneModule,
 
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([PodcastsEffects, EntriesEffects]),
+        EffectsModule.forRoot([PodcastsEffects, EntriesEffects, ProfileEffects]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
         })
