@@ -24,7 +24,7 @@ export class PusherService {
         this._pusher.logToConsole = true;
     }
 
-    subscribeMessage(channel: String, message: String, callback) {
+    subscribeMessage(channel: string, message: string, callback) {
         this._pusher.subscribe(channel)
             .bind(message, callback);
     }

@@ -88,7 +88,7 @@ export class AuthService {
             }
         });
     }
-    public getToken(): String {
+    public getToken(): string {
         if (this.isAuthenticated()) return localStorage.getItem('id_token');
         return '';
     }
