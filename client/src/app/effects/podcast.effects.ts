@@ -19,7 +19,10 @@ export class PodcastsEffects {
         .ofType(podcasts.LOAD)
         .switchMap(payload => this._service.get())
         .map(res => ({ type: podcasts.LOAD_SUCCESS, payload: res }))
-        .do(res => this.router.navigate(['/podcasts', res.payload[0].slug]))
+        // remove this because it was causing a horrid redirect
+        // .do(res => {
+        //     this.router.navigate(['/podcasts', res.payload[0].slug])
+        // })
         .catch(() => Observable.of({ type: podcasts.LOAD_FAIL }));
     @Effect()
     addPodcast$ = this.actions$

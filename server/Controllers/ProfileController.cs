@@ -57,7 +57,7 @@ namespace PodNoms.Api.Controllers
             return new OkObjectResult(item);
         }
 
-        [HttpPost("/updateapikey")]
+        [HttpPost("updateapikey")]
         public async Task<ActionResult> UpdateApiKey()
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
@@ -69,6 +69,14 @@ namespace PodNoms.Api.Controllers
                 return new OkObjectResult(newKey);
             }
             return new NotFoundResult();
+        }
+        [HttpGet("checkslug/{slug}")]
+        public async Task<string> CheckSlug(string slug){
+            var result = await _userRepository.GetBySlugAsync(slug);
+            if (result != null){
+                return "Found";
+            }
+            return "NotFound";
         }
     }
 }
