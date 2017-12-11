@@ -24,6 +24,7 @@ namespace PodNoms.Api.Services.Processor {
 
         public ApplicationsSettings _applicationsSettings { get; }
 
+
         public UrlProcessService (IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
             ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base (logger, mapper, pusher) {
@@ -44,7 +45,9 @@ namespace PodNoms.Api.Services.Processor {
                 _logger.LogError ("Unable to process item");
                 return false;
             }
-
+            if (entry.SourceUrl.EndsWith (".mp3") || entry.SourceUrl.EndsWith (".wav") || entry.SourceUrl.EndsWith (".aif")) {
+                return true;
+            }
             var downloader = new AudioDownloader (entry.SourceUrl, _applicationsSettings.Downloader);
             downloader.DownloadInfo ();
             if (downloader.Properties != null) {
