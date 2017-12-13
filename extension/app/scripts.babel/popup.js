@@ -44,8 +44,8 @@ function postPodcast(event) {
                 type: 'basic',
                 iconUrl: 'images/icon-128.png',
                 title: 'Podcast Added Succesfully',
-                message: 'It should show up in your podcaster soon.'
             });
+            message: 'It should show up in your podcaster soon.'
         } else {
             chrome.notifications.create({
                 type: 'basic',
