@@ -1,3 +1,4 @@
+import { environment } from 'environments/environment';
 import { PodcastEntryModel } from 'app/models/podcasts.models';
 import { PodcastModel } from './../models/podcasts.models';
 import { AuthHttp } from 'angular2-jwt';
@@ -16,41 +17,41 @@ export class PodcastService {
     constructor(private _http: AuthHttp) { }
     //#region Podcasts
     get(): Observable<PodcastModel[]> {
-        return this._http.get('api/podcast/')
+        return this._http.get(environment.API_HOST + '/podcast/')
             .map(res => res.json());
     }
     getPodcast(slug: string): Observable<PodcastModel> {
-        return this._http.get('api/podcast/' + slug)
+        return this._http.get(environment.API_HOST + '/podcast/' + slug)
             .map(res => res.json());
     }
     addPodcast(podcast: PodcastModel): Observable<PodcastModel> {
         console.log('PodcastService', 'addPodcast', podcast);
         const data = JSON.stringify(podcast, PodcastService._replacer);
-        return this._http.post('api/podcast', data)
+        return this._http.post(environment.API_HOST + '/podcast', data)
             .map(res => res.json());
     }
     updatePodcast(podcast: PodcastModel) {
-        return this._http.put('api/podcast/', podcast);
+        return this._http.put(environment.API_HOST + '/podcast/', podcast);
     }
     deletePodcast(id: number) {
-        return this._http.delete('api/podcast/' + id);
+        return this._http.delete(environment.API_HOST + '/podcast/' + id);
     }
     //#endregion
     //#region Entries
     getEntries(slug: string): any {
-        return this._http.get('api/entry/all/' + slug)
+        return this._http.get(environment.API_HOST + '/entry/all/' + slug)
             .map(res => res.json());
     }
     addEntry(entry: PodcastEntryModel) {
-        return this._http.post('api/entry', JSON.stringify(entry))
+        return this._http.post(environment.API_HOST + '/entry', JSON.stringify(entry))
             .map(res => res.json());
     }
     updateEntry(entry: PodcastEntryModel) {
-        return this._http.post('api/entry', JSON.stringify(entry))
+        return this._http.post(environment.API_HOST + '/entry', JSON.stringify(entry))
             .map(res => res.json());
     }
     deleteEntry(id: number) {
-        return this._http.delete('api/entry/' + id);
+        return this._http.delete(environment.API_HOST + '/entry/' + id);
     }
     //#endregion
 }
