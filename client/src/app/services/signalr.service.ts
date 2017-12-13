@@ -14,12 +14,12 @@ export class SignalRService {
     constructor(private _auth: AuthService) {
 
     }
-    public init(url: string) {
+    public init(url: string): Promise<void> {
         const token = this._auth.getToken();
         const options: any = {
             transport: 0
         };
         this.connection = new HubConnection(url + '?token=' + token, options);
-        this.connection.start();
+        return this.connection.start();
     }
 }
