@@ -1,4 +1,3 @@
-import { DropzoneConfigInterface } from 'app/components/shared/dropzone/dropzone.interfaces';
 import { Observable } from 'rxjs/Observable';
 import { environment } from 'environments/environment';
 import { SignalRService } from 'app/services/signalr.service';
@@ -17,21 +16,16 @@ export class DebugComponent implements OnInit {
 
     debugInfo$: Observable<string>;
 
-    config: DropzoneConfigInterface = {
-        acceptedFiles: 'audio/*',
-        maxFilesize: 4000, // 4Gb
-        timeout: 1000 * (60 * 120), /// 2 hours
-        maxFiles: 1
-    };
-    constructor(private _debugService: DebugService, private _signalRService: SignalRService) {}
+    constructor(private _debugService: DebugService, private _signalrService: SignalRService) {}
     ngOnInit() {
-        this._signalRService.init(`${environment.SIGNALR_HOST}hubs/debug`);
-        this._signalRService.connection.on('Send', data => {
-            console.log('DebugService', 'signalr', data);
-            this.messagesReceived.push(data);
-            this.realtimeMessage = '';
-        });
-        this.debugInfo$ = this._debugService.getDebugInfo();
+        this._signalrService.init(`${environment.SIGNALR_HOST}hubs/debug`).then(() => {
+            this._signalrService.connection.on('Send', data => {
+                console.log('DebugService', 'signalr', data);
+                this.messagesReceived.push(data);
+                this.realtimeMessage = '';
+            });
+            this.debugInfo$ = this._debugService.getDebugInfo();
+        }).catch((err) => console.error('debug.component.ts', '_signalrService.init', err));
     }
 
     sendMessage() {
