@@ -24,11 +24,11 @@ export class EntryListItemComponent implements OnInit {
     constructor(private _signalrService: SignalRService, private _store: Store<ApplicationState>) {}
     ngOnInit() {
         if (this.entry && !this.entry.processed && this.entry.processingStatus !== 'Failed') {
-            console.error('entry-list-item.component.ts', 'ngOnInit', 'Initting signalr');
+            console.log('entry-list-item.component.ts', 'ngOnInit', 'Initting signalr');
             this._signalrService
                 .init(`${environment.SIGNALR_HOST}hubs/audioprocessing`)
                 .then(() => {
-                    console.error('entry-list-item.component.ts', 'ngOnInit', 'Initted signalr');
+                    console.log('entry-list-item.component.ts', 'ngOnInit', 'Initted signalr');
                     const updateChannel: string = `${this.entry.uid}__progress_update`;
                     const processedChannel: string = `${this.entry.uid}__info_processed`;
                     console.log('EntryListItemComponent', 'updateChannel', updateChannel);
