@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve --ssl",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint"
@@ -24,7 +24,7 @@
         "@angular/platform-browser": "^5.1.0",
         "@angular/platform-browser-dynamic": "^5.1.0",
         "@angular/router": "^5.1.0",
-        "@aspnet/signalr-client": "^1.0.0-alpha2-27654",
+        "@aspnet/signalr-client": "^1.0.0-alpha2-final",
         "@ngrx/effects": "^4.1.1",
         "@ngrx/store": "^4.1.1",
         "@ngrx/store-devtools": "^4.1.1",
