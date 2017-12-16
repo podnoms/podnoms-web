@@ -23,21 +23,30 @@ export class EntryListItemComponent implements OnInit {
 
     constructor(private _signalrService: SignalRService, private _store: Store<ApplicationState>) {}
     ngOnInit() {
-        if (!this.entry.processed && this.entry.processingStatus !== 'Failed') {
-            this._signalrService.init(`${environment.SIGNALR_HOST}hubs/audioprocessing`);
+        if (this.entry && !this.entry.processed && this.entry.processingStatus !== 'Failed') {
+            console.log('entry-list-item.component.ts', 'ngOnInit', 'Initting signalr');
+            this._signalrService
+                .init(`${environment.SIGNALR_HOST}hubs/audioprocessing`)
+                .then(() => {
+                    console.log('entry-list-item.component.ts', 'ngOnInit', 'Initted signalr');
+                    const updateChannel: string = `${this.entry.uid}__progress_update`;
+                    const processedChannel: string = `${this.entry.uid}__info_processed`;
+                    console.log('EntryListItemComponent', 'updateChannel', updateChannel);
+                    console.log('EntryListItemComponent', 'processedChannel', processedChannel);
 
-            const updateChannel: string = `${this.entry.uid}__progress_update`;
-            const processedChannel: string = `${this.entry.uid}__info_processed`;
-            console.log('EntryListItemComponent', 'updateChannel', updateChannel);
-            console.log('EntryListItemComponent', 'processedChannel', processedChannel);
-
-            this._signalrService.connection.on(updateChannel, result => {
-                this.percentageProcessed = result.percentage;
-                this.currentSpeed = result.currentSpeed;
-            });
-            this._signalrService.connection.on(processedChannel, result => {
-                this._store.dispatch(new fromEntriesActions.UpdateSuccessAction(result));
-            });
+                    this._signalrService.connection.on(updateChannel, result => {
+                        this.percentageProcessed = result.percentage;
+                        this.currentSpeed = result.currentSpeed;
+                    });
+                    this._signalrService.connection.on(processedChannel, result => {
+                        this.entry = result;
+                        if (this.entry.processingStatus === 'Processed') {
+                            // only update the store when we're finished.
+                            this._store.dispatch(new fromEntriesActions.UpdateSuccessAction(result));
+                        }
+                    });
+                })
+                .catch(err => console.error('entry-list-item.component.ts', '_signalrService.init', err));
         }
     }
     deleteEntry() {

@@ -1,0 +1,6 @@
+{
+    "workbench.colorTheme": "Atom One Light",
+    "files.exclude": {
+        "app/scripts": true
+    }
+}
