@@ -105,6 +105,7 @@ export class AuthService {
         localStorage.removeItem('expires_at');
 
         this._router.navigate(['/']);
+        window.location.reload();
     }
     public isAuthenticated(): boolean {
         const expiresAt = JSON.parse(localStorage.getItem('expires_at'));

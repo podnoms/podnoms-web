@@ -18,8 +18,6 @@ namespace PodNoms.Api {
             WebHost.CreateDefaultBuilder (args)
             .UseStartup<Startup> ()
             .UseKestrel (options => {
-                options.Listen (IPAddress.Any, 5000, listenOptions =>
-                    listenOptions.UseHttps ("localhost.pfx"));
                 options.Limits.MaxRequestBodySize = 1073741824;
             })
             .Build ();
