@@ -17,6 +17,7 @@ namespace PodNoms.Api {
         public static IWebHost BuildWebHost (string[] args) =>
             WebHost.CreateDefaultBuilder (args)
             .UseStartup<Startup> ()
+            .UseUrls ("http://*:5000")
             .UseKestrel (options => {
                 options.Limits.MaxRequestBodySize = 1073741824;
             })

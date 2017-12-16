@@ -42,19 +42,20 @@ namespace PodNoms.Api.Controllers {
         }
 
         private void _processEntry (PodcastEntry entry) {
-                try {
-                    var infoJobId = BackgroundJob.Enqueue<IUrlProcessService> (
-                        service => service.GetInformation (entry.Id));
-                    var extract = BackgroundJob.ContinueWith<IUrlProcessService> (
-                        infoJobId, service => service.DownloadAudio (entry.Id));
-                    var upload = BackgroundJob.ContinueWith<IAudioUploadProcessService> (
-                        extract, service => service.UploadAudio (entry.Id, entry.AudioUrl));
-                } catch (InvalidOperationException ex) {
-                    _logger.LogError ($"Failed submitting job to processor\n{ex.Message}");
-                    entry.ProcessingStatus = ProcessingStatus.Failed;
-                }
+            try {
+                var infoJobId = BackgroundJob.Enqueue<IUrlProcessService> (
+                    service => service.GetInformation (entry.Id));
+                var extract = BackgroundJob.ContinueWith<IUrlProcessService> (
+                    infoJobId, service => service.DownloadAudio (entry.Id));
+                var upload = BackgroundJob.ContinueWith<IAudioUploadProcessService> (
+                    extract, service => service.UploadAudio (entry.Id, entry.AudioUrl));
+            } catch (InvalidOperationException ex) {
+                _logger.LogError ($"Failed submitting job to processor\n{ex.Message}");
+                entry.ProcessingStatus = ProcessingStatus.Failed;
             }
-            [HttpGet ("all/{podcastSlug}")]
+        }
+
+        [HttpGet ("all/{podcastSlug}")]
         public async Task<IActionResult> GetAllForSlug (string podcastSlug) {
             var entries = await _repository.GetAllAsync (podcastSlug);
             var results = _mapper.Map<List<PodcastEntry>, List<PodcastEntryViewModel>> (entries.ToList ());
@@ -71,6 +72,7 @@ namespace PodNoms.Api.Controllers {
 
                 entry.Podcast = podcast;
                 entry.Processed = false;
+                entry.Title = "Waiting for information";
             }
             await _repository.AddOrUpdateAsync (entry);
             await _uow.CompleteAsync ();
