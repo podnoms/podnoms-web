@@ -12,7 +12,7 @@ export class AuthService {
     auth0 = new auth0.WebAuth({
         domain: AUTH_CONFIG.AUTH0_DOMAIN,
         clientID: AUTH_CONFIG.AUTH0_CLIENT_ID,
-        redirectUri: AUTH_CONFIG.AUTH0_CALBACKURL,
+        redirectUri: AUTH_CONFIG.AUTH0_CALLBACKURL,
         audience: `https://${AUTH_CONFIG.AUTH0_DOMAIN}/userinfo`,
         responseType: 'token id_token',
         prompt: 'select_account',
