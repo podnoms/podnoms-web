@@ -2,9 +2,8 @@ import { environment } from 'environments/environment';
 import { ApplicationState } from 'app/store/index';
 import { Store } from '@ngrx/store';
 import { SignalRService } from 'app/services/signalr.service';
-import { PodcastModel } from 'app/models/podcasts.models';
+import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 
 import * as fromEntriesActions from 'app/actions/entries.actions';
@@ -54,5 +53,9 @@ export class EntryListItemComponent implements OnInit {
     }
     updateTitle($event: Event) {
         this._store.dispatch(new fromEntriesActions.UpdateAction(this.entry));
+    }
+
+    goto(entry: PodcastEntryModel) {
+        window.open(entry.sourceUrl);
     }
 }
