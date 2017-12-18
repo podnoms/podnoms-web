@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AUTH_CONFIG } from './../constants/auth0';
 import * as auth0 from 'auth0-js';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/filter';
@@ -101,7 +101,7 @@ export class AuthService {
         this.auth0.renewAuth(
             {
                 audience: 'https://podnoms/',
-                redirectUri: `${environment.API_HOST}silent`,
+                redirectUri: `${environment.API_HOST}/silent`,
                 usePostMessage: true,
                 postMessageOrigin: environment.BASE_URL
             },
@@ -115,13 +115,13 @@ export class AuthService {
         );
     }
     public scheduleRenewal() {
-        console.log('auth.service.ts', 'scheduleRenewal', 'Starting renewal scheduler');
         if (!this.isAuthenticated()) return;
         console.log('auth.service.ts', 'scheduleRenewal', 'Schedule required');
         this.unscheduleRenewal();
 
         const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
         const source = Observable.of(expiresAt).flatMap(e => {
+            console.log('auth.service.ts', 'scheduleRenewal_expiresAt', `Renewal scheduled at: ${new Date(e)}`);
             const now = Date.now();
             return Observable.timer(Math.max(1, e - now));
         });

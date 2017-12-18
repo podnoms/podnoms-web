@@ -6,7 +6,7 @@ namespace PodNoms.Api.Persistence {
         User Get(int id);
         User Get(string email);
         Task<User> GetBySlugAsync(string slug);
-        User UpdateRegistration(string email, string name, string sid, string providerId, string profileImage);
+        User UpdateRegistration(string email, string name, string sid, string providerId, string profileImage, string refreshToken);
         string UpdateApiKey(User email);
 
         User AddOrUpdate(User user);

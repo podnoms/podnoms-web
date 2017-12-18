@@ -5,3 +5,4 @@ export const environment = {
     AUTH0_REDIRECT_URL: 'https://podnoms.com/callback',
     BASE_URL: 'https://podnoms.com'
 };
+
