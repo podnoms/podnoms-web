@@ -12,6 +12,7 @@ export class AppComponent {
 
     constructor(private _authService: AuthService, _globals: GlobalsService) {
         _authService.handleAuthentication();
+        _authService.scheduleRenewal();
     }
 
     loggedIn() {

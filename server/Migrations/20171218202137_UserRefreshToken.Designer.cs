@@ -12,9 +12,10 @@ using System;
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171218202137_UserRefreshToken")]
+    partial class UserRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

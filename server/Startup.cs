@@ -33,6 +33,7 @@ using Microsoft.Extensions.Primitives;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace PodNoms.Api
 {
@@ -130,6 +131,7 @@ namespace PodNoms.Api
             services.AddMvc(options =>
             {
                 options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+                options.OutputFormatters.OfType<StringOutputFormatter>().Single().SupportedMediaTypes.Add("text/html");
             }).AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
