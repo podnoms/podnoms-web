@@ -1,6 +1,6 @@
 import { PodcastEntryModel } from 'app/models/podcasts.models';
 import * as entries from '../actions/entries.actions';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 export interface State {
     loading: boolean;

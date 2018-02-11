@@ -205,7 +205,7 @@ namespace PodNoms.Api
             if ((env.IsProduction() || true))
             {
                 app.UseHangfireServer();
-                app.UseHangfireDashboard("/1466049a-41ba-420e-ac05-25a06bdd1aad", new DashboardOptions
+                app.UseHangfireDashboard("/hangfire", new DashboardOptions
                 {
                     Authorization = new[] { new HangFireAuthorizationFilter() }
                 });
