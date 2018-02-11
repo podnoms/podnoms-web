@@ -1,6 +1,7 @@
 import { PodcastModel } from 'app/models/podcasts.models';
 import * as podcastActions from 'app/actions/podcast.actions';
-import _ from 'lodash';
+// import _ from 'lodash';
+import * as _ from "lodash";
 
 export interface State {
     loading: boolean;
