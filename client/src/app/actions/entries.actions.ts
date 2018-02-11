@@ -32,6 +32,7 @@ export class AddAction implements Action {
 export class AddSuccessAction implements Action {
     readonly type = ADD_SUCCESS;
     constructor(public payload: PodcastEntryModel) {
+        console.log('entries.actions.ts', 'AddSuccessACtion', payload);
         console.log('EntryReducer', 'AddSuccessAction', payload);
     }
 }
