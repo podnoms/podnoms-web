@@ -1,7 +1,33 @@
-<div class="input-group add-url-form">
-    <input type="text" id="input2-group2" name="entry-url" [(ngModel)]="newEntrySourceUrl" class="form-control" placeholder="New entry URL">
-    <span class="input-group-btn">
-        <button type="button" class="btn btn-primary" (click)="addEntry(podcast)">
-            <i class="fa fa-plus-circle"></i> Submit</button>
-    </span>
+<form class="push">
+    <div class="input-group input-group-lg">
+        <input type="text"
+            name="entry-url"
+            #input
+            [disabled]="isPosting"
+            [(ngModel)]="newEntrySourceUrl"
+            class="form-control"
+            placeholder="Paste (or type) URL and press enter or the button">
+        <div class="input-group-append">
+            <button type="submit"
+                class="btn btn-secondary"
+                [disabled]="isPosting"
+                (click)="addEntry(podcast)">
+                <i class="fa fa-plus"
+                    *ngIf="!isPosting"></i>
+                <i class="fa fa-cog fa-spin"
+                    *ngIf="isPosting"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="alert alert-danger alert-dismissible fade show animated fadeInDown"
+    role="alert"
+    *ngIf="errorText">
+    <strong>Error!</strong> {{errorText}}
+    <button type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
