@@ -1,4 +1,3 @@
-import { UpdateAction, AddAction } from './../../actions/entries.actions';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
@@ -8,7 +7,9 @@ import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'app/store';
 import { HostListener } from '@angular/core';
+import {Location} from '@angular/common';
 
+import { UpdateAction, AddAction } from 'app/actions/entries.actions';
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
@@ -33,15 +34,27 @@ export class PodcastComponent {
         }
     }
 
-    constructor(private _store: Store<ApplicationState>, route: ActivatedRoute) {
+    constructor(private _store: Store<ApplicationState>, route: ActivatedRoute, private _location: Location) {
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
 
         this.entries$ = _store.select(fromPodcast.getEntries);
         route.params.subscribe(params => {
-            if (params['slug'] !== undefined) {
+            let slug = params['slug'];
+            if (slug !== undefined) {
                 this.firstRun = false;
-                _store.dispatch(new fromEntriesActions.LoadAction(params['slug']));
-                _store.dispatch(new fromPodcastActions.SelectAction(params['slug']));
+                _store.dispatch(new fromEntriesActions.LoadAction(slug));
+                _store.dispatch(new fromPodcastActions.SelectAction(slug));
+            } else {
+                this.selectedPodcast$.subscribe(r => {
+                    if (r) {
+                        slug = r.slug;
+                        _store.dispatch(new fromEntriesActions.LoadAction(slug));
+                        _store.dispatch(new fromPodcastActions.SelectAction(slug));
+
+                        this._location.go('/podcasts/' + slug);
+                    }
+                });
+                console.log('podcast.component.ts', 'ctor', params);
             }
         });
     }

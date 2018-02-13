@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +9,10 @@ using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Storage;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PodNoms.Api.Controllers {
     [Route ("[controller]")]
@@ -65,6 +65,9 @@ namespace PodNoms.Api.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post ([FromBody] PodcastEntryViewModel item) {
+
+            // first check url is valid
+
             var entry = _mapper.Map<PodcastEntryViewModel, PodcastEntry> (item);
             if (entry.ProcessingStatus == ProcessingStatus.Accepted) {
                 var podcast = await _podcastRepository.GetAsync (item.PodcastId);
@@ -82,6 +85,7 @@ namespace PodNoms.Api.Controllers {
             }
             var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel> (entry);
             return Ok (result);
+
         }
 
         [HttpDelete ("{id}")]
@@ -89,6 +93,15 @@ namespace PodNoms.Api.Controllers {
             await this._repository.DeleteAsync (id);
             await _uow.CompleteAsync ();
             return Ok ();
+        }
+
+        [HttpPost ("isvalid")]
+        public async Task<IActionResult> IsValid ([FromBody] string url) {
+            if (!string.IsNullOrEmpty (url)) {
+                var isValid = await _processor.CheckUrlValid (url);
+                if (isValid) return Ok ();
+            }
+            return BadRequest ();
         }
     }
 }

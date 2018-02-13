@@ -2,9 +2,8 @@ import { environment } from 'environments/environment';
 import { ApplicationState } from 'app/store/index';
 import { Store } from '@ngrx/store';
 import { SignalRService } from 'app/services/signalr.service';
-import { PodcastModel } from 'app/models/podcasts.models';
+import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 
 import * as fromEntriesActions from 'app/actions/entries.actions';
@@ -24,9 +23,11 @@ export class EntryListItemComponent implements OnInit {
     constructor(private _signalrService: SignalRService, private _store: Store<ApplicationState>) {}
     ngOnInit() {
         if (this.entry && !this.entry.processed && this.entry.processingStatus !== 'Failed') {
-            console.log('entry-list-item.component.ts', 'ngOnInit', 'Initting signalr');
+            const signalRHost = `${environment.SIGNALR_HOST}hubs/audioprocessing`;
+
+            console.log('entry-list-item.component.ts', 'ngOnInit', `Initting signalr: ${signalRHost}`);
             this._signalrService
-                .init(`${environment.SIGNALR_HOST}hubs/audioprocessing`)
+                .init(signalRHost)
                 .then(() => {
                     console.log('entry-list-item.component.ts', 'ngOnInit', 'Initted signalr');
                     const updateChannel: string = `${this.entry.uid}__progress_update`;
@@ -54,5 +55,9 @@ export class EntryListItemComponent implements OnInit {
     }
     updateTitle($event: Event) {
         this._store.dispatch(new fromEntriesActions.UpdateAction(this.entry));
+    }
+
+    goto(entry: PodcastEntryModel) {
+        window.open(entry.sourceUrl);
     }
 }
