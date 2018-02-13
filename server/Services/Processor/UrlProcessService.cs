@@ -1,8 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Dynamic;
-using System.IO;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -16,6 +12,10 @@ using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
 using PusherServer;
+using System.ComponentModel;
+using System.Dynamic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PodNoms.Api.Services.Processor {
     internal class UrlProcessService : ProcessService, IUrlProcessService {
@@ -23,7 +23,6 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IEntryRepository _repository;
 
         public ApplicationsSettings _applicationsSettings { get; }
-
 
         public UrlProcessService (IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
@@ -39,6 +38,12 @@ namespace PodNoms.Api.Services.Processor {
                 uid,
                 e);
         }
+
+        public async Task<bool> CheckUrlValid (string url) {
+            return await new AudioDownloader (url, _applicationsSettings.Downloader)
+                .CheckUrlValid ();
+        }
+
         public async Task<bool> GetInformation (int entryId) {
             var entry = await _repository.GetAsync (entryId);
             if (entry == null || string.IsNullOrEmpty (entry.SourceUrl)) {

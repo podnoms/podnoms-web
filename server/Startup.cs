@@ -33,6 +33,7 @@ using Microsoft.Extensions.Primitives;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace PodNoms.Api
 {
@@ -130,6 +131,7 @@ namespace PodNoms.Api
             services.AddMvc(options =>
             {
                 options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+                options.OutputFormatters.OfType<StringOutputFormatter>().Single().SupportedMediaTypes.Add("text/html");
             }).AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -203,7 +205,7 @@ namespace PodNoms.Api
             if ((env.IsProduction() || true))
             {
                 app.UseHangfireServer();
-                app.UseHangfireDashboard("/1466049a-41ba-420e-ac05-25a06bdd1aad", new DashboardOptions
+                app.UseHangfireDashboard("/hangfire", new DashboardOptions
                 {
                     Authorization = new[] { new HangFireAuthorizationFilter() }
                 });

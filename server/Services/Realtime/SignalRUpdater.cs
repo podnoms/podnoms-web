@@ -17,9 +17,9 @@ namespace PodNoms.Api.Services.Realtime
         public async Task<bool> SendProcessUpdate(string userId, string channelName, string eventName, object data)
         {
             var bus = $"{channelName}__{eventName}";
-            await _hub.InvokeUserAsync(
-                userId, 
-                bus, new object[] { data });
+            await _hub.InvokeAllAsync(
+                bus, //userId, 
+                new object[] { data });
             return true;
         }
     }
