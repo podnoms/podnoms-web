@@ -21,6 +21,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -91,8 +92,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
         DropzoneModule,
-
+        ClipboardModule,
         StoreModule.forRoot(reducers),
+
         EffectsModule.forRoot([PodcastsEffects, EntriesEffects, ProfileEffects]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
