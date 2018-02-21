@@ -5,6 +5,7 @@ import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild }
 
 import { AuthService } from 'app/services/auth.service';
 import { PodcastModel } from 'app/models/podcasts.models';
+import { environment } from 'environments/environment';
 
 import * as Dropzone from 'dropzone';
 
@@ -21,7 +22,7 @@ export class PodcastUploadFormComponent implements OnInit {
     constructor(private _toastyService: ToastyService, private _auth: AuthService) {}
     ngOnInit() {
         const config = {
-            url: `/api/podcast/${this.podcast.slug}/audioupload`,
+            url: `${environment.API_HOST}/podcast/${this.podcast.slug}/audioupload`,
             acceptedFiles: 'audio/*',
             maxFilesize: 4000, // 4Gb
             timeout: 1000 * (60 * 120), /// 2 hours
