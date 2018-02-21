@@ -66,6 +66,10 @@ export class PodcastService {
                 return Observable.throw(new Error(error.status));
             });
     }
-
+    reSubmitEntry(entry: PodcastEntryModel): Observable<PodcastEntryModel> {
+        return this._http
+        .post(environment.API_HOST + '/entry/resubmit', entry)
+        .map(res => res.json());
+    }
     //#endregion
 }

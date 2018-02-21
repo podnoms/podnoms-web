@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
@@ -9,17 +13,13 @@ using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Storage;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PodNoms.Api.Controllers {
     [Route ("[controller]")]
     public class EntryController : Controller {
         private readonly IPodcastRepository _podcastRepository;
         private readonly IEntryRepository _repository;
-        private readonly IUnitOfWork _uow;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IUrlProcessService _processor;
         private readonly ILogger _logger;
@@ -35,7 +35,7 @@ namespace PodNoms.Api.Controllers {
             this._podcastRepository = podcastRepository;
             this._repository = repository;
             this._storageSettings = storageSettings.Value;
-            this._uow = unitOfWork;
+            this._unitOfWork = unitOfWork;
             this._audioFileStorageSettings = audioFileStorageSettings.Value;
             this._mapper = mapper;
             this._processor = processor;
@@ -75,10 +75,14 @@ namespace PodNoms.Api.Controllers {
 
                 entry.Podcast = podcast;
                 entry.Processed = false;
-                entry.Title = "Waiting for information";
+                if (string.IsNullOrEmpty (item.Title)) {
+                    entry.Title = "Waiting for information";
+                } else {
+                    entry.Title = item.Title;
+                }
             }
             await _repository.AddOrUpdateAsync (entry);
-            await _uow.CompleteAsync ();
+            await _unitOfWork.CompleteAsync ();
 
             if (entry.ProcessingStatus.Equals (ProcessingStatus.Accepted) && entry.Id != 0) {
                 _processEntry (entry);
@@ -91,7 +95,7 @@ namespace PodNoms.Api.Controllers {
         [HttpDelete ("{id}")]
         public async Task<IActionResult> Delete (int id) {
             await this._repository.DeleteAsync (id);
-            await _uow.CompleteAsync ();
+            await _unitOfWork.CompleteAsync ();
             return Ok ();
         }
 
@@ -102,6 +106,18 @@ namespace PodNoms.Api.Controllers {
                 if (isValid) return Ok ();
             }
             return BadRequest ();
+        }
+
+        [HttpPost ("resubmit")]
+        public async Task<IActionResult> ReSubmit ([FromBody] PodcastEntryViewModel item) {
+            var entry = await _repository.GetAsync (item.Id);
+            entry.ProcessingStatus = ProcessingStatus.Processing;
+            await _unitOfWork.CompleteAsync ();
+            if (entry.ProcessingStatus != ProcessingStatus.Processed) {
+                _processEntry (entry);
+            }
+
+            return Ok (entry);
         }
     }
 }

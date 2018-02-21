@@ -1,4 +1,8 @@
 using System;
+using System.ComponentModel;
+using System.Dynamic;
+using System.IO;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,10 +16,6 @@ using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
 using PusherServer;
-using System.ComponentModel;
-using System.Dynamic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace PodNoms.Api.Services.Processor {
     internal class UrlProcessService : ProcessService, IUrlProcessService {
@@ -80,23 +80,30 @@ namespace PodNoms.Api.Services.Processor {
             var entry = await _repository.GetAsync (entryId);
             if (entry == null)
                 return false;
+            try {
+                var downloader = new AudioDownloader (entry.SourceUrl, _applicationsSettings.Downloader);
+                var outputFile =
+                    Path.Combine (System.IO.Path.GetTempPath (), $"{System.Guid.NewGuid().ToString()}.mp3");
 
-            var downloader = new AudioDownloader (entry.SourceUrl, _applicationsSettings.Downloader);
-            var outputFile =
-                Path.Combine (System.IO.Path.GetTempPath (), $"{System.Guid.NewGuid().ToString()}.mp3");
+                downloader.DownloadProgress += async (s, e) => await __downloader_progress (entry.Podcast.User.GetUserId (), entry.Uid, e);
 
-            downloader.DownloadProgress += async (s, e) => await __downloader_progress (entry.Podcast.User.GetUserId (), entry.Uid, e);
+                downloader.PostProcessing += (s, e) => {
+                    Console.WriteLine (e);
+                };
+                var sourceFile = downloader.DownloadAudio (entry.Uid);
+                if (!string.IsNullOrEmpty (sourceFile)) {
+                    entry.ProcessingStatus = ProcessingStatus.Uploading;
+                    entry.AudioUrl = sourceFile;
 
-            downloader.PostProcessing += (s, e) => {
-                Console.WriteLine (e);
-            };
-            var sourceFile = downloader.DownloadAudio (entry.Uid);
-            if (!string.IsNullOrEmpty (sourceFile)) {
-                entry.ProcessingStatus = ProcessingStatus.Uploading;
-                entry.AudioUrl = sourceFile;
-
-                await _sendProcessCompleteMessage (entry);
+                    await _sendProcessCompleteMessage (entry);
+                    await _unitOfWork.CompleteAsync ();
+                }
+            } catch (Exception ex) {
+                _logger.LogError ($"Entry: {entryId}\n{ex.Message}");
+                entry.ProcessingStatus = ProcessingStatus.Failed;
+                entry.ProcessingPayload = ex.Message;
                 await _unitOfWork.CompleteAsync ();
+                await _sendProcessCompleteMessage (entry);
             }
             return false;
         }
