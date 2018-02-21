@@ -1,6 +1,7 @@
 import {Http, Headers} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {AuthService} from './auth.service';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class ImageService {
@@ -14,6 +15,6 @@ export class ImageService {
         formData.append('file', image);
         const headers = new Headers();
         headers.append('Authorization', 'Bearer ' + this._auth.getToken());
-        return this._http.post(`/api/podcast/${podcastSlug}/imageupload`, formData, {headers: headers});
+        return this._http.post(`${environment.API_HOST}/podcast/${podcastSlug}/imageupload`, formData, {headers: headers});
     }
 }
