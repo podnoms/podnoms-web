@@ -1,4 +1,9 @@
 @import 'assets/css/style.css';
+@import '~ng2-toasty/bundles/style.css';
+@import '~ng2-toasty/bundles/style-bootstrap.css';
+@import '~font-awesome/css/font-awesome.css';
+@import '~simple-line-icons/css/simple-line-icons.css';
+@import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
 
 a:hover {
     cursor:pointer;
@@ -39,7 +44,7 @@ a:hover {
   color: #fff;
 }
 
-.btn-dribbble:focus, 
+.btn-dribbble:focus,
 .btn-dribbble:hover,
 .btn-dropbox:focus,
 .btn-dropbox:hover,
