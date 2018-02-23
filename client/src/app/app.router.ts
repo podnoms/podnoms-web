@@ -1,19 +1,21 @@
-import { ProfileComponent } from './components/profile/profile.component';
-import { ResetComponent } from './components/reset/reset.component';
-import { RegisterComponent } from './components/register/register.component';
-import { CallbackComponent } from './components/callback/callback.component';
-import { LoginComponent } from './components/login/login.component';
-import { DebugComponent } from './components/debug/debug.component';
+import { ProfileComponent } from 'app/components/profile/profile.component';
+import { ResetComponent } from 'app/components/reset/reset.component';
+import { RegisterComponent } from 'app/components/register/register.component';
+import { CallbackComponent } from 'app/components/callback/callback.component';
+import { LoginComponent } from 'app/components/login/login.component';
+import { DebugComponent } from 'app/components/debug/debug.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from 'app/components/home/home.component';
 import { AuthGuard } from './services/auth.guard';
-import { PodcastComponent } from './components/podcast/podcast.component';
-import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
+import { PodcastComponent } from 'app/components/podcast/podcast.component';
+import { PodcastAddFormComponent } from 'app/components/podcast/podcast-add-form/podcast-add-form.component';
+import { AboutComponent } from 'app/components/about/about.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
+    { path: 'about', component: AboutComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'reset', component: ResetComponent, pathMatch: 'full' },
     { path: 'callback', component: CallbackComponent },
