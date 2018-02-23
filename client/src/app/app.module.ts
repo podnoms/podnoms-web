@@ -46,6 +46,7 @@ import { PrettyPrintPipe } from 'app/pipes/pretty-print.pipe';
 import { RegisterComponent } from './components/register/register.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AboutComponent } from './components/about/about.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -79,7 +80,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         CallbackComponent,
         RegisterComponent,
         ResetComponent,
-        ProfileComponent
+        ProfileComponent,
+        AboutComponent
     ],
     imports: [
         BrowserModule,
