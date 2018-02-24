@@ -47,6 +47,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -81,7 +82,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         RegisterComponent,
         ResetComponent,
         ProfileComponent,
-        AboutComponent
+        AboutComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
