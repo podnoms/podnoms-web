@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs/Observable';
 import { SignalRService } from 'app/services/signalr.service';
-import { HubConnection } from '@aspnet/signalr-client';
 import { Component, OnInit } from '@angular/core';
 import { DebugService } from 'app/services/debug.service';
 import { environment } from 'environments/environment';
