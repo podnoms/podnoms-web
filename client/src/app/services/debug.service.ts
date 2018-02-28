@@ -1,7 +1,6 @@
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
-import { HubConnection } from '@aspnet/signalr-client';
 import { Injectable } from '@angular/core';
 
 @Injectable()
