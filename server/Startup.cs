@@ -215,8 +215,8 @@ namespace PodNoms.Api
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<AudioProcessingHub>("hubs/audioprocessing");
-                routes.MapHub<DebugHub>("hubs/debug");
+                routes.MapHub<AudioProcessingHub>("/hubs/audioprocessing");
+                routes.MapHub<DebugHub>("/hubs/debug");
             });
 
             app.UseMvc(routes =>

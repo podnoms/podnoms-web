@@ -2,7 +2,7 @@ import { ProfileModel } from 'app/models/profile.model';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ProfileService } from '../../services/profile.service';
-import { Observable } from '@aspnet/signalr-client/dist/src/Observable';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-navbar',

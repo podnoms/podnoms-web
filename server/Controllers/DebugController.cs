@@ -67,8 +67,8 @@ namespace PodNoms.Api.Controllers {
         [Authorize]
         [HttpPost ("realtime")]
         public async Task<IActionResult> Realtime ([FromBody] string message) {
-            await _hubManager.InvokeUserAsync (User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
-            await _hubManager.InvokeAllAsync ("Send", new string[] { $"All: {message}" });
+            await _hubManager.SendUserAsync (User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
+            await _hubManager.SendAllAsync("Send", new string[] { $"All: {message}" });
             return Ok (message);
         }
     }
