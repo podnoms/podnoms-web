@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/dotnet-nightly:2.1-sdk AS build-env
 WORKDIR /app
 
 COPY *.csproj ./
@@ -8,7 +8,7 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/aspnetcore:2.0
+FROM microsoft/dotnet-nightly:2.1-runtime-alpine
 WORKDIR /app
 RUN apt-get update && apt-get install -y curl python ffmpeg && \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
