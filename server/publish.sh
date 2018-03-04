@@ -2,5 +2,4 @@
 unset DOCKER_HOST
 unset DOCKER_TLS_VERIFY
 
-docker build --rm -f Dockerfile -t fergalmoran/podnoms.api .
-docker push fergalmoran/podnoms.api
+docker build --rm -f Dockerfile -t fergalmoran/podnoms.api . && docker push fergalmoran/podnoms.api
