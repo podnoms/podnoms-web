@@ -12,15 +12,14 @@ using Microsoft.Extensions.Logging;
 namespace PodNoms.Api {
     public class Program {
         public static void Main (string[] args) {
-            BuildWebHost (args).Run ();
+            CreateWebHostBuilder (args).Build ().Run ();
         }
-        public static IWebHost BuildWebHost (string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder (string[] args) =>
             WebHost.CreateDefaultBuilder (args)
             .UseStartup<Startup> ()
             .UseUrls ("http://*:5000")
             .UseKestrel (options => {
                 options.Limits.MaxRequestBodySize = 1073741824;
-            })
-            .Build ();
+            });
     }
 }
