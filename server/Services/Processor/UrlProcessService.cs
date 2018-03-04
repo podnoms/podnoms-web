@@ -15,7 +15,6 @@ using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
-using PusherServer;
 
 namespace PodNoms.Api.Services.Processor {
     internal class UrlProcessService : ProcessService, IUrlProcessService {
