@@ -12,7 +12,10 @@ import { Observable } from 'rxjs/Observable';
 export class NavbarComponent implements OnInit {
     user$: Observable<ProfileModel>;
 
-    constructor(private _authService: AuthService, private _profileService: ProfileService) {}
+    constructor(
+        private _authService: AuthService,
+        private _profileService: ProfileService
+    ) {}
 
     ngOnInit() {
         if (this.loggedIn()) {
