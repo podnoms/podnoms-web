@@ -6,13 +6,20 @@ COPY NuGet.config ./
 RUN dotnet restore
 
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet build -c Release -o /out -r alpine.3.6-x64
+RUN dotnet publish -c Release -o /out -r alpine.3.6-x64
 
 FROM microsoft/dotnet-nightly:2.1-runtime-alpine
-WORKDIR /app
-RUN apt-get update && apt-get install -y curl python ffmpeg && \
+
+RUN apk add --no-cache --update \
+    python \
+    ffmpeg \
+    libuv \
+    curl && \
+    ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so && \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
     chmod a+rx /usr/local/bin/youtube-dl
 
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "PodNoms.Api.dll"]
+
