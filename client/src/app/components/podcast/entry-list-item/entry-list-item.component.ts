@@ -45,28 +45,12 @@ export class EntryListItemComponent implements OnInit {
             this._signalrService
                 .init(signalRHost)
                 .then(() => {
-                    console.log(
-                        'entry-list-item.component.ts',
-                        'ngOnInit',
-                        'Initted signalr'
-                    );
                     const updateChannel: string = `${
                         this.entry.uid
                     }__progress_update`;
                     const processedChannel: string = `${
                         this.entry.uid
                     }__info_processed`;
-                    console.log(
-                        'EntryListItemComponent',
-                        'updateChannel',
-                        updateChannel
-                    );
-                    console.log(
-                        'EntryListItemComponent',
-                        'processedChannel',
-                        processedChannel
-                    );
-
                     this._signalrService.connection.on(
                         updateChannel,
                         result => {
