@@ -19,7 +19,8 @@ RUN apk add --no-cache --update \
     curl && \
     ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so && \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
-    chmod a+rx /usr/local/bin/youtube-dl
+    chmod a+rx /usr/local/bin/youtube-dl && \
+    youtube-dl -U
 
 COPY --from=build-env /out .
 ENTRYPOINT ["dotnet", "PodNoms.Api.dll"]
