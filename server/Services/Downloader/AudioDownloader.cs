@@ -1,11 +1,12 @@
 using System;
-using Newtonsoft.Json;
-using PodNoms.Api.Models.ViewModels;
 using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using PodNoms.Api.Models.ViewModels;
+using PodNoms.Api.Utils.Extensions;
 
 namespace PodNoms.Api.Services.Downloader {
     public class AudioDownloader {
@@ -55,8 +56,18 @@ namespace PodNoms.Api.Services.Downloader {
                 CreateNoWindow = true
                 }
             };
+            proc.EnableRaisingEvents = true;
+            proc.Exited += ((e, s) => {
+                // Console.WriteLine ($"{e.ToString()} - {s.ToString()}");
+            });
+            proc.OutputDataReceived += ((e, s) => {
+                Console.WriteLine ($"{e.ToString()} - {s.ToString()}");
+            });
+            proc.ErrorDataReceived += ((e, s) => {
+                Console.WriteLine ($"{e.ToString()} - {s.ToString()}");
+            });
             proc.Start ();
-            await (Task.Run (() => proc.WaitForExit ()));
+            await proc.WaitForExitAsync ();
             return (proc.ExitCode == 0);
         }
 
