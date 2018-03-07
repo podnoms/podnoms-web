@@ -15,7 +15,7 @@ using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Storage;
 
 namespace PodNoms.Api.Controllers {
-    [Route ("[controller]")]
+    [Route("[controller]")]
     public class EntryController : Controller {
         private readonly IPodcastRepository _podcastRepository;
         private readonly IEntryRepository _repository;
@@ -26,12 +26,12 @@ namespace PodNoms.Api.Controllers {
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
         private readonly StorageSettings _storageSettings;
 
-        public EntryController (IEntryRepository repository,
+        public EntryController(IEntryRepository repository,
             IPodcastRepository podcastRepository,
             IUnitOfWork unitOfWork, IMapper mapper, IOptions<StorageSettings> storageSettings,
             IOptions<AudioFileStorageSettings> audioFileStorageSettings,
             IUrlProcessService processor, ILoggerFactory logger) {
-            this._logger = logger.CreateLogger<EntryController> ();
+            this._logger = logger.CreateLogger<EntryController>();
             this._podcastRepository = podcastRepository;
             this._repository = repository;
             this._storageSettings = storageSettings.Value;
@@ -41,83 +41,73 @@ namespace PodNoms.Api.Controllers {
             this._processor = processor;
         }
 
-        private void _processEntry (PodcastEntry entry) {
+        private void _processEntry(PodcastEntry entry) {
             try {
-                var infoJobId = BackgroundJob.Enqueue<IUrlProcessService> (
-                    service => service.GetInformation (entry.Id));
-                var extract = BackgroundJob.ContinueWith<IUrlProcessService> (
-                    infoJobId, service => service.DownloadAudio (entry.Id));
-                var upload = BackgroundJob.ContinueWith<IAudioUploadProcessService> (
-                    extract, service => service.UploadAudio (entry.Id, entry.AudioUrl));
+                var extractJobId = BackgroundJob.Enqueue<IUrlProcessService>(
+                    service => service.DownloadAudio(entry.Id));
+                var upload = BackgroundJob.ContinueWith<IAudioUploadProcessService>(
+                    extractJobId, service => service.UploadAudio(entry.Id, entry.AudioUrl));
             } catch (InvalidOperationException ex) {
-                _logger.LogError ($"Failed submitting job to processor\n{ex.Message}");
+                _logger.LogError($"Failed submitting job to processor\n{ex.Message}");
                 entry.ProcessingStatus = ProcessingStatus.Failed;
             }
         }
 
-        [HttpGet ("all/{podcastSlug}")]
-        public async Task<IActionResult> GetAllForSlug (string podcastSlug) {
-            var entries = await _repository.GetAllAsync (podcastSlug);
-            var results = _mapper.Map<List<PodcastEntry>, List<PodcastEntryViewModel>> (entries.ToList ());
+        [HttpGet("all/{podcastSlug}")]
+        public async Task<IActionResult> GetAllForSlug(string podcastSlug) {
+            var entries = await _repository.GetAllAsync(podcastSlug);
+            var results = _mapper.Map<List<PodcastEntry>, List<PodcastEntryViewModel>>(entries.ToList());
 
-            return Ok (results);
+            return Ok(results);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post ([FromBody] PodcastEntryViewModel item) {
+        public async Task<ActionResult<PodcastEntryViewModel>> Post([FromBody] PodcastEntryViewModel item) {
 
             // first check url is valid
-
-            var entry = _mapper.Map<PodcastEntryViewModel, PodcastEntry> (item);
-            if (entry.ProcessingStatus == ProcessingStatus.Accepted) {
-                var podcast = await _podcastRepository.GetAsync (item.PodcastId);
-                entry.ImageUrl = $"{_storageSettings.CdnUrl}static/images/default-entry.png";
-
-                entry.Podcast = podcast;
-                entry.Processed = false;
-                if (string.IsNullOrEmpty (item.Title)) {
-                    entry.Title = "Waiting for information";
-                } else {
-                    entry.Title = item.Title;
+            var entry = _mapper.Map<PodcastEntryViewModel, PodcastEntry>(item);
+            var podcast = await _podcastRepository.GetAsync(item.PodcastId);
+            if (podcast != null && await _processor.GetInformation(entry)) {
+                if (entry.ProcessingStatus == ProcessingStatus.Processing) {
+                    entry.Podcast = podcast;
+                    entry.Processed = false;
+                    await _repository.AddOrUpdateAsync(entry);
+                    await _unitOfWork.CompleteAsync();
+                    _processEntry(entry);
+                    var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
+                    return result;
                 }
             }
-            await _repository.AddOrUpdateAsync (entry);
-            await _unitOfWork.CompleteAsync ();
-
-            if (entry.ProcessingStatus.Equals (ProcessingStatus.Accepted) && entry.Id != 0) {
-                _processEntry (entry);
-            }
-            var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel> (entry);
-            return Ok (result);
-
+            return BadRequest();
         }
 
-        [HttpDelete ("{id}")]
-        public async Task<IActionResult> Delete (int id) {
-            await this._repository.DeleteAsync (id);
-            await _unitOfWork.CompleteAsync ();
-            return Ok ();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id) {
+            await this._repository.DeleteAsync(id);
+            await _unitOfWork.CompleteAsync();
+            return Ok();
         }
-
-        [HttpPost ("isvalid")]
-        public async Task<IActionResult> IsValid ([FromBody] string url) {
-            if (!string.IsNullOrEmpty (url)) {
-                var isValid = await _processor.CheckUrlValid (url);
-                if (isValid) return Ok ();
-            }
-            return BadRequest ();
-        }
-
-        [HttpPost ("resubmit")]
-        public async Task<IActionResult> ReSubmit ([FromBody] PodcastEntryViewModel item) {
-            var entry = await _repository.GetAsync (item.Id);
+        [HttpPost("/preprocess")]
+        public async Task<ActionResult<PodcastEntryViewModel>> PreProcess(PodcastEntryViewModel item) {
+            var entry = await _repository.GetAsync(item.Id);
+            entry.ProcessingStatus = ProcessingStatus.Accepted;
+            var response = _processor.GetInformation(item.Id);
             entry.ProcessingStatus = ProcessingStatus.Processing;
-            await _unitOfWork.CompleteAsync ();
-            if (entry.ProcessingStatus != ProcessingStatus.Processed) {
-                _processEntry (entry);
-            }
+            await _unitOfWork.CompleteAsync();
 
-            return Ok (entry);
+            var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
+            return result;
+        }
+
+        [HttpPost("resubmit")]
+        public async Task<IActionResult> ReSubmit([FromBody] PodcastEntryViewModel item) {
+            var entry = await _repository.GetAsync(item.Id);
+            entry.ProcessingStatus = ProcessingStatus.Processing;
+            await _unitOfWork.CompleteAsync();
+            if (entry.ProcessingStatus != ProcessingStatus.Processed) {
+                _processEntry(entry);
+            }
+            return Ok(entry);
         }
     }
 }
