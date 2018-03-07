@@ -9,6 +9,7 @@ using NYoutubeDL;
 using NYoutubeDL.Models;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Utils.Extensions;
+using static NYoutubeDL.Helpers.Enums;
 
 namespace PodNoms.Api.Services.Downloader {
     public class AudioDownloader {
@@ -48,11 +49,12 @@ namespace PodNoms.Api.Services.Downloader {
                 return $"{{\"Error\": \"{ex.Message}\"}}";
             }
         }
-        public async Task<bool> CheckUrlValid() {
+        public async Task<bool> GetInfo() {
             var ret = false;
             await Task.Run(() => {
                 var youtubeDl = new YoutubeDL();
                 youtubeDl.VideoUrl = this._url;
+                this.Properties = youtubeDl.GetDownloadInfo();
                 var info = youtubeDl.GetDownloadInfo();
                 ret = (
                    info != null &&
@@ -65,20 +67,15 @@ namespace PodNoms.Api.Services.Downloader {
         public string DownloadAudio(string uid) {
             var outputFile = Path.Combine(Path.GetTempPath(), $"{uid}.mp3");
             var templateFile = Path.Combine(Path.GetTempPath(), $"{uid}.%(ext)s");
-            var proc = new Process {
-                StartInfo = new ProcessStartInfo {
-                    FileName = this._downloader,
-                    Arguments = $"-o \"{templateFile}\" --audio-format mp3 -x \"{this._url}\"",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
-            };
 
-            StringBuilder br = new StringBuilder();
-            proc.Start();
-            while (!proc.StandardOutput.EndOfStream) {
-                string output = proc.StandardOutput.ReadLine();
+            var yt = new YoutubeDL();
+            yt.Options.FilesystemOptions.Output = templateFile;
+            yt.Options.PostProcessingOptions.ExtractAudio = true;
+            yt.Options.PostProcessingOptions.AudioFormat = AudioFormat.mp3;
+
+            yt.VideoUrl = this._url;
+
+            yt.StandardOutputEvent += (sender, output) => {
                 if (output.Contains("%")) {
                     var progress = _parseProgress(output);
                     if (DownloadProgress != null) {
@@ -89,31 +86,11 @@ namespace PodNoms.Api.Services.Downloader {
                         PostProcessing(this, output);
                     }
                 }
-            }
-
-            if (File.Exists(outputFile)) {
-                return outputFile;
-            }
-            return string.Empty;
-        }
-
-        public void DownloadInfo() {
-            var proc = new Process {
-                StartInfo = new ProcessStartInfo {
-                    FileName = "youtube-dl",
-                    Arguments = $"-j {this._url}",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
             };
-
-            StringBuilder br = new StringBuilder();
-            proc.Start();
-            while (!proc.StandardOutput.EndOfStream) {
-                br.Append(proc.StandardOutput.ReadLine());
-            }
-            Properties = JsonConvert.DeserializeObject<ExpandoObject>(br.ToString());
+            yt.PrepareDownload();
+            Process yp = yt.Download();
+            yp.WaitForExit();
+            return File.Exists(outputFile) ? outputFile : string.Empty;
         }
 
         private ProcessProgressEvent _parseProgress(string output) {
