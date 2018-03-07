@@ -97,9 +97,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ToastyModule.forRoot(),
         DropzoneModule,
         ClipboardModule,
+
         StoreModule.forRoot(reducers),
 
-        EffectsModule.forRoot([PodcastsEffects, EntriesEffects, ProfileEffects]),
+        EffectsModule.forRoot([
+            PodcastsEffects,
+            EntriesEffects,
+            ProfileEffects
+        ]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
         })
