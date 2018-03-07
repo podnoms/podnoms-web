@@ -23,86 +23,85 @@ namespace PodNoms.Api.Services.Processor {
 
         public ApplicationsSettings _applicationsSettings { get; }
 
-        public UrlProcessService (IEntryRepository repository, IUnitOfWork unitOfWork,
+        public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
-            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base (logger, mapper, pusher) {
+            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher) {
             this._applicationsSettings = applicationsSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
         }
 
-        private async Task __downloader_progress (string userId, string uid, ProcessProgressEvent e) {
-            await _sendProgressUpdate (
+        private async Task __downloader_progress(string userId, string uid, ProcessProgressEvent e) {
+            await _sendProgressUpdate(
                 userId,
                 uid,
                 e);
         }
-
-        public async Task<bool> CheckUrlValid (string url) {
-            return await new AudioDownloader (url, _applicationsSettings.Downloader)
-                .CheckUrlValid ();
-        }
-
-        public async Task<bool> GetInformation (int entryId) {
-            var entry = await _repository.GetAsync (entryId);
-            if (entry == null || string.IsNullOrEmpty (entry.SourceUrl)) {
-                _logger.LogError ("Unable to process item");
+        public async Task<bool> GetInformation(int entryId) {
+            var entry = await _repository.GetAsync(entryId);
+            if (entry == null || string.IsNullOrEmpty(entry.SourceUrl)) {
+                _logger.LogError("Unable to process item");
                 return false;
             }
-            if (entry.SourceUrl.EndsWith (".mp3") || entry.SourceUrl.EndsWith (".wav") || entry.SourceUrl.EndsWith (".aif")) {
+            if (entry.SourceUrl.EndsWith(".mp3") || entry.SourceUrl.EndsWith(".wav") || entry.SourceUrl.EndsWith(".aif")) {
                 return true;
             }
-            var downloader = new AudioDownloader (entry.SourceUrl, _applicationsSettings.Downloader);
-            downloader.DownloadInfo ();
+            return await GetInformation(entry);
+        }
+
+        public async Task<bool> GetInformation(PodcastEntry entry) {
+
+            var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
+            await downloader.GetInfo();
             if (downloader.Properties != null) {
-                entry.Title = downloader.Properties?.title;
-                entry.Description = downloader.Properties?.description;
-                entry.ImageUrl = downloader.Properties?.thumbnail;
+                entry.Title = downloader.Properties?.Title;
+                entry.Description = downloader.Properties?.Description;
+                entry.ImageUrl = downloader.Properties?.Thumbnail;
                 entry.ProcessingStatus = ProcessingStatus.Processing;
                 try {
-                    entry.Author = downloader.Properties?.uploader;
+                    entry.Author = downloader.Properties?.Uploader;
                 } catch (Exception) {
-                    _logger.LogWarning ($"Unable to extract downloader info for: {entry.SourceUrl}");
+                    _logger.LogWarning($"Unable to extract downloader info for: {entry.SourceUrl}");
                 }
 
-                await _unitOfWork.CompleteAsync ();
+                await _unitOfWork.CompleteAsync();
 
-                _logger.LogDebug ("***DOWNLOAD INFO RETRIEVED****\n");
-                _logger.LogDebug ($"Title: {entry.Title}\nDescription: {entry.Description}\nAuthor: {entry.Author}\n");
+                _logger.LogDebug("***DOWNLOAD INFO RETRIEVED****\n");
+                _logger.LogDebug($"Title: {entry.Title}\nDescription: {entry.Description}\nAuthor: {entry.Author}\n");
 
-                var pusherResult = await _sendProcessCompleteMessage (entry);
+                // var pusherResult = await _sendProcessCompleteMessage(entry);
                 return true;
             }
             return false;
         }
-        public async Task<bool> DownloadAudio (int entryId) {
-            var entry = await _repository.GetAsync (entryId);
+        public async Task<bool> DownloadAudio(int entryId) {
+            var entry = await _repository.GetAsync(entryId);
             if (entry == null)
                 return false;
             try {
-                var downloader = new AudioDownloader (entry.SourceUrl, _applicationsSettings.Downloader);
+                var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
                 var outputFile =
-                    Path.Combine (System.IO.Path.GetTempPath (), $"{System.Guid.NewGuid().ToString()}.mp3");
+                    Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 
-                downloader.DownloadProgress += async (s, e) => await __downloader_progress (entry.Podcast.User.GetUserId (), entry.Uid, e);
+                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.User.GetUserId(), entry.Uid, e);
 
                 downloader.PostProcessing += (s, e) => {
-                    Console.WriteLine (e);
+                    Console.WriteLine(e);
                 };
-                var sourceFile = downloader.DownloadAudio (entry.Uid);
-                if (!string.IsNullOrEmpty (sourceFile)) {
+                var sourceFile = downloader.DownloadAudio(entry.Uid);
+                if (!string.IsNullOrEmpty(sourceFile)) {
                     entry.ProcessingStatus = ProcessingStatus.Uploading;
                     entry.AudioUrl = sourceFile;
 
-                    await _sendProcessCompleteMessage (entry);
-                    await _unitOfWork.CompleteAsync ();
+                    await _sendProcessCompleteMessage(entry);
+                    await _unitOfWork.CompleteAsync();
                 }
             } catch (Exception ex) {
-                _logger.LogError ($"Entry: {entryId}\n{ex.Message}");
+                _logger.LogError($"Entry: {entryId}\n{ex.Message}");
                 entry.ProcessingStatus = ProcessingStatus.Failed;
                 entry.ProcessingPayload = ex.Message;
-                await _unitOfWork.CompleteAsync ();
-                await _sendProcessCompleteMessage (entry);
+                await _unitOfWork.CompleteAsync();
+                await _sendProcessCompleteMessage(entry);
             }
             return false;
         }
