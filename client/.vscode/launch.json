@@ -4,16 +4,16 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome with ng serve",
-            "url": "http://dev.podnoms.com:4200/",
-            "webRoot": "${workspaceRoot}"
+            "name": "Launch Chrome against localhost",
+            "url": "http://dev.podnoms.com:4200",
+            "webRoot": "${workspaceFolder}"
         },
         {
             "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome with ng test",
-            "url": "http://localhost:9876/debug.html",
-            "webRoot": "${workspaceRoot}"
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

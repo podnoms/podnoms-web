@@ -15,7 +15,7 @@ namespace PodNoms.Api.Services.Downloader {
     public class AudioDownloader {
         private readonly string _url;
         private readonly string _downloader;
-        public dynamic Properties { get; private set; }
+        public VideoDownloadInfo Properties { get; private set; }
         protected const string DOWNLOADRATESTRING = "iB/s";
         protected const string DOWNLOADSIZESTRING = "iB";
         protected const string ETASTRING = "ETA";
@@ -54,7 +54,7 @@ namespace PodNoms.Api.Services.Downloader {
             await Task.Run(() => {
                 var youtubeDl = new YoutubeDL();
                 youtubeDl.VideoUrl = this._url;
-                this.Properties = youtubeDl.GetDownloadInfo();
+                this.Properties = youtubeDl.GetDownloadInfo() as VideoDownloadInfo;
                 var info = youtubeDl.GetDownloadInfo();
                 ret = (
                    info != null &&
