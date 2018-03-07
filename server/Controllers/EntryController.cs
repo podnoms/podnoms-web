@@ -69,6 +69,9 @@ namespace PodNoms.Api.Controllers {
             var podcast = await _podcastRepository.GetAsync(item.PodcastId);
             if (podcast != null && await _processor.GetInformation(entry)) {
                 if (entry.ProcessingStatus == ProcessingStatus.Processing) {
+                    if (string.IsNullOrEmpty(entry.ImageUrl)) {
+                        entry.ImageUrl = $"{_storageSettings.CdnUrl}static/images/default-entry.png";
+                    }
                     entry.Podcast = podcast;
                     entry.Processed = false;
                     await _repository.AddOrUpdateAsync(entry);
