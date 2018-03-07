@@ -33,16 +33,18 @@ export class EntriesEffects {
     add$ = this.actions$
         .ofType(entries.ADD)
         .switchMap((action: entries.AddAction) =>
-            this._service.addEntry(action.payload)
-        )
-        .map(res => {
-            console.log('EntriesEffects', 'add$', res);
-            return ({ type: entries.ADD_SUCCESS, payload: res });
-        })
-        .catch(err => {
-            console.error('EntriesEffects', 'add$', err);
-            return Observable.of({ type: entries.ADD_FAIL });
-        });
+            //this is probably (definitely) superfluous as we've now moved
+            //the addEntry into the component
+            this._service.updateEntry(action.payload)
+                .map(res => {
+                    console.log('EntriesEffects', 'add$', res);
+                    return ({ type: entries.ADD_SUCCESS, payload: res });
+                })
+                .catch(err => {
+                    console.error('EntriesEffects', 'add$', err);
+                    return Observable.of({ type: entries.ADD_FAIL });
+                })
+        );
     @Effect()
     delete$ = this.actions$
         .ofType(entries.DELETE)

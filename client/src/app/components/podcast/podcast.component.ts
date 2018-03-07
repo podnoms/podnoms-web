@@ -82,6 +82,6 @@ export class PodcastComponent {
     }
     onUrlAddComplete(entry: PodcastEntryModel) {
         this.urlMode = false;
-        this._store.dispatch(new fromEntriesActions.AddAction(entry));
+        this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
     }
 }
