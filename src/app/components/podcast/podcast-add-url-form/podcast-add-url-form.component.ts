@@ -36,29 +36,22 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
         this.errorText = '';
         if (this.isValidURL(urlToCheck)) {
             this.isPosting = true;
-            this._service.checkEntry(urlToCheck).subscribe(
-                r => {
-                    if (r) {
-                        const entry = new PodcastEntryModel(
-                            this.podcast.id,
-                            urlToCheck
-                        );
-                        this.onUrlAddComplete.emit(entry);
-                        this.isPosting = false;
-                        this.newEntrySourceUrl = urlToCheck;
-                    } else {
-                        this.errorText = 'This is not a supported URL';
-                        this.isPosting = false;
-                        this.newEntrySourceUrl = urlToCheck;
-                    }
-                },
-                err => {
-                    this.errorText = 'This is not a supported URL';
-                    this.isPosting = false;
-                    this.newEntrySourceUrl = urlToCheck;
-                }
+            const entry = new PodcastEntryModel(
+                this.podcast.id,
+                urlToCheck
             );
+            this._service.addEntry(entry)
+                .subscribe(e => {
+                    if (e) {
+                        this.onUrlAddComplete.emit(e);
+                    }
+                }, (err) => {
+                    this.isPosting = false;
+                    this.errorText = 'This does not look like a valid URL';
+                    this.newEntrySourceUrl = urlToCheck;
+                });
         } else {
+            this.isPosting = false;
             this.errorText = 'This does not look like a valid URL';
             this.newEntrySourceUrl = urlToCheck;
         }
