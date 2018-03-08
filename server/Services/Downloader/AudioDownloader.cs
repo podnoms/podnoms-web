@@ -54,12 +54,12 @@ namespace PodNoms.Api.Services.Downloader {
             await Task.Run(() => {
                 var youtubeDl = new YoutubeDL();
                 youtubeDl.VideoUrl = this._url;
-                this.Properties = youtubeDl.GetDownloadInfo() as VideoDownloadInfo;
-                var info = youtubeDl.GetDownloadInfo();
+                var info = youtubeDl.GetDownloadInfo() as VideoDownloadInfo;
                 ret = (
                    info != null &&
                    info is VideoDownloadInfo && //make sure it's not a playlist                                                                                                 
                    (info.Errors.Count == 0 || info.VideoSize != null));
+                if (ret) this.Properties = info;
             });
             return ret;
         }
