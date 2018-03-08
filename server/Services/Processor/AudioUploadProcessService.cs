@@ -36,7 +36,7 @@ namespace PodNoms.Api.Services.Processor {
             entry.ProcessingStatus = ProcessingStatus.Uploading;
             await _unitOfWork.CompleteAsync ();
             try {
-                // bit messy but can't figure how to p  ass youtube-dl job result to this job
+                // bit messy but can't figure how to pass youtube-dl job result to this job
                 // so using AudioUrl as a proxy
                 if (string.IsNullOrEmpty (localFile))
                     localFile = entry.AudioUrl;
