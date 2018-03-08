@@ -1,3 +1,0 @@
-[submodule "server/NYoutubeDL"]
-	path = server/NYoutubeDL
-	url = https://github.com/BrianAllred/NYoutubeDL.git
