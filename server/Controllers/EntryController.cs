@@ -84,6 +84,7 @@ namespace PodNoms.Api.Controllers {
                         return result;
                     }
                 } else if (status == AudioType.Playlist) {
+                    entry.ProcessingStatus = ProcessingStatus.Deferred;
                     return Accepted(entry);
                 }
             }
