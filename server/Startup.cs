@@ -39,61 +39,61 @@ namespace PodNoms.Api {
     public class Startup {
         public IConfiguration Configuration { get; }
 
-        public Startup (IConfiguration configuration) {
+        public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
 
-        public void ConfigureProductionServices (IServiceCollection services) {
-            ConfigureServices (services);
-            services.AddHangfire (config => {
-                config.UseSqlServerStorage (Configuration["ConnectionStrings:DefaultConnection"]);
+        public void ConfigureProductionServices(IServiceCollection services) {
+            ConfigureServices(services);
+            services.AddHangfire(config => {
+                config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
             });
         }
-        public void ConfigureDevelopmentServices (IServiceCollection services) {
-            ConfigureServices (services);
-            services.AddHangfire (config => {
-                config.UseMemoryStorage ();
+        public void ConfigureDevelopmentServices(IServiceCollection services) {
+            ConfigureServices(services);
+            services.AddHangfire(config => {
+                config.UseMemoryStorage();
             });
         }
-        public void ConfigureServices (IServiceCollection services) {
-            Console.WriteLine ($"Configuring services: {Configuration.ToString()}");
+        public void ConfigureServices(IServiceCollection services) {
+            Console.WriteLine($"Configuring services: {Configuration.ToString()}");
 
-            services.AddDbContext<PodnomsDbContext> (options =>
-                options.UseSqlServer (Configuration.GetConnectionString ("DefaultConnection")));
+            services.AddDbContext<PodnomsDbContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddOptions ();
-            services.Configure<AppSettings> (Configuration.GetSection ("App"));
-            services.Configure<StorageSettings> (Configuration.GetSection ("Storage"));
-            services.Configure<ApplicationsSettings> (Configuration.GetSection ("ApplicationsSettings"));
-            services.Configure<ImageFileStorageSettings> (Configuration.GetSection ("ImageFileStorageSettings"));
-            services.Configure<AudioFileStorageSettings> (Configuration.GetSection ("AudioFileStorageSettings"));
-            services.Configure<FormOptions> (options => {
+            services.AddOptions();
+            services.Configure<AppSettings>(Configuration.GetSection("App"));
+            services.Configure<StorageSettings>(Configuration.GetSection("Storage"));
+            services.Configure<ApplicationsSettings>(Configuration.GetSection("ApplicationsSettings"));
+            services.Configure<ImageFileStorageSettings>(Configuration.GetSection("ImageFileStorageSettings"));
+            services.Configure<AudioFileStorageSettings>(Configuration.GetSection("AudioFileStorageSettings"));
+            services.Configure<FormOptions>(options => {
                 options.ValueCountLimit = 10;
                 options.ValueLengthLimit = int.MaxValue;
                 options.MemoryBufferThreshold = Int32.MaxValue;
                 options.MultipartBodyLengthLimit = long.MaxValue;
             });
 
-            services.AddAutoMapper (e => {
-                e.AddProfile (new MappingProvider (Configuration));
+            services.AddAutoMapper(e => {
+                e.AddProfile(new MappingProvider(Configuration));
             });
 
-            services.AddAuthentication (options => {
+            services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer (options => {
+            }).AddJwtBearer(options => {
                 options.Audience = Configuration["auth0:clientId"];
                 options.Authority = $"https://{Configuration["auth0:domain"]}/";
                 options.TokenValidationParameters = new TokenValidationParameters {
                     NameClaimType = "name"
                 };
-                options.Events = new JwtBearerEvents () {
+                options.Events = new JwtBearerEvents() {
                     OnTokenValidated = AuthenticationMiddleware.OnTokenValidated
                 };
                 options.Events.OnMessageReceived = context => {
                     StringValues token;
-                    if (context.Request.Path.Value.StartsWith ("/hubs/") && context.Request.Query.TryGetValue ("token", out token)) {
+                    if (context.Request.Path.Value.StartsWith("/hubs/") && context.Request.Query.TryGetValue("token", out token)) {
                         context.Token = token;
                     }
 
@@ -102,107 +102,107 @@ namespace PodNoms.Api {
             });
 
             var defaultPolicy =
-                new AuthorizationPolicyBuilder ()
-                .AddAuthenticationSchemes ("Bearer")
-                .RequireAuthenticatedUser ()
-                .Build ();
+                new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes("Bearer")
+                .RequireAuthenticatedUser()
+                .Build();
 
-            services.AddAuthorization (j => {
+            services.AddAuthorization(j => {
                 j.DefaultPolicy = defaultPolicy;
             });
 
-            services.AddMvc (options => {
-                    options.OutputFormatters.Add (new XmlSerializerOutputFormatter ());
-                    options.OutputFormatters
-                        .OfType<StringOutputFormatter> ()
-                        .Single ().SupportedMediaTypes.Add ("text/html");
-                })
-                .SetCompatibilityVersion (CompatibilityVersion.Version_2_1)
-                .AddJsonOptions (options => {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver ();
+            services.AddMvc(options => {
+                options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+                options.OutputFormatters
+                    .OfType<StringOutputFormatter>()
+                    .Single().SupportedMediaTypes.Add("text/html");
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
                 })
-                .AddXmlSerializerFormatters ();
+                .AddXmlSerializerFormatters();
 
-            services.Configure<FormOptions> (x => {
+            services.Configure<FormOptions>(x => {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
             });
-            services.AddSignalR (config => { });
+            services.AddSignalR(config => { });
 
-            services.AddCors (options => {
-                options.AddPolicy ("AllowAllOrigins",
+            services.AddCors(options => {
+                options.AddPolicy("AllowAllOrigins",
                     builder => builder
-                    .AllowAnyOrigin ()
-                    .AllowAnyMethod ()
-                    .AllowAnyHeader ()
-                    .AllowCredentials ());
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
             });
 
-            services.AddTransient<IFileUploader, AzureFileUploader> ();
-            services.AddTransient<IRealTimeUpdater, SignalRUpdater> ();
-            services.AddScoped<IUnitOfWork, UnitOfWork> ();
-            services.AddScoped<IPodcastRepository, PodcastRepository> ();
-            services.AddScoped<IEntryRepository, EntryRepository> ();
-            services.AddScoped<IUserRepository, UserRepository> ();
-            services.AddScoped<IUrlProcessService, UrlProcessService> ();
-            services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService> ();
+            services.AddTransient<IFileUploader, AzureFileUploader>();
+            services.AddTransient<IRealTimeUpdater, SignalRUpdater>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPodcastRepository, PodcastRepository>();
+            services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUrlProcessService, UrlProcessService>();
+            services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
 
-            services.AddSingleton (typeof (HubLifetimeManager<DebugHub>),
-                typeof (DebugHubLifetimeManager<DebugHub>));
+            services.AddSingleton(typeof(HubLifetimeManager<DebugHub>),
+                typeof(DebugHubLifetimeManager<DebugHub>));
 
             //register the codepages (required for slugify)
             var instance = CodePagesEncodingProvider.Instance;
-            Encoding.RegisterProvider (instance);
+            Encoding.RegisterProvider(instance);
 
         }
 
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env,
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory, IServiceProvider serviceProvider) {
 
-            if (env.IsDevelopment ()) {
-                app.UseDeveloperExceptionPage ();
+            if (env.IsDevelopment()) {
+                app.UseDeveloperExceptionPage();
             } else {
-                app.UseExceptionHandler ("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");
             }
 
-            Console.WriteLine ("Performing migrations");
+            Console.WriteLine("Performing migrations");
             //TODO: Fix this when EF sucks less
             // using (var context = new PodnomsDbContext(
             //     app.ApplicationServices.GetRequiredService<DbContextOptions<PodnomsDbContext>>()))
             // {
             //     context.Database.Migrate();
             // }
-            Console.WriteLine ("Successfully migrated");
+            Console.WriteLine("Successfully migrated");
 
             // app.UseHsts();
             // app.UseHttpsRedirection();
-            app.UseStaticFiles ();
+            app.UseStaticFiles();
 
-            GlobalConfiguration.Configuration.UseActivator (new ServiceProviderActivator (serviceProvider));
+            GlobalConfiguration.Configuration.UseActivator(new ServiceProviderActivator(serviceProvider));
 
-            if ((env.IsProduction () || true)) {
-                app.UseHangfireServer ();
-                app.UseHangfireDashboard ("/hangfire", new DashboardOptions {
-                    Authorization = new [] { new HangFireAuthorizationFilter () }
+            if ((env.IsProduction() || true)) {
+                app.UseHangfireServer();
+                app.UseHangfireDashboard("/hangfire", new DashboardOptions {
+                    Authorization = new[] { new HangFireAuthorizationFilter() }
                 });
             }
 
-            app.UseCors ("AllowAllOrigins");
+            app.UseCors("AllowAllOrigins");
 
-            app.UseSignalR (routes => {
-                routes.MapHub<AudioProcessingHub> ("/hubs/audioprocessing");
-                routes.MapHub<DebugHub> ("/hubs/debug");
+            app.UseSignalR(routes => {
+                routes.MapHub<AudioProcessingHub>("/hubs/audioprocessing");
+                routes.MapHub<DebugHub>("/hubs/debug");
             });
 
-            app.UseMvc (routes => {
-                routes.MapRoute (
+            app.UseMvc(routes => {
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             //start hangfire jobs
-            //RecurringJob.AddOrUpdate<ClearOrphanAudioJob>(x => x.Execute(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<ClearOrphanAudioJob>(x => x.Execute(), Cron.Daily(1));
         }
     }
 }
