@@ -24,9 +24,6 @@ namespace PodNoms.Api.Services.Jobs {
         }
 
         public async Task Execute() {
-            await ClearOrphanAudio();
-        }
-        public async Task ClearOrphanAudio() {
             try {
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_storageSettings.ConnectionString);
                 CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();

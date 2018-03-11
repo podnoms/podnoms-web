@@ -48,6 +48,7 @@ import { ResetComponent } from './components/reset/reset.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { JobsService } from 'app/services/jobs.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -122,6 +123,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         PodcastService,
         ImageService,
         DebugService,
+        JobsService,
         GlobalsService
     ],
     bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { SignalRService } from 'app/services/signalr.service';
 import { Component, OnInit } from '@angular/core';
 import { DebugService } from 'app/services/debug.service';
 import { environment } from 'environments/environment';
+import { JobsService } from 'app/services/jobs.service';
 
 @Component({
     selector: 'app-debug',
@@ -18,7 +19,8 @@ export class DebugComponent implements OnInit {
     signalrHost = environment.SIGNALR_HOST;
     pingPong = '';
 
-    constructor(private _debugService: DebugService, private _signalrService: SignalRService) {}
+    constructor(private _debugService: DebugService, private _jobsService: JobsService,
+        private _signalrService: SignalRService) {}
     ngOnInit() {
         this._signalrService
             .init(`${environment.SIGNALR_HOST}hubs/debug`)
@@ -40,5 +42,10 @@ export class DebugComponent implements OnInit {
     }
     doSomething() {
         alert('doSomething was did');
+    }
+
+    processOrphans(){
+        this._jobsService.processOrphans()
+            .subscribe(e => console.log('debug.component.ts', 'processOrphans', e));
     }
 }
