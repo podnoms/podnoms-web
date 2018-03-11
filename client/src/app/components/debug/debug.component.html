@@ -20,6 +20,17 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="block">
+                    <div class="block-header">
+                        Jobs
+                    </div>
+                    <div class="block-content">
+                        <button class="btn btn-primary"
+                                (click)="processOrphans()">Process Orphans</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="block">
@@ -30,8 +41,8 @@
                     </pre>
                     </div>
                     <div class="row">
-                        API Host: {{apiHost}} <br /> 
-                        SignalR Host: {{signalrHost}} <br /> 
+                        API Host: {{apiHost}} <br />
+                        SignalR Host: {{signalrHost}} <br />
                         Ping: {{pingPong}} </div>
                 </div>
             </div>

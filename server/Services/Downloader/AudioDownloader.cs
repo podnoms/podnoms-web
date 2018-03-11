@@ -13,6 +13,7 @@ using static NYoutubeDL.Helpers.Enums;
 
 namespace PodNoms.Api.Services.Downloader {
     public class AudioDownloader {
+
         private readonly string _url;
         private readonly string _downloader;
         public VideoDownloadInfo Properties { get; private set; }
@@ -49,17 +50,22 @@ namespace PodNoms.Api.Services.Downloader {
                 return $"{{\"Error\": \"{ex.Message}\"}}";
             }
         }
-        public async Task<bool> GetInfo() {
-            var ret = false;
+        public async Task<AudioType> GetInfo() {
+            var ret = AudioType.Invalid;
             await Task.Run(() => {
                 var youtubeDl = new YoutubeDL();
                 youtubeDl.VideoUrl = this._url;
                 DownloadInfo info = youtubeDl.GetDownloadInfo();
-                ret = (
-                   info != null &&
-                   info is VideoDownloadInfo && //make sure it's not a playlist                                                                                                 
-                   (info.Errors.Count == 0 || info.VideoSize != null));
-                if (ret) this.Properties = (VideoDownloadInfo)info;
+
+                if (info != null &&
+                   (info.Errors.Count == 0 || info.VideoSize != null)) {
+                    if (info is PlaylistDownloadInfo) {
+                        ret = AudioType.Playlist;
+                    } else if (info is VideoDownloadInfo) {
+                        ret = AudioType.Valid;
+                        this.Properties = (VideoDownloadInfo)info;
+                    }
+                }
             });
             return ret;
         }
