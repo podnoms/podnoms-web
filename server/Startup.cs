@@ -202,7 +202,7 @@ namespace PodNoms.Api {
             });
 
             //start hangfire jobs
-            RecurringJob.AddOrUpdate<ClearOrphanAudioJob>(x => x.Execute(), Cron.Daily(1));
+            JobBootstrapper.BootstrapJobs();
         }
     }
 }
