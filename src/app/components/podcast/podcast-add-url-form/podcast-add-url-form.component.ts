@@ -40,7 +40,6 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
             const entry = new PodcastEntryModel(this.podcast.id, urlToCheck);
             this._service.addEntry(entry).subscribe(
                 e => {
-                    debugger;
                     if (e) {
                         if (e.ProcessingStatus == 6) {
                             this.onUploadDeferred.emit(e);
