@@ -8,6 +8,7 @@ namespace PodNoms.Api.Controllers
 {
     [Authorize]
     [Route("[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class JobController : Controller
     {
         [HttpGet("processorphans")]

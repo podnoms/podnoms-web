@@ -34,6 +34,7 @@ using PodNoms.Api.Services.Jobs;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -124,6 +125,10 @@ namespace PodNoms.Api {
                 })
                 .AddXmlSerializerFormatters();
 
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new Info { Title = "Podnoms.API", Version = "v1" });
+            });
+
             services.Configure<FormOptions>(x => {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
@@ -195,6 +200,12 @@ namespace PodNoms.Api {
                 routes.MapHub<DebugHub>("/hubs/debug");
             });
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PodNoms.API");
+                c.RoutePrefix = "";
+            });
+            
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
