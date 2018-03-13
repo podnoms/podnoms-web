@@ -7,7 +7,8 @@ namespace PodNoms.Api.Models {
         Processing, //2
         Uploading, //3
         Processed, //4
-        Failed //5
+        Failed, //5
+        Deferred //6
     }
     public class PodcastEntry : BaseModel {
 

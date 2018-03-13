@@ -37,23 +37,23 @@ namespace PodNoms.Api.Services.Processor {
                 uid,
                 e);
         }
-        public async Task<bool> GetInformation(int entryId) {
+        public async Task<AudioType> GetInformation(int entryId) {
             var entry = await _repository.GetAsync(entryId);
             if (entry == null || string.IsNullOrEmpty(entry.SourceUrl)) {
                 _logger.LogError("Unable to process item");
-                return false;
+                return AudioType.Invalid;
             }
             if (entry.SourceUrl.EndsWith(".mp3") || entry.SourceUrl.EndsWith(".wav") || entry.SourceUrl.EndsWith(".aif")) {
-                return true;
+                return AudioType.Valid;
             }
             return await GetInformation(entry);
         }
 
-        public async Task<bool> GetInformation(PodcastEntry entry) {
+        public async Task<AudioType> GetInformation(PodcastEntry entry) {
 
             var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
-            await downloader.GetInfo();
-            if (downloader.Properties != null) {
+            var ret = await downloader.GetInfo();
+            if (ret == AudioType.Valid) {
                 entry.Title = downloader.Properties?.Title;
                 entry.Description = downloader.Properties?.Description;
                 entry.ImageUrl = downloader.Properties?.Thumbnail;
@@ -68,11 +68,8 @@ namespace PodNoms.Api.Services.Processor {
 
                 _logger.LogDebug("***DOWNLOAD INFO RETRIEVED****\n");
                 _logger.LogDebug($"Title: {entry.Title}\nDescription: {entry.Description}\nAuthor: {entry.Author}\n");
-
-                // var pusherResult = await _sendProcessCompleteMessage(entry);
-                return true;
             }
-            return false;
+            return ret;
         }
         public async Task<bool> DownloadAudio(int entryId) {
             var entry = await _repository.GetAsync(entryId);
