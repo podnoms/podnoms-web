@@ -34,6 +34,7 @@ using PodNoms.Api.Services.Jobs;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
+using PodNoms.Api.Utils;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PodNoms.Api {
@@ -127,6 +128,7 @@ namespace PodNoms.Api {
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Info { Title = "Podnoms.API", Version = "v1" });
+                c.DocumentFilter<LowercaseDocumentFilter>();
             });
 
             services.Configure<FormOptions>(x => {
