@@ -45,7 +45,8 @@
             </app-podcast-upload-form>
             <app-podcast-add-url-form *ngIf="urlMode"
                 [podcast]="podcast"
-                (onUrlAddComplete)="onUrlAddComplete($event)">
+                (onUrlAddComplete)="onUrlAddComplete($event)"
+                (onUploadDeferred)="onEntryUploadDeferred($event)">
             </app-podcast-add-url-form>
             <table class="js-table-checkable table table-hover js-table-checkable-enabled">
                 <tbody>

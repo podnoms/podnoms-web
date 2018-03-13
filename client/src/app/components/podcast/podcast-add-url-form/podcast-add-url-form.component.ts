@@ -17,6 +17,7 @@ import { PodcastService } from 'app/services/podcast.service';
 export class PodcastAddUrlFormComponent implements AfterViewInit {
     @Input() podcast: PodcastModel;
     @Output() onUrlAddComplete: EventEmitter<any> = new EventEmitter();
+    @Output() onUploadDeferred: EventEmitter<any> = new EventEmitter();
     newEntrySourceUrl: string;
     errorText: string;
     isPosting: boolean = false;
@@ -36,20 +37,23 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
         this.errorText = '';
         if (this.isValidURL(urlToCheck)) {
             this.isPosting = true;
-            const entry = new PodcastEntryModel(
-                this.podcast.id,
-                urlToCheck
-            );
-            this._service.addEntry(entry)
-                .subscribe(e => {
+            const entry = new PodcastEntryModel(this.podcast.id, urlToCheck);
+            this._service.addEntry(entry).subscribe(
+                e => {
                     if (e) {
-                        this.onUrlAddComplete.emit(e);
+                        if (e.ProcessingStatus == 6) {
+                            this.onUploadDeferred.emit(e);
+                        } else {
+                            this.onUrlAddComplete.emit(e);
+                        }
                     }
-                }, (err) => {
+                },
+                err => {
                     this.isPosting = false;
                     this.errorText = 'This does not look like a valid URL';
                     this.newEntrySourceUrl = urlToCheck;
-                });
+                }
+            );
         } else {
             this.isPosting = false;
             this.errorText = 'This does not look like a valid URL';

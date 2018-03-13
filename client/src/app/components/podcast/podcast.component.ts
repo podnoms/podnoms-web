@@ -7,7 +7,7 @@ import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'app/store';
 import { HostListener } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 
 import { UpdateAction, AddAction } from 'app/actions/entries.actions';
 import * as fromPodcast from 'app/reducers';
@@ -34,7 +34,11 @@ export class PodcastComponent {
         }
     }
 
-    constructor(private _store: Store<ApplicationState>, route: ActivatedRoute, private _location: Location) {
+    constructor(
+        private _store: Store<ApplicationState>,
+        route: ActivatedRoute,
+        private _location: Location
+    ) {
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
 
         this.entries$ = _store.select(fromPodcast.getEntries);
@@ -48,8 +52,12 @@ export class PodcastComponent {
                 this.selectedPodcast$.subscribe(r => {
                     if (r) {
                         slug = r.slug;
-                        _store.dispatch(new fromEntriesActions.LoadAction(slug));
-                        _store.dispatch(new fromPodcastActions.SelectAction(slug));
+                        _store.dispatch(
+                            new fromEntriesActions.LoadAction(slug)
+                        );
+                        _store.dispatch(
+                            new fromPodcastActions.SelectAction(slug)
+                        );
 
                         this._location.go('/podcasts/' + slug);
                     }
@@ -79,6 +87,9 @@ export class PodcastComponent {
         // so do a funky success/update dance
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
         this._store.dispatch(new fromEntriesActions.UpdateAction(entry));
+    }
+    onEntryUploadDeferred($event) {
+
     }
     onUrlAddComplete(entry: PodcastEntryModel) {
         this.urlMode = false;
