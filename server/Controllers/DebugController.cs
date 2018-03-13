@@ -15,7 +15,7 @@ using PodNoms.Api.Services.Jobs;
 using PodNoms.Api.Services.Realtime;
 
 namespace PodNoms.Api.Controllers {
-    [Route ("[controller]")]
+    [Route("[controller]")]
     public class DebugController : Controller {
         private readonly StorageSettings _storageSettings;
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
@@ -26,7 +26,7 @@ namespace PodNoms.Api.Controllers {
 
         public AppSettings _appSettings { get; }
 
-        public DebugController (IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
+        public DebugController(IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
             HubLifetimeManager<DebugHub> hubManager, IUserRepository userRepository,
             IOptions<ApplicationsSettings> applicationsSettings,
             IOptions<AudioFileStorageSettings> audioFileStorageSettings,
@@ -41,35 +41,36 @@ namespace PodNoms.Api.Controllers {
         }
 
         [Authorize]
-        public IActionResult Get () {
+        [HttpGet]
+        public IActionResult Get() {
             var config = new {
                 Version = _appSettings.Version,
                 CdnUrl = _storageSettings.CdnUrl,
                 AudioContainer = _audioFileStorageSettings.ContainerName,
                 ImageContainer = _imageFileStorageSettings.ContainerName,
                 YouTubeDlPath = _applicationsSettings.Downloader,
-                YouTubeDlVersion = AudioDownloader.GetVersion (_applicationsSettings.Downloader),
+                YouTubeDlVersion = AudioDownloader.GetVersion(_applicationsSettings.Downloader),
                 RssUrl = _appSettings.RssUrl
             };
-            return new OkObjectResult (config);
+            return new OkObjectResult(config);
         }
 
-        [HttpGet ("ping")]
-        public string Ping () {
+        [HttpGet("ping")]
+        public string Ping() {
             return "Pong";
         }
 
-        [HttpGet ("clear")]
-        public IActionResult Clear () {
-            return Ok ();
+        [HttpGet("clear")]
+        public IActionResult Clear() {
+            return Ok();
         }
 
         [Authorize]
-        [HttpPost ("realtime")]
-        public async Task<IActionResult> Realtime ([FromBody] string message) {
-            await _hubManager.SendUserAsync (User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
+        [HttpPost("realtime")]
+        public async Task<IActionResult> Realtime([FromBody] string message) {
+            await _hubManager.SendUserAsync(User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
             await _hubManager.SendAllAsync("Send", new string[] { $"All: {message}" });
-            return Ok (message);
+            return Ok(message);
         }
     }
 }
