@@ -8,29 +8,24 @@ using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 
-namespace PodNoms.Api.Controllers
-{
+namespace PodNoms.Api.Controllers {
     [Authorize]
     [Route("[controller]")]
-    public class ProfileController : Controller
-    {
+    public class ProfileController : Controller {
         private IUserRepository _userRepository;
         public IUnitOfWork _unitOfWork { get; }
         public IMapper _mapper { get; }
 
-        public ProfileController(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
-        {
+        public ProfileController(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork) {
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;
             this._userRepository = userRepository;
         }
-
-        public ActionResult Get()
-        {
+        [HttpGet]
+        public ActionResult Get() {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var user = _userRepository.Get(email);
-            if (user != null)
-            {
+            if (user != null) {
                 var result = _mapper.Map<User, ProfileViewModel>(user);
                 return new OkObjectResult(result);
             }
@@ -38,8 +33,7 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ProfileViewModel item)
-        {
+        public async Task<ActionResult> Post([FromBody] ProfileViewModel item) {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var user = _userRepository.Get(email);
 
@@ -58,12 +52,10 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpPost("updateapikey")]
-        public async Task<ActionResult> UpdateApiKey()
-        {
+        public async Task<ActionResult> UpdateApiKey() {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var user = _userRepository.Get(email);
-            if (user != null)
-            {
+            if (user != null) {
                 var newKey = _userRepository.UpdateApiKey(user);
                 await _unitOfWork.CompleteAsync();
                 return new OkObjectResult(newKey);
@@ -71,9 +63,9 @@ namespace PodNoms.Api.Controllers
             return new NotFoundResult();
         }
         [HttpGet("checkslug/{slug}")]
-        public async Task<string> CheckSlug(string slug){
+        public async Task<string> CheckSlug(string slug) {
             var result = await _userRepository.GetBySlugAsync(slug);
-            if (result != null){
+            if (result != null) {
                 return "Found";
             }
             return "NotFound";

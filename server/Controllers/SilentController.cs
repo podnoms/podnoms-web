@@ -28,6 +28,7 @@ namespace PodNoms.Api.Controllers {
         </html>";
 
         [Produces ("text/html")]
+        [HttpGet]
         public IActionResult Index () { 
             return Ok (HTML);
         }
