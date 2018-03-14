@@ -8,6 +8,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { PodcastService } from 'app/services/podcast.service';
+import { debounceTime } from 'rxjs/operator/debounceTime';
 
 @Component({
     selector: 'app-podcast-add-url-form',
@@ -41,7 +42,7 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
             this._service.addEntry(entry).subscribe(
                 e => {
                     if (e) {
-                        if (e.ProcessingStatus == 6) {
+                        if (e.processingStatus == 6) {
                             this.onUploadDeferred.emit(e);
                         } else {
                             this.onUrlAddComplete.emit(e);
