@@ -1,89 +1,68 @@
-<div class="content"
-    *ngIf="selectedPodcast$ | async; let podcast; else empty">
+<div class="content" *ngIf="selectedPodcast$ | async; let podcast; else empty">
     <div class="block">
         <div class="block-header block-header-default">
             <h3 class="block-title">{{podcast.title}}</h3>
             <div class="block-options">
-                <div class="btn-group"
-                    role="group"
-                    aria-label="Podcast actions">
-                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
-                        class="btn btn-secondary btn-outline">
-                        <i class="icon-pencil"
-                            aria-hidden="true"></i> Edit
+                <div class="btn-group" role="group" aria-label="Podcast actions">
+                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']" class="btn btn-secondary btn-outline">
+                        <i class="icon-pencil" aria-hidden="true"></i> Edit
                     </a>
-                    <a (click)="podcastDeleteDialog.show()"
-                        class="btn btn-secondary btn-outline-danger">
-                        <i class="icon-close"
-                            aria-hidden="true"></i> Delete
+                    <a (click)="podcastDeleteDialog.show()" class="btn btn-secondary btn-outline-danger">
+                        <i class="icon-close" aria-hidden="true"></i> Delete
                     </a>
-                    <a class="btn btn-secondary"
-                        (click)="startAddEntry()"><i class="icon-plus"></i> Add (from URL)</a>
-                    <a class="btn btn-secondary"
-                        (click)="startUpload()"><i class="icon-cloud-upload"></i> Upload (from computer)</a>
+                    <a class="btn btn-secondary" (click)="startAddEntry()">
+                        <i class="icon-plus"></i> Add (from URL)</a>
+                    <a class="btn btn-secondary" (click)="startUpload()">
+                        <i class="icon-cloud-upload"></i> Upload (from computer)</a>
                 </div>
-                <div class="btn-group"
-                    role="group"
-                    aria-label="Podcast actions">
-                    <a class="btn btn-secondary btn-outline-warning"
-                        [href]="podcast.rssUrl"
-                        target="_blank">
+                <div class="btn-group" role="group" aria-label="Podcast actions">
+                    <a class="btn btn-secondary btn-outline-warning" [href]="podcast.rssUrl" target="_blank">
                         <i class="text-warning fa fa-rss"></i> Rss Url
                     </a>
-                    <button class="btn btn-secondary btn-outline-warning"
-                        ngxClipboard
-                        [cbContent]="podcast.rssUrl">
+                    <button class="btn btn-secondary btn-outline-warning" ngxClipboard [cbContent]="podcast.rssUrl">
                         <i class="fa fa-copy"></i>
                     </button>
                 </div>
             </div>
         </div>
         <div class="block-content">
-            <app-podcast-upload-form *ngIf="uploadMode"
-                [podcast]="podcast"
-                (onUploadComplete)="onEntryUploadComplete($event)">
+            <app-podcast-upload-form *ngIf="uploadMode" [podcast]="podcast" (onUploadComplete)="onEntryUploadComplete($event)">
             </app-podcast-upload-form>
-            <app-podcast-add-url-form *ngIf="urlMode"
-                [podcast]="podcast"
-                (onUrlAddComplete)="onUrlAddComplete($event)"
-                (onUploadDeferred)="onEntryUploadDeferred($event)">
+            <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)" (onUploadDeferred)="onEntryUploadDeferred($event)">
             </app-podcast-add-url-form>
+            <div class="block block-themed" *ngIf="pendingEntry">
+                <div class="block-header bg-danger">
+                    <h3 class="block-title">This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes being downloaded to your device).</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" (click)="processPlaylist()">
+                            <i class="fa fa-check"></i>Yes
+                        </button>
+                        <button type="button" class="btn-block-option" (click)="dismissPlaylist()">
+                            <i class="fa fa-times"></i>No
+                        </button>
+                    </div>
+                </div>
+            </div>
             <table class="js-table-checkable table table-hover js-table-checkable-enabled">
                 <tbody>
-                    <tr *ngFor="let e of entries$ | async | orderBy : '-id'"
-                        app-entry-list-item
-                        (entryRemoved)='deleteEntry(e)'
-                        [entry]="e">
-
+                    <tr *ngFor="let e of entries$ | async | orderBy : '-id'" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="modal fade"
-        bsModal
-        #podcastDeleteDialog="bs-modal"
-        tabindex="-1"
-        role="dialog"
-        aria-hidden="true">
+    <div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title pull-left">Delete this podcast?</h4>
-                    <button type="button"
-                        class="close pull-right"
-                        aria-label="Close"
-                        (click)="podcastDeleteDialog.hide()">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="podcastDeleteDialog.hide()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <button type="button"
-                        class="btn btn-primary pull-right"
-                        (click)="podcastDeleteDialog.hide()">No
+                    <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
                     </button>
-                    <button type="button"
-                        class="btn btn-danger pull-right"
-                        (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
+                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
                     </button>
                 </div>
             </div>
@@ -98,8 +77,7 @@
             </div>
             <div class="font-size-h4 font-w600">It's looking a bit empty here?</div>
             <div class="pt-20">
-                <a class="btn btn-rounded btn-alt-primary"
-                    [routerLink]="['/add']">
+                <a class="btn btn-rounded btn-alt-primary" [routerLink]="['/add']">
                     <i class="fa fa-cog mr-5"></i> Add my first podcast
                 </a>
             </div>
