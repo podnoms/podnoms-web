@@ -13,6 +13,7 @@ import { UpdateAction, AddAction } from 'app/actions/entries.actions';
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
+import { PodcastService } from 'app/services/podcast.service';
 
 @Component({
     selector: 'app-podcast',
@@ -21,6 +22,7 @@ import * as fromEntriesActions from 'app/actions/entries.actions';
 })
 export class PodcastComponent {
     selectedPodcast$: Observable<PodcastModel>;
+    pendingEntry: PodcastEntryModel = null;
     entries$: Observable<PodcastEntryModel[]>;
     uploadMode = false;
     urlMode = false;
@@ -36,6 +38,8 @@ export class PodcastComponent {
 
     constructor(
         private _store: Store<ApplicationState>,
+        private _service: PodcastService,
+        private _toasty: ToastyService,
         route: ActivatedRoute,
         private _location: Location
     ) {
@@ -88,11 +92,25 @@ export class PodcastComponent {
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
         this._store.dispatch(new fromEntriesActions.UpdateAction(entry));
     }
-    onEntryUploadDeferred($event) {
-
+    onEntryUploadDeferred(entry: PodcastEntryModel) {
+        this.pendingEntry = entry;
     }
     onUrlAddComplete(entry: PodcastEntryModel) {
         this.urlMode = false;
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
+    }
+    processPlaylist() {
+        if (this.pendingEntry) {
+            this._service.addPlaylist(this.pendingEntry)
+                .subscribe(e => {
+                    if (e) {
+                        this._toasty.info('Playlist added, check back here (and on your device) for new episodes');
+                    }
+                });
+        }
+    }
+    dismissPlaylist() {
+        this.urlMode = false;
+        this.pendingEntry = null;
     }
 }

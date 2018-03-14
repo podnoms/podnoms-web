@@ -13,7 +13,7 @@ export class PodcastService {
         }
         return value;
     }
-    constructor(private _http: AuthHttp) {}
+    constructor(private _http: AuthHttp) { }
     //#region Podcasts
     get(): Observable<PodcastModel[]> {
         return this._http
@@ -68,8 +68,16 @@ export class PodcastService {
     }
     reSubmitEntry(entry: PodcastEntryModel): Observable<PodcastEntryModel> {
         return this._http
-        .post(environment.API_HOST + '/entry/resubmit', entry)
-        .map(res => res.json());
+            .post(environment.API_HOST + '/entry/resubmit', entry)
+            .map(res => res.json());
+    }
+    //#endregion
+
+    //#region Playlists
+    addPlaylist(entry: PodcastEntryModel) {
+        return this._http
+            .post(environment.API_HOST + '/playlist', JSON.stringify(entry))
+            .map(res => res.json());
     }
     //#endregion
 }

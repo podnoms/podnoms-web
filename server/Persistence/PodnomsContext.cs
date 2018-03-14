@@ -6,15 +6,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using PodNoms.Api.Models;
 
-namespace PodNoms.Api.Persistence
-{
+namespace PodNoms.Api.Persistence {
 
-    public class PodnomsDbContext : DbContext
-    {
+    public class PodnomsDbContext : DbContext {
         public PodnomsDbContext(DbContextOptions<PodnomsDbContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
 
@@ -38,6 +35,7 @@ namespace PodNoms.Api.Persistence
 
         public DbSet<Podcast> Podcasts { get; set; }
         public DbSet<PodcastEntry> PodcastEntries { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }
