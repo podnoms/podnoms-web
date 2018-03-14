@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PodNoms.Api.Models;
@@ -15,6 +16,9 @@ namespace PodNoms.Api.Persistence {
                 .Include(e => e.Podcast.User)
                 .SingleOrDefaultAsync(e => e.Id == id);
             return entry;
+        }
+        public async Task<IEnumerable<Playlist>> GetAllAsync() {
+            return await _context.Playlists.ToListAsync();
         }
         public async Task<Playlist> AddOrUpdateAsync(Playlist playlist) {
             if (playlist.Id != 0) {
