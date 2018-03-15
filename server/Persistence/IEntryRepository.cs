@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PodNoms.Api.Models;
 
-namespace PodNoms.Api.Persistence
-{
-    public interface IEntryRepository
-    {
+namespace PodNoms.Api.Persistence {
+    public interface IEntryRepository {
         Task<PodcastEntry> GetAsync(int id);
         Task<PodcastEntry> GetByUidAsync(string uid);
         Task<IEnumerable<PodcastEntry>> GetAllAsync(int podcastId);

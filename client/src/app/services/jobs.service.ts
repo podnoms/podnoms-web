@@ -6,9 +6,16 @@ import { environment } from 'environments/environment';
 
 @Injectable()
 export class JobsService {
-    constructor(private _http: AuthHttp) {}
+    constructor(private _http: AuthHttp) { }
 
     processOrphans(): Observable<Response> {
         return this._http.get(environment.API_HOST + '/job/processorphans');
+    }
+
+    processPlaylists(): Observable<Response> {
+        return this._http.get(environment.API_HOST + '/job/processplaylists');
+    }
+    updateYouTubeDl(): Observable<Response> {
+        return this._http.get(environment.API_HOST + '/job/updateyoutubedl');
     }
 }
