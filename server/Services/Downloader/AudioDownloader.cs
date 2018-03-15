@@ -16,7 +16,11 @@ namespace PodNoms.Api.Services.Downloader {
 
         private readonly string _url;
         private readonly string _downloader;
-        public VideoDownloadInfo Properties { get; private set; }
+
+        private DownloadInfo _properties;
+        public VideoDownloadInfo Properties => _properties is VideoDownloadInfo ? (VideoDownloadInfo)_properties : null;
+        public DownloadInfo RawProperties => _properties;
+
         protected const string DOWNLOADRATESTRING = "iB/s";
         protected const string DOWNLOADSIZESTRING = "iB";
         protected const string ETASTRING = "ETA";
@@ -55,15 +59,15 @@ namespace PodNoms.Api.Services.Downloader {
             await Task.Run(() => {
                 var youtubeDl = new YoutubeDL();
                 youtubeDl.VideoUrl = this._url;
-                DownloadInfo info = youtubeDl.GetDownloadInfo();
+                var info = youtubeDl.GetDownloadInfo();
 
                 if (info != null &&
                    (info.Errors.Count == 0 || info.VideoSize != null)) {
-                    if (info is PlaylistDownloadInfo) {
+                    this._properties = info;
+                    if (info is PlaylistDownloadInfo && ((PlaylistDownloadInfo)info).Videos.Count > 0) {
                         ret = AudioType.Playlist;
                     } else if (info is VideoDownloadInfo) {
                         ret = AudioType.Valid;
-                        this.Properties = (VideoDownloadInfo)info;
                     }
                 }
             });

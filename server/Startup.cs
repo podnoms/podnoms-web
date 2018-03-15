@@ -151,6 +151,7 @@ namespace PodNoms.Api {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
