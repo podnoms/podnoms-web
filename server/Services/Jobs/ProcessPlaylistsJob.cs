@@ -27,8 +27,8 @@ namespace PodNoms.Api.Services.Jobs {
                 var downloader = new AudioDownloader(playlist.SourceUrl, _applicationsSettings.Downloader);
                 var info = await downloader.GetInfo();
                 if (info == AudioType.Playlist){
-                    var 
-                    for (var item in downloader.Properties.)
+                    //var 
+                    //for (var item in downloader.Properties.)
                 }
             }
         }
