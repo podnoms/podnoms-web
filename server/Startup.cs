@@ -156,7 +156,7 @@ namespace PodNoms.Api {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
-            services.AddScoped<IMailSender, MailSender>();
+            services.AddScoped<IMailSender, MailgunSender>();
 
             services.AddSingleton(typeof(HubLifetimeManager<DebugHub>),
                 typeof(DebugHubLifetimeManager<DebugHub>));
