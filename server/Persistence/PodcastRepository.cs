@@ -10,21 +10,17 @@ using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
 using PodNoms.Api.Utils.Extensions;
 
-namespace PodNoms.Api.Persistence
-{
-    public class PodcastRepository : IPodcastRepository
-    {
+namespace PodNoms.Api.Persistence {
+    public class PodcastRepository : IPodcastRepository {
         private readonly PodnomsDbContext _context;
         public IFileUploader _fileUploader { get; }
         public ImageFileStorageSettings _imageStorageSettings { get; }
-        public PodcastRepository(PodnomsDbContext context, IFileUploader fileUploader, IOptions<ImageFileStorageSettings> imageStorageSettings)
-        {
+        public PodcastRepository(PodnomsDbContext context, IFileUploader fileUploader, IOptions<ImageFileStorageSettings> imageStorageSettings) {
             this._imageStorageSettings = imageStorageSettings.Value;
             this._fileUploader = fileUploader;
             this._context = context;
         }
-        public async Task<Podcast> GetAsync(int id)
-        {
+        public async Task<Podcast> GetAsync(int id) {
             var ret = await _context.Podcasts
                 .Where(p => p.Id == id)
                 .Include(p => p.User)
@@ -32,8 +28,7 @@ namespace PodNoms.Api.Persistence
 
             return ret;
         }
-        public async Task<Podcast> GetAsync(string emailAddress, string slug)
-        {
+        public async Task<Podcast> GetAsync(string emailAddress, string slug) {
             var ret = await _context.Podcasts
                 .Where(p => p.Slug == slug && p.User.EmailAddress == emailAddress)
                 .Include(p => p.PodcastEntries)
@@ -42,26 +37,20 @@ namespace PodNoms.Api.Persistence
 
             return ret;
         }
-        public async Task<IEnumerable<Podcast>> GetAllAsync(string emailAddress)
-        {
+        public async Task<IEnumerable<Podcast>> GetAllAsync(string emailAddress) {
             var ret = _context.Podcasts
                 .Where(u => u.User.EmailAddress == emailAddress)
                 .Include(p => p.User)
                 .OrderByDescending(p => p.Id);
             return await ret.ToListAsync();
         }
-        public async Task<Podcast> AddOrUpdateAsync(Podcast item)
-        {
-            if (item.Id != 0)
-            {
+        public async Task<Podcast> AddOrUpdateAsync(Podcast item) {
+            if (item.Id != 0) {
                 _context.Entry(item).State = EntityState.Modified;
-            }
-            else
-            {
+            } else {
                 var localFile = await HttpUtils.DownloadFile($"http://lorempixel.com/1400/1400/?{System.Guid.NewGuid().ToString()}");
                 item.Uid = System.Guid.NewGuid().ToString();
-                if (string.IsNullOrEmpty(item.Slug) && !string.IsNullOrEmpty(item.Title))
-                {
+                if (string.IsNullOrEmpty(item.Slug) && !string.IsNullOrEmpty(item.Title)) {
                     item.Slug = item.Title.Slugify(
                         from p in _context.Podcasts
                         select p.Slug);
@@ -74,15 +63,11 @@ namespace PodNoms.Api.Persistence
 
             return item;
         }
-        public async Task<int> DeleteAsync(int id)
-        {
+        public async Task<int> DeleteAsync(int id) {
             var podcast = await _context.Podcasts.SingleAsync(p => p.Id == id);
-            if (podcast != null)
-            {
-                if (podcast.PodcastEntries != null)
-                {
-                    foreach (var entry in podcast.PodcastEntries)
-                    {
+            if (podcast != null) {
+                if (podcast.PodcastEntries != null) {
+                    foreach (var entry in podcast.PodcastEntries) {
                         _context.Remove(entry);
                     }
                 }
