@@ -67,6 +67,7 @@ namespace PodNoms.Api {
             services.Configure<AppSettings>(Configuration.GetSection("App"));
             services.Configure<StorageSettings>(Configuration.GetSection("Storage"));
             services.Configure<ApplicationsSettings>(Configuration.GetSection("ApplicationsSettings"));
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<ImageFileStorageSettings>(Configuration.GetSection("ImageFileStorageSettings"));
             services.Configure<AudioFileStorageSettings>(Configuration.GetSection("AudioFileStorageSettings"));
             services.Configure<FormOptions>(options => {
@@ -151,9 +152,11 @@ namespace PodNoms.Api {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
+            services.AddScoped<IMailSender, MailgunSender>();
 
             services.AddSingleton(typeof(HubLifetimeManager<DebugHub>),
                 typeof(DebugHubLifetimeManager<DebugHub>));

@@ -3,6 +3,9 @@ export const environment = {
     API_HOST: 'https://podnoms.com/api',
     SIGNALR_HOST: 'https://rt.podnoms.com/',
     AUTH0_REDIRECT_URL: 'https://podnoms.com/callback',
-    BASE_URL: 'https://podnoms.com'
+    BASE_URL: 'https://podnoms.com',
+    appInsights: {
+        instrumentationKey: '020b002a-bd3d-4b25-8a74-cab16fd39dfc'
+    }
 };
 
