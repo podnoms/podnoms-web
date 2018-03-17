@@ -33,7 +33,6 @@ namespace PodNoms.Api.Services.Processor {
                 return false;
             }
             entry.ProcessingStatus = ProcessingStatus.Uploading;
-            entry.ProcessingStatus = ProcessingStatus.Uploading;
             await _unitOfWork.CompleteAsync ();
             try {
                 // bit messy but can't figure how to pass youtube-dl job result to this job

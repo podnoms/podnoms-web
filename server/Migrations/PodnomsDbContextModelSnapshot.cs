@@ -150,6 +150,9 @@ namespace PodNoms.Api.Migrations
                     b.Property<string>("Slug")
                         .HasMaxLength(50);
 
+                    b.Property<string>("Uid")
+                        .HasMaxLength(50);
+
                     b.Property<DateTime>("UpdateDate");
 
                     b.HasKey("Id");
