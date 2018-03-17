@@ -33,17 +33,8 @@ export class EntryListItemComponent implements OnInit {
             !this.entry.processed &&
             this.entry.processingStatus !== 'Failed'
         ) {
-            const signalRHost = `${
-                environment.SIGNALR_HOST
-            }hubs/audioprocessing`;
-
-            console.log(
-                'entry-list-item.component.ts',
-                'ngOnInit',
-                `Initting signalr: ${signalRHost}`
-            );
             this._signalrService
-                .init(signalRHost)
+                .init('audioprocessing')
                 .then(() => {
                     const updateChannel: string = `${
                         this.entry.uid

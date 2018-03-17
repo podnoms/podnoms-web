@@ -15,6 +15,7 @@ import { AuthGuard } from './services/auth.guard';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 import { ImageService } from './services/image.service';
 import { DebugService } from './services/debug.service';
+import { ChatterService } from './services/chatter.service';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -99,6 +100,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ToastyModule.forRoot(),
         DropzoneModule,
         ClipboardModule,
+        PushNotificationsModule,
 
         StoreModule.forRoot(reducers),
 
@@ -122,8 +124,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         SignalRService,
         ProfileService,
         PodcastService,
+        PushNotificationsService,
         ImageService,
         DebugService,
+        ChatterService,
         AppInsightsService,
         JobsService,
         GlobalsService
