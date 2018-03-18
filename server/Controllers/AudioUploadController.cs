@@ -21,12 +21,10 @@ using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
 
-namespace PodNoms.Api.Controllers
-{
+namespace PodNoms.Api.Controllers {
     [Authorize]
     [Route("/podcast/{slug}/audioupload")]
-    public class AudioUploadController : Controller
-    {
+    public class AudioUploadController : Controller {
         private readonly IPodcastRepository _podcastRepository;
         private readonly IEntryRepository _entryRepository;
         private IUnitOfWork _unitOfWork;
@@ -37,8 +35,7 @@ namespace PodNoms.Api.Controllers
 
         public AudioUploadController(IPodcastRepository podcastRepository, IEntryRepository entryRepository, IUnitOfWork unitOfWork,
                         IOptions<AudioFileStorageSettings> settings, IOptions<StorageSettings> storageSettings,
-                        ILoggerFactory loggerFactory, IMapper mapper)
-        {
+                        ILoggerFactory loggerFactory, IMapper mapper) {
             this._mapper = mapper;
             this._audioFileStorageSettings = settings.Value;
             this._storageSettings = storageSettings.Value;
@@ -49,22 +46,19 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(string slug, IFormFile file)
-        {
+        public async Task<IActionResult> Upload(string slug, IFormFile file) {
             _logger.LogDebug($"Settings are\nMaxUploadFileSize: {_audioFileStorageSettings.MaxUploadFileSize}");
             if (file == null || file.Length == 0) return BadRequest("No file found in stream");
             if (file.Length > _audioFileStorageSettings.MaxUploadFileSize) return BadRequest("Maximum file size exceeded");
             if (!_audioFileStorageSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type");
 
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if (!string.IsNullOrEmpty(email))
-            {
+            if (!string.IsNullOrEmpty(email)) {
                 var podcast = await _podcastRepository.GetAsync(email, slug);
                 if (podcast == null)
                     return NotFound();
 
-                var entry = new PodcastEntry
-                {
+                var entry = new PodcastEntry {
                     Title = Path.GetFileName(Path.GetFileNameWithoutExtension(file.FileName)),
                     ImageUrl = $"{_storageSettings.CdnUrl}static/images/default-entry.png",
                     Processed = false,

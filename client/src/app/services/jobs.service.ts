@@ -13,7 +13,7 @@ export class JobsService {
     }
 
     processPlaylists(): Observable<Response> {
-        return this._http.get(environment.API_HOST + '/job/processplaylists');
+    return this._http.get(environment.API_HOST + '/job/processplaylists');
     }
     updateYouTubeDl(): Observable<Response> {
         return this._http.get(environment.API_HOST + '/job/updateyoutubedl');
