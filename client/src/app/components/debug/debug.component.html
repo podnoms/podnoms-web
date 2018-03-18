@@ -7,11 +7,8 @@
                         Realtime
                     </div>
                     <div class="block-content">
-                        <input type="text"
-                               id="text"
-                               [(ngModel)]="realtimeMessage">
-                        <button class="btn btn-primary"
-                                (click)="sendMessage()">Send Realtime</button>
+                        <input type="text" id="text" [(ngModel)]="realtimeMessage">
+                        <button class="btn btn-primary" (click)="sendMessage()">Send Realtime</button>
                         <ul class="list-unstyled">
                             <li *ngFor="let message of messagesReceived">
                                 {{message}}
@@ -23,15 +20,33 @@
             <div class="row">
                 <div class="block">
                     <div class="block-header">
+                        Chatter
+                    </div>
+                    <div class="block-content">
+                        <button class="btn btn-primary" (click)="sendChatter()">Send Chatter</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="block">
+                    <div class="block-header">
+                        Desktop Notifications
+                    </div>
+                    <div class="block-content">
+                        <input type="text" id="text" [(ngModel)]="notificationMessage">
+                        <button class="btn btn-primary" (click)="sendDesktopNotification()">Send Desktop Notification</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="block">
+                    <div class="block-header">
                         Jobs
                     </div>
                     <div class="block-content">
-                        <button class="btn btn-primary"
-                                (click)="processOrphans()">Process Orphans</button>
-                                <button class="btn btn-primary"
-                                (click)="processPlaylists()">Process Playlists</button>
-                                <button class="btn btn-primary"
-                                (click)="updateYouTubeDl()">Update Youtube Downloader</button>
+                        <button class="btn btn-primary" (click)="processOrphans()">Process Orphans</button>
+                        <button class="btn btn-primary" (click)="processPlaylists()">Process Playlists</button>
+                        <button class="btn btn-primary" (click)="updateYouTubeDl()">Update Youtube Downloader</button>
                     </div>
                 </div>
             </div>
@@ -45,9 +60,9 @@
                     </pre>
                     </div>
                     <div class="row">
-                        API Host: {{apiHost}} <br />
-                        SignalR Host: {{signalrHost}} <br />
-                        Ping: {{pingPong}} </div>
+                        API Host: {{apiHost}}
+                        <br /> SignalR Host: {{signalrHost}}
+                        <br /> Ping: {{pingPong}} </div>
                 </div>
             </div>
         </div>

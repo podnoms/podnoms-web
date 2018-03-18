@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -13,6 +14,7 @@ using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Downloader;
+using PodNoms.Api.Services.Hubs;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
 
@@ -22,13 +24,16 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IEntryRepository _repository;
 
         public ApplicationsSettings _applicationsSettings { get; }
+        private readonly HubLifetimeManager<ChatterHub> _chatterHub;
 
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
+            HubLifetimeManager<ChatterHub> chatterHub,
             ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher) {
             this._applicationsSettings = applicationsSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
+            this._chatterHub = chatterHub;
         }
 
         private async Task __downloader_progress(string userId, string uid, ProcessProgressEvent e) {
@@ -92,6 +97,10 @@ namespace PodNoms.Api.Services.Processor {
 
                     await _sendProcessCompleteMessage(entry);
                     await _unitOfWork.CompleteAsync();
+                    await _chatterHub.SendAllAsync(
+                        $"{entry.Podcast.User.Uid}_chatter",
+                        new object[] { $"{entry.Title} has succesfully been processed" });
+
                 }
             } catch (Exception ex) {
                 _logger.LogError($"Entry: {entryId}\n{ex.Message}");
@@ -99,6 +108,9 @@ namespace PodNoms.Api.Services.Processor {
                 entry.ProcessingPayload = ex.Message;
                 await _unitOfWork.CompleteAsync();
                 await _sendProcessCompleteMessage(entry);
+                await _chatterHub.SendAllAsync(
+                    $"{entry.Podcast.User.Uid}_chatter",
+                    new object[] { $"Error processing {entry.Title}" });
             }
             return false;
         }
