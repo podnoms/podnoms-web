@@ -5,6 +5,7 @@ import { AuthService } from 'app/services/auth.service';
 import { AppInsightsService } from 'app/services/app-insights.service';
 import { SignalRService } from 'app/services/signalr.service';
 import { ProfileService } from './services/profile.service';
+import { PushNotificationsService } from 'app/services/push-notifications.service';
 
 @Component({
     selector: 'app-root',
@@ -27,9 +28,9 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.loggedIn()) {
-            this._pushNotifications.requestPermission();
+        this._pushNotifications.requestPermissions();
 
+        if (this.loggedIn()) {
             const user = this._profileService.getProfile().subscribe(u => {
                 if (u) {
                     const chatterChannel = `${u.uid}_chatter`;
@@ -44,22 +45,10 @@ export class AppComponent implements OnInit {
                             this._signalrService.connection.on(
                                 chatterChannel,
                                 result => {
-                                    this._pushNotifications
-                                        .create('PodNoms', { body: result })
-                                        .subscribe(
-                                            res =>
-                                                console.log(
-                                                    'app.component',
-                                                    '_pushNotifications',
-                                                    res
-                                                ),
-                                            err =>
-                                                console.log(
-                                                    'app.component',
-                                                    '_pushNotifications',
-                                                    err
-                                                )
-                                        );
+                                    this._pushNotifications.createNotification(
+                                        'PodNoms',
+                                        result
+                                    );
                                 }
                             );
                         })
