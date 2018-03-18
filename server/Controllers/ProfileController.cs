@@ -22,9 +22,9 @@ namespace PodNoms.Api.Controllers {
             this._userRepository = userRepository;
         }
         [HttpGet]
-        public ActionResult Get() {
+        public async Task<ActionResult<ProfileViewModel>> Get() {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var user = _userRepository.Get(email);
+            var user = await _userRepository.GetAsync(email);
             if (user != null) {
                 var result = _mapper.Map<User, ProfileViewModel>(user);
                 return new OkObjectResult(result);

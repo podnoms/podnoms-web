@@ -15,6 +15,7 @@ import { AuthGuard } from './services/auth.guard';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 import { ImageService } from './services/image.service';
 import { DebugService } from './services/debug.service';
+import { ChatterService } from './services/chatter.service';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -50,6 +51,7 @@ import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { JobsService } from 'app/services/jobs.service';
 import { AppInsightsService } from 'app/services/app-insights.service';
+import { PushNotificationsService } from './services/push-notifications.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -124,6 +126,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         PodcastService,
         ImageService,
         DebugService,
+        PushNotificationsService,
+        ChatterService,
         AppInsightsService,
         JobsService,
         GlobalsService
