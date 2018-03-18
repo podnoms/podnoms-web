@@ -51,6 +51,7 @@ import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { JobsService } from 'app/services/jobs.service';
 import { AppInsightsService } from 'app/services/app-insights.service';
+import { PushNotificationsService } from './services/push-notifications.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -100,7 +101,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ToastyModule.forRoot(),
         DropzoneModule,
         ClipboardModule,
-        PushNotificationsModule,
 
         StoreModule.forRoot(reducers),
 
@@ -124,9 +124,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         SignalRService,
         ProfileService,
         PodcastService,
-        PushNotificationsService,
         ImageService,
         DebugService,
+        PushNotificationsService,
         ChatterService,
         AppInsightsService,
         JobsService,

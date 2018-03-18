@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { DebugService } from 'app/services/debug.service';
 import { environment } from 'environments/environment';
 import { JobsService } from 'app/services/jobs.service';
-import { PushNotificationsService } from 'ng-push';
 import { ChatterService } from 'app/services/chatter.service';
+import { PushNotificationsService } from 'app/services/push-notifications.service';
 
 @Component({
     selector: 'app-debug',
@@ -57,7 +57,7 @@ export class DebugComponent implements OnInit {
     }
     sendChatter() {
         this._chatterService.ping('Pong').subscribe(r => {
-            this._pushNotifications.create('PodNoms', { body: r });
+            this._pushNotifications.createNotification('PodNoms', r);
         });
     }
     sendDesktopNotification() {
@@ -66,22 +66,10 @@ export class DebugComponent implements OnInit {
             'sendDesktopFunction',
             this.notificationMessage
         );
-        this._pushNotifications
-            .create('PodNoms', { body: this.notificationMessage })
-            .subscribe(
-                res =>
-                    console.log(
-                        'debug.component',
-                        'sendDesktopNotification',
-                        res
-                    ),
-                err =>
-                    console.log(
-                        'debug.component',
-                        'sendDesktopNotification',
-                        err
-                    )
-            );
+        this._pushNotifications.createNotification(
+            'PodNoms',
+            this.notificationMessage
+        );
     }
     processOrphans() {
         this._jobsService
