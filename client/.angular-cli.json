@@ -56,9 +56,6 @@
     },
     "defaults": {
         "styleExt": "css",
-        "component": {},
-        "serve": {
-            "host": "dev.podnoms.com"
-        }
+        "component": {}
     }
 }

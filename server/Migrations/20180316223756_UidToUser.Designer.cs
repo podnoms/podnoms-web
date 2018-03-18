@@ -13,9 +13,10 @@ using PodNoms.Api.Persistence;
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180316223756_UidToUser")]
+    partial class UidToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,7 +152,7 @@ namespace PodNoms.Api.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Uid")
-                        .HasMaxLength(50);
+                        .HasMaxLength(32);
 
                     b.Property<DateTime>("UpdateDate");
 

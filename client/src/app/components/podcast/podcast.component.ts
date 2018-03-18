@@ -14,6 +14,7 @@ import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
 import { PodcastService } from 'app/services/podcast.service';
+import { PushNotificationsService } from 'app/services/push-notifications.service';
 
 @Component({
     selector: 'app-podcast',
