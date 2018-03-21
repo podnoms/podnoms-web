@@ -71,6 +71,9 @@ export class DebugComponent implements OnInit {
             this.notificationMessage
         );
     }
+    subscribeToServerPush(){
+        alert('Hello Sailor');
+    }
     processOrphans() {
         this._jobsService
             .processOrphans()
