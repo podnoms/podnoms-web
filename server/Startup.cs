@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
@@ -35,7 +36,10 @@ using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
+using PodNoms.Api.Services.Push.Extensions;
+
 using Swashbuckle.AspNetCore.Swagger;
+using PodNoms.Api.Services.Push.Formatters;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -50,6 +54,15 @@ namespace PodNoms.Api {
             services.AddHangfire(config => {
                 config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
             });
+
+            services.AddPushSubscriptionStore(Configuration)
+                .AddPushNotificationService(Configuration)
+                .AddMvc(options => {
+                    options.InputFormatters.Add(new TextPlainInputFormatter());
+                })
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
         }
         public void ConfigureDevelopmentServices(IServiceCollection services) {
             ConfigureServices(services);
@@ -211,7 +224,7 @@ namespace PodNoms.Api {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PodNoms.API");
                 c.RoutePrefix = "";
             });
-            
+
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",

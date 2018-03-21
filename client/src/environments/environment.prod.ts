@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
-    API_HOST: 'https://podnoms.com/api',
+    API_HOST: 'https://localhost:5001',
+    // API_HOST: 'https://podnoms.com/api',
     SIGNALR_HOST: 'https://rt.podnoms.com/',
     AUTH0_REDIRECT_URL: 'https://podnoms.com/callback',
     BASE_URL: 'https://podnoms.com',
