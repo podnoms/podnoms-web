@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._pushNotifications.requestPermissions();
+        // this._pushNotifications.requestPermissions();
 
         if (this.loggedIn()) {
             const user = this._profileService.getProfile().subscribe(u => {
