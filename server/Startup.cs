@@ -186,7 +186,7 @@ namespace PodNoms.Api {
             Console.WriteLine("Successfully migrated");
 
             // app.UseHsts();
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             GlobalConfiguration.Configuration.UseActivator(new ServiceProviderActivator(serviceProvider));
