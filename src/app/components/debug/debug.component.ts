@@ -72,7 +72,7 @@ export class DebugComponent implements OnInit {
         );
     }
     subscribeToServerPush(){
-        alert('Hello Sailor');
+        this._pushNotifications.subscribeToServerPush();
     }
     processOrphans() {
         this._jobsService

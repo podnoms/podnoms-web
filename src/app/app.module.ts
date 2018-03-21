@@ -23,6 +23,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ClipboardModule } from 'ngx-clipboard';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -50,8 +51,11 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { JobsService } from 'app/services/jobs.service';
+import { PushService } from 'app/services/push.service';
 import { AppInsightsService } from 'app/services/app-insights.service';
 import { PushNotificationsService } from './services/push-notifications.service';
+
+import { environment } from 'environments/environment';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -91,6 +95,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ],
     imports: [
         BrowserModule,
+        ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
         AppRoutingModule,
         HttpModule,
         FormsModule,
@@ -125,6 +130,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProfileService,
         PodcastService,
         ImageService,
+        PushService,
         DebugService,
         PushNotificationsService,
         ChatterService,
