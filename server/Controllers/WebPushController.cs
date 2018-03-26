@@ -7,7 +7,7 @@ using PodNoms.Api.Services.Push.Models;
 
 namespace PodNoms.Api.Controllers {
 
-    [Authorize]
+    // [Authorize]
     [Route("[controller]")]
     public class WebPushController : Controller {
         private readonly IPushSubscriptionStore _subscriptionStore;
@@ -17,7 +17,7 @@ namespace PodNoms.Api.Controllers {
             this._subscriptionStore = subscriptionStore;
             this._notificationService = notificationService;
         }
-        
+
         [HttpPost("subscribe")]
         public async Task<IActionResult> StoreSubscription([FromBody]PushSubscription subscription) {
             await _subscriptionStore.StoreSubscriptionAsync(subscription);
@@ -25,7 +25,7 @@ namespace PodNoms.Api.Controllers {
         }
 
         // POST push-notifications-api/notifications
-        [HttpPost("notifications")]
+        [HttpPost("message")]
         public async Task<IActionResult> SendNotification([FromBody]PushMessageViewModel message) {
             PushMessage pushMessage = new PushMessage(message.Notification) {
                 Topic = message.Topic,

@@ -43,10 +43,11 @@ export class PushNotificationsService {
     }
 
     subscribeToServerPush() {
-        console.log('PushNotificationsService', 'subscribeToServerPush');
+        console.log('PushNotificationsService', 'subscribeToServerPush', this.vapidPublicKey);
         this._pushServiceWorker.requestSubscription({
             serverPublicKey: this.vapidPublicKey
         }).then(pushSubscription => {
+            console.log('PushNotificationsService', 'subscribeToServerPush', pushSubscription);
             this._pushService.addSubscriber(pushSubscription)
                 .subscribe(res => {
                     console.log('PushNotificationsService', 'subscribeToServerPush', res);
@@ -59,6 +60,7 @@ export class PushNotificationsService {
     }
 
     createNotification(subject: string, text: string) {
+        console.log('PushNotificationsService', 'createNotification', subject, text);
         if (this.isSupported()) {
             const options = {
                 body: text,
@@ -74,3 +76,4 @@ export class PushNotificationsService {
         }
     }
 }
+
