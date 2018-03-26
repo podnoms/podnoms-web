@@ -40,6 +40,7 @@ using PodNoms.Api.Services.Push.Extensions;
 
 using Swashbuckle.AspNetCore.Swagger;
 using PodNoms.Api.Services.Push.Formatters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -69,6 +70,15 @@ namespace PodNoms.Api {
             services.AddHangfire(config => {
                 config.UseMemoryStorage();
             });
+
+            services.AddPushSubscriptionStore(Configuration)
+                .AddPushNotificationService(Configuration)
+                .AddMvc(options => {
+                    options.InputFormatters.Add(new TextPlainInputFormatter());
+                })
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
         }
         public void ConfigureServices(IServiceCollection services) {
             Console.WriteLine($"Configuring services: {Configuration.ToString()}");
@@ -199,7 +209,7 @@ namespace PodNoms.Api {
             Console.WriteLine("Successfully migrated");
 
             // app.UseHsts();
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             GlobalConfiguration.Configuration.UseActivator(new ServiceProviderActivator(serviceProvider));
@@ -210,6 +220,11 @@ namespace PodNoms.Api {
                     Authorization = new[] { new HangFireAuthorizationFilter() }
                 });
             }
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+            app.UseAuthentication();
 
             app.UseCors("AllowAllOrigins");
 
@@ -224,6 +239,8 @@ namespace PodNoms.Api {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PodNoms.API");
                 c.RoutePrefix = "";
             });
+
+            app.UseSqlitePushSubscriptionStore();
 
             app.UseMvc(routes => {
                 routes.MapRoute(

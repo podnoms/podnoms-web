@@ -31,13 +31,8 @@ export class PushService {
         const url = `${this.API_URL}/webpush/subscribe`;
         console.log('[Push Service] Adding subscriber')
 
-        let body = {
-            action: 'subscribe',
-            subscription: subscription
-        }
-
         return this.http
-            .post(url, body)
+            .post(url, subscription)
             .catch(this.handleError);
 
     }
