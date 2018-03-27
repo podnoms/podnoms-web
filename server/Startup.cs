@@ -104,6 +104,8 @@ namespace PodNoms.Api {
                 e.AddProfile(new MappingProvider(Configuration));
             });
 
+            services.AddHttpClient();
+
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -178,6 +180,7 @@ namespace PodNoms.Api {
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
+            services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
             services.AddScoped<IMailSender, MailgunSender>();
 

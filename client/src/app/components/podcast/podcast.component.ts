@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
+import { PodcastService } from 'app/services/podcast.service';
+import { MessagingService } from 'app/services/messaging.service';
 import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'app/store';
@@ -13,8 +15,6 @@ import { UpdateAction, AddAction } from 'app/actions/entries.actions';
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
-import { PodcastService } from 'app/services/podcast.service';
-import { PushNotificationsService } from 'app/services/push-notifications.service';
 
 @Component({
     selector: 'app-podcast',
@@ -102,12 +102,13 @@ export class PodcastComponent {
     }
     processPlaylist() {
         if (this.pendingEntry) {
-            this._service.addPlaylist(this.pendingEntry)
-                .subscribe(e => {
-                    if (e) {
-                        this._toasty.info('Playlist added, check back here (and on your device) for new episodes');
-                    }
-                });
+            this._service.addPlaylist(this.pendingEntry).subscribe(e => {
+                if (e) {
+                    this._toasty.info(
+                        'Playlist added, check back here (and on your device) for new episodes'
+                    );
+                }
+            });
         }
     }
     dismissPlaylist() {
