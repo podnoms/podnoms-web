@@ -4,37 +4,34 @@
             <div class="row">
                 <div class="block">
                     <div class="block-header">
-                        Realtime
-                    </div>
-                    <div class="block-content">
-                        <input type="text" id="text" [(ngModel)]="realtimeMessage">
-                        <button class="btn btn-primary" (click)="sendMessage()">Send Realtime</button>
-                        <ul class="list-unstyled">
-                            <li *ngFor="let message of messagesReceived">
-                                {{message}}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="block">
-                    <div class="block-header">
-                        Chatter
-                    </div>
-                    <div class="block-content">
-                        <button class="btn btn-primary" (click)="sendChatter()">Send Chatter</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="block">
-                    <div class="block-header">
                         Desktop Notifications
                     </div>
                     <div class="block-content">
-                        <input type="text" id="text" [(ngModel)]="notificationMessage">
-                        <button class="btn btn-primary" (click)="sendDesktopNotification()">Send Desktop Notification</button>
+                        <button class="btn btn-danger" (click)="subscribeToServerPush()">Subscribe to server push</button>
+                        <button class="btn btn-danger" (click)="sendServerPush()">Send server push</button>
+                        <br />
+                        <div id="realtime-results" *ngIf="message$ | async as message">
+                            <h5>{{ message.notification.title}}</h5>
+                            <img [src]="message.notification.icon" width="100px;">
+                            <p>{{ message.notification.body}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="block">
+                    <div class="block-header">Debug Info</div>
+                    <div class="block-content">
+                        <div class="row">
+                            <pre [innerHtml]="(debugInfo$ | async) | prettyprint">
+                    </pre>
+                        </div>
+                        <div class="row">
+                            API Host: {{apiHost}}
+                            <br /> SignalR Host: {{signalrHost}}
+                            <br /> Ping: {{pingPong}} </div>
                     </div>
                 </div>
             </div>
@@ -48,21 +45,6 @@
                         <button class="btn btn-primary" (click)="processPlaylists()">Process Playlists</button>
                         <button class="btn btn-primary" (click)="updateYouTubeDl()">Update Youtube Downloader</button>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="block">
-                <div class="block-header">Debug Info</div>
-                <div class="block-content">
-                    <div class="row">
-                        <pre [innerHtml]="(debugInfo$ | async) | prettyprint">
-                    </pre>
-                    </div>
-                    <div class="row">
-                        API Host: {{apiHost}}
-                        <br /> SignalR Host: {{signalrHost}}
-                        <br /> Ping: {{pingPong}} </div>
                 </div>
             </div>
         </div>
