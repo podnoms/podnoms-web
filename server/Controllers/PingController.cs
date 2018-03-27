@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace server.Controllers {
+namespace PodNoms.Api.Controllers {
+    [Route("[controller]")]
     public class PingController : Controller {
         [HttpGet]
         public string Get() {
             return "Pong";
         }
-    }   
+    }
 }
