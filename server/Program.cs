@@ -19,14 +19,14 @@ namespace PodNoms.Api {
         }
         public static IWebHostBuilder CreateWebHostBuilder (string[] args) =>
             WebHost.CreateDefaultBuilder (args)
-            .UseStartup<Startup> ()
-            .UseKestrel(options => {
-                    options.Listen(IPAddress.Any, 5000);
-                    if (isDevelopment){
-                        options.Listen(IPAddress.Any, 5001, listenOptions => {
-                            listenOptions.UseHttps("certs/dev2.podnoms.com.pfx", "secret");
-                        });
-                    }
-            });
+            .UseStartup<Startup> ();
+            // .UseKestrel(options => {
+            //         options.Listen(IPAddress.Any, 5000);
+            //         if (isDevelopment){
+            //             options.Listen(IPAddress.Any, 5001, listenOptions => {
+            //                 listenOptions.UseHttps("certs/dev2.podnoms.com.pfx", "secret");
+            //             });
+            //         }
+            // });
     }
 }

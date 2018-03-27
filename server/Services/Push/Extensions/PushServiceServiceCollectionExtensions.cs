@@ -8,7 +8,7 @@ namespace PodNoms.Api.Services.Push.Extensions {
         public static IServiceCollection AddPushServicePushNotificationService(this IServiceCollection services) {
             services.AddMemoryCache();
             services.AddSingleton<IVapidTokenCache, MemoryVapidTokenCache>();
-            services.AddSingleton<IPushNotificationService, PushServicePushNotificationService>();
+            services.AddSingleton<IPushNotificationService, FirebasePushNotificationService>();
             return services;
         }
     }

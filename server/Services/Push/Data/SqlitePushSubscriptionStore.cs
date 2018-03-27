@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Lib.Net.Http.WebPush;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,9 @@ namespace PodNoms.Api.Services.Push.Data {
         }
 
         public Task StoreSubscriptionAsync(PushSubscription subscription) {
-            _context.Subscriptions.Add(new PushSubscriptionContext.PushSubscription(subscription));
+            PushSubscriptionContext.PushSubscription entity = new PushSubscriptionContext.PushSubscription(subscription);
+            var key = entity.Auth;
+            _context.Subscriptions.Add(entity);
 
             return _context.SaveChangesAsync();
         }
@@ -26,7 +29,9 @@ namespace PodNoms.Api.Services.Push.Data {
 
             await _context.SaveChangesAsync();
         }
-
+        public Task ForEachSubscriptionAsync(string uid, Action<PushSubscription> action) {
+            return _context.Subscriptions.Where(e => e.Auth == uid).AsNoTracking().ForEachAsync(action);
+        }
         public Task ForEachSubscriptionAsync(Action<PushSubscription> action) {
             return _context.Subscriptions.AsNoTracking().ForEachAsync(action);
         }
