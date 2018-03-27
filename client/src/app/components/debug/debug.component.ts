@@ -30,6 +30,7 @@ export class DebugComponent implements OnInit {
     ) {}
     ngOnInit() {
         this._debugService.ping().subscribe(r => (this.pingPong = r));
+        this.debugInfo$ = this._debugService.getDebugInfo();
     }
 
     subscribeToServerPush() {
