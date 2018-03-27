@@ -24,4 +24,3 @@ RUN apk add --no-cache --update \
 
 COPY --from=build-env /out .
 ENTRYPOINT ["dotnet", "PodNoms.Api.dll"]
-
