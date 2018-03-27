@@ -25,13 +25,13 @@
                     <div class="block-header">Debug Info</div>
                     <div class="block-content">
                         <div class="row">
-                            <pre [innerHtml]="(debugInfo$ | async) | prettyprint">
-                    </pre>
-                        </div>
-                        <div class="row">
                             API Host: {{apiHost}}
                             <br /> SignalR Host: {{signalrHost}}
-                            <br /> Ping: {{pingPong}} </div>
+                            <br /> Ping: {{pingPong}}
+                        </div>
+                        <div class="row">
+                            <pre [innerHtml]="(debugInfo$ | async) | prettyprint"></pre>
+                        </div>
                     </div>
                 </div>
             </div>
