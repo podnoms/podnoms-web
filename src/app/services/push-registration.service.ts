@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 import { environment } from 'environments/environment';
 
 @Injectable()
-export class PushService {
+export class PushRegistrationService {
     private API_URL: string;
     constructor(private http: AuthHttp) {
         this.API_URL = environment.API_HOST;
@@ -27,14 +27,11 @@ export class PushService {
     }
 
     addSubscriber(subscription) {
-
-        const url = `${this.API_URL}/webpush/subscribe`;
         console.log('[Push Service] Adding subscriber')
-
+        const url = `${this.API_URL}/webpush/subscribe`;
         return this.http
             .post(url, subscription)
             .catch(this.handleError);
-
     }
 
     deleteSubscriber(subscription) {
