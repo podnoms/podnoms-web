@@ -11,15 +11,22 @@ using Microsoft.Extensions.Logging;
 
 namespace PodNoms.Api {
     public class Program {
+        static bool isDevelopment =
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == EnvironmentName.Development;
+
         public static void Main (string[] args) {
             CreateWebHostBuilder (args).Build ().Run ();
         }
         public static IWebHostBuilder CreateWebHostBuilder (string[] args) =>
             WebHost.CreateDefaultBuilder (args)
-            .UseStartup<Startup> ()
-            .UseUrls ("http://*:5000")
-            .UseKestrel (options => {
-                options.Limits.MaxRequestBodySize = 1073741824;
-            });
+            .UseStartup<Startup> ();
+            // .UseKestrel(options => {
+            //         options.Listen(IPAddress.Any, 5000);
+            //         if (isDevelopment){
+            //             options.Listen(IPAddress.Any, 5001, listenOptions => {
+            //                 listenOptions.UseHttps("certs/dev2.podnoms.com.pfx", "secret");
+            //             });
+            //         }
+            // });
     }
 }

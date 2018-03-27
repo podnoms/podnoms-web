@@ -5,7 +5,8 @@ import { DebugService } from 'app/services/debug.service';
 import { environment } from 'environments/environment';
 import { JobsService } from 'app/services/jobs.service';
 import { ChatterService } from 'app/services/chatter.service';
-import { PushNotificationsService } from 'app/services/push-notifications.service';
+import { MessagingService } from 'app/services/messaging.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
     selector: 'app-debug',
@@ -13,10 +14,7 @@ import { PushNotificationsService } from 'app/services/push-notifications.servic
     styleUrls: ['./debug.component.css']
 })
 export class DebugComponent implements OnInit {
-    realtimeMessage: string;
-    notificationMessage: string;
-
-    messagesReceived: string[] = [];
+    message$: BehaviorSubject<any>;
 
     debugInfo$: Observable<string>;
     apiHost = environment.API_HOST;
@@ -27,49 +25,24 @@ export class DebugComponent implements OnInit {
         private _debugService: DebugService,
         private _chatterService: ChatterService,
         private _jobsService: JobsService,
-        private _pushNotifications: PushNotificationsService,
+        private _pushNotifications: MessagingService,
         private _signalrService: SignalRService
     ) {}
     ngOnInit() {
-        // this._signalrService
-        //     .init(`${environment.SIGNALR_HOST}hubs/debug`)
-        //     .then(() => {
-        //         this._signalrService.connection.on('Send', data => {
-        //             console.log('DebugService', 'signalr', data);
-        //             this.messagesReceived.push(data);
-        //             this.realtimeMessage = '';
-        //         });
-        //         this.debugInfo$ = this._debugService.getDebugInfo();
-        //     })
-        //     .catch(err =>
-        //         console.error('debug.component.ts', '_signalrService.init', err)
-        //     );
         this._debugService.ping().subscribe(r => (this.pingPong = r));
     }
 
-    sendMessage() {
+    subscribeToServerPush() {
+        this._pushNotifications.getPermission();
+        this._pushNotifications.receiveMessage();
+        this.message$ = this._pushNotifications.currentMessage;
+    }
+    sendServerPush() {
         this._debugService
-            .sendRealtime(this.realtimeMessage)
-            .subscribe(r => console.log(r));
-    }
-    doSomething() {
-        alert('doSomething was did');
-    }
-    sendChatter() {
-        this._chatterService.ping('Pong').subscribe(r => {
-            this._pushNotifications.createNotification('PodNoms', r);
-        });
-    }
-    sendDesktopNotification() {
-        console.log(
-            'debug.component',
-            'sendDesktopFunction',
-            this.notificationMessage
-        );
-        this._pushNotifications.createNotification(
-            'PodNoms',
-            this.notificationMessage
-        );
+            .sendPush()
+            .subscribe(r =>
+                console.log('debug.component', 'sendServerPush', r)
+            );
     }
     processOrphans() {
         this._jobsService
