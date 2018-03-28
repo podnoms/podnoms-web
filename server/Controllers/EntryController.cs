@@ -94,7 +94,7 @@ namespace PodNoms.Api.Controllers {
                     return Accepted(entry);
                 }
             }
-            return BadRequest();
+            return BadRequest($"Unable to find podcast with ID: {item.PodcastId}");
         }
 
         [HttpDelete("{id}")]
