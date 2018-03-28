@@ -1,0 +1,16 @@
+FROM microsoft/dotnet-nightly:2.1.0-preview1-runtime-alpine
+COPY out/* /app/
+WORKDIR /app
+
+RUN apk add --no-cache --update \
+    python \
+    ffmpeg \
+    libuv \
+    curl \
+    curl-dev && \
+    ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so && \
+    curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
+    chmod a+rx /usr/local/bin/youtube-dl && \
+    youtube-dl -U
+
+ENTRYPOINT ["dotnet", "PodNoms.Api.dll"]

@@ -16,9 +16,13 @@ namespace PodNoms.Api.Services.Push.Data {
 
         public Task StoreSubscriptionAsync(PushSubscription subscription) {
             PushSubscriptionContext.PushSubscription entity = new PushSubscriptionContext.PushSubscription(subscription);
-            var key = entity.Auth;
-            _context.Subscriptions.Add(entity);
-
+            if (_context.Subscriptions.Where(s => s.Endpoint == subscription.Endpoint).Count() > 0) {
+                // _context.Entry(entry).State = EntityState.Modified
+                _context.Subscriptions.Attach(entity);
+                _context.Entry(entity).State = EntityState.Modified;
+            } else {
+                _context.Subscriptions.Add(entity);
+            }
             return _context.SaveChangesAsync();
         }
 
