@@ -16,12 +16,10 @@ using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Utils.Extensions;
 #endregion
-namespace PodNoms.Api.Controllers
-{
+namespace PodNoms.Api.Controllers {
     [Authorize]
     [Route("[controller]")]
-    public class PodcastController : Controller
-    {
+    public class PodcastController : Controller {
         private readonly IPodcastRepository _repository;
         private readonly IUserRepository _userRepository;
         private readonly IOptions<AppSettings> _settings;
@@ -29,8 +27,7 @@ namespace PodNoms.Api.Controllers
         private readonly IUnitOfWork _uow;
 
         public PodcastController(IPodcastRepository repository, IUserRepository userRepository,
-            IOptions<AppSettings> options, IMapper mapper, IUnitOfWork unitOfWork)
-        {
+            IOptions<AppSettings> options, IMapper mapper, IUnitOfWork unitOfWork) {
             this._uow = unitOfWork;
             this._repository = repository;
             this._userRepository = userRepository;
@@ -39,11 +36,9 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<PodcastViewModel>> Get()
-        {
+        public async Task<IEnumerable<PodcastViewModel>> Get() {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if (!string.IsNullOrEmpty(email))
-            {
+            if (!string.IsNullOrEmpty(email)) {
                 var podcasts = await _repository.GetAllAsync(email);
                 var ret = _mapper.Map<List<Podcast>, List<PodcastViewModel>>(podcasts.ToList());
                 return ret;
@@ -52,11 +47,9 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpGet("{slug}")]
-        public async Task<IActionResult> GetBySlug(string slug)
-        {
+        public async Task<IActionResult> GetBySlug(string slug) {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if (!string.IsNullOrEmpty(email))
-            {
+            if (!string.IsNullOrEmpty(email)) {
                 var podcast = await _repository.GetAsync(email, slug);
                 if (podcast == null)
                     return NotFound();
@@ -66,15 +59,13 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] PodcastViewModel vm)
-        {
+        public async Task<IActionResult> Post([FromBody] PodcastViewModel vm) {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var user = _userRepository.Get(email);
             if (string.IsNullOrEmpty(email) || user == null)
                 return new BadRequestObjectResult("Unable to look up user profile");
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 var item = _mapper.Map<PodcastViewModel, Podcast>(vm);
                 item.User = user;
 
@@ -86,18 +77,15 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] PodcastViewModel vm)
-        {
+        public async Task<IActionResult> Put([FromBody] PodcastViewModel vm) {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var user = _userRepository.Get(email);
             if (string.IsNullOrEmpty(email) || user == null)
                 return new BadRequestObjectResult("Unable to look up user profile");
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 var podcast = await _repository.GetAsync(vm.Id);
-                if (podcast != null)
-                {
+                if (podcast != null) {
                     var item = _mapper.Map<PodcastViewModel, Podcast>(vm, podcast);
 
                     await _uow.CompleteAsync();
@@ -108,8 +96,7 @@ namespace PodNoms.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
+        public async Task<IActionResult> Delete(int id) {
             await this._repository.DeleteAsync(id);
             await _uow.CompleteAsync();
             return Ok();
