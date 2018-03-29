@@ -16,6 +16,9 @@ export class DebugService {
     }
 
     ping(): Observable<string> {
-        return this._http.get(environment.API_HOST + '/debug/ping').map(r => r.text());
+        return this._http.get(environment.API_HOST + '/ping').map(r => r.text());
+    }
+    sendPush(): Observable<string>{
+        return this._http.get(environment.API_HOST + '/debug/serverpush').map(r => r.text());
     }
 }
