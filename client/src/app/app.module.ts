@@ -9,6 +9,9 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ToastyModule } from 'ng2-toasty';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
@@ -50,8 +53,11 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { JobsService } from 'app/services/jobs.service';
+import { PushRegistrationService } from 'app/services/push-registration.service';
 import { AppInsightsService } from 'app/services/app-insights.service';
-import { PushNotificationsService } from './services/push-notifications.service';
+import { MessagingService } from './services/messaging.service';
+
+import { environment } from 'environments/environment';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -91,6 +97,17 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ],
     imports: [
         BrowserModule,
+        AngularFireModule.initializeApp({
+            apiKey: 'AIzaSyAaIm8LTB0ZgJ-g7RXEjtVa1EOQB381QLI',
+            authDomain: 'podnoms-797e3.firebaseapp.com',
+            databaseURL: 'https://podnoms-797e3.firebaseio.com',
+            projectId: 'podnoms-797e3',
+            storageBucket: 'podnoms-797e3.appspot.com',
+            messagingSenderId: '777042345082'
+        }),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+
         AppRoutingModule,
         HttpModule,
         FormsModule,
@@ -125,8 +142,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ProfileService,
         PodcastService,
         ImageService,
+        PushRegistrationService,
         DebugService,
-        PushNotificationsService,
+        MessagingService,
         ChatterService,
         AppInsightsService,
         JobsService,

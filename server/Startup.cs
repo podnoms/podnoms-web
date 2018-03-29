@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
@@ -35,7 +36,11 @@ using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
+using PodNoms.Api.Services.Push.Extensions;
+
 using Swashbuckle.AspNetCore.Swagger;
+using PodNoms.Api.Services.Push.Formatters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -50,12 +55,30 @@ namespace PodNoms.Api {
             services.AddHangfire(config => {
                 config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
             });
+
+            services.AddPushSubscriptionStore(Configuration)
+                .AddPushNotificationService(Configuration)
+                .AddMvc(options => {
+                    options.InputFormatters.Add(new TextPlainInputFormatter());
+                })
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
         }
         public void ConfigureDevelopmentServices(IServiceCollection services) {
             ConfigureServices(services);
             services.AddHangfire(config => {
                 config.UseMemoryStorage();
             });
+
+            services.AddPushSubscriptionStore(Configuration)
+                .AddPushNotificationService(Configuration)
+                .AddMvc(options => {
+                    options.InputFormatters.Add(new TextPlainInputFormatter());
+                })
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
         }
         public void ConfigureServices(IServiceCollection services) {
             Console.WriteLine($"Configuring services: {Configuration.ToString()}");
@@ -80,6 +103,8 @@ namespace PodNoms.Api {
             services.AddAutoMapper(e => {
                 e.AddProfile(new MappingProvider(Configuration));
             });
+
+            services.AddHttpClient();
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -155,6 +180,7 @@ namespace PodNoms.Api {
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
+            services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
             services.AddScoped<IMailSender, MailgunSender>();
 
@@ -198,6 +224,11 @@ namespace PodNoms.Api {
                 });
             }
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+            app.UseAuthentication();
+
             app.UseCors("AllowAllOrigins");
 
             app.UseSignalR(routes => {
@@ -211,7 +242,9 @@ namespace PodNoms.Api {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "PodNoms.API");
                 c.RoutePrefix = "";
             });
-            
+
+            app.UseSqlitePushSubscriptionStore();
+
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",

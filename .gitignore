@@ -7,3 +7,5 @@ extension
 client/tags
 NYoutubeDL
 tags
+.secrets
+pushsubscription.db
