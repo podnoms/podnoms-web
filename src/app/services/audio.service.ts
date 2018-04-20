@@ -24,7 +24,9 @@ export class AudioService {
     durationChanged: EventEmitter<number> = new EventEmitter();
     volumeChanged: EventEmitter<number> = new EventEmitter();
 
-    constructor() {}
+    constructor() {
+        this._volume = parseInt(localStorage.getItem('audio_volume') || '50', 10);
+    }
 
     private _isPlaying() {
         return (
@@ -35,22 +37,23 @@ export class AudioService {
             this._audio.readyState > 2
         );
     }
-    getVolume(){
+    getVolume() {
         return this._volume;
     }
-    setVolume(newVolume: number){
+    setVolume(newVolume: number) {
         this._volume = newVolume;
-        this._audio.volume(this._volume/100);
+        this._audio.volume(this._volume / 100);
+        localStorage.setItem('audio_volume', String(newVolume));
     }
     playAudio(source: string, title: string) {
-        if (this._audio && this._audio.playing()){
+        if (this._audio && this._audio.playing()) {
             this._audio.stop();
             this.playTimer.unsubscribe();
         }
         this._audio = new Howl({
             src: [source],
             html5: true,
-            volume: (this._volume/100),
+            volume: this._volume / 100,
             onplay: (id, pos) => {
                 console.log('onplay', id, pos);
                 this._playState = 1;
@@ -73,11 +76,11 @@ export class AudioService {
             this.playTimer.unsubscribe();
         });
     }
-    toggle(){
-        if (this._audio.playing()){
+    toggle() {
+        if (this._audio.playing()) {
             this._audio.pause();
             this._playState = 2;
-        }else{
+        } else {
             this._audio.play();
             this._playState = 1;
         }
@@ -89,7 +92,7 @@ export class AudioService {
             this.playStateChanged.emit(this._playState);
         }
     }
-    setPosition(position){
+    setPosition(position) {
         this._audio.seek(position);
     }
 }
