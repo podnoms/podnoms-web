@@ -58,6 +58,9 @@ import { AppInsightsService } from 'app/services/app-insights.service';
 import { MessagingService } from './services/messaging.service';
 
 import { environment } from 'environments/environment';
+import { FooterPlayerComponent } from 'app/components/footer-player/footer-player.component';
+import { AudioService } from 'app/services/audio.service';
+import { HumaniseTimePipe } from './pipes/humanise-time.pipe';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(
@@ -93,7 +96,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ResetComponent,
         ProfileComponent,
         AboutComponent,
-        FooterComponent
+        FooterComponent,
+        FooterPlayerComponent,
+        HumaniseTimePipe
     ],
     imports: [
         BrowserModule,
@@ -148,6 +153,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         ChatterService,
         AppInsightsService,
         JobsService,
+        AudioService,
         GlobalsService
     ],
     bootstrap: [AppComponent]

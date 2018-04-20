@@ -41,11 +41,6 @@ export class AppComponent implements OnInit {
                     this._signalrService
                         .init('chatter')
                         .then(r => {
-                            console.log(
-                                'app.component',
-                                'Chatter Service ready to rock',
-                                r
-                            );
                             this._signalrService.connection.on(
                                 chatterChannel,
                                 result => {

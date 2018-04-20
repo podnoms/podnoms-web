@@ -8,6 +8,7 @@ import { ToastyService, ToastData, ToastOptions } from 'ng2-toasty';
 
 import * as fromEntriesActions from 'app/actions/entries.actions';
 import { PodcastService } from '../../../services/podcast.service';
+import { AudioService } from 'app/services/audio.service';
 
 @Component({
     selector: '[app-entry-list-item]',
@@ -20,9 +21,11 @@ export class EntryListItemComponent implements OnInit {
 
     percentageProcessed = 0;
     currentSpeed: string = '';
+    playing: boolean = false;
 
     constructor(
         private _signalrService: SignalRService,
+        private _audioService: AudioService,
         private _entryService: PodcastService,
         private _store: Store<ApplicationState>,
         private _toasty: ToastyService
@@ -44,14 +47,14 @@ export class EntryListItemComponent implements OnInit {
                     }__info_processed`;
                     this._signalrService.connection.on(
                         updateChannel,
-                        result => {
+                        (result) => {
                             this.percentageProcessed = result.percentage;
                             this.currentSpeed = result.currentSpeed;
                         }
                     );
                     this._signalrService.connection.on(
                         processedChannel,
-                        result => {
+                        (result) => {
                             this.entry = result;
                             if (this.entry.processingStatus === 'Processed') {
                                 // only update the store when we're finished.
@@ -64,7 +67,7 @@ export class EntryListItemComponent implements OnInit {
                         }
                     );
                 })
-                .catch(err =>
+                .catch((err) =>
                     console.error(
                         'entry-list-item.component.ts',
                         '_signalrService.init',
@@ -85,9 +88,19 @@ export class EntryListItemComponent implements OnInit {
         window.open(entry.sourceUrl);
     }
     retry(entry: PodcastEntryModel) {
-        this._entryService.reSubmitEntry(entry).subscribe(r => {
+        this._entryService.reSubmitEntry(entry).subscribe((r) => {
             this.entry = r;
             this._toasty.info('Submitted podcast for re-processing');
         });
+    }
+    playAudio(source: string) {
+        this._audioService.playStateChanged.subscribe((r) => {
+            this.playing = r == 1;
+        });
+        if (!this.playing) {
+            this._audioService.playAudio(this.entry.audioUrl, this.entry.title);
+        } else {
+            this._audioService.pauseAudio();
+        }
     }
 }

@@ -23,13 +23,15 @@
             "styles": [
                 "../node_modules/font-awesome/css/font-awesome.css",
                 "../node_modules/simple-line-icons/css/simple-line-icons.css",
+                "../node_modules/jplayer/dist/skin/blue.monday/css/jplayer.blue.monday.css",
                 "styles.css"
             ],
             "scripts": [
                 "../node_modules/jquery/dist/jquery.js",
                 "../node_modules/tether/dist/js/tether.js",
                 "../node_modules/popper.js/dist/umd/popper.min.js",
-                "../node_modules/bootstrap/dist/js/bootstrap.js"
+                "../node_modules/bootstrap/dist/js/bootstrap.js",
+                "../node_modules/howler/dist/howler.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {
