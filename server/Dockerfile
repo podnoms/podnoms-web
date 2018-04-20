@@ -1,4 +1,5 @@
-FROM microsoft/aspnetcore-build:2.1.300-preview1-stretch AS build-env
+FROM microsoft/dotnet:2.1-sdk as build-env
+# FROM microsoft/aspnetcore-build:2.1.300-preview2-stretch AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -10,7 +11,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
-FROM microsoft/aspnetcore:2.1.0-preview1-stretch-slim
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 
