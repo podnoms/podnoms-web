@@ -39,17 +39,19 @@
             </div>
         </span>
         <span *ngIf="entry.processingStatus==='Processed'" style="width: 100%">
+            <a class="btn btn-outline btn-outline-danger" (click)="playAudio(entry.audioUrl)">
+                <i class="fa" [ngClass]="playing ? 'fa-pause' : 'fa-play'"></i>
+            </a>
+            <!--
             <audio controls preload="none">
                 <source src="{{entry.audioUrl}}" type="audio/mpeg" />
                 <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
             </audio>
+            -->
         </span>
     </em>
 </td>
 <td class="d-none d-sm-table-cell">
-    <a class="btn btn-outline btn-outline-danger" (click)="playAudio(entry.audioUrl)">
-        <i class="fa" [ngClass]="playing ? 'fa-pause' : 'fa-play'"></i>
-    </a>
     <a class="btn btn-outline btn-outline-danger" (click)="entryDeleteDialog.show()">
         <i class="fa fa-remove"></i>
     </a>
