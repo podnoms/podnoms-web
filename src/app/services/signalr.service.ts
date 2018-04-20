@@ -9,7 +9,7 @@ export class SignalRService {
 
     constructor(private _auth: AuthService) {}
     public init(hub: string): Promise<void> {
-        const url = `${environment.SIGNALR_HOST}hubs/${hub}`;
+        const url = `${environment.SIGNALR_HOST}/hubs/${hub}`;
 
         const token = this._auth.getToken();
         const options: any = {

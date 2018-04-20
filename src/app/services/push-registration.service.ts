@@ -17,7 +17,9 @@ export class PushRegistrationService {
 
     urlBase64ToUint8Array(base64String) {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
         const rawData = window.atob(base64);
         const outputArray = new Uint8Array(rawData.length);
         for (let i = 0; i < rawData.length; ++i) {
@@ -27,27 +29,18 @@ export class PushRegistrationService {
     }
 
     addSubscriber(subscription) {
-        console.log('[Push Service] Adding subscriber')
         const url = `${this.API_URL}/webpush/subscribe`;
-        return this.http
-            .post(url, subscription)
-            .catch(this.handleError);
+        return this.http.post(url, subscription).catch(this.handleError);
     }
 
     deleteSubscriber(subscription) {
-
         const url = `${this.API_URL}/webpush`;
-        console.log('[Push Service] Deleting subscriber')
-
-        let body = {
+        const body = {
             action: 'unsubscribe',
             subscription: subscription
-        }
+        };
 
-        return this.http
-            .post(url, body)
-            .catch(this.handleError);
-
+        return this.http.post(url, body).catch(this.handleError);
     }
 
     private handleError(error: Response | any) {
@@ -59,5 +52,4 @@ export class PushRegistrationService {
         }
         return Observable.throw(errMsg);
     }
-
 }

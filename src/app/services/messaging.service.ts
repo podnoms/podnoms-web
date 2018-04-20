@@ -43,12 +43,10 @@ export class MessagingService {
         this.messaging
             .requestPermission()
             .then(() => {
-                console.log('Notification permission granted.');
                 const token = this.messaging.getToken();
                 return token;
             })
             .then(token => {
-                console.log(token);
                 this.updateToken(token);
             })
             .catch(err => {
@@ -58,7 +56,6 @@ export class MessagingService {
 
     receiveMessage() {
         this.messaging.onMessage(payload => {
-            console.log('Message received', payload);
             this.currentMessage.next(payload);
         });
     }
