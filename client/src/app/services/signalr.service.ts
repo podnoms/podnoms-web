@@ -1,6 +1,11 @@
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import { HubConnection } from '@aspnet/signalr';
+import {
+    HubConnection,
+    HubConnectionBuilder,
+    JsonHubProtocol,
+    LogLevel
+} from '@aspnet/signalr';
 import { environment } from 'environments/environment';
 
 @Injectable()
@@ -15,7 +20,12 @@ export class SignalRService {
         const options: any = {
             transport: 0
         };
-        this.connection = new HubConnection(url + '?token=' + token, options);
+
+        this.connection = new HubConnectionBuilder()
+            .configureLogging(LogLevel.Trace)
+            .withUrl(url + '?token=' + token, options)
+            .withHubProtocol(new JsonHubProtocol())
+            .build();
         return this.connection.start();
     }
 }

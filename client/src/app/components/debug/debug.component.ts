@@ -18,6 +18,7 @@ export class DebugComponent implements OnInit {
 
     debugInfo$: Observable<string>;
     apiHost = environment.API_HOST;
+    signalrHost = environment.SIGNALR_HOST;
     pingPong = '';
 
     constructor(
