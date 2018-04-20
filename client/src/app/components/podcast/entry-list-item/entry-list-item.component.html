@@ -1,99 +1,73 @@
-<td class="text-center"
-    (click)="goto(entry)">
+<td class="text-center" (click)="goto(entry)">
     <div *ngIf="entry.processingStatus === 'Accepted'">
         <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
     </div>
-    <div class="avatar"
-        *ngIf="entry.processingStatus !== 'Accepted'">
-        <img [src]="entry.imageUrl"
-            class="img-avatar img-avatar48"
-            alt="">
+    <div class="avatar" *ngIf="entry.processingStatus !== 'Accepted'">
+        <img [src]="entry.imageUrl" class="img-avatar img-avatar48" alt="">
         <span class="avatar-status badge-success"></span>
     </div>
 </td>
 <td>
     <p class="font-w600 mb-10">
-        <inline-editor type="text"
-            [(ngModel)]="entry.title"
-            (onSave)="updateTitle($event)"
-            name="title"
-            size="32"></inline-editor>
+        <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="updateTitle($event)" name="title" size="32"></inline-editor>
     </p>
-    <p class="font-w600 mb-0"
-        [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
+    <p class="font-w600 mb-0" [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
         <span>{{entry.processingStatus}}</span>| {{entry.createDate | amTimeAgo}}
     </p>
 </td>
 <td class="d-none d-sm-table-cell">
     <em class="text-muted">
-                <span *ngIf="entry.processingStatus === 'Accepted'"
-                style="width: 100%">
-              <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-          </span>
-          <span *ngIf="entry.processingStatus === 'Failed'">
-                <button class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10"
-                (click)="retry(entry)">Retry</button>
-          </span>
-          <span *ngIf="entry.processingStatus!=='Processed' && entry.processingStatus !== 'Accepted' && entry.processingStatus !== 'Failed'"
-                style="width: 100%">
-              <div class="clearfix">
-                  <div class="float-left">
-                      <strong>{{percentageProcessed}}%</strong>
-                  </div>
-                  <div class="float-right">
-                      <small class="text-muted">{{entry.processingStatus}}: {{currentSpeed}}</small>
-                  </div>
-              </div>
-              <div class="progress progress-xs">
-                  <div class="progress-bar bg-success"
-                       role="progressbar"
-                       [style.width]="percentageProcessed + '%'"
-                       [attr.aria-valuenow]="percentageProcessed"
-                       aria-valuemin="0"
-                       aria-valuemax="100"></div>
-              </div>
-          </span>
-          <span *ngIf="entry.processingStatus==='Processed'"
-                style="width: 100%">
-              <audio controls
-                     preload="none">
-                  <source src="{{entry.audioUrl}}"
-                          type="audio/mpeg" />
-                  <a target="_blank"
-                     [href]="entry.audioUrl">{{entry.title}}</a>
-              </audio>
-          </span>
-        </em>
+        <span *ngIf="entry.processingStatus === 'Accepted'" style="width: 100%">
+            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+        </span>
+        <span *ngIf="entry.processingStatus === 'Failed'">
+            <button class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10" (click)="retry(entry)">Retry</button>
+        </span>
+        <span *ngIf="entry.processingStatus!=='Processed' && entry.processingStatus !== 'Accepted' && entry.processingStatus !== 'Failed'"
+            style="width: 100%">
+            <div class="clearfix">
+                <div class="float-left">
+                    <strong>{{percentageProcessed}}%</strong>
+                </div>
+                <div class="float-right">
+                    <small class="text-muted">{{entry.processingStatus}}: {{currentSpeed}}</small>
+                </div>
+            </div>
+            <div class="progress progress-xs">
+                <div class="progress-bar bg-success" role="progressbar" [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </span>
+        <span *ngIf="entry.processingStatus==='Processed'" style="width: 100%">
+            <a class="btn btn-outline btn-outline-danger" (click)="playAudio(entry.audioUrl)">
+                <i class="fa" [ngClass]="playing ? 'fa-pause' : 'fa-play'"></i>
+            </a>
+            <!--
+            <audio controls preload="none">
+                <source src="{{entry.audioUrl}}" type="audio/mpeg" />
+                <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
+            </audio>
+            -->
+        </span>
+    </em>
 </td>
 <td class="d-none d-sm-table-cell">
-    <a class="btn btn-outline btn-outline-danger"
-        (click)="entryDeleteDialog.show()"><i class="fa fa-remove"></i></a>
+    <a class="btn btn-outline btn-outline-danger" (click)="entryDeleteDialog.show()">
+        <i class="fa fa-remove"></i>
+    </a>
 </td>
-
-<div class="modal fade"
-    bsModal
-    #entryDeleteDialog="bs-modal"
-    tabindex="-1"
-    role="dialog"
-    aria-hidden="true">
+<div class="modal fade" bsModal #entryDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title pull-left">Delete this podcast entry?</h4>
-                <button type="button"
-                    class="close pull-right"
-                    aria-label="Close"
-                    (click)="entryDeleteDialog.hide()">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="entryDeleteDialog.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <button type="button"
-                    class="btn btn-primary pull-right"
-                    (click)="entryDeleteDialog.hide()">No</button>
-                <button type="button"
-                    class="btn btn-danger pull-right"
-                    (click)="deleteEntry(); entryDeleteDialog.hide()">Yes
+                <button type="button" class="btn btn-primary pull-right" (click)="entryDeleteDialog.hide()">No</button>
+                <button type="button" class="btn btn-danger pull-right" (click)="deleteEntry(); entryDeleteDialog.hide()">Yes
                 </button>
             </div>
         </div>
