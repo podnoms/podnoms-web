@@ -1,14 +1,5 @@
 <footer class="footer">
-    <div class="container">
-        <!-- <div class="float-right">
-            <share-button button="twitter" text="Tweet"></share-button>
-            <share-button button="facebook" text="Share"></share-button>
-        </div> -->
-        <div class="float-left">
-            Crafted with <i class="fa fa-heart text-pulse"></i> by
-            <a class="font-w600"
-                href="http://github.com/fergalmoran/podnoms"
-                target="_blank">podnoms</a>
-        </div>
+    <div class="foooter-player-wrapper" *ngIf="showPlayer">
+        <app-footer-player></app-footer-player>
     </div>
 </footer>
