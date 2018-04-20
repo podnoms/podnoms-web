@@ -6,7 +6,9 @@
 a:hover {
     cursor:pointer;
 }
-
+body {
+    background-color: #FFFFFF!important;
+}
 /**====== Badges-button css end ======**/
 /**====== Social-Buttons css start ======**/
 
