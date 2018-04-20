@@ -116,18 +116,15 @@ export class AuthService {
     }
     public scheduleRenewal() {
         if (!this.isAuthenticated()) return;
-        console.log('auth.service.ts', 'scheduleRenewal', 'Schedule required');
         this.unscheduleRenewal();
 
         const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
         const source = Observable.of(expiresAt).flatMap(e => {
-            console.log('auth.service.ts', 'scheduleRenewal_expiresAt', `Renewal scheduled at: ${new Date(e)}`);
             const now = Date.now();
             return Observable.timer(Math.max(1, e - now));
         });
         this.refreshSubscription = source.subscribe(() => {
             console.log('auth.service.ts', 'scheduleRenewal', 'Starting renewal and schedule');
-
             this.renewToken();
             this.scheduleRenewal();
         });

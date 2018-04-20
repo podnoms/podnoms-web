@@ -1,6 +1,9 @@
- img.sidebar-icon {
-     width: 28px;
-     height: 28px;
-     margin: 0 4px;
-     border-radius: 50em;
- }
+#sidebar {
+    margin-bottom: 55px;
+}
+img.sidebar-icon {
+    width: 28px;
+    height: 28px;
+    margin: 0 4px;
+    border-radius: 50em;
+}

@@ -184,9 +184,6 @@ namespace PodNoms.Api {
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
             services.AddScoped<IMailSender, MailgunSender>();
 
-            services.AddSingleton(typeof(HubLifetimeManager<DebugHub>),
-                typeof(DebugHubLifetimeManager<DebugHub>));
-
             //register the codepages (required for slugify)
             var instance = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(instance);
