@@ -25,7 +25,7 @@ export class PodcastComponent {
     selectedPodcast$: Observable<PodcastModel>;
     pendingEntry: PodcastEntryModel = null;
     entries$: Observable<PodcastEntryModel[]>;
-    uploadMode = false;
+    uploadMode = true;
     urlMode = false;
     firstRun = true;
 
