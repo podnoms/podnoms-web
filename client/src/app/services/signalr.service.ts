@@ -22,7 +22,7 @@ export class SignalRService {
         };
 
         this.connection = new HubConnectionBuilder()
-            .configureLogging(LogLevel.Trace)
+            .configureLogging(LogLevel.Error)
             .withUrl(url + '?token=' + token, options)
             .withHubProtocol(new JsonHubProtocol())
             .build();

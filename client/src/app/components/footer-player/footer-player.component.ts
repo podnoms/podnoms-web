@@ -18,28 +18,37 @@ export class FooterPlayerComponent implements OnInit {
     constructor(private _audioService: AudioService) {}
 
     ngOnInit() {
-        this._audioService.positionChanged.subscribe((p) => this.position = p);
-        this._audioService.titleChanged.subscribe((t) => this.title = t);
-        this._audioService.durationChanged.subscribe((d) => this.duration = d);
-        this._audioService.volumeChanged.subscribe((v) => this.volume = v);
-        this._audioService.playStateChanged.subscribe((s) => this.playState = s);
+        this._audioService.positionChanged.subscribe(
+            (p) => (this.position = p)
+        );
+        this._audioService.titleChanged.subscribe((t) => (this.title = t));
+        this._audioService.durationChanged.subscribe(
+            (d) => (this.duration = d)
+        );
+        this._audioService.volumeChanged.subscribe((v) => (this.volume = v));
+        this._audioService.playStateChanged.subscribe(
+            (s) => (this.playState = s)
+        );
 
-        this.volume = this._audioService.getVolume();
+        this._audioService.requestUpdate();
     }
-    playPause(){
+    playPause() {
         this._audioService.toggle();
     }
-    doSeek(event){
+    doSeek(event) {
         const $bar = $(event.currentTarget);
-        const newPercentage = ((event.pageX - ($bar.offset().left)) / ($bar.width()) * 100);
+        const newPercentage =
+            (event.pageX - $bar.offset().left) / $bar.width() * 100;
 
-        const pos = (newPercentage/100)*this.duration;
+        const pos = newPercentage / 100 * this.duration;
         this._audioService.setPosition(pos);
     }
 
     setVolume(event) {
         const $bar = $(event.currentTarget);
-        const volume = Math.round(((event.pageX - ($bar.offset().left)) / ($bar.width()) * 100));
+        const volume = Math.round(
+            (event.pageX - $bar.offset().left) / $bar.width() * 100
+        );
         this._audioService.setVolume(volume);
     }
 }
