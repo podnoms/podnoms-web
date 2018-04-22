@@ -3,15 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
+using PodNoms.Api.Services.Auth;
 
-namespace PodNoms.Api.Providers
-{
-    public class MappingProvider : Profile
-    {
+namespace PodNoms.Api.Providers {
+    public class MappingProvider : Profile {
         private readonly IConfiguration _options;
         public MappingProvider() { }
-        public MappingProvider(IConfiguration options)
-        {
+        public MappingProvider(IConfiguration options) {
             this._options = options;
 
             //Domain to API Resource
@@ -29,7 +27,7 @@ namespace PodNoms.Api.Providers
                 .ForMember(
                     src => src.AudioUrl,
                     e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
-                    
+
             CreateMap<User, ProfileViewModel>()
                 .ForMember(
                     src => src.Name,
@@ -37,13 +35,17 @@ namespace PodNoms.Api.Providers
 
             //API Resource to Domain
             CreateMap<PodcastViewModel, Podcast>()
-                .ForMember(v => v.ImageUrl, opt => opt.Ignore())
+                .ForMember(v => v.ImageUrl, map => map.Ignore())
             ;
             CreateMap<PodcastEntryViewModel, PodcastEntry>()
                 .ForMember(
                     e => e.ImageUrl,
-                    opt => opt.MapFrom(m => m.ImageUrl))
+                    map => map.MapFrom(vm => vm.ImageUrl))
             ;
+            CreateMap<RegistrationViewModel, ApplicationUser>()
+                .ForMember(
+                    e => e.UserName,
+                    map => map.MapFrom(vm => vm.Email));
         }
     }
 }

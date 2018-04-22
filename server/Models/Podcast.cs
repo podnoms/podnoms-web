@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.Options;
+using PodNoms.Api.Services.Auth;
 
 namespace PodNoms.Api.Models {
     public class Podcast : BaseModel {
         public int Id { get; set; }
         public string Uid { get; set; }
         public User User { get; set; }
+        public ApplicationUser AppUser { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Slug { get; set; }

@@ -1,24 +1,29 @@
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
-import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DebugService {
-    constructor(private _http: AuthHttp) {}
+    constructor(private _http: HttpClient) {}
 
     sendRealtime(message: string): any {
-        return this._http.post(environment.API_HOST + '/debug/realtime', JSON.stringify(message));
+        return this._http.post(
+            environment.API_HOST + '/debug/realtime',
+            JSON.stringify(message)
+        );
     }
 
     getDebugInfo(): Observable<string> {
-        return this._http.get(environment.API_HOST + '/debug').map(r => r.json());
+        return this._http.get<string>(environment.API_HOST + '/debug');
     }
 
     ping(): Observable<string> {
-        return this._http.get(environment.API_HOST + '/ping').map(r => r.text());
+        return this._http.get<string>(environment.API_HOST + '/ping');
     }
-    sendPush(): Observable<string>{
-        return this._http.get(environment.API_HOST + '/debug/serverpush').map(r => r.text());
+    sendPush(): Observable<string> {
+        return this._http.get<string>(
+            environment.API_HOST + '/debug/serverpush'
+        );
     }
 }

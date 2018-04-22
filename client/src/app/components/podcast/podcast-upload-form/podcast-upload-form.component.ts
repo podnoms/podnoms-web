@@ -11,7 +11,7 @@ import {
     ViewChild
 } from '@angular/core';
 
-import { AuthService } from 'app/services/auth.service';
+import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
 import { PodcastModel } from 'app/models/podcasts.models';
 import { environment } from 'environments/environment';
 
@@ -29,7 +29,7 @@ export class PodcastUploadFormComponent implements OnInit {
 
     constructor(
         private _toastyService: ToastyService,
-        private _auth: AuthService
+        private _auth: PodnomsAuthService
     ) {}
     ngOnInit() {
         const config = {

@@ -1,13 +1,12 @@
 import {Http, Headers} from '@angular/http';
 import {Injectable} from '@angular/core';
-import {AuthService} from './auth.service';
+import {PodnomsAuthService} from './podnoms-auth.service';
 import { environment } from 'environments/environment';
 
 @Injectable()
 export class ImageService {
 
-    // TODO: Change this to use AuthHttp when I can figure out why formData is null
-    constructor(private _http: Http, private _auth: AuthService) {
+    constructor(private _http: Http, private _auth: PodnomsAuthService) {
     }
 
     upload(podcastSlug: string, image) {

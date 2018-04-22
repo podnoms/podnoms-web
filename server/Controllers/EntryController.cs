@@ -19,7 +19,7 @@ using PodNoms.Api.Services.Storage;
 namespace PodNoms.Api.Controllers {
 
     [Route("[controller]")]
-    public class EntryController : AuthController {
+    public class EntryController : UserController {
         private readonly IPodcastRepository _podcastRepository;
         private readonly IEntryRepository _repository;
         private readonly IUnitOfWork _unitOfWork;

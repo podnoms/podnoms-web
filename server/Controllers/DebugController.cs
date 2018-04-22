@@ -18,7 +18,7 @@ using WebPush = Lib.Net.Http.WebPush;
 
 namespace PodNoms.Api.Controllers {
     [Route("[controller]")]
-    public class DebugController : AuthController {
+    public class DebugController : UserController {
         private readonly StorageSettings _storageSettings;
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
         private readonly ApplicationsSettings _applicationsSettings;

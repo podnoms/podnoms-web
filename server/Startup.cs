@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using FluentValidation.AspNetCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -41,9 +42,14 @@ using PodNoms.Api.Services.Push.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 using PodNoms.Api.Services.Push.Formatters;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace PodNoms.Api {
     public class Startup {
+        private const string SecretKey = "QGfaEMNASkNMGLKA3LjgPdkPfFEy3n40"; // todo: get this from somewhere secure
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration) {
@@ -105,39 +111,65 @@ namespace PodNoms.Api {
             });
 
             services.AddHttpClient();
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>(options => {
+                //TODO: Remove this in production, only for testing
+                options.ValidFor = TimeSpan.FromDays(28);
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+            });
+            var tokenValidationParameters = new TokenValidationParameters {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _signingKey,
+
+                RequireExpirationTime = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
-                options.Audience = Configuration["auth0:clientId"];
-                options.Authority = $"https://{Configuration["auth0:domain"]}/";
-                options.TokenValidationParameters = new TokenValidationParameters {
-                    NameClaimType = "name"
+            }).AddJwtBearer(configureOptions => {
+                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                configureOptions.TokenValidationParameters = tokenValidationParameters;
+                configureOptions.SaveToken = true;
+                configureOptions.Events = new JwtBearerEvents() {
+                    //Don't need this now we've removed Auth0
+                    // OnTokenValidated = AuthenticationMiddleware.OnTokenValidated
                 };
-                options.Events = new JwtBearerEvents() {
-                    OnTokenValidated = AuthenticationMiddleware.OnTokenValidated
-                };
-                options.Events.OnMessageReceived = context => {
+                configureOptions.Events.OnMessageReceived = context => {
                     StringValues token;
                     if (context.Request.Path.Value.StartsWith("/hubs/") && context.Request.Query.TryGetValue("token", out token)) {
                         context.Token = token;
                     }
-
                     return Task.CompletedTask;
-                };
+                };                
             });
-
-            var defaultPolicy =
-                new AuthorizationPolicyBuilder()
-                .AddAuthenticationSchemes("Bearer")
-                .RequireAuthenticatedUser()
-                .Build();
 
             services.AddAuthorization(j => {
-                j.DefaultPolicy = defaultPolicy;
+                j.AddPolicy("ApiUser", policy => policy.RequireClaim(
+                    Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
             });
+            // add identity
+            var identityBuilder = services.AddIdentityCore<ApplicationUser>(o => {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            });
+            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
+            identityBuilder.AddEntityFrameworkStores<PodnomsDbContext>().AddDefaultTokenProviders();
 
             services.AddMvc(options => {
                 options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
@@ -150,7 +182,8 @@ namespace PodNoms.Api {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
                 })
-                .AddXmlSerializerFormatters();
+                .AddXmlSerializerFormatters()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Info { Title = "Podnoms.API", Version = "v1" });
@@ -174,6 +207,8 @@ namespace PodNoms.Api {
 
             services.AddTransient<IFileUploader, AzureFileUploader>();
             services.AddTransient<IRealTimeUpdater, SignalRUpdater>();
+            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
