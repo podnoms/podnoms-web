@@ -1,10 +1,12 @@
 export class ProfileModel {
-    id?: number;
+    id?: string;
     slug: string;
     email: string;
     name: string;
     description?: string;
     uid?: string;
-    apiKey?: string;
     profileImage?: string;
+    apiKey: string;
+    firstName: string;
+    lastName: string;
 }
