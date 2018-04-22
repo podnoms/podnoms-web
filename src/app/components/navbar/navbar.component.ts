@@ -1,6 +1,6 @@
 import { ProfileModel } from 'app/models/profile.model';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { PodnomsAuthService } from '../../services/podnoms-auth.service';
 import { ProfileService } from '../../services/profile.service';
 import { Observable } from 'rxjs/Observable';
 
@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
     user$: Observable<ProfileModel>;
 
     constructor(
-        private _authService: AuthService,
+        private _authService: PodnomsAuthService,
         private _profileService: ProfileService
     ) {}
 

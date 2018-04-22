@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { AuthHttp } from 'angular2-jwt';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ChatterService {
-    constructor(private _http: AuthHttp) {}
+    constructor(private _http: HttpClient) {}
 
     ping(message: string): any {
         return this._http.post(
