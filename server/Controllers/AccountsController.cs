@@ -30,7 +30,7 @@ namespace PodNoms.Api.Controllers {
             // var result = await _userRepository.AddOrUpdate(userIdentity, model.Password);
 
             if (!result.Succeeded) return new BadRequestObjectResult(result);
-            return new OkObjectResult(model);
+            return new OkObjectResult(model );
         }
     }
 }
