@@ -10,9 +10,10 @@ using PodNoms.Api.Persistence;
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180421162833_ChangeContextType")]
+    partial class ChangeContextType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,8 +153,6 @@ namespace PodNoms.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppUserId");
-
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getdate()");
@@ -174,8 +173,6 @@ namespace PodNoms.Api.Migrations
                     b.Property<int?>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("UserId");
 
@@ -270,7 +267,7 @@ namespace PodNoms.Api.Migrations
                         .IsUnique()
                         .HasFilter("[Slug] IS NOT NULL");
 
-                    b.ToTable("UserDetails");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PodNoms.Api.Services.Auth.ApplicationUser", b =>
@@ -387,10 +384,6 @@ namespace PodNoms.Api.Migrations
 
             modelBuilder.Entity("PodNoms.Api.Models.Podcast", b =>
                 {
-                    b.HasOne("PodNoms.Api.Services.Auth.ApplicationUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("PodNoms.Api.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

@@ -1,4 +1,4 @@
-import { AuthService } from './auth.service';
+import { PodnomsAuthService } from './podnoms-auth.service';
 import { Injectable } from '@angular/core';
 import {
     HubConnection,
@@ -12,7 +12,7 @@ import { environment } from 'environments/environment';
 export class SignalRService {
     public connection: HubConnection;
 
-    constructor(private _auth: AuthService) {}
+    constructor(private _auth: PodnomsAuthService) {}
     public init(hub: string): Promise<void> {
         const url = `${environment.SIGNALR_HOST}/hubs/${hub}`;
 

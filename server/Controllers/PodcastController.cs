@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
@@ -24,10 +25,12 @@ namespace PodNoms.Api.Controllers {
         private readonly IUserRepository _userRepository;
         private readonly IOptions<AppSettings> _settings;
         private readonly IMapper _mapper;
+        private ClaimsPrincipal _caller;
         private readonly IUnitOfWork _uow;
 
         public PodcastController(IPodcastRepository repository, IUserRepository userRepository,
-            IOptions<AppSettings> options, IMapper mapper, IUnitOfWork unitOfWork) {
+            IOptions<AppSettings> options, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) {
+            _caller = httpContextAccessor.HttpContext.User;
             this._uow = unitOfWork;
             this._repository = repository;
             this._userRepository = userRepository;
@@ -37,12 +40,10 @@ namespace PodNoms.Api.Controllers {
 
         [HttpGet]
         public async Task<IEnumerable<PodcastViewModel>> Get() {
-            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if (!string.IsNullOrEmpty(email)) {
-                var podcasts = await _repository.GetAllAsync(email);
-                var ret = _mapper.Map<List<Podcast>, List<PodcastViewModel>>(podcasts.ToList());
-                return ret;
-            }
+            var userId = _caller.Claims.Single(c => c.Type == "id");
+            var podcasts = await _repository.GetAllAsync(userId.Value);
+            var ret = _mapper.Map<List<Podcast>, List<PodcastViewModel>>(podcasts.ToList());
+            return ret;
             throw new Exception("No local user stored!");
         }
 
@@ -60,9 +61,9 @@ namespace PodNoms.Api.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PodcastViewModel vm) {
-            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var user = _userRepository.Get(email);
-            if (string.IsNullOrEmpty(email) || user == null)
+            var userId = _caller.Claims.Single(c => c.Type == "id");
+            var user = _userRepository.Get(userId.Value);
+            if (user == null)
                 return new BadRequestObjectResult("Unable to look up user profile");
 
             if (ModelState.IsValid) {
