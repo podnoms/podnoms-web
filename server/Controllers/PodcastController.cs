@@ -8,6 +8,7 @@ using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
@@ -23,17 +24,19 @@ namespace PodNoms.Api.Controllers {
     public class PodcastController : Controller {
         private readonly IPodcastRepository _repository;
         private readonly IUserRepository _userRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IOptions<AppSettings> _settings;
         private readonly IMapper _mapper;
         private ClaimsPrincipal _caller;
         private readonly IUnitOfWork _uow;
 
-        public PodcastController(IPodcastRepository repository, IUserRepository userRepository,
+        public PodcastController(IPodcastRepository repository, IUserRepository userRepository, UserManager<ApplicationUser> userManager,
             IOptions<AppSettings> options, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) {
-            _caller = httpContextAccessor.HttpContext.User;
+            this._caller = httpContextAccessor.HttpContext.User;
             this._uow = unitOfWork;
             this._repository = repository;
             this._userRepository = userRepository;
+            this._userManager = userManager;
             this._settings = options;
             this._mapper = mapper;
         }
@@ -62,28 +65,25 @@ namespace PodNoms.Api.Controllers {
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PodcastViewModel vm) {
             var userId = _caller.Claims.Single(c => c.Type == "id");
-            var user = _userRepository.Get(userId.Value);
-            if (user == null)
-                return new BadRequestObjectResult("Unable to look up user profile");
+            var user = await this._userManager.FindByIdAsync(userId.Value);
+            if (user != null) {
+                if (ModelState.IsValid) {
+                    var item = _mapper.Map<PodcastViewModel, Podcast>(vm);
 
-            if (ModelState.IsValid) {
-                var item = _mapper.Map<PodcastViewModel, Podcast>(vm);
-                item.User = user;
+                    //remove once we're ready
+                    item.User = _userRepository.Get("fergal.moran@gmail.com");
+                    item.AppUser = user;
 
-                var ret = await _repository.AddOrUpdateAsync(item);
-                await _uow.CompleteAsync();
-                return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(ret));
+                    var ret = await _repository.AddOrUpdateAsync(item);
+                    await _uow.CompleteAsync();
+                    return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(ret));
+                }
             }
             return BadRequest("Invalid request data");
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] PodcastViewModel vm) {
-            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var user = _userRepository.Get(email);
-            if (string.IsNullOrEmpty(email) || user == null)
-                return new BadRequestObjectResult("Unable to look up user profile");
-
             if (ModelState.IsValid) {
                 var podcast = await _repository.GetAsync(vm.Id);
                 if (podcast != null) {

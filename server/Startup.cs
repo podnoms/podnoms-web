@@ -97,6 +97,7 @@ namespace PodNoms.Api {
             services.Configure<StorageSettings>(Configuration.GetSection("Storage"));
             services.Configure<ApplicationsSettings>(Configuration.GetSection("ApplicationsSettings"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.Configure<FacebookAuthSettings>(Configuration.GetSection("FacebookAuthSettings"));
             services.Configure<ImageFileStorageSettings>(Configuration.GetSection("ImageFileStorageSettings"));
             services.Configure<AudioFileStorageSettings>(Configuration.GetSection("AudioFileStorageSettings"));
             services.Configure<FormOptions>(options => {

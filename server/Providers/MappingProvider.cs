@@ -33,6 +33,14 @@ namespace PodNoms.Api.Providers {
                     src => src.Name,
                     e => e.MapFrom(m => m.FullName));
 
+            CreateMap<ApplicationUser, ProfileViewModel>()
+                .ForMember(
+                    src => src.Name,
+                    map => map.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(
+                    src => src.ProfileImage,
+                    map => map.MapFrom(s => s.PictureUrl));
+
             //API Resource to Domain
             CreateMap<PodcastViewModel, Podcast>()
                 .ForMember(v => v.ImageUrl, map => map.Ignore())
