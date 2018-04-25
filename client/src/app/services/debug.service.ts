@@ -22,8 +22,14 @@ export class DebugService {
         return this._http.get<string>(environment.API_HOST + '/ping');
     }
     sendPush(): Observable<string> {
-        return this._http.get<string>(
-            environment.API_HOST + '/debug/serverpush'
+        var message = {
+            topic: 'DebugFromClient',
+            notification: 'HelloSailor',
+            urgency: 'normal'
+        };
+        return this._http.post<string>(
+            environment.API_HOST + '/webpush/message',
+            message
         );
     }
 }
