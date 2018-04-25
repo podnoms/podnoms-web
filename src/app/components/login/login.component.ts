@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         private _socialAuthService: AuthService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router
-    ) {}
+    ) { }
     ngOnInit() {
         this._subscription = this._activatedRoute.queryParams.subscribe(
             (param: any) => {
@@ -41,19 +41,46 @@ export class LoginComponent implements OnInit {
     }
     login(provider?: string) {
         this.isRequesting = true;
-        //clear any social auth cookie
-        //this._socialAuthService.signOut();
         if (provider === 'facebook') {
             const options: LoginOpt = {
                 scope: 'email public_profile',
                 redirect_uri: 'http://localhost:5000/facebook-auth.html'
             };
-            this._socialAuthService.signIn(
-                FacebookLoginProvider.PROVIDER_ID,
-                options
-            );
+            this._socialAuthService.signIn( FacebookLoginProvider.PROVIDER_ID, options)
+                .then(user => {
+                    if (user) {
+                        const rpc = this._authService.facebookLogin(user.authToken);
+                        if (!rpc) return;
+                        rpc.finally(() => (this.isRequesting = false)).subscribe(
+                            (result) => {
+                                if (result) {
+                                    this._router.navigate(['/podcasts']);
+                                }
+                            },
+                            (error) => {
+                                this.errorMessage = error;
+                            }
+                        );
+                    }
+                });
         } else if (provider === 'google-oauth2') {
-            this._socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+            this._socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+                .then(user => {
+                    if (user) {
+                        const rpc = this._authService.googleLogin(user.idToken);
+                        if (!rpc) return;
+                        rpc.finally(() => (this.isRequesting = false)).subscribe(
+                            (result) => {
+                                if (result) {
+                                    this._router.navigate(['/podcasts']);
+                                }
+                            },
+                            (error) => {
+                                this.errorMessage = error;
+                            }
+                        );
+                    }
+                });
         } else {
             this._authService
                 .login(this.username, this.password)
@@ -66,29 +93,6 @@ export class LoginComponent implements OnInit {
             //we can bail here as we don't need to subscribe to the social auth observer
             return;
         }
-
-        this._socialAuthService.authState.subscribe((user) => {
-            if (user) {
-                let rpc;
-
-                if (user.provider === 'FACEBOOK') {
-                    rpc = this._authService.facebookLogin(user.authToken);
-                } else if (user.provider === 'GOOGLE') {
-                    rpc = this._authService.googleLogin(user.idToken);
-                }
-                if (!rpc) return;
-                rpc.finally(() => (this.isRequesting = false)).subscribe(
-                    (result) => {
-                        if (result) {
-                            this._router.navigate(['/podcasts']);
-                        }
-                    },
-                    (error) => {
-                        this.errorMessage = error;
-                    }
-                );
-            }
-        });
     }
     loginSuccess(data) {
         console.log('LoginComponent', 'loginSuccess');

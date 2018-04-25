@@ -123,7 +123,6 @@ export class PodnomsAuthService extends BaseService {
             .map((res) => true)
             .catch(this.handleError);
     }
-
     public logout() {
         localStorage.removeItem('auth_token');
         this._authService.signOut().then(() => console.log("Logout ok"));
