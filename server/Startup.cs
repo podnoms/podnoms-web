@@ -153,7 +153,7 @@ namespace PodNoms.Api {
                         context.Token = token;
                     }
                     return Task.CompletedTask;
-                };                
+                };
             });
 
             services.AddAuthorization(j => {
@@ -171,7 +171,8 @@ namespace PodNoms.Api {
             });
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<PodnomsDbContext>().AddDefaultTokenProviders();
-
+            identityBuilder.AddUserManager<PodNomsUserManager>();
+            
             services.AddMvc(options => {
                 options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
                 options.OutputFormatters
@@ -205,6 +206,7 @@ namespace PodNoms.Api {
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+
 
             services.AddTransient<IFileUploader, AzureFileUploader>();
             services.AddTransient<IRealTimeUpdater, SignalRUpdater>();
