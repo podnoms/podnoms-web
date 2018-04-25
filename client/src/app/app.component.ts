@@ -2,7 +2,7 @@ import { GlobalsService } from './services/globals.service';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToastyService } from 'ng2-toasty';
-import { AuthService } from 'app/services/auth.service';
+import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
 import { AppInsightsService } from 'app/services/app-insights.service';
 import { SignalRService } from 'app/services/signalr.service';
 import { ProfileService } from './services/profile.service';
@@ -15,15 +15,13 @@ import { MessagingService } from 'app/services/messaging.service';
 })
 export class AppComponent implements OnInit {
     constructor(
-        private _authService: AuthService,
+        private _authService: PodnomsAuthService,
         private _toastyService: ToastyService,
         private _signalrService: SignalRService,
         private _profileService: ProfileService,
         private _messagingService: MessagingService,
         _appInsights: AppInsightsService
     ) {
-        _authService.handleAuthentication();
-        _authService.scheduleRenewal();
     }
     loggedIn() {
         return this._authService.isAuthenticated();

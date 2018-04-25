@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'app/services/auth.service';
+import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./callback.component.css']
 })
 export class CallbackComponent implements OnInit {
-    constructor(private _authService: AuthService, private _router: Router) {}
+    constructor(private _authService: PodnomsAuthService, private _router: Router) {}
 
     ngOnInit() {
         this._router.navigate(['/podcasts']);

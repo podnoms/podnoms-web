@@ -17,14 +17,18 @@ export class ProfileComponent implements OnInit {
     originalSlug: string;
     slugError: string = '';
     profile$: Observable<ProfileModel>;
-    constructor(private _store: Store<ApplicationState>, private _service: ProfileService, private _router: Router) {
+    constructor(
+        private _store: Store<ApplicationState>,
+        private _service: ProfileService,
+        private _router: Router
+    ) {
         _store.dispatch(new fromProfileActions.LoadAction());
         this.profile$ = _store.select(fromProfile.getProfile);
-        this.profile$.skip(1).subscribe(p => (this.originalSlug = p.slug));
+        this.profile$.skip(1).subscribe((p) => (this.originalSlug = p.slug));
     }
     ngOnInit() {}
     onSlugChanged(slug: string) {
-        this._service.checkSlug(slug).subscribe(v => {
+        this._service.checkSlug(slug).subscribe((v) => {
             console.log('profile.component.ts', 'onSlugChanged', v);
             if (v === 'Found' && slug !== this.originalSlug) {
                 this.slugError = 'Slug already exists';
@@ -34,10 +38,10 @@ export class ProfileComponent implements OnInit {
         });
     }
     regenerateApiKey(profile: ProfileModel) {
-        this._service.regenerateApiKey().subscribe(a => (profile.apiKey = a));
+        this._service.regenerateApiKey().subscribe((a) => (profile.apiKey = a));
     }
     doSave(profile: ProfileModel) {
-        this._router.navigate(['/']);
+        this._router.navigate(['']);
         // TODO: Updating slug is adding new User
         if (this.slugError === 'CHANGETHIS') {
             this._store.dispatch(new fromProfileActions.UpdateAction(profile));
