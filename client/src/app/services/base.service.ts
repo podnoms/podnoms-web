@@ -15,7 +15,7 @@ export abstract class BaseService {
         const serverError = error;
 
         if (!serverError.type) {
-            for (let key in serverError) {
+            for (const key in serverError) {
                 if (serverError[key])
                     modelStateErrors += serverError[key] + '\n';
             }

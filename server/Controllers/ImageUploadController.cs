@@ -17,7 +17,11 @@ using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
 using Microsoft.AspNetCore.Identity;
 using PodNoms.Api.Services.Auth;
-using System.Drawing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Transforms;
+using SixLabors.ImageSharp.Processing.Filters;
 
 namespace PodNoms.Api.Controllers {
     [Authorize]
@@ -71,7 +75,16 @@ namespace PodNoms.Api.Controllers {
 
         //TODO: Refactor this to service
         private (string, string) __todo_convert_cache_file(string cacheFile, string prefix) {
-            return (cacheFile, "jpg");
+            // return (cacheFile, "jpg");
+            var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}.png");
+            using (Image<Rgba32> image = Image.Load(cacheFile)) {
+                image.Mutate(x => x
+                    .Resize(1400, 1400));
+                using (var outputStream = new FileStream(outputFile, FileMode.CreateNew)) {
+                    image.SaveAsPng(outputStream);
+                }
+            }
+            return (outputFile, "png");
         }
     }
 }
