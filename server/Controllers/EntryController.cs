@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hangfire;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,6 +14,7 @@ using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services;
+using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Services.Jobs;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Storage;
@@ -19,7 +22,7 @@ using PodNoms.Api.Services.Storage;
 namespace PodNoms.Api.Controllers {
 
     [Route("[controller]")]
-    public class EntryController : UserController {
+    public class EntryController : BaseAuthController {
         private readonly IPodcastRepository _podcastRepository;
         private readonly IEntryRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
@@ -30,11 +33,12 @@ namespace PodNoms.Api.Controllers {
         private readonly StorageSettings _storageSettings;
 
         public EntryController(IEntryRepository repository,
-            IUserRepository userRepository,
             IPodcastRepository podcastRepository,
             IUnitOfWork unitOfWork, IMapper mapper, IOptions<StorageSettings> storageSettings,
             IOptions<AudioFileStorageSettings> audioFileStorageSettings,
-            IUrlProcessService processor, ILoggerFactory logger) : base(userRepository) {
+            IUrlProcessService processor, ILoggerFactory logger,
+            UserManager<ApplicationUser> userManager,
+            IHttpContextAccessor contextAccessor) : base(contextAccessor, userManager) {
             this._logger = logger.CreateLogger<EntryController>();
             this._podcastRepository = podcastRepository;
             this._repository = repository;
@@ -52,7 +56,7 @@ namespace PodNoms.Api.Controllers {
                 var uploadJobId = BackgroundJob.ContinueWith<IAudioUploadProcessService>(
                     extractJobId, service => service.UploadAudio(entry.Id, entry.AudioUrl));
                 var notify = BackgroundJob.ContinueWith<INotifyJobCompleteService>(
-                    uploadJobId, service => service.NotifyUser(entry.Podcast.User.Uid, "PodNoms", $"{entry.Title} has finished processing",
+                    uploadJobId, service => service.NotifyUser(entry.Podcast.AppUser.Id, "PodNoms", $"{entry.Title} has finished processing",
                     entry.Podcast.ImageUrl));
             } catch (InvalidOperationException ex) {
                 _logger.LogError($"Failed submitting job to processor\n{ex.Message}");

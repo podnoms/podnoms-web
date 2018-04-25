@@ -16,7 +16,7 @@ namespace PodNoms.Api.Providers {
             CreateMap<Podcast, PodcastViewModel>()
                 .ForMember(
                     v => v.RssUrl,
-                    e => e.MapFrom(m => $"{this._options.GetSection("App")["RssUrl"]}{m.User.Slug}/{m.Slug}"))
+                    e => e.MapFrom(m => $"{this._options.GetSection("App")["RssUrl"]}{m.AppUser.Slug}/{m.Slug}"))
                 .ForMember(
                     v => v.ImageUrl,
                     e => e.MapFrom(m => m.GetImageUrl(
@@ -27,11 +27,6 @@ namespace PodNoms.Api.Providers {
                 .ForMember(
                     src => src.AudioUrl,
                     e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
-
-            CreateMap<User, ProfileViewModel>()
-                .ForMember(
-                    src => src.Name,
-                    e => e.MapFrom(m => m.FullName));
 
             CreateMap<ApplicationUser, ProfileViewModel>()
                 .ForMember(

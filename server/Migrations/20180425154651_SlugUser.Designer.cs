@@ -10,9 +10,10 @@ using PodNoms.Api.Persistence;
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180425154651_SlugUser")]
+    partial class SlugUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

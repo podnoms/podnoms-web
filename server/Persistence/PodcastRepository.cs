@@ -23,24 +23,23 @@ namespace PodNoms.Api.Persistence {
         public async Task<Podcast> GetAsync(int id) {
             var ret = await _context.Podcasts
                 .Where(p => p.Id == id)
-                .Include(p => p.User)
+                .Include(p => p.AppUser)
                 .FirstOrDefaultAsync();
 
             return ret;
         }
-        public async Task<Podcast> GetAsync(string emailAddress, string slug) {
+        public async Task<Podcast> GetAsync(string id, string slug) {
             var ret = await _context.Podcasts
-                .Where(p => p.Slug == slug && p.User.EmailAddress == emailAddress)
+                .Where(p => p.Slug == slug && p.AppUser.Id == id)
                 .Include(p => p.PodcastEntries)
-                .Include(p => p.User)
+                .Include(p => p.AppUser)
                 .FirstOrDefaultAsync();
 
             return ret;
         }
-        public async Task<IEnumerable<Podcast>> GetAllAsync(string userId) {
+        public async Task<IEnumerable<Podcast>> GetAllAsync(string id) {
             var ret = _context.Podcasts
-                .Where(u => u.AppUser.Id == userId)
-                .Include(p => p.User)
+                .Where(u => u.AppUser.Id == id)
                 .Include(p => p.AppUser)
                 .OrderByDescending(p => p.Id);
             return await ret.ToListAsync();

@@ -43,8 +43,7 @@ export class LoginComponent implements OnInit {
         this.isRequesting = true;
         if (provider === 'facebook') {
             const options: LoginOpt = {
-                scope: 'email public_profile',
-                redirect_uri: 'http://localhost:5000/facebook-auth.html'
+                scope: 'email public_profile'
             };
             this._socialAuthService.signIn( FacebookLoginProvider.PROVIDER_ID, options)
                 .then(user => {

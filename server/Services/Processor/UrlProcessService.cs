@@ -85,7 +85,7 @@ namespace PodNoms.Api.Services.Processor {
                 var outputFile =
                     Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 
-                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.User.GetUserId(), entry.Uid, e);
+                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.AppUser.Id, entry.Uid, e);
 
                 downloader.PostProcessing += (s, e) => {
                     Console.WriteLine(e);
@@ -98,7 +98,7 @@ namespace PodNoms.Api.Services.Processor {
                     await _sendProcessCompleteMessage(entry);
                     await _unitOfWork.CompleteAsync();
                     await _chatterHub.SendAllAsync(
-                        $"{entry.Podcast.User.Uid}_chatter",
+                        $"{entry.Podcast.AppUser.Id}_chatter",
                         new object[] { $"{entry.Title} has succesfully been processed" });
 
                 }
@@ -109,7 +109,7 @@ namespace PodNoms.Api.Services.Processor {
                 await _unitOfWork.CompleteAsync();
                 await _sendProcessCompleteMessage(entry);
                 await _chatterHub.SendAllAsync(
-                    $"{entry.Podcast.User.Uid}_chatter",
+                    $"{entry.Podcast.AppUser.Id}_chatter",
                     new object[] { $"Error processing {entry.Title}" });
             }
             return false;
