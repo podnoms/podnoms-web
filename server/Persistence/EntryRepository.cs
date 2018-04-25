@@ -15,7 +15,7 @@ namespace PodNoms.Api.Persistence {
         public async Task<PodcastEntry> GetAsync(int id) {
             var entry = await _context.PodcastEntries
                 .Include(e => e.Podcast)
-                .Include(e => e.Podcast.User)
+                .Include(e => e.Podcast.AppUser)
                 .SingleOrDefaultAsync(e => e.Id == id);
             return entry;
         }

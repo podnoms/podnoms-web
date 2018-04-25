@@ -3,12 +3,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
 using PodNoms.Api.Persistence;
+using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Services.Hubs;
 using PodNoms.Api.Services.Jobs;
@@ -18,7 +21,7 @@ using WebPush = Lib.Net.Http.WebPush;
 
 namespace PodNoms.Api.Controllers {
     [Route("[controller]")]
-    public class DebugController : UserController {
+    public class DebugController : BaseAuthController {
         private readonly StorageSettings _storageSettings;
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
         private readonly ApplicationsSettings _applicationsSettings;
@@ -30,12 +33,14 @@ namespace PodNoms.Api.Controllers {
         public AppSettings _appSettings { get; }
 
         public DebugController(IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
-            HubLifetimeManager<DebugHub> hubManager, IUserRepository userRepository,
+            HubLifetimeManager<DebugHub> hubManager,
             IOptions<ApplicationsSettings> applicationsSettings,
             IOptions<AudioFileStorageSettings> audioFileStorageSettings,
             IOptions<ImageFileStorageSettings> imageFileStorageSettings,
             IPushSubscriptionStore subscriptionStore,
-            IPushNotificationService notificationService) : base(userRepository) {
+            UserManager<ApplicationUser> userManager,
+            IPushNotificationService notificationService,
+            IHttpContextAccessor contextAccessor) : base(contextAccessor, userManager) {
             this._appSettings = appSettings.Value;
             this._storageSettings = settings.Value;
             this._applicationsSettings = applicationsSettings.Value;
@@ -75,12 +80,9 @@ namespace PodNoms.Api.Controllers {
                 Topic = "Debug",
                 Urgency = WebPush.PushMessageUrgency.Normal
             };
-            var uid = await GetUserUidAsync();
-
-            await _subscriptionStore.ForEachSubscriptionAsync(uid, (subscription) => {
+            await _subscriptionStore.ForEachSubscriptionAsync(_applicationUser.Id, (subscription) => {
                 _notificationService.SendNotificationAsync(subscription, pushMessage);
             });
-
             return "Hello Sailor!";
         }
     }

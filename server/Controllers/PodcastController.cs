@@ -21,21 +21,19 @@ using PodNoms.Api.Utils.Extensions;
 namespace PodNoms.Api.Controllers {
     [Authorize]
     [Route("[controller]")]
-    public class PodcastController : Controller {
+    public class PodcastController : BaseAuthController {
         private readonly IPodcastRepository _repository;
-        private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IOptions<AppSettings> _settings;
         private readonly IMapper _mapper;
-        private ClaimsPrincipal _caller;
         private readonly IUnitOfWork _uow;
 
-        public PodcastController(IPodcastRepository repository, IUserRepository userRepository, UserManager<ApplicationUser> userManager,
-            IOptions<AppSettings> options, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) {
-            this._caller = httpContextAccessor.HttpContext.User;
+        public PodcastController(IPodcastRepository repository, IOptions<AppSettings> options,
+                    IMapper mapper, IUnitOfWork unitOfWork,
+                    UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
+            : base(contextAccessor, userManager) {
             this._uow = unitOfWork;
             this._repository = repository;
-            this._userRepository = userRepository;
             this._userManager = userManager;
             this._settings = options;
             this._mapper = mapper;
@@ -43,11 +41,9 @@ namespace PodNoms.Api.Controllers {
 
         [HttpGet]
         public async Task<IEnumerable<PodcastViewModel>> Get() {
-            var userId = _caller.Claims.Single(c => c.Type == "id");
-            var podcasts = await _repository.GetAllAsync(userId.Value);
+            var podcasts = await _repository.GetAllAsync(_applicationUser.Id);
             var ret = _mapper.Map<List<Podcast>, List<PodcastViewModel>>(podcasts.ToList());
             return ret;
-            throw new Exception("No local user stored!");
         }
 
         [HttpGet("{slug}")]
@@ -64,22 +60,13 @@ namespace PodNoms.Api.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PodcastViewModel vm) {
-            var userId = _caller.Claims.Single(c => c.Type == "id");
-            var user = await this._userManager.FindByIdAsync(userId.Value);
-            if (user != null) {
-                if (ModelState.IsValid) {
-                    var item = _mapper.Map<PodcastViewModel, Podcast>(vm);
-
-                    //remove once we're ready
-                    item.User = _userRepository.Get("fergal.moran@gmail.com");
-                    item.AppUser = user;
-
-                    var ret = await _repository.AddOrUpdateAsync(item);
-                    await _uow.CompleteAsync();
-                    return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(ret));
-                }
+            if (ModelState.IsValid) {
+                var item = _mapper.Map<PodcastViewModel, Podcast>(vm);
+                var ret = await _repository.AddOrUpdateAsync(item);
+                await _uow.CompleteAsync();
+                return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(ret));
             }
-            return BadRequest("Invalid request data");
+            return BadRequest("Invalid podcast model");
         }
 
         [HttpPut]

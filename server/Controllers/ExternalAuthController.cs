@@ -62,13 +62,13 @@ namespace PodNoms.Api.Controllers {
                     FirstName = payload.GivenName,
                     LastName = payload.FamilyName,
                     Name = payload.Name,
-                    Picture = new FacebookPictureData {
+                        Picture = new FacebookPictureData {
                         Data = new FacebookPicture {
                             Url = payload.Picture
                         }
                     }
                 });
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid google token.", ModelState));
             }
         }

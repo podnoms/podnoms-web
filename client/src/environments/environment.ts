@@ -5,7 +5,6 @@ export const environment = {
     production: false,
     API_HOST: ROOT_URL,
     SIGNALR_HOST: ROOT_URL,
-    AUTH0_REDIRECT_URL: `${ROOT_URL}/callback`,
     BASE_URL: 'http://localhost:4200/',
     appInsights: {
         instrumentationKey: '020b002a-bd3d-4b25-8a74-cab16fd39dfc'
