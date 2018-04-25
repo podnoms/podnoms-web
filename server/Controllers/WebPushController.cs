@@ -10,7 +10,7 @@ namespace PodNoms.Api.Controllers {
 
     // [Authorize]
     [Route("[controller]")]
-    public class WebPushController : AuthController {
+    public class WebPushController : UserController {
         private readonly IPushSubscriptionStore _subscriptionStore;
         public readonly IPushNotificationService _notificationService;
 

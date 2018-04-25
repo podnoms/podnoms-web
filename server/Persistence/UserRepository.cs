@@ -15,19 +15,19 @@ namespace PodNoms.Api.Persistence {
         }
 
         public User Get(int id) {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return _context.UserDetails.FirstOrDefault(u => u.Id == id);
         }
 
         public User Get(string email) {
-            return _context.Users.FirstOrDefault(u => u.EmailAddress == email);
+            return _context.UserDetails.FirstOrDefault(u => u.EmailAddress == email);
         }
         public async Task<User> GetAsync(string email) {
-            return await _context.Users
+            return await _context.UserDetails
                 .Where(u => u.EmailAddress == email)
                 .FirstOrDefaultAsync();     
         }
         public async Task<User> GetBySlugAsync(string slug) {
-            var user = await _context.Users
+            var user = await _context.UserDetails
                 .Where(u => u.Slug == slug)
                 .FirstOrDefaultAsync();
 
@@ -36,9 +36,9 @@ namespace PodNoms.Api.Persistence {
 
         public User AddOrUpdate(User user) {
             if (user.Id != 0) {
-                _context.Users.Attach(user);
+                _context.UserDetails.Attach(user);
             } else {
-                _context.Users.Add(user);
+                _context.UserDetails.Add(user);
 
             }
             return user;
@@ -46,7 +46,7 @@ namespace PodNoms.Api.Persistence {
 
         public User UpdateRegistration(string email, string name, string sid, string providerId, string profileImage,
                                              string refreshToken) {
-            var user = _context.Users.FirstOrDefault(u => u.EmailAddress == email);
+            var user = _context.UserDetails.FirstOrDefault(u => u.EmailAddress == email);
 
             if (user == null) {
                 user = new User();
@@ -57,7 +57,7 @@ namespace PodNoms.Api.Persistence {
                 var c = user.FullName ?? email?.Split('@')[0] ?? string.Empty;
                 if (!string.IsNullOrEmpty(c)) {
                     user.Slug = c.Slugify(
-                        from u in _context.Users select u.Slug);
+                        from u in _context.UserDetails select u.Slug);
                 }
             }
             if (string.IsNullOrEmpty(user.Uid)) {
@@ -81,7 +81,7 @@ namespace PodNoms.Api.Persistence {
             if (user != null) {
                 do {
                     newKey = Randomisers.RandomString(16);
-                } while (_context.Users.FirstOrDefault(u => u.ApiKey == newKey) != null);
+                } while (_context.UserDetails.FirstOrDefault(u => u.ApiKey == newKey) != null);
             }
             user.ApiKey = newKey;
             return newKey;

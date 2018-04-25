@@ -1,4 +1,4 @@
-import { AuthService } from 'app/services/auth.service';
+import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    constructor(private _router: Router, private _authService: AuthService) {}
+    constructor(private _router: Router, private _authService: PodnomsAuthService) {}
 
     ngOnInit() {
         if (this._authService.isAuthenticated) {
