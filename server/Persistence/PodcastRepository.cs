@@ -48,17 +48,14 @@ namespace PodNoms.Api.Persistence {
             if (item.Id != 0) {
                 _context.Entry(item).State = EntityState.Modified;
             } else {
-                var localFile = await HttpUtils.DownloadFile($"http://lorempixel.com/1400/1400/?{System.Guid.NewGuid().ToString()}");
                 item.Uid = System.Guid.NewGuid().ToString();
                 if (string.IsNullOrEmpty(item.Slug) && !string.IsNullOrEmpty(item.Title)) {
                     item.Slug = item.Title.Slugify(
                         from p in _context.Podcasts
                         select p.Slug);
                 }
-                item.ImageUrl = $"{item.Uid}.jpg";
+                item.ImageUrl = $"standard/podcast-image-{Randomisers.RandomInteger(1, 16)}.png";
                 _context.Podcasts.Add(item);
-                var file = await _fileUploader.UploadFile(
-                    localFile, _imageStorageSettings.ContainerName, item.ImageUrl, null);
             }
 
             return item;
