@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
     }
     login(provider?: string) {
         this.isRequesting = true;
+        //clear any social auth cookie
+        //this._socialAuthService.signOut();
         if (provider === 'facebook') {
             const options: LoginOpt = {
                 scope: 'email public_profile',
@@ -50,34 +52,44 @@ export class LoginComponent implements OnInit {
                 FacebookLoginProvider.PROVIDER_ID,
                 options
             );
+        } else if (provider === 'google-oauth2') {
+            this._socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
         } else {
             this._authService
                 .login(this.username, this.password)
                 .finally(() => (this.isRequesting = false))
                 .subscribe((result) => {
                     if (result) {
-                        this._router.navigate(['/']);
+                        this._router.navigate(['/podcasts']);
                     }
                 }, (error) => (this.errorMessage = error));
+            //we can bail here as we don't need to subscribe to the social auth observer
+            return;
         }
 
         this._socialAuthService.authState.subscribe((user) => {
-            this._authService
-                .facebookLogin(user.authToken)
-                .finally(() => (this.isRequesting = false))
-                .subscribe(
+            if (user) {
+                let rpc;
+
+                if (user.provider === 'FACEBOOK') {
+                    rpc = this._authService.facebookLogin(user.authToken);
+                } else if (user.provider === 'GOOGLE') {
+                    rpc = this._authService.googleLogin(user.idToken);
+                }
+                if (!rpc) return;
+                rpc.finally(() => (this.isRequesting = false)).subscribe(
                     (result) => {
                         if (result) {
-                            this._router.navigate(['/']);
+                            this._router.navigate(['/podcasts']);
                         }
                     },
                     (error) => {
                         this.errorMessage = error;
                     }
                 );
+            }
         });
     }
-    logout() {}
     loginSuccess(data) {
         console.log('LoginComponent', 'loginSuccess');
     }
