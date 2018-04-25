@@ -40,16 +40,16 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
             this.isPosting = true;
             const entry = new PodcastEntryModel(this.podcast.id, urlToCheck);
             this._service.addEntry(entry).subscribe(
-                e => {
+                (e) => {
                     if (e) {
-                        if (e.processingStatus == 6) {
+                        if (e.processingStatus == '6') {
                             this.onUploadDeferred.emit(e);
                         } else {
                             this.onUrlAddComplete.emit(e);
                         }
                     }
                 },
-                err => {
+                (err) => {
                     this.isPosting = false;
                     this.errorText = 'This does not look like a valid URL';
                     this.newEntrySourceUrl = urlToCheck;

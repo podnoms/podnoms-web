@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthHttp } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
@@ -7,11 +6,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
 import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PushRegistrationService {
     private API_URL: string;
-    constructor(private http: AuthHttp) {
+    constructor(private _http: HttpClient) {
         this.API_URL = environment.API_HOST;
     }
 
@@ -30,7 +30,7 @@ export class PushRegistrationService {
 
     addSubscriber(subscription) {
         const url = `${this.API_URL}/webpush/subscribe`;
-        return this.http.post(url, subscription).catch(this.handleError);
+        return this._http.post(url, subscription).catch(this.handleError);
     }
 
     deleteSubscriber(subscription) {
@@ -40,7 +40,9 @@ export class PushRegistrationService {
             subscription: subscription
         };
 
-        return this.http.post(url, body).catch(this.handleError);
+        return this._http
+            .post(url, JSON.stringify(body))
+            .catch(this.handleError);
     }
 
     private handleError(error: Response | any) {

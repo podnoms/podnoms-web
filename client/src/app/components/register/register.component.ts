@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from './../../services/auth.service';
+import { PodnomsAuthService } from './../../services/podnoms-auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -12,21 +13,23 @@ export class RegisterComponent implements OnInit {
     password: string;
     passwordRepeat: string;
     sending = false;
-
+    _isRequesting: boolean = false;
     errorMessage: string;
-    constructor(private _authService: AuthService) {}
+    constructor(private _authService: PodnomsAuthService, private _router: Router) {}
 
     ngOnInit() {}
 
     doRegister() {
+        this._isRequesting = true;
         this._authService
             .signup(this.username, this.password)
-            .catch(err => {
-                if ((err.code = 'user_exists')) this.errorMessage = 'A user with this email address already exists';
-                else this.errorMessage = err.description;
-
-                return Observable.of(`Error logging in: ${err.description}`);
-            })
-            .subscribe(r => console.log('Done'));
+            .finally(() => (this._isRequesting = false))
+            .subscribe((result) => {
+                if (result) {
+                    this._router.navigate(['/login'], {
+                        queryParams: { brandNew: true, email: this.username }
+                    });
+                }
+            }, (errors) => (this.errorMessage = errors));
     }
 }

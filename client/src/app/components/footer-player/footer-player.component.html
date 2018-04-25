@@ -1,9 +1,8 @@
 <div class="player-wrapper">
-    <div id="uniquePlayer-1" class="webPlayer light audioPlayer footer-player">
+    <div class="webPlayer light audioPlayer footer-player">
         <div class="controls">
             <div class="leftblock">
-                <a (click)="playPause()" tabindex="1" class="smooth noload"
-                   [ngClass]="playState === 1 ? 'pause' : 'play'"></a>
+                <a (click)="playPause()" tabindex="1" class="smooth noload" [ngClass]="playState === 1 ? 'pause' : 'play'"></a>
             </div>
             <div class="play-progress">
                 <span>
@@ -12,7 +11,7 @@
                 <div class="progressbar">
                     <div class="seekBar horizontal" style="width: 100%;" (click)="doSeek($event)">
                         <div class="playBar" [style.width.%]="(position/duration)*100"></div>
-                        <a ng-style="{'left': + vm.playPos + '%'}">
+                        <a [style.left.%]="(position/duration)*100">
                             <div></div>
                         </a>
                         <input type="hidden" name="" ng-model="vm.playPos">

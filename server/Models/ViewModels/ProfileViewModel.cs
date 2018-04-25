@@ -1,6 +1,6 @@
 ﻿namespace PodNoms.Api.Models.ViewModels {
     public class ProfileViewModel {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Slug { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
