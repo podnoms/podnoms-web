@@ -3,25 +3,6 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="block">
-                    <div class="block-header">
-                        Desktop Notifications
-                    </div>
-                    <div class="block-content">
-                        <button class="btn btn-danger" (click)="subscribeToServerPush()">Subscribe to server push</button>
-                        <button class="btn btn-danger" (click)="sendServerPush()">Send server push</button>
-                        <br />
-                        <div id="realtime-results" *ngIf="message$ | async as message">
-                            <h5>{{ message.notification.title}}</h5>
-                            <img [src]="message.notification.icon" width="100px;">
-                            <p>{{ message.notification.body}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="block">
                     <div class="block-header">Debug Info</div>
                     <div class="block-content">
                         <div class="row">
@@ -47,6 +28,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-default" (click)="requestPushCallback()">Request push callback</button>
         </div>
     </div>
 </div>
