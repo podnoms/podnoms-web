@@ -77,6 +77,9 @@ namespace PodNoms.Api.Controllers {
         private (string, string) __todo_convert_cache_file(string cacheFile, string prefix) {
             // return (cacheFile, "jpg");
             var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}.png");
+            if (System.IO.File.Exists(outputFile))
+                System.IO.File.Delete(outputFile);
+                
             using (Image<Rgba32> image = Image.Load(cacheFile)) {
                 image.Mutate(x => x
                     .Resize(1400, 1400));

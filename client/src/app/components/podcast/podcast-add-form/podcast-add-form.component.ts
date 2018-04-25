@@ -30,35 +30,47 @@ export class PodcastAddFormComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this._route.params.subscribe(params => {
+        this._route.params.subscribe((params) => {
             if (params['slug'] === undefined) {
                 this.podcast$ = Observable.of(new PodcastModel());
             } else {
-                this.podcast$ = this._store.select(fromPodcast.getSelectedPodcast);
-                this._store.dispatch(new fromPodcastActions.SelectAction(params['slug']));
+                this.podcast$ = this._store.select(
+                    fromPodcast.getSelectedPodcast
+                );
+                this._store.dispatch(
+                    new fromPodcastActions.SelectAction(params['slug'])
+                );
             }
         });
-        this.podcast$.subscribe(p => {
-            this.image.src = p.imageUrl;
+        this.podcast$.subscribe((p) => {
+            if (p) {
+                this.image.src = p.imageUrl;
+            }
         });
     }
 
     submitForm(podcast: PodcastModel) {
         this.sending = true;
         if (this.imageChanged) {
-            this.uploadPhoto(podcast).subscribe(r => {
+            this.uploadPhoto(podcast).subscribe((r) => {
                 podcast.imageUrl = r.json().imageUrl;
-                this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
+                this._store.dispatch(
+                    new fromPodcastActions.UpdateAction(podcast)
+                );
             });
         } else {
             if (podcast.id) {
-                this._store.dispatch(new fromPodcastActions.UpdateAction(podcast));
+                this._store.dispatch(
+                    new fromPodcastActions.UpdateAction(podcast)
+                );
             } else {
                 this._store.dispatch(new fromPodcastActions.AddAction(podcast));
             }
         }
     }
-
+    callFileInput() {
+        this.fileInput.nativeElement.click();
+    }
     uploadPhoto(podcast) {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
         return this._imageService.upload(podcast.slug, nativeElement.files[0]);
