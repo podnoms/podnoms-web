@@ -71,7 +71,7 @@ import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
 let config = new AuthServiceConfig([
     {
         id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider('Google-OAuth-Client-Id')
+        provider: new GoogleLoginProvider('357461672895-2mevm3b10b4bd3gjdvugl00up8ba2n4m.apps.googleusercontent.com')
     },
     {
         id: FacebookLoginProvider.PROVIDER_ID,
