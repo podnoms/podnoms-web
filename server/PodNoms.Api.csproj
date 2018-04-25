@@ -12,6 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
+    <PackageReference Include="Google.Apis" Version="1.32.2" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.32.2" />
+    <PackageReference Include="Google.Apis.Core" Version="1.32.2" />
+    <PackageReference Include="Google.Apis.Plus.v1" Version="1.32.2.1182" />
     <PackageReference Include="Hangfire" Version="1.6.17" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.2" />
     <PackageReference Include="Lib.Net.Http.WebPush" Version="1.3.0" />
