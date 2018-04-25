@@ -37,10 +37,11 @@ namespace PodNoms.Api.Persistence {
 
             return ret;
         }
-        public async Task<IEnumerable<Podcast>> GetAllAsync(string emailAddress) {
+        public async Task<IEnumerable<Podcast>> GetAllAsync(string userId) {
             var ret = _context.Podcasts
-                .Where(u => u.User.EmailAddress == emailAddress)
+                .Where(u => u.AppUser.Id == userId)
                 .Include(p => p.User)
+                .Include(p => p.AppUser)
                 .OrderByDescending(p => p.Id);
             return await ret.ToListAsync();
         }

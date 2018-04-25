@@ -1,6 +1,24 @@
-FROM microsoft/dotnet-nightly:2.1.0-preview1-runtime-alpine
-COPY out/* /app/
+FROM microsoft/dotnet:2.1.300-preview2-sdk-alpine AS build
 WORKDIR /app
+
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore
+
+# copy everything else and build app
+COPY . .
+WORKDIR /app/
+RUN dotnet build
+
+FROM build AS publish
+WORKDIR /app
+RUN dotnet publish -c Release -o out
+
+
+FROM microsoft/dotnet:2.1.0-preview2-aspnetcore-runtime-alpine AS runtime
+WORKDIR /app
+COPY --from=publish /app/out ./
+# ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so && \
 
 RUN apk add --no-cache --update \
     python \
@@ -8,7 +26,6 @@ RUN apk add --no-cache --update \
     libuv \
     curl \
     curl-dev && \
-    ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so && \
     curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
     chmod a+rx /usr/local/bin/youtube-dl && \
     youtube-dl -U
