@@ -125,6 +125,7 @@ export class PodnomsAuthService extends BaseService {
     }
     public logout() {
         localStorage.removeItem('auth_token');
+        localStorage.removeItem('audio_state');
         this._authService.signOut().then(() => console.log("Logout ok"));
         this.zone.run(() => {
             document.location.href = '/';
