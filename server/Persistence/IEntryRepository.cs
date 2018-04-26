@@ -8,6 +8,7 @@ namespace PodNoms.Api.Persistence {
         Task<PodcastEntry> GetByUidAsync(string uid);
         Task<IEnumerable<PodcastEntry>> GetAllAsync(int podcastId);
         Task<IEnumerable<PodcastEntry>> GetAllAsync(string podcastSlug);
+        Task<IEnumerable<PodcastEntry>> GetAllForUserAsync(string userId);
         Task<PodcastEntry> AddOrUpdateAsync(PodcastEntry entry);
         Task DeleteAsync(int id);
     }

@@ -31,13 +31,21 @@ namespace PodNoms.Api.Services.Auth {
         }
         public override async Task<IdentityResult> CreateAsync(ApplicationUser user) {
             _slugify(user);
+            _checkName(user);
             await _imageify(user);
             return await base.CreateAsync(user);
         }
         public override async Task<IdentityResult> UpdateAsync(ApplicationUser user) {
             _slugify(user);
+            _checkName(user);
             await _imageify(user);
             return await base.UpdateAsync(user);
+        }
+        private void _checkName(ApplicationUser user) {
+            if (string.IsNullOrEmpty(user.FirstName)) {
+                user.FirstName = "PodNoms";
+                user.LastName = "User";
+            }
         }
 
         private async Task _imageify(ApplicationUser user) {

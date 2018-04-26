@@ -29,7 +29,5 @@ export class SidebarComponent {
         this._store.dispatch(new fromPodcastActions.GetAction(podcast.slug));
         return false;
     }
-    deletePodcast(podcast) {
 
-    }
 }

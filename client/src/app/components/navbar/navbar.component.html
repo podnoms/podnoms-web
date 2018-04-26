@@ -9,23 +9,25 @@
             </a> -->
         </div>
         <div class="content-header-section" *ngIf="user$ | async; let user; else loading">
-            <img [src]="user.profileImage"
-                 class="rounded-circle profile-img">
-            <div class="btn-group"
-                 role="group">
-                <button type="button"
-                        class="btn btn-rounded btn-dual-secondary"
-                        id="page-header-user-dropdown"
-                        data-toggle="dropdown">
-                    {{user.name}}<i class="fa fa-angle-down ml-5"></i>
+            <img [src]="user.profileImage" class="rounded-circle profile-img">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown">
+                    {{user.name}}
+                    <i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-150">
-                    <a class="dropdown-item" [routerLink]="['/profile']"><i class="login-user mr-5"></i> Profile</a>
-                    <a class="dropdown-item"
-                       (click)="logout()"><i class="login-logout mr-5"></i> Logout</a>
+                    <a class="dropdown-item" [routerLink]="['/profile']">
+                        <i class="login-user mr-5"></i> Profile</a>
+                    <a class="dropdown-item" (click)="logout()">
+                        <i class="login-logout mr-5"></i> Logout</a>
                 </div>
             </div>
+            <button type="button" class="btn btn-circle btn-dual-secondary" (click)="toggleOverlay()">
+                <i class="fa fa-tasks"></i>
+            </button>
         </div>
-        <ng-template #loading><i class="fa fa-sun-o fa-spin text-white"></i></ng-template>
+        <ng-template #loading>
+            <i class="fa fa-sun-o fa-spin text-white"></i>
+        </ng-template>
     </div>
 </header>
