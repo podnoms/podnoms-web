@@ -67,6 +67,8 @@ import { AudioService } from 'app/services/audio.service';
 import { HumaniseTimePipe } from './pipes/humanise-time.pipe';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
+import { SideOverlayComponent } from './components/side-overlay/side-overlay.component';
+import { UiStateService } from './services/ui-state.service';
 
 let config = new AuthServiceConfig([
     {
@@ -106,7 +108,8 @@ export function provideConfig() {
         AboutComponent,
         FooterComponent,
         FooterPlayerComponent,
-        HumaniseTimePipe
+        HumaniseTimePipe,
+        SideOverlayComponent
     ],
     imports: [
         BrowserModule,
@@ -146,6 +149,7 @@ export function provideConfig() {
     ],
     providers: [
         PodnomsAuthService,
+        UiStateService,
         AuthGuard,
         {
             provide: HTTP_INTERCEPTORS,

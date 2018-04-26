@@ -41,8 +41,14 @@ export class PodcastService {
     }
     //#endregion
     //#region Entries
-    getEntries(slug: string): any {
-        return this._http.get(environment.API_HOST + '/entry/all/' + slug);
+
+    getAllEntriesForUser(): Observable<PodcastEntryModel[]> {
+        return this._http.get<PodcastEntryModel[]>(
+            environment.API_HOST + '/entry/users/'
+        );
+    }
+    getEntries(slug: string): Observable<PodcastEntryModel[]> {
+        return this._http.get<PodcastEntryModel[]>(environment.API_HOST + '/entry/all/' + slug);
     }
     addEntry(entry: PodcastEntryModel): Observable<PodcastEntryModel> {
         return this._http.post<PodcastEntryModel>(
