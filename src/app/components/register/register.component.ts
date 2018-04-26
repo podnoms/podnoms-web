@@ -15,7 +15,10 @@ export class RegisterComponent implements OnInit {
     sending = false;
     _isRequesting: boolean = false;
     errorMessage: string;
-    constructor(private _authService: PodnomsAuthService, private _router: Router) {}
+    constructor(
+        private _authService: PodnomsAuthService,
+        private _router: Router
+    ) {}
 
     ngOnInit() {}
 
@@ -24,12 +27,21 @@ export class RegisterComponent implements OnInit {
         this._authService
             .signup(this.username, this.password)
             .finally(() => (this._isRequesting = false))
-            .subscribe((result) => {
-                if (result) {
-                    this._router.navigate(['/login'], {
-                        queryParams: { brandNew: true, email: this.username }
-                    });
+            .subscribe(
+                (result) => {
+                    if (result) {
+                        this._router.navigate(['/login'], {
+                            queryParams: {
+                                brandNew: true,
+                                email: this.username
+                            }
+                        });
+                    }
+                },
+                (errors) => {
+                    debugger;
+                    this.errorMessage = errors;
                 }
-            }, (errors) => (this.errorMessage = errors));
+            );
     }
 }
