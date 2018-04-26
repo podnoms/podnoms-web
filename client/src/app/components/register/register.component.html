@@ -1,69 +1,51 @@
-<div id="page-container"
-     class="main-content-boxed">
+<div id="page-container" class="main-content-boxed">
     <main id="main-container">
-        <div class="bg-image"
-             style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
+        <div class="bg-image" style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
             <div class="hero-static content content-full bg-white">
-                <div class="text-center">
+                <div class="py-30 px-5 text-center">
                     <a class="link-effect font-w700">
                         <i class="login-fire"></i>
                         <span class="font-size-xl text-primary-dark">pod</span>
                         <span class="font-size-xl">noms</span>
                     </a>
                     <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
+                    <h2 class="h4 font-w400 text-muted mb-0">Please add your details</h2>
                 </div>
 
-                <div class="row justify-content-center">
+                <div class="row justify-content-center px-5">
                     <div class="col-sm-8 col-md-6 col-xl-4">
-                        <form class="js-validation-signin"
-                              (ngSubmit)="doRegister()"
-                              method="post">
+                        <form class="js-validation-signin" (ngSubmit)="doRegister()" method="post">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <div class="form-material floating">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="login-username"
-                                               name="login-username"
-                                               [(ngModel)]="username">
+                                    <div class="form-material ">
+                                        <input type="text" class="form-control" id="login-username" name="login-username" [(ngModel)]="username">
                                         <label for="login-username">Email Address</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <div class="form-material floating">
-                                        <input type="password"
-                                               class="form-control"
-                                               id="login-password"
-                                               name="login-password"
-                                               [(ngModel)]="password">
+                                    <div class="form-material ">
+                                        <input type="password" class="form-control" id="login-password" name="login-password" [(ngModel)]="password">
                                         <label for="login-password">Password</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <div class="form-material floating">
-                                        <input type="password"
-                                               class="form-control"
-                                               id="login-password2"
-                                               name="login-password2"
-                                               [(ngModel)]="passwordRepeat">
+                                    <div class="form-material ">
+                                        <input type="password" class="form-control" id="login-password2" name="login-password2" [(ngModel)]="passwordRepeat">
                                         <label for="login-password">Repeat password</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="alert alert-danger"
-                                 *ngIf="errorMessage"
-                                 role="alert">
+                            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
                                 {{errorMessage}}
                             </div>
                             <div class="form-group row gutters-tiny">
                                 <div class="col-12 mb-10">
-                                    <button type="submit"
-                                            class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
-                                        <i class="login-login mr-10"></i> Register
+                                    <button type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-success">
+                                        <i class="si si-user-follow mr-10"></i> Register
                                     </button>
                                 </div>
                             </div>
