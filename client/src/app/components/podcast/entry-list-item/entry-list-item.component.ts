@@ -9,6 +9,7 @@ import { ToastyService, ToastData, ToastOptions } from 'ng2-toasty';
 import * as fromEntriesActions from 'app/actions/entries.actions';
 import { PodcastService } from '../../../services/podcast.service';
 import { AudioService } from 'app/services/audio.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: '[app-entry-list-item]',
@@ -102,5 +103,36 @@ export class EntryListItemComponent implements OnInit {
         } else {
             this._audioService.pauseAudio();
         }
+    }
+    createObjectURL(file) {
+        return window.URL.createObjectURL(file);
+    }
+    downloadAudio(entry: PodcastEntryModel) {
+        // const link = document.createElement('a');
+        // link.download = 'a';
+        // link.href = entry.audioUrl;
+        // document.body.appendChild(link);
+        // link.click();
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', entry.audioUrl, true);
+        xhr.responseType = 'blob';
+
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                const url = window.URL.createObjectURL(
+                    new Blob([this.response], {
+                        type: 'application/audio'
+                    })
+                );
+                const link = document.createElement('A');
+                link.setAttribute('href', url);
+                link.setAttribute('download', `${entry.title}.mp3`);
+                link.appendChild(document.createTextNode('Download'));
+                document.getElementsByTagName('body')[0].appendChild(link);
+
+                link.click();
+            }
+        };
+        xhr.send();
     }
 }
