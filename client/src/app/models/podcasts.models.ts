@@ -1,4 +1,3 @@
-
 export class PodcastModel {
     id?: number;
     title: string;
@@ -23,7 +22,7 @@ export class PodcastEntryModel {
     processed: boolean;
     processingStatus?: string;
     processingPayload?: string;
-
+    podcast?: PodcastModel;
     constructor(podcastId?: number, sourceUrl?: string) {
         this.podcastId = podcastId;
         this.sourceUrl = sourceUrl;

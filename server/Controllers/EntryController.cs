@@ -64,6 +64,15 @@ namespace PodNoms.Api.Controllers {
             }
         }
 
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllForUser() {
+            var entries = await _repository.GetAllForUserAsync(_applicationUser.Id);
+            var results = _mapper.Map<List<PodcastEntry>, List<PodcastEntryViewModel>>(
+                entries.OrderByDescending(e => e.Id).ToList()
+            );
+            return Ok(results);
+        }
+
         [HttpGet("all/{podcastSlug}")]
         public async Task<IActionResult> GetAllForSlug(string podcastSlug) {
             var entries = await _repository.GetAllAsync(podcastSlug);
