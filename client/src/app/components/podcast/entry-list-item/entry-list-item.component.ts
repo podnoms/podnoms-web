@@ -118,9 +118,9 @@ export class EntryListItemComponent implements OnInit {
         xhr.responseType = 'blob';
 
         xhr.onload = function(e) {
-            if (this.status == 200) {
+            if (this['status'] == 200) {
                 const url = window.URL.createObjectURL(
-                    new Blob([this.response], {
+                    new Blob([this['response']], {
                         type: 'application/audio'
                     })
                 );
