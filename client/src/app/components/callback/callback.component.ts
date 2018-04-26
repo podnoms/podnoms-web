@@ -11,6 +11,7 @@ export class CallbackComponent implements OnInit {
     constructor(private _authService: PodnomsAuthService, private _router: Router) {}
 
     ngOnInit() {
+        debugger;
         this._router.navigate(['/podcasts']);
     }
 }

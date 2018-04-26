@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
     constructor(private _router: Router, private _authService: PodnomsAuthService) {}
 
     ngOnInit() {
-        if (this._authService.isAuthenticated) {
+        if (this._authService.isAuthenticated()) {
             this._router.navigate(['podcasts']);
         }
     }
