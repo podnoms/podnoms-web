@@ -172,7 +172,7 @@ namespace PodNoms.Api {
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<PodnomsDbContext>().AddDefaultTokenProviders();
             identityBuilder.AddUserManager<PodNomsUserManager>();
-            
+
             services.AddMvc(options => {
                 options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
                 options.OutputFormatters
@@ -220,6 +220,7 @@ namespace PodNoms.Api {
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
             services.AddScoped<IMailSender, MailgunSender>();
+            services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 
             //register the codepages (required for slugify)
             var instance = CodePagesEncodingProvider.Instance;

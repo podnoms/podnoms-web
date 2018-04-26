@@ -11,17 +11,7 @@ export abstract class BaseService {
             return Observable.throw(applicationError);
         }
 
-        let modelStateErrors: string = '';
-        const serverError = error;
-
-        if (!serverError.type) {
-            for (const key in serverError) {
-                if (serverError[key])
-                    modelStateErrors += serverError[key] + '\n';
-            }
-        }
-
-        modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
-        return Observable.throw(modelStateErrors || 'Server error');
+        const serverError = error.error.errors[0].description;
+        return Observable.throw(serverError || 'Server error');
     }
 }
