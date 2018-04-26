@@ -38,23 +38,21 @@
                     aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </span>
-        <span *ngIf="entry.processingStatus==='Processed'" style="width: 100%">
-            <a class="btn btn-outline btn-outline-danger" (click)="playAudio(entry.audioUrl)">
-                <i class="fa" [ngClass]="playing ? 'fa-pause' : 'fa-play'"></i>
-            </a>
-            <!--
-            <audio controls preload="none">
-                <source src="{{entry.audioUrl}}" type="audio/mpeg" />
-                <a target="_blank" [href]="entry.audioUrl">{{entry.title}}</a>
-            </audio>
-            -->
+        <span *ngIf="entry.processingStatus==='Processed'" style="width: 100%" class="mt-25">
+
+            <button class="btn btn-circle" type="button" (click)="playAudio(entry.audioUrl)">
+                <i class="si  text-success" [ngClass]="playing ? 'si-control-pause' : 'si-control-play'"></i>
+            </button>
+            <button class="btn btn-circle" type="button" (click)="downloadAudio(entry)">
+                <i class="si si-cloud-download text-success"></i>
+            </button>
         </span>
     </em>
 </td>
 <td class="d-none d-sm-table-cell">
-    <a class="btn btn-outline btn-outline-danger" (click)="entryDeleteDialog.show()">
-        <i class="fa fa-remove"></i>
-    </a>
+    <button class="btn btn-circle text-danger" (click)="entryDeleteDialog.show()">
+        <i class="si si-close"></i>
+    </button>
 </td>
 <div class="modal fade" bsModal #entryDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
