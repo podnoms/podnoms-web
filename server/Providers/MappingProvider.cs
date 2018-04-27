@@ -24,7 +24,7 @@ namespace PodNoms.Api.Providers {
                         this._options.GetSection("ImageFileStorageSettings")["ContainerName"])))
                 .ForMember(
                     v => v.ThumbnailUrl,
-                    e => e.MapFrom(m => m.GetThumnnailUrl(
+                    e => e.MapFrom(m => m.GetThumbnailUrl(
                         this._options.GetSection("Storage")["CdnUrl"],
                         this._options.GetSection("ImageFileStorageSettings")["ContainerName"])));
 
@@ -42,9 +42,7 @@ namespace PodNoms.Api.Providers {
                     map => map.MapFrom(s => s.PictureUrl));
 
             //API Resource to Domain
-            CreateMap<PodcastViewModel, Podcast>()
-                .ForMember(v => v.ImageUrl, map => map.Ignore())
-            ;
+            CreateMap<PodcastViewModel, Podcast>();
             CreateMap<PodcastEntryViewModel, PodcastEntry>()
                 .ForMember(
                     e => e.ImageUrl,

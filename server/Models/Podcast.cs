@@ -11,17 +11,17 @@ namespace PodNoms.Api.Models {
         public string Title { get; set; }
         public string Description { get; set; }
         public string Slug { get; set; }
-        public string ImageUrl { get; set; }
+        public string TemporaryImageUrl { get; set; }
         public List<PodcastEntry> PodcastEntries { get; set; }
         public Podcast() {
             PodcastEntries = new List<PodcastEntry>();
         }
 
         public string GetImageUrl(string cdnUrl, string containerName) {
-            return $"{cdnUrl}{containerName}/{this.ImageUrl}";
+            return string.IsNullOrEmpty(TemporaryImageUrl) ? $"{cdnUrl}{containerName}/{this.Uid}.png" : TemporaryImageUrl;
         }
-        public string GetThumnnailUrl(string cdnUrl, string containerName) {
-            return $"{cdnUrl}{containerName}/{this.Uid}-32x32.png";
+        public string GetThumbnailUrl(string cdnUrl, string containerName) {
+            return string.IsNullOrEmpty(TemporaryImageUrl) ? $"{cdnUrl}{containerName}/{this.Uid}-32x32.png" : TemporaryImageUrl;
         }
     }
 }

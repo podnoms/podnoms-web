@@ -54,7 +54,7 @@ namespace PodNoms.Api.Persistence {
                         from p in _context.Podcasts
                         select p.Slug);
                 }
-                item.ImageUrl = $"standard/podcast-image-{Randomisers.RandomInteger(1, 16)}.png";
+                item.TemporaryImageUrl = $"standard/podcast-image-{Randomisers.RandomInteger(1, 16)}.png";
                 _context.Podcasts.Add(item);
             }
 
