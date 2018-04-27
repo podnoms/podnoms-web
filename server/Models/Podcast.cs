@@ -18,10 +18,12 @@ namespace PodNoms.Api.Models {
         }
 
         public string GetImageUrl(string cdnUrl, string containerName) {
-            return string.IsNullOrEmpty(TemporaryImageUrl) ? $"{cdnUrl}{containerName}/{this.Uid}.png" : TemporaryImageUrl;
+            return string.IsNullOrEmpty(TemporaryImageUrl) ? $"{cdnUrl}{containerName}/{this.Uid}.png" :
+                $"{cdnUrl}static/images/{TemporaryImageUrl}";
         }
         public string GetThumbnailUrl(string cdnUrl, string containerName) {
-            return string.IsNullOrEmpty(TemporaryImageUrl) ? $"{cdnUrl}{containerName}/{this.Uid}-32x32.png" : TemporaryImageUrl;
+            return string.IsNullOrEmpty(TemporaryImageUrl) ? $"{cdnUrl}{containerName}/{this.Uid}-32x32.png" :
+                $"{cdnUrl}static/images/{TemporaryImageUrl}";
         }
     }
 }
