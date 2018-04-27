@@ -4,6 +4,7 @@ export class PodcastModel {
     description?: string;
     slug?: string;
     imageUrl?: string;
+    thumbnailUrl?: string;
     rssUrl?: string;
     podcastEntries?: PodcastEntryModel[];
 }
