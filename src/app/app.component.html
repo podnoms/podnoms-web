@@ -1,7 +1,8 @@
 <div *ngIf="!loggedIn()">
     <router-outlet></router-outlet>
 </div>
-<div id="page-container" class="sidebar-o side-scroll side-trans-enabled" [ngClass]="overlayOpen ? 'side-overlay-o' : ''"
+<div id="page-container" class="sidebar-o side-scroll side-trans-enabled page-header-inverse" 
+                         [ngClass]="overlayOpen ? 'side-overlay-o' : ''"
     *ngIf="loggedIn()">
     <app-side-overlay></app-side-overlay>
     <app-sidebar></app-sidebar>
