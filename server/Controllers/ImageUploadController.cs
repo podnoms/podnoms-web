@@ -59,12 +59,17 @@ namespace PodNoms.Api.Controllers {
 
             var cacheFile = await CachedFormFileStorage.CacheItem(file);
             (var finishedFile, var extension) = __todo_convert_cache_file(cacheFile, podcast.Uid);
+            var thumbnailFile = __todo_create_thumbnail(cacheFile, podcast.Uid);
 
-            var destinationFile = $"{System.Guid.NewGuid().ToString()}.{extension}";
+            var destinationFile = $"{podcast.Uid}.{extension}";
+            var destinationFileThumbnail = $"{podcast.Uid}-32x32.{extension}";
             podcast.ImageUrl = destinationFile;
 
-            var imageUrl = await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
-                destinationFile, (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
+            await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
+                destinationFile, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
+
+            await _fileUploader.UploadFile(thumbnailFile, _imageFileStorageSettings.ContainerName,
+                           destinationFileThumbnail, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
 
             await _repository.AddOrUpdateAsync(podcast);
 
@@ -79,7 +84,7 @@ namespace PodNoms.Api.Controllers {
             var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}.png");
             if (System.IO.File.Exists(outputFile))
                 System.IO.File.Delete(outputFile);
-                
+
             using (Image<Rgba32> image = Image.Load(cacheFile)) {
                 image.Mutate(x => x
                     .Resize(1400, 1400));
@@ -88,6 +93,21 @@ namespace PodNoms.Api.Controllers {
                 }
             }
             return (outputFile, "png");
+        }
+        private string __todo_create_thumbnail(string cacheFile, string prefix) {
+            // return (cacheFile, "jpg");
+            var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}-32x32.png");
+            if (System.IO.File.Exists(outputFile))
+                System.IO.File.Delete(outputFile);
+
+            using (Image<Rgba32> image = Image.Load(cacheFile)) {
+                image.Mutate(x => x
+                    .Resize(32, 32));
+                using (var outputStream = new FileStream(outputFile, FileMode.CreateNew)) {
+                    image.SaveAsPng(outputStream);
+                }
+            }
+            return outputFile;
         }
     }
 }
