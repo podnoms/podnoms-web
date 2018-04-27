@@ -63,7 +63,6 @@ namespace PodNoms.Api.Controllers {
 
             var destinationFile = $"{podcast.Uid}.{extension}";
             var destinationFileThumbnail = $"{podcast.Uid}-32x32.{extension}";
-            podcast.ImageUrl = destinationFile;
 
             await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
                 destinationFile, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
@@ -72,7 +71,7 @@ namespace PodNoms.Api.Controllers {
                            destinationFileThumbnail, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
 
             await _repository.AddOrUpdateAsync(podcast);
-
+            podcast.TemporaryImageUrl = string.Empty;
             await this._unitOfWork.CompleteAsync();
 
             return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));

@@ -1,7 +1,6 @@
 import { ProfileComponent } from 'app/components/profile/profile.component';
 import { ResetComponent } from 'app/components/reset/reset.component';
 import { RegisterComponent } from 'app/components/register/register.component';
-import { CallbackComponent } from 'app/components/callback/callback.component';
 import { LoginComponent } from 'app/components/login/login.component';
 import { DebugComponent } from 'app/components/debug/debug.component';
 import { NgModule } from '@angular/core';
@@ -18,7 +17,6 @@ const routes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'reset', component: ResetComponent, pathMatch: 'full' },
-    { path: 'callback', component: CallbackComponent },
     { path: 'debug', component: DebugComponent, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuard] },

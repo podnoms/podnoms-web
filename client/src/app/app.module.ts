@@ -1,5 +1,4 @@
 import { GlobalsService } from './services/globals.service';
-import { CallbackComponent } from './components/callback/callback.component';
 import { PodcastUploadFormComponent } from './components/podcast/podcast-upload-form/podcast-upload-form.component';
 import { PodcastAddUrlFormComponent } from './components/podcast/podcast-add-url-form/podcast-add-url-form.component';
 import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
@@ -70,7 +69,7 @@ import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
 import { SideOverlayComponent } from './components/side-overlay/side-overlay.component';
 import { UiStateService } from './services/ui-state.service';
 
-let config = new AuthServiceConfig([
+const config = new AuthServiceConfig([
     {
         id: GoogleLoginProvider.PROVIDER_ID,
         provider: new GoogleLoginProvider('357461672895-2mevm3b10b4bd3gjdvugl00up8ba2n4m.apps.googleusercontent.com')
@@ -101,7 +100,6 @@ export function provideConfig() {
         PodcastAddUrlFormComponent,
         DebugComponent,
         SidebarComponent,
-        CallbackComponent,
         RegisterComponent,
         ResetComponent,
         ProfileComponent,
