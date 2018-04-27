@@ -20,5 +20,8 @@ namespace PodNoms.Api.Models {
         public string GetImageUrl(string cdnUrl, string containerName) {
             return $"{cdnUrl}{containerName}/{this.ImageUrl}";
         }
+        public string GetThumnnailUrl(string cdnUrl, string containerName) {
+            return $"{cdnUrl}{containerName}/{this.Uid}-32x32.png";
+        }
     }
 }

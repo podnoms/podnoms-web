@@ -43,6 +43,7 @@ namespace PodNoms.Api.Services.Processor {
                 if (File.Exists(localFile)) {
                     var fileName = new FileInfo(localFile).Name;
                     await _fileUploader.UploadFile(localFile, _audioStorageSettings.ContainerName, fileName,
+                        "application/mpeg",
                         async (p, t) => {
                             if (p % 1 == 0) {
                                 await _sendProgressUpdate(

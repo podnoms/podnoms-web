@@ -21,6 +21,11 @@ namespace PodNoms.Api.Providers {
                     v => v.ImageUrl,
                     e => e.MapFrom(m => m.GetImageUrl(
                         this._options.GetSection("Storage")["CdnUrl"],
+                        this._options.GetSection("ImageFileStorageSettings")["ContainerName"])))
+                .ForMember(
+                    v => v.ThumbnailUrl,
+                    e => e.MapFrom(m => m.GetThumnnailUrl(
+                        this._options.GetSection("Storage")["CdnUrl"],
                         this._options.GetSection("ImageFileStorageSettings")["ContainerName"])));
 
             CreateMap<PodcastEntry, PodcastEntryViewModel>()
