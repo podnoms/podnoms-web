@@ -38,7 +38,6 @@
     "dropzone": "^5.3.0",
     "firebase":"4.12.1",
     "angularfire2":"^5.0.0-rc.6",
-    "font-awesome": "^4.7.0",
     "howler": "^2.0.9",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
@@ -48,7 +47,6 @@
     "ngx-moment": "^2.0.0-rc.0",
     "popper.js": "^1.13.0",
     "rxjs": "5.5.6",
-    "simple-line-icons": "^2.4.1",
     "tether": "^1.4.3",
     "uglify-es": "^3.3.10",
     "zone.js": "^0.8.20"
