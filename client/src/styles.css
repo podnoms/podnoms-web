@@ -1,5 +1,8 @@
-@import 'assets/css/style.css';
-@import 'assets/css/simple-line-icons.css';
+/* @import 'assets/css/style.css'; */
+/* @import 'assets/css/simple-line-icons.css'; */
+
+@import 'assets/theme/css/codebase.css';
+@import 'assets/theme/css/themes/pulse.min.css';
 @import '~ng2-toasty/bundles/style.css';
 @import '~ng2-toasty/bundles/style-bootstrap.css';
 @import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
