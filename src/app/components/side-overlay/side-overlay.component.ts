@@ -24,7 +24,7 @@ export class SideOverlayComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this._uiStateService.change.subscribe((r) => {
+        this._uiStateService.overlayChanged.subscribe((r) => {
             if (r) {
                 this.user$ = this._profileService.getProfile();
                 this.entries$ = this._podcastService.getAllEntriesForUser();

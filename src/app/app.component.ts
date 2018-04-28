@@ -18,6 +18,7 @@ import * as fromProfileActions from 'app/actions/profile.actions';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+    sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     constructor(
         private _authService: PodnomsAuthService,
@@ -35,7 +36,12 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         // this._pushNotifications.requestPermissions();
-        this._uiStateService.change.subscribe((r) => (this.overlayOpen = r));
+        this._uiStateService.sidebarChanged.subscribe(
+            (r) => (this.sidebarOpen = r)
+        );
+        this._uiStateService.overlayChanged.subscribe(
+            (r) => (this.overlayOpen = r)
+        );
         if (this.loggedIn()) {
             this._store.dispatch(new fromProfileActions.LoadAction());
             const profile$ = this._store.select(fromProfile.getProfile);

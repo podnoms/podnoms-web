@@ -23,11 +23,16 @@ export class NavbarComponent implements OnInit {
         private _uiStateService: UiStateService
     ) {
         this.profile$ = _store.select(fromProfile.getProfile);
-        this.profile$.subscribe((p) => console.log('navbar.component', 'profile$subscribe', p));
+        this.profile$.subscribe((p) =>
+            console.log('navbar.component', 'profile$subscribe', p)
+        );
         // this.profile$.skip(1).subscribe((p) => (this.originalSlug = p.slug));
     }
 
     ngOnInit() {}
+    toggleSidebar() {
+        this._uiStateService.toggleSidebar();
+    }
     toggleOverlay() {
         this._uiStateService.toggleOverlay();
     }
