@@ -5,15 +5,15 @@
             <div class="block-options">
                 <div class="btn-group" role="group" aria-label="Podcast actions">
                     <a [routerLink]="['/podcasts', podcast.slug, 'edit']" class="btn btn-secondary btn-outline">
-                        <i class="icon-pencil" aria-hidden="true"></i> Edit
+                        <i class="si si-pencil" aria-hidden="true"></i> Edit
                     </a>
                     <a (click)="podcastDeleteDialog.show()" class="btn btn-secondary btn-outline-danger">
-                        <i class="icon-close" aria-hidden="true"></i> Delete
+                        <i class="si si-close" aria-hidden="true"></i> Delete
                     </a>
                     <a class="btn btn-secondary" (click)="startAddEntry()">
-                        <i class="icon-plus"></i> Add (from URL)</a>
+                        <i class="si si-plus"></i> Add (from URL)</a>
                     <a class="btn btn-secondary" (click)="startUpload()">
-                        <i class="icon-cloud-upload"></i> Upload (from computer)</a>
+                        <i class="si si-cloud-upload"></i> Upload (from computer)</a>
                 </div>
                 <div class="btn-group" role="group" aria-label="Podcast actions">
                     <a class="btn btn-secondary btn-outline-warning" [href]="podcast.rssUrl" target="_blank">
