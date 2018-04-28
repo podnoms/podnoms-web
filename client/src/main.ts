@@ -6,7 +6,6 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
     enableProdMode();
-} else {
     console.log(
         `%c ________________________________________
 < mooooooooooooooooooooooooooooooooooooo >
