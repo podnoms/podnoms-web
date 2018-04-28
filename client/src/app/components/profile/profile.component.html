@@ -1,4 +1,69 @@
-<div class="content">
+<form (submit)="doSave(profile)" *ngIf="profile$ | async; let profile; else loading">
+    <h2 class="content-heading text-black">Personal Details</h2>
+    <div class="row items-push">
+        <div class="col-lg-3">
+            <p class="text-muted">
+                Tell us as much or as little as you like, nobody sees this anyway
+            </p>
+
+            <h2>Avatar Image</h2>
+            <div class="mb-15  animated fadeIn">
+                <div class="options-container">
+                    <div class="input-group" style="visibility: hidden;">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Choose image....
+                                <input type="file" (change)="fileChangeEvent()" #fileInput>
+                            </span>
+                        </span>
+                    </div>
+                    <img class="img-avatar img-avatar96 img-avatar-thumb" [src]="profile.profileImage" alt="">
+                    <div class="options-overlay">
+                        <div class="options-overlay-content">
+                            <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75" (click)="callFileInput()">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 offset-lg-1">
+            <div class="form-group row">
+                <div class="col-6">
+                    <label for="crypto-settings-firstname">Firstname</label>
+                    <input type="text" class="form-control form-control-lg" name="first-name" [(ngModel)]="profile.firstName">
+                </div>
+                <div class="col-6">
+                    <label for="crypto-settings-lastname">Lastname</label>
+                    <input type="text" class="form-control form-control-lg" name="second-name" [(ngModel)]="profile.lastName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-6">
+                    <label for="crypto-settings-street-1">Slug</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="slug" name="slug" required="" [(ngModel)]="profile.slug" (input)="onSlugChanged(profile.slug)">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-asterisk"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-text text-muted">This uniquely identifies the rss URL for your podcasts.</div>
+                    <div class="invalid-feedback animated fadeInDown">{{slugError}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-alt-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<ng-template #loading></ng-template>
+<!-- <div class="content">
     <div class="col-md-6">
         <div class="card"
              *ngIf="profile$ | async; let profile; else loading">
@@ -108,4 +173,4 @@
         </div>
     </div>
 </div>
-<ng-template #loading></ng-template>
+-->

@@ -23,7 +23,6 @@ namespace PodNoms.Api.Controllers {
     [Route("[controller]")]
     public class PodcastController : BaseAuthController {
         private readonly IPodcastRepository _repository;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IOptions<AppSettings> _settings;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
@@ -34,7 +33,6 @@ namespace PodNoms.Api.Controllers {
             : base(contextAccessor, userManager) {
             this._uow = unitOfWork;
             this._repository = repository;
-            this._userManager = userManager;
             this._settings = options;
             this._mapper = mapper;
         }

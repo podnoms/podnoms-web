@@ -35,13 +35,23 @@ namespace PodNoms.Api.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ProfileViewModel item) {
-            throw new InvalidOperationException("THis has not been setup yet");
+        public async Task<ActionResult<ProfileViewModel>> Post([FromBody] ProfileViewModel item) {
+            _applicationUser.Slug = item.Slug;
+            _applicationUser.FirstName = item.FirstName;
+            _applicationUser.LastName = item.LastName;
+            await _userManager.UpdateAsync(_applicationUser);
+            var ret = _mapper.Map<ApplicationUser, ProfileViewModel>(_applicationUser);
+            return Ok(ret);
         }
 
         [HttpGet("checkslug/{slug}")]
-        public async Task<string> CheckSlug(string slug) {
-            return "NotFound";
+        public async Task<IActionResult> CheckSlug(string slug) {
+            var slugValid = await _userManager.CheckSlug(slug);
+
+            if (slugValid)
+                return NotFound();
+
+            return Ok();
         }
     }
 }
