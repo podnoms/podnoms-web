@@ -15,9 +15,11 @@ import { ImageService } from 'app/services/image.service';
     styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+    profile$: Observable<ProfileModel>;
+
     originalSlug: string;
     slugError: string = '';
-    profile$: Observable<ProfileModel>;
+
     private imageChanged = false;
     image: any = new Image();
     sending = false;
@@ -32,17 +34,19 @@ export class ProfileComponent implements OnInit {
         private _router: Router
     ) {
         this.profile$ = _store.select(fromProfile.getProfile);
-        this.profile$.skip(1).subscribe((p) => (this.originalSlug = p.slug));
+        this.profile$.skip(1).subscribe((p) => {
+            this.originalSlug = p.slug;
+            this.image.src = p.profileImage;
+        });
     }
     ngOnInit() {}
 
     private _parseImageData(file: File) {
         const myReader: FileReader = new FileReader();
-        const that = this;
-        myReader.onloadend = function(loadEvent: any) {
-            that.image = new Image();
-            that.image.src = loadEvent.target.result;
-            that.imageChanged = true;
+        myReader.onloadend = (loadEvent: any) => {
+            this.image = new Image();
+            this.image.src = loadEvent.target.result;
+            this.imageChanged = true;
         };
         myReader.readAsDataURL(file);
     }

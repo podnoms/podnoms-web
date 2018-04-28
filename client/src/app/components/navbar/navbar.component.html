@@ -1,13 +1,13 @@
 <header id="page-header">
     <div class="content-header">
+
         <div class="content-header-section">
-            <a [routerLink]="['add']">
-                <i class="fa fa-plus"></i> Add Podcast
-            </a>
-            <!-- <a [routerLink]="['debug']">
-                <i class="fa fa-plus"></i> Debug
-            </a> -->
+            <button type="button" class="btn btn-circle btn-dual-secondary" (click)="toggleSidebar()">
+                <i class="fa fa-navicon"></i>
+            </button>
         </div>
+
+
         <div class="content-header-section" *ngIf="profile$ | async; let profile; else loading">
             <img [src]="profile.profileImage" class="rounded-circle profile-img">
             <div class="btn-group" role="group">

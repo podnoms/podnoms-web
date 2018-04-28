@@ -38,7 +38,6 @@ export class PodcastAddFormComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        const that = this;
         this._route.params.subscribe((params) => {
             if (params['slug'] === undefined) {
                 this.podcast$ = Observable.of(new PodcastModel());
@@ -95,10 +94,7 @@ export class PodcastAddFormComponent implements OnInit {
     }
     uploadPhoto(podcast) {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-        return this._imageService.upload(
-            podcast.slug,
-            this._imageFileBuffer
-        );
+        return this._imageService.upload(podcast.slug, this._imageFileBuffer);
     }
 
     fileChangeEvent() {
@@ -108,11 +104,10 @@ export class PodcastAddFormComponent implements OnInit {
     }
     private _parseImageData(file: File) {
         const myReader: FileReader = new FileReader();
-        const that = this;
-        myReader.onloadend = function(loadEvent: any) {
-            that.image = new Image();
-            that.image.src = loadEvent.target.result;
-            that.imageChanged = true;
+        myReader.onloadend = (loadEvent: any) => {
+            this.image = new Image();
+            this.image.src = loadEvent.target.result;
+            this.imageChanged = true;
         };
         myReader.readAsDataURL(file);
     }
