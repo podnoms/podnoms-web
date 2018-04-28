@@ -8,11 +8,11 @@
                 <i class="fa fa-plus"></i> Debug
             </a> -->
         </div>
-        <div class="content-header-section" *ngIf="user$ | async; let user; else loading">
-            <img [src]="user.profileImage" class="rounded-circle profile-img">
+        <div class="content-header-section" *ngIf="profile$ | async; let profile; else loading">
+            <img [src]="profile.profileImage" class="rounded-circle profile-img">
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown">
-                    {{user.name}}
+                    {{profile.firstName}} {{profile.lastName}}
                     <i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-150">

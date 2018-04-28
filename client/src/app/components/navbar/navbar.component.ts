@@ -4,6 +4,9 @@ import { PodnomsAuthService } from '../../services/podnoms-auth.service';
 import { ProfileService } from '../../services/profile.service';
 import { Observable } from 'rxjs/Observable';
 import { UiStateService } from '../../services/ui-state.service';
+import { ApplicationState } from 'app/store';
+import { Store } from '@ngrx/store';
+import * as fromProfile from 'app/reducers';
 
 @Component({
     selector: 'app-navbar',
@@ -11,19 +14,20 @@ import { UiStateService } from '../../services/ui-state.service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    user$: Observable<ProfileModel>;
+    profile$: Observable<ProfileModel>;
 
     constructor(
-        private _authService: PodnomsAuthService,
+        private _store: Store<ApplicationState>,
         private _profileService: ProfileService,
+        private _authService: PodnomsAuthService,
         private _uiStateService: UiStateService
-    ) {}
-
-    ngOnInit() {
-        if (this._authService.isAuthenticated()) {
-            this.user$ = this._profileService.getProfile();
-        }
+    ) {
+        this.profile$ = _store.select(fromProfile.getProfile);
+        this.profile$.subscribe((p) => console.log('navbar.component', 'profile$subscribe', p));
+        // this.profile$.skip(1).subscribe((p) => (this.originalSlug = p.slug));
     }
+
+    ngOnInit() {}
     toggleOverlay() {
         this._uiStateService.toggleOverlay();
     }

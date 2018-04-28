@@ -8,6 +8,9 @@ import { SignalRService } from 'app/services/signalr.service';
 import { ProfileService } from './services/profile.service';
 import { MessagingService } from 'app/services/messaging.service';
 import { UiStateService } from 'app/services/ui-state.service';
+import { ApplicationState } from 'app/store';
+import * as fromProfile from 'app/reducers';
+import * as fromProfileActions from 'app/actions/profile.actions';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +21,7 @@ export class AppComponent implements OnInit {
     overlayOpen: boolean = false;
     constructor(
         private _authService: PodnomsAuthService,
+        private _store: Store<ApplicationState>,
         private _toastyService: ToastyService,
         private _signalrService: SignalRService,
         private _profileService: ProfileService,
@@ -33,11 +37,13 @@ export class AppComponent implements OnInit {
         // this._pushNotifications.requestPermissions();
         this._uiStateService.change.subscribe((r) => (this.overlayOpen = r));
         if (this.loggedIn()) {
-            const user = this._profileService.getProfile().subscribe((u) => {
-                if (u) {
+            this._store.dispatch(new fromProfileActions.LoadAction());
+            const profile$ = this._store.select(fromProfile.getProfile);
+            profile$.subscribe((p) => {
+                if (p) {
                     this._messagingService.getPermission();
                     this._messagingService.receiveMessage();
-                    const chatterChannel = `${u.uid}_chatter`;
+                    const chatterChannel = `${p.uid}_chatter`;
                     this._signalrService
                         .init('chatter')
                         .then((r) => {
