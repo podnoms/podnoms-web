@@ -1,5 +1,6 @@
 #sidebar {
-    margin-bottom: 55px;
+    /* We'll disable this for now, full height bar looks a bit better */
+    /* margin-bottom: 55px; */
 }
 img.sidebar-icon {
     width: 32;
