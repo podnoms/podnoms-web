@@ -44,11 +44,13 @@
                     </div>
                 </div>
             </div>
-            <table class="js-table-checkable table table-hover js-table-checkable-enabled">
-                <tbody>
-                    <tr *ngFor="let e of entries$ | async | orderBy : '-id'" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr *ngFor="let e of entries$ | async | orderBy : '-id'" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
