@@ -42,6 +42,9 @@ export class AppComponent implements OnInit {
         this._uiStateService.overlayChanged.subscribe(
             (r) => (this.overlayOpen = r)
         );
+        this._authService.authNavStatus$.subscribe(r => r && this._bootstrapAuthorisedServices());
+    }
+    _bootstrapAuthorisedServices(){
         if (this.loggedIn()) {
             this._store.dispatch(new fromProfileActions.LoadAction());
             const profile$ = this._store.select(fromProfile.getProfile);
