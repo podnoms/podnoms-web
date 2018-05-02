@@ -48,7 +48,7 @@ namespace PodNoms.Api.Controllers {
             if (user != null) {
                 var podcast = await _podcastRepository.GetAsync(user.Id, entry);
                 if (podcast != null) {
-                    string xml = ResourceReader.ReadResource("podcast.xml", _logger);
+                    string xml = await ResourceReader.ReadResource("podcast.xml");
                     var template = Handlebars.Compile(xml);
                     var compiled = new PodcastEnclosureViewModel {
                         Title = podcast.Title,

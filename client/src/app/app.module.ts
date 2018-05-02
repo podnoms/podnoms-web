@@ -68,6 +68,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
 import { SideOverlayComponent } from './components/side-overlay/side-overlay.component';
 import { UiStateService } from './services/ui-state.service';
+import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
 
 const config = new AuthServiceConfig([
     {
@@ -109,7 +110,8 @@ export function provideConfig() {
         FooterComponent,
         FooterPlayerComponent,
         HumaniseTimePipe,
-        SideOverlayComponent
+        SideOverlayComponent,
+        BoilerplateComponent
     ],
     imports: [
         BrowserModule,
