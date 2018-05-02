@@ -10,6 +10,7 @@ import { AuthGuard } from './services/auth.guard';
 import { PodcastComponent } from 'app/components/podcast/podcast.component';
 import { PodcastAddFormComponent } from 'app/components/podcast/podcast-add-form/podcast-add-form.component';
 import { AboutComponent } from 'app/components/about/about.component';
+import { BoilerplateComponent } from 'app/components/boilerplate/boilerplate.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -22,7 +23,8 @@ const routes: Routes = [
     { path: 'podcasts', component: PodcastComponent, canActivate: [AuthGuard] },
     { path: 'add', component: PodcastAddFormComponent, canActivate: [AuthGuard], pathMatch: 'full' },
     { path: 'podcasts/:slug', component: PodcastComponent, canActivate: [AuthGuard] },
-    { path: 'podcasts/:slug/edit', component: PodcastAddFormComponent, canActivate: [AuthGuard] }
+    { path: 'podcasts/:slug/edit', component: PodcastAddFormComponent, canActivate: [AuthGuard] },
+    { path: 'boilerplate/:key', component: BoilerplateComponent }
 ];
 
 @NgModule({
