@@ -17,6 +17,7 @@ namespace PodNoms.Api.Services.Auth {
     public class PodNomsUserManager : UserManager<ApplicationUser> {
         private readonly PodnomsDbContext _context;
         private readonly GravatarHttpClient _gravatarClient;
+        private readonly IMailSender _mailSender;
         private readonly StorageSettings _storageSettings;
 
         public PodNomsUserManager(IUserStore<ApplicationUser> store, IOptions<IdentityOptions> optionsAccessor,
@@ -24,15 +25,22 @@ namespace PodNoms.Api.Services.Auth {
                     IEnumerable<IPasswordValidator<ApplicationUser>> passwordValidators, ILookupNormalizer keyNormalizer,
                     IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<ApplicationUser>> logger,
                     [FromServices]GravatarHttpClient gravatarClient,
-                    IOptions<StorageSettings> storageSettings) :
+                    IOptions<StorageSettings> storageSettings,
+                    IMailSender mailSender) :
             base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger) {
             this._gravatarClient = gravatarClient;
+            this._mailSender = mailSender;
             this._storageSettings = storageSettings.Value;
         }
         public override async Task<IdentityResult> CreateAsync(ApplicationUser user) {
             _slugify(user);
             _checkName(user);
             await _imageify(user);
+            try {
+                await _mailSender.SendEmail("fergal.moran@gmail.com", "New user signup", $"{user.Email}\n{user.FirstName} {user.LastName}");
+            } catch (Exception) {
+
+            }
             return await base.CreateAsync(user);
         }
         public override async Task<IdentityResult> UpdateAsync(ApplicationUser user) {
