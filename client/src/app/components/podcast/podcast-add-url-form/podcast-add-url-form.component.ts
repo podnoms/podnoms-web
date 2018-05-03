@@ -42,7 +42,7 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
             this._service.addEntry(entry).subscribe(
                 (e) => {
                     if (e) {
-                        if (e.processingStatus == '6') {
+                        if (e.processingStatus === 'Deferred') {
                             this.onUploadDeferred.emit(e);
                         } else {
                             this.onUrlAddComplete.emit(e);
