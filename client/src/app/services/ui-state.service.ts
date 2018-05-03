@@ -2,7 +2,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 
 @Injectable()
 export class UiStateService {
-    sidebarOpen: boolean = false;
+    sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     @Output() sidebarChanged: EventEmitter<boolean> = new EventEmitter();
     @Output() overlayChanged: EventEmitter<boolean> = new EventEmitter();
