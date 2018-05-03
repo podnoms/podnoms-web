@@ -31,6 +31,7 @@ namespace PodNoms.Api.Services.Auth {
             this._gravatarClient = gravatarClient;
             this._mailSender = mailSender;
             this._storageSettings = storageSettings.Value;
+
         }
         public override async Task<IdentityResult> CreateAsync(ApplicationUser user) {
             _slugify(user);
