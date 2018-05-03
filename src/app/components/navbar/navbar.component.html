@@ -7,8 +7,13 @@
             </button>
         </div>
 
-
         <div class="content-header-section" *ngIf="profile$ | async; let profile; else loading">
+            <button href="https://facebook.com/podnoms" target="_blank" class="btn btn-circle btn-dual-secondary">
+                <i class="fa fa-facebook"></i>
+            </button>
+            <button href="https://twitter.com/podnoms" target="_blank" class="btn btn-circle btn-dual-secondary">
+                <i class="fa fa-twitter"></i>
+            </button>
             <img [src]="profile.profileImage" class="rounded-circle profile-img">
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown">
