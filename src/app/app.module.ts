@@ -11,6 +11,8 @@ import {
     NgcCookieConsentConfig
 } from 'ngx-cookieconsent';
 import { ToastyModule } from 'ng2-toasty';
+import { CKEditorModule } from 'ng2-ckeditor';
+
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -157,6 +159,7 @@ export function provideConfig() {
         HttpModule,
         FormsModule,
         InlineEditorModule,
+        CKEditorModule,
         MomentModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),

@@ -21,3 +21,12 @@
     width: 480px;
     height: 320px;
 }
+.form-left {
+    padding-right: 50px;
+}
+.form-right {
+    padding-left: 50px;
+}
+.mce-branding {
+    display: none !important;
+}
