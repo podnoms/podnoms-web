@@ -12,11 +12,16 @@ namespace PodNoms.Api.Models.ViewModels.RssViewModels
         public string PublishDate { get; set; }
         public string Language { get; set; }
         public string Copyright { get; set; }
+        public string Owner { get; set; }
+        public string OwnerEmail { get; set; }
+        public string ShowUrl { get; set; }
         public List<PodcastEnclosureItemViewModel> Items { get; set; }
     }
     public class PodcastEnclosureItemViewModel
     {
         public string Title { get; set; }
+        public string Uid { get; set; }
+
         public string Description { get; set; }
         public string Author { get; set; }
         public string UpdateDate { get; set; }
