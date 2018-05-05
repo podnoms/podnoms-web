@@ -11,12 +11,13 @@ import {
     NgcCookieConsentConfig
 } from 'ngx-cookieconsent';
 import { ToastyModule } from 'ng2-toasty';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import { QuillModule } from 'ngx-quill'
+
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {
     GoogleLoginProvider,
@@ -159,9 +160,8 @@ export function provideConfig() {
         HttpModule,
         FormsModule,
         InlineEditorModule,
-        FroalaEditorModule.forRoot(),
-        FroalaViewModule.forRoot(),
         MomentModule,
+        QuillModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
