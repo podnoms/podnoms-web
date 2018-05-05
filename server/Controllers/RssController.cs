@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -40,6 +41,7 @@ namespace PodNoms.Api.Controllers {
         }
 
         [HttpGet("{slug}/{entry}")]
+        [HttpHead("{slug}/{entry}")]
         [Produces("application/xml")]
         public async Task<IActionResult> Get(string slug, string entry) {
             _logger.LogDebug("RSS: Retrieving podcast");
@@ -48,31 +50,37 @@ namespace PodNoms.Api.Controllers {
             if (user != null) {
                 var podcast = await _podcastRepository.GetAsync(user.Id, entry);
                 if (podcast != null) {
-                    string xml = await ResourceReader.ReadResource("podcast.xml");
+                    string xml = System.IO.File.ReadAllText("/tmp/podcast.xml");
+                    // string xml = await ResourceReader.ReadResource("podcast.xml");
                     var template = Handlebars.Compile(xml);
                     var compiled = new PodcastEnclosureViewModel {
                         Title = podcast.Title,
                         Description = podcast.Description,
                         Author = "PodNoms Podcasts",
-                        Image = podcast.GetImageUrl(_storageOptions.CdnUrl, _imageOptions.ContainerName),
+                        Image = podcast.GetImageUrl(_storageOptions.CdnUrl, _imageOptions.ContainerName).Replace("https://", "http://"),
                         Link = $"{_appOptions.RssUrl}{user.Slug}/{podcast.Slug}",
                         PublishDate = podcast.CreateDate.ToRFC822String(),
                         Language = "en-IE",
                         Copyright = $"© {DateTime.Now.Year} PodNoms",
+                        Owner = $"{user.FirstName} {user.LastName}",
+                        OwnerEmail = user.Email,
+                        ShowUrl = $"http://dev.podnoms.com:5000/rss/{user.Slug}/{podcast.Slug}",
+
                         Items = (
                             from e in podcast.PodcastEntries
                             select new PodcastEnclosureItemViewModel {
                                 Title = e.Title.StripNonXMLChars(),
+                                Uid = e.Uid,
                                 Description = e.Description.StripNonXMLChars(),
                                 Author = e.Author.StripNonXMLChars(),
                                 UpdateDate = e.CreateDate.ToRFC822String(),
-                                AudioUrl = $"{_storageOptions.CdnUrl}{e.AudioUrl}",
+                                AudioUrl = $"{_storageOptions.CdnUrl}{e.AudioUrl}".Replace("https://", "http://"),
                                 AudioFileSize = e.AudioFileSize
                             }
                         ).ToList()
                     };
                     var result = template(compiled);
-                    return Content(result, "application/xml");
+                    return Content(result, "application/xml", Encoding.UTF8);
                 }
             }
             return NotFound();
