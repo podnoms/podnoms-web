@@ -21,6 +21,7 @@
                         "assets": [
                             "src/favicon.ico",
                             "src/assets",
+                            "src/loaderio-67089ea0ceb418a2eaaa531ce07aa8bf.html",
                             "src/firebase-messaging-sw.js",
                             "src/facebook-auth.html",
                             "src/manifest.json"
