@@ -4,6 +4,7 @@ const ROOT_URL = 'http://localhost:5000';
 export const environment = {
     production: false,
     API_HOST: ROOT_URL,
+    DOMAIN: 'localhost',
     SIGNALR_HOST: ROOT_URL,
     BASE_URL: 'http://localhost:4200/',
     appInsights: {
