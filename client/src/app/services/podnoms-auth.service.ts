@@ -116,7 +116,6 @@ export class PodnomsAuthService extends BaseService {
                 body,
                 this.httpOptions
             )
-            .map((res) => true)
             .catch(this.handleError);
     }
     public logout() {
