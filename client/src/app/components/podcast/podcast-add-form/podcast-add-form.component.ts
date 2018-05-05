@@ -28,7 +28,25 @@ export class PodcastAddFormComponent implements OnInit {
     private imageChanged = false;
     image: any = new Image();
     sending = false;
-
+    options = {
+        toolbarButtons: [
+            'undo',
+            'redo',
+            '|',
+            'bold',
+            'italic',
+            'underline',
+            'strikeThrough',
+            'subscript',
+            'superscript',
+            'outdent',
+            'indent',
+            'clearFormatting',
+            'insertTable',
+            'html'
+        ],
+        height: 300
+    };
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -110,5 +128,10 @@ export class PodcastAddFormComponent implements OnInit {
             this.imageChanged = true;
         };
         myReader.readAsDataURL(file);
+    }
+    deletePodcast(podcast: PodcastModel) {
+        console.log('PodcastComponent', 'deletePodcast');
+        this._store.dispatch(new fromPodcastActions.DeleteAction(podcast.id));
+        this._router.navigate(['/']);
     }
 }

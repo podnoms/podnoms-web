@@ -2,7 +2,7 @@
     <div class="block-header block-header-default">
         <h1 class="block-title">Podcast Details</h1>
         <div class="block-options">
-            <button type="button" class="btn-block-option">
+            <button type="button" class="btn-block-option" (click)="podcastDeleteDialog.show()">
                 <i class="si si-close"></i> Delete podcast
             </button>
         </div>
@@ -18,11 +18,9 @@
                         </div>
                         <div class="form-group">
                             <label for="podcast-description">Description</label>
-                            <div [froalaEditor] [(froalaModel)]="podcast.description"></div>
+                            <div [froalaEditor]="options" [(froalaModel)]="podcast.description"></div>
                         </div>
                     </div>
-
-
                     <div class="form-actions">
                         <button type="submit" [disabled]="sending" class="btn btn-success">
                             <i class="fa fa-check"></i> Done!</button>
@@ -50,6 +48,24 @@
                             </span>
                         </span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Delete this podcast?</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="podcastDeleteDialog.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
+                    </button>
+                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
+                    </button>
                 </div>
             </div>
         </div>
