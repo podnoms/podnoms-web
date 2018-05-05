@@ -49,6 +49,7 @@
     "ngx-clipboard": "^10.0.0",
     "ngx-cookieconsent": "^1.0.1",
     "ngx-moment": "^2.0.0-rc.0",
+    "ngx-quill": "^3.0.0",
     "popper.js": "^1.13.0",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",

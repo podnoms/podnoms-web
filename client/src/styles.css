@@ -3,11 +3,11 @@
 
 @import 'assets/theme/css/codebase.css';
 @import 'assets/theme/css/themes/pulse.min.css';
-@import '~froala-editor/css/froala_editor.pkgd.min.css';
-@import '~froala-editor/css/froala_style.min.css';
 @import '~ng2-toasty/bundles/style.css';
 @import '~ng2-toasty/bundles/style-bootstrap.css';
 @import '~cookieconsent/build/cookieconsent.min.css';
+@import '~quill/dist/quill.snow.css';
+@import '~quill/dist/quill.bubble.css';
 @import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
 
 a:hover {

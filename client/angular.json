@@ -33,7 +33,8 @@
                             "node_modules/tether/dist/js/tether.js",
                             "node_modules/popper.js/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.js",
-                            "node_modules/froala-editor/js/froala_editor.pkgd.min.js",
+                            "node_modules/ngx-quill/bundles/ngx-quill.umd.js",
+                            "node_modules/quill/dist/quill.js",
                             "node_modules/howler/dist/howler.js"
                         ]
                     },
