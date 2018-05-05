@@ -14,6 +14,11 @@
                 <i class="fa fa-twitter"></i>
             </a>
         </div>
+        <div class="content-header-section">
+            <a href="https://talk.podnoms.com/" target="_blank" class="btn btn-circle btn-dual-secondary btn-twitter">
+                <i class="fa fa-life-ring"></i>&nbsp; Help & Support
+            </a>
+        </div>
         <div class="content-header-section" *ngIf="profile$ | async; let profile; else loading">
 
             <img [src]="profile.profileImage" class="rounded-circle profile-img">
