@@ -15,6 +15,7 @@ import { ToastyService } from 'ng2-toasty';
 
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
+declare var require: any;
 
 @Component({
     selector: 'app-podcast-add-form',
