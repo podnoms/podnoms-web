@@ -6,6 +6,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import {
+    NgcCookieConsentModule,
+    NgcCookieConsentConfig
+} from 'ngx-cookieconsent';
 import { ToastyModule } from 'ng2-toasty';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -69,6 +73,29 @@ import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
 import { SideOverlayComponent } from './components/side-overlay/side-overlay.component';
 import { UiStateService } from './services/ui-state.service';
 import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
+
+const cookieConfig: NgcCookieConsentConfig = {
+    cookie: {
+        domain: environment.DOMAIN
+    },
+    palette: {
+        popup: {
+            background: '#64386b',
+            text: '#ffcdfd'
+        },
+        button: {
+            background: 'transparent',
+            text: '#f8a8ff',
+            border: '#f8a8ff'
+        }
+    },
+    position: 'top',
+    static: true,
+    content: {
+        message: 'We use cookies, suck it up!',
+        href: 'https://podnoms.com/boilerplate/privacy'
+    }
+};
 
 const config = new AuthServiceConfig([
     {
@@ -134,6 +161,7 @@ export function provideConfig() {
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
+        NgcCookieConsentModule.forRoot(cookieConfig),
         DropzoneModule,
         ClipboardModule,
         SocialLoginModule,

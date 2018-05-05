@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    DOMAIN: 'podnoms.com',
     API_HOST: 'https://api.podnoms.com',
     SIGNALR_HOST: 'https://rt.podnoms.com',
     BASE_URL: 'https://podnoms.com',
