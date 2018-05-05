@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group">
                             <label for="podcast-description">Description</label>
-                            <div [froalaEditor]="options" [(froalaModel)]="podcast.description"></div>
+                            <quill-editor name="description" [style]="{height: '400px'}" [(ngModel)]="podcast.description"></quill-editor>
                         </div>
                     </div>
                     <div class="form-actions">
