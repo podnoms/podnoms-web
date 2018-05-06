@@ -4,6 +4,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { BasePageComponent } from '../base-page/base-page.component';
 import { AppInsightsService } from '../../services/app-insights.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-reset',
@@ -14,43 +15,84 @@ export class ResetComponent extends BasePageComponent implements OnInit {
     username: string;
     errorMessage: string;
     successMessage: string;
-    noToken: boolean = true;
+    token: string;
     newPassword: string;
     newPasswordRepeat: string;
     constructor(
+        route: ActivatedRoute,
         private _authService: PodnomsAuthService,
+        private _router: Router,
         private _insightsService: AppInsightsService
     ) {
         super();
+
+        route.queryParams.subscribe((params) => {
+            this.token = params.token;
+            this.username = params.email;
+        });
     }
 
     ngOnInit() {}
     resetPassword() {
-        if (this.username) {
-            this._authService.resetPassword(this.username).subscribe(
-                (result) => {
-                    if (result.status === 200) {
-                        console.log('reset.component.ts', 'method', result);
-                        this.errorMessage = '';
-                        this.successMessage = `A password reset link has been sent to ${
-                            this.username
-                        }`;
-                    } else {
-                        this.errorMessage =
-                            'Unable to reset your password\nPlease visit https://talk.podnoms.com and request help.';
-                    }
-                },
-                (err) => {
-                    this.errorMessage = this.formatError(
-                        'Unable to reset your password'
+        if (this.token) {
+            if (this.newPassword === this.newPasswordRepeat) {
+                this._authService
+                    .resetPassword(
+                        this.username,
+                        this.newPassword,
+                        this.newPasswordRepeat,
+                        this.token
+                    )
+                    .subscribe(
+                        (result) => {
+                            if (result) {
+                                this._router.navigate(['/login'], {
+                                    queryParams: {
+                                        justReset: true,
+                                        email: this.username
+                                    }
+                                });
+                            } else {
+                                this.errorMessage = this.formatError(
+                                    'Unable to reset your password, has the link expired?'
+                                );
+                            }
+                        },
+                        (err) => {
+                            this.errorMessage = this.formatError(
+                                'Unable to reset your password, has the link expired?'
+                            );
+                        }
                     );
-                    this._insightsService.logEvent('client_error', {
-                        message: err.message
-                    });
-                }
-            );
+            }
         } else {
-            this.errorMessage = 'Please enter your email address';
+            if (this.username) {
+                this._authService.forgotPassword(this.username).subscribe(
+                    (result) => {
+                        if (result['email']) {
+                            console.log('reset.component.ts', 'method', result);
+                            this.errorMessage = '';
+                            this.successMessage = `A password reset link has been sent to ${
+                                this.username
+                            }`;
+                        } else {
+                            this.errorMessage = this.formatError(
+                                'Unable to reset your password'
+                            );
+                        }
+                    },
+                    (err) => {
+                        this.errorMessage = this.formatError(
+                            'Unable to reset your password'
+                        );
+                        this._insightsService.logEvent('client_error', {
+                            message: err.message
+                        });
+                    }
+                );
+            } else {
+                this.errorMessage = 'Please enter your email address';
+            }
         }
     }
 }

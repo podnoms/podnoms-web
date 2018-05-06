@@ -23,6 +23,6 @@ export class BasePageComponent {
     protected formatError(error: string): string {
         return `${error}<br />Please visit <a href="${
             environment.HELP_URL
-        }">here</a> and request help.`;
+        }" target="_blank">here</a> and request help.`;
     }
 }

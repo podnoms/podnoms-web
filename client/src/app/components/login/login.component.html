@@ -56,6 +56,11 @@
                                         <strong>Account created!</strong> Please login with your new details
                                     </div>
                                 </div>
+                                <div class="col-md-12 new-user-alert" *ngIf="justReset">
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Password succesfully reset!</strong> Please login with your new details
+                                    </div>
+                                </div>
                                 <div class="form-group row gutters-tiny">
                                     <div class="col-12 mb-10">
                                         <button type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
