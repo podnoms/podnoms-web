@@ -49,8 +49,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
-                                    {{errorMessage}}
+                                <div class="alert alert-danger" *ngIf="errorMessage" role="alert" [innerHTML]="errorMessage">
                                 </div>
                                 <div class="col-md-12 new-user-alert" *ngIf="brandNew">
                                     <div class="alert alert-success" role="alert">
