@@ -8,13 +8,14 @@ import * as fromProfile from 'app/reducers';
 import * as fromProfileActions from 'app/actions/profile.actions';
 import { Router } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
+import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent extends BasePageComponent implements OnInit {
     profile$: Observable<ProfileModel>;
 
     originalSlug: string;
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit {
         private _imageService: ImageService,
         private _router: Router
     ) {
+        super();
         this.profile$ = _store.select(fromProfile.getProfile);
         this.profile$.skip(1).subscribe((p) => {
             this.originalSlug = p.slug;
