@@ -50,8 +50,7 @@ namespace PodNoms.Api.Controllers {
             if (user != null) {
                 var podcast = await _podcastRepository.GetAsync(user.Id, entry);
                 if (podcast != null) {
-                    string xml = System.IO.File.ReadAllText("/tmp/podcast.xml");
-                    // string xml = await ResourceReader.ReadResource("podcast.xml");
+                    string xml = await ResourceReader.ReadResource("podcast.xml");
                     var template = Handlebars.Compile(xml);
                     var compiled = new PodcastEnclosureViewModel {
                         Title = podcast.Title,
@@ -82,6 +81,8 @@ namespace PodNoms.Api.Controllers {
                     var result = template(compiled);
                     return Content(result, "application/xml", Encoding.UTF8);
                 }
+            } else {
+                _logger.LogError($"Unable to find user {slug}");
             }
             return NotFound();
         }
