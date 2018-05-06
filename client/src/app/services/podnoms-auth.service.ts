@@ -127,6 +127,32 @@ export class PodnomsAuthService extends BaseService {
             window.location.reload(true);
         }, 0);
     }
-    public resetPassword(userName: string) {}
-    public loginSocial(provider: string): void {}
+    public resetPassword(
+        email: string,
+        newPassword: string,
+        newPasswordRepeat: string,
+        code: string
+    ): Observable<Response> {
+        const body = JSON.stringify({
+            email: email,
+            password: newPassword,
+            confirmPassword: newPasswordRepeat,
+            code: code
+        });
+        return this._http.post<Response>(
+            environment.API_HOST + '/auth/reset',
+            body,
+            this.httpOptions
+        );
+    }
+    public forgotPassword(userName: string): Observable<Response> {
+        const body = JSON.stringify({
+            email: userName
+        });
+        return this._http.post<Response>(
+            environment.API_HOST + '/auth/forgot',
+            body,
+            this.httpOptions
+        );
+    }
 }

@@ -45,6 +45,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -218,6 +219,7 @@ namespace PodNoms.Api {
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
+            services.AddScoped<IEmailSender, PodNoms.Api.Services.Auth.EmailSender>();
             services.AddScoped<IMailSender, MailgunSender>();
             services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 
