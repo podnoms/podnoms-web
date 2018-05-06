@@ -2,13 +2,14 @@ import { Observable } from 'rxjs/Observable';
 import { PodnomsAuthService } from './../../services/podnoms-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends BasePageComponent implements OnInit {
     username: string;
     password: string;
     passwordRepeat: string;
@@ -18,7 +19,9 @@ export class RegisterComponent implements OnInit {
     constructor(
         private _authService: PodnomsAuthService,
         private _router: Router
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit() {}
 
