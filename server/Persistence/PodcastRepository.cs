@@ -55,9 +55,8 @@ namespace PodNoms.Api.Persistence {
                         select p.Slug);
                 }
                 item.TemporaryImageUrl = $"standard/podcast-image-{Randomisers.RandomInteger(1, 16)}.png";
-                _context.Podcasts.Add(item);
+                await _context.Podcasts.AddAsync(item);
             }
-
             return item;
         }
         public async Task<int> DeleteAsync(int id) {
