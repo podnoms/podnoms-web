@@ -13,7 +13,7 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-8 col-md-6 col-xl-4">
                         <form class="js-validation-signin" action="" (ngSubmit)="resetPassword()" method="post">
-                            <div class="form-group row" *ngIf="noToken">
+                            <div class="form-group row" *ngIf="!token">
                                 <div class="col-12">
                                     <div class="form-material floating">
                                         <input type="text" class="form-control" id="login-username" name="login-username" [(ngModel)]="username">
@@ -21,7 +21,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row" *ngIf="!noToken">
+                            <div class="form-group row" *ngIf="token">
                                 <div class="col-12">
                                     <div class="form-material ">
                                         <input type="password" class="form-control" id="login-password" name="login-password" [(ngModel)]="newPassword">
@@ -29,16 +29,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row" *ngIf="!noToken">
+                            <div class="form-group row" *ngIf="token">
                                 <div class="col-12 ">
                                     <div class="form-material ">
-                                        <input type="password " class="form-control " id="login-password2 " name="login-password2
-                                " [(ngModel)]="newPasswordRepeat ">
-                                        <label for="login-password ">Repeat password</label>
+                                        <input type="password" class="form-control" id="login-password2" name="login-password2" [(ngModel)]="newPasswordRepeat ">
+                                        <label for="login-password">Repeat password</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="alert alert-danger " *ngIf="errorMessage " role="alert " [innerHTML]="errorMessage ">
+                            <div class="alert alert-danger" *ngIf="errorMessage " role="alert " [innerHTML]="errorMessage ">
                             </div>
                             <div class="form-group row gutters-tiny " *ngIf="successMessage ">
                                 <div class="col-12 mb-10 ">
