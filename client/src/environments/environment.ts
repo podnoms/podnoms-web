@@ -7,6 +7,7 @@ export const environment = {
     DOMAIN: 'localhost',
     SIGNALR_HOST: ROOT_URL,
     BASE_URL: 'http://localhost:4200/',
+    HELP_URL: 'https://talk.podnoms.com',
     appInsights: {
         instrumentationKey: '020b002a-bd3d-4b25-8a74-cab16fd39dfc'
     },

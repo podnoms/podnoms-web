@@ -20,10 +20,10 @@ namespace PodNoms.Api.Services {
 
         public async Task<bool> SendEmail(string email, string subject, string message){
             using (var client = new HttpClient { BaseAddress = new Uri(_emailSettings.ApiBaseUri) }) {
-                client.DefaultRequestHeaders.Authorization = 
+                client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Basic",
                             Convert.ToBase64String(Encoding.ASCII.GetBytes(_emailSettings.ApiKey)));
-                
+
                 _logger.LogInformation($"From: {_emailSettings.From}\nTo: {email}\nApi key: {_emailSettings.ApiKey}");
 
                 var content = new FormUrlEncodedContent(new[]
@@ -37,7 +37,7 @@ namespace PodNoms.Api.Services {
                 var result = await client.PostAsync(_emailSettings.RequestUri, content).ConfigureAwait(false);
                 if (result.StatusCode == HttpStatusCode.OK)
                     return true;
-                
+
                 _logger.LogError($"Error {result.StatusCode} sending mail\n{result.ReasonPhrase}");
                 return false;
             }
