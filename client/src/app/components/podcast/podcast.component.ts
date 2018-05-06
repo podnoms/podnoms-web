@@ -16,13 +16,14 @@ import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({
     selector: 'app-podcast',
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.css']
 })
-export class PodcastComponent {
+export class PodcastComponent extends BasePageComponent {
     selectedPodcast$: Observable<PodcastModel>;
     pendingEntry: PodcastEntryModel = null;
     entries$: Observable<PodcastEntryModel[]>;
@@ -46,6 +47,7 @@ export class PodcastComponent {
         route: ActivatedRoute,
         private _location: Location
     ) {
+        super();
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
 
         this.entries$ = _store.select(fromPodcast.getEntries);

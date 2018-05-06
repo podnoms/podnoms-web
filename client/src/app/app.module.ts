@@ -76,6 +76,7 @@ import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
 import { SideOverlayComponent } from './components/side-overlay/side-overlay.component';
 import { UiStateService } from './services/ui-state.service';
 import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
+import { BasePageComponent } from './components/base-page/base-page.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -141,7 +142,8 @@ export function provideConfig() {
         FooterPlayerComponent,
         HumaniseTimePipe,
         SideOverlayComponent,
-        BoilerplateComponent
+        BoilerplateComponent,
+        BasePageComponent
     ],
     imports: [
         BrowserModule,
