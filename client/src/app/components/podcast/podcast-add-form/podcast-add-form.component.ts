@@ -15,6 +15,7 @@ import { ToastyService } from 'ng2-toasty';
 
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
+import { BasePageComponent } from '../../base-page/base-page.component';
 declare var require: any;
 
 @Component({
@@ -22,7 +23,8 @@ declare var require: any;
     templateUrl: './podcast-add-form.component.html',
     styleUrls: ['./podcast-add-form.component.css']
 })
-export class PodcastAddFormComponent implements OnInit {
+export class PodcastAddFormComponent extends BasePageComponent
+    implements OnInit {
     _imageFileBuffer: File;
     podcast$: Observable<PodcastModel>;
     @ViewChild('fileInput') fileInput: ElementRef;
@@ -54,7 +56,9 @@ export class PodcastAddFormComponent implements OnInit {
         private _imageService: ImageService,
         private _store: Store<ApplicationState>,
         private renderer: Renderer2
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit() {
         this._route.params.subscribe((params) => {
