@@ -14,7 +14,7 @@ namespace PodNoms.Api.Utils.RemoteParsers {
         public MixcloudParser(IHttpClientFactory httpClientFactory) {
             this._httpClientFactory = httpClientFactory;
         }
-        public bool ValidateUrl(string url) {
+        public static bool ValidateUrl(string url) {
             var regex = new Regex(URL_REGEX);
             var result = regex.Match(url);
             return result.Success;
