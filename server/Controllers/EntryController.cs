@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hangfire;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,7 @@ namespace PodNoms.Api.Controllers {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IUrlProcessService _processor;
+        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILogger _logger;
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
         private readonly StorageSettings _storageSettings;
@@ -43,6 +45,7 @@ namespace PodNoms.Api.Controllers {
             IConfiguration options,
             IUrlProcessService processor, ILoggerFactory logger,
             UserManager<ApplicationUser> userManager,
+            IHostingEnvironment hostingEnvironment,
             IHttpContextAccessor contextAccessor) : base(contextAccessor, userManager) {
             this._logger = logger.CreateLogger<EntryController>();
             this._podcastRepository = podcastRepository;
@@ -53,6 +56,7 @@ namespace PodNoms.Api.Controllers {
             this._audioFileStorageSettings = audioFileStorageSettings.Value;
             this._mapper = mapper;
             this._processor = processor;
+            this._hostingEnvironment = hostingEnvironment;
         }
 
         private void _processEntry(PodcastEntry entry) {
@@ -111,7 +115,7 @@ namespace PodNoms.Api.Controllers {
                         var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
                         return result;
                     }
-                } else if (status == AudioType.Playlist) {
+                } else if (status == AudioType.Playlist && _hostingEnvironment.IsDevelopment()) {
                     entry.ProcessingStatus = ProcessingStatus.Deferred;
                     return Accepted(entry);
                 }

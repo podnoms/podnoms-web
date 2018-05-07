@@ -10,9 +10,10 @@ using PodNoms.Api.Persistence;
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180507155436_Rename_ParsedPlaylistVideos")]
+    partial class Rename_ParsedPlaylistVideos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,8 +142,6 @@ namespace PodNoms.Api.Migrations
                     b.Property<DateTime>("UpdateDate");
 
                     b.Property<string>("VideoId");
-
-                    b.Property<string>("VideoType");
 
                     b.HasKey("Id");
 
