@@ -19,6 +19,11 @@ namespace PodNoms.Api.Controllers {
             var infoJobId = BackgroundJob.Enqueue<ProcessPlaylistsJob>(service => service.Execute());
             return Ok();
         }
+        [HttpGet("processplaylistitems")]
+        public IActionResult ProcessPlaylistItems() {
+            var infoJobId = BackgroundJob.Enqueue<ProcessPlaylistItemJob>(service => service.Execute());
+            return Ok();
+        }
         [HttpGet("updateyoutubedl")]
         public IActionResult UpdateYouTubeDl() {
             var infoJobId = BackgroundJob.Enqueue<UpdateYouTubeDlJob>(service => service.Execute());

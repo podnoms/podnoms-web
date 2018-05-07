@@ -54,24 +54,22 @@ namespace PodNoms.Api.Services.Downloader {
                 return $"{{\"Error\": \"{ex.Message}\"}}";
             }
         }
-        public async Task<AudioType> GetInfo() {
+        public AudioType GetInfo() {
             var ret = AudioType.Invalid;
-            await Task.Run(() => {
-                var youtubeDl = new YoutubeDL();
-                youtubeDl.VideoUrl = this._url;
-                var info = youtubeDl.GetDownloadInfo();
+            var yt = new YoutubeDL();
+            yt.VideoUrl = this._url;
+            var info = yt.GetDownloadInfo();
 
-                if (info != null &&
-                   (info.Errors.Count == 0 || info.VideoSize != null)) {
-                    this._properties = info;
-                    // have to dump playlist handling for now
-                    if (info is PlaylistDownloadInfo && ((PlaylistDownloadInfo)info).Videos.Count > 0) {
-                        ret = AudioType.Playlist;
-                    } else if (info is VideoDownloadInfo) {
-                        ret = AudioType.Valid;
-                    }
+            if (info != null &&
+               (info.Errors.Count == 0 || info.VideoSize != null)) {
+                this._properties = info;
+                // have to dump playlist handling for now
+                if (info is PlaylistDownloadInfo && ((PlaylistDownloadInfo)info).Videos.Count > 0) {
+                    ret = AudioType.Playlist;
+                } else if (info is VideoDownloadInfo) {
+                    ret = AudioType.Valid;
                 }
-            });
+            }
             return ret;
         }
 
@@ -89,10 +87,12 @@ namespace PodNoms.Api.Services.Downloader {
             yt.StandardOutputEvent += (sender, output) => {
                 if (output.Contains("%")) {
                     var progress = _parseProgress(output);
+                    Console.WriteLine($"Processing {progress.CurrentSpeed} {progress.ETA} {progress.Percentage}");
                     if (DownloadProgress != null) {
                         DownloadProgress(this, progress);
                     }
                 } else {
+                    Console.WriteLine(output);
                     if (PostProcessing != null) {
                         PostProcessing(this, output);
                     }

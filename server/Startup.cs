@@ -46,6 +46,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using PodNoms.Api.Utils.RemoteParsers;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -102,7 +103,7 @@ namespace PodNoms.Api {
             services.Configure<ImageFileStorageSettings>(Configuration.GetSection("ImageFileStorageSettings"));
             services.Configure<AudioFileStorageSettings>(Configuration.GetSection("AudioFileStorageSettings"));
             services.Configure<FormOptions>(options => {
-                options.ValueCountLimit = 10;
+                // options.ValueCountLimit = 10;
                 options.ValueLengthLimit = int.MaxValue;
                 options.MemoryBufferThreshold = Int32.MaxValue;
                 options.MultipartBodyLengthLimit = long.MaxValue;
@@ -112,6 +113,10 @@ namespace PodNoms.Api {
                 e.AddProfile(new MappingProvider(Configuration));
             });
 
+            services.AddHttpClient("mixcloud", c => {
+                c.BaseAddress = new Uri("https://api.mixcloud.com/");
+                c.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
             services.AddHttpClient();
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -220,6 +225,8 @@ namespace PodNoms.Api {
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
             services.AddScoped<IMailSender, MailgunSender>();
+            services.AddScoped<YouTubeParser>();
+            services.AddScoped<MixcloudParser>();
             services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 
             //register the codepages (required for slugify)

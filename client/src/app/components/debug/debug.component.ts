@@ -54,6 +54,13 @@ export class DebugComponent implements OnInit {
                 console.log('debug.component.ts', 'processPlaylists', e)
             );
     }
+    processPlaylistItems() {
+        this._jobsService
+            .processPlaylistItems()
+            .subscribe((e) =>
+                console.log('debug.component.ts', 'processPlaylists', e)
+            );
+    }
     updateYouTubeDl() {
         this._jobsService
             .updateYouTubeDl()

@@ -57,7 +57,7 @@ namespace PodNoms.Api.Services.Processor {
         public async Task<AudioType> GetInformation(PodcastEntry entry) {
 
             var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
-            var ret = await downloader.GetInfo();
+            var ret =  downloader.GetInfo();
             if (ret == AudioType.Valid) {
                 entry.Title = downloader.Properties?.Title;
                 entry.Description = downloader.Properties?.Description;
