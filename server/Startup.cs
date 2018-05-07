@@ -219,7 +219,6 @@ namespace PodNoms.Api {
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
-            services.AddScoped<IEmailSender, PodNoms.Api.Services.Auth.EmailSender>();
             services.AddScoped<IMailSender, MailgunSender>();
             services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 

@@ -47,7 +47,7 @@ namespace PodNoms.Api.Services.Jobs {
                         _logger.LogWarning($"Error processing blob {blob.Uri}\n{e.Message}");
                     }
                 }
-                await this._mailSender.SendEmail("fergal.moran@gmail.com", $"ClearOrphanAudioJob: Complete {blobCount}", string.Empty);
+                await this._mailSender.SendEmailAsync("fergal.moran@gmail.com", $"ClearOrphanAudioJob: Complete {blobCount}", string.Empty);
             } catch (Exception ex) {
                 _logger.LogError($"Error clearing orphans\n{ex.Message}");
             }
