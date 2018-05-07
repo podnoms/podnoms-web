@@ -20,6 +20,7 @@ using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Services.Jobs;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Storage;
+using PodNoms.Api.Utils.RemoteParsers;
 
 namespace PodNoms.Api.Controllers {
 
@@ -115,9 +116,11 @@ namespace PodNoms.Api.Controllers {
                         var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
                         return result;
                     }
-                } else if (status == AudioType.Playlist && _hostingEnvironment.IsDevelopment()) {
+                } else if (status == AudioType.Playlist && YouTubeParser.ValidateUrl(item.SourceUrl)) {
                     entry.ProcessingStatus = ProcessingStatus.Deferred;
                     return Accepted(entry);
+                } else {
+                    return BadRequest("Processor failed");
                 }
             }
             return BadRequest($"Unable to find podcast with ID: {item.PodcastId}");

@@ -44,15 +44,14 @@ namespace PodNoms.Api.Services.Jobs {
                 var info =  downloader.GetInfo();
                 var id = ((PlaylistDownloadInfo)downloader.RawProperties).Id;
                 if (info == AudioType.Playlist && downloader.RawProperties is PlaylistDownloadInfo) {
-                    if (_youTubeParser.ValidateUrl(playlist.SourceUrl)) {
+                    if (YouTubeParser.ValidateUrl(playlist.SourceUrl)) {
                         var searchTerm = (playlist.SourceUrl.Contains("/user/")) ? "forUsername" : "id";
                         resultList = await _youTubeParser.GetPlaylistEntriesForId(id);
                         //make sure the items are sorted in ascending date order
                         //so they will be processed in the order they were created
-                    } else if (_mixcloudParser.ValidateUrl(playlist.SourceUrl)) {
+                    } else if (MixcloudParser.ValidateUrl(playlist.SourceUrl)) {
                         resultList = await _mixcloudParser.GetEntries(id);
                     }
-
                 }
                 foreach (var item in resultList?.OrderBy(r => r.UploadDate)) {
                     if (!playlist.ParsedPlaylistItems.Any(p => p.VideoId == item.Id)) {
