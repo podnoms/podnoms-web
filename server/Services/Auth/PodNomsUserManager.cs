@@ -15,7 +15,6 @@ using PodNoms.Api.Utils;
 
 namespace PodNoms.Api.Services.Auth {
     public class PodNomsUserManager : UserManager<ApplicationUser> {
-        private readonly PodnomsDbContext _context;
         private readonly GravatarHttpClient _gravatarClient;
         private readonly IMailSender _mailSender;
         private readonly StorageSettings _storageSettings;
