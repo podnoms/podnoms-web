@@ -4,7 +4,12 @@ WORKDIR /app
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./
-RUN dotnet restore
+COPY NuGet.config ./
+RUN dotnet restore \
+    --source https://api.nuget.org/v3/index.json \
+    --source https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json \
+    --source https://dotnet.myget.org/F/aspnetcore-ci-dev/api/v3/index.json \
+    --source https://www.myget.org/F/sixlabors/api/v3/index.json 
 
 # Copy everything else and build
 COPY . ./

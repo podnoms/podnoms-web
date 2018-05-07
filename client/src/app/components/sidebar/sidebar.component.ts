@@ -11,6 +11,7 @@ import 'rxjs/add/operator/skip';
 import { ApplicationState } from 'app/store';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromPodcasts from 'app/reducers';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -19,17 +20,19 @@ import * as fromPodcasts from 'app/reducers';
 })
 export class SidebarComponent {
     podcasts$: Observable<PodcastModel[]>;
-    constructor(private _store: Store<ApplicationState>) {
-        this.podcasts$ = _store
-            .skip(1)
-            .map(s => s.podcasts.results);
+    constructor(
+        private _store: Store<ApplicationState>,
+        private _router: Router
+    ) {
+        this.podcasts$ = _store.skip(1).map((s) => s.podcasts.results);
         this._store.dispatch(new fromPodcastActions.LoadAction());
     }
     onSelect(podcast) {
         this._store.dispatch(new fromPodcastActions.GetAction(podcast.slug));
         return false;
     }
-    deletePodcast(podcast) {
 
+    doAddPodcast() {
+        this._router.navigate(['add']);
     }
 }

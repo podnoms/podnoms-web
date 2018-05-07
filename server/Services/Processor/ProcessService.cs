@@ -27,7 +27,7 @@ namespace PodNoms.Api.Services.Processor {
 
         protected async Task<bool> _sendProcessCompleteMessage(PodcastEntry entry) {
             var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
-            return await _sendProcessUpdate(entry.Podcast.User.GetUserId(), entry.Uid, "info_processed", result);
+            return await _sendProcessUpdate(entry.Podcast.AppUser.Id, entry.Uid, "info_processed", result);
         }
         protected async Task<bool> _sendProgressUpdate(string userId, string itemUid, ProcessProgressEvent data) {
             return await _realtime.SendProcessUpdate(userId, itemUid, "progress_update", data);

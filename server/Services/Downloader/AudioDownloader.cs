@@ -65,7 +65,7 @@ namespace PodNoms.Api.Services.Downloader {
                    (info.Errors.Count == 0 || info.VideoSize != null)) {
                     this._properties = info;
                     // have to dump playlist handling for now
-                    if (false && info is PlaylistDownloadInfo && ((PlaylistDownloadInfo)info).Videos.Count > 0) {
+                    if (info is PlaylistDownloadInfo && ((PlaylistDownloadInfo)info).Videos.Count > 0) {
                         ret = AudioType.Playlist;
                     } else if (info is VideoDownloadInfo) {
                         ret = AudioType.Valid;

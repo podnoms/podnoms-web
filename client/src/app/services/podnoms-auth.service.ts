@@ -85,13 +85,9 @@ export class PodnomsAuthService extends BaseService {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const body = JSON.stringify({ accessToken });
         return this._http
-            .post<string>(
-                environment.API_HOST + '/externalauth/google',
-                body,
-                {
-                    headers
-                }
-            )
+            .post<string>(environment.API_HOST + '/externalauth/google', body, {
+                headers
+            })
             .map((res) => {
                 localStorage.setItem('auth_token', res['auth_token']);
                 this._loggedIn = true;
@@ -101,7 +97,7 @@ export class PodnomsAuthService extends BaseService {
             .catch(this.handleError);
     }
     public signup(email: string, password: string): Observable<ProfileModel> {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email,
             password
         });
@@ -111,8 +107,8 @@ export class PodnomsAuthService extends BaseService {
             })
         };
 
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
 
         return this._http
             .post<ProfileModel>(
@@ -120,17 +116,43 @@ export class PodnomsAuthService extends BaseService {
                 body,
                 this.httpOptions
             )
-            .map((res) => true)
             .catch(this.handleError);
     }
     public logout() {
         localStorage.removeItem('auth_token');
-        this._authService.signOut().then(() => console.log("Logout ok"));
-        this.zone.run(() => {
-            document.location.href = '/';
-            window.location.reload();
-        });
+        localStorage.removeItem('audio_state');
+        this._loggedIn = false;
+        setTimeout(() => {
+            this._router.navigate(['/']);
+            window.location.reload(true);
+        }, 0);
     }
-    public resetPassword(userName: string) {}
-    public loginSocial(provider: string): void {}
+    public resetPassword(
+        email: string,
+        newPassword: string,
+        newPasswordRepeat: string,
+        code: string
+    ): Observable<Response> {
+        const body = JSON.stringify({
+            email: email,
+            password: newPassword,
+            confirmPassword: newPasswordRepeat,
+            code: code
+        });
+        return this._http.post<Response>(
+            environment.API_HOST + '/auth/reset',
+            body,
+            this.httpOptions
+        );
+    }
+    public forgotPassword(userName: string): Observable<Response> {
+        const body = JSON.stringify({
+            email: userName
+        });
+        return this._http.post<Response>(
+            environment.API_HOST + '/auth/forgot',
+            body,
+            this.httpOptions
+        );
+    }
 }

@@ -2,7 +2,7 @@
     position: relative;
     overflow: hidden;
 }
-.btn-file input[type=file] {
+.btn-file input[type='file'] {
     position: absolute;
     top: 0;
     right: 0;
@@ -17,7 +17,16 @@
     cursor: inherit;
     display: block;
 }
-.img-preview{
+.img-preview {
     width: 480px;
     height: 320px;
+}
+.form-left {
+    padding-right: 50px;
+}
+.form-right {
+    padding-left: 50px;
+}
+.mce-branding {
+    display: none !important;
 }

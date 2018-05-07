@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Rx';
 export abstract class BaseService {
     constructor() {}
 
-    protected handleError(error: any) {
-        const applicationError = error.headers.get('Application-Error');
+    protected handleError(response: any) {
+        const applicationError = response.headers.get('Application-Error');
 
         // either applicationError in header or model error in body
         if (applicationError) {
@@ -12,7 +12,7 @@ export abstract class BaseService {
         }
 
         let modelStateErrors: string = '';
-        const serverError = error.json();
+        const serverError = response.error; //json();
 
         if (!serverError.type) {
             for (let key in serverError) {

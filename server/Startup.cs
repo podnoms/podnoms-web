@@ -45,6 +45,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -153,7 +154,7 @@ namespace PodNoms.Api {
                         context.Token = token;
                     }
                     return Task.CompletedTask;
-                };                
+                };
             });
 
             services.AddAuthorization(j => {
@@ -167,10 +168,10 @@ namespace PodNoms.Api {
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 6;
             });
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
             identityBuilder.AddEntityFrameworkStores<PodnomsDbContext>().AddDefaultTokenProviders();
+            identityBuilder.AddUserManager<PodNomsUserManager>();
 
             services.AddMvc(options => {
                 options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
@@ -206,6 +207,7 @@ namespace PodNoms.Api {
                     .AllowCredentials());
             });
 
+
             services.AddTransient<IFileUploader, AzureFileUploader>();
             services.AddTransient<IRealTimeUpdater, SignalRUpdater>();
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
@@ -214,11 +216,12 @@ namespace PodNoms.Api {
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
+            services.AddScoped<IEmailSender, PodNoms.Api.Services.Auth.EmailSender>();
             services.AddScoped<IMailSender, MailgunSender>();
+            services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 
             //register the codepages (required for slugify)
             var instance = CodePagesEncodingProvider.Instance;

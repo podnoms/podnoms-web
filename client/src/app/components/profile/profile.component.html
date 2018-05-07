@@ -1,111 +1,66 @@
-<div class="content">
-    <div class="col-md-6">
-        <div class="card"
-             *ngIf="profile$ | async; let profile; else loading">
-            <div class="block">
-                <div class="block-header block-header-default">
-                    <h3 class="block-title">Profile</h3>
-                    <div class="block-options">
-                        <button type="button"
-                                class="btn-block-option">
-                            <i class="si si-wrench"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="block-content">
-                    <form>
-                        <div class="form-group">
-                            <label class="form-control-label"
-                                   for="slug">Slug</label>
-                            <div class="input-group flex-wrap"
-                                 [ngClass]="slugError !== '' ? 'is-invalid' : ''">
-                                <input type="text"
-                                       class="form-control"
-                                       [attr.disabled]="true"
-                                       id="slug"
-                                       name="slug"
-                                       required=""
-                                       [(ngModel)]="profile.slug"
-                                       (input)="onSlugChanged(profile.slug)">
-                                <div class="invalid-feedback w-100">{{slugError}}</div>
-                            </div>
-                            <div class="form-text text-muted">This will be used in the RSS url for your podcasts</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="api-key">API Key</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       [attr.disabled]="true"
-                                       [(ngModel)]="profile.apiKey"
-                                       id="api-key"
-                                       name="api-key">
-                                <span class="input-group-btn">
-                                    <button type="button"
-                                            (click)="regenerateApiKeyDialog.show()"
-                                            class="btn btn-secondary"><i class="fa fa-refresh"></i> Regenerate
-                                    </button>
+<form (submit)="doSave(profile)" *ngIf="profile$ | async; let profile; else loading">
+    <h2 class="content-heading text-black">Personal Details</h2>
+    <div class="row items-push">
+        <div class="col-lg-3">
+            <p class="text-muted">
+                Tell us as much or as little as you like, nobody sees this anyway
+            </p>
+            <h2>Avatar Image</h2>
+            <div class="mb-15  animated fadeIn">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="options-container text-center">
+                        <div class="input-group" style="visibility: hidden;">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file">
+                                    Choose image....
+                                    <input type="file" (change)="fileChangeEvent()" #fileInput>
                                 </span>
-                            </div>
+                            </span>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <button type="submit"
-                                        [disabled]="slugError != ''"
-                                        (click)="doSave(profile)"
-                                        class="btn btn-alt-primary">
-                                    <i class="fa fa-floppy-o"></i> Save
-                                </button>
+                        <img class="img-fluid options-item" [src]="image.src" alt="">
+                        <div class="options-overlay bg-black-op-75">
+                            <div class="options-overlay-content">
+                                <a class="btn btn-sm btn-rounded btn-alt-danger min-width-75" (click)="callFileInput()">
+                                    <i class="fa fa-pencil"></i> Change
+                                </a>
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal fade"
-                 bsModal
-                 #regenerateApiKeyDialog="bs-modal"
-                 id="modal-fadein"
-                 tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="modal-fadein"
-                 aria-hidden="true">
-                <div class="modal-dialog"
-                     role="document">
-                    <div class="modal-content">
-                        <div class="block block-themed block-transparent mb-0">
-                            <div class="block-header bg-primary-dark">
-                                <h3 class="block-title">Regenerate API Key?</h3>
-                                <div class="block-options">
-                                    <button type="button"
-                                            class="btn-block-option"
-                                            data-dismiss="modal"
-                                            aria-label="Close">
-                                        <i class="si si-close"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="block-content">
-                                <p>Regenerating the API key will break any applications using it!!</p>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button"
-                                    class="btn btn-alt-secondary"
-                                    (click)="regenerateApiKeyDialog.hide()"
-                                    data-dismiss="modal">
-                                <i class="fa fa-times"></i> Forget it
-                            </button>
-                            <button type="button"
-                                    class="btn btn-alt-success"
-                                    (click)="regenerateApiKey(profile); regenerateApiKeyDialog.hide()"
-                                    data-dismiss="modal">
-                                <i class="fa fa-check"></i> Go for it
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-7 offset-lg-1">
+            <div class="form-group row">
+                <div class="col-6">
+                    <label for="crypto-settings-firstname">Firstname</label>
+                    <input type="text" class="form-control form-control-lg" name="first-name" [(ngModel)]="profile.firstName">
+                </div>
+                <div class="col-6">
+                    <label for="crypto-settings-lastname">Lastname</label>
+                    <input type="text" class="form-control form-control-lg" name="second-name" [(ngModel)]="profile.lastName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-6">
+                    <label for="crypto-settings-street-1">Slug</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="slug" name="slug" required="" [(ngModel)]="profile.slug" (input)="onSlugChanged(profile.slug)">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-asterisk"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-text text-muted">This uniquely identifies the rss URL for your podcasts.</div>
+                    <div class="invalid-feedback animated fadeInDown">{{slugError}}</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-alt-primary">Update</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</form>
 <ng-template #loading></ng-template>

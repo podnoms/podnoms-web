@@ -33,12 +33,7 @@ export class DebugComponent implements OnInit {
         this.debugInfo$ = this._debugService.getDebugInfo();
     }
 
-    subscribeToServerPush() {
-        this._pushNotifications.getPermission();
-        this._pushNotifications.receiveMessage();
-        this.message$ = this._pushNotifications.currentMessage;
-    }
-    sendServerPush() {
+    requestPushCallback() {
         this._debugService
             .sendPush()
             .subscribe((r) =>

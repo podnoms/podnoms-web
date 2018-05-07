@@ -1,0 +1,48 @@
+<aside id="side-overlay">
+    <div class="slimScrollDiv">
+        <div class="content-header content-header-fullrow">
+            <div class="content-header-section align-parent">
+                <button type="button" class="btn btn-circle btn-dual-secondary align-v-r" (click)="toggleOverlay()">
+                    <i class="fa fa-times text-danger"></i>
+                </button>
+                <div class="content-header-item" *ngIf="user$ | async; let user">
+                    <a class="img-link mr-5" [routerLink]="['/profile']">
+                        <img class="img-avatar img-avatar32" [src]="user.profileImage" alt="">
+                    </a>
+                    <a class="align-middle link-effect text-primary-dark font-w600" [routerLink]="['/profile']">{{user.name}}</a>
+                </div>
+            </div>
+        </div>
+        <div class="content-side">
+            <div class="block pull-r-l">
+                <div class="block-header bg-body-light">
+                    <h3 class="block-title">
+                        <i class="fa fa-fw fa-clock-o font-size-default mr-5"></i>Episodes
+                    </h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option">
+                            <i class="si si-refresh"></i>
+                        </button>
+                        <!-- <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle">
+                            <i class="si si-arrow-up"></i>
+                        </button> -->
+                    </div>
+                </div>
+                <div class="block-content">
+                    <ul class="nav-users push">
+                        <li *ngFor="let entry of entries$ | async| orderBy: '-id'">
+                            <a [routerLink]="['/podcasts', entry.podcast.slug]">
+                                <img class="img-avatar" [src]="entry.imageUrl" alt="">
+                                <i class="fa fa-circle text-success"></i> {{entry.podcast.title}}
+                                <div class="font-w400 font-size-xs text-muted" style="margin-right: 15px;">{{entry.title}}</div>
+                                <button type="button" class="btn btn-circle btn-dual-secondary align-v-r" (click)="playAudio(entry)">
+                                    <i class="si si-control-play text-danger"></i>
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

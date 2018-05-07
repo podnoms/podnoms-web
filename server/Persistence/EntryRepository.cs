@@ -15,7 +15,7 @@ namespace PodNoms.Api.Persistence {
         public async Task<PodcastEntry> GetAsync(int id) {
             var entry = await _context.PodcastEntries
                 .Include(e => e.Podcast)
-                .Include(e => e.Podcast.User)
+                .Include(e => e.Podcast.AppUser)
                 .SingleOrDefaultAsync(e => e.Id == id);
             return entry;
         }
@@ -37,6 +37,14 @@ namespace PodNoms.Api.Persistence {
                 .ToListAsync();
             return entries;
         }
+        public async Task<IEnumerable<PodcastEntry>> GetAllForUserAsync(string userId) {
+            var entries = await _context.PodcastEntries
+                .Where(e => e.Podcast.AppUser.Id == userId)
+                .Include(e => e.Podcast)
+                .ToListAsync();
+            return entries;
+        }
+
         public async Task<PodcastEntry> AddOrUpdateAsync(PodcastEntry entry) {
             if (entry.Id != 0) {
                 // _context.Entry(entry).State = EntityState.Modified

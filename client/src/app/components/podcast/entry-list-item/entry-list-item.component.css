@@ -1,5 +1,8 @@
-
-.podcast-entry-table-image{
+.podcast-entry-table-image {
     width: 32px;
     height: 32px;
+}
+
+.tools-wrapper {
+    margin-top: auto;
 }

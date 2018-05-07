@@ -10,15 +10,17 @@ import {
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends BasePageComponent implements OnInit {
     private _subscription: Subscription;
 
     brandNew: boolean = false;
+    justReset: boolean = false;
     username: string;
     password: string;
     isRequesting: boolean = false;
@@ -30,11 +32,14 @@ export class LoginComponent implements OnInit {
         private _socialAuthService: AuthService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router
-    ) { }
+    ) {
+        super();
+    }
     ngOnInit() {
         this._subscription = this._activatedRoute.queryParams.subscribe(
             (param: any) => {
                 this.brandNew = param['brandNew'];
+                this.justReset = param['justReset'];
                 this.username = param['email'];
             }
         );
@@ -43,42 +48,49 @@ export class LoginComponent implements OnInit {
         this.isRequesting = true;
         if (provider === 'facebook') {
             const options: LoginOpt = {
-                scope: 'email public_profile',
-                redirect_uri: 'http://localhost:5000/facebook-auth.html'
+                scope: 'email public_profile'
             };
-            this._socialAuthService.signIn( FacebookLoginProvider.PROVIDER_ID, options)
-                .then(user => {
+            this._socialAuthService
+                .signIn(FacebookLoginProvider.PROVIDER_ID, options)
+                .then((user) => {
                     if (user) {
-                        const rpc = this._authService.facebookLogin(user.authToken);
-                        if (!rpc) return;
-                        rpc.finally(() => (this.isRequesting = false)).subscribe(
-                            (result) => {
-                                if (result) {
-                                    this._router.navigate(['/podcasts']);
-                                }
-                            },
-                            (error) => {
-                                this.errorMessage = error;
-                            }
+                        const rpc = this._authService.facebookLogin(
+                            user.authToken
                         );
+                        if (!rpc) return;
+                        rpc
+                            .finally(() => (this.isRequesting = false))
+                            .subscribe(
+                                (result) => {
+                                    if (result) {
+                                        this._router.navigate(['/podcasts']);
+                                    }
+                                },
+                                (error) => {
+                                    this.errorMessage = error;
+                                }
+                            );
                     }
                 });
         } else if (provider === 'google-oauth2') {
-            this._socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-                .then(user => {
+            this._socialAuthService
+                .signIn(GoogleLoginProvider.PROVIDER_ID)
+                .then((user) => {
                     if (user) {
                         const rpc = this._authService.googleLogin(user.idToken);
                         if (!rpc) return;
-                        rpc.finally(() => (this.isRequesting = false)).subscribe(
-                            (result) => {
-                                if (result) {
-                                    this._router.navigate(['/podcasts']);
+                        rpc
+                            .finally(() => (this.isRequesting = false))
+                            .subscribe(
+                                (result) => {
+                                    if (result) {
+                                        this._router.navigate(['/podcasts']);
+                                    }
+                                },
+                                (error) => {
+                                    this.errorMessage = error;
                                 }
-                            },
-                            (error) => {
-                                this.errorMessage = error;
-                            }
-                        );
+                            );
                     }
                 });
         } else {

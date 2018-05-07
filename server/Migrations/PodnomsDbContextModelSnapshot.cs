@@ -160,10 +160,10 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("ImageUrl");
-
                     b.Property<string>("Slug")
                         .IsUnicode(true);
+
+                    b.Property<string>("TemporaryImageUrl");
 
                     b.Property<string>("Title");
 
@@ -171,13 +171,9 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<DateTime>("UpdateDate");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Podcasts");
                 });
@@ -230,49 +226,6 @@ namespace PodNoms.Api.Migrations
                     b.ToTable("PodcastEntries");
                 });
 
-            modelBuilder.Entity("PodNoms.Api.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApiKey")
-                        .HasMaxLength(50);
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("ProfileImage");
-
-                    b.Property<string>("ProviderId")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("RefreshToken");
-
-                    b.Property<string>("Sid")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Slug")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Uid")
-                        .HasMaxLength(50);
-
-                    b.Property<DateTime>("UpdateDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique()
-                        .HasFilter("[Slug] IS NOT NULL");
-
-                    b.ToTable("UserDetails");
-                });
-
             modelBuilder.Entity("PodNoms.Api.Services.Auth.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -313,6 +266,8 @@ namespace PodNoms.Api.Migrations
                     b.Property<string>("PictureUrl");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Slug");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -390,10 +345,6 @@ namespace PodNoms.Api.Migrations
                     b.HasOne("PodNoms.Api.Services.Auth.ApplicationUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("PodNoms.Api.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PodNoms.Api.Models.PodcastEntry", b =>

@@ -1,5 +1,4 @@
 import { GlobalsService } from './services/globals.service';
-import { CallbackComponent } from './components/callback/callback.component';
 import { PodcastUploadFormComponent } from './components/podcast/podcast-upload-form/podcast-upload-form.component';
 import { PodcastAddUrlFormComponent } from './components/podcast/podcast-add-url-form/podcast-add-url-form.component';
 import { PodcastAddFormComponent } from './components/podcast/podcast-add-form/podcast-add-form.component';
@@ -7,11 +6,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import {
+    NgcCookieConsentModule,
+    NgcCookieConsentConfig
+} from 'ngx-cookieconsent';
 import { ToastyModule } from 'ng2-toasty';
+
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import { QuillModule } from 'ngx-quill';
+
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {
     GoogleLoginProvider,
@@ -67,11 +73,40 @@ import { AudioService } from 'app/services/audio.service';
 import { HumaniseTimePipe } from './pipes/humanise-time.pipe';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PodNomsApiInterceptor } from './interceptors/podnoms-api.interceptor';
+import { SideOverlayComponent } from './components/side-overlay/side-overlay.component';
+import { UiStateService } from './services/ui-state.service';
+import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
+import { BasePageComponent } from './components/base-page/base-page.component';
 
-let config = new AuthServiceConfig([
+const cookieConfig: NgcCookieConsentConfig = {
+    cookie: {
+        domain: environment.DOMAIN
+    },
+    palette: {
+        popup: {
+            background: '#64386b',
+            text: '#ffcdfd'
+        },
+        button: {
+            background: 'transparent',
+            text: '#f8a8ff',
+            border: '#f8a8ff'
+        }
+    },
+    position: 'top',
+    static: true,
+    content: {
+        message: 'We use cookies, suck it up!',
+        href: 'https://podnoms.com/boilerplate/privacy'
+    }
+};
+
+const config = new AuthServiceConfig([
     {
         id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider('357461672895-2mevm3b10b4bd3gjdvugl00up8ba2n4m.apps.googleusercontent.com')
+        provider: new GoogleLoginProvider(
+            '357461672895-2mevm3b10b4bd3gjdvugl00up8ba2n4m.apps.googleusercontent.com'
+        )
     },
     {
         id: FacebookLoginProvider.PROVIDER_ID,
@@ -99,14 +134,16 @@ export function provideConfig() {
         PodcastAddUrlFormComponent,
         DebugComponent,
         SidebarComponent,
-        CallbackComponent,
         RegisterComponent,
         ResetComponent,
         ProfileComponent,
         AboutComponent,
         FooterComponent,
         FooterPlayerComponent,
-        HumaniseTimePipe
+        HumaniseTimePipe,
+        SideOverlayComponent,
+        BoilerplateComponent,
+        BasePageComponent
     ],
     imports: [
         BrowserModule,
@@ -126,9 +163,11 @@ export function provideConfig() {
         FormsModule,
         InlineEditorModule,
         MomentModule,
+        QuillModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),
+        NgcCookieConsentModule.forRoot(cookieConfig),
         DropzoneModule,
         ClipboardModule,
         SocialLoginModule,
@@ -146,6 +185,7 @@ export function provideConfig() {
     ],
     providers: [
         PodnomsAuthService,
+        UiStateService,
         AuthGuard,
         {
             provide: HTTP_INTERCEPTORS,

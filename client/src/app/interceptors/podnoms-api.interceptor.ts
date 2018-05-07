@@ -5,12 +5,18 @@ import {
     HttpHandler,
     HttpRequest,
     HttpHeaderResponse,
-    HttpHeaders
+    HttpHeaders,
+    HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { PodnomsAuthService } from '../services/podnoms-auth.service';
 
 @Injectable()
 export class PodNomsApiInterceptor implements HttpInterceptor {
+
+    constructor(private _authService: PodnomsAuthService) {
+
+    }
     private commonHeaders(): HttpHeaders {
         const headers = new HttpHeaders({
             'cache-control': 'no-cache',
@@ -31,6 +37,13 @@ export class PodNomsApiInterceptor implements HttpInterceptor {
         const changedReq = req.clone({
             headers: headers
         });
-        return next.handle(changedReq);
+        return next.handle(changedReq).do(
+            (event: HttpEvent<any>) => {},
+            (err: any) => {
+                if (err instanceof HttpErrorResponse && err.status === 401) {
+                    this._authService.logout();
+                }
+            }
+        );
     }
 }

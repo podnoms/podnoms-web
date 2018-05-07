@@ -33,8 +33,8 @@ export class EntriesEffects {
     add$ = this.actions$
         .ofType(entries.ADD)
         .switchMap((action: entries.AddAction) =>
-            //this is probably (definitely) superfluous as we've now moved
-            //the addEntry into the component
+            // this is probably (definitely) superfluous as we've now moved
+            // the addEntry into the component
             this._service.updateEntry(action.payload)
                 .map(res => {
                     console.log('EntriesEffects', 'add$', res);

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using SixLabors.ImageSharp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +15,18 @@ using PodNoms.Api.Persistence;
 using PodNoms.Api.Services;
 using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
+using Microsoft.AspNetCore.Identity;
+using PodNoms.Api.Services.Auth;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Transforms;
+using SixLabors.ImageSharp.Processing.Filters;
 
 namespace PodNoms.Api.Controllers {
     [Authorize]
     [Route("/podcast/{slug}/imageupload")]
-    public class ImageUploadController : Controller {
+    public class ImageUploadController : BaseAuthController {
         private readonly IPodcastRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -31,7 +36,9 @@ namespace PodNoms.Api.Controllers {
 
         public ImageUploadController(IPodcastRepository repository, IUnitOfWork unitOfWork,
                 IFileUploader fileUploader, IOptions<ImageFileStorageSettings> imageFileStorageSettings,
-                ILoggerFactory loggerFactory, IMapper mapper) {
+                ILoggerFactory loggerFactory, IMapper mapper, UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
+            : base(contextAccessor, userManager) {
+
             this._fileUploader = fileUploader;
             this._imageFileStorageSettings = imageFileStorageSettings.Value;
             this._repository = repository;
@@ -42,42 +49,64 @@ namespace PodNoms.Api.Controllers {
         [HttpPost]
         public async Task<IActionResult> Upload(string slug, IFormFile file) {
             _logger.LogDebug("Uploading new image");
-            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            if (!string.IsNullOrEmpty(email)) {
-                if (file == null || file.Length == 0) return BadRequest("No file found in stream");
-                if (file.Length > _imageFileStorageSettings.MaxUploadFileSize) return BadRequest("Maximum file size exceeded");
-                if (!_imageFileStorageSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type");
+            if (file == null || file.Length == 0) return BadRequest("No file found in stream");
+            if (file.Length > _imageFileStorageSettings.MaxUploadFileSize) return BadRequest("Maximum file size exceeded");
+            if (!_imageFileStorageSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type");
 
-                var podcast = await _repository.GetAsync(email, slug);
-                if (podcast == null)
-                    return NotFound();
+            var podcast = await _repository.GetAsync(_applicationUser.Id, slug);
+            if (podcast == null)
+                return NotFound();
 
-                var cacheFile = await CachedFormFileStorage.CacheItem(file);
-                (var finishedFile, var extension) = __todo_convert_cache_file(cacheFile, podcast.Uid);
+            var cacheFile = await CachedFormFileStorage.CacheItem(file);
+            (var finishedFile, var extension) = __todo_convert_cache_file(cacheFile, podcast.Uid);
+            var thumbnailFile = __todo_create_thumbnail(cacheFile, podcast.Uid);
 
-                var destinationFile = $"{System.Guid.NewGuid().ToString()}.{extension}";
-                podcast.ImageUrl = destinationFile;
+            var destinationFile = $"{podcast.Uid}.{extension}";
+            var destinationFileThumbnail = $"{podcast.Uid}-32x32.{extension}";
 
-                var imageUrl = await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
-                    destinationFile, (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
+            await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
+                destinationFile, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
 
-                await _repository.AddOrUpdateAsync(podcast);
+            await _fileUploader.UploadFile(thumbnailFile, _imageFileStorageSettings.ContainerName,
+                           destinationFileThumbnail, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
 
-                await this._unitOfWork.CompleteAsync();
+            await _repository.AddOrUpdateAsync(podcast);
+            podcast.TemporaryImageUrl = string.Empty;
+            await this._unitOfWork.CompleteAsync();
 
-                return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));
-            }
-            return Unauthorized();
+            return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));
         }
 
         //TODO: Refactor this to service
         private (string, string) __todo_convert_cache_file(string cacheFile, string prefix) {
-            var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}.jpg");
-            using (Image<Rgba32> image = Image.Load(cacheFile)) {
-                image.Save(outputFile);
-            }
+            // return (cacheFile, "jpg");
+            var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}.png");
+            if (System.IO.File.Exists(outputFile))
+                System.IO.File.Delete(outputFile);
 
-            return (outputFile, "jpg");
+            using (Image<Rgba32> image = Image.Load(cacheFile)) {
+                image.Mutate(x => x
+                    .Resize(1400, 1400));
+                using (var outputStream = new FileStream(outputFile, FileMode.CreateNew)) {
+                    image.SaveAsPng(outputStream);
+                }
+            }
+            return (outputFile, "png");
+        }
+        private string __todo_create_thumbnail(string cacheFile, string prefix) {
+            // return (cacheFile, "jpg");
+            var outputFile = Path.Combine(Path.GetTempPath(), $"{prefix}-32x32.png");
+            if (System.IO.File.Exists(outputFile))
+                System.IO.File.Delete(outputFile);
+
+            using (Image<Rgba32> image = Image.Load(cacheFile)) {
+                image.Mutate(x => x
+                    .Resize(32, 32));
+                using (var outputStream = new FileStream(outputFile, FileMode.CreateNew)) {
+                    image.SaveAsPng(outputStream);
+                }
+            }
+            return outputFile;
         }
     }
 }
