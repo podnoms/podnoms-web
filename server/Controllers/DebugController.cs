@@ -51,8 +51,8 @@ namespace PodNoms.Api.Controllers {
             this._notificationService = notificationService;
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize]
         public IActionResult Get() {
             var config = new {
                 Version = _appSettings.Version,
@@ -61,6 +61,7 @@ namespace PodNoms.Api.Controllers {
                 ImageContainer = _imageFileStorageSettings.ContainerName,
                 YouTubeDlPath = _applicationsSettings.Downloader,
                 YouTubeDlVersion = AudioDownloader.GetVersion(_applicationsSettings.Downloader),
+                OSVersion = System.Environment.OSVersion,
                 RssUrl = _appSettings.RssUrl
             };
             return new OkObjectResult(config);
