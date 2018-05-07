@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/DTDs/Podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/">
-<channel>
-    <title> {{title}} </title>
-    <description> {{description}} </description>
-    <itunes:author>{{author}} </itunes:author>
-    <itunes:summary>Podcast {{title}} from PodNoms </itunes:summary>
-    <itunes:category>{{title}}</itunes:category>
-    <link>{{link}}</link>
-    <itunes:image href="{{image}}" />
-    <pubDate> {{publishDate}} </pubDate>
-    <language>{{language}}</language>
-    <copyright>{{copyright}}</copyright>
-    {{#each Items}}
-    <item>
+<rss
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
         <title> {{title}} </title>
-        <description>{{description}}</description>
-        <itunes:author>{{author}}</itunes:author>
-        <itunes:summary>{{description}}</itunes:summary>
-        <summary>{{description}}</summary>
-        <pubDate> {{updateDate}}</pubDate>
-        <enclosure url="{{audioUrl}}" length="{{audioFileSize}}" type="audio/mpeg" /> 
-    </item>
-    {{/each}}
-</channel>
+        <description>Podcast {{title}} from PodNoms</description>
+        <itunes:author>{{author}} </itunes:author>
+        <itunes:summary>Podcast {{title}} from PodNoms</itunes:summary>
+        <category>Technology</category>
+        <category>Software How-To</category>
+		<itunes:category text="Technology"><itunes:category text="Software How-To"/></itunes:category><itunes:category text="Technology"><itunes:category text="Gadgets"/></itunes:category><itunes:category text="Technology"><itunes:category text="Software How-To"/></itunes:category>
+        <link>{{link}}</link>
+        <itunes:image href="{{image}}" />
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:owner>
+            <itunes:name>{{owner}}</itunes:name>
+            <itunes:email>{{ownerEmail}}</itunes:email>
+        </itunes:owner>
+        <atom:link href="{{showUrl}}" rel="self" type="application/rss+xml" />
+        <pubDate> {{publishDate}} </pubDate>
+        <language>{{language}}</language>
+        <copyright>{{copyright}}</copyright>    {{#each Items}}
+        <item>
+            <title> {{title}} </title>
+            <guid isPermaLink="false">{{uid}}</guid>
+            <description>{{description}}</description>
+            <itunes:author>{{author}}</itunes:author>
+            <itunes:summary>{{description}}</itunes:summary>
+            <pubDate> {{updateDate}}</pubDate>
+            <enclosure url="{{audioUrl}}" length="{{audioFileSize}}" type="audio/mpeg" />
+        </item>    {{/each}}
+
+    </channel>
 </rss>

@@ -18,62 +18,63 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IFileUploader _fileUploader;
         private readonly AudioFileStorageSettings _audioStorageSettings;
 
-        public AudioUploadProcessService (IEntryRepository repository, IUnitOfWork unitOfWork,
+        public AudioUploadProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<AudioFileStorageSettings> audioStorageSettings,
-            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) : base (logger, mapper, realtimeUpdater) {
+            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) : base(logger, mapper, realtimeUpdater) {
             this._repository = repository;
             this._unitOfWork = unitOfWork;
             this._fileUploader = fileUploader;
             this._audioStorageSettings = audioStorageSettings.Value;
         }
-        public async Task<bool> UploadAudio (int entryId, string localFile) {
-            var entry = await _repository.GetAsync (entryId);
+        public async Task<bool> UploadAudio(int entryId, string localFile) {
+            var entry = await _repository.GetAsync(entryId);
             if (entry == null) {
-                _logger.LogError ($"Unable to find entry with id: {entryId}");
+                _logger.LogError($"Unable to find entry with id: {entryId}");
                 return false;
             }
             entry.ProcessingStatus = ProcessingStatus.Uploading;
-            await _unitOfWork.CompleteAsync ();
+            await _unitOfWork.CompleteAsync();
             try {
                 // bit messy but can't figure how to pass youtube-dl job result to this job
                 // so using AudioUrl as a proxy
-                if (string.IsNullOrEmpty (localFile))
+                if (string.IsNullOrEmpty(localFile))
                     localFile = entry.AudioUrl;
 
-                if (File.Exists (localFile)) {
-                    var fileName = new FileInfo (localFile).Name;
-                    await _fileUploader.UploadFile (localFile, _audioStorageSettings.ContainerName, fileName,
+                if (File.Exists(localFile)) {
+                    var fileName = new FileInfo(localFile).Name;
+                    await _fileUploader.UploadFile(localFile, _audioStorageSettings.ContainerName, fileName,
+                        "application/mpeg",
                         async (p, t) => {
                             if (p % 1 == 0) {
-                                await _sendProgressUpdate (
-                                    entry.Podcast.User.GetUserId (),
+                                await _sendProgressUpdate(
+                                    entry.Podcast.AppUser.Id,
                                     entry.Uid,
                                     new ProcessProgressEvent {
                                         Percentage = p,
-                                            CurrentSpeed = string.Empty,
-                                            TotalSize = t.ToString ()
+                                        CurrentSpeed = string.Empty,
+                                        TotalSize = t.ToString()
                                     });
                             }
                         });
                     entry.Processed = true;
                     entry.ProcessingStatus = ProcessingStatus.Processed;
                     entry.AudioUrl = $"{_audioStorageSettings.ContainerName}/{fileName}";
-                    await _unitOfWork.CompleteAsync ();
-                    await _sendProcessCompleteMessage (entry);
+                    await _unitOfWork.CompleteAsync();
+                    await _sendProcessCompleteMessage(entry);
                     return true;
                 } else {
-                    _logger.LogError ($"Error uploading audio file: {entry.AudioUrl} does not exist");
+                    _logger.LogError($"Error uploading audio file: {entry.AudioUrl} does not exist");
                     entry.ProcessingStatus = ProcessingStatus.Failed;
                     entry.ProcessingPayload = $"Unable to find {entry.AudioUrl}";
-                    await _unitOfWork.CompleteAsync ();
-                    await _sendProcessCompleteMessage (entry);
+                    await _unitOfWork.CompleteAsync();
+                    await _sendProcessCompleteMessage(entry);
                 }
             } catch (Exception ex) {
-                _logger.LogError ($"Error uploading audio file: {ex.Message}");
+                _logger.LogError($"Error uploading audio file: {ex.Message}");
                 entry.ProcessingStatus = ProcessingStatus.Failed;
                 entry.ProcessingPayload = ex.Message;
-                await _unitOfWork.CompleteAsync ();
-                await _sendProcessCompleteMessage (entry);
+                await _unitOfWork.CompleteAsync();
+                await _sendProcessCompleteMessage(entry);
             }
             return false;
         }

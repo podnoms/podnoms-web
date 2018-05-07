@@ -1,19 +1,19 @@
-<div class="content" *ngIf="selectedPodcast$ | async; let podcast; else empty">
+<div class="podcast-container-wrapper" *ngIf="selectedPodcast$ | async; let podcast; else empty">
     <div class="block">
         <div class="block-header block-header-default">
             <h3 class="block-title">{{podcast.title}}</h3>
             <div class="block-options">
                 <div class="btn-group" role="group" aria-label="Podcast actions">
                     <a [routerLink]="['/podcasts', podcast.slug, 'edit']" class="btn btn-secondary btn-outline">
-                        <i class="icon-pencil" aria-hidden="true"></i> Edit
+                        <i class="si si-pencil" aria-hidden="true"></i> Edit
                     </a>
                     <a (click)="podcastDeleteDialog.show()" class="btn btn-secondary btn-outline-danger">
-                        <i class="icon-close" aria-hidden="true"></i> Delete
+                        <i class="si si-close" aria-hidden="true"></i> Delete
                     </a>
                     <a class="btn btn-secondary" (click)="startAddEntry()">
-                        <i class="icon-plus"></i> Add (from URL)</a>
+                        <i class="si si-plus"></i> Add (from URL)</a>
                     <a class="btn btn-secondary" (click)="startUpload()">
-                        <i class="icon-cloud-upload"></i> Upload (from computer)</a>
+                        <i class="si si-cloud-upload"></i> Upload (from computer)</a>
                 </div>
                 <div class="btn-group" role="group" aria-label="Podcast actions">
                     <a class="btn btn-secondary btn-outline-warning" [href]="podcast.rssUrl" target="_blank">
@@ -32,7 +32,8 @@
             </app-podcast-add-url-form>
             <div class="block block-themed" *ngIf="pendingEntry">
                 <div class="block-header bg-danger">
-                    <h3 class="block-title">This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes being downloaded to your device).</h3>
+                    <h3 class="block-title">This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes
+                        being downloaded to your device).</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" (click)="processPlaylist()">
                             <i class="fa fa-check"></i>Yes
@@ -43,11 +44,13 @@
                     </div>
                 </div>
             </div>
-            <table class="js-table-checkable table table-hover js-table-checkable-enabled">
-                <tbody>
-                    <tr *ngFor="let e of entries$ | async | orderBy : '-id'" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr *ngFor="let e of entries$ | async | orderBy : '-id'" app-entry-list-item (entryRemoved)='deleteEntry(e)' [entry]="e">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">

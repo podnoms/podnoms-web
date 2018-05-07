@@ -10,12 +10,10 @@ namespace PodNoms.Api.Controllers {
 
     [Route("[controller]")]
     public class AccountsController : Controller {
-        private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public AccountsController(IUserRepository userRepository, UserManager<ApplicationUser> userManager, IMapper mapper) {
-            this._userRepository = userRepository;
+        public AccountsController(UserManager<ApplicationUser> userManager, IMapper mapper) {
             this._userManager = userManager;
             this._mapper = mapper;
         }

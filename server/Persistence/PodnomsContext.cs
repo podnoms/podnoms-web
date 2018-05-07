@@ -29,15 +29,10 @@ namespace PodNoms.Api.Persistence {
                 .Property(b => b.CreateDate)
                 .HasDefaultValueSql("getdate()");
 
-            modelBuilder.Entity<User>()
-                .HasIndex(e => e.Slug)
-                 .IsUnique(true);
-
         }
 
         public DbSet<Podcast> Podcasts { get; set; }
         public DbSet<PodcastEntry> PodcastEntries { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
-        public DbSet<User> UserDetails { get; set; }
     }
 }

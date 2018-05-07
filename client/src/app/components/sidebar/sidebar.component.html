@@ -20,13 +20,17 @@
         </div>
     </div>
     <div class="content-side content-side-full">
+        <button type="button" class="btn btn-block btn-alt-success push d-flex align-items-center justify-content-between" (click)="doAddPodcast()">
+            <span>Add Podcast</span>
+            <i class="fa fa-plus float-right"></i>
+        </button>
         <ul class="nav-main">
             <li class="nav-main-heading">
                 <span>My Podcasts</span>
             </li>
             <li *ngFor="let podcast of podcasts$ | async | orderBy : '-id'">
                 <a [routerLink]="['/podcasts', podcast.slug]" [routerLinkActive]="['active']">
-                    <img class="sidebar-icon" [src]="podcast.imageUrl">
+                    <img class="sidebar-icon" [src]="podcast.thumbnailUrl">
                     <span class="sidebar-mini-hide">{{podcast.title}}</span>
                 </a>
             </li>

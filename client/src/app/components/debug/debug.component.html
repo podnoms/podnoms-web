@@ -1,52 +1,34 @@
-<div class="content">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="block">
-                    <div class="block-header">
-                        Desktop Notifications
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="block">
+                <div class="block-header">Debug Info</div>
+                <div class="block-content">
+                    <div class="row">
+                        API Host: {{apiHost}}
+                        <br /> SignalR Hos: {{signalrHost}}
+                        <br /> Ping: {{pingPong}}
                     </div>
-                    <div class="block-content">
-                        <button class="btn btn-danger" (click)="subscribeToServerPush()">Subscribe to server push</button>
-                        <button class="btn btn-danger" (click)="sendServerPush()">Send server push</button>
-                        <br />
-                        <div id="realtime-results" *ngIf="message$ | async as message">
-                            <h5>{{ message.notification.title}}</h5>
-                            <img [src]="message.notification.icon" width="100px;">
-                            <p>{{ message.notification.body}}</p>
-                        </div>
+                    <div class="row">
+                        <pre [innerHtml]="(debugInfo$ | async) | prettyprint"></pre>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="block">
-                    <div class="block-header">Debug Info</div>
-                    <div class="block-content">
-                        <div class="row">
-                            API Host: {{apiHost}}
-                            <br /> SignalR Hos: {{signalrHost}}
-                            <br /> Ping: {{pingPong}}
-                        </div>
-                        <div class="row">
-                            <pre [innerHtml]="(debugInfo$ | async) | prettyprint"></pre>
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="block">
+                <div class="block-header">
+                    Jobs
                 </div>
-            </div>
-            <div class="row">
-                <div class="block">
-                    <div class="block-header">
-                        Jobs
-                    </div>
-                    <div class="block-content">
-                        <button class="btn btn-primary" (click)="processOrphans()">Process Orphans</button>
-                        <button class="btn btn-primary" (click)="processPlaylists()">Process Playlists</button>
-                        <button class="btn btn-primary" (click)="updateYouTubeDl()">Update Youtube Downloader</button>
-                    </div>
+                <div class="block-content">
+                    <button class="btn btn-primary" (click)="processOrphans()">Process Orphans</button>
+                    <button class="btn btn-primary" (click)="processPlaylists()">Process Playlists</button>
+                    <button class="btn btn-primary" (click)="updateYouTubeDl()">Update Youtube Downloader</button>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-default" (click)="requestPushCallback()">Request push callback</button>
     </div>
 </div>

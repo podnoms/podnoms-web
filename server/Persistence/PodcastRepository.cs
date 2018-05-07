@@ -23,24 +23,23 @@ namespace PodNoms.Api.Persistence {
         public async Task<Podcast> GetAsync(int id) {
             var ret = await _context.Podcasts
                 .Where(p => p.Id == id)
-                .Include(p => p.User)
+                .Include(p => p.AppUser)
                 .FirstOrDefaultAsync();
 
             return ret;
         }
-        public async Task<Podcast> GetAsync(string emailAddress, string slug) {
+        public async Task<Podcast> GetAsync(string id, string slug) {
             var ret = await _context.Podcasts
-                .Where(p => p.Slug == slug && p.User.EmailAddress == emailAddress)
+                .Where(p => p.Slug == slug && p.AppUser.Id == id)
                 .Include(p => p.PodcastEntries)
-                .Include(p => p.User)
+                .Include(p => p.AppUser)
                 .FirstOrDefaultAsync();
 
             return ret;
         }
-        public async Task<IEnumerable<Podcast>> GetAllAsync(string userId) {
+        public async Task<IEnumerable<Podcast>> GetAllAsync(string id) {
             var ret = _context.Podcasts
-                .Where(u => u.AppUser.Id == userId)
-                .Include(p => p.User)
+                .Where(u => u.AppUser.Id == id)
                 .Include(p => p.AppUser)
                 .OrderByDescending(p => p.Id);
             return await ret.ToListAsync();
@@ -49,19 +48,15 @@ namespace PodNoms.Api.Persistence {
             if (item.Id != 0) {
                 _context.Entry(item).State = EntityState.Modified;
             } else {
-                var localFile = await HttpUtils.DownloadFile($"http://lorempixel.com/1400/1400/?{System.Guid.NewGuid().ToString()}");
                 item.Uid = System.Guid.NewGuid().ToString();
                 if (string.IsNullOrEmpty(item.Slug) && !string.IsNullOrEmpty(item.Title)) {
                     item.Slug = item.Title.Slugify(
                         from p in _context.Podcasts
                         select p.Slug);
                 }
-                item.ImageUrl = $"{item.Uid}.jpg";
-                _context.Podcasts.Add(item);
-                var file = await _fileUploader.UploadFile(
-                    localFile, _imageStorageSettings.ContainerName, item.ImageUrl, null);
+                item.TemporaryImageUrl = $"standard/podcast-image-{Randomisers.RandomInteger(1, 16)}.png";
+                await _context.Podcasts.AddAsync(item);
             }
-
             return item;
         }
         public async Task<int> DeleteAsync(int id) {

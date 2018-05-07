@@ -7,5 +7,6 @@ namespace PodNoms.Api.Services.Auth {
         public string LastName { get; set; }
         public long? FacebookId { get; set; }
         public string PictureUrl { get; set; }
+        public string Slug { get; set; }
     }
 }

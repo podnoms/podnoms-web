@@ -5,5 +5,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: #f5f5f5;
+}
+.foooter-player-wrapper {
+    padding: 0 0 0 220px;
 }

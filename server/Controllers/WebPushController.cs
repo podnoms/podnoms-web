@@ -5,24 +5,28 @@ using Microsoft.AspNetCore.Mvc;
 using PodNoms.Api.Services.Push;
 using PodNoms.Api.Services.Push.Models;
 using PodNoms.Api.Persistence;
+using Microsoft.AspNetCore.Identity;
+using PodNoms.Api.Services.Auth;
+using Microsoft.AspNetCore.Http;
 
 namespace PodNoms.Api.Controllers {
 
     // [Authorize]
     [Route("[controller]")]
-    public class WebPushController : UserController {
+    public class WebPushController : BaseAuthController {
         private readonly IPushSubscriptionStore _subscriptionStore;
         public readonly IPushNotificationService _notificationService;
 
-        public WebPushController(IUserRepository userRepository, IPushSubscriptionStore subscriptionStore,
-                        IPushNotificationService notificationService) : base(userRepository) {
+        public WebPushController(IPushSubscriptionStore subscriptionStore, IPushNotificationService notificationService,
+                                    UserManager<ApplicationUser> userManager,
+                                    IHttpContextAccessor contextAccessor) : base(contextAccessor, userManager) {
             this._subscriptionStore = subscriptionStore;
             this._notificationService = notificationService;
         }
 
         [HttpPost("subscribe")]
         public async Task<IActionResult> StoreSubscription([FromBody]WebPush.PushSubscription subscription) {
-            subscription.Keys["auth"] = $"{await this.GetUserUidAsync()}";
+            subscription.Keys["auth"] = _applicationUser.Id;
             await _subscriptionStore.StoreSubscriptionAsync(subscription);
             return NoContent();
         }

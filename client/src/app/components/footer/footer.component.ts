@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AudioService } from 'app/services/audio.service';
+import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
 
 @Component({
     selector: 'app-footer',
@@ -8,7 +9,9 @@ import { AudioService } from 'app/services/audio.service';
 })
 export class FooterComponent implements OnInit {
     showPlayer: boolean = false;
-    constructor(private _audioService: AudioService) {}
+    constructor(
+        private _audioService: AudioService
+    ) {}
 
     ngOnInit() {
         console.log('footer.component', 'ngOnInit');

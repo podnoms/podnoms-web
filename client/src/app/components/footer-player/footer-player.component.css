@@ -1,8 +1,6 @@
 .webPlayer {
-    padding: 0 220px 0 220px;
     width: 100%;
     clear: both;
-    background-color: #42a5f5;
 }
 .webPlayer.light {
     display: inline-block;
@@ -73,7 +71,7 @@
     display: block;
     position: relative;
     height: 40px;
-    background-color: #d3eafd;
+    /* background-color: #d3eafd;   */
     /* background: #ccccc0; */
     color: #646464;
     padding: 5px 10px;

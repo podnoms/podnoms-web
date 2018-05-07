@@ -32,9 +32,9 @@ export class ProfileService {
         );
     }
 
-    checkSlug(slug): Observable<string> {
+    checkSlug(slug): Observable<Response> {
         console.log('profile.service.ts', 'checkSlug', slug);
-        return this._http.get<string>(
+        return this._http.get<Response>(
             environment.API_HOST + '/profile/checkslug/' + slug
         );
     }
