@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PodNoms.Api.Models;
 using PodNoms.Api.Models.ViewModels;
+using PodNoms.Api.Services;
 using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Utils;
 
@@ -17,15 +18,15 @@ namespace PodNoms.Api.Controllers {
     public class AuthController : Controller {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtFactory _jwtFactory;
-        private readonly IEmailSender _emailSender;
+        private readonly IMailSender _emailSender;
         private readonly AppSettings _appSettings;
         private readonly JwtIssuerOptions _jwtOptions;
 
         public AuthController(UserManager<ApplicationUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions,
-                    IOptions<AppSettings> appSettings, IEmailSender emailSender) {
+                    IOptions<AppSettings> appSettings, IMailSender mailSender) {
             _userManager = userManager;
             _jwtFactory = jwtFactory;
-            _emailSender = emailSender;
+            _emailSender = mailSender;
             _appSettings = appSettings.Value;
             _jwtOptions = jwtOptions.Value;
         }
@@ -77,7 +78,7 @@ namespace PodNoms.Api.Controllers {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = $"{_appSettings.SiteUrl}/reset?token={WebUtility.UrlEncode(code)}&email={WebUtility.UrlEncode(user.Email)}";
                 await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+                            new { resetLink = callbackUrl }, "forgot_password.html");
                 return Ok(model);
             }
             return BadRequest(model);
