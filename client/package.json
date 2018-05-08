@@ -1,6 +1,6 @@
 {
   "name": "pod-noms.web",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -50,9 +50,13 @@
     "ngx-moment": "^2.0.0-rc.0",
     "ngx-quill": "^3.0.0",
     "popper.js": "^1.13.0",
+<<<<<<< HEAD
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",
     "simple-line-icons": "^2.4.1",
+=======
+    "rxjs": "5.5.6",
+>>>>>>> develop
     "tether": "^1.4.3",
     "uglify-es": "^3.3.10",
     "zone.js": "^0.8.26"

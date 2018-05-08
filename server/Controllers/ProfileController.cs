@@ -29,7 +29,7 @@ namespace PodNoms.Api.Controllers {
             this._unitOfWork = unitOfWork;
         }
         [HttpGet]
-        public async Task<ActionResult<ProfileViewModel>> Get() {
+        public ActionResult<ProfileViewModel> Get() {
             var result = _mapper.Map<ApplicationUser, ProfileViewModel>(_applicationUser);
             return new OkObjectResult(result);
         }

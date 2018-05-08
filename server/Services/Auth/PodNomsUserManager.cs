@@ -15,7 +15,6 @@ using PodNoms.Api.Utils;
 
 namespace PodNoms.Api.Services.Auth {
     public class PodNomsUserManager : UserManager<ApplicationUser> {
-        private readonly PodnomsDbContext _context;
         private readonly GravatarHttpClient _gravatarClient;
         private readonly IMailSender _mailSender;
         private readonly StorageSettings _storageSettings;
@@ -38,7 +37,7 @@ namespace PodNoms.Api.Services.Auth {
             _checkName(user);
             await _imageify(user);
             try {
-                await _mailSender.SendEmail("fergal.moran@gmail.com", "New user signup", $"{user.Email}\n{user.FirstName} {user.LastName}");
+                await _mailSender.SendEmailAsync("fergal.moran@gmail.com", "New user signup", $"{user.Email}\n{user.FirstName} {user.LastName}");
             } catch (Exception) {
 
             }
