@@ -24,16 +24,16 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IEntryRepository _repository;
 
         public ApplicationsSettings _applicationsSettings { get; }
-        private readonly HubLifetimeManager<ChatterHub> _chatterHub;
+        private readonly HubLifetimeManager<UserUpdatesHub> _userUpdateHub;
 
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
-            HubLifetimeManager<ChatterHub> chatterHub,
+            HubLifetimeManager<UserUpdatesHub> userUpdateHub,
             ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher) {
             this._applicationsSettings = applicationsSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
-            this._chatterHub = chatterHub;
+            this._userUpdateHub = userUpdateHub;
         }
 
         private async Task __downloader_progress(string userId, string uid, ProcessProgressEvent e) {
@@ -97,8 +97,8 @@ namespace PodNoms.Api.Services.Processor {
 
                     await _sendProcessCompleteMessage(entry);
                     await _unitOfWork.CompleteAsync();
-                    await _chatterHub.SendAllAsync(
-                        $"{entry.Podcast.AppUser.Id}_chatter",
+                    await _userUpdateHub.SendAllAsync(
+                        entry.Podcast.AppUser.Id,
                         new object[] { $"{entry.Title} has succesfully been processed" });
 
                 }
@@ -108,8 +108,8 @@ namespace PodNoms.Api.Services.Processor {
                 entry.ProcessingPayload = ex.Message;
                 await _unitOfWork.CompleteAsync();
                 await _sendProcessCompleteMessage(entry);
-                await _chatterHub.SendAllAsync(
-                    $"{entry.Podcast.AppUser.Id}_chatter",
+                await _userUpdateHub.SendAllAsync(
+                    entry.Podcast.AppUser.Id,
                     new object[] { $"Error processing {entry.Title}" });
             }
             return false;
