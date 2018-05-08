@@ -23,7 +23,6 @@ using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils.RemoteParsers;
 
 namespace PodNoms.Api.Controllers {
-
     [Route("[controller]")]
     public class EntryController : BaseAuthController {
         private readonly IPodcastRepository _podcastRepository;

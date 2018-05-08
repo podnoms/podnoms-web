@@ -1,20 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { FirebaseAuthService } from '../../services/firebase-auth.service';
-import {
-    AngularFirestore,
-    AngularFirestoreCollection,
-    AngularFirestoreDocument
-} from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
 import { ProfileService } from '../../services/profile.service';
-import { FirebaseUser } from '../../models/firebaseuser.model';
+import { SignalRService } from '../../services/signalr.service';
+import { ProfileModel } from 'app/models/profile.model';
+import { ChatService } from 'app/services/chat.service';
+import { ChatModel } from 'app/models/chat.model';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'app/store';
 
-interface ChatMessage {
-    messageText: string;
-    name: string;
-    fromUser: string;
-}
+import * as fromChat from 'app/reducers';
+import * as fromChatActions from 'app/actions/chat.actions';
+import { Observable } from 'rxjs/Observable';
 @Component({
     selector: 'app-chat-widget',
     templateUrl: './chat-widget.component.html',
@@ -23,54 +18,43 @@ interface ChatMessage {
 export class ChatWidgetComponent implements OnInit {
     chatActive: boolean = false;
     loading: boolean = false;
-    currentUser: FirebaseUser;
+    user: ProfileModel;
+    messages$: Observable<ChatModel[]>;
 
-    messageCollection: AngularFirestoreCollection<ChatMessage>;
-    messages: Observable<ChatMessage[]>;
-    userName: string = 'Anonymous User';
     constructor(
-        private _firebaseAuthService: FirebaseAuthService,
         private _profileService: ProfileService,
-        private afs: AngularFirestore
+        private _signalRService: SignalRService,
+        private _store: Store<ApplicationState>
     ) {
-        this._profileService
-            .getProfile()
-            .subscribe((p) => (this.userName = p.firstName + ' ' + p.lastName));
+        this._profileService.getProfile().subscribe((p) => (this.user = p));
+        this.messages$ = _store.select(fromChat.getChat);
     }
 
     ngOnInit() {}
 
     togglePopup() {
         this.chatActive = !this.chatActive;
-        if (this.chatActive) {
+
+        if (this.chatActive && this.user) {
             this.loading = true;
-            this._firebaseAuthService.user.subscribe((u) => {
-                if (u === null) {
-                    this._firebaseAuthService
-                        .anonymousLogin()
-                        .then((user) => this._openChat(user));
-                } else {
-                    this._openChat(u);
-                }
+            this._signalRService.init('chat').then(() => {
+                this.loading = false;
+                this._signalRService.connection.on('SendMessage', (message) => {
+                    console.log(
+                        'chat-widget.component',
+                        'SendMessage',
+                        message
+                    );
+                });
             });
         }
     }
-    _openChat(user) {
-        this.currentUser = user;
-        this.loading = false;
-        this.messageCollection = this.afs.collection('supportchat');
-        this.messages = this.messageCollection.valueChanges();
-    }
 
     sendMessage(el: HTMLInputElement) {
-        if (el.value) {
-            this.afs
-                .collection('supportchat')
-                .add({
-                    fromUid: this.currentUser.uid,
-                    messageText: el.value,
-                    name: this.currentUser.displayName
-                });
-        }
+        const item: ChatModel = {
+            message: el.value
+        };
+        this._store.dispatch(new fromChatActions.AddAction(item));
+        el.value = '';
     }
 }

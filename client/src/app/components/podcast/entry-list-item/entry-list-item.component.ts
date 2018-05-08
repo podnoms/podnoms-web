@@ -25,7 +25,7 @@ export class EntryListItemComponent implements OnInit {
     playing: boolean = false;
 
     constructor(
-        private _signalrService: SignalRService,
+        private _signalRService: SignalRService,
         private _audioService: AudioService,
         private _entryService: PodcastService,
         private _store: Store<ApplicationState>,
@@ -37,7 +37,7 @@ export class EntryListItemComponent implements OnInit {
             !this.entry.processed &&
             this.entry.processingStatus !== 'Failed'
         ) {
-            this._signalrService
+            this._signalRService
                 .init('audioprocessing')
                 .then(() => {
                     const updateChannel: string = `${
@@ -46,14 +46,14 @@ export class EntryListItemComponent implements OnInit {
                     const processedChannel: string = `${
                         this.entry.uid
                     }__info_processed`;
-                    this._signalrService.connection.on(
+                    this._signalRService.connection.on(
                         updateChannel,
                         (result) => {
                             this.percentageProcessed = result.percentage;
                             this.currentSpeed = result.currentSpeed;
                         }
                     );
-                    this._signalrService.connection.on(
+                    this._signalRService.connection.on(
                         processedChannel,
                         (result) => {
                             this.entry = result;
