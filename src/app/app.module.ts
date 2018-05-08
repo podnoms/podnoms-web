@@ -29,7 +29,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
 import { ImageService } from './services/image.service';
 import { DebugService } from './services/debug.service';
-import { ChatterService } from './services/chatter.service';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -208,7 +207,6 @@ export function provideConfig() {
         PushRegistrationService,
         DebugService,
         MessagingService,
-        ChatterService,
         AppInsightsService,
         JobsService,
         AudioService,

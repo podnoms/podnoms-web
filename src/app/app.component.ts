@@ -55,9 +55,9 @@ export class AppComponent implements OnInit {
                 if (p) {
                     this._messagingService.getPermission();
                     this._messagingService.receiveMessage();
-                    const chatterChannel = `${p.uid}_chatter`;
+                    const chatterChannel = `${p.id}`;
                     this._signalrService
-                        .init('chatter')
+                        .init('userupdates')
                         .then((r) => {
                             this._signalrService.connection.on(
                                 chatterChannel,
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
                         .catch((err) => {
                             console.error(
                                 'app.component',
-                                'Unable to initialise chatter hub',
+                                'Unable to initialise site update hub',
                                 err
                             );
                         });
