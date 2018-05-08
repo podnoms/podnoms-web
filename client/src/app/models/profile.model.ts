@@ -4,7 +4,6 @@ export class ProfileModel {
     email: string;
     name: string;
     description?: string;
-    uid?: string;
     profileImage?: string;
     apiKey: string;
     firstName: string;
