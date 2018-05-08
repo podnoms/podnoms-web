@@ -52,6 +52,7 @@ import { DropzoneModule } from './components/shared/dropzone/dropzone.module';
 import { reducers } from './reducers';
 import { PodcastsEffects } from './effects/podcast.effects';
 import { EntriesEffects } from './effects/entries.effects';
+import { ChatEffects } from './effects/chat.effects';
 import { ProfileEffects } from './effects/profile.effects';
 import { PodcastService } from './services/podcast.service';
 import { SignalRService } from 'app/services/signalr.service';
@@ -78,7 +79,7 @@ import { UiStateService } from './services/ui-state.service';
 import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
 import { BasePageComponent } from './components/base-page/base-page.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
-import { FirebaseAuthService } from './services/firebase-auth.service';
+import { ChatService } from 'app/services/chat.service';
 
 const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -181,7 +182,8 @@ export function provideConfig() {
         EffectsModule.forRoot([
             PodcastsEffects,
             EntriesEffects,
-            ProfileEffects
+            ProfileEffects,
+            ChatEffects
         ]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
@@ -210,7 +212,7 @@ export function provideConfig() {
         AppInsightsService,
         JobsService,
         AudioService,
-        FirebaseAuthService,
+        ChatService,
         GlobalsService
     ],
     bootstrap: [AppComponent]

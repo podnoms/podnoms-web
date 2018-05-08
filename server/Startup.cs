@@ -277,6 +277,7 @@ namespace PodNoms.Api {
                 routes.MapHub<AudioProcessingHub>("/hubs/audioprocessing");
                 routes.MapHub<UserUpdatesHub>("/hubs/userupdates");
                 routes.MapHub<DebugHub>("/hubs/debug");
+                routes.MapHub<ChatHub>("/hubs/chat");
             });
 
             app.UseSwagger();

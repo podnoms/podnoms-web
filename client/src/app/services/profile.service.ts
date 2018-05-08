@@ -5,23 +5,29 @@ import { ProfileModel } from 'app/models/profile.model';
 import 'rxjs/add/operator/map';
 import { Profile } from 'selenium-webdriver/firefox';
 import { HttpClient } from '@angular/common/http';
+import { PodnomsAuthService } from './podnoms-auth.service';
 
 @Injectable()
 export class ProfileService {
     profile: ProfileModel;
-    constructor(private _http: HttpClient) {}
+    constructor(
+        private _http: HttpClient,
+        private _authService: PodnomsAuthService
+    ) {}
 
     getProfile(): Observable<ProfileModel> {
-        if (!this.profile) {
-            return this._http
-                .get<ProfileModel>(environment.API_HOST + '/profile')
-                .map((res) => {
-                    this.profile = res;
-                    return this.profile;
-                });
-        } else {
-            return Observable.of(this.profile);
-        }
+        if (this._authService.isAuthenticated()) {
+            if (!this.profile) {
+                return this._http
+                    .get<ProfileModel>(environment.API_HOST + '/profile')
+                    .map((res) => {
+                        this.profile = res;
+                        return this.profile;
+                    });
+            } else {
+                return Observable.of(this.profile);
+            }
+        } else return Observable.of(null);
     }
 
     updateProfile(profile): Observable<ProfileModel> {
