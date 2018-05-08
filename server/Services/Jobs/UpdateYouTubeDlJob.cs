@@ -22,7 +22,7 @@ namespace PodNoms.Api.Services.Jobs {
             yt.Options.GeneralOptions.Update = true;
             yt.Download("https://www.youtube.com/watch?v=OJ2wOKDzKyI");
 
-            var results = await _sender.SendEmail("fergal.moran@gmail.com", "PodNoms: UpdateYouTubeDlJob completed", "As you were");
+            var results = await _sender.SendEmailAsync("fergal.moran@gmail.com", "PodNoms: UpdateYouTubeDlJob completed", "As you were");
             _logger.LogInformation($"{results}");
         }
     }

@@ -10,9 +10,10 @@ using PodNoms.Api.Persistence;
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180507153433_ParsedPlaylistVideos")]
+    partial class ParsedPlaylistVideos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +128,7 @@ namespace PodNoms.Api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PodNoms.Api.Models.ParsedPlaylistItem", b =>
+            modelBuilder.Entity("PodNoms.Api.Models.ParsedPlaylistVideo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -142,13 +143,11 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<string>("VideoId");
 
-                    b.Property<string>("VideoType");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlaylistId");
 
-                    b.ToTable("ParsedPlaylistItems");
+                    b.ToTable("ParsedPlaylistVideos");
                 });
 
             modelBuilder.Entity("PodNoms.Api.Models.Playlist", b =>
@@ -351,10 +350,10 @@ namespace PodNoms.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PodNoms.Api.Models.ParsedPlaylistItem", b =>
+            modelBuilder.Entity("PodNoms.Api.Models.ParsedPlaylistVideo", b =>
                 {
                     b.HasOne("PodNoms.Api.Models.Playlist", "Playlist")
-                        .WithMany("ParsedPlaylistItems")
+                        .WithMany("ParsedPlaylistVideos")
                         .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

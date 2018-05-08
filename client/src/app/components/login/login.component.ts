@@ -20,6 +20,7 @@ export class LoginComponent extends BasePageComponent implements OnInit {
     private _subscription: Subscription;
 
     brandNew: boolean = false;
+    justReset: boolean = false;
     username: string;
     password: string;
     isRequesting: boolean = false;
@@ -38,6 +39,7 @@ export class LoginComponent extends BasePageComponent implements OnInit {
         this._subscription = this._activatedRoute.queryParams.subscribe(
             (param: any) => {
                 this.brandNew = param['brandNew'];
+                this.justReset = param['justReset'];
                 this.username = param['email'];
             }
         );
