@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { PodcastService } from 'app/services/podcast.service';
-import { MessagingService } from 'app/services/messaging.service';
 import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'app/store';
