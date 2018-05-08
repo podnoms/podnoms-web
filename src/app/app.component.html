@@ -1,8 +1,7 @@
 <div *ngIf="!loggedIn()">
     <router-outlet></router-outlet>
 </div>
-<div id="page-container" class="sidebar-inverse side-scroll side-trans-enabled page-header-inverse"
-    [ngClass]="[overlayOpen ? 'side-overlay-o' : '', sidebarOpen ? 'sidebar-o' : '']"
+<div id="page-container" class="sidebar-inverse side-scroll side-trans-enabled page-header-inverse" [ngClass]="[overlayOpen ? 'side-overlay-o' : '', sidebarOpen ? 'sidebar-o' : '']"
     *ngIf="loggedIn()">
     <app-side-overlay></app-side-overlay>
     <app-sidebar></app-sidebar>
@@ -15,3 +14,4 @@
 </div>
 <app-footer *ngIf="loggedIn()"></app-footer>
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
+<app-chat-widget *ngIf="loggedIn()"></app-chat-widget>

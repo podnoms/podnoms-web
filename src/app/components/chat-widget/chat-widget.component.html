@@ -20,8 +20,8 @@
             <div class="message self">
                 <div class="message-content">Tell me where it hurts?</div>
             </div>
-            <div class="message" *ngFor="let message of messages | async">
-                <div class="message-content">{{message.messageText}}</div>
+            <div class="message" *ngFor="let message of messages$ | async">
+                <div class="message-content">{{message.message}}</div>
             </div>
         </div>
 
