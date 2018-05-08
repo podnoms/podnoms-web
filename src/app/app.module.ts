@@ -16,6 +16,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { QuillModule } from 'ngx-quill';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
@@ -77,6 +78,8 @@ import { SideOverlayComponent } from './components/side-overlay/side-overlay.com
 import { UiStateService } from './services/ui-state.service';
 import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
 import { BasePageComponent } from './components/base-page/base-page.component';
+import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
+import { FirebaseAuthService } from './services/firebase-auth.service';
 
 const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -143,20 +146,22 @@ export function provideConfig() {
         HumaniseTimePipe,
         SideOverlayComponent,
         BoilerplateComponent,
-        BasePageComponent
+        BasePageComponent,
+        ChatWidgetComponent
     ],
     imports: [
         BrowserModule,
         AngularFireModule.initializeApp({
-            apiKey: 'AIzaSyAaIm8LTB0ZgJ-g7RXEjtVa1EOQB381QLI',
-            authDomain: 'podnoms-797e3.firebaseapp.com',
-            databaseURL: 'https://podnoms-797e3.firebaseio.com',
-            projectId: 'podnoms-797e3',
-            storageBucket: 'podnoms-797e3.appspot.com',
-            messagingSenderId: '777042345082'
+            apiKey: 'AIzaSyA5pGl4o1oGJi1Ke-842Lq0VvL2YZU2rfc',
+            authDomain: 'podnoms-api.firebaseapp.com',
+            databaseURL: 'https://podnoms-api.firebaseio.com',
+            projectId: 'podnoms-api',
+            storageBucket: '',
+            messagingSenderId: '357461672895'
         }),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
+        AngularFirestoreModule,
         HttpClientModule,
         AppRoutingModule,
         HttpModule,
@@ -207,6 +212,7 @@ export function provideConfig() {
         AppInsightsService,
         JobsService,
         AudioService,
+        FirebaseAuthService,
         GlobalsService
     ],
     bootstrap: [AppComponent]
