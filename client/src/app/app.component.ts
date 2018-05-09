@@ -58,13 +58,11 @@ export class AppComponent implements OnInit {
                     const chatterChannel = `${p.id}`;
                     this._signalrService
                         .init('userupdates')
-                        .then((r) => {
-                            this._signalrService.connection.on(
-                                chatterChannel,
-                                (result) => {
-                                    this._toastyService.info(result);
-                                }
-                            );
+                        .then((listener) => {
+                            listener.on<string>(chatterChannel)
+                            .subscribe(result => {
+                                this._toastyService.info(result);
+                            });
                         })
                         .catch((err) => {
                             console.error(

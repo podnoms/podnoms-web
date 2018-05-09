@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Downloader;
@@ -23,14 +24,14 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntryRepository _repository;
 
-        public ApplicationsSettings _applicationsSettings { get; }
+        public HelpersSettings _helpersSettings { get; }
         private readonly HubLifetimeManager<UserUpdatesHub> _userUpdateHub;
 
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
-            IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
+            IFileUploader fileUploader, IOptions<HelpersSettings> helpersSettings,
             HubLifetimeManager<UserUpdatesHub> userUpdateHub,
             ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher) {
-            this._applicationsSettings = applicationsSettings.Value;
+            this._helpersSettings = helpersSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
             this._userUpdateHub = userUpdateHub;
@@ -56,7 +57,7 @@ namespace PodNoms.Api.Services.Processor {
 
         public async Task<AudioType> GetInformation(PodcastEntry entry) {
 
-            var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
+            var downloader = new AudioDownloader(entry.SourceUrl, _helpersSettings.Downloader);
             var ret =  downloader.GetInfo();
             if (ret == AudioType.Valid) {
                 entry.Title = downloader.Properties?.Title;
@@ -81,7 +82,7 @@ namespace PodNoms.Api.Services.Processor {
             if (entry == null)
                 return false;
             try {
-                var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
+                var downloader = new AudioDownloader(entry.SourceUrl, _helpersSettings.Downloader);
                 var outputFile =
                     Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 

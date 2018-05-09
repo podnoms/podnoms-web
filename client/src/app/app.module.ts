@@ -156,7 +156,7 @@ export function provideConfig() {
             authDomain: 'podnoms-api.firebaseapp.com',
             databaseURL: 'https://podnoms-api.firebaseio.com',
             projectId: 'podnoms-api',
-            storageBucket: '',
+            storageBucket: 'podnoms-api.appspot.com',
             messagingSenderId: '357461672895'
         }),
         AngularFireDatabaseModule,

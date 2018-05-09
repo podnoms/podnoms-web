@@ -10,6 +10,7 @@ import * as fromEntriesActions from 'app/actions/entries.actions';
 import { PodcastService } from '../../../services/podcast.service';
 import { AudioService } from 'app/services/audio.service';
 import { Observable } from 'rxjs/Observable';
+import { AudioProcessingMessageModel } from 'app/models/audioprocessingmessage.model';
 
 @Component({
     selector: '[app-entry-list-item]',
@@ -39,23 +40,22 @@ export class EntryListItemComponent implements OnInit {
         ) {
             this._signalRService
                 .init('audioprocessing')
-                .then(() => {
+                .then((listener) => {
                     const updateChannel: string = `${
                         this.entry.uid
                     }__progress_update`;
                     const processedChannel: string = `${
                         this.entry.uid
                     }__info_processed`;
-                    this._signalRService.connection.on(
-                        updateChannel,
-                        (result) => {
+                    listener
+                        .on<AudioProcessingMessageModel>(updateChannel)
+                        .subscribe((result) => {
                             this.percentageProcessed = result.percentage;
                             this.currentSpeed = result.currentSpeed;
-                        }
-                    );
-                    this._signalRService.connection.on(
-                        processedChannel,
-                        (result) => {
+                        });
+                    listener
+                        .on<PodcastEntryModel>(processedChannel)
+                        .subscribe((result) => {
                             this.entry = result;
                             if (this.entry.processingStatus === 'Processed') {
                                 // only update the store when we're finished.
@@ -65,8 +65,7 @@ export class EntryListItemComponent implements OnInit {
                                     )
                                 );
                             }
-                        }
-                    );
+                        });
                 })
                 .catch((err) =>
                     console.error(

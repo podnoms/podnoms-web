@@ -22,6 +22,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Transforms;
 using SixLabors.ImageSharp.Processing.Filters;
+using PodNoms.Api.Models.Settings;
 
 namespace PodNoms.Api.Controllers {
     [Authorize]
@@ -42,6 +43,7 @@ namespace PodNoms.Api.Controllers {
             this._fileUploader = fileUploader;
             this._imageFileStorageSettings = imageFileStorageSettings.Value;
             this._repository = repository;
+            //this._repository = repository;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._logger = loggerFactory.CreateLogger<ImageUploadController>();
