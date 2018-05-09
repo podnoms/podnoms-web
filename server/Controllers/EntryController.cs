@@ -7,12 +7,14 @@ using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services;
@@ -24,6 +26,7 @@ using PodNoms.Api.Utils.RemoteParsers;
 
 namespace PodNoms.Api.Controllers {
     [Route("[controller]")]
+    [Authorize]
     public class EntryController : BaseAuthController {
         private readonly IPodcastRepository _podcastRepository;
         private readonly IEntryRepository _repository;

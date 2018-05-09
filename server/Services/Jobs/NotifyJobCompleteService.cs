@@ -12,7 +12,6 @@ namespace PodNoms.Api.Services.Jobs {
                 IPushNotificationService notificationService) {
             this._notificationService = notificationService;
             this._subscriptionStore = subscriptionStore;
-
         }
         public async Task NotifyUser(string userId, string title, string body, string image) {
             WebPush.PushMessage pushMessage = new WebPush.PushMessage(body) {

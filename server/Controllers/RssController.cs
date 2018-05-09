@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels.RssViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Auth;

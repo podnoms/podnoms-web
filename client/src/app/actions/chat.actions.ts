@@ -23,12 +23,29 @@ export const ADD_SUCCESS = '[Chat] Add Chat Success';
 export const ADD_FAIL = '[Chat] Add Chat Fail';
 export class AddAction implements Action {
     readonly type = ADD;
-    constructor(public payload: ChatModel) {
-    }
+    constructor(public payload: ChatModel) {}
 }
 export class AddSuccessAction implements Action {
     readonly type = ADD_SUCCESS;
+    constructor(public payload: ChatModel) {}
+}
+//#endregion
+//#region Add
+// the receive action is for messages from signalR
+// we don't want to initiate a POST to the server.
+export const RECEIVE = '[Chat] Receive Chat';
+export const RECEIVE_SUCCESS = '[Chat] Receive Chat Success';
+export const RECEIVE_FAIL = '[Chat] Receive Chat Fail';
+export class ReceiveAction implements Action {
+    readonly type = RECEIVE;
     constructor(public payload: ChatModel) {
+        console.log('chat.actions', 'RECEIVE', payload);
+    }
+}
+export class ReceiveSuccessAction implements Action {
+    readonly type = RECEIVE_SUCCESS;
+    constructor(public payload: ChatModel) {
+        console.log('chat.actions', 'RECEIVE_SUCESS', payload);
     }
 }
 //#endregion
@@ -37,5 +54,6 @@ export type Actions =
     | LoadSuccessAction
     | LoadFailAction
     | AddAction
-    | AddSuccessAction;
-
+    | AddSuccessAction
+    | ReceiveAction
+    | ReceiveSuccessAction;

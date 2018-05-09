@@ -13,10 +13,10 @@ namespace PodNoms.Api.Services.Push {
         private readonly ILogger<PushServicePushNotificationService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         public string PublicKey => _options.PublicKey;
-        public FirebasePushNotificationService(IOptions<PushNotificationServiceOptions> optionsAccessor,
+        public FirebasePushNotificationService(IOptions<PushNotificationServiceOptions> pushOptions,
                 IHttpClientFactory httpClientFactory,
                 ILogger<PushServicePushNotificationService> logger) {
-            _options = optionsAccessor.Value;
+            _options = pushOptions.Value;
             _logger = logger;
             _httpClientFactory = httpClientFactory;
         }

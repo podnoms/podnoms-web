@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Services.Processor;
@@ -16,12 +17,12 @@ namespace PodNoms.Api.Services.Jobs {
         private readonly IAudioUploadProcessService _uploadService;
         private readonly IConfiguration _options;
         private readonly IPodcastRepository _podcastRepository;
-        private readonly ApplicationsSettings _applicationsSettings;
+        private readonly HelpersSettings _helpersSettings;
         private readonly ILogger<ProcessPlaylistItemJob> _logger;
         private readonly IUnitOfWork _unitOfWork;
         public ProcessPlaylistItemJob(IPlaylistRepository playlistRepository, IEntryRepository entryRepository,
                         IAudioUploadProcessService uploadService, IConfiguration options,
-                        IPodcastRepository podcastRepository, IOptions<ApplicationsSettings> applicationsSettings,
+                        IPodcastRepository podcastRepository, IOptions<HelpersSettings> _helpersSettings,
                         IUnitOfWork unitOfWork, ILogger<ProcessPlaylistItemJob> logger) {
             this._unitOfWork = unitOfWork;
             this._playlistRepository = playlistRepository;
@@ -29,7 +30,7 @@ namespace PodNoms.Api.Services.Jobs {
             this._uploadService = uploadService;
             this._options = options;
             this._podcastRepository = podcastRepository;
-            this._applicationsSettings = applicationsSettings.Value;
+            this._helpersSettings = _helpersSettings.Value;
             this._logger = logger;
         }
         public async Task Execute() {
@@ -42,7 +43,7 @@ namespace PodNoms.Api.Services.Jobs {
             var item = await _playlistRepository.GetParsedItem(itemId, playlistId);
             if (item != null && !string.IsNullOrEmpty(item.VideoType) && item.VideoType.Equals("youtube")) {
                 var url = $"https://www.youtube.com/watch?v={item.VideoId}";
-                var downloader = new AudioDownloader(url, _applicationsSettings.Downloader);
+                var downloader = new AudioDownloader(url, _helpersSettings.Downloader);
                 var info =  downloader.GetInfo();
                 if (info == AudioType.Valid) {
                     var podcast = await _podcastRepository.GetAsync(item.Playlist.PodcastId);

@@ -6,6 +6,7 @@ using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 
 namespace PodNoms.Api.Utils.RemoteParsers {
     public partial class YouTubeParser {

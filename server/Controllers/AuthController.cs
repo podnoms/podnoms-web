@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Services;
 using PodNoms.Api.Services.Auth;

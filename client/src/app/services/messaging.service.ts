@@ -18,7 +18,7 @@ export class MessagingService {
         private _pushRegistrationServer: PushRegistrationService
     ) {
         this.messaging.usePublicVapidKey(
-            'BKyhUqIVZLauKNA-DXPXbIVLj5XiWurHbRV_0Rd3BOjY5cU9GOrd5ptXVJ2CNExxdveKYzZevrep2CflKeqkyqo'
+            'BP05eVFzqeEh54DaL3TOe6x_8UFs60nw_gfSrI5tdILjb5VnHwas0n7c_075tsc1w5fm87u9d4Dawj_YN13PSAI'
         );
     }
 

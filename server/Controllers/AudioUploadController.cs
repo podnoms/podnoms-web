@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Providers;

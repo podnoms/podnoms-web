@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { SignalRService } from '../../services/signalr.service';
 import { ProfileModel } from 'app/models/profile.model';
@@ -15,11 +15,17 @@ import { Observable } from 'rxjs/Observable';
     templateUrl: './chat-widget.component.html',
     styleUrls: ['./chat-widget.component.css']
 })
-export class ChatWidgetComponent implements OnInit {
+export class ChatWidgetComponent {
     chatActive: boolean = false;
-    loading: boolean = false;
-    user: ProfileModel;
+    private user: ProfileModel;
     messages$: Observable<ChatModel[]>;
+    private messageEl: ElementRef;
+
+    // have to handle ViewChild like this as it's hidden with ngIf
+    @ViewChild('message')
+    set content(content: ElementRef) {
+        this.messageEl = content;
+    }
 
     constructor(
         private _profileService: ProfileService,
@@ -28,25 +34,17 @@ export class ChatWidgetComponent implements OnInit {
     ) {
         this._profileService.getProfile().subscribe((p) => (this.user = p));
         this.messages$ = _store.select(fromChat.getChat);
+        this.messages$.subscribe((r) => {
+            if (r.length != 0) {
+                this.chatActive = true;
+            }
+        });
     }
-
-    ngOnInit() {}
 
     togglePopup() {
         this.chatActive = !this.chatActive;
-
-        if (this.chatActive && this.user) {
-            this.loading = true;
-            this._signalRService.init('chat').then(() => {
-                this.loading = false;
-                this._signalRService.connection.on('SendMessage', (message) => {
-                    console.log(
-                        'chat-widget.component',
-                        'SendMessage',
-                        message
-                    );
-                });
-            });
+        if (this.chatActive) {
+            setTimeout(() => this.messageEl.nativeElement.focus(), 0);
         }
     }
 

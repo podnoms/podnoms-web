@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Providers;
@@ -97,9 +98,10 @@ namespace PodNoms.Api {
             services.AddOptions();
             services.Configure<AppSettings>(Configuration.GetSection("App"));
             services.Configure<StorageSettings>(Configuration.GetSection("Storage"));
-            services.Configure<ApplicationsSettings>(Configuration.GetSection("ApplicationsSettings"));
+            services.Configure<HelpersSettings>(Configuration.GetSection("HelpersSettings"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<FacebookAuthSettings>(Configuration.GetSection("FacebookAuthSettings"));
+            services.Configure<ChatSettings>(Configuration.GetSection("ChatSettings"));
             services.Configure<ImageFileStorageSettings>(Configuration.GetSection("ImageFileStorageSettings"));
             services.Configure<AudioFileStorageSettings>(Configuration.GetSection("AudioFileStorageSettings"));
             services.Configure<FormOptions>(options => {
@@ -188,7 +190,7 @@ namespace PodNoms.Api {
                 .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-                })
+            })
                 .AddXmlSerializerFormatters()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
@@ -201,10 +203,24 @@ namespace PodNoms.Api {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
             });
-            services.AddSignalR(config => { });
+
+            services.AddSignalR()
+                .AddJsonProtocol(options => options.PayloadSerializerSettings.ContractResolver = new DefaultContractResolver() {
+                    NamingStrategy = new CamelCaseNamingStrategy() {
+                        ProcessDictionaryKeys = true
+                    }
+                });
 
             services.AddCors(options => {
-                options.AddPolicy("AllowAllOrigins",
+                options.AddPolicy("PodNomsClientPolicy",
+                    builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("http://localhost:4200", "https://*.podnoms.com")
+                    .AllowCredentials());
+            });
+            services.AddCors(options => {
+                options.AddPolicy("AllowAllPolicy",
                     builder => builder
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
@@ -224,6 +240,7 @@ namespace PodNoms.Api {
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
+            services.AddScoped<ISupportChatService, SupportChatService>();
             services.AddScoped<IMailSender, MailgunSender>();
             services.AddScoped<YouTubeParser>();
             services.AddScoped<MixcloudParser>();
@@ -271,7 +288,7 @@ namespace PodNoms.Api {
             });
             app.UseAuthentication();
 
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowAllPolicy");
 
             app.UseSignalR(routes => {
                 routes.MapHub<AudioProcessingHub>("/hubs/audioprocessing");
