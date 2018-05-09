@@ -33,7 +33,8 @@ export function reducer(state = initialState, action: chat.Actions): State {
                 loading: false
             };
         }
-        case chat.ADD_SUCCESS: {
+        case chat.ADD_SUCCESS:
+        case chat.RECEIVE_SUCCESS: {
             const newResults = _.clone(state.result);
             newResults.push(action.payload);
             const newState = {

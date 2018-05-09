@@ -25,8 +25,9 @@
             </div>
         </div>
 
-        <div class="chat-controls" *ngIf="!loading">
-            <input class="message-input" placeholder="Type your message here..." type="text" #message (keyup.enter)="sendMessage(message)">
+        <div class="chat-controls">
+            <input #message class="message-input" placeholder="Type your message and press enter..." type="text"
+                    (keyup.enter)="sendMessage(message)">
             <div class="chat-extra">
                 <a href="#">
                     <span class="extra-tooltip">Attach Document</span>
