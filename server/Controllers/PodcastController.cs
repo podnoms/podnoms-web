@@ -36,7 +36,7 @@ namespace PodNoms.Api.Controllers {
 
         [HttpGet]
         public async Task<IEnumerable<PodcastViewModel>> Get() {
-            var podcasts = await _repository.GetAllAsync(_applicationUser.Id);
+            var podcasts = await _repository.GetAllForUserAsync(_applicationUser.Id);
             var ret = _mapper.Map<List<Podcast>, List<PodcastViewModel>>(podcasts.ToList());
             return ret;
         }

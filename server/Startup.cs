@@ -61,6 +61,9 @@ namespace PodNoms.Api {
         }
 
         public void ConfigureProductionServices(IServiceCollection services) {
+            services.AddDbContext<PodNomsDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             ConfigureServices(services);
             services.AddHangfire(config => {
                 config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
@@ -76,6 +79,11 @@ namespace PodNoms.Api {
                 });
         }
         public void ConfigureDevelopmentServices(IServiceCollection services) {
+            services.AddDbContext<PodNomsDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging(true);
+            });
+
             ConfigureServices(services);
             services.AddHangfire(config => {
                 config.UseMemoryStorage();
@@ -92,9 +100,6 @@ namespace PodNoms.Api {
         }
         public void ConfigureServices(IServiceCollection services) {
             Console.WriteLine($"Configuring services: {Configuration.ToString()}");
-
-            services.AddDbContext<PodNomsDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddOptions();
             services.Configure<AppSettings>(Configuration.GetSection("App"));

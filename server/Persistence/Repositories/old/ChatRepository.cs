@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PodNoms.Api.Models;
 
-namespace PodNoms.Api.Persistence {
+namespace PodNoms.Api.Persistence.Old {
     public class ChatRepository : IChatRepository {
         private readonly PodNomsDbContext _context;
 

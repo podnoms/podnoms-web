@@ -5,8 +5,7 @@ using Microsoft.Extensions.Options;
 using PodNoms.Api.Services.Auth;
 
 namespace PodNoms.Api.Models {
-    public class ChatMessage : BaseModel {
-        public int Id { get; set; }
+    public class ChatMessage : BaseModel, IEntity {
 
         public ApplicationUser FromUser { get; set; }
         public ApplicationUser ToUser { get; set; }

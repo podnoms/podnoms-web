@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PodNoms.Api.Models;
 
-namespace PodNoms.Api.Persistence {
+namespace PodNoms.Api.Persistence.Old {
     public interface IChatRepository {
         Task<IEnumerable<ChatMessage>> GetSentChats(string fromUserId);
         Task<IEnumerable<ChatMessage>> GetReceivedChats(string fromUserId);

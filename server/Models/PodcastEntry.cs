@@ -12,7 +12,6 @@ namespace PodNoms.Api.Models {
     }
     public class PodcastEntry : BaseModel {
 
-        public int Id { get; set; }
         public string Uid { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }

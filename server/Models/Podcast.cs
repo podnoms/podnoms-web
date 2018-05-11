@@ -5,7 +5,6 @@ using PodNoms.Api.Services.Auth;
 
 namespace PodNoms.Api.Models {
     public class Podcast : BaseModel {
-        public int Id { get; set; }
         public string Uid { get; set; }
         public ApplicationUser AppUser { get; set; }
         public string Title { get; set; }

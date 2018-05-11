@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PodNoms.Api.Models;
 
-namespace PodNoms.Api.Persistence {
+namespace PodNoms.Api.Persistence.Old {
     public interface IPodcastRepository {
         Task<Podcast> GetAsync(int id);
         Task<Podcast> GetAsync(string id, string slug);
