@@ -32,7 +32,7 @@ namespace PodNoms.Api.Controllers {
                     PodcastId = entry.PodcastId,
                     SourceUrl = entry.SourceUrl
                 };
-                await _playlistRepository.AddOrUpdateAsync(playlist);
+                _playlistRepository.AddOrUpdate(playlist);
                 await _unitOfWork.CompleteAsync();
                 return Ok(playlist);
             }

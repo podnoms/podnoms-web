@@ -13,6 +13,7 @@ namespace PodNoms.Api.Persistence {
         }
         public async Task CompleteAsync() {
             try {
+                await Task.FromResult<object>(null);
                 await _context.SaveChangesAsync();
             } catch (DbUpdateException dbe) {
                 this._logger.LogError($"Error completing unit of work: {dbe.Message}\n{dbe.InnerException.Message}");

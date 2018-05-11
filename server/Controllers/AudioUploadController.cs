@@ -69,7 +69,7 @@ namespace PodNoms.Api.Controllers {
             };
 
             var localFile = await CachedFormFileStorage.CacheItem(file);
-            await _entryRepository.AddOrUpdateAsync(entry);
+            _entryRepository.AddOrUpdate(entry);
             await _unitOfWork.CompleteAsync();
 
             BackgroundJob.Enqueue<IAudioUploadProcessService>(service => service.UploadAudio(entry.Id, localFile));

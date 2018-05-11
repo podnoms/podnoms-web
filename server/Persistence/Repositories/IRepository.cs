@@ -10,9 +10,9 @@ namespace PodNoms.Api.Persistence {
     public interface IRepository<TEntity> where TEntity : class, IEntity {
         IQueryable<TEntity> GetAll();
         Task<TEntity> GetAsync(int id);
-        Task<TEntity> CreateAsync(TEntity entity);
-        Task<TEntity> UpdateAsync(TEntity entity);
-        Task<TEntity> AddOrUpdateAsync(TEntity entity);
+        TEntity Create(TEntity entity);
+        TEntity Update(TEntity entity);
+        TEntity AddOrUpdate(TEntity entity);
         Task DeleteAsync(int id);
     }
 
@@ -28,35 +28,31 @@ namespace PodNoms.Api.Persistence {
         }
 
         public IQueryable<TEntity> GetAll() {
-            return _context.Set<TEntity>().AsNoTracking();
+            return _context.Set<TEntity>();
         }
         public async Task<TEntity> GetAsync(int id) {
             return await _context.Set<TEntity>()
-                .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<TEntity> CreateAsync(TEntity entity) {
-            var ret = await _context.Set<TEntity>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+        public TEntity Create(TEntity entity) {
+            var ret = _context.Set<TEntity>().Add(entity);
             return ret as TEntity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity) {
+        public TEntity Update(TEntity entity) {
             var ret = _context.Set<TEntity>().Update(entity);
-            await _context.SaveChangesAsync();
             return ret as TEntity;
         }
 
-        public async Task<TEntity> AddOrUpdateAsync(TEntity entity) {
+        public TEntity AddOrUpdate(TEntity entity) {
             var ret = entity;
             if (entity.Id != 0) {
                 // _context.Entry(entry).State = EntityState.Modified
-                ret = await UpdateAsync(entity);
+                ret = Update(entity);
             } else {
-                ret = await CreateAsync(entity);
+                ret = Create(entity);
             }
-            await _context.SaveChangesAsync();
             return ret;
         }
 

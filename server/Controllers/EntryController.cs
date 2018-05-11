@@ -112,7 +112,7 @@ namespace PodNoms.Api.Controllers {
                         }
                         entry.Podcast = podcast;
                         entry.Processed = false;
-                        await _repository.AddOrUpdateAsync(entry);
+                        _repository.AddOrUpdate(entry);
                         await _unitOfWork.CompleteAsync();
                         _processEntry(entry);
                         var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);

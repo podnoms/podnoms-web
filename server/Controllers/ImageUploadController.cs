@@ -28,7 +28,7 @@ namespace PodNoms.Api.Controllers {
     [Authorize]
     [Route("/podcast/{slug}/imageupload")]
     public class ImageUploadController : BaseAuthController {
-        private readonly IPodcastRepository _repository;
+        private readonly IPodcastRepository _podcastRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ImageFileStorageSettings _imageFileStorageSettings;
@@ -42,7 +42,7 @@ namespace PodNoms.Api.Controllers {
 
             this._fileUploader = fileUploader;
             this._imageFileStorageSettings = imageFileStorageSettings.Value;
-            this._repository = repository;
+            this._podcastRepository = repository;
             //this._repository = repository;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
@@ -55,16 +55,16 @@ namespace PodNoms.Api.Controllers {
             if (file.Length > _imageFileStorageSettings.MaxUploadFileSize) return BadRequest("Maximum file size exceeded");
             if (!_imageFileStorageSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type");
 
-            var podcast = await _repository.GetAsync(_applicationUser.Id, slug);
+            var podcast = await _podcastRepository.GetAsync(_applicationUser.Id, slug);
             if (podcast == null)
                 return NotFound();
 
             var cacheFile = await CachedFormFileStorage.CacheItem(file);
-            (var finishedFile, var extension) = __todo_convert_cache_file(cacheFile, podcast.Uid);
-            var thumbnailFile = __todo_create_thumbnail(cacheFile, podcast.Uid);
+            (var finishedFile, var extension) = __todo_convert_cache_file(cacheFile, podcast.ExposedUid);
+            var thumbnailFile = __todo_create_thumbnail(cacheFile, podcast.ExposedUid);
 
-            var destinationFile = $"{podcast.Uid}.{extension}";
-            var destinationFileThumbnail = $"{podcast.Uid}-32x32.{extension}";
+            var destinationFile = $"{podcast.ExposedUid}.{extension}";
+            var destinationFileThumbnail = $"{podcast.ExposedUid}-32x32.{extension}";
 
             await _fileUploader.UploadFile(finishedFile, _imageFileStorageSettings.ContainerName,
                 destinationFile, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
@@ -72,7 +72,7 @@ namespace PodNoms.Api.Controllers {
             await _fileUploader.UploadFile(thumbnailFile, _imageFileStorageSettings.ContainerName,
                            destinationFileThumbnail, "image/png", (p, t) => _logger.LogDebug($"Uploading image: {p} - {t}"));
 
-            await _repository.AddOrUpdateAsync(podcast);
+            _podcastRepository.AddOrUpdate(podcast);
             podcast.TemporaryImageUrl = string.Empty;
             await this._unitOfWork.CompleteAsync();
 

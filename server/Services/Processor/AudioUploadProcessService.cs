@@ -49,7 +49,7 @@ namespace PodNoms.Api.Services.Processor {
                             if (p % 1 == 0) {
                                 await _sendProgressUpdate(
                                     entry.Podcast.AppUser.Id,
-                                    entry.Uid,
+                                    entry.ExposedUid,
                                     new ProcessProgressEvent {
                                         Percentage = p,
                                         CurrentSpeed = string.Empty,
