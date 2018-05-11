@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
 using PodNoms.Api.Models.Settings;
-using PodNoms.Api.Persistence;
+using PodNoms.Api.Persistence.Old;
 using PodNoms.Api.Services.Storage;
 using PodNoms.Api.Utils;
 using PodNoms.Api.Utils.Extensions;
 
-namespace PodNoms.Api.Persistence {
+namespace PodNoms.Api.Persistence.Old {
     public class PodcastRepository : IPodcastRepository {
         private readonly PodNomsDbContext _context;
         public IFileUploader _fileUploader { get; }

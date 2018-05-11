@@ -55,10 +55,7 @@ namespace PodNoms.Api.Providers {
                     e => e.UserName,
                     map => map.MapFrom(vm => vm.Email));
 
-            CreateMap<ChatViewModel, ChatMessage>()
-                .ForMember(
-                    e => e.FromUser,
-                    map => map.MapFrom(vm => e;
+            CreateMap<ChatViewModel, ChatMessage>();
 
         }
     }

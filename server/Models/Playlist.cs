@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace PodNoms.Api.Models {
     public class Playlist : BaseModel {
-        public int Id { get; set; }
         //TODO: Update this to use concrete model
         public int PodcastId { get; set; }
         public string SourceUrl { get; set; }
@@ -14,7 +13,6 @@ namespace PodNoms.Api.Models {
         }
     }
     public class ParsedPlaylistItem : BaseModel {
-        public int Id { get; set; }
         public string VideoId { get; set; }
         public string VideoType { get; set; }
         public bool IsProcessed { get; set; }

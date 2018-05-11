@@ -37,7 +37,7 @@ namespace PodNoms.Api.Services.Jobs {
         }
 
         public async Task Execute() {
-            var playlists = await _playlistRepository.GetAllAsync();
+            var playlists = _playlistRepository.GetAll();
             var resultList = new List<ParsedItemResult>();
 
             foreach (var playlist in playlists) {
