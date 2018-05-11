@@ -41,6 +41,8 @@ namespace PodNoms.Api.Providers {
                     src => src.ProfileImage,
                     map => map.MapFrom(s => s.PictureUrl));
 
+            CreateMap<ChatMessage, ChatViewModel>();
+
             //API Resource to Domain
             CreateMap<PodcastViewModel, Podcast>();
             CreateMap<PodcastEntryViewModel, PodcastEntry>()
@@ -52,6 +54,12 @@ namespace PodNoms.Api.Providers {
                 .ForMember(
                     e => e.UserName,
                     map => map.MapFrom(vm => vm.Email));
+
+            CreateMap<ChatViewModel, ChatMessage>()
+                .ForMember(
+                    e => e.FromUser,
+                    map => map.MapFrom(vm => e;
+
         }
     }
 }

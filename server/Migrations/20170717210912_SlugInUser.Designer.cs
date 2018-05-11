@@ -11,7 +11,7 @@ using System;
 
 namespace PodNoms.Api.Migrations
 {
-    [DbContext(typeof(PodnomsDbContext))]
+    [DbContext(typeof(PodNomsDbContext))]
     [Migration("20170717210912_SlugInUser")]
     partial class SlugInUser
     {

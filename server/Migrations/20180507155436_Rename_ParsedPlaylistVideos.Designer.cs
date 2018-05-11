@@ -9,7 +9,7 @@ using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Migrations
 {
-    [DbContext(typeof(PodnomsDbContext))]
+    [DbContext(typeof(PodNomsDbContext))]
     [Migration("20180507155436_Rename_ParsedPlaylistVideos")]
     partial class Rename_ParsedPlaylistVideos
     {

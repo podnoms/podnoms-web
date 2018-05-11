@@ -13,10 +13,10 @@ using PodNoms.Api.Utils.Extensions;
 
 namespace PodNoms.Api.Persistence {
     public class PodcastRepository : IPodcastRepository {
-        private readonly PodnomsDbContext _context;
+        private readonly PodNomsDbContext _context;
         public IFileUploader _fileUploader { get; }
         public ImageFileStorageSettings _imageStorageSettings { get; }
-        public PodcastRepository(PodnomsDbContext context, IFileUploader fileUploader, IOptions<ImageFileStorageSettings> imageStorageSettings) {
+        public PodcastRepository(PodNomsDbContext context, IFileUploader fileUploader, IOptions<ImageFileStorageSettings> imageStorageSettings) {
             this._imageStorageSettings = imageStorageSettings.Value;
             this._fileUploader = fileUploader;
             this._context = context;

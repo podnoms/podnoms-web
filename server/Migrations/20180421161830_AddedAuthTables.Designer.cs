@@ -9,7 +9,7 @@ using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Migrations
 {
-    [DbContext(typeof(PodnomsDbContext))]
+    [DbContext(typeof(PodNomsDbContext))]
     [Migration("20180421161830_AddedAuthTables")]
     partial class AddedAuthTables
     {

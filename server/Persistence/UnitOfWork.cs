@@ -5,9 +5,9 @@ using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Persistence {
     public class UnitOfWork : IUnitOfWork {
-        private readonly PodnomsDbContext _context;
+        private readonly PodNomsDbContext _context;
         private readonly ILogger<UnitOfWork> _logger;
-        public UnitOfWork(PodnomsDbContext context, ILogger<UnitOfWork> logger) {
+        public UnitOfWork(PodNomsDbContext context, ILogger<UnitOfWork> logger) {
             this._logger = logger;
             this._context = context;
         }

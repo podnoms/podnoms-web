@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Migrations
 {
-    [DbContext(typeof(PodnomsDbContext))]
-    [Migration("20180509115328_AddedChatDb")]
-    partial class AddedChatDb
+    [DbContext(typeof(PodNomsDbContext))]
+    partial class PodNomsDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,21 +137,19 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<DateTime>("CreateDate");
 
-                    b.Property<int?>("FromUserId");
+                    b.Property<string>("FromUserId");
 
-                    b.Property<string>("FromUserId1");
+                    b.Property<DateTime?>("MessageSeen");
 
-                    b.Property<int?>("ToUserId");
-
-                    b.Property<string>("ToUserId1");
+                    b.Property<string>("ToUserId");
 
                     b.Property<DateTime>("UpdateDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromUserId1");
+                    b.HasIndex("FromUserId");
 
-                    b.HasIndex("ToUserId1");
+                    b.HasIndex("ToUserId");
 
                     b.ToTable("ChatMessages");
                 });
@@ -390,11 +386,11 @@ namespace PodNoms.Api.Migrations
                 {
                     b.HasOne("PodNoms.Api.Services.Auth.ApplicationUser", "FromUser")
                         .WithMany()
-                        .HasForeignKey("FromUserId1");
+                        .HasForeignKey("FromUserId");
 
                     b.HasOne("PodNoms.Api.Services.Auth.ApplicationUser", "ToUser")
                         .WithMany()
-                        .HasForeignKey("ToUserId1");
+                        .HasForeignKey("ToUserId");
                 });
 
             modelBuilder.Entity("PodNoms.Api.Models.ParsedPlaylistItem", b =>
