@@ -10,28 +10,35 @@ import * as fromChat from 'app/reducers';
 import * as fromChatActions from 'app/actions/chat.actions';
 import { ApplicationState } from '../store';
 import { Store } from '@ngrx/store';
+import { debug } from 'util';
+import { PodnomsAuthService } from './podnoms-auth.service';
 
 @Injectable()
 export class ChatService extends BaseService {
     constructor(
         private _http: HttpClient,
         private _signalRService: SignalRService,
-        private _store: Store<ApplicationState>
+        private _store: Store<ApplicationState>,
+        private _authService: PodnomsAuthService
     ) {
         super();
-        this._signalRService.init('chat').then((listener) => {
-            listener
-                .on<ChatModel>('SendMessage')
-                .subscribe((message: ChatModel) => {
-                    console.log(
-                        'chat-widget.component',
-                        'SendMessage',
-                        message
-                    );
-                    this._store.dispatch(
-                        new fromChatActions.ReceiveAction(message)
-                    );
+        this._authService.authNavStatus$.subscribe((r) => {
+            if (r) {
+                this._signalRService.init('chat').then((listener) => {
+                    listener
+                        .on<ChatModel>('SendMessage')
+                        .subscribe((message: ChatModel) => {
+                            console.log(
+                                'chat-widget.component',
+                                'SendMessage',
+                                message
+                            );
+                            this._store.dispatch(
+                                new fromChatActions.ReceiveAction(message)
+                            );
+                        });
                 });
+            }
         });
     }
 

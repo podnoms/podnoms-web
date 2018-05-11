@@ -9,6 +9,7 @@ using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Services.Hubs;
 using PodNoms.Api.Services.Push;
+using PodNoms.Api.Services.Slack;
 using WebPush = Lib.Net.Http.WebPush;
 
 namespace PodNoms.Api.Services {
@@ -18,15 +19,16 @@ namespace PodNoms.Api.Services {
         private readonly HubLifetimeManager<ChatHub> _chatHub;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPushSubscriptionStore _subscriptionStore;
-        private readonly HubLifetimeManager<ChatHub> _hub;
+        private readonly SlackSupportClient _slackSupport;
         public SupportChatService(UserManager<ApplicationUser> userManager, IOptions<ChatSettings> chatSettings,
                          IPushSubscriptionStore subscriptionStore, IPushNotificationService notificationService,
-                         HubLifetimeManager<ChatHub> chatHub) {
+                         HubLifetimeManager<ChatHub> chatHub, SlackSupportClient slackSupport) {
             this._chatSettings = chatSettings.Value;
             this._notificationService = notificationService;
             this._chatHub = chatHub;
             this._userManager = userManager;
             this._subscriptionStore = subscriptionStore;
+            this._slackSupport = slackSupport;
 
         }
         public async Task<bool> InitiateSupportRequest(string fromUser, ChatViewModel message) {
@@ -46,6 +48,9 @@ namespace PodNoms.Api.Services {
 
                     //send SignalR message to notify in chat.component
                     await _chatHub.SendUserAsync(user.Email, "SendMessage", new object[] { message });
+
+                    //send slack message
+                    var slackResult = await _slackSupport.NotifyUser(message);
                     return true;
                 }
             }

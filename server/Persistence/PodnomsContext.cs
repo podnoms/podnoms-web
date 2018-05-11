@@ -50,5 +50,6 @@ namespace PodNoms.Api.Persistence {
         public DbSet<PodcastEntry> PodcastEntries { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<ParsedPlaylistItem> ParsedPlaylistItems { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
     }
 }
