@@ -28,4 +28,5 @@ namespace PodNoms.Api.Models {
         public int PodcastId { get; set; }
         public Podcast Podcast { get; set; }
     }
+
 }

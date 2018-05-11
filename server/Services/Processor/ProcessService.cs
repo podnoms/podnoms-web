@@ -15,9 +15,9 @@ namespace PodNoms.Api.Services.Processor {
         protected readonly IRealTimeUpdater _realtime;
         protected readonly IMapper _mapper;
         protected readonly JsonSerializer _serializer;
-        protected ProcessService(ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) {
+        protected ProcessService(ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) {
             this._logger = logger.CreateLogger<UrlProcessService>();
-            this._realtime = pusher;
+            this._realtime = realtimeUpdater;
 
             this._mapper = mapper;
             this._serializer = new JsonSerializer {

@@ -30,7 +30,7 @@ namespace PodNoms.Api.Services.Processor {
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<HelpersSettings> helpersSettings,
             HubLifetimeManager<UserUpdatesHub> userUpdateHub,
-            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher) {
+            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) : base(logger, mapper, realtimeUpdater) {
             this._helpersSettings = helpersSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;

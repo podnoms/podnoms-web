@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Migrations
 {
     [DbContext(typeof(PodnomsDbContext))]
-    partial class PodnomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180509115328_AddedChatDb")]
+    partial class AddedChatDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,8 +142,6 @@ namespace PodNoms.Api.Migrations
                     b.Property<int?>("FromUserId");
 
                     b.Property<string>("FromUserId1");
-
-                    b.Property<DateTime?>("Seen");
 
                     b.Property<int?>("ToUserId");
 

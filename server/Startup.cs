@@ -48,6 +48,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PodNoms.Api.Utils.RemoteParsers;
+using PodNoms.Api.Services.Slack;
 
 namespace PodNoms.Api {
     public class Startup {
@@ -244,6 +245,7 @@ namespace PodNoms.Api {
             services.AddScoped<IMailSender, MailgunSender>();
             services.AddScoped<YouTubeParser>();
             services.AddScoped<MixcloudParser>();
+            services.AddScoped<SlackSupportClient>();
             services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 
             //register the codepages (required for slugify)
