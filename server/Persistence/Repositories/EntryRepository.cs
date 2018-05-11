@@ -29,7 +29,7 @@ namespace PodNoms.Api.Persistence {
 
         public async Task<PodcastEntry> GetByUidAsync(string uid) {
             var entry = await GetAll()
-                    .SingleOrDefaultAsync(e => e.Uid == uid);
+                    .SingleOrDefaultAsync(e => e.NewId.ToString().Equals(uid));
             return entry;
         }
     }

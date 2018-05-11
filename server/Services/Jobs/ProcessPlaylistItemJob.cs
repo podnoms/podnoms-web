@@ -53,7 +53,6 @@ namespace PodNoms.Api.Services.Jobs {
                         //we have the file so lets create the entry and ship to CDN
                         var entry = new PodcastEntry {
                             Title = downloader.Properties?.Title,
-                            Uid = uid,
                             Description = downloader.Properties?.Description,
                             ProcessingStatus = ProcessingStatus.Uploading,
                             ImageUrl = downloader.Properties?.Thumbnail

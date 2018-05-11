@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 
-namespace PodNoms.Api.Models.ViewModels.RssViewModels
-{
-    public class PodcastEnclosureViewModel
-    {
+namespace PodNoms.Api.Models.ViewModels.RssViewModels {
+    public class PodcastEnclosureViewModel {
         public string Title { get; set; }
         public string Description { get; set; }
         public string Author { get; set; }
@@ -17,10 +15,9 @@ namespace PodNoms.Api.Models.ViewModels.RssViewModels
         public string ShowUrl { get; set; }
         public List<PodcastEnclosureItemViewModel> Items { get; set; }
     }
-    public class PodcastEnclosureItemViewModel
-    {
-        public string Title { get; set; }
+    public class PodcastEnclosureItemViewModel {
         public string Uid { get; set; }
+        public string Title { get; set; }
 
         public string Description { get; set; }
         public string Author { get; set; }

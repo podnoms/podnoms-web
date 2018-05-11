@@ -47,7 +47,7 @@ namespace PodNoms.Api.Controllers {
             message.FromUserName = _applicationUser.FullName;
             message.FromUserId = _applicationUser.Id;
             var chat = _mapper.Map<ChatMessage>(message);
-            await _chatRepository.AddOrUpdateAsync(chat);
+            _chatRepository.AddOrUpdate(chat);
             await this._unitOfWork.CompleteAsync();
 
             if (await _supportChatService.InitiateSupportRequest(_userId, message)) {

@@ -86,12 +86,12 @@ namespace PodNoms.Api.Services.Processor {
                 var outputFile =
                     Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 
-                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.AppUser.Id, entry.Uid, e);
+                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.AppUser.Id, entry.ExposedUid, e);
 
                 downloader.PostProcessing += (s, e) => {
                     Console.WriteLine(e);
                 };
-                var sourceFile = downloader.DownloadAudio(entry.Uid);
+                var sourceFile = downloader.DownloadAudio(entry.ExposedUid);
                 if (!string.IsNullOrEmpty(sourceFile)) {
                     entry.ProcessingStatus = ProcessingStatus.Uploading;
                     entry.AudioUrl = sourceFile;

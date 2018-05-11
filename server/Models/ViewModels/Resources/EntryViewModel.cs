@@ -4,7 +4,6 @@ namespace PodNoms.Api.Models.ViewModels {
     public class PodcastEntryViewModel {
         public int Id { get; set; }
         public int PodcastId { get; set; }
-        public string Uid { get; set; }
         public DateTime CreateDate { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
