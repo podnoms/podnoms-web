@@ -6,9 +6,9 @@ using PodNoms.Api.Models;
 
 namespace PodNoms.Api.Persistence {
     public class PlaylistRepository : IPlaylistRepository {
-        private readonly PodnomsDbContext _context;
+        private readonly PodNomsDbContext _context;
 
-        public PlaylistRepository(PodnomsDbContext context) {
+        public PlaylistRepository(PodNomsDbContext context) {
             this._context = context;
         }
         public async Task<Playlist> GetAsync(int id) {

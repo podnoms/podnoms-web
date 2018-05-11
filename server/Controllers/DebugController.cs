@@ -27,14 +27,14 @@ namespace PodNoms.Api.Controllers {
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
         private readonly HelpersSettings _helpersSettings;
         private readonly ImageFileStorageSettings _imageFileStorageSettings;
-        private readonly HubLifetimeManager<DebugHub> _hubManager;
+        private readonly HubLifetimeManager<DebugHub> _hub;
         private readonly IPushSubscriptionStore _subscriptionStore;
         private readonly IPushNotificationService _notificationService;
 
         public AppSettings _appSettings { get; }
 
         public DebugController(IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
-            HubLifetimeManager<DebugHub> hubManager,
+            HubLifetimeManager<DebugHub> hub,
             IOptions<HelpersSettings> helpersSettings,
             IOptions<AudioFileStorageSettings> audioFileStorageSettings,
             IOptions<ImageFileStorageSettings> imageFileStorageSettings,
@@ -47,7 +47,7 @@ namespace PodNoms.Api.Controllers {
             this._helpersSettings = helpersSettings.Value;
             this._audioFileStorageSettings = audioFileStorageSettings.Value;
             this._imageFileStorageSettings = imageFileStorageSettings.Value;
-            this._hubManager = hubManager;
+            this._hub = hub;
             this._subscriptionStore = subscriptionStore;
             this._notificationService = notificationService;
         }
@@ -71,8 +71,8 @@ namespace PodNoms.Api.Controllers {
         [Authorize]
         [HttpPost("realtime")]
         public async Task<IActionResult> Realtime([FromBody] string message) {
-            await _hubManager.SendUserAsync(User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
-            await _hubManager.SendAllAsync("Send", new string[] { $"All: {message}" });
+            await _hub.SendUserAsync(User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
+            await _hub.SendAllAsync("Send", new string[] { $"All: {message}" });
             return Ok(message);
         }
         [Authorize]

@@ -7,9 +7,9 @@ using PodNoms.Api.Models;
 
 namespace PodNoms.Api.Persistence {
     public class EntryRepository : IEntryRepository {
-        private readonly PodnomsDbContext _context;
+        private readonly PodNomsDbContext _context;
 
-        public EntryRepository(PodnomsDbContext context) {
+        public EntryRepository(PodNomsDbContext context) {
             this._context = context;
         }
         public async Task<PodcastEntry> GetAsync(int id) {

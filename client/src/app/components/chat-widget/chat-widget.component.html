@@ -1,7 +1,7 @@
 <div class="floated-chat-w active" *ngIf="chatActive">
     <div class="floated-chat-i">
-        <div class="chat-close">
-            <i class="os-icon os-icon-close"></i>
+        <div class="chat-close" (click)="togglePopup()">
+            <i class="fa fa-2x fa-window-close"></i>
         </div>
         <div class="chat-head">
             <div class="user-w with-status status-green">
@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-<div class="floated-chat-btn" (click)="togglePopup()">
+<div class="floated-chat-btn" *ngIf="!chatActive" (click)="togglePopup()">
     <i class="fa fa-comments-o"></i>
     <span>Talk to us!</span>
 </div>

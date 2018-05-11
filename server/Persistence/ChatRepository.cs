@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PodNoms.Api.Models;
 
 namespace PodNoms.Api.Persistence {
     public class ChatRepository : IChatRepository {
-        private readonly PodnomsDbContext _context;
+        private readonly PodNomsDbContext _context;
 
-        public ChatRepository(PodnomsDbContext context) {
+        public ChatRepository(PodNomsDbContext context) {
             this._context = context;
         }
         public async Task<ChatMessage> AddOrUpdateChat(ChatMessage chat) {
@@ -21,21 +22,43 @@ namespace PodNoms.Api.Persistence {
             return chat;
         }
 
-        public Task<IEnumerable<ChatMessage>> GetChats(string fromUserId, string toUserId) {
-            throw new System.NotImplementedException();
+        public async Task<IEnumerable<ChatMessage>> GetAllChats(string userId) {
+            var chats = await _context.ChatMessages
+                .Where(c => c.FromUser.Id == userId || c.ToUser.Id == userId)
+                .Include(c => c.FromUser)
+                .Include(c => c.ToUser)
+                .ToListAsync();
+
+            return chats;
+        }
+        public async Task<IEnumerable<ChatMessage>> GetChats(string fromUserId, string toUserId) {
+            var chats = await _context.ChatMessages
+                .Where(c => c.FromUser.Id == fromUserId && c.ToUser.Id == toUserId)
+                .Include(c => c.FromUser)
+                .Include(c => c.ToUser)
+                .ToListAsync();
+
+            return chats;
         }
 
-        public Task<IEnumerable<ChatMessage>> GetReceivedChats(string fromUserId) {
-            throw new System.NotImplementedException();
+        public async Task<IEnumerable<ChatMessage>> GetReceivedChats(string toUserId) {
+            var chats = await _context.ChatMessages
+                .Where(c => c.ToUser.Id == toUserId)
+                .Include(c => c.FromUser)
+                .Include(c => c.ToUser)
+                .ToListAsync();
+
+            return chats;
         }
 
-        public Task<IEnumerable<ChatMessage>> GetSentChats(string fromUserId) {
-            throw new System.NotImplementedException();
-        }
+        public async Task<IEnumerable<ChatMessage>> GetSentChats(string fromUserId) {
+            var chats = await _context.ChatMessages
+                .Where(c => c.FromUser.Id == fromUserId)
+                .Include(c => c.FromUser)
+                .Include(c => c.ToUser)
+                .ToListAsync();
 
-        Task<IEnumerable<ChatMessage>> IChatRepository.AddOrUpdateChat(ChatMessage message) {
-            throw new System.NotImplementedException();
+            return chats;
         }
     }
-
 }

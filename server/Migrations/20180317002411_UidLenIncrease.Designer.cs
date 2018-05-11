@@ -12,7 +12,7 @@ using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Migrations
 {
-    [DbContext(typeof(PodnomsDbContext))]
+    [DbContext(typeof(PodNomsDbContext))]
     [Migration("20180317002411_UidLenIncrease")]
     partial class UidLenIncrease
     {

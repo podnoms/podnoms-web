@@ -16,16 +16,16 @@ namespace PodNoms.Api.Services {
     public class SupportChatService : ISupportChatService {
         private readonly ChatSettings _chatSettings;
         private readonly IPushNotificationService _notificationService;
-        private readonly HubLifetimeManager<ChatHub> _chatHub;
+        private readonly HubLifetimeManager<ChatHub> _hub;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPushSubscriptionStore _subscriptionStore;
         private readonly SlackSupportClient _slackSupport;
         public SupportChatService(UserManager<ApplicationUser> userManager, IOptions<ChatSettings> chatSettings,
                          IPushSubscriptionStore subscriptionStore, IPushNotificationService notificationService,
-                         HubLifetimeManager<ChatHub> chatHub, SlackSupportClient slackSupport) {
+                         HubLifetimeManager<ChatHub> hub, SlackSupportClient slackSupport) {
             this._chatSettings = chatSettings.Value;
             this._notificationService = notificationService;
-            this._chatHub = chatHub;
+            this._hub = hub;
             this._userManager = userManager;
             this._subscriptionStore = subscriptionStore;
             this._slackSupport = slackSupport;
@@ -47,7 +47,7 @@ namespace PodNoms.Api.Services {
                     });
 
                     //send SignalR message to notify in chat.component
-                    await _chatHub.SendUserAsync(user.Email, "SendMessage", new object[] { message });
+                    await _hub.SendUserAsync(user.Email, "SendMessage", new object[] { message });
 
                     //send slack message
                     var slackResult = await _slackSupport.NotifyUser(message);

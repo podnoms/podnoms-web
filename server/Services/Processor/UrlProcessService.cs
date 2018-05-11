@@ -25,16 +25,16 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IEntryRepository _repository;
 
         public HelpersSettings _helpersSettings { get; }
-        private readonly HubLifetimeManager<UserUpdatesHub> _userUpdateHub;
+        private readonly HubLifetimeManager<UserUpdatesHub> _hub;
 
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
             IFileUploader fileUploader, IOptions<HelpersSettings> helpersSettings,
-            HubLifetimeManager<UserUpdatesHub> userUpdateHub,
+            HubLifetimeManager<UserUpdatesHub> hub,
             ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) : base(logger, mapper, realtimeUpdater) {
             this._helpersSettings = helpersSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
-            this._userUpdateHub = userUpdateHub;
+            this._hub = hub;
         }
 
         private async Task __downloader_progress(string userId, string uid, ProcessProgressEvent e) {
@@ -98,7 +98,7 @@ namespace PodNoms.Api.Services.Processor {
 
                     await _sendProcessCompleteMessage(entry);
                     await _unitOfWork.CompleteAsync();
-                    await _userUpdateHub.SendAllAsync(
+                    await _hub.SendAllAsync(
                         entry.Podcast.AppUser.Id,
                         new object[] { $"{entry.Title} has succesfully been processed" });
 
@@ -109,7 +109,7 @@ namespace PodNoms.Api.Services.Processor {
                 entry.ProcessingPayload = ex.Message;
                 await _unitOfWork.CompleteAsync();
                 await _sendProcessCompleteMessage(entry);
-                await _userUpdateHub.SendAllAsync(
+                await _hub.SendAllAsync(
                     entry.Podcast.AppUser.Id,
                     new object[] { $"Error processing {entry.Title}" });
             }

@@ -7,7 +7,8 @@ namespace PodNoms.Api.Persistence {
         Task<IEnumerable<ChatMessage>> GetSentChats(string fromUserId);
         Task<IEnumerable<ChatMessage>> GetReceivedChats(string fromUserId);
         Task<IEnumerable<ChatMessage>> GetChats(string fromUserId, string toUserId);
-        Task<IEnumerable<ChatMessage>> AddOrUpdateChat(ChatMessage message);
+        Task<IEnumerable<ChatMessage>> GetAllChats(string userId);
+        Task<ChatMessage> AddOrUpdateChat(ChatMessage message);
     }
 
 }

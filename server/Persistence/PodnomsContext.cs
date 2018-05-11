@@ -13,8 +13,8 @@ using PodNoms.Api.Services.Auth;
 
 namespace PodNoms.Api.Persistence {
 
-    public class PodnomsDbContext : IdentityDbContext<ApplicationUser> {
-        public PodnomsDbContext(DbContextOptions<PodnomsDbContext> options) : base(options) { }
+    public class PodNomsDbContext : IdentityDbContext<ApplicationUser> {
+        public PodNomsDbContext(DbContextOptions<PodNomsDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);

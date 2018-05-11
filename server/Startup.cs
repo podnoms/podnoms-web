@@ -93,7 +93,7 @@ namespace PodNoms.Api {
         public void ConfigureServices(IServiceCollection services) {
             Console.WriteLine($"Configuring services: {Configuration.ToString()}");
 
-            services.AddDbContext<PodnomsDbContext>(options =>
+            services.AddDbContext<PodNomsDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddOptions();
@@ -178,7 +178,7 @@ namespace PodNoms.Api {
                 o.Password.RequireNonAlphanumeric = false;
             });
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
-            identityBuilder.AddEntityFrameworkStores<PodnomsDbContext>().AddDefaultTokenProviders();
+            identityBuilder.AddEntityFrameworkStores<PodNomsDbContext>().AddDefaultTokenProviders();
             identityBuilder.AddUserManager<PodNomsUserManager>();
 
             services.AddMvc(options => {
@@ -191,12 +191,12 @@ namespace PodNoms.Api {
                 .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-            })
+                })
                 .AddXmlSerializerFormatters()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new Info { Title = "Podnoms.API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "PodNoms.API", Version = "v1" });
                 c.DocumentFilter<LowercaseDocumentFilter>();
             });
 
@@ -238,6 +238,7 @@ namespace PodNoms.Api {
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
@@ -262,15 +263,6 @@ namespace PodNoms.Api {
             } else {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-            Console.WriteLine("Performing migrations");
-            //TODO: Fix this when EF sucks less
-            // using (var context = new PodnomsDbContext(
-            //     app.ApplicationServices.GetRequiredService<DbContextOptions<PodnomsDbContext>>()))
-            // {
-            //     context.Database.Migrate();
-            // }
-            Console.WriteLine("Successfully migrated");
 
             // app.UseHsts();
             // app.UseHttpsRedirection();
