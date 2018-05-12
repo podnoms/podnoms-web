@@ -2,9 +2,24 @@
     <h2 class="content-heading text-black">Personal Details</h2>
     <div class="row items-push">
         <div class="col-lg-3">
-            <p class="text-muted">
-                Tell us as much or as little as you like, nobody sees this anyway
-            </p>
+            <div *ngIf="(limits$ | async) as limit; else loading">
+                <div class="js-pie-chart pie-chart js-pie-chart-enabled" data-percent="25" data-line-width="2" data-size="100" data-bar-color="#ef5350"
+                    data-track-color="#e9e9e9" data-scale-color="#d9d9d9">
+                    <span>25mb
+                        <br>
+                        <small class="text-muted">/100mb</small>
+                    </span>
+                    <canvas height="100" width="100"></canvas>
+                </div>
+                <p>
+                    Using: {{limit.storageUsed | bytesToHuman}} of {{limit.storageQuota| bytesToHuman}}
+                </p>
+            </div>
+            <ng-template #loading>
+                <div class="col-6 col-md-3">
+                    <i class="fa fa-4x fa-sun-o fa-spin text-warning"></i>
+                </div>
+            </ng-template>
             <h2>Avatar Image</h2>
             <div class="mb-15  animated fadeIn">
                 <div class="col-sm-6 col-xl-4">

@@ -81,6 +81,7 @@ import { BoilerplateComponent } from './components/boilerplate/boilerplate.compo
 import { BasePageComponent } from './components/base-page/base-page.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
 import { ChatService } from 'app/services/chat.service';
+import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
 
 const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -130,6 +131,7 @@ export function provideConfig() {
         NavbarComponent,
 
         FilterEntryPipe,
+        BytesToHumanPipe,
         OrderByPipe,
         PrettyPrintPipe,
         EntryListItemComponent,
@@ -148,7 +150,8 @@ export function provideConfig() {
         SideOverlayComponent,
         BoilerplateComponent,
         BasePageComponent,
-        ChatWidgetComponent
+        ChatWidgetComponent,
+        BytesToHumanPipe
     ],
     imports: [
         BrowserModule,

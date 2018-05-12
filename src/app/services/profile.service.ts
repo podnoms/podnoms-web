@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ProfileModel } from 'app/models/profile.model';
 import 'rxjs/add/operator/map';
-import { Profile } from 'selenium-webdriver/firefox';
 import { HttpClient } from '@angular/common/http';
 import { PodnomsAuthService } from './podnoms-auth.service';
+import { ProfileLimitsModel } from 'app/models/profile.limits';
 
 @Injectable()
 export class ProfileService {
@@ -48,6 +48,11 @@ export class ProfileService {
         return this._http.post<string>(
             environment.API_HOST + '/profile/updateapikey',
             null
+        );
+    }
+    getLimits(): Observable<ProfileLimitsModel> {
+        return this._http.get<ProfileLimitsModel>(
+            environment.API_HOST + '/profile/limits'
         );
     }
 }

@@ -9,6 +9,7 @@ import * as fromProfileActions from 'app/actions/profile.actions';
 import { Router } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
 import { BasePageComponent } from '../base-page/base-page.component';
+import { ProfileLimitsModel } from 'app/models/profile.limits';
 
 @Component({
     selector: 'app-profile',
@@ -27,6 +28,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     _imageFileBuffer: File;
 
     @ViewChild('fileInput') fileInput: ElementRef;
+    limits$: Observable<ProfileLimitsModel>;
 
     constructor(
         private _store: Store<ApplicationState>,
@@ -40,6 +42,8 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             this.originalSlug = p.slug;
             this.image.src = p.profileImage;
         });
+
+        this.limits$ = _service.getLimits();
     }
     ngOnInit() {}
 
