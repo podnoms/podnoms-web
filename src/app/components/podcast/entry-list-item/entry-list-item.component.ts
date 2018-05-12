@@ -48,13 +48,13 @@ export class EntryListItemComponent implements OnInit {
                         this.entry.uid
                     }__info_processed`;
                     listener
-                        .on<AudioProcessingMessageModel>(updateChannel)
+                        .on<AudioProcessingMessageModel>('audioprocessing', updateChannel)
                         .subscribe((result) => {
                             this.percentageProcessed = result.percentage;
                             this.currentSpeed = result.currentSpeed;
                         });
                     listener
-                        .on<PodcastEntryModel>(processedChannel)
+                        .on<PodcastEntryModel>('audioprocessing', processedChannel)
                         .subscribe((result) => {
                             this.entry = result;
                             if (this.entry.processingStatus === 'Processed') {
