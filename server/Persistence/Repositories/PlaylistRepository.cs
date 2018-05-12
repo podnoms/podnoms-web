@@ -13,7 +13,11 @@ namespace PodNoms.Api.Persistence {
     public class PlaylistRepository : GenericRepository<Playlist>, IPlaylistRepository {
         public PlaylistRepository(PodNomsDbContext context, ILogger<PlaylistRepository> logger) : base(context, logger) {
         }
-
+        public new async Task<Playlist> GetAsync(int id) {
+            return await GetContext().Playlists
+                .Include(i => i.ParsedPlaylistItems)
+                .SingleOrDefaultAsync(i => i.Id == id);
+        }
         public async Task<ParsedPlaylistItem> GetParsedItem(string itemId, int playlistId) {
             return await GetContext().ParsedPlaylistItems
                 .Include(i => i.Playlist)

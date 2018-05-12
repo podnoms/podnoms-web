@@ -118,7 +118,8 @@ namespace PodNoms.Api.Controllers {
                         return result;
                     }
                 }
-            } else if (status == AudioType.Playlist && YouTubeParser.ValidateUrl(item.SourceUrl)) {
+            } else if ((status == AudioType.Playlist && YouTubeParser.ValidateUrl(item.SourceUrl))
+                        || MixcloudParser.ValidateUrl(item.SourceUrl))  {
                 entry.ProcessingStatus = ProcessingStatus.Deferred;
                 var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
                 return Accepted(result);
