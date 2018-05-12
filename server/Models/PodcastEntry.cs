@@ -10,7 +10,7 @@ namespace PodNoms.Api.Models {
         Failed, //5
         Deferred //6
     }
-    public class PodcastEntry : BaseModel {
+    public class PodcastEntry : BaseEntity {
 
         public string Author { get; set; }
         public string Title { get; set; }

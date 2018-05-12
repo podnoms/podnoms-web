@@ -4,7 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Annotations;
 
 namespace PodNoms.Api.Persistence {
     public interface IRepository<TEntity> where TEntity : class, IEntity {
@@ -18,9 +20,11 @@ namespace PodNoms.Api.Persistence {
 
     public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity {
         private PodNomsDbContext _context;
+        private readonly ILogger<GenericRepository<TEntity>> _logger;
 
-        public GenericRepository(PodNomsDbContext context) {
+        public GenericRepository(PodNomsDbContext context, ILogger<GenericRepository<TEntity>> logger) {
             _context = context;
+            _logger = logger;
         }
 
         public PodNomsDbContext GetContext() {
@@ -36,13 +40,16 @@ namespace PodNoms.Api.Persistence {
         }
 
         public TEntity Create(TEntity entity) {
+            if (entity is ISluggedEntity) {
+                (entity as ISluggedEntity).Slug = (entity as ISluggedEntity).GetSlug(_context, _logger);
+            }
             var ret = _context.Set<TEntity>().Add(entity);
-            return ret as TEntity;
+            return entity;
         }
 
         public TEntity Update(TEntity entity) {
             var ret = _context.Set<TEntity>().Update(entity);
-            return ret as TEntity;
+            return entity;
         }
 
         public TEntity AddOrUpdate(TEntity entity) {

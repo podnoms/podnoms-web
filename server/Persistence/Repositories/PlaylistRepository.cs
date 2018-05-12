@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PodNoms.Api.Models;
 
 namespace PodNoms.Api.Persistence {
@@ -10,7 +11,7 @@ namespace PodNoms.Api.Persistence {
         Task<List<ParsedPlaylistItem>> GetUnprocessedItems();
     }
     public class PlaylistRepository : GenericRepository<Playlist>, IPlaylistRepository {
-        public PlaylistRepository(PodNomsDbContext context) : base(context) {
+        public PlaylistRepository(PodNomsDbContext context, ILogger<PlaylistRepository> logger) : base(context, logger) {
         }
 
         public async Task<ParsedPlaylistItem> GetParsedItem(string itemId, int playlistId) {

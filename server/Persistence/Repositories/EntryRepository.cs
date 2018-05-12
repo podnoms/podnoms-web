@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PodNoms.Api.Models;
 
 
@@ -12,7 +13,7 @@ namespace PodNoms.Api.Persistence {
         Task<PodcastEntry> GetByUidAsync(string uid);
     }
     public class EntryRepository : GenericRepository<PodcastEntry>, IEntryRepository {
-        public EntryRepository(PodNomsDbContext context) : base(context) {
+        public EntryRepository(PodNomsDbContext context, ILogger<EntryRepository> logger) : base(context, logger) {
         }
         public async Task<IEnumerable<PodcastEntry>> GetAllForSlugAsync(string podcastSlug) {
             var entries = await GetAll()
