@@ -36,6 +36,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ClipboardModule } from 'ngx-clipboard';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -159,6 +160,8 @@ export function provideConfig() {
             storageBucket: 'podnoms-api.appspot.com',
             messagingSenderId: '357461672895'
         }),
+        NgxSmartModalModule.forRoot(),
+
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         AngularFirestoreModule,
@@ -202,6 +205,7 @@ export function provideConfig() {
             provide: AuthServiceConfig,
             useFactory: provideConfig
         },
+
         SignalRService,
         ProfileService,
         PodcastService,

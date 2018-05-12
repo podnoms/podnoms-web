@@ -23,6 +23,8 @@ namespace PodNoms.Api.Models {
         public string ProcessingPayload { get; set; }
         public ProcessingStatus ProcessingStatus { get; set; } = ProcessingStatus.Accepted;
         public bool Processed { get; set; }
+
+        public int PodcastId { get; set; }
         public Podcast Podcast { get; set; }
     }
 

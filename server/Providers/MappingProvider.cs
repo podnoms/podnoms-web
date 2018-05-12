@@ -33,12 +33,6 @@ namespace PodNoms.Api.Providers {
                     src => src.AudioUrl,
                     e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"))
                 .ForMember(
-                    src => src.PodcastId,
-                    e => e.MapFrom(m => m.Podcast.Id))
-                .ForMember(
-                    src => src.Podcast,
-                    e => e.MapFrom(m => m.Podcast))
-                .ForMember(
                     src => src.Uid,
                     e => e.MapFrom(m => m.ExposedUid));
 
