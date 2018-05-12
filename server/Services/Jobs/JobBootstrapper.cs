@@ -11,6 +11,7 @@ namespace PodNoms.Api.Services.Jobs {
             RecurringJob.AddOrUpdate<ClearOrphanAudioJob>(x => x.Execute(), Cron.Daily(1));
             RecurringJob.AddOrUpdate<UpdateYouTubeDlJob>(x => x.Execute(), Cron.Daily(1, 30));
             // BackgroundJob.Schedule<ProcessPlaylistsJob>(x => x.Execute(), TimeSpan.FromSeconds(1));
+            RecurringJob.AddOrUpdate<ProcessPlaylistsJob>(x => x.Execute(), Cron.Daily(2));
         }
     }
 }

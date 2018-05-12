@@ -16,6 +16,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { QuillModule } from 'ngx-quill';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
@@ -28,7 +29,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthGuard } from './services/auth.guard';
 import { ImageService } from './services/image.service';
 import { DebugService } from './services/debug.service';
-import { ChatterService } from './services/chatter.service';
 import { DebugComponent } from './components/debug/debug.component';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -52,6 +52,7 @@ import { DropzoneModule } from './components/shared/dropzone/dropzone.module';
 import { reducers } from './reducers';
 import { PodcastsEffects } from './effects/podcast.effects';
 import { EntriesEffects } from './effects/entries.effects';
+import { ChatEffects } from './effects/chat.effects';
 import { ProfileEffects } from './effects/profile.effects';
 import { PodcastService } from './services/podcast.service';
 import { SignalRService } from 'app/services/signalr.service';
@@ -77,6 +78,8 @@ import { SideOverlayComponent } from './components/side-overlay/side-overlay.com
 import { UiStateService } from './services/ui-state.service';
 import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
 import { BasePageComponent } from './components/base-page/base-page.component';
+import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
+import { ChatService } from 'app/services/chat.service';
 
 const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -143,20 +146,22 @@ export function provideConfig() {
         HumaniseTimePipe,
         SideOverlayComponent,
         BoilerplateComponent,
-        BasePageComponent
+        BasePageComponent,
+        ChatWidgetComponent
     ],
     imports: [
         BrowserModule,
         AngularFireModule.initializeApp({
-            apiKey: 'AIzaSyAaIm8LTB0ZgJ-g7RXEjtVa1EOQB381QLI',
-            authDomain: 'podnoms-797e3.firebaseapp.com',
-            databaseURL: 'https://podnoms-797e3.firebaseio.com',
-            projectId: 'podnoms-797e3',
-            storageBucket: 'podnoms-797e3.appspot.com',
-            messagingSenderId: '777042345082'
+            apiKey: 'AIzaSyA5pGl4o1oGJi1Ke-842Lq0VvL2YZU2rfc',
+            authDomain: 'podnoms-api.firebaseapp.com',
+            databaseURL: 'https://podnoms-api.firebaseio.com',
+            projectId: 'podnoms-api',
+            storageBucket: 'podnoms-api.appspot.com',
+            messagingSenderId: '357461672895'
         }),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
+        AngularFirestoreModule,
         HttpClientModule,
         AppRoutingModule,
         HttpModule,
@@ -177,7 +182,8 @@ export function provideConfig() {
         EffectsModule.forRoot([
             PodcastsEffects,
             EntriesEffects,
-            ProfileEffects
+            ProfileEffects,
+            ChatEffects
         ]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
@@ -203,10 +209,10 @@ export function provideConfig() {
         PushRegistrationService,
         DebugService,
         MessagingService,
-        ChatterService,
         AppInsightsService,
         JobsService,
         AudioService,
+        ChatService,
         GlobalsService
     ],
     bootstrap: [AppComponent]

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using PodNoms.Api.Services.Gravatar;
 using PodNoms.Api.Models;
 using PodNoms.Api.Utils;
+using PodNoms.Api.Models.Settings;
 
 namespace PodNoms.Api.Services.Auth {
     public class PodNomsUserManager : UserManager<ApplicationUser> {

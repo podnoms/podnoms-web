@@ -1,10 +1,12 @@
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PodNoms.Api.Services.Auth;
 
+[Authorize]
 public class BaseAuthController : Controller {
     private readonly ClaimsPrincipal _caller;
     protected readonly UserManager<ApplicationUser> _userManager;

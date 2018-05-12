@@ -10,10 +10,8 @@ namespace PodNoms.Api.Models {
         Failed, //5
         Deferred //6
     }
-    public class PodcastEntry : BaseModel {
+    public class PodcastEntry : BaseEntity {
 
-        public int Id { get; set; }
-        public string Uid { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -25,7 +23,7 @@ namespace PodNoms.Api.Models {
         public string ProcessingPayload { get; set; }
         public ProcessingStatus ProcessingStatus { get; set; } = ProcessingStatus.Accepted;
         public bool Processed { get; set; }
-        public int PodcastId { get; set; }
         public Podcast Podcast { get; set; }
     }
+
 }

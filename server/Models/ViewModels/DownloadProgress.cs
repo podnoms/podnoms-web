@@ -1,5 +1,4 @@
-namespace PodNoms.Api.Models.ViewModels
-{
+namespace PodNoms.Api.Models.ViewModels {
     public class ProcessProgressEvent {
         public double Percentage { get; set; }
         public string TotalSize;

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Providers;
@@ -68,7 +69,7 @@ namespace PodNoms.Api.Controllers {
             };
 
             var localFile = await CachedFormFileStorage.CacheItem(file);
-            await _entryRepository.AddOrUpdateAsync(entry);
+            _entryRepository.AddOrUpdate(entry);
             await _unitOfWork.CompleteAsync();
 
             BackgroundJob.Enqueue<IAudioUploadProcessService>(service => service.UploadAudio(entry.Id, localFile));
