@@ -30,6 +30,7 @@ namespace PodNoms.Api.Persistence {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
+
             foreach (var pb in __getColumn(modelBuilder, "CreateDate")) {
                 pb.ValueGeneratedOnAdd()
                   .HasDefaultValueSql("getdate()");

@@ -10,3 +10,7 @@ ol {
 .border {
     background: red;
 }
+.modal-podcast-image {
+    width: 64px;
+    height: 64px;
+}

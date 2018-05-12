@@ -9,6 +9,7 @@
 @import '~quill/dist/quill.snow.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
+@import '~ngx-smart-modal/ngx-smart-modal.css';
 
 a:hover {
     cursor: pointer;
@@ -19,6 +20,12 @@ body {
 .cc-grower {
     width: auto;
     margin-left: 220px;
+}
+
+/* Remove padding from ngx-dialog */
+
+.nsm-dialog.nsm-dialog-open {
+    padding: 0px !important;
 }
 
 /**====== Badges-button css end ======**/

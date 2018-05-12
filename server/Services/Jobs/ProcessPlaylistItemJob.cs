@@ -46,7 +46,7 @@ namespace PodNoms.Api.Services.Jobs {
                 var downloader = new AudioDownloader(url, _helpersSettings.Downloader);
                 var info =  downloader.GetInfo();
                 if (info == AudioType.Valid) {
-                    var podcast = await _podcastRepository.GetAsync(item.Playlist.Podcast.Id);
+                    var podcast = await _podcastRepository.GetAsync(item.Playlist.PodcastId);
                     var uid = System.Guid.NewGuid().ToString();
                     var file = downloader.DownloadAudio(uid);
                     if (System.IO.File.Exists(file)) {

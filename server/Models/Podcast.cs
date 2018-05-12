@@ -6,6 +6,7 @@ using PodNoms.Api.Services.Auth;
 
 namespace PodNoms.Api.Models {
     public class Podcast : BaseEntity, ISluggedEntity {
+        public string AppUserId { get; set; }
         public ApplicationUser AppUser { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
