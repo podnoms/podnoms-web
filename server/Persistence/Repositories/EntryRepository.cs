@@ -11,9 +11,19 @@ namespace PodNoms.Api.Persistence {
         Task<IEnumerable<PodcastEntry>> GetAllForSlugAsync(string podcastSlug);
         Task<IEnumerable<PodcastEntry>> GetAllForUserAsync(string userId);
         Task<PodcastEntry> GetByUidAsync(string uid);
+        Task LoadPodcastAsync(PodcastEntry entry);
     }
     public class EntryRepository : GenericRepository<PodcastEntry>, IEntryRepository {
         public EntryRepository(PodNomsDbContext context, ILogger<EntryRepository> logger) : base(context, logger) {
+        }
+
+        public new async Task<PodcastEntry> GetAsync(int id) {
+            var ret = await GetAll()
+                .Where(p => p.Id == id)
+                .Include(p => p.Podcast)
+                .Include(p => p.Podcast.AppUser)
+                .FirstOrDefaultAsync();
+            return ret;
         }
         public async Task<IEnumerable<PodcastEntry>> GetAllForSlugAsync(string podcastSlug) {
             var entries = await GetAll()
@@ -32,6 +42,12 @@ namespace PodNoms.Api.Persistence {
             var entry = await GetAll()
                     .SingleOrDefaultAsync(e => e.NewId.ToString().Equals(uid));
             return entry;
+        }
+
+        public async Task LoadPodcastAsync(PodcastEntry entry) {
+            await GetContext().Entry(entry)
+                   .Reference(e => e.Podcast)
+                   .LoadAsync();
         }
     }
 }

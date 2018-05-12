@@ -58,7 +58,7 @@ namespace PodNoms.Api.Services.Processor {
         public async Task<AudioType> GetInformation(PodcastEntry entry) {
 
             var downloader = new AudioDownloader(entry.SourceUrl, _helpersSettings.Downloader);
-            var ret =  downloader.GetInfo();
+            var ret = downloader.GetInfo();
             if (ret == AudioType.Valid) {
                 entry.Title = downloader.Properties?.Title;
                 entry.Description = downloader.Properties?.Description;
@@ -79,6 +79,7 @@ namespace PodNoms.Api.Services.Processor {
         }
         public async Task<bool> DownloadAudio(int entryId) {
             var entry = await _repository.GetAsync(entryId);
+
             if (entry == null)
                 return false;
             try {
@@ -86,7 +87,13 @@ namespace PodNoms.Api.Services.Processor {
                 var outputFile =
                     Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 
-                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.AppUser.Id, entry.ExposedUid, e);
+                downloader.DownloadProgress += async (s, e) => {
+                    try {
+                        await __downloader_progress(entry.Podcast.AppUser.Id, entry.ExposedUid, e);
+                    } catch (NullReferenceException nre) {
+                        _logger.LogError(nre.Message);
+                    }
+                };
 
                 downloader.PostProcessing += (s, e) => {
                     Console.WriteLine(e);

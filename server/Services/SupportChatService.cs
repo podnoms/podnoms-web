@@ -47,7 +47,7 @@ namespace PodNoms.Api.Services {
                     });
 
                     //send SignalR message to notify in chat.component
-                    await _hub.SendUserAsync(user.Email, "SendMessage", new object[] { message });
+                    await _hub.SendUserAsync(user.Id, "SendMessage", new object[] { message });
 
                     //send slack message
                     var slackResult = await _slackSupport.NotifyUser(message);
