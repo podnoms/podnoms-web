@@ -24,7 +24,6 @@ import { BasePageComponent } from '../base-page/base-page.component';
 })
 export class PodcastComponent extends BasePageComponent {
     selectedPodcast$: Observable<PodcastModel>;
-    pendingEntry: PodcastEntryModel = null;
     entries$: Observable<PodcastEntryModel[]>;
     uploadMode = false;
     urlMode = false;
@@ -96,26 +95,21 @@ export class PodcastComponent extends BasePageComponent {
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
         this._store.dispatch(new fromEntriesActions.UpdateAction(entry));
     }
-    onEntryUploadDeferred(entry: PodcastEntryModel) {
-        this.pendingEntry = entry;
-    }
+
     onUrlAddComplete(entry: PodcastEntryModel) {
         this.urlMode = false;
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
     }
-    processPlaylist() {
-        if (this.pendingEntry) {
-            this._service.addPlaylist(this.pendingEntry).subscribe((e) => {
-                if (e) {
-                    this._toasty.info(
-                        'Playlist added, check back here (and on your device) for new episodes'
-                    );
-                }
-            });
-        }
-    }
-    dismissPlaylist() {
+
+    processPlaylist(entry: PodcastEntryModel) {
         this.urlMode = false;
-        this.pendingEntry = null;
+        this.uploadMode = false;
+        this._service.addPlaylist(entry).subscribe((e) => {
+            if (e) {
+                this._toasty.info(
+                    'Playlist added, check back here (and on your device) for new episodes'
+                );
+            }
+        });
     }
 }

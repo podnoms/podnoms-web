@@ -28,22 +28,8 @@
         <div class="block-content">
             <app-podcast-upload-form *ngIf="uploadMode" [podcast]="podcast" (onUploadComplete)="onEntryUploadComplete($event)">
             </app-podcast-upload-form>
-            <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)" (onUploadDeferred)="onEntryUploadDeferred($event)">
+            <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)" (onPlaylistAdded)="processPlaylist($event)">
             </app-podcast-add-url-form>
-            <div class="block block-themed" *ngIf="pendingEntry">
-                <div class="block-header bg-danger">
-                    <h3 class="block-title">This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes
-                        being downloaded to your device).</h3>
-                    <div class="block-options">
-                        <button type="button" class="btn-block-option" (click)="processPlaylist()">
-                            <i class="fa fa-check"></i>Yes
-                        </button>
-                        <button type="button" class="btn-block-option" (click)="dismissPlaylist()">
-                            <i class="fa fa-times"></i>No
-                        </button>
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tbody>
