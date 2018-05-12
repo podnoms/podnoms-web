@@ -28,6 +28,10 @@ export class SideOverlayComponent implements OnInit {
             if (r) {
                 this.user$ = this._profileService.getProfile();
                 this.entries$ = this._podcastService.getAllEntriesForUser();
+
+                this.entries$.subscribe((r) =>
+                    console.log('side-overlay.component', 'gotEntries', r)
+                );
             }
         });
     }

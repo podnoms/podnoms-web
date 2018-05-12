@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels.RssViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Auth;
@@ -69,7 +70,7 @@ namespace PodNoms.Api.Controllers {
                             from e in podcast.PodcastEntries
                             select new PodcastEnclosureItemViewModel {
                                 Title = e.Title.StripNonXMLChars(),
-                                Uid = e.Uid,
+                                Uid = e.ExposedUid,
                                 Description = e.Description.StripNonXMLChars(),
                                 Author = e.Author.StripNonXMLChars(),
                                 UpdateDate = e.CreateDate.ToRFC822String(),

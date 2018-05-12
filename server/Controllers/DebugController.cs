@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Services.Downloader;
@@ -24,17 +25,17 @@ namespace PodNoms.Api.Controllers {
     public class DebugController : BaseAuthController {
         private readonly StorageSettings _storageSettings;
         private readonly AudioFileStorageSettings _audioFileStorageSettings;
-        private readonly ApplicationsSettings _applicationsSettings;
+        private readonly HelpersSettings _helpersSettings;
         private readonly ImageFileStorageSettings _imageFileStorageSettings;
-        private readonly HubLifetimeManager<DebugHub> _hubManager;
+        private readonly HubLifetimeManager<DebugHub> _hub;
         private readonly IPushSubscriptionStore _subscriptionStore;
         private readonly IPushNotificationService _notificationService;
 
         public AppSettings _appSettings { get; }
 
         public DebugController(IOptions<StorageSettings> settings, IOptions<AppSettings> appSettings,
-            HubLifetimeManager<DebugHub> hubManager,
-            IOptions<ApplicationsSettings> applicationsSettings,
+            HubLifetimeManager<DebugHub> hub,
+            IOptions<HelpersSettings> helpersSettings,
             IOptions<AudioFileStorageSettings> audioFileStorageSettings,
             IOptions<ImageFileStorageSettings> imageFileStorageSettings,
             IPushSubscriptionStore subscriptionStore,
@@ -43,24 +44,25 @@ namespace PodNoms.Api.Controllers {
             IHttpContextAccessor contextAccessor) : base(contextAccessor, userManager) {
             this._appSettings = appSettings.Value;
             this._storageSettings = settings.Value;
-            this._applicationsSettings = applicationsSettings.Value;
+            this._helpersSettings = helpersSettings.Value;
             this._audioFileStorageSettings = audioFileStorageSettings.Value;
             this._imageFileStorageSettings = imageFileStorageSettings.Value;
-            this._hubManager = hubManager;
+            this._hub = hub;
             this._subscriptionStore = subscriptionStore;
             this._notificationService = notificationService;
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize]
         public IActionResult Get() {
             var config = new {
                 Version = _appSettings.Version,
                 CdnUrl = _storageSettings.CdnUrl,
                 AudioContainer = _audioFileStorageSettings.ContainerName,
                 ImageContainer = _imageFileStorageSettings.ContainerName,
-                YouTubeDlPath = _applicationsSettings.Downloader,
-                YouTubeDlVersion = AudioDownloader.GetVersion(_applicationsSettings.Downloader),
+                YouTubeDlPath = _helpersSettings.Downloader,
+                YouTubeDlVersion = AudioDownloader.GetVersion(_helpersSettings.Downloader),
+                OSVersion = System.Environment.OSVersion,
                 RssUrl = _appSettings.RssUrl
             };
             return new OkObjectResult(config);
@@ -69,8 +71,8 @@ namespace PodNoms.Api.Controllers {
         [Authorize]
         [HttpPost("realtime")]
         public async Task<IActionResult> Realtime([FromBody] string message) {
-            await _hubManager.SendUserAsync(User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
-            await _hubManager.SendAllAsync("Send", new string[] { $"All: {message}" });
+            await _hub.SendUserAsync(User.Identity.Name, "Send", new string[] { $"User {User.Identity.Name}: {message}" });
+            await _hub.SendAllAsync("Send", new string[] { $"All: {message}" });
             return Ok(message);
         }
         [Authorize]

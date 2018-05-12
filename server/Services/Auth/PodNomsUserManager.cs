@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using PodNoms.Api.Services.Gravatar;
 using PodNoms.Api.Models;
 using PodNoms.Api.Utils;
+using PodNoms.Api.Models.Settings;
 
 namespace PodNoms.Api.Services.Auth {
     public class PodNomsUserManager : UserManager<ApplicationUser> {
@@ -37,7 +38,7 @@ namespace PodNoms.Api.Services.Auth {
             _checkName(user);
             await _imageify(user);
             try {
-                await _mailSender.SendEmail("fergal.moran@gmail.com", "New user signup", $"{user.Email}\n{user.FirstName} {user.LastName}");
+                await _mailSender.SendEmailAsync("fergal.moran@gmail.com", "New user signup", $"{user.Email}\n{user.FirstName} {user.LastName}");
             } catch (Exception) {
 
             }

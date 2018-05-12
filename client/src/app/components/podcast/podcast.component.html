@@ -7,7 +7,7 @@
                     <a [routerLink]="['/podcasts', podcast.slug, 'edit']" class="btn btn-secondary btn-outline">
                         <i class="si si-pencil" aria-hidden="true"></i> Edit
                     </a>
-                    <a (click)="podcastDeleteDialog.show()" class="btn btn-secondary btn-outline-danger">
+                    <a (click)="modalService.getModal('deleteModal').open()" class="btn btn-secondary btn-outline-danger">
                         <i class="si si-close" aria-hidden="true"></i> Delete
                     </a>
                     <a class="btn btn-secondary" (click)="startAddEntry()">
@@ -28,22 +28,8 @@
         <div class="block-content">
             <app-podcast-upload-form *ngIf="uploadMode" [podcast]="podcast" (onUploadComplete)="onEntryUploadComplete($event)">
             </app-podcast-upload-form>
-            <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)" (onUploadDeferred)="onEntryUploadDeferred($event)">
+            <app-podcast-add-url-form *ngIf="urlMode" [podcast]="podcast" (onUrlAddComplete)="onUrlAddComplete($event)" (onPlaylistAdded)="processPlaylist($event)">
             </app-podcast-add-url-form>
-            <div class="block block-themed" *ngIf="pendingEntry">
-                <div class="block-header bg-danger">
-                    <h3 class="block-title">This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes
-                        being downloaded to your device).</h3>
-                    <div class="block-options">
-                        <button type="button" class="btn-block-option" (click)="processPlaylist()">
-                            <i class="fa fa-check"></i>Yes
-                        </button>
-                        <button type="button" class="btn-block-option" (click)="dismissPlaylist()">
-                            <i class="fa fa-times"></i>No
-                        </button>
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tbody>
@@ -53,24 +39,44 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title pull-left">Delete this podcast?</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="podcastDeleteDialog.hide()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <ngx-smart-modal #deleteModal identifier="deleteModal" customClass="modal-dialog" [closable]="false">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Delete this podcast?</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close" (click)="deleteModal.close()">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
-                    </button>
-                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
+                <div class="block-content">
+                    <h3 class="mb-20">This operation cannot be undone!</h3>
+                    <div class="container-fluid cxt-padded bg-faded">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2 text-md-left text-center">
+                                    <img class="modal-podcast-image rounded-circle" [src]="podcast.imageUrl" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-md-10 text-md-left text-center font-w600">
+                                    {{podcast.title}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-20">Deleting this podcast will delete all associated entries and audio with no opportunity to get them back.
+                        It will also be removed from any podcast applications subscribed to this feed..
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-alt-secondary" data-dismiss="modal" (click)="deleteModal.close()">No</button>
+                    <button type="button" class="btn btn-alt-success" data-dismiss="modal" (click)="deletePodcast(podcast); deleteModal.close()">
+                        <i class="fa fa-check"></i> Yes
                     </button>
                 </div>
             </div>
         </div>
-    </div>
+    </ngx-smart-modal>
 </div>
 <ng-template #empty>
     <div class="block-content block-content-full">

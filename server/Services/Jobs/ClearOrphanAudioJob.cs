@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Services.Jobs {
@@ -47,7 +48,7 @@ namespace PodNoms.Api.Services.Jobs {
                         _logger.LogWarning($"Error processing blob {blob.Uri}\n{e.Message}");
                     }
                 }
-                await this._mailSender.SendEmail("fergal.moran@gmail.com", $"ClearOrphanAudioJob: Complete {blobCount}", string.Empty);
+                await this._mailSender.SendEmailAsync("fergal.moran@gmail.com", $"ClearOrphanAudioJob: Complete {blobCount}", string.Empty);
             } catch (Exception ex) {
                 _logger.LogError($"Error clearing orphans\n{ex.Message}");
             }

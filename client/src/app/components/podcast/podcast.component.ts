@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 import { PodcastModel, PodcastEntryModel } from 'app/models/podcasts.models';
 import { ToastyService } from 'ng2-toasty';
 import { PodcastService } from 'app/services/podcast.service';
-import { MessagingService } from 'app/services/messaging.service';
 import { AppComponent } from 'app/app.component';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'app/store';
@@ -17,6 +16,7 @@ import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { BasePageComponent } from '../base-page/base-page.component';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
     selector: 'app-podcast',
@@ -25,7 +25,6 @@ import { BasePageComponent } from '../base-page/base-page.component';
 })
 export class PodcastComponent extends BasePageComponent {
     selectedPodcast$: Observable<PodcastModel>;
-    pendingEntry: PodcastEntryModel = null;
     entries$: Observable<PodcastEntryModel[]>;
     uploadMode = false;
     urlMode = false;
@@ -44,14 +43,15 @@ export class PodcastComponent extends BasePageComponent {
         private _service: PodcastService,
         private _toasty: ToastyService,
         private _cookieConsentService: NgcCookieConsentService,
-        route: ActivatedRoute,
-        private _location: Location
+        private _location: Location,
+        private _route: ActivatedRoute,
+        public modalService: NgxSmartModalService
     ) {
         super();
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
 
         this.entries$ = _store.select(fromPodcast.getEntries);
-        route.params.subscribe((params) => {
+        _route.params.subscribe((params) => {
             let slug = params['slug'];
             if (slug !== undefined) {
                 this.firstRun = false;
@@ -97,26 +97,21 @@ export class PodcastComponent extends BasePageComponent {
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
         this._store.dispatch(new fromEntriesActions.UpdateAction(entry));
     }
-    onEntryUploadDeferred(entry: PodcastEntryModel) {
-        this.pendingEntry = entry;
-    }
+
     onUrlAddComplete(entry: PodcastEntryModel) {
         this.urlMode = false;
         this._store.dispatch(new fromEntriesActions.AddSuccessAction(entry));
     }
-    processPlaylist() {
-        if (this.pendingEntry) {
-            this._service.addPlaylist(this.pendingEntry).subscribe((e) => {
-                if (e) {
-                    this._toasty.info(
-                        'Playlist added, check back here (and on your device) for new episodes'
-                    );
-                }
-            });
-        }
-    }
-    dismissPlaylist() {
+
+    processPlaylist(entry: PodcastEntryModel) {
         this.urlMode = false;
-        this.pendingEntry = null;
+        this.uploadMode = false;
+        this._service.addPlaylist(entry).subscribe((e) => {
+            if (e) {
+                this._toasty.info(
+                    'Playlist added, check back here (and on your device) for new episodes'
+                );
+            }
+        });
     }
 }

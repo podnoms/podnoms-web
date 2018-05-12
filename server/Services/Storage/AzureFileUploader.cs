@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Services.Processor;
 using PodNoms.Api.Services.Realtime;
 using PodNoms.Api.Utils.Extensions;
@@ -28,7 +29,7 @@ namespace PodNoms.Api.Services.Storage {
 
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(destinationFile);
             blockBlob.Properties.ContentType = contentType;
-            
+
             var blockSize = 256 * 1024;
             blockBlob.StreamWriteSizeInBytes = blockSize;
             long bytesToUpload = (new FileInfo(sourceFile)).Length;
