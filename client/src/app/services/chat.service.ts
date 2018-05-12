@@ -26,7 +26,7 @@ export class ChatService extends BaseService {
             if (r) {
                 this._signalRService.init('chat').then((listener) => {
                     listener
-                        .on<ChatModel>('SendMessage')
+                        .on<ChatModel>('chat', 'SendMessage')
                         .subscribe((message: ChatModel) => {
                             console.log(
                                 'chat-widget.component',
