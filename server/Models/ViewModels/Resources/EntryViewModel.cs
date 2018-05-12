@@ -17,6 +17,6 @@ namespace PodNoms.Api.Models.ViewModels {
         public bool Processed { get; set; }
         public string ProcessingPayload { get; set; }
         public int PodcastId { get; set; }
-        // public PodcastViewModel Podcast { get; set; }
+        public PodcastViewModel Podcast { get; set; }
     }
 }
