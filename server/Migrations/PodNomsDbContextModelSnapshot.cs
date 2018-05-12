@@ -135,15 +135,22 @@ namespace PodNoms.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("FromUserId");
 
                     b.Property<DateTime?>("MessageSeen");
 
+                    b.Property<Guid>("NewId")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<string>("ToUserId");
 
-                    b.Property<DateTime>("UpdateDate");
+                    b.Property<string>("Uid");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -160,13 +167,20 @@ namespace PodNoms.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<bool>("IsProcessed");
 
+                    b.Property<Guid>("NewId")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("PlaylistId");
 
-                    b.Property<DateTime>("UpdateDate");
+                    b.Property<string>("Uid");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("VideoId");
 
@@ -185,13 +199,20 @@ namespace PodNoms.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<Guid>("NewId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("PodcastId");
 
                     b.Property<string>("SourceUrl");
 
-                    b.Property<DateTime>("UpdateDate");
+                    b.Property<string>("Uid");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -208,9 +229,13 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<string>("AppUserId");
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Description");
+
+                    b.Property<Guid>("NewId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Slug");
 
@@ -220,7 +245,8 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<string>("Uid");
 
-                    b.Property<DateTime>("UpdateDate");
+                    b.Property<DateTime>("UpdateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -243,11 +269,15 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<string>("Author");
 
-                    b.Property<DateTime>("CreateDate");
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Description");
 
                     b.Property<string>("ImageUrl");
+
+                    b.Property<Guid>("NewId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("PlaylistId");
 
@@ -265,7 +295,8 @@ namespace PodNoms.Api.Migrations
 
                     b.Property<string>("Uid");
 
-                    b.Property<DateTime>("UpdateDate");
+                    b.Property<DateTime>("UpdateDate")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 

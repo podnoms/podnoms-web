@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.Options;
+using PodNoms.Api.Models.Annotations;
 using PodNoms.Api.Services.Auth;
 
 namespace PodNoms.Api.Models {
-    public class Podcast : BaseModel {
+    public class Podcast : BaseEntity, ISluggedEntity {
         public ApplicationUser AppUser { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
+        [SlugField(sourceField: "Title")]
         public string Slug { get; set; }
         public string TemporaryImageUrl { get; set; }
         public List<PodcastEntry> PodcastEntries { get; set; }

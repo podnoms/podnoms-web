@@ -49,11 +49,13 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PodNoms.Api.Utils.RemoteParsers;
 using PodNoms.Api.Services.Slack;
+using System.Threading;
 
 namespace PodNoms.Api {
     public class Startup {
         private const string SecretKey = "QGfaEMNASkNMGLKA3LjgPdkPfFEy3n40"; // todo: get this from somewhere secure
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private static Mutex mutex = new Mutex();
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration) {
@@ -80,7 +82,7 @@ namespace PodNoms.Api {
         }
         public void ConfigureDevelopmentServices(IServiceCollection services) {
             services.AddDbContext<PodNomsDbContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("PlaygroundConnection"));
                 options.EnableSensitiveDataLogging(true);
             });
 
@@ -117,9 +119,12 @@ namespace PodNoms.Api {
                 options.MultipartBodyLengthLimit = long.MaxValue;
             });
 
+            mutex.WaitOne();
+            Mapper.Reset();
             services.AddAutoMapper(e => {
                 e.AddProfile(new MappingProvider(Configuration));
             });
+            mutex.ReleaseMutex();
 
             services.AddHttpClient("mixcloud", c => {
                 c.BaseAddress = new Uri("https://api.mixcloud.com/");
@@ -259,9 +264,20 @@ namespace PodNoms.Api {
             Encoding.RegisterProvider(instance);
 
         }
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-            ILoggerFactory loggerFactory, IServiceProvider serviceProvider) {
+            ILoggerFactory loggerFactory, IServiceProvider serviceProvider, IApplicationLifetime lifetime) {
+
+            lifetime.ApplicationStarted.Register(() => {
+                if (env.IsDevelopment()) {
+                    var p = new System.Diagnostics.Process();
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.FileName = "/usr/bin/play";
+                    p.StartInfo.Arguments = "/home/fergalm/dev/podnoms/server/.working/tada.mp3";
+                    p.Start();
+                }
+            });
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
@@ -273,13 +289,12 @@ namespace PodNoms.Api {
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            GlobalConfiguration.Configuration.UseActivator(new ServiceProviderActivator(serviceProvider));
-
             if ((env.IsProduction() || true)) {
                 app.UseHangfireServer();
                 app.UseHangfireDashboard("/hangfire", new DashboardOptions {
                     Authorization = new[] { new HangFireAuthorizationFilter() }
                 });
+                GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
             }
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions {

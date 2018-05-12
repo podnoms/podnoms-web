@@ -113,10 +113,12 @@ namespace PodNoms.Api.Controllers {
                         entry.Podcast = podcast;
                         entry.Processed = false;
                         _repository.AddOrUpdate(entry);
-                        await _unitOfWork.CompleteAsync();
-                        _processEntry(entry);
-                        var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
-                        return result;
+                        bool succeeded = await _unitOfWork.CompleteAsync();
+                        if (succeeded) {
+                            _processEntry(entry);
+                            var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
+                            return result;
+                        }
                     }
                 } else if (status == AudioType.Playlist && YouTubeParser.ValidateUrl(item.SourceUrl)) {
                     entry.ProcessingStatus = ProcessingStatus.Deferred;

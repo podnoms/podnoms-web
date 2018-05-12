@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PodNoms.Api.Models;
 
 namespace PodNoms.Api.Persistence {
@@ -12,7 +13,7 @@ namespace PodNoms.Api.Persistence {
         Task<IEnumerable<ChatMessage>> GetAllChats(string userId);
     }
     public class ChatRepository : GenericRepository<ChatMessage>, IChatRepository {
-        public ChatRepository(PodNomsDbContext context) : base(context) {
+        public ChatRepository(PodNomsDbContext context, ILogger<ChatRepository> logger) : base(context, logger) {
 
         }
 

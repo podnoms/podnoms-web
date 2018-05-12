@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PodNoms.Api.Providers;
 
 namespace PodNoms.Api {
     public class Program {
@@ -15,21 +17,17 @@ namespace PodNoms.Api {
             Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == EnvironmentName.Development;
 
         public static void Main(string[] args) {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = BuildWebHost(args).Build();
+            host.MigrateDatabase(isDevelopment);
+            host.Run();
         }
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
-            .UseUrls("http://0.0.0.0:5000")
-             .UseKestrel(options => {
-                 options.Limits.MaxRequestBodySize = 1073741824; //1Gb
-                                                                 //  if (isDevelopment)
-                                                                 //  {
-                                                                 //      options.Listen(IPAddress.Any, 5001, listenOptions =>
-                                                                 //      {
-                                                                 //          listenOptions.UseHttps("certs/dev2.podnoms.com.pfx", "secret");
-                                                                 //      });
-                                                                 //  }
-             });
+                .UseStartup<Startup>()
+                .UseUrls("http://0.0.0.0:5000")
+                .UseKestrel(options => {
+                    options.Limits.MaxRequestBodySize = 1073741824;
+                });
+
     }
 }
