@@ -19,7 +19,7 @@ namespace PodNoms.Api.Persistence {
                 .Include(i => i.Playlist)
                 .Include(i => i.Playlist.Podcast)
                 .Include(i => i.Playlist.Podcast.AppUser)
-                .SingleOrDefaultAsync(i => i.VideoId == itemId && i.PlaylistId == playlistId);
+                .SingleOrDefaultAsync(i => i.VideoId == itemId && i.Playlist.Id == playlistId);
         }
         public async Task<List<ParsedPlaylistItem>> GetUnprocessedItems() {
             return await GetContext().ParsedPlaylistItems

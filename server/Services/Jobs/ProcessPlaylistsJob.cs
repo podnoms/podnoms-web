@@ -37,12 +37,13 @@ namespace PodNoms.Api.Services.Jobs {
         }
 
         public async Task Execute() {
-            var playlists = _playlistRepository.GetAll();
+            var playlists = _playlistRepository.GetAll()
+                .ToList();
             var resultList = new List<ParsedItemResult>();
 
             foreach (var playlist in playlists) {
                 var downloader = new AudioDownloader(playlist.SourceUrl, _helpersSettings.Downloader);
-                var info =  downloader.GetInfo();
+                var info = downloader.GetInfo();
                 var id = ((PlaylistDownloadInfo)downloader.RawProperties).Id;
                 if (info == AudioType.Playlist && downloader.RawProperties is PlaylistDownloadInfo) {
                     if (YouTubeParser.ValidateUrl(playlist.SourceUrl)) {
@@ -60,10 +61,11 @@ namespace PodNoms.Api.Services.Jobs {
                             VideoId = item.Id,
                             VideoType = item.VideoType
                         });
+                        await _unitOfWork.CompleteAsync();
+
                         BackgroundJob.Enqueue<ProcessPlaylistItemJob>(service => service.ExecuteForItem(item.Id, playlist.Id));
                     }
                 }
-                await _unitOfWork.CompleteAsync();
             }
         }
     }

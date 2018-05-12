@@ -29,7 +29,7 @@ namespace PodNoms.Api.Controllers {
             var podcast = await _podcastRepository.GetAsync(entry.PodcastId); 
             if (podcast != null) {
                 var playlist = new Playlist() {
-                    PodcastId = entry.PodcastId,
+                    Podcast = podcast,
                     SourceUrl = entry.SourceUrl
                 };
                 _playlistRepository.AddOrUpdate(playlist);
