@@ -12,6 +12,7 @@ import { ApplicationState } from 'app/store';
 import * as fromProfile from 'app/reducers';
 import * as fromProfileActions from 'app/actions/profile.actions';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -21,6 +22,8 @@ import { NgcCookieConsentService } from 'ngx-cookieconsent';
 export class AppComponent implements OnInit {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
+    isProduction = environment.production;
+
     constructor(
         private _authService: PodnomsAuthService,
         private _store: Store<ApplicationState>,

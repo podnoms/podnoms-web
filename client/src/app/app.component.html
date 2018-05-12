@@ -14,4 +14,4 @@
 </div>
 <app-footer *ngIf="loggedIn()"></app-footer>
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
-<app-chat-widget *ngIf="loggedIn()"></app-chat-widget>
+<app-chat-widget *ngIf="loggedIn() && !isProduction"></app-chat-widget>
