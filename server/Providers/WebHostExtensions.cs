@@ -4,15 +4,13 @@ using PodNoms.Api.Persistence;
 
 namespace PodNoms.Api.Providers {
     public static class WebHostExtensions {
-        public static IWebHost MigrateDatabase(this IWebHost webHost, bool isDevelopment) {
-            if (isDevelopment) {
-                var serviceScopeFactory = (IServiceScopeFactory)webHost.Services.GetService(typeof(IServiceScopeFactory));
-                using (var scope = serviceScopeFactory.CreateScope()) {
-                    var services = scope.ServiceProvider;
-                    var dbContext = services.GetRequiredService<PodNomsDbContext>();
-                    // dbContext.Database.EnsureDeleted();
-                    dbContext.Database.EnsureCreated();
-                }
+        public static IWebHost MigrateDatabase(this IWebHost webHost, bool migrate, bool dropFirst) {
+            var serviceScopeFactory = (IServiceScopeFactory)webHost.Services.GetService(typeof(IServiceScopeFactory));
+            using (var scope = serviceScopeFactory.CreateScope()) {
+                var services = scope.ServiceProvider;
+                var dbContext = services.GetRequiredService<PodNomsDbContext>();
+                if (dropFirst) dbContext.Database.EnsureDeleted();
+                if (migrate) dbContext.Database.EnsureCreated();
             }
             return webHost;
         }

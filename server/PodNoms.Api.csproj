@@ -13,7 +13,11 @@
     <EmbeddedResource Include="Resources/*.html" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-rc1-final"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.0-rc1-final" />
+
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
     <PackageReference Include="Google.Apis.Plus.v1" Version="1.33.0.1209" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.33.0.1217" />
@@ -23,7 +27,6 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="Handlebars.NetStandard" Version="1.8.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" />
     <PackageReference Include="Polly" Version="5.2.0" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.1.4" />
@@ -31,10 +34,11 @@
     <PackageReference Include="runtime.linux-x64.CoreCompat.System.Drawing" Version="1.0.0-beta009" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-dev001179" />
     <PackageReference Include="Slack.Webhooks" Version="1.0.4" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="1.1.10-pre20180223200113" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="1.1.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0-rc1" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.2.1" />
+
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />

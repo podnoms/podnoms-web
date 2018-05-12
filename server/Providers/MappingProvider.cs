@@ -33,6 +33,9 @@ namespace PodNoms.Api.Providers {
                     src => src.AudioUrl,
                     e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"))
                 .ForMember(
+                    src => src.PodcastId,
+                    e => e.MapFrom(m => m.Podcast.Id))
+                .ForMember(
                     src => src.Uid,
                     e => e.MapFrom(m => m.ExposedUid));
 
@@ -49,7 +52,10 @@ namespace PodNoms.Api.Providers {
                 .ForMember(
                     e => e.ImageUrl,
                     map => map.MapFrom(vm => vm.ImageUrl))
-            ;
+                .ForMember(
+                    e => e.Podcast,
+                    opt => opt.ResolveUsing<PodcastForeignKeyResolver>());
+
             CreateMap<RegistrationViewModel, ApplicationUser>()
                 .ForMember(
                     e => e.UserName,

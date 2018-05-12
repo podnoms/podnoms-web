@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +18,7 @@ using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Utils.Extensions;
 
 namespace PodNoms.Api.Persistence {
+
 
     public class PodNomsDbContext : IdentityDbContext<ApplicationUser> {
         private readonly ILogger<PodNomsDbContext> _logger;
@@ -64,5 +64,6 @@ namespace PodNoms.Api.Persistence {
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<ParsedPlaylistItem> ParsedPlaylistItems { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<ServerConfig> ServerConfig { get; set; }
     }
 }

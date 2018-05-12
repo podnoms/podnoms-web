@@ -19,6 +19,7 @@ using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Services.Auth;
 using PodNoms.Api.Utils;
 using Google.Apis.Auth;
+using Microsoft.Extensions.Logging;
 
 namespace PodNoms.Api.Controllers {
     [Route("[controller]/[action]")]
@@ -40,14 +41,16 @@ namespace PodNoms.Api.Controllers {
         private readonly FacebookAuthSettings _fbAuthSettings;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
+        private readonly ILogger<ExternalAuthController> _logger;
         private static readonly HttpClient Client = new HttpClient();
 
         public ExternalAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor, UserManager<ApplicationUser> userManager,
-         IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions) {
+         IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, ILogger<ExternalAuthController> logger) {
             _fbAuthSettings = fbAuthSettingsAccessor.Value;
             _userManager = userManager;
             _jwtFactory = jwtFactory;
             _jwtOptions = jwtOptions.Value;
+            _logger = logger;
         }
         // POST api/externalauth/google
         [HttpPost]
@@ -62,13 +65,14 @@ namespace PodNoms.Api.Controllers {
                     FirstName = payload.GivenName,
                     LastName = payload.FamilyName,
                     Name = payload.Name,
-                        Picture = new FacebookPictureData {
+                    Picture = new FacebookPictureData {
                         Data = new FacebookPicture {
                             Url = payload.Picture
                         }
                     }
                 });
-            } catch (Exception) {
+            } catch (Exception ex) {
+                _logger.LogError($"Error logging in: {ex.Message}");
                 return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid google token.", ModelState));
             }
         }

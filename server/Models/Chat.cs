@@ -9,7 +9,7 @@ namespace PodNoms.Api.Models {
 
         public ApplicationUser FromUser { get; set; }
         public ApplicationUser ToUser { get; set; }
-
+        public string Message { get; set; }
         public DateTime? MessageSeen { get; set; }
 
     }

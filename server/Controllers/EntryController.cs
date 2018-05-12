@@ -102,32 +102,28 @@ namespace PodNoms.Api.Controllers {
 
             // first check url is valid
             var entry = _mapper.Map<PodcastEntryViewModel, PodcastEntry>(item);
-            var podcast = await _podcastRepository.GetAsync(item.PodcastId);
-            if (podcast != null) {
-                var status = await _processor.GetInformation(entry);
-                if (status == AudioType.Valid) {
-                    if (entry.ProcessingStatus == ProcessingStatus.Processing) {
-                        if (string.IsNullOrEmpty(entry.ImageUrl)) {
-                            entry.ImageUrl = $"{_storageSettings.CdnUrl}static/images/default-entry.png";
-                        }
-                        entry.Podcast = podcast;
-                        entry.Processed = false;
-                        _repository.AddOrUpdate(entry);
-                        bool succeeded = await _unitOfWork.CompleteAsync();
-                        if (succeeded) {
-                            _processEntry(entry);
-                            var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
-                            return result;
-                        }
+            var status = await _processor.GetInformation(entry);
+            if (status == AudioType.Valid) {
+                if (entry.ProcessingStatus == ProcessingStatus.Processing) {
+                    if (string.IsNullOrEmpty(entry.ImageUrl)) {
+                        entry.ImageUrl = $"{_storageSettings.CdnUrl}static/images/default-entry.png";
                     }
-                } else if (status == AudioType.Playlist && YouTubeParser.ValidateUrl(item.SourceUrl)) {
-                    entry.ProcessingStatus = ProcessingStatus.Deferred;
-                    return Accepted(entry);
-                } else {
-                    return BadRequest("Processor failed");
+                    entry.Processed = false;
+                    _repository.AddOrUpdate(entry);
+                    bool succeeded = await _unitOfWork.CompleteAsync();
+                    await _repository.LoadPodcastAsync(entry);
+                    if (succeeded) {
+                        _processEntry(entry);
+                        var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
+                        return result;
+                    }
                 }
+            } else if (status == AudioType.Playlist && YouTubeParser.ValidateUrl(item.SourceUrl)) {
+                entry.ProcessingStatus = ProcessingStatus.Deferred;
+                var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
+                return Accepted(result);
             }
-            return BadRequest($"Unable to find podcast with ID: {item.PodcastId}");
+            return BadRequest("Failed to create podcast entry");
         }
 
         [HttpDelete("{id}")]
