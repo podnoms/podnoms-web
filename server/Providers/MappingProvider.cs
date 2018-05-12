@@ -36,6 +36,9 @@ namespace PodNoms.Api.Providers {
                     src => src.PodcastId,
                     e => e.MapFrom(m => m.Podcast.Id))
                 .ForMember(
+                    src => src.Podcast,
+                    e => e.MapFrom(m => m.Podcast))
+                .ForMember(
                     src => src.Uid,
                     e => e.MapFrom(m => m.ExposedUid));
 

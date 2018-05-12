@@ -1,4 +1,6 @@
 #!/bin/bash
+eval $(docker-machine env --unset)
+
 read -n1 -p "Renew web? [y,n]" web
 if [[ $web == "Y" || $web == "y" ]]; then
     docker run -it --rm -p 443:443 -p 80:80 --name certbot \
@@ -52,4 +54,5 @@ if [[ $jobs == "Y" || $jobs == "y" ]]; then
         -d jobs.podnoms.com \
         -m fergal.moran@gmail.com
 fi
+eval $(docker-machine env --unset)
 echo \n
