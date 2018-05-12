@@ -244,6 +244,7 @@ namespace PodNoms.Api {
             services.AddTransient<IRealTimeUpdater, SignalRUpdater>();
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddSingleton<IUserIdProvider, SignalRUserIdProvider>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
@@ -274,7 +275,7 @@ namespace PodNoms.Api {
                     p.StartInfo.RedirectStandardOutput = true;
                     p.StartInfo.RedirectStandardError = true;
                     p.StartInfo.FileName = "/usr/bin/play";
-                    p.StartInfo.Arguments = "/home/fergalm/dev/podnoms/server/.working/tada.mp3";
+                    p.StartInfo.Arguments = "-v 0.1 /home/fergalm/dev/podnoms/server/.working/tada.mp3";
                     p.Start();
                 }
             });

@@ -31,12 +31,12 @@ namespace PodNoms.Api.Providers {
             CreateMap<PodcastEntry, PodcastEntryViewModel>()
                 .ForMember(
                     src => src.AudioUrl,
-                    e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
+                    e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"))
+                .ForMember(
+                    src => src.Uid,
+                    e => e.MapFrom(m => m.ExposedUid));
 
             CreateMap<ApplicationUser, ProfileViewModel>()
-                .ForMember(
-                    src => src.Name,
-                    map => map.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(
                     src => src.ProfileImage,
                     map => map.MapFrom(s => s.PictureUrl));
