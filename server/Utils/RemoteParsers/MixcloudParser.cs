@@ -4,31 +4,58 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System;
+using Microsoft.Extensions.Logging;
+using System.Security.Policy;
 
 namespace PodNoms.Api.Utils.RemoteParsers {
     public class MixcloudParser {
-        const string URL_REGEX = @"^(http(s)?:\/\/)?((w){3}.)?mixcloud?(\.com)?\/.+";
+        static string[] VALID_PATHS = new string[] {
+            "stream", "uploads", "favorites", "listens", "playlists"
+        };
 
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<MixcloudParser> _logger;
 
-        public MixcloudParser(IHttpClientFactory httpClientFactory) {
+        public MixcloudParser(IHttpClientFactory httpClientFactory, ILogger<MixcloudParser> logger) {
+            this._logger = logger;
             this._httpClientFactory = httpClientFactory;
         }
         public static bool ValidateUrl(string url) {
-            var regex = new Regex(URL_REGEX);
-            var result = regex.Match(url);
-            return result.Success;
+            try {
+                var uri = new Uri(url);
+                if (uri.Host.EndsWith("mixcloud.com")) {
+                    var path = uri.Segments[uri.Segments.Length - 1].ToString().TrimEnd(new[] { '/' });
+                    return (VALID_PATHS.Any(path.Equals)) || uri.Segments.Length == 1;
+                }
+            } catch (Exception) {
+            }
+            return false;
         }
-        public async Task<List<ParsedItemResult>> GetEntries(string identifier) {
-            var client = _httpClientFactory.CreateClient("mixcloud");
-            var result = await client.GetAsync(identifier);
-            if (result.IsSuccessStatusCode) {
-                var typed = JsonConvert.DeserializeObject<MixcloudResult>(await result.Content.ReadAsStringAsync());
-                return typed.data[0].cloudcasts.Select(c => new ParsedItemResult {
-                    Id = c.key,
-                    VideoType = "mixcloud",
-                    UploadDate = c.updated_time
-                }).ToList();
+        public async Task<List<ParsedItemResult>> GetEntries(string url) {
+            try {
+                var path = new Uri(url).Segments.First(s => s != "/");
+                var newUrl = HttpUtils.UrlCombine(path, "cloudcasts");
+                var client = _httpClientFactory.CreateClient("mixcloud");
+                var result = await client.GetAsync(newUrl);
+
+                if (result.IsSuccessStatusCode) {
+                    var body = await result.Content.ReadAsStringAsync();
+                    Console.WriteLine(body);
+                    System.IO.File.WriteAllText("/tmp/dump.json", body);
+                    var typed = JsonConvert.DeserializeObject<Welcome>(body, MixcloudJsonConverter.Settings);
+                    // var typed = JsonConvert.DeserializeObject<MixcloudResult>(body);
+                    var data = typed.Data.OrderByDescending(p => p.UpdatedTime)
+                        .Select(c => new ParsedItemResult {
+                            Id = c.Key,
+                            VideoType = "mixcloud",
+                            UploadDate = c.UpdatedTime.DateTime
+                        }).Take(10).ToList();
+                    return data;
+                }
+            } catch (Exception ex) {
+                _logger.LogError($"Error parsing url: {url}");
+                _logger.LogError(ex.Message);
             }
             return null;
         }

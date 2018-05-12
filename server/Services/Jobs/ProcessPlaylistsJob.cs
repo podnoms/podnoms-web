@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,33 +46,38 @@ namespace PodNoms.Api.Services.Jobs {
             }
         }
         public async Task Execute(int playlistId) {
+            try {
+                var playlist = await _playlistRepository.GetAsync(playlistId);
+                var resultList = new List<ParsedItemResult>();
 
-            var playlist = await _playlistRepository.GetAsync(playlistId);
-            var resultList = new List<ParsedItemResult>();
-
-            var downloader = new AudioDownloader(playlist.SourceUrl, _helpersSettings.Downloader);
-            var info = downloader.GetInfo();
-            var id = ((PlaylistDownloadInfo)downloader.RawProperties).Id;
-            if (info == AudioType.Playlist && downloader.RawProperties is PlaylistDownloadInfo) {
-                if (YouTubeParser.ValidateUrl(playlist.SourceUrl)) {
-                    var searchTerm = (playlist.SourceUrl.Contains("/user/")) ? "forUsername" : "id";
-                    resultList = await _youTubeParser.GetPlaylistEntriesForId(id);
-                    //make sure the items are sorted in ascending date order
-                    //so they will be processed in the order they were created
-                } else if (MixcloudParser.ValidateUrl(playlist.SourceUrl)) {
-                    resultList = await _mixcloudParser.GetEntries(id);
+                var downloader = new AudioDownloader(playlist.SourceUrl, _helpersSettings.Downloader);
+                var info = downloader.GetInfo();
+                var id = ((PlaylistDownloadInfo)downloader.RawProperties)?.Id;
+                if (!string.IsNullOrEmpty(id)) {
+                    if (YouTubeParser.ValidateUrl(playlist.SourceUrl)) {
+                        var searchTerm = (playlist.SourceUrl.Contains("/user/")) ? "forUsername" : "id";
+                        resultList = await _youTubeParser.GetPlaylistEntriesForId(id);
+                        //make sure the items are sorted in ascending date order
+                        //so they will be processed in the order they were created
+                    } else if (MixcloudParser.ValidateUrl(playlist.SourceUrl)) {
+                        resultList = await _mixcloudParser.GetEntries(playlist.SourceUrl);
+                    }
+                    if (resultList != null) { 
+                        //order in reverse so the newest item is added first
+                        foreach (var item in resultList?.OrderBy(r => r.UploadDate)) {
+                            if (!playlist.ParsedPlaylistItems.Any(p => p.VideoId == item.Id)) {
+                                playlist.ParsedPlaylistItems.Add(new ParsedPlaylistItem {
+                                    VideoId = item.Id,
+                                    VideoType = item.VideoType
+                                });
+                                await _unitOfWork.CompleteAsync();
+                                BackgroundJob.Enqueue<ProcessPlaylistItemJob>(service => service.ExecuteForItem(item.Id, playlist.Id));
+                            }
+                        }
+                    }
                 }
-            }
-            foreach (var item in resultList?.OrderBy(r => r.UploadDate)) {
-                if (!playlist.ParsedPlaylistItems.Any(p => p.VideoId == item.Id)) {
-                    playlist.ParsedPlaylistItems.Add(new ParsedPlaylistItem {
-                        VideoId = item.Id,
-                        VideoType = item.VideoType
-                    });
-                    await _unitOfWork.CompleteAsync();
-
-                    BackgroundJob.Enqueue<ProcessPlaylistItemJob>(service => service.ExecuteForItem(item.Id, playlist.Id));
-                }
+            } catch (Exception ex) {
+                _logger.LogError(ex.Message);
             }
         }
     }

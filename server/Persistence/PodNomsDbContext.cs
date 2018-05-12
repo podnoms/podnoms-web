@@ -30,6 +30,9 @@ namespace PodNoms.Api.Persistence {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ParsedPlaylistItem>()
+                .HasIndex(p => new { p.VideoId, p.PlaylistId })
+                .IsUnique(true);
 
             foreach (var pb in __getColumn(modelBuilder, "CreateDate")) {
                 pb.ValueGeneratedOnAdd()
