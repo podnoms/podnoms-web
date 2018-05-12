@@ -15,9 +15,9 @@ namespace PodNoms.Api.Services.Processor {
         protected readonly IRealTimeUpdater _realtime;
         protected readonly IMapper _mapper;
         protected readonly JsonSerializer _serializer;
-        protected ProcessService(ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) {
+        protected ProcessService(ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) {
             this._logger = logger.CreateLogger<UrlProcessService>();
-            this._realtime = pusher;
+            this._realtime = realtimeUpdater;
 
             this._mapper = mapper;
             this._serializer = new JsonSerializer {
@@ -27,7 +27,7 @@ namespace PodNoms.Api.Services.Processor {
 
         protected async Task<bool> _sendProcessCompleteMessage(PodcastEntry entry) {
             var result = _mapper.Map<PodcastEntry, PodcastEntryViewModel>(entry);
-            return await _sendProcessUpdate(entry.Podcast.AppUser.Id, entry.Uid, "info_processed", result);
+            return await _sendProcessUpdate(entry.Podcast.AppUser.Id, entry.ExposedUid, "info_processed", result);
         }
         protected async Task<bool> _sendProgressUpdate(string userId, string itemUid, ProcessProgressEvent data) {
             return await _realtime.SendProcessUpdate(userId, itemUid, "progress_update", data);

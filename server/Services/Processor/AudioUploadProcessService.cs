@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Realtime;
@@ -48,7 +49,7 @@ namespace PodNoms.Api.Services.Processor {
                             if (p % 1 == 0) {
                                 await _sendProgressUpdate(
                                     entry.Podcast.AppUser.Id,
-                                    entry.Uid,
+                                    entry.ExposedUid,
                                     new ProcessProgressEvent {
                                         Percentage = p,
                                         CurrentSpeed = string.Empty,

@@ -12,6 +12,7 @@ import { ApplicationState } from 'app/store';
 import * as fromProfile from 'app/reducers';
 import * as fromProfileActions from 'app/actions/profile.actions';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -21,6 +22,8 @@ import { NgcCookieConsentService } from 'ngx-cookieconsent';
 export class AppComponent implements OnInit {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
+    isProduction = environment.production;
+
     constructor(
         private _authService: PodnomsAuthService,
         private _store: Store<ApplicationState>,
@@ -55,21 +58,19 @@ export class AppComponent implements OnInit {
                 if (p) {
                     this._messagingService.getPermission();
                     this._messagingService.receiveMessage();
-                    const chatterChannel = `${p.uid}_chatter`;
+                    const chatterChannel = `${p.id}`;
                     this._signalrService
-                        .init('chatter')
-                        .then((r) => {
-                            this._signalrService.connection.on(
-                                chatterChannel,
-                                (result) => {
-                                    this._toastyService.info(result);
-                                }
-                            );
+                        .init('userupdates')
+                        .then((listener) => {
+                            listener.on<string>('userupdates', chatterChannel)
+                            .subscribe(result => {
+                                this._toastyService.info(result);
+                            });
                         })
                         .catch((err) => {
                             console.error(
                                 'app.component',
-                                'Unable to initialise chatter hub',
+                                'Unable to initialise site update hub',
                                 err
                             );
                         });

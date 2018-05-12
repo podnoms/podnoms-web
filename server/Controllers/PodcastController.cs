@@ -23,23 +23,20 @@ namespace PodNoms.Api.Controllers {
     [Route("[controller]")]
     public class PodcastController : BaseAuthController {
         private readonly IPodcastRepository _repository;
-        private readonly IOptions<AppSettings> _settings;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public PodcastController(IPodcastRepository repository, IOptions<AppSettings> options,
-                    IMapper mapper, IUnitOfWork unitOfWork,
+        public PodcastController(IPodcastRepository repository, IMapper mapper, IUnitOfWork unitOfWork,
                     UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor)
             : base(contextAccessor, userManager) {
             this._uow = unitOfWork;
             this._repository = repository;
-            this._settings = options;
             this._mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IEnumerable<PodcastViewModel>> Get() {
-            var podcasts = await _repository.GetAllAsync(_applicationUser.Id);
+            var podcasts = await _repository.GetAllForUserAsync(_applicationUser.Id);
             var ret = _mapper.Map<List<Podcast>, List<PodcastViewModel>>(podcasts.ToList());
             return ret;
         }
@@ -61,7 +58,7 @@ namespace PodNoms.Api.Controllers {
             if (ModelState.IsValid) {
                 var item = _mapper.Map<PodcastViewModel, Podcast>(vm);
                 item.AppUser = _applicationUser;
-                var ret = await _repository.AddOrUpdateAsync(item);
+                var ret = _repository.AddOrUpdate(item);
                 await _uow.CompleteAsync();
                 return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(ret));
             }
@@ -71,13 +68,10 @@ namespace PodNoms.Api.Controllers {
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] PodcastViewModel vm) {
             if (ModelState.IsValid) {
-                var podcast = await _repository.GetAsync(vm.Id);
-                if (podcast != null) {
-                    var item = _mapper.Map<PodcastViewModel, Podcast>(vm, podcast);
-
-                    await _uow.CompleteAsync();
-                    return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));
-                }
+                var podcast = _mapper.Map<PodcastViewModel, Podcast>(vm);
+                _repository.AddOrUpdate(podcast);
+                await _uow.CompleteAsync();
+                return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));
             }
             return BadRequest("Invalid request data");
         }

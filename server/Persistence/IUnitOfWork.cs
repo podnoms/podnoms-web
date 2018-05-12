@@ -5,6 +5,6 @@ namespace PodNoms.Api.Persistence
 {
     public interface IUnitOfWork
     {
-        Task CompleteAsync();
+        Task<bool> CompleteAsync();
     }
 }

@@ -19,19 +19,7 @@ WORKDIR /app
 RUN dotnet publish -c Release -o out
 
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime-alpine AS runtime
-WORKDIR /app
+FROM fergalmoran/podnoms.alpine.base AS runtime
 COPY --from=publish /app/out ./
-# ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so && \
-
-RUN apk add --no-cache --update \
-    python \
-    ffmpeg \
-    libuv \
-    curl \
-    curl-dev && \
-    curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
-    chmod a+rx /usr/local/bin/youtube-dl && \
-    youtube-dl -U
 
 ENTRYPOINT ["dotnet", "PodNoms.Api.dll"]

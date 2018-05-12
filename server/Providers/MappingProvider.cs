@@ -31,15 +31,20 @@ namespace PodNoms.Api.Providers {
             CreateMap<PodcastEntry, PodcastEntryViewModel>()
                 .ForMember(
                     src => src.AudioUrl,
-                    e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"));
+                    e => e.MapFrom(m => $"{this._options.GetSection("Storage")["CdnUrl"]}{m.AudioUrl}"))
+                .ForMember(
+                    src => src.PodcastId,
+                    e => e.MapFrom(m => m.Podcast.Id))
+                .ForMember(
+                    src => src.Uid,
+                    e => e.MapFrom(m => m.ExposedUid));
 
             CreateMap<ApplicationUser, ProfileViewModel>()
                 .ForMember(
-                    src => src.Name,
-                    map => map.MapFrom(s => $"{s.FirstName} {s.LastName}"))
-                .ForMember(
                     src => src.ProfileImage,
                     map => map.MapFrom(s => s.PictureUrl));
+
+            CreateMap<ChatMessage, ChatViewModel>();
 
             //API Resource to Domain
             CreateMap<PodcastViewModel, Podcast>();
@@ -47,11 +52,17 @@ namespace PodNoms.Api.Providers {
                 .ForMember(
                     e => e.ImageUrl,
                     map => map.MapFrom(vm => vm.ImageUrl))
-            ;
+                .ForMember(
+                    e => e.Podcast,
+                    opt => opt.ResolveUsing<PodcastForeignKeyResolver>());
+
             CreateMap<RegistrationViewModel, ApplicationUser>()
                 .ForMember(
                     e => e.UserName,
                     map => map.MapFrom(vm => vm.Email));
+
+            CreateMap<ChatViewModel, ChatMessage>();
+
         }
     }
 }

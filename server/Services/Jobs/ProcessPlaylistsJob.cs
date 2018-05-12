@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NYoutubeDL.Models;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Downloader;
 using PodNoms.Api.Utils.RemoteParsers;
@@ -17,31 +18,32 @@ namespace PodNoms.Api.Services.Jobs {
     public class ProcessPlaylistsJob : IJob {
         public readonly IPlaylistRepository _playlistRepository;
         public readonly IEntryRepository _entryRepository;
-        private readonly ApplicationsSettings _applicationsSettings;
+        private readonly HelpersSettings _helpersSettings;
         private readonly ILogger<ProcessPlaylistsJob> _logger;
         private readonly YouTubeParser _youTubeParser;
         private readonly MixcloudParser _mixcloudParser;
         private readonly IUnitOfWork _unitOfWork;
 
         public ProcessPlaylistsJob(IPlaylistRepository playlistRepository, IEntryRepository entryRepository,
-                                IUnitOfWork unitOfWork, IOptions<ApplicationsSettings> applicationsSettings,
+                                IUnitOfWork unitOfWork, IOptions<HelpersSettings> helpersSettings,
                                 ILoggerFactory logger, YouTubeParser youTubeParser, MixcloudParser mixcloudParser) {
             this._unitOfWork = unitOfWork;
             this._youTubeParser = youTubeParser;
             this._mixcloudParser = mixcloudParser;
             this._playlistRepository = playlistRepository;
             this._entryRepository = entryRepository;
-            this._applicationsSettings = applicationsSettings.Value;
+            this._helpersSettings = helpersSettings.Value;
             this._logger = logger.CreateLogger<ProcessPlaylistsJob>();
         }
 
         public async Task Execute() {
-            var playlists = await _playlistRepository.GetAllAsync();
+            var playlists = _playlistRepository.GetAll()
+                .ToList();
             var resultList = new List<ParsedItemResult>();
 
             foreach (var playlist in playlists) {
-                var downloader = new AudioDownloader(playlist.SourceUrl, _applicationsSettings.Downloader);
-                var info =  downloader.GetInfo();
+                var downloader = new AudioDownloader(playlist.SourceUrl, _helpersSettings.Downloader);
+                var info = downloader.GetInfo();
                 var id = ((PlaylistDownloadInfo)downloader.RawProperties).Id;
                 if (info == AudioType.Playlist && downloader.RawProperties is PlaylistDownloadInfo) {
                     if (YouTubeParser.ValidateUrl(playlist.SourceUrl)) {
@@ -59,10 +61,11 @@ namespace PodNoms.Api.Services.Jobs {
                             VideoId = item.Id,
                             VideoType = item.VideoType
                         });
+                        await _unitOfWork.CompleteAsync();
+
                         BackgroundJob.Enqueue<ProcessPlaylistItemJob>(service => service.ExecuteForItem(item.Id, playlist.Id));
                     }
                 }
-                await _unitOfWork.CompleteAsync();
             }
         }
     }

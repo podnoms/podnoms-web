@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Providers;
@@ -47,11 +48,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PodNoms.Api.Utils.RemoteParsers;
+using PodNoms.Api.Services.Slack;
+using System.Threading;
 
 namespace PodNoms.Api {
     public class Startup {
         private const string SecretKey = "QGfaEMNASkNMGLKA3LjgPdkPfFEy3n40"; // todo: get this from somewhere secure
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+        private static Mutex mutex = new Mutex();
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration) {
@@ -59,6 +63,9 @@ namespace PodNoms.Api {
         }
 
         public void ConfigureProductionServices(IServiceCollection services) {
+            services.AddDbContext<PodNomsDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             ConfigureServices(services);
             services.AddHangfire(config => {
                 config.UseSqlServerStorage(Configuration["ConnectionStrings:DefaultConnection"]);
@@ -74,6 +81,11 @@ namespace PodNoms.Api {
                 });
         }
         public void ConfigureDevelopmentServices(IServiceCollection services) {
+            services.AddDbContext<PodNomsDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("PlaygroundConnection"));
+                options.EnableSensitiveDataLogging(true);
+            });
+
             ConfigureServices(services);
             services.AddHangfire(config => {
                 config.UseMemoryStorage();
@@ -91,15 +103,13 @@ namespace PodNoms.Api {
         public void ConfigureServices(IServiceCollection services) {
             Console.WriteLine($"Configuring services: {Configuration.ToString()}");
 
-            services.AddDbContext<PodnomsDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddOptions();
             services.Configure<AppSettings>(Configuration.GetSection("App"));
             services.Configure<StorageSettings>(Configuration.GetSection("Storage"));
-            services.Configure<ApplicationsSettings>(Configuration.GetSection("ApplicationsSettings"));
+            services.Configure<HelpersSettings>(Configuration.GetSection("HelpersSettings"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<FacebookAuthSettings>(Configuration.GetSection("FacebookAuthSettings"));
+            services.Configure<ChatSettings>(Configuration.GetSection("ChatSettings"));
             services.Configure<ImageFileStorageSettings>(Configuration.GetSection("ImageFileStorageSettings"));
             services.Configure<AudioFileStorageSettings>(Configuration.GetSection("AudioFileStorageSettings"));
             services.Configure<FormOptions>(options => {
@@ -109,9 +119,12 @@ namespace PodNoms.Api {
                 options.MultipartBodyLengthLimit = long.MaxValue;
             });
 
+            mutex.WaitOne();
+            Mapper.Reset();
             services.AddAutoMapper(e => {
                 e.AddProfile(new MappingProvider(Configuration));
             });
+            mutex.ReleaseMutex();
 
             services.AddHttpClient("mixcloud", c => {
                 c.BaseAddress = new Uri("https://api.mixcloud.com/");
@@ -175,7 +188,7 @@ namespace PodNoms.Api {
                 o.Password.RequireNonAlphanumeric = false;
             });
             identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), identityBuilder.Services);
-            identityBuilder.AddEntityFrameworkStores<PodnomsDbContext>().AddDefaultTokenProviders();
+            identityBuilder.AddEntityFrameworkStores<PodNomsDbContext>().AddDefaultTokenProviders();
             identityBuilder.AddUserManager<PodNomsUserManager>();
 
             services.AddMvc(options => {
@@ -193,7 +206,7 @@ namespace PodNoms.Api {
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new Info { Title = "Podnoms.API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "PodNoms.API", Version = "v1" });
                 c.DocumentFilter<LowercaseDocumentFilter>();
             });
 
@@ -201,10 +214,24 @@ namespace PodNoms.Api {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
             });
-            services.AddSignalR(config => { });
+
+            services.AddSignalR()
+                .AddJsonProtocol(options => options.PayloadSerializerSettings.ContractResolver = new DefaultContractResolver() {
+                    NamingStrategy = new CamelCaseNamingStrategy() {
+                        ProcessDictionaryKeys = true
+                    }
+                });
 
             services.AddCors(options => {
-                options.AddPolicy("AllowAllOrigins",
+                options.AddPolicy("PodNomsClientPolicy",
+                    builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("http://localhost:4200", "https://*.podnoms.com")
+                    .AllowCredentials());
+            });
+            services.AddCors(options => {
+                options.AddPolicy("AllowAllPolicy",
                     builder => builder
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
@@ -217,16 +244,20 @@ namespace PodNoms.Api {
             services.AddTransient<IRealTimeUpdater, SignalRUpdater>();
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddSingleton<IUserIdProvider, SignalRUserIdProvider>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
             services.AddScoped<IUrlProcessService, UrlProcessService>();
             services.AddScoped<INotifyJobCompleteService, NotifyJobCompleteService>();
             services.AddScoped<IAudioUploadProcessService, AudioUploadProcessService>();
+            services.AddScoped<ISupportChatService, SupportChatService>();
             services.AddScoped<IMailSender, MailgunSender>();
             services.AddScoped<YouTubeParser>();
             services.AddScoped<MixcloudParser>();
+            services.AddScoped<SlackSupportClient>();
             services.AddHttpClient<Services.Gravatar.GravatarHttpClient>();
 
             //register the codepages (required for slugify)
@@ -234,9 +265,20 @@ namespace PodNoms.Api {
             Encoding.RegisterProvider(instance);
 
         }
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-            ILoggerFactory loggerFactory, IServiceProvider serviceProvider) {
+            ILoggerFactory loggerFactory, IServiceProvider serviceProvider, IApplicationLifetime lifetime) {
+
+            lifetime.ApplicationStarted.Register(() => {
+                if (env.IsDevelopment()) {
+                    var p = new System.Diagnostics.Process();
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.FileName = "/usr/bin/play";
+                    p.StartInfo.Arguments = "-v 0.1 /home/fergalm/dev/podnoms/server/.working/tada.mp3";
+                    p.Start();
+                }
+            });
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
@@ -244,26 +286,16 @@ namespace PodNoms.Api {
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            Console.WriteLine("Performing migrations");
-            //TODO: Fix this when EF sucks less
-            // using (var context = new PodnomsDbContext(
-            //     app.ApplicationServices.GetRequiredService<DbContextOptions<PodnomsDbContext>>()))
-            // {
-            //     context.Database.Migrate();
-            // }
-            Console.WriteLine("Successfully migrated");
-
             // app.UseHsts();
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            GlobalConfiguration.Configuration.UseActivator(new ServiceProviderActivator(serviceProvider));
 
             if ((env.IsProduction() || true)) {
                 app.UseHangfireServer();
                 app.UseHangfireDashboard("/hangfire", new DashboardOptions {
                     Authorization = new[] { new HangFireAuthorizationFilter() }
                 });
+                GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
             }
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions {
@@ -271,12 +303,13 @@ namespace PodNoms.Api {
             });
             app.UseAuthentication();
 
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowAllPolicy");
 
             app.UseSignalR(routes => {
                 routes.MapHub<AudioProcessingHub>("/hubs/audioprocessing");
-                routes.MapHub<ChatterHub>("/hubs/chatter");
+                routes.MapHub<UserUpdatesHub>("/hubs/userupdates");
                 routes.MapHub<DebugHub>("/hubs/debug");
+                routes.MapHub<ChatHub>("/hubs/chat");
             });
 
             app.UseSwagger();
