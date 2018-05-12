@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using PodNoms.Api.Models;
+using PodNoms.Api.Models.Settings;
 using PodNoms.Api.Models.ViewModels;
 using PodNoms.Api.Persistence;
 using PodNoms.Api.Services.Downloader;
@@ -23,17 +24,17 @@ namespace PodNoms.Api.Services.Processor {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEntryRepository _repository;
 
-        public ApplicationsSettings _applicationsSettings { get; }
-        private readonly HubLifetimeManager<ChatterHub> _chatterHub;
+        public HelpersSettings _helpersSettings { get; }
+        private readonly HubLifetimeManager<UserUpdatesHub> _hub;
 
         public UrlProcessService(IEntryRepository repository, IUnitOfWork unitOfWork,
-            IFileUploader fileUploader, IOptions<ApplicationsSettings> applicationsSettings,
-            HubLifetimeManager<ChatterHub> chatterHub,
-            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater pusher) : base(logger, mapper, pusher) {
-            this._applicationsSettings = applicationsSettings.Value;
+            IFileUploader fileUploader, IOptions<HelpersSettings> helpersSettings,
+            HubLifetimeManager<UserUpdatesHub> hub,
+            ILoggerFactory logger, IMapper mapper, IRealTimeUpdater realtimeUpdater) : base(logger, mapper, realtimeUpdater) {
+            this._helpersSettings = helpersSettings.Value;
             this._repository = repository;
             this._unitOfWork = unitOfWork;
-            this._chatterHub = chatterHub;
+            this._hub = hub;
         }
 
         private async Task __downloader_progress(string userId, string uid, ProcessProgressEvent e) {
@@ -56,8 +57,8 @@ namespace PodNoms.Api.Services.Processor {
 
         public async Task<AudioType> GetInformation(PodcastEntry entry) {
 
-            var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
-            var ret = await downloader.GetInfo();
+            var downloader = new AudioDownloader(entry.SourceUrl, _helpersSettings.Downloader);
+            var ret = downloader.GetInfo();
             if (ret == AudioType.Valid) {
                 entry.Title = downloader.Properties?.Title;
                 entry.Description = downloader.Properties?.Description;
@@ -78,27 +79,34 @@ namespace PodNoms.Api.Services.Processor {
         }
         public async Task<bool> DownloadAudio(int entryId) {
             var entry = await _repository.GetAsync(entryId);
+
             if (entry == null)
                 return false;
             try {
-                var downloader = new AudioDownloader(entry.SourceUrl, _applicationsSettings.Downloader);
+                var downloader = new AudioDownloader(entry.SourceUrl, _helpersSettings.Downloader);
                 var outputFile =
                     Path.Combine(System.IO.Path.GetTempPath(), $"{System.Guid.NewGuid().ToString()}.mp3");
 
-                downloader.DownloadProgress += async (s, e) => await __downloader_progress(entry.Podcast.AppUser.Id, entry.Uid, e);
+                downloader.DownloadProgress += async (s, e) => {
+                    try {
+                        await __downloader_progress(entry.Podcast.AppUser.Id, entry.ExposedUid, e);
+                    } catch (NullReferenceException nre) {
+                        _logger.LogError(nre.Message);
+                    }
+                };
 
                 downloader.PostProcessing += (s, e) => {
                     Console.WriteLine(e);
                 };
-                var sourceFile = downloader.DownloadAudio(entry.Uid);
+                var sourceFile = downloader.DownloadAudio(entry.ExposedUid);
                 if (!string.IsNullOrEmpty(sourceFile)) {
                     entry.ProcessingStatus = ProcessingStatus.Uploading;
                     entry.AudioUrl = sourceFile;
 
                     await _sendProcessCompleteMessage(entry);
                     await _unitOfWork.CompleteAsync();
-                    await _chatterHub.SendAllAsync(
-                        $"{entry.Podcast.AppUser.Id}_chatter",
+                    await _hub.SendAllAsync(
+                        entry.Podcast.AppUser.Id,
                         new object[] { $"{entry.Title} has succesfully been processed" });
 
                 }
@@ -108,8 +116,8 @@ namespace PodNoms.Api.Services.Processor {
                 entry.ProcessingPayload = ex.Message;
                 await _unitOfWork.CompleteAsync();
                 await _sendProcessCompleteMessage(entry);
-                await _chatterHub.SendAllAsync(
-                    $"{entry.Podcast.AppUser.Id}_chatter",
+                await _hub.SendAllAsync(
+                    entry.Podcast.AppUser.Id,
                     new object[] { $"Error processing {entry.Title}" });
             }
             return false;

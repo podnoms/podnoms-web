@@ -8,7 +8,6 @@
         public string LastName { get; set; }
         public string Description { get; set; }
         public string ProfileImage { get; set; }
-        public string Uid { get; set; }
         public string ApiKey { get; set; }
     }
 }

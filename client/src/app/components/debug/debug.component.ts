@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { DebugService } from 'app/services/debug.service';
 import { environment } from 'environments/environment';
 import { JobsService } from 'app/services/jobs.service';
-import { ChatterService } from 'app/services/chatter.service';
 import { MessagingService } from 'app/services/messaging.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -23,7 +22,6 @@ export class DebugComponent implements OnInit {
 
     constructor(
         private _debugService: DebugService,
-        private _chatterService: ChatterService,
         private _jobsService: JobsService,
         private _pushNotifications: MessagingService,
         private _signalrService: SignalRService
@@ -50,6 +48,13 @@ export class DebugComponent implements OnInit {
     processPlaylists() {
         this._jobsService
             .processPlaylists()
+            .subscribe((e) =>
+                console.log('debug.component.ts', 'processPlaylists', e)
+            );
+    }
+    processPlaylistItems() {
+        this._jobsService
+            .processPlaylistItems()
             .subscribe((e) =>
                 console.log('debug.component.ts', 'processPlaylists', e)
             );

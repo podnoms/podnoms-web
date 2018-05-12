@@ -3,12 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace PodNoms.Api.Utils.Extensions
-{
-    public static class StringExtensions
-    {
-        public static string StripNonXMLChars(this string str, float xmlVersion = 1.1f)
-        {
+namespace PodNoms.Api.Utils.Extensions {
+    public static class StringExtensions {
+        public static string StripNonXMLChars(this string str, float xmlVersion = 1.1f) {
             if (string.IsNullOrEmpty(str))
                 return string.Empty;
             const string patternVersion1_0 = @"&#x((10?|[2-F])FFF[EF]|FDD[0-9A-F]|7F|8[0-46-9A-F]9[0-9A-F]);";
@@ -26,19 +23,16 @@ namespace PodNoms.Api.Utils.Extensions
             return result;
         }
 
-        public static string RemoveNonAlphaChars(this string str)
-        {
+        public static string RemoveNonAlphaChars(this string str) {
             Regex rgx = new Regex("[^a-zA-Z0-9 -]");
             return rgx.Replace(str, "");
         }
-        public static string RemoveInvalidUrlChars(this string str)
-        {
+        public static string RemoveInvalidUrlChars(this string str) {
             string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
             Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
             return r.Replace(str, "");
         }
-        public static string Slugify(this string phrase, IEnumerable<string> source)
-        {
+        public static string Slugify(this string phrase, IEnumerable<string> source) {
             string str = phrase.RemoveAccent().ToLower().RemoveInvalidUrlChars().RemoveNonAlphaChars();
             // invalid chars           
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
@@ -51,26 +45,22 @@ namespace PodNoms.Api.Utils.Extensions
 
             str = str.Replace(" ", "");
             var count = 1;
-
-            while (source != null &&
-                !string.IsNullOrEmpty(source.Where(e => e == str).Select(e => e).DefaultIfEmpty("").FirstOrDefault()))
-            {
-                str = $"{str}_{count++}";
+            var origStr = str;
+            while (source != null && source.Count() != 0 &&
+                !string.IsNullOrEmpty(source.Where(e => e == str).Select(e => e).DefaultIfEmpty("").FirstOrDefault())) {
+                str = $"{origStr}-{count++}";
             }
             return str;
         }
 
-        public static string RemoveAccent(this string txt)
-        {
+        public static string RemoveAccent(this string txt) {
             byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return System.Text.Encoding.ASCII.GetString(bytes);
         }
 
-        public static string UrlParse(this string url, params string[] parts)
-        {
+        public static string UrlParse(this string url, params string[] parts) {
             url = url.TrimEnd('/');
-            foreach (var u in parts)
-            {
+            foreach (var u in parts) {
                 url = string.Format("{0}/{1}", url, u.TrimStart('/'));
             }
             return url;

@@ -18,6 +18,11 @@ export class JobsService {
             environment.API_HOST + '/job/processplaylists'
         );
     }
+    processPlaylistItems(): Observable<Response> {
+        return this._http.get<Response>(
+            environment.API_HOST + '/job/processplaylistitems'
+        );
+    }
     updateYouTubeDl(): Observable<Response> {
         return this._http.get<Response>(
             environment.API_HOST + '/job/updateyoutubedl'

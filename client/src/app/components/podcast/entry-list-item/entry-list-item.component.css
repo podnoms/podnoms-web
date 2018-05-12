@@ -6,3 +6,7 @@
 .tools-wrapper {
     margin-top: auto;
 }
+.modal-entry-image {
+    width: 64px;
+    height: 64px;
+}
