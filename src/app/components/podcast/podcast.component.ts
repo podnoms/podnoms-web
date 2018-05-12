@@ -16,6 +16,7 @@ import * as fromPodcastActions from 'app/actions/podcast.actions';
 import * as fromEntriesActions from 'app/actions/entries.actions';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { BasePageComponent } from '../base-page/base-page.component';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
     selector: 'app-podcast',
@@ -42,14 +43,15 @@ export class PodcastComponent extends BasePageComponent {
         private _service: PodcastService,
         private _toasty: ToastyService,
         private _cookieConsentService: NgcCookieConsentService,
-        route: ActivatedRoute,
-        private _location: Location
+        private _location: Location,
+        private _route: ActivatedRoute,
+        public modalService: NgxSmartModalService
     ) {
         super();
         this.selectedPodcast$ = _store.select(fromPodcast.getSelectedPodcast);
 
         this.entries$ = _store.select(fromPodcast.getEntries);
-        route.params.subscribe((params) => {
+        _route.params.subscribe((params) => {
             let slug = params['slug'];
             if (slug !== undefined) {
                 this.firstRun = false;
