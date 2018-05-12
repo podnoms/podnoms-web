@@ -68,13 +68,10 @@ namespace PodNoms.Api.Controllers {
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] PodcastViewModel vm) {
             if (ModelState.IsValid) {
-                var podcast = await _repository.GetAsync(vm.Id);
-                if (podcast != null) {
-                    var item = _mapper.Map<PodcastViewModel, Podcast>(vm, podcast);
-
-                    await _uow.CompleteAsync();
-                    return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));
-                }
+                var podcast = _mapper.Map<PodcastViewModel, Podcast>(vm);
+                _repository.AddOrUpdate(podcast);
+                await _uow.CompleteAsync();
+                return new OkObjectResult(_mapper.Map<Podcast, PodcastViewModel>(podcast));
             }
             return BadRequest("Invalid request data");
         }
