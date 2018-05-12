@@ -17,20 +17,33 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
 })
 export class PodcastAddUrlFormComponent implements AfterViewInit {
     @Input() podcast: PodcastModel;
-    @Output() onUrlAddComplete: EventEmitter<any> = new EventEmitter();
-    @Output() onUploadDeferred: EventEmitter<any> = new EventEmitter();
+    @Output()
+    onUrlAddComplete: EventEmitter<any> = new EventEmitter();
+    @Output()
+    onPlaylistAdded: EventEmitter<any> = new EventEmitter();
+
     newEntrySourceUrl: string;
     errorText: string;
     isPosting: boolean = false;
     @ViewChild('input') vc: any;
+    playlistProxy: PodcastEntryModel = null;
     constructor(private _service: PodcastService) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
     }
     isValidURL(str) {
-        var a = document.createElement('a');
+        let a = document.createElement('a');
         a.href = str;
         return a.host && a.host != window.location.host;
+    }
+    processPlaylist() {
+        this.onPlaylistAdded.emit(this.playlistProxy)
+        this.resetUrl();
+    }
+    resetUrl() {
+        this.playlistProxy = null;
+        this.isPosting = false;
+        this.newEntrySourceUrl = '';
     }
     addEntry(podcast: PodcastModel) {
         const urlToCheck = this.newEntrySourceUrl;
@@ -43,7 +56,7 @@ export class PodcastAddUrlFormComponent implements AfterViewInit {
                 (e) => {
                     if (e) {
                         if (e.processingStatus === 'Deferred') {
-                            this.onUploadDeferred.emit(e);
+                            this.playlistProxy = e;
                         } else {
                             this.onUrlAddComplete.emit(e);
                         }
