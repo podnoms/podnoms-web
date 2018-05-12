@@ -26,7 +26,8 @@ namespace PodNoms.Api.Utils.RemoteParsers {
                 var uri = new Uri(url);
                 if (uri.Host.EndsWith("mixcloud.com")) {
                     var path = uri.Segments[uri.Segments.Length - 1].ToString().TrimEnd(new[] { '/' });
-                    return (VALID_PATHS.Any(path.Equals)) || uri.Segments.Length == 1;
+                    return (VALID_PATHS.Any(path.Equals)) || 
+                            uri.Segments.Where(s => s != "/").Count() == 1;
                 }
             } catch (Exception) {
             }
@@ -41,10 +42,7 @@ namespace PodNoms.Api.Utils.RemoteParsers {
 
                 if (result.IsSuccessStatusCode) {
                     var body = await result.Content.ReadAsStringAsync();
-                    Console.WriteLine(body);
-                    System.IO.File.WriteAllText("/tmp/dump.json", body);
                     var typed = JsonConvert.DeserializeObject<Welcome>(body, MixcloudJsonConverter.Settings);
-                    // var typed = JsonConvert.DeserializeObject<MixcloudResult>(body);
                     var data = typed.Data.OrderByDescending(p => p.UpdatedTime)
                         .Select(c => new ParsedItemResult {
                             Id = c.Key,
