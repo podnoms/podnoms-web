@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    image: podnoms.azurecr.io/podnoms.api
+    image: podnoms.azurecr.io/podnoms.web
     ports:
         - "80:80"
         - "443:443"
@@ -19,5 +19,5 @@ services:
     image: v2tec/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
+    #   - /root/.docker/config.json:/config.json
     command: --interval 30
