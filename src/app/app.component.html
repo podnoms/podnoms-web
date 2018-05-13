@@ -1,0 +1,17 @@
+<div *ngIf="!loggedIn()">
+    <router-outlet></router-outlet>
+</div>
+<div id="page-container" class="sidebar-inverse side-scroll side-trans-enabled page-header-inverse" [ngClass]="[overlayOpen ? 'side-overlay-o' : '', sidebarOpen ? 'sidebar-o' : '']"
+    *ngIf="loggedIn()">
+    <app-side-overlay></app-side-overlay>
+    <app-sidebar></app-sidebar>
+    <app-navbar></app-navbar>
+    <main id="main-container">
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>
+<app-footer *ngIf="loggedIn()"></app-footer>
+<ng2-toasty [position]="'top-right'"></ng2-toasty>
+<app-chat-widget *ngIf="loggedIn() && !isProduction"></app-chat-widget>

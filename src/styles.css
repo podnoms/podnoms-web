@@ -1,0 +1,133 @@
+/* @import 'assets/css/style.css'; */
+/* @import 'assets/css/simple-line-icons.css'; */
+
+@import 'assets/theme/css/codebase.css';
+@import 'assets/theme/css/themes/pulse.min.css';
+@import '~ng2-toasty/bundles/style.css';
+@import '~ng2-toasty/bundles/style-bootstrap.css';
+@import '~cookieconsent/build/cookieconsent.min.css';
+@import '~quill/dist/quill.snow.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
+@import '~ngx-smart-modal/ngx-smart-modal.css';
+
+a:hover {
+    cursor: pointer;
+}
+body {
+    background-color: #ffffff !important;
+}
+.cc-grower {
+    width: auto;
+    margin-left: 220px;
+}
+
+/* Remove padding from ngx-dialog */
+
+.nsm-dialog.nsm-dialog-open {
+    padding: 0px !important;
+}
+
+/**====== Badges-button css end ======**/
+/**====== Social-Buttons css start ======**/
+
+.btn-dribbble i,
+.btn-dropbox i,
+.btn-facebook i,
+.btn-flickr i,
+.btn-github i,
+.btn-google-plus i,
+.btn-instagram i,
+.btn-linkedin i,
+.btn-pinterest i,
+.btn-skype i,
+.btn-tumblr i,
+.btn-twitter i,
+.btn-youtube i {
+    display: inline-block;
+    border-radius: 3px 0 0 3px;
+}
+.btn-dribbble,
+.btn-dropbox,
+.btn-facebook,
+.btn-flickr,
+.btn-github,
+.btn-google-plus,
+.btn-instagram,
+.btn-linkedin,
+.btn-pinterest,
+.btn-skype,
+.btn-tumblr,
+.btn-twitter,
+.btn-youtube {
+    color: #fff;
+}
+
+.btn-dribbble:focus,
+.btn-dribbble:hover,
+.btn-dropbox:focus,
+.btn-dropbox:hover,
+.btn-facebook:focus,
+.btn-facebook:hover,
+.btn-flickr:focus,
+.btn-flickr:hover,
+.btn-github:focus,
+.btn-github:hover,
+.btn-google-plus:focus,
+.btn-google-plus:hover,
+.btn-instagram:focus,
+.btn-instagram:hover,
+.btn-linkedin:focus,
+.btn-linkedin:hover,
+.btn-pinterest:focus,
+.btn-pinterest:hover,
+.btn-skype:focus,
+.btn-skype:hover,
+.btn-tumblr:focus,
+.btn-tumblr:hover,
+.btn-twitter:focus,
+.btn-twitter:hover,
+.btn-youtube:focus,
+.btn-youtube:hover {
+    color: #fff;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.btn-facebook {
+    background-color: #3b5998;
+}
+
+.btn-twitter {
+    background-color: #00aced;
+}
+
+.btn-linkedin {
+    background-color: #007bb6;
+}
+
+.btn-dribbble {
+    background-color: #ea4c89;
+}
+
+.btn-google-plus {
+    background-color: #dd4b39;
+}
+
+.btn-instagram {
+    background-color: #517fa4;
+}
+
+.btn-pinterest {
+    background-color: #cb2027;
+}
+
+.btn-dropbox {
+    background-color: #32506d;
+}
+
+.btn-tumblr {
+    background-color: #00aced;
+}
+
+/**====== Social-Buttons css end ======**/

@@ -1,0 +1,17 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+        - "80:80"
+        - "443:443"
+    links:
+        - "api:api"
+    volumes:
+        - /etc/letsencrypt:/etc/letsencrypt
+        - /var/lib/letsencrypt:/var/lib/letsencrypt
+  api:
+    image: podnoms.azurecr.io/podnoms.api
+    container_name: api
+    expose:
+        - 5000

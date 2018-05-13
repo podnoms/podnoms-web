@@ -1,0 +1,102 @@
+<td class="pull-left" style="width: 5%">
+    <div *ngIf="entry.processingStatus === 'Accepted'">
+        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+    <div class="avatar" *ngIf="entry.processingStatus !== 'Accepted'">
+        <img [src]="entry.imageUrl" class="img-avatar img-avatar48" alt="">
+        <span class="avatar-status badge-success"></span>
+    </div>
+</td>
+<td class="font-w600" style="width: 65%">
+    <p class="font-w600 mb-10">
+        <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="updateTitle($event)" name="title" size="32"></inline-editor>
+    </p>
+    <p class="font-w600 mb-0" [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
+        <span>{{entry.processingStatus}}</span>| {{entry.createDate | amTimeAgo}}
+    </p>
+</td>
+<td style="width: 20%">
+    <em class="text-muted">
+        <span *ngIf="entry.processingStatus === 'Accepted'" style="width: 100%">
+            <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+        </span>
+        <span *ngIf="entry.processingStatus === 'Failed'">
+            <button class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10" (click)="retry(entry)">Retry</button>
+        </span>
+        <span *ngIf="entry.processingStatus!=='Processed' && entry.processingStatus !== 'Accepted' && entry.processingStatus !== 'Failed'"
+            style="width: 100%">
+            <div class="clearfix">
+                <div class="float-left">
+                    <strong>{{percentageProcessed}}%</strong>
+                </div>
+                <div class="float-right">
+                    <small class="text-muted">{{entry.processingStatus}}: {{currentSpeed}}</small>
+                </div>
+            </div>
+            <div class="progress progress-xs">
+                <div class="progress-bar bg-success" role="progressbar" [style.width]="percentageProcessed + '%'" [attr.aria-valuenow]="percentageProcessed"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </span>
+        <span *ngIf="entry.processingStatus==='Processed'" style="width: 100%" class="mt-25">
+            <!-- keep here just in case we want to put something in here later-->
+        </span>
+    </em>
+</td>
+<td class="text-center" style="width: 10%" valign="middle">
+    <div class="tools-wrapper">
+        <div class="btn-group">
+            <button type="button" class="btn btn-success" (click)="playAudio(entry.audioUrl)">
+                <i class="si" [ngClass]="playing ? 'si-control-pause' : 'si-control-play'"></i>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary" (click)="downloadAudio(entry)">
+                <i class="si si-cloud-download"></i>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="entryDeleteDialog.show()">
+                <i class="si si-close"></i>
+            </button>
+        </div>
+    </div>
+</td>
+<div class="modal fade" role="document" bsModal #entryDeleteDialog="bs-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Delete this podcast entry?</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close" (click)="entryDeleteDialog.hide()">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <h3 class="mb-20">This operation cannot be undone!</h3>
+
+                    <div class="container-fluid cxt-padded bg-faded">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2 text-md-left text-center">
+                                    <img class="modal-entry-image rounded-circle" [src]="entry.imageUrl" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-md-10 text-md-left text-center font-w600">
+                                    {{entry.title}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-20">Deleting this entry will delete all associated audio with no opportunity to get it back. It will also
+                        be removed from any podcast applications subscribed to this feed..
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-alt-secondary" data-dismiss="modal" (click)="entryDeleteDialog.hide()">No</button>
+                    <button type="button" class="btn btn-alt-success" data-dismiss="modal" (click)="deleteEntry(); entryDeleteDialog.hide()">
+                        <i class="fa fa-check"></i> Yes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

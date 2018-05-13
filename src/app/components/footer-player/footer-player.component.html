@@ -1,0 +1,33 @@
+<div class="player-wrapper">
+    <div class="webPlayer light audioPlayer bg-gd-dusk footer-player">
+        <div class="controls">
+            <div class="leftblock">
+                <a (click)="playPause()" tabindex="1" class="smooth noload" [ngClass]="playState === 1 ? 'pause' : 'play'"></a>
+            </div>
+            <div class="play-progress">
+                <span>
+                    {{title}}
+                </span>
+                <div class="progressbar">
+                    <div class="seekBar horizontal" style="width: 100%;" (click)="doSeek($event)">
+                        <div class="playBar" [style.width.%]="(position/duration)*100"></div>
+                        <a [style.left.%]="(position/duration)*100">
+                            <div></div>
+                        </a>
+                        <input type="hidden" name="" ng-model="vm.playPos">
+                    </div>
+                </div>
+                <div class="time current">{{ position | humaniseTime }}</div>
+                <div class="time duration">{{ duration | humaniseTime }}</div>
+            </div>
+            <div class="rightblock">
+                <div class="volumeBar">
+                    <div class="currentVolume horizontal" (click)="setVolume($event)">
+                        <div class="curvol" [style.width.%]="volume"></div>
+                    </div>
+                </div>
+                <div class="volumeText">Volume: {{volume}}</div>
+            </div>
+        </div>
+    </div>
+</div>

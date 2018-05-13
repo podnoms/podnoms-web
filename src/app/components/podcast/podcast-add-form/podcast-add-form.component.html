@@ -1,0 +1,82 @@
+<div class="block" *ngIf="podcast$ | async; let podcast; else loading">
+    <div class="block-header block-header-default">
+        <h1 class="block-title">Podcast Details</h1>
+        <div class="block-options">
+            <button type="button" class="btn-block-option" (click)="podcastDeleteDialog.show()">
+                <i class="si si-close"></i> Delete podcast
+            </button>
+        </div>
+    </div>
+    <div class="block-content">
+        <div class="row my-20">
+            <div class="col-6 form-left">
+                <form (submit)="submitForm(podcast)">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label for="podcast-name">Podcast Name</label>
+                            <input id="podcast-name" name="podcast-name" class="form-control" placeholder="Podcast name" [(ngModel)]="podcast.title">
+                        </div>
+                        <div class="form-group">
+                            <label for="podcast-description">Description</label>
+                            <quill-editor name="description" [style]="{height: '400px'}" [(ngModel)]="podcast.description"></quill-editor>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" [disabled]="sending" class="btn btn-success">
+                            <i class="fa fa-check"></i> Done!</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-6 form-right" *ngIf="podcast.id">
+                <label for="">Cover Image</label>
+                <div class="file-upload">
+                    <div class="options-container" id="image-container">
+                        <img class="img-fluid options-item img-preview" [src]="image.src" alt="">
+                        <div class="options-overlay bg-black-op-75">
+                            <div class="options-overlay-content">
+                                <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75" (click)="callFileInput()">
+                                    <i class="fa fa-pencil"></i> Replace
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group" style="visibility: hidden;">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Choose image....
+                                <input type="file" (change)="fileChangeEvent()" #fileInput>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" bsModal #podcastDeleteDialog="bs-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Delete this podcast?</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="podcastDeleteDialog.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary pull-right" (click)="podcastDeleteDialog.hide()">No
+                    </button>
+                    <button type="button" class="btn btn-danger pull-right" (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="sk-wave" *ngIf="!selectedPodcast">
+        <div class="sk-rect sk-rect1"></div>
+        <div class="sk-rect sk-rect2"></div>
+        <div class="sk-rect sk-rect3"></div>
+        <div class="sk-rect sk-rect4"></div>
+        <div class="sk-rect sk-rect5"></div>
+    </div>
+</ng-template>
