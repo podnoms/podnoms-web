@@ -1,0 +1,91 @@
+<div id="page-container" class="main-content-boxed">
+    <main id="main-container">
+        <div class="bg-image" style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
+            <div class="hero-static content content-full bg-white">
+                <div class="py-30 px-5 text-center">
+                    <a class="link-effect font-w700">
+                        <i class="login-fire"></i>
+                        <span class="font-size-xl text-primary-dark">pod</span>
+                        <span class="font-size-xl">noms</span>
+                    </a>
+                    <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
+                    <h2 class="h4 font-w400 text-muted mb-0" *ngIf="!isRequesting">Please sign in</h2>
+                    <h2 class="h4 font-w400 text-muted mb-0" *ngIf="isRequesting">Logging in</h2>
+                </div>
+                <div *ngIf="!isRequesting">
+                    <div class="row justify-content-center px-5">
+                        <div class="row">
+                            <div class="col-sm-6 mb-6">
+                                <button class="btn btn-facebook" (click)="login('facebook')" style="width: 100%">
+                                    <i class="fa fa-facebook"></i>&nbsp;Facebook</button>
+                            </div>
+                            <div class="col-sm-6 mb-6">
+                                <button class="btn btn-google-plus" (click)="login('google-oauth2')" style="width: 100%">
+                                    <i class="fa fa-google"></i>&nbsp;Google</button>
+                            </div>
+                            <!-- <div class="col-sm-4 mb-5">
+                                <button class="btn btn-twitter" (click)="login('twitter')" style="width: 100%">
+                                    <i class="fa fa-twitter"></i>&nbsp;Twitter</button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center">
+                        <div class="col-sm-8 col-md-6 col-xl-4">
+                            <form class="js-validation-signin" action="" (ngSubmit)="login()" method="post">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="form-material ">
+                                            <input type="text" autocomplete="username" class="form-control" id="login-username" name="login-username" [(ngModel)]="username">
+                                            <label for="login-username">Email Address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <div class="form-material">
+                                            <input type="password" autocomplete="current-password" class="form-control" id="login-password" name="login-password" [(ngModel)]="password">
+                                            <label for="login-password">Password</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="alert alert-danger" *ngIf="errorMessage" role="alert" [innerHTML]="errorMessage">
+                                </div>
+                                <div class="col-md-12 new-user-alert" *ngIf="brandNew">
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Account created!</strong> Please login with your new details
+                                    </div>
+                                </div>
+                                <div class="col-md-12 new-user-alert" *ngIf="justReset">
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Password succesfully reset!</strong> Please login with your new details
+                                    </div>
+                                </div>
+                                <div class="form-group row gutters-tiny">
+                                    <div class="col-12 mb-10">
+                                        <button type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
+                                            <i class="si si-login mr-10"></i> Sign In
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 mb-5">
+                                        <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary" [routerLink]="['/register']">
+                                            <i class="fa fa-plus text-muted mr-5"></i> New Account
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 mb-5">
+                                        <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary" [routerLink]="['/reset']">
+                                            <i class="fa fa-warning text-muted mr-5"></i> Forgot password
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center px-5" *ngIf="isRequesting">
+                    <i class="fa fa-4x fa-sun-o fa-spin text-warning"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

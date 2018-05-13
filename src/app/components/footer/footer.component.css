@@ -1,0 +1,11 @@
+body {
+    margin-bottom: 90px; /* Margin bottom by footer height */
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.foooter-player-wrapper {
+    padding: 0 0 0 220px;
+}
