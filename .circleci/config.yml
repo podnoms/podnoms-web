@@ -12,3 +12,17 @@ jobs:
          docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
          docker tag podnoms.web $REGISTRY_HOST/podnoms.web
          docker push $REGISTRY_HOST/podnoms.web
+ deployment:
+    machine: true
+    steps:
+      - checkout
+      - run: |
+          echo '-----BEGIN CERTIFICATE-----' >> ca.pem \
+                 && echo $DOCKER_PROD_CAPEM | sed -e 's/\s\+/\n/g' >> ca.pem \
+                 && echo '-----END CERTIFICATE-----' >> ca.pem \
+                 && touch $DOCKER_CERT_PATH_PROD/ca.pem \
+                 && mv ca.pem $DOCKER_CERT_PATH_PROD/ca.pem
+      - run: |
+          echo export DOCKER_TLS_VERIFY=$(echo $DOCKER_TLS_VERIFY_PROD) >> ~/.circlerc
+          echo export DOCKER_HOST=$(echo $DOCKER_HOST_PROD) >> ~/.circlerc
+          echo export DOCKER_CERT_PATH=$(echo $DOCKER_CERT_PATH_PROD) >> ~/.circlerc
