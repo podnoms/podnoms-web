@@ -21,7 +21,8 @@
                             "src/favicon.ico",
                             "src/firebase-messaging-sw.js",
                             "src/facebook-auth.html",
-                            "src/manifest.json"
+                            "src/manifest.json",
+                            "src/web.config"
                         ],
                         "styles": ["src/styles.css"],
                         "scripts": [
