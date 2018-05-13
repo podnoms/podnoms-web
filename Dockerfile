@@ -18,7 +18,7 @@ RUN npm install -g @angular/cli
 COPY . /usr/src/app
 
 # generate build
-RUN npm run build-prod
+RUN ng build --prod
 
 # base image
 FROM nginx:1.13.9-alpine
