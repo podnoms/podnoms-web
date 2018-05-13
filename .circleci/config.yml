@@ -28,6 +28,7 @@ jobs:
           echo export DOCKER_HOST=$(echo $DOCKER_HOST_PROD) >> ~/.circlerc
           echo export DOCKER_CERT_PATH=$(echo $DOCKER_CERT_PATH_PROD) >> ~/.circlerc
       - run: |
+          docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
           docker-compose up -d
           docker images --no-trunc | grep none | awk '{print $3}' | xargs docker rmi
 
