@@ -19,8 +19,7 @@ import { Router } from '@angular/router';
 import { ImageService } from 'app/services/image.service';
 import { BasePageComponent } from '../base-page/base-page.component';
 import { ProfileLimitsModel } from 'app/models/profile.limits';
-import { fromEvent } from 'rxjs';
-import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
 
 declare let jQuery: any;
 
@@ -32,6 +31,8 @@ declare let jQuery: any;
 export class ProfileComponent extends BasePageComponent
     implements AfterViewInit {
     profile$: Observable<ProfileModel>;
+
+    searchTerm$ = new Subject<string>();
 
     originalSlug: string;
     slugError: string = '';
@@ -49,6 +50,8 @@ export class ProfileComponent extends BasePageComponent
     viewContainerRefs;
     limit: any;
 
+    slugging: boolean = false;
+
     constructor(
         private _store: Store<ApplicationState>,
         private _service: ProfileService,
@@ -62,7 +65,19 @@ export class ProfileComponent extends BasePageComponent
             this.originalSlug = p.slug;
             this.image.src = p.profileImage;
         });
+
+        this.searchTerm$
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .do((x) => (this.slugging = true))
+            .switchMap((term) => this._service.checkSlug(term))
+            .subscribe((r) => {
+                if (r) this.slugError = '';
+                else this.slugError = 'Slug already exists';
+                this.slugging = false;
+            });
     }
+
     ngAfterViewInit() {
         this._service.getLimits().subscribe((l) => {
             this.limit = l;
@@ -89,19 +104,6 @@ export class ProfileComponent extends BasePageComponent
                 }
             });
         });
-
-        const searchBox = document.getElementById('slug-box');
-
-        // const typeahead = fromEvent(searchBox, 'input').pipe(
-        //     map((e: KeyboardEvent) => e.target.value),
-        //     filter((text) => text.length > 2),
-        //     debounceTime(10),
-        //     distinctUntilChanged(),
-        //     switchMap((v) => this.onSlugChanged(v))
-        // );
-        // typeahead.subscribe((data) => {
-        //     // Handle the data from the API
-        // });
     }
 
     private _parseImageData(file: File) {
@@ -113,13 +115,7 @@ export class ProfileComponent extends BasePageComponent
         };
         myReader.readAsDataURL(file);
     }
-    onSlugChanged(slug: string)  {
-        this._service.checkSlug(slug).subscribe((v) => {
-            console.log('profile.component.ts', 'onSlugChanged', v);
-            if (v) this.slugError = '';
-            else this.slugError = 'Slug already exists';
-        });
-    }
+
     uploadPhoto(podcast) {
         const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
         return this._imageService.upload(podcast.slug, this._imageFileBuffer);
