@@ -1,39 +1,19 @@
-version: 2
-jobs:
-    # The build job
-    build:
-        working_directory: ~/project
-        docker:
-            - image: circleci/node:10.0-browsers
-        steps:
-            # Checkout the code from the branch into the working_directory
-            - checkout
-            # Log the current branch
-            - run:
-                name: Show current branch
-                command: echo ${CIRCLE_BRANCH}
-            # Restore local dependencies from cache
-            - restore_cache:
-                keys:
-                - v1-dependencies-{{ checksum "package.json" }}
-                - v1-dependencies-
-            # Install project dependencies
-            - run:
-                name: Install local dependencies
-                command: npm install
-            # Cache local dependencies if they don't exist
-            - save_cache:
-                key: v1-dependencies-{{ checksum "package.json" }}
-                paths:
-                    - node_modules
-            # Build project with different configuration based on
-            # the current branch
-            - run:
-                name: Building
-                command: |
-                    npm run build-prod
-            # Cache the dist folder for the deploy job
-            - save_cache:
-                key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-                paths:
-                    - dist
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build --rm=false -t $REGISTRY_HOST/podnoms-web .
+
+test:
+  override:
+    - docker run -d hello-world
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_USER -u $DOCKER_USER -p $DOCKER_PASSWORD $REGISTRY_HOST
+      - docker push $REGISTRY_HOST/circleci
