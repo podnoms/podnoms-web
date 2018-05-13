@@ -38,9 +38,9 @@ export class ProfileService {
         );
     }
 
-    checkSlug(slug): Observable<Response> {
+    checkSlug(slug): Observable<boolean> {
         console.log('profile.service.ts', 'checkSlug', slug);
-        return this._http.get<Response>(
+        return this._http.get<boolean>(
             environment.API_HOST + '/profile/checkslug/' + slug
         );
     }

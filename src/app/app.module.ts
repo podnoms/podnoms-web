@@ -18,6 +18,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { QuillModule } from 'ngx-quill';
+import { EasyPieChartModule } from 'ng2modules-easypiechart';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {
@@ -175,6 +176,7 @@ export function provideConfig() {
         InlineEditorModule,
         MomentModule,
         QuillModule,
+        EasyPieChartModule,
         ModalModule.forRoot(),
         ProgressbarModule.forRoot(),
         ToastyModule.forRoot(),

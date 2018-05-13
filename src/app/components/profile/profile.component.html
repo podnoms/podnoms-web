@@ -2,25 +2,17 @@
     <h2 class="content-heading text-black">Personal Details</h2>
     <div class="row items-push">
         <div class="col-lg-3">
-            <div *ngIf="(limits$ | async) as limit; else loading">
-                <div class="js-pie-chart pie-chart js-pie-chart-enabled" data-percent="25" data-line-width="2" data-size="100" data-bar-color="#ef5350"
-                    data-track-color="#e9e9e9" data-scale-color="#d9d9d9">
-                    <span>25mb
-                        <br>
-                        <small class="text-muted">/100mb</small>
-                    </span>
-                    <canvas height="100" width="100"></canvas>
+            <a class="block block-link-shadow text-right" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="chart js-pie-chart pie-chart js-pie-chart-enabled" data-percent="60" #usageChart *ngIf="limit">
+                        <span>{{limit.storageUsed | bytesToHuman}}
+                            <br>
+                            <small class="text-muted">of {{limit.storageQuota| bytesToHuman}}</small>
+                        </span>
+                    </div>
+                    <p class="font-w600 text-center">Storage space used</p>
                 </div>
-                <p>
-                    Using: {{limit.storageUsed | bytesToHuman}} of {{limit.storageQuota| bytesToHuman}}
-                </p>
-            </div>
-            <ng-template #loading>
-                <div class="col-6 col-md-3">
-                    <i class="fa fa-4x fa-sun-o fa-spin text-warning"></i>
-                </div>
-            </ng-template>
-            <h2>Avatar Image</h2>
+            </a>
             <div class="mb-15  animated fadeIn">
                 <div class="col-sm-6 col-xl-4">
                     <div class="options-container text-center">
@@ -59,7 +51,7 @@
                 <div class="col-6">
                     <label for="crypto-settings-street-1">Slug</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="slug" name="slug" required="" [(ngModel)]="profile.slug" (input)="onSlugChanged(profile.slug)">
+                        <input type="text" class="form-control" id="slug-box" name="slug-box" autocomplete="off" required="" [(ngModel)]="profile.slug" (input)="onSlugChanged(profile.slug)">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="fa fa-asterisk"></i>

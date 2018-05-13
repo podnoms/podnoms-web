@@ -31,6 +31,8 @@
                             "node_modules/popper.js/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.js",
                             "node_modules/quill/dist/quill.js",
+                            "node_modules/easy-pie-chart/dist/easypiechart.js",
+                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js",
                             "node_modules/howler/dist/howler.js"
                         ]
                     },
@@ -73,32 +75,6 @@
                         "browserTarget": "podnoms-web:build"
                     }
                 },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "karmaConfig": "./karma.conf.js",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "src/tsconfig.spec.json",
-                        "scripts": [
-                            "node_modules/jquery/dist/jquery.js",
-                            "node_modules/cookieconsent/build/cookieconsent.min.js",
-                            "node_modules/tether/dist/js/tether.js",
-                            "node_modules/popper.js/dist/umd/popper.min.js",
-                            "node_modules/bootstrap/dist/js/bootstrap.js",
-                            "node_modules/quill/dist/quill.js",
-                            "node_modules/howler/dist/howler.js"
-                        ],
-                        "styles": ["src/styles.css"],
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico",
-                            "src/firebase-messaging-sw.js",
-                            "src/facebook-auth.html",
-                            "src/manifest.json"
-                        ]
-                    }
-                },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
@@ -106,27 +82,6 @@
                             "src/tsconfig.app.json",
                             "src/tsconfig.spec.json"
                         ],
-                        "exclude": []
-                    }
-                }
-            }
-        },
-        "podnoms-web-e2e": {
-            "root": "",
-            "sourceRoot": "",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "podnoms-web:serve"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": ["e2e/tsconfig.e2e.json"],
                         "exclude": []
                     }
                 }
