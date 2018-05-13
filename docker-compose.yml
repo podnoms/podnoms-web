@@ -15,3 +15,9 @@ services:
     container_name: api
     expose:
         - 5000
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
+    command: --interval 30

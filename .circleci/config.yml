@@ -31,11 +31,11 @@ jobs:
           docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
           docker-compose up -d
 
-workflows:
-    version: 2
-    publish_workflow:
-        jobs:
-            # - build
-            - deploy
-                # requires:
-                #     - build
+# workflows:
+#     version: 2
+#     publish_workflow:
+#         jobs:
+#             - build
+#             - deploy
+#                 requires:
+#                     - build
