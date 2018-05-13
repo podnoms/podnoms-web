@@ -26,10 +26,6 @@ jobs:
                 key: v1-dependencies-{{ checksum "package.json" }}
                 paths:
                     - node_modules
-            # Lint the source code
-            - run:
-                name: Linting
-                command: npm run lint
             # Build project with different configuration based on
             # the current branch
             - run:
