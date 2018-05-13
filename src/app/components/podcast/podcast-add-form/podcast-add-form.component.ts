@@ -16,6 +16,8 @@ import { ToastyService } from 'ng2-toasty';
 import * as fromPodcast from 'app/reducers';
 import * as fromPodcastActions from 'app/actions/podcast.actions';
 import { BasePageComponent } from '../../base-page/base-page.component';
+import { FormGroup } from '@angular/forms';
+import { UtilityService } from '../../../services/utility.service';
 declare var require: any;
 
 @Component({
@@ -30,6 +32,9 @@ export class PodcastAddFormComponent extends BasePageComponent
     @ViewChild('fileInput') fileInput: ElementRef;
     private imageChanged = false;
     image: any = new Image();
+    checkingDomain: boolean = false;
+    domainValid: boolean = false;
+
     sending = false;
     options = {
         toolbarButtons: [
@@ -53,12 +58,14 @@ export class PodcastAddFormComponent extends BasePageComponent
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
+        private _utilityService: UtilityService,
         private _imageService: ImageService,
         private _store: Store<ApplicationState>,
         private renderer: Renderer2
     ) {
         super();
     }
+    private form: FormGroup;
 
     ngOnInit() {
         this._route.params.subscribe((params) => {
@@ -111,6 +118,12 @@ export class PodcastAddFormComponent extends BasePageComponent
                 this._store.dispatch(new fromPodcastActions.AddAction(podcast));
             }
         }
+    }
+    checkDomain(domain: string) {
+        this.checkingDomain = true;
+        this._utilityService
+            .checkDomain(domain)
+            .subscribe((e) => (this.domainValid = e));
     }
     callFileInput() {
         this.fileInput.nativeElement.click();

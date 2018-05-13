@@ -1,0 +1,49 @@
+version: 2
+jobs:
+    # The build job
+    build:
+        working_directory: ~/project
+        docker:
+            - image: circleci/node:6.10-browsers
+        steps:
+            # Checkout the code from the branch into the working_directory
+            - checkout
+            # Log the current branch
+            - run:
+                name: Show current branch
+                command: echo ${CIRCLE_BRANCH}
+            # Restore local dependencies from cache
+            - restore_cache:
+                keys:
+                - v1-dependencies-{{ checksum "package.json" }}
+                - v1-dependencies-
+            # Install project dependencies
+            - run:
+                name: Install local dependencies
+                command: npm install
+            # Cache local dependencies if they don't exist
+            - save_cache:
+                key: v1-dependencies-{{ checksum "package.json" }}
+                paths:
+                    - node_modules
+            # Lint the source code
+            - run:
+                name: Linting
+                command: npm run lint
+            # Build project with different configuration based on
+            # the current branch
+            - run:
+                name: Building
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+                        npm run build-qa
+                    elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+                        npm run build-prod
+                    else
+                        npm run build-dev
+                    fi
+            # Cache the dist folder for the deploy job
+            - save_cache:
+                key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+                paths:
+                    - dist

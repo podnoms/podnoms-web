@@ -83,6 +83,7 @@ import { BasePageComponent } from './components/base-page/base-page.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
 import { ChatService } from 'app/services/chat.service';
 import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
+import { UtilityService } from 'app/services/utility.service';
 
 const cookieConfig: NgcCookieConsentConfig = {
     cookie: {
@@ -212,6 +213,7 @@ export function provideConfig() {
         },
 
         SignalRService,
+        UtilityService,
         ProfileService,
         PodcastService,
         ImageService,

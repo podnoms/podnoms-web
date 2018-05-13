@@ -5,6 +5,7 @@ export class PodcastModel {
     slug?: string;
     imageUrl?: string;
     thumbnailUrl?: string;
+    customDomain?: string;
     rssUrl?: string;
     podcastEntries?: PodcastEntryModel[];
 }
