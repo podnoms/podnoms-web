@@ -12,7 +12,7 @@ jobs:
          docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
          docker tag podnoms.web $REGISTRY_HOST/podnoms.web
          docker push $REGISTRY_HOST/podnoms.web
- deployment:
+ deploy:
     machine: true
     steps:
       - checkout
@@ -30,4 +30,7 @@ workflows:
     version: 2
     publish_workflow:
         jobs:
-            - deployment
+            - build
+            - deployment:
+                requires:
+                    - build
