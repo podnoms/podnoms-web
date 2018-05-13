@@ -92,16 +92,16 @@ export class ProfileComponent extends BasePageComponent
 
         const searchBox = document.getElementById('slug-box');
 
-        const typeahead = fromEvent(searchBox, 'input').pipe(
-            map((e: KeyboardEvent) => e.target.value),
-            filter((text) => text.length > 2),
-            debounceTime(10),
-            distinctUntilChanged(),
-            switchMap((v) => this.onSlugChanged(v))
-        );
-        typeahead.subscribe((data) => {
-            // Handle the data from the API
-        });
+        // const typeahead = fromEvent(searchBox, 'input').pipe(
+        //     map((e: KeyboardEvent) => e.target.value),
+        //     filter((text) => text.length > 2),
+        //     debounceTime(10),
+        //     distinctUntilChanged(),
+        //     switchMap((v) => this.onSlugChanged(v))
+        // );
+        // typeahead.subscribe((data) => {
+        //     // Handle the data from the API
+        // });
     }
 
     private _parseImageData(file: File) {
@@ -113,7 +113,7 @@ export class ProfileComponent extends BasePageComponent
         };
         myReader.readAsDataURL(file);
     }
-    onSlugChanged(slug: string) : boolean {
+    onSlugChanged(slug: string)  {
         this._service.checkSlug(slug).subscribe((v) => {
             console.log('profile.component.ts', 'onSlugChanged', v);
             if (v) this.slugError = '';
