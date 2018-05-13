@@ -7,8 +7,8 @@ jobs:
      - checkout
      - run: |
          docker info
-         docker build -t podnoms-web .
+         docker build -t podnoms.web .
      - run: |
          docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
-         docker tag podnoms-web $REGISTRY_HOST/podnoms-web
-         docker push $REGISTRY_HOST/podnoms-web
+         docker tag podnoms.web $REGISTRY_HOST/podnoms.web
+         docker push $REGISTRY_HOST/podnoms.web
