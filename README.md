@@ -1,4 +1,4 @@
 # PodNoms.Web
 Web ui
 
-[![Build Status](https://travis-ci.org/podnoms/podnoms-web.svg?branch=develop)](https://travis-ci.org/podnoms/podnoms-web)
+[![CircleCI](https://circleci.com/gh/podnoms/podnoms-web/tree/develop.svg?style=svg)](https://circleci.com/gh/podnoms/podnoms-web/tree/develop)
