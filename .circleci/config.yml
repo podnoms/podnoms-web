@@ -30,7 +30,6 @@ jobs:
       - run: |
           docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
           docker-compose up -d
-          docker images --no-trunc | grep none | awk '{print $3}' | xargs docker rmi
 
 workflows:
     version: 2
