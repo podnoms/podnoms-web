@@ -11,7 +11,7 @@ services:
         - /etc/letsencrypt:/etc/letsencrypt
         - /var/lib/letsencrypt:/var/lib/letsencrypt
   api:
-    image: fergalmoran/podnoms.api
+    image: podnoms.azurecr.io/podnoms.api
     container_name: api
     expose:
         - 5000
