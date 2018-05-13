@@ -20,6 +20,7 @@ jobs:
           echo '-----BEGIN CERTIFICATE-----' >> ca.pem \
                  && echo $DOCKER_PROD_CAPEM | sed -e 's/\s\+/\n/g' >> ca.pem \
                  && echo '-----END CERTIFICATE-----' >> ca.pem \
+                 && mkdir -p $DOCKER_CERT_PATH_PROD \
                  && touch $DOCKER_CERT_PATH_PROD/ca.pem \
                  && mv ca.pem $DOCKER_CERT_PATH_PROD/ca.pem
       - run: |
