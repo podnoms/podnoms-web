@@ -27,6 +27,10 @@ jobs:
           echo export DOCKER_TLS_VERIFY=$(echo $DOCKER_TLS_VERIFY_PROD) >> ~/.circlerc
           echo export DOCKER_HOST=$(echo $DOCKER_HOST_PROD) >> ~/.circlerc
           echo export DOCKER_CERT_PATH=$(echo $DOCKER_CERT_PATH_PROD) >> ~/.circlerc
+      - run: |
+          docker-compose up -d
+          docker images --no-trunc | grep none | awk '{print $3}' | xargs docker rmi
+
 workflows:
     version: 2
     publish_workflow:
