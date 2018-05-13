@@ -30,7 +30,7 @@ workflows:
     version: 2
     publish_workflow:
         jobs:
-            - build
-            - deployment:
-                requires:
-                    - build
+            # - build
+            - deploy
+                # requires:
+                #     - build
