@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    build: .
+    image: podnoms.azurecr.io/podnoms.api
     ports:
         - "80:80"
         - "443:443"
