@@ -5,20 +5,20 @@ jobs:
         docker:
           - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
-            - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_HOST
+            - run: sudo docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_HOST
 
     build:
         docker:
           - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
             - checkout
-            - run: docker build -t podnoms.azurecr.io/podnoms.web .
+            - run: sudo docker build -t podnoms.azurecr.io/podnoms.web .
 
     deploy:
         docker:
           - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
-            - run: docker push podnoms.azurecr.io/podnoms.web
+            - run: sudo docker push podnoms.azurecr.io/podnoms.web
 workflows:
     version: 2
     commit:
