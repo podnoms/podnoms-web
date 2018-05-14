@@ -27,13 +27,13 @@ workflows:
     commit:
         jobs:
             - login
-            - checkout:
-                requires:
-                  - login
             - build:
                 requires:
-                  - checkout
+                  - login
+            - deploy:
+                requires:
+                    - build
                 filters:
                     branches:
-                      only: master
+                    only: master
 
