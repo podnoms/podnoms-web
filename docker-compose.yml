@@ -1,4 +1,4 @@
-gersion: '3'
+version: '3'
 services:
   web:
     image: podnoms.azurecr.io/podnoms.web
