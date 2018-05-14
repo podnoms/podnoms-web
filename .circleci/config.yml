@@ -3,7 +3,6 @@ general:
   branches:
     only:
       - master
-      - develop
 jobs:
     login:
         docker:
