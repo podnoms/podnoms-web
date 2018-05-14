@@ -4,9 +4,7 @@ services:
 install:
     - docker build -t podnoms.azurecr.io/podnoms.web .
 before-deploy:
-    - >-
-        docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD
-        $DOCKER_HOST
+    -  docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $DOCKER_HOST
 deploy:
     provider: script
     script: docker push podnoms.azurecr.io/podnoms.web
