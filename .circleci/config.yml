@@ -24,7 +24,7 @@ jobs:
             - run: sudo docker push podnoms.azurecr.io/podnoms.web
 workflows:
     version: 2
-    commit:
+    build-test-deploy:
         jobs:
             - login
             - build:
@@ -33,7 +33,3 @@ workflows:
             - deploy:
                 requires:
                     - build
-                filters:
-                    branches:
-                    only: master
-
