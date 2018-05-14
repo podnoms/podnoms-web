@@ -1,25 +1,32 @@
 version: '3'
 services:
-  web:
-    image: podnoms.azurecr.io/podnoms.web
-    ports:
-        - "80:80"
-        - "443:443"
-    links:
-        - "api:api"
-    volumes:
-        - /etc/letsencrypt:/etc/letsencrypt
-        - /var/lib/letsencrypt:/var/lib/letsencrypt
-  api:
-    image: podnoms.azurecr.io/podnoms.api
-    expose:
-        - 5000
-  watchtower:
-    image: v2tec/watchtower
-    environment:
-         - REPO_USER=${REPO_USER} 
-         - REPO_PASS=${REPO_PASS} 
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 30
-    restart: unless-stopped
+    web:
+        image: podnoms.azurecr.io/podnoms.web
+        labels:
+            com.centurylinklabs.watchtower.enable: "true"
+        container_name: podnoms.web
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - "api:api"
+        volumes:
+            - /etc/letsencrypt:/etc/letsencrypt
+            - /var/lib/letsencrypt:/var/lib/letsencrypt
+    api:
+        image: podnoms.azurecr.io/podnoms.api
+        labels:
+            com.centurylinklabs.watchtower.enable: "true"
+        container_name: podnoms.api
+        expose:
+            - 5000
+    watchtower:
+        image: v2tec/watchtower
+        container_name: podnoms.watcher
+        environment:
+            - REPO_USER=${REPO_USER}
+            - REPO_PASS=${REPO_PASS}
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: --interval 30 --label-enable
+        restart: unless-stopped
