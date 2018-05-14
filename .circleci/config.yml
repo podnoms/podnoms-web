@@ -14,7 +14,7 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
-            - run: sudo docker build -t podnoms.azurecr.io/podnoms.web .
+            - run: docker build -t podnoms.azurecr.io/podnoms.web .
 
     deploy:
         docker:
