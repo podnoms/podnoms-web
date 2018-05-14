@@ -28,5 +28,5 @@ services:
             - REPO_PASS=${REPO_PASS}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        command: --interval 30 --label-enable --debug
+        command: --interval 30 --label-enable
         restart: unless-stopped
