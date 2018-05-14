@@ -1,18 +1,23 @@
-version: 2
+sudo: required
+services:
+    docker
+
+version: 3
 general:
   branches:
     only:
       - master
 jobs:
  build:
-   machine: true
-   steps:
-     # checkout source code
-     - checkout
-     - run: |
-         docker info
-         docker build -t $REGISTRY_HOST/podnoms.web .
-     - run: |
-         docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
-         docker tag podnoms.web $REGISTRY_HOST/podnoms.web
-         docker push $REGISTRY_HOST/podnoms.web
+    include:
+        - stage: build
+            - checkout
+
+                docker info
+                docker build -t $REGISTRY_HOST/podnoms.web .
+                docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
+                docker tag podnoms.web $REGISTRY_HOST/podnoms.web
+                docker push $REGISTRY_HOST/podnoms.web
+
+        - test: build
+        - debloy: build
