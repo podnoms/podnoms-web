@@ -47,3 +47,4 @@ src/app/constants/auth0.ts
 TODO.md
 yarn-error.log
 .scratch
+.env
