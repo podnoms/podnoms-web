@@ -157,14 +157,7 @@ export function provideConfig() {
     ],
     imports: [
         BrowserModule,
-        AngularFireModule.initializeApp({
-            apiKey: 'AIzaSyA5pGl4o1oGJi1Ke-842Lq0VvL2YZU2rfc',
-            authDomain: 'podnoms-api.firebaseapp.com',
-            databaseURL: 'https://podnoms-api.firebaseio.com',
-            projectId: 'podnoms-api',
-            storageBucket: 'podnoms-api.appspot.com',
-            messagingSenderId: '357461672895'
-        }),
+        AngularFireModule.initializeApp(environment.firebase),
         NgxSmartModalModule.forRoot(),
 
         AngularFireDatabaseModule,
