@@ -6,7 +6,7 @@ jobs:
           - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
             - setup_remote_docker
-            - run: sudo docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $DOCKER_HOST
+            - run: docker login -u $DOCKER_USER -P $DOCKER_PASSWORD $DOCKER_HOST
 
     build:
         docker:
