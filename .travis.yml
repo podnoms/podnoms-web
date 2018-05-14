@@ -1,15 +1,15 @@
 language: node_js
 node_js:
     - '8.10'
-branches:
-    only:
-        - master
-before_script:
-    - npm install -g firebase-tools
-    - npm install -g @angular/cli
-script:
-    - ng build --prod
-notifications:
-    email:
-        on_failure: change
-        on_success: change
+
+install:
+      - docker build -t podnoms.azurecr.io/podnoms.web .
+
+before-deploy:
+      - docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $DOCKER_HOST
+
+deploy:
+    provider: script
+    script:  docker push podnoms.azurecr.io/podnoms.web
+    on:
+      branch: master
