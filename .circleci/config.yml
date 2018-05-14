@@ -5,7 +5,7 @@ jobs:
         docker:
           - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
-            - run: docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $DOCKER_HOST
+            - run: sudo docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $DOCKER_HOST
 
     build:
         docker:
