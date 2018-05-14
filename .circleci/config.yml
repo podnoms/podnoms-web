@@ -1,40 +1,33 @@
-version: 2
+version: 2.0
+
 jobs:
-  build:
-    docker:
-      - image: circleci/node:10.1-stretch-browsers
-    steps:
-      - checkout
-      - run:
-            name: Docker Login
-            command: docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
-  test:
-    docker:
-      - image: circleci/node:10.1-stretch-browsers
-    steps:
-      - checkout
-      - run: 'Echo Hello Sailor'
-  deploy:
-    docker:
-      - image: circleci/<language>:<version TAG>
-    steps:
-      - checkout
-      - run:
-          name: Push to Registry
-          command: er push podnoms.azurecr.io/podnoms.web
+    login:
+        machine: true
+        steps:
+            - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_HOST
+
+    build:
+        machine: true
+        steps:
+            - checkout
+            - run: docker build -t podnoms.azurecr.io/podnoms.web .
+
+    deploy:
+        machine: true
+        steps:
+            - run: docker push podnoms.azurecr.io/podnoms.web
 workflows:
     version: 2
-build_and_test:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+    commit:
+        jobs:
+            - login
+            - checkout:
+                requires:
+                  - login
+            - build:
+                requires:
+                  - checkout
+                filters:
+                    branches:
+                      only: master
 
-deploy:
-    machinbe:
-        enabled: true
-    working_directory("~/.working")
