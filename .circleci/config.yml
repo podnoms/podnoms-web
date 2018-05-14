@@ -1,23 +1,40 @@
-sudo: required
-services:
-    docker
-
-version: 3
-general:
-  branches:
-    only:
-      - master
+version: 2
 jobs:
- build:
-    include:
-        - stage: build
-            - checkout
+  build:
+    docker:
+      - image: circleci/node:10.1-stretch-browsers
+    steps:
+      - checkout
+      - run:
+            name: Docker Login
+            command: docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
+  test:
+    docker:
+      - image: circleci/node:10.1-stretch-browsers
+    steps:
+      - checkout
+      - run: 'Echo Hello Sailor'
+  deploy:
+    docker:
+      - image: circleci/<language>:<version TAG>
+    steps:
+      - checkout
+      - run:
+          name: Push to Registry
+          command: er push podnoms.azurecr.io/podnoms.web
+workflows:
+    version: 2
+build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
-                docker info
-                docker build -t $REGISTRY_HOST/podnoms.web .
-                docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
-                docker tag podnoms.web $REGISTRY_HOST/podnoms.web
-                docker push $REGISTRY_HOST/podnoms.web
-
-        - test: build
-        - debloy: build
+deploy:
+    machinbe:
+        enabled: true
+    working_directory("~/.working")
