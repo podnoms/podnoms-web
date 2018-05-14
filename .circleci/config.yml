@@ -2,19 +2,23 @@ version: 2.0
 
 jobs:
     login:
+        docker:
+          - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
             - setup_remote_docker
             - run: sudo docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $DOCKER_HOST
 
     build:
-        machine: true
+        docker:
+          - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
             - checkout
             - setup_remote_docker
             - run: sudo docker build -t podnoms.azurecr.io/podnoms.web .
 
     deploy:
-        machine: true
+        docker:
+          - image: circleci/buildpack-deps:18.04-curl-browsers
         steps:
             - setup_remote_docker
             - run: sudo docker push podnoms.azurecr.io/podnoms.web
