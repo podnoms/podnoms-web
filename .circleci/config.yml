@@ -2,21 +2,21 @@ version: 2.0
 
 jobs:
     login:
-        machine:
-          image: circleci/classic:201708-01
+        docker:
+          - image: circleci/classic:201708-01
         steps:
             - run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_HOST
 
     build:
-        machine:
-          image: circleci/classic:201708-01
+        docker:
+          - image: circleci/classic:201708-01
         steps:
             - checkout
             - run: docker build -t podnoms.azurecr.io/podnoms.web .
 
     deploy:
-        machine:
-          image: circleci/classic:201708-01
+        docker:
+          - image: circleci/classic:201708-01
         steps:
             - run: docker push podnoms.azurecr.io/podnoms.web
 workflows:
