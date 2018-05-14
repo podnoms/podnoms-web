@@ -1,4 +1,8 @@
 version: 2
+general:
+  branches:
+    only:
+      - master
 jobs:
  build:
    machine: true
@@ -7,35 +11,8 @@ jobs:
      - checkout
      - run: |
          docker info
-         docker build -t podnoms.web .
+         docker build -t $REGISTRY_HOST/podnoms.web .
      - run: |
          docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
          docker tag podnoms.web $REGISTRY_HOST/podnoms.web
          docker push $REGISTRY_HOST/podnoms.web
- deploy:
-    machine: true
-    steps:
-      - checkout
-      - run: |
-          echo '-----BEGIN CERTIFICATE-----' >> ca.pem \
-                 && echo $DOCKER_PROD_CAPEM | sed -e 's/\s\+/\n/g' >> ca.pem \
-                 && echo '-----END CERTIFICATE-----' >> ca.pem \
-                 && mkdir -p $DOCKER_CERT_PATH_PROD \
-                 && touch $DOCKER_CERT_PATH_PROD/ca.pem \
-                 && mv ca.pem $DOCKER_CERT_PATH_PROD/ca.pem
-      - run: |
-          export DOCKER_TLS_VERIFY=$(echo $DOCKER_TLS_VERIFY_PROD) >> ~/.circlerc
-          export DOCKER_HOST=$(echo $DOCKER_HOST_PROD) >> ~/.circlerc
-          export DOCKER_CERT_PATH=$(echo $DOCKER_CERT_PATH_PROD) >> ~/.circlerc
-      - run: |
-          docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD $REGISTRY_HOST
-          docker-compose up -d
-
-# workflows:
-#     version: 2
-#     publish_workflow:
-#         jobs:
-#             - build
-#             - deploy
-#                 requires:
-#                     - build
