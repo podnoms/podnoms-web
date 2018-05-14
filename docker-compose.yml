@@ -2,7 +2,7 @@ version: '2'
 services:
   web:
     image: podnoms.azurecr.io/podnoms.web
-    container_name: web
+    container_name: podnoms_web
     ports:
         - "80:80"
         - "443:443"
@@ -13,15 +13,17 @@ services:
         - /var/lib/letsencrypt:/var/lib/letsencrypt
   api:
     image: podnoms.azurecr.io/podnoms.api
-    container_name: api
+    container_name: podnoms_api
     expose:
         - 5000
   watchtower:
+    image: v2tec/watchtower
+    container_name: podnoms_watchtower
     environment:
          - REPO_USER=${REPO_USER} 
          - REPO_PASS=${REPO_PASS} 
 
-    image: v2tec/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 30
+    command: podnoms_web podnoms_api --interval 30
+    restart: unless-stopped

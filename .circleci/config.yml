@@ -29,6 +29,7 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
+            - run: docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY
             - run: docker build -t podnoms.azurecr.io/podnoms.api .
             - run: docker push podnoms.azurecr.io/podnoms.api
 workflows:
