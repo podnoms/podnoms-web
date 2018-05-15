@@ -1,8 +1,4 @@
 version: 2.0
-general:
-  branches:
-    only:
-      - master
 jobs:
     login:
         docker:
@@ -22,9 +18,6 @@ jobs:
     build_and_deploy:
         docker:
           - image: circleci/buildpack-deps:18.04-curl-browsers
-        filters:
-            branches:
-                only: develop
         steps:
             - checkout
             - setup_remote_docker
@@ -36,12 +29,6 @@ workflows:
     build-test-deploy:
         jobs:
             - login
-            - build:
-                filters:
-                    branches:
-                        only: develop
-                requires:
-                  - login
             - build_and_deploy:
                 filters:
                     branches:
