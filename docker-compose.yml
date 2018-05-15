@@ -26,6 +26,9 @@ services:
         environment:
             - REPO_USER=${REPO_USER}
             - REPO_PASS=${REPO_PASS}
+            - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATIONS}
+            - WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL=${WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+            - WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER=${WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         command: --interval 30 --label-enable
