@@ -3,21 +3,6 @@
     <h2 class="content-heading text-black">Personal Details</h2>
     <div class="row items-push">
         <div class="col-lg-3">
-            <a class="block block-link-shadow text-right"
-               href="javascript:void(0)">
-                <div class="block-content block-content-full clearfix">
-                    <div class="chart js-pie-chart pie-chart js-pie-chart-enabled"
-                         data-percent="60"
-                         #usageChart
-                         *ngIf="limit">
-                        <span>{{limit.storageUsed | bytesToHuman}}
-                            <br>
-                            <small class="text-muted">of {{limit.storageQuota| bytesToHuman}}</small>
-                        </span>
-                    </div>
-                    <p class="font-w600 text-center">Storage space used</p>
-                </div>
-            </a>
             <div class="mb-15  animated fadeIn">
                 <div class="col-sm-6 col-xl-4">
                     <div class="options-container text-center">
