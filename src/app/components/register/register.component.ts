@@ -42,7 +42,6 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                     }
                 },
                 (errors) => {
-                    debugger;
                     this.errorMessage = errors;
                 }
             );
