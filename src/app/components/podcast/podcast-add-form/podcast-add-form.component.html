@@ -28,27 +28,23 @@
                             <div class="col-6">
                                 <label for="slug-box">Slug</label>
                                 <div class="input-group"
-                                     [ngClass]="domain.hasError('pattern') ? 'is-invalid' : ''">
+                                     [ngClass]="slug.hasError('pattern') ? 'is-invalid' : ''">
                                     <input type="text"
                                            class="form-control"
                                            id="slug-box"
                                            name="slug-box"
-                                           #domain="ngModel"
-                                           pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
+                                           #slug="ngModel"
                                            autocomplete="off"
                                            required=""
-                                           (blur)="checkDomain(podcast.customDomain)"
-                                           [(ngModel)]="podcast.customDomain">
+                                           [(ngModel)]="podcast.slug">
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fa fa-asterisk"
-                                               [ngClass]="checkingDomain ? 'fa-spin' : ''"></i>
+                                               [ngClass]="checkingSlug ? 'fa-spin' : ''"></i>
                                         </span>
                                     </div>
                                 </div>
-                                <div class="invalid-feedback"
-                                     *ngIf="domain.hasError('pattern')">This does not look like a valid domain?</div>
-                                <div class="form-text text-muted">You need to setup up a CNAME pointing to rss.podnoms.com</div>
+
                             </div>
                         </div>
                         <!-- <div class="form-group row">
@@ -69,6 +65,7 @@
                                 <div class="invalid-feedback"
                                      [hidden]="!domain.hasError('pattern')">
                                     This does not look like a valid domain?</div>
+                                <div class="form-text text-muted">You need to setup up a CNAME pointing to rss.podnoms.com</div>
                             </div>
                         </div> -->
                         <div class="form-group row">
