@@ -32,6 +32,7 @@ export class PodcastAddFormComponent extends BasePageComponent
     @ViewChild('fileInput') fileInput: ElementRef;
     private imageChanged = false;
     image: any = new Image();
+    checkingSlug: boolean = false;
     checkingDomain: boolean = false;
     domainValid: boolean = false;
 
