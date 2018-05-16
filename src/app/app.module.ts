@@ -45,7 +45,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PodnomsAuthService } from './services/podnoms-auth.service';
 import { ProfileService } from './services/profile.service';
-import { MomentModule } from 'angular2-moment';
+import { MomentModule } from 'ngx-moment';
 import { FilterEntryPipe } from './pipes/filter-entry.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { PodcastComponent } from './components/podcast/podcast.component';
