@@ -2,13 +2,9 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "outDir": "../out-tsc/app",
+        "baseUrl": "./",
         "module": "es2015",
-        "baseUrl": "",
         "types": []
-    },
-    "angularCompilerOptions": {
-        "skipTemplateCodegen": false,
-        "strictMetadataEmit": false
     },
     "exclude": ["test.ts", "**/*.spec.ts"]
 }

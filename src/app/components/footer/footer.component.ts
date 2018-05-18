@@ -1,22 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { AudioService } from 'app/services/audio.service';
-import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
+import { AudioService } from '../../core/audio.service';
 
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.css']
+    styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
     showPlayer: boolean = false;
-    constructor(
-        private _audioService: AudioService
-    ) {}
+    constructor(private audioService: AudioService) {}
 
     ngOnInit() {
         console.log('footer.component', 'ngOnInit');
-        this._audioService.playStateChanged.subscribe((s) => {
-            this.showPlayer = s != -1;
+        this.audioService.playStateChanged.subscribe(s => {
+            this.showPlayer = s !== -1;
         });
     }
 }

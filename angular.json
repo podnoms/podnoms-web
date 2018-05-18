@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "podnoms-web": {
+        "app": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -11,29 +11,19 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist",
+                        "outputPath": "dist/app",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "polyfills": "src/polyfills.ts",
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico",
-                            "src/firebase-messaging-sw.js",
-                            "src/facebook-auth.html",
-                            "src/manifest.json",
-                            "src/web.config"
-                        ],
-                        "styles": ["src/styles.css"],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["src/styles"]
+                        },
+                        "assets": ["src/assets", "src/favicon.ico"],
+                        "styles": ["src/styles/styles.scss"],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",
-                            "node_modules/cookieconsent/build/cookieconsent.min.js",
-                            "node_modules/tether/dist/js/tether.js",
-                            "node_modules/popper.js/dist/umd/popper.min.js",
-                            "node_modules/bootstrap/dist/js/bootstrap.js",
-                            "node_modules/quill/dist/quill.js",
-                            "node_modules/easy-pie-chart/dist/easypiechart.js",
-                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
                             "node_modules/howler/dist/howler.js"
                         ]
                     },
@@ -47,7 +37,7 @@
                             "aot": true,
                             "extractLicenses": true,
                             "vendorChunk": false,
-                            "buildOptimizer": false,
+                            "buildOptimizer": true,
                             "fileReplacements": [
                                 {
                                     "replace":
@@ -62,18 +52,34 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "podnoms-web:build"
+                        "browserTarget": "app:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "podnoms-web:build:production"
+                            "browserTarget": "app:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "podnoms-web:build"
+                        "browserTarget": "app:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "karmaConfig": "./karma.conf.js",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "scripts": [],
+                        "styles": [
+                            "src/styles/theme.scss",
+                            "src/styles/mixin.scss",
+                            "src/styles/styles.scss"
+                        ],
+                        "assets": ["src/assets", "src/favicon.ico"]
                     }
                 },
                 "lint": {
@@ -83,17 +89,38 @@
                             "src/tsconfig.app.json",
                             "src/tsconfig.spec.json"
                         ],
-                        "exclude": []
+                        "exclude": ["**/node_modules/**"]
+                    }
+                }
+            }
+        },
+        "app-e2e": {
+            "root": "",
+            "sourceRoot": "",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "./protractor.conf.js",
+                        "devServerTarget": "app:serve"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["e2e/tsconfig.e2e.json"],
+                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
         }
     },
-    "defaultProject": "podnoms-web",
+    "defaultProject": "app",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",
-            "styleext": "css"
+            "styleext": "scss"
         },
         "@schematics/angular:directive": {
             "prefix": "app"

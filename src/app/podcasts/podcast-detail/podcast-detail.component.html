@@ -1,0 +1,11 @@
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tbody>
+            <tr *ngFor="let entry of podcast.podcastEntries | orderBy : '-id'">
+                <app-entry-list-item [entry]="entry"></app-entry-list-item>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--app-entry-list-item (entryRemoved)='deleteEntry(e)'
+    [entry]="e"> -->

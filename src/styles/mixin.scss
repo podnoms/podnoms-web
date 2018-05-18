@@ -1,0 +1,20 @@
+@import 'theme';
+
+$fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-regular';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-solid';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-brands';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome';
+
+$simple-line-font-path: '~simple-line-icons/fonts/';
+@import '~simple-line-icons/scss/simple-line-icons';
+
+@import 'assets/css/social-buttons.css';
+
+// @import '~ng2-toasty/bundles/style.css';
+// @import '~ng2-toasty/bundles/style-bootstrap.css';
+// @import '~cookieconsent/build/cookieconsent.min.css';
+// @import '~quill/dist/quill.snow.css';
+// @import '~quill/dist/quill.bubble.css';
+// @import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
+// @import '~ngx-smart-modal/ngx-smart-modal.css';

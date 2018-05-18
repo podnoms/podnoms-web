@@ -1,44 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { UiStateService } from '../../services/ui-state.service';
-import { ProfileService } from 'app/services/profile.service';
-import { ProfileModel } from 'app/models/profile.model';
-import { PodcastEntryModel } from 'app/models/podcasts.models';
-import { Observable } from 'rxjs/Observable';
-import { PodcastService } from 'app/services/podcast.service';
-import { AudioService } from 'app/services/audio.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Profile, PodcastEntry } from '../../core';
+import { UiStateService } from '../../core/ui-state.service';
+import { EntriesService } from '../../podcasts/entries.service';
+import { Observable } from 'rxjs';
+import { AudioService } from '../../core/audio.service';
 
 @Component({
     selector: 'app-side-overlay',
     templateUrl: './side-overlay.component.html',
-    styleUrls: ['./side-overlay.component.css']
+    styleUrls: ['./side-overlay.component.scss']
 })
 export class SideOverlayComponent implements OnInit {
-    user$: Observable<ProfileModel>;
-    entries$: Observable<PodcastEntryModel[]>;
+    @Input() profile: Profile;
+    entries$: Observable<PodcastEntry[]>;
+    loading$: Observable<boolean>;
 
     constructor(
-        private _profileService: ProfileService,
-        private _podcastService: PodcastService,
-        private _uiStateService: UiStateService,
-        private _audioService: AudioService
-    ) {}
+        public uiStateService: UiStateService,
+        public audioService: AudioService,
+        private entryService: EntriesService
+    ) {
+        this.entries$ = entryService.entities$;
+        this.loading$ = entryService.loading$;
+    }
 
     ngOnInit() {
-        this._uiStateService.overlayChanged.subscribe((r) => {
-            if (r) {
-                this.user$ = this._profileService.getProfile();
-                this.entries$ = this._podcastService.getAllEntriesForUser();
-
-                this.entries$.subscribe((r) =>
-                    console.log('side-overlay.component', 'gotEntries', r)
-                );
-            }
-        });
-    }
-    toggleOverlay() {
-        this._uiStateService.toggleOverlay();
-    }
-    playAudio(entry: PodcastEntryModel) {
-        this._audioService.playAudio(entry.audioUrl, entry.title);
+        this.entryService.getAll();
     }
 }

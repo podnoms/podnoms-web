@@ -1,0 +1,33 @@
+<div class="podcast-container-wrapper" *ngIf="podcasts$ | async as podcast">
+    <div class="block" *ngIf="selectedPodcast$ | async as selected">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">{{selected.title}}</h3>
+            <div class="block-options">
+                <div class="btn-group" role="group" aria-label="Podcast actions">
+                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']" class="btn btn-secondary btn-outline">
+                        <i class="icon icon-pencil" aria-hidden="true"></i> Edit
+                    </a>
+                    <!-- <a (click)="modalService.getModal('deleteModal').open()" class="btn btn-secondary btn-outline-danger">
+                        <i class="icon icon-close" aria-hidden="true"></i> Delete
+                    </a>
+                    <a class="btn btn-secondary" (click)="startAddEntry()">
+                        <i class="icon icon-plus"></i> Add (from URL)</a>
+                    <a class="btn btn-secondary" (click)="startUpload()">
+                        <i class="icon icon-cloud-upload"></i> Upload (from computer)</a> -->
+                </div>
+                <div class="btn-group" role="group" aria-label="Podcast actions">
+                    <a class="btn btn-secondary btn-outline-warning" [href]="podcast.rssUrl" target="_blank">
+                        <i class="text-warning fas fa-rss"></i> Rss Url
+                    </a>
+                    <button class="btn btn-secondary btn-outline-warning">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="block-content" >
+            <app-podcast-detail
+                [podcast]="selected"></app-podcast-detail>
+        </div>
+    </div>
+</div>
