@@ -36,9 +36,8 @@ export class PodcastsComponent {
                 this._initialiseState(); // reset and set based on new parameter this time
             });
         } else {
-            const subscription = this.service.entities$.subscribe(r => {
+            this.service.entities$.subscribe(r => {
                 if (r && r.length > 0) {
-                    subscription.unsubscribe();
                     this.router.navigate(['podcasts', r[0].slug]);
                 }
             });

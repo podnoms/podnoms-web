@@ -15,6 +15,7 @@ import { AuthResponseModel } from './models/auth-response.model';
 import { ProfileService } from './profile.service';
 import { Profile } from '../core';
 import { PodnomsApiAuthService } from './podnoms-auth.service';
+import { removeSummaryDuplicates } from '@angular/compiler';
 
 @Injectable({
     providedIn: 'root'
@@ -23,11 +24,11 @@ export class PodNomsAuthService extends BaseService {
     private _authNavStatusSource = new BehaviorSubject<boolean>(false);
     private authNavStatus$ = this._authNavStatusSource.asObservable();
 
-    private _profileSource = new BehaviorSubject<Profile>(null);
-    profile$ = this._profileSource.asObservable();
+    profile$ = new BehaviorSubject<Profile>(null);
+    //profile$  = this._profileSource.asObservable();
 
-    private bootstrapped: boolean = false;
-
+    private profileSubject = new BehaviorSubject<Profile>(null);
+    guid: string;
     constructor(
         private router: Router,
         private socialAuthService: SocialAuthService,
@@ -35,16 +36,25 @@ export class PodNomsAuthService extends BaseService {
         private profileService: ProfileService
     ) {
         super();
+        this.guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+            /[xy]/g,
+            function(c) {
+                const r = (Math.random() * 16) | 0,
+                    v = c === 'x' ? r : (r & 0x3) | 0x8;
+                return v.toString(16);
+            }
+        );
+        console.log('auth.service', 'constructor', this.guid);
     }
+
     bootstrap(): Observable<boolean> {
         const ret = new Subject<boolean>();
         if (this.isLoggedIn()) {
             this.profileService.getAll();
             this.profileService.entities$.subscribe(results => {
                 if (results.length !== 0) {
-                    this._profileSource.next(results[0]);
+                    this.profile$.next(results[0]);
                     this._authNavStatusSource.next(true);
-                    this.bootstrapped = true;
                     ret.next(true);
                 }
             });
@@ -73,6 +83,8 @@ export class PodNomsAuthService extends BaseService {
     }
     logout() {
         localStorage.clear();
+        this.profile$.next(null);
+        this._authNavStatusSource.next(false);
         this.router.navigate(['']);
     }
 

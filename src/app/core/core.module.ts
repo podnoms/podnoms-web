@@ -7,6 +7,7 @@ import { ToastService } from './toast.service';
 import { throwIfAlreadyLoaded } from './module-import-check';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AudioService } from './audio.service';
+import { PodNomsAuthService } from '../auth/auth.service';
 
 @NgModule({
     imports: [
@@ -16,7 +17,7 @@ import { AudioService } from './audio.service';
     ],
     declarations: [NavbarComponent],
     exports: [NavbarComponent],
-    providers: [ToastService, AudioService]
+    providers: [ToastService, AudioService, PodNomsAuthService]
 })
 export class CoreModule {
     constructor(
