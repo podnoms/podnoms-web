@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core';
 import { AppStoreModule } from './store/app-store.module';
 import { ComponentsModule } from './components/components.module';
-
+import { SimpleNotificationsModule } from 'angular2-notifications';
 @NgModule({
     imports: [
         BrowserModule,
@@ -17,7 +17,8 @@ import { ComponentsModule } from './components/components.module';
         ComponentsModule,
         HttpClientModule,
         AppRoutingModule,
-        AppStoreModule
+        AppStoreModule,
+        SimpleNotificationsModule.forRoot()
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent]

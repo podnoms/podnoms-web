@@ -9,10 +9,10 @@ import {
     HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from '../auth/auth.service';
+import { PodNomsAuthService } from '../auth/auth.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) {}
+    constructor(private authService: PodNomsAuthService) {}
     private commonHeaders(): HttpHeaders {
         const headers = new HttpHeaders({
             'cache-control': 'no-cache',

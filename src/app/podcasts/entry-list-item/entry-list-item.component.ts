@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PodcastEntry } from '../../core';
+import { AudioService } from '../../core/audio.service';
 
 @Component({
     selector: 'app-entry-list-item',
@@ -8,7 +9,7 @@ import { PodcastEntry } from '../../core';
 })
 export class EntryListItemComponent implements OnInit {
     @Input() entry: PodcastEntry;
-    constructor() {}
+    constructor(public audioService: AudioService) {}
 
     ngOnInit() {}
 }
