@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { PodNomsAuthService } from '../auth.service';
 
 @Component({
     selector: 'app-home',
@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    constructor(router: Router, auth: AuthService) {
+    constructor(router: Router, auth: PodNomsAuthService) {
         if (auth.isLoggedIn()) {
             router.navigate(['/podcasts']);
         }

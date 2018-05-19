@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile } from '../model';
-import { AuthService } from '../../auth/auth.service';
+import { PodNomsAuthService } from '../../auth/auth.service';
 import { UiStateService } from '../ui-state.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class NavbarComponent {
     @Input() profile: Profile;
 
     constructor(
-        private authService: AuthService,
+        private authService: PodNomsAuthService,
         private uiStateService: UiStateService
     ) {}
     toggleSidebar() {

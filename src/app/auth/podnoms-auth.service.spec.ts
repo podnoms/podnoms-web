@@ -1,17 +1,17 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { PodNomsAuthService } from './auth.service';
+import { PodnomsAuthService } from './podnoms-auth.service';
 
-describe('AuthServiceService', () => {
+describe('PodnomsAuthService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [PodNomsAuthService]
+            providers: [PodnomsAuthService]
         });
     });
 
     it(
         'should be created',
-        inject([PodNomsAuthService], (service: PodNomsAuthService) => {
+        inject([PodnomsAuthService], (service: PodnomsAuthService) => {
             expect(service).toBeTruthy();
         })
     );

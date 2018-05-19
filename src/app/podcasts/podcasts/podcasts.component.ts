@@ -24,18 +24,25 @@ export class PodcastsComponent {
 
     constructor(
         private service: PodcastService,
+        private router: Router,
         private route: ActivatedRoute
     ) {
         this.id = this.route.snapshot.params.podcast;
-        // if (this.id) {
-        //     this.route.params.subscribe(params => {
-        //         console.log('podcasts.component', 'paramChange', params);
-        //         this.id = params['podcast'];
-        //         this._initialiseState(); // reset and set based on new parameter this time
-        //     });
-        // } else {
-        //     alert('Invalid route URL, select podcast on the left');
-        // }
+        if (this.id) {
+            this._initialiseState(); // reset and set based on new parameter this time
+            this.route.params.subscribe(params => {
+                console.log('podcasts.component', 'paramChange', params);
+                this.id = params['podcast'];
+                this._initialiseState(); // reset and set based on new parameter this time
+            });
+        } else {
+            const subscription = this.service.entities$.subscribe(r => {
+                if (r && r.length > 0) {
+                    subscription.unsubscribe();
+                    this.router.navigate(['podcasts', r[0].slug]);
+                }
+            });
+        }
     }
     _initialiseState() {
         this.podcasts$ = this.service.entities$.map(r =>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { PodNomsAuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     isRequesting: boolean = false;
 
     constructor(
-        private auth: AuthService,
+        private authService: PodNomsAuthService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -31,8 +31,17 @@ export class LoginComponent implements OnInit {
             }
         );
     }
+    socialLogin(method: string) {
+        this.authService
+            .socialLogin(method)
+            .subscribe(
+                success => this.router.navigate(['']),
+                error =>
+                    console.log('login.component', 'Error logging in', error)
+            );
+    }
     login() {
-        this.auth
+        this.authService
             .login(this.username, this.password)
             .subscribe(
                 success => this.router.navigate(['']),

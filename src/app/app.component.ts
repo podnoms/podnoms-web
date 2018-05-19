@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { PodNomsAuthService } from './auth/auth.service';
 import { Observable } from 'rxjs';
 import { Profile } from './core';
 import { UiStateService } from './core/ui-state.service';
@@ -14,13 +14,14 @@ export class AppComponent {
     overlayOpen: boolean = false;
     profile$: Observable<Profile>;
     constructor(
-        private authService: AuthService,
+        private authService: PodNomsAuthService,
         public uiStateService: UiStateService
     ) {
         authService.bootstrap().subscribe(r => {
-            if (r) {
-                this.profile$ = authService.profile$;
-            }
+            this.profile$ = authService.profile$;
+            // this.profile$.subscribe(profile => {
+            //     console.log('app.component', 'profile$', profile);
+            // });
         });
     }
 

@@ -51,4 +51,6 @@ export const pluralNames = {};
         }
     ]
 })
-export class EntityStoreModule {}
+export class EntityStoreModule {
+    constructor(toastService: NgrxDataToastService) {}
+}
