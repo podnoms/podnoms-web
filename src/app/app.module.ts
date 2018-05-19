@@ -9,6 +9,7 @@ import { CoreModule } from './core';
 import { AppStoreModule } from './store/app-store.module';
 import { ComponentsModule } from './components/components.module';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
     imports: [
         BrowserModule,
@@ -18,6 +19,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
         HttpClientModule,
         AppRoutingModule,
         AppStoreModule,
+        SharedModule, // import here to make sure that AuthService is a singleton
         SimpleNotificationsModule.forRoot()
     ],
     declarations: [AppComponent],

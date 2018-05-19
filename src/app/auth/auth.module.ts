@@ -6,11 +6,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SharedModule } from '../shared/shared.module';
-import { PodNomsAuthService } from './auth.service';
+import { ProfileService } from './profile.service';
 
 @NgModule({
     imports: [CommonModule, SharedModule, AuthRoutingModule],
-    providers: [PodNomsAuthService],
+    providers: [ProfileService],
     declarations: [
         HomeComponent,
         LoginComponent,

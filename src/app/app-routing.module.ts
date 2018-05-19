@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PodcastsModule } from './podcasts/podcasts.module';
 import { AuthModule } from './auth/auth.module';
 import { Podcast } from './core';
+import { AuthGuard } from './auth/auth-guard.guard';
 
 // Define the paths to the lazily loaded modules
 const lazyPaths = {
@@ -18,7 +19,11 @@ const routes: Routes = [
         redirectTo: 'home'
     },
     { path: 'home', loadChildren: () => AuthModule },
-    { path: 'podcasts', loadChildren: () => PodcastsModule }
+    {
+        path: 'podcasts',
+        loadChildren: () => PodcastsModule,
+        canActivate: [AuthGuard]
+    }
 ];
 
 @NgModule({

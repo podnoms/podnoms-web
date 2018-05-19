@@ -3,6 +3,7 @@ import { PodNomsAuthService } from './auth/auth.service';
 import { Observable } from 'rxjs';
 import { Profile } from './core';
 import { UiStateService } from './core/ui-state.service';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'app-root',
@@ -17,14 +18,16 @@ export class AppComponent {
         private authService: PodNomsAuthService,
         public uiStateService: UiStateService
     ) {
-        authService.bootstrap().subscribe(r => {
-            this.profile$ = authService.profile$;
-            // this.profile$.subscribe(profile => {
-            //     console.log('app.component', 'profile$', profile);
-            // });
+        this.profile$ = authService.profile$;
+        this.profile$.subscribe(profile => {
+            console.log('app.component', 'profile$', profile);
         });
+        authService.bootstrap().subscribe(r => {});
+        console.log('app.component', 'constructor', authService.guid);
     }
-
+    background() {
+        console.log('app.component', 'background', this.profile$);
+    }
     loggedIn(): boolean {
         return false;
     }
