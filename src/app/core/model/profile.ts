@@ -9,3 +9,8 @@ export class Profile {
     firstName: string;
     lastName: string;
 }
+export class ProfileLimits {
+    user: Profile;
+    storageQuota: number;
+    storageUsed: number;
+}

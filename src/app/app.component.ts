@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { PodNomsAuthService } from './auth/auth.service';
+import { AuthService } from './auth/auth.service';
 import { Observable } from 'rxjs';
-import { Profile } from './core';
+import { Profile, ToastService } from './core';
 import { UiStateService } from './core/ui-state.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { SignalRService } from './shared/services/signal-r.service';
 
 @Component({
     selector: 'app-root',
@@ -15,19 +16,33 @@ export class AppComponent {
     overlayOpen: boolean = false;
     profile$: Observable<Profile>;
     constructor(
-        private authService: PodNomsAuthService,
-        public uiStateService: UiStateService
+        private authService: AuthService,
+        public uiStateService: UiStateService,
+        private toast: ToastService,
+        signalr: SignalRService
     ) {
         this.profile$ = authService.profile$;
-        this.profile$.subscribe(profile => {
-            console.log('app.component', 'profile$', profile);
-        });
         authService.bootstrap().subscribe(r => {});
-        console.log('app.component', 'constructor', authService.guid);
+        authService.authNavStatus$.subscribe(r => {
+            if (r) {
+                signalr
+                    .init('userupdates')
+                    .then(listener => {
+                        listener.on<string>('userupdates', 'site-notices').subscribe(result => {
+                            this.toast.showToast('New message', result);
+                        });
+                    })
+                    .catch(err => {
+                        console.error(
+                            'app.component',
+                            'Unable to initialise site update hub',
+                            err
+                        );
+                    });
+            }
+        });
     }
-    background() {
-        console.log('app.component', 'background', this.profile$);
-    }
+    background() {}
     loggedIn(): boolean {
         return false;
     }

@@ -1,7 +1,6 @@
+import { timer as observableTimer, Subscription, Observable } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
 import { Howl } from 'howler';
-import 'rxjs/add/observable/timer';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +45,7 @@ export class AudioService {
                 console.log('onplay', id, pos);
                 this._playState = 1;
                 this._duration = this._audio.duration();
-                this.playTimer = Observable.timer(0, 10).subscribe(r => {
+                this.playTimer = observableTimer(0, 10).subscribe(r => {
                     this._position = this._audio.seek();
                     this._postEvents();
                     if (r % 1000 === 0) {

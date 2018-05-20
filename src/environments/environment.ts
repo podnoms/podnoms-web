@@ -5,5 +5,10 @@
 
 export const environment = {
     production: false,
-    apiHost: 'http://localhost:5000'
+    signalRHost: 'http://localhost:5000',
+    apiHost: 'http://localhost:5000',
+    helpUrl: 'https://talk.podnoms.com/',
+    appInsights: {
+        instrumentationKey: '020b002a-bd3d-4b25-8a74-cab16fd39dfc'
+    }
 };

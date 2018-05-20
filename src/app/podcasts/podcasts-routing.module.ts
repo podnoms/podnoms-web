@@ -1,22 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PodcastsComponent } from './podcasts/podcasts.component';
+import { PodcastComponent } from './podcast/podcast.component';
 import { AuthGuard } from '../auth/auth-guard.guard';
+import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
 
 const routes: Routes = [
+    { path: '', pathMatch: 'full', component: PodcastComponent, canActivate: [AuthGuard] },
     {
-        path: '',
+        path: 'add',
         pathMatch: 'full',
-        component: PodcastsComponent,
+        component: PodcastEditFormComponent,
         canActivate: [AuthGuard]
     },
     {
-        path: ':podcast',
+        path: 'edit/:podcast',
         pathMatch: 'full',
-        component: PodcastsComponent,
+        component: PodcastEditFormComponent,
         canActivate: [AuthGuard]
-    }
+    },
+    { path: ':podcast', pathMatch: 'full', component: PodcastComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PodNomsAuthService } from '../auth.service';
+import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,27 +17,24 @@ export class LoginComponent implements OnInit {
     isRequesting: boolean = false;
 
     constructor(
-        private authService: PodNomsAuthService,
+        private authService: AuthService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) {}
 
     ngOnInit() {
-        this.metadata = this.activatedRoute.queryParams.subscribe(
-            (param: any) => {
-                this.brandNew = param['brandNew'];
-                this.justReset = param['justReset'];
-                this.username = param['email'];
-            }
-        );
+        this.metadata = this.activatedRoute.queryParams.subscribe((param: any) => {
+            this.brandNew = param['brandNew'];
+            this.justReset = param['justReset'];
+            this.username = param['email'];
+        });
     }
     socialLogin(method: string) {
         this.authService
             .socialLogin(method)
             .subscribe(
                 success => this.router.navigate(['']),
-                error =>
-                    console.log('login.component', 'Error logging in', error)
+                error => console.log('login.component', 'Error logging in', error)
             );
     }
     login() {
@@ -45,8 +42,7 @@ export class LoginComponent implements OnInit {
             .login(this.username, this.password)
             .subscribe(
                 success => this.router.navigate(['']),
-                error =>
-                    console.log('login.component', 'Error logging in', error)
+                error => console.log('login.component', 'Error logging in', error)
             );
     }
 }

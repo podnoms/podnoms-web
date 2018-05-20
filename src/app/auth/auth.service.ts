@@ -1,28 +1,25 @@
+import { map } from 'rxjs/operators';
 import { Injectable, OnInit } from '@angular/core';
 import { BaseService } from '../core/base.service';
-import { Provider } from '@angular/compiler/src/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import {
     AuthService as SocialAuthService,
     FacebookLoginProvider,
-    LoginOpt
+    LoginOpt,
+    GoogleLoginProvider
 } from 'angularx-social-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthResponseModel } from './models/auth-response.model';
-import { ProfileService } from './profile.service';
 import { Profile } from '../core';
-import { PodnomsApiAuthService } from './podnoms-auth.service';
-import { removeSummaryDuplicates } from '@angular/compiler';
+import { ProfileStoreService } from '../profile/profile-store.service';
+import { AuthApiProxyService } from './auth-api-proxy.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PodNomsAuthService extends BaseService {
+export class AuthService extends BaseService {
     private _authNavStatusSource = new BehaviorSubject<boolean>(false);
-    private authNavStatus$ = this._authNavStatusSource.asObservable();
+    authNavStatus$ = this._authNavStatusSource.asObservable();
 
     profile$ = new BehaviorSubject<Profile>(null);
     //profile$  = this._profileSource.asObservable();
@@ -32,19 +29,10 @@ export class PodNomsAuthService extends BaseService {
     constructor(
         private router: Router,
         private socialAuthService: SocialAuthService,
-        private podnomsAuthService: PodnomsApiAuthService,
-        private profileService: ProfileService
+        private podnomsAuthService: AuthApiProxyService,
+        private profileService: ProfileStoreService
     ) {
         super();
-        this.guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-            /[xy]/g,
-            function(c) {
-                const r = (Math.random() * 16) | 0,
-                    v = c === 'x' ? r : (r & 0x3) | 0x8;
-                return v.toString(16);
-            }
-        );
-        console.log('auth.service', 'constructor', this.guid);
     }
 
     bootstrap(): Observable<boolean> {
@@ -72,14 +60,18 @@ export class PodNomsAuthService extends BaseService {
     socialLogin(provider: string): Observable<boolean> {
         if (provider === 'facebook') {
             return this._loginFacebook();
+        } else if (provider === 'google-oauth2') {
+            return this._loginGoogle();
         }
     }
     login(userName: string, password: string): Observable<boolean> {
-        return this.podnomsAuthService.login(userName, password).map(res => {
-            localStorage.setItem('auth_token', res.auth_token);
-            this.bootstrap();
-            return true;
-        });
+        return this.podnomsAuthService.login(userName, password).pipe(
+            map(res => {
+                localStorage.setItem('auth_token', res.auth_token);
+                this.bootstrap();
+                return true;
+            })
+        );
     }
     logout() {
         localStorage.clear();
@@ -88,30 +80,39 @@ export class PodNomsAuthService extends BaseService {
         this.router.navigate(['']);
     }
 
+    private _loginGoogle(): Observable<boolean> {
+        const ret = new Subject<boolean>();
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(user => {
+            if (user) {
+                const rpc = this.podnomsAuthService.googleLogin(user.idToken).subscribe(
+                    res => {
+                        localStorage.setItem('auth_token', res.auth_token);
+                        this.bootstrap();
+                        ret.next(true);
+                    },
+                    err => ret.next(false)
+                );
+            }
+        });
+        return ret;
+    }
     private _loginFacebook(): Observable<boolean> {
         const ret = new Subject<boolean>();
         const options: LoginOpt = {
             scope: 'email public_profile'
         };
-        this.socialAuthService
-            .signIn(FacebookLoginProvider.PROVIDER_ID, options)
-            .then(user => {
-                if (user) {
-                    this.podnomsAuthService
-                        .facebookLogin(user.authToken)
-                        .subscribe(
-                            res => {
-                                localStorage.setItem(
-                                    'auth_token',
-                                    res.auth_token
-                                );
-                                this.bootstrap();
-                                ret.next(true);
-                            },
-                            err => ret.next(false)
-                        );
-                }
-            });
+        this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, options).then(user => {
+            if (user) {
+                this.podnomsAuthService.facebookLogin(user.authToken).subscribe(
+                    res => {
+                        localStorage.setItem('auth_token', res.auth_token);
+                        this.bootstrap();
+                        ret.next(true);
+                    },
+                    err => ret.next(false)
+                );
+            }
+        });
         return ret;
     }
 }

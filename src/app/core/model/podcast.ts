@@ -7,12 +7,12 @@ export class Podcast {
     thumbnailUrl?: string;
     customDomain?: string;
     rssUrl?: string;
+    createDate?: Date;
     podcastEntries?: PodcastEntry[];
 }
 export class PodcastEntry {
-    id?: number;
+    id?: string;
     uid?: string;
-    createDate?: string;
     author?: string;
     title?: string;
     description?: string;
@@ -20,12 +20,13 @@ export class PodcastEntry {
     audioUrl?: string;
     imageUrl?: string;
     processed: boolean;
+    createDate?: Date;
     processingStatus?: string;
     processingPayload?: string;
     podcastSlug?: string;
     podcastTitle?: string;
-    podcastId?: number;
-    constructor(podcastId?: number, sourceUrl?: string) {
+    podcastId?: string;
+    constructor(podcastId?: string, sourceUrl?: string) {
         this.podcastId = podcastId;
         this.sourceUrl = sourceUrl;
         this.processed = false;

@@ -10,6 +10,7 @@ import { AppStoreModule } from './store/app-store.module';
 import { ComponentsModule } from './components/components.module';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { SharedModule } from './shared/shared.module';
+import { environment } from '../environments/environment';
 @NgModule({
     imports: [
         BrowserModule,

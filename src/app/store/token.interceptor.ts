@@ -8,11 +8,11 @@ import {
     HttpHeaders,
     HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { PodNomsAuthService } from '../auth/auth.service';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private authService: PodNomsAuthService) {}
+    constructor(private authService: AuthService) {}
     private commonHeaders(): HttpHeaders {
         const headers = new HttpHeaders({
             'cache-control': 'no-cache',
@@ -21,10 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
         return headers;
     }
 
-    intercept(
-        req: HttpRequest<any>,
-        next: HttpHandler
-    ): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.authService) {
             return next.handle(req);
         }

@@ -24,7 +24,10 @@
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",
                             "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-                            "node_modules/howler/dist/howler.js"
+                            "node_modules/howler/dist/howler.js",
+                            "node_modules/quill/dist/quill.js",
+                            "node_modules/easy-pie-chart/dist/easypiechart.js",
+                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js"
                         ]
                     },
                     "configurations": {
@@ -40,10 +43,8 @@
                             "buildOptimizer": true,
                             "fileReplacements": [
                                 {
-                                    "replace":
-                                        "src/environments/environment.ts",
-                                    "with":
-                                        "src/environments/environment.prod.ts"
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
                                 }
                             ]
                         }
@@ -85,10 +86,7 @@
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": [
-                            "src/tsconfig.app.json",
-                            "src/tsconfig.spec.json"
-                        ],
+                        "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
                         "exclude": ["**/node_modules/**"]
                     }
                 }
