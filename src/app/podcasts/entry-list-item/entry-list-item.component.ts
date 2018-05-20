@@ -14,6 +14,7 @@ import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
+import { EntriesDataService } from '../../podcast/entries-data.service';
 
 @Component({
     selector: 'app-entry-list-item',
@@ -71,7 +72,9 @@ export class EntryListItemComponent implements OnInit {
         this.entryRemoved.emit(this.entry);
     }
     updateTitle($event: Event) {
-        this.entriesStoreService.update(this.entry);
+        this.podcastDataService
+            .updateEntry(this.entry)
+            .subscribe(e => this.entriesStoreService.updateOneInCache(e));
     }
     goto(entry: PodcastEntry) {
         window.open(entry.sourceUrl);

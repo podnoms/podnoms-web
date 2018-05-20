@@ -9,17 +9,19 @@ const routes: Routes = [
     { path: '', pathMatch: 'full', component: PodcastComponent, canActivate: [AuthGuard] },
     {
         path: 'add',
-        pathMatch: 'full',
         component: PodcastEditFormComponent,
         canActivate: [AuthGuard]
     },
     {
-        path: 'edit/:podcast',
-        pathMatch: 'full',
-        component: PodcastEditFormComponent,
+        path: ':podcast',
+        component: PodcastComponent,
         canActivate: [AuthGuard]
     },
-    { path: ':podcast', pathMatch: 'full', component: PodcastComponent, canActivate: [AuthGuard] }
+    {
+        path: ':podcast/edit/',
+        component: PodcastEditFormComponent,
+        canActivate: [AuthGuard]
+    }
 ];
 
 @NgModule({
