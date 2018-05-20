@@ -6,16 +6,16 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SharedModule } from '../shared/shared.module';
-import { ProfileService } from './profile.service';
+import { ResetComponent } from './reset/reset.component';
 
 @NgModule({
     imports: [CommonModule, SharedModule, AuthRoutingModule],
-    providers: [ProfileService],
     declarations: [
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        ResetComponent
     ]
 })
 export class AuthModule {}

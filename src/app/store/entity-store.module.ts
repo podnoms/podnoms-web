@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
-import {
-    EntityMetadataMap,
-    NgrxDataModule,
-    EntityDataService,
-    EntityReducerFactory,
-    DefaultDataServiceConfig
-} from 'ngrx-data';
+import { EntityMetadataMap, NgrxDataModule, DefaultDataServiceConfig } from 'ngrx-data';
 import { NgrxDataToastService } from './ngrx-data-toast.service';
 import { environment } from '../../environments/environment';
 
+export function sortByName(a: { name: string }, b: { name: string }): number {
+    return a.name.localeCompare(b.name);
+}
+
 export const entityMetadata: EntityMetadataMap = {
     Podcast: {},
-    Entry: {},
+    Entry: {
+        // sortComparer: (a: { name: string }, b: { name: string }): number => {
+        //     var d1 = new Date(a.createDate);
+        //     var d2 = new Date(d1);
+        // }
+    },
     Profile: {}
 };
 const defaultDataServiceConfig: DefaultDataServiceConfig = {

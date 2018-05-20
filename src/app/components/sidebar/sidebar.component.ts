@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterDetailCommands, Podcast } from '../../core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ComponentsService } from '../components.service';
-import { PodcastService } from '../../podcasts/podcast.service';
+import { PodcastStoreService } from '../../podcasts/podcast-store.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -15,11 +16,14 @@ export class SidebarComponent implements OnInit {
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
 
-    constructor(private _podcastService: PodcastService) {
+    constructor(private router: Router, private _podcastService: PodcastStoreService) {
         this.podcasts$ = _podcastService.entities$;
         this.loading$ = _podcastService.loading$;
     }
     ngOnInit() {
         this._podcastService.getAll();
+    }
+    doAddPodcast() {
+        this.router.navigate(['podcasts/add']);
     }
 }

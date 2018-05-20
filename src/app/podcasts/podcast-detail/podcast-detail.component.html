@@ -1,11 +1,27 @@
-<div class="table-responsive">
+<div class="table-responsive"
+     *ngIf="podcast.podcastEntries.length !== 0; else empty">
     <table class="table table-hover">
         <tbody>
-            <tr *ngFor="let entry of podcast.podcastEntries | orderBy : '-id'">
-                <app-entry-list-item [entry]="entry"></app-entry-list-item>
+            <tr *ngFor="let entry of podcast.podcastEntries | orderByDate '-createDate'">
+                <app-entry-list-item (entryRemoved)='deleteEntry(entry)'
+                                     [entry]="entry"></app-entry-list-item>
             </tr>
         </tbody>
     </table>
 </div>
-<!--app-entry-list-item (entryRemoved)='deleteEntry(e)'
-    [entry]="e"> -->
+<ng-template #empty>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="block-header bg-pulse mb-20 text-center">
+                <h3 class="block-title font-w600 text-white font-weight-bold">Time to add some episodes!</h3>
+                <aside>Click
+                    <b>Add (from URL)</b> to add something from YouTube, MixCloud, SoundCloud and many more</aside>
+                <aside>Click
+                    <b>Upload (from computer)</b> to add mp3 files from your PC</aside>
+                <div class="block-options">
+                    <i class="fa fa-frown fa-3x text-warning text-warning mr-5"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -5,11 +5,19 @@ import {
     OnChanges,
     ViewChild,
     SimpleChanges,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    SimpleChange
 } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-import { Podcast, MasterDetailCommands } from '../../core';
+import { Podcast, MasterDetailCommands, PodcastEntry } from '../../core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { PodcastStoreService } from '../podcast-store.service';
+import { map, debounceTime } from 'rxjs/operators';
+import { Effect } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { EntityActions, persistOps, EntityAction, EntityOp } from 'ngrx-data';
+import { PodcastDataService } from '../podcast-data.service';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -20,5 +28,18 @@ import { Podcast, MasterDetailCommands } from '../../core';
 export class PodcastDetailComponent {
     @Input() podcast: Podcast;
 
-    constructor() {}
+    constructor(
+        private podcastStoreService: PodcastStoreService,
+        private podcastDataService: PodcastDataService,
+        private actions$: EntityActions
+    ) {}
+
+    deleteEntry(entry: PodcastEntry) {
+        this.podcastDataService.deleteEntry(entry.id).subscribe(r => {
+            this.podcast.podcastEntries = this.podcast.podcastEntries.filter(
+                p => p.id !== entry.id
+            );
+            this.podcastStoreService.updateOneInCache(this.podcast);
+        });
+    }
 }

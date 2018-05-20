@@ -28,7 +28,7 @@
             <li class="nav-main-heading">
                 <span>My Podcasts</span>
             </li>
-            <li *ngFor="let podcast of podcasts$ | async | orderBy : '-id'">
+            <li *ngFor="let podcast of podcasts$ | async | orderByDate : '-createDate'">
                 <a [routerLink]="['/podcasts', podcast.slug]" [routerLinkActive]="['active']">
                     <img class="sidebar-icon" [src]="podcast.thumbnailUrl">
                     <span class="sidebar-mini-hide">{{podcast.title}}</span>

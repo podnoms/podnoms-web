@@ -1,11 +1,34 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { AppDevModule } from './app/app-dev.module';
-import 'angular2-notifications';
 
+//#region console overwrite
+if (environment.production && location.host !== 'localhost:4200') {
+    enableProdMode();
+    console.log(
+        `%c ________________________________________
+< mooooooooooooooooooooooooooooooooooooo >
+<        Looking under the hood?         >
+<      Source: http://bit.ly/2HzR9Qk     >
+ ----------------------------------------
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||`,
+        'font-family:monospace; color: brown; font-size: x-large'
+    );
+
+    if (typeof window.console !== 'undefined') {
+        window.console.log = function() {};
+        window.console.debug = function() {};
+        window.console.warn = function() {};
+        window.console.error = function() {};
+    }
+}
+//# endregion
 if (environment.production) {
     enableProdMode();
 }

@@ -9,8 +9,6 @@ export class NgrxDataToastService {
         actions$
             .where(ea => ea.op.endsWith(OP_SUCCESS) || ea.op.endsWith(OP_ERROR))
             // this service never dies so no need to unsubscribe
-            .subscribe(action =>
-                toast.openSnackBar(`${action.entityName} action`, action.op)
-            );
+            .subscribe(action => toast.showToast(`${action.entityName} action`, action.op));
     }
 }

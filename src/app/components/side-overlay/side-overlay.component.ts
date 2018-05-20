@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Profile, PodcastEntry } from '../../core';
 import { UiStateService } from '../../core/ui-state.service';
-import { EntriesService } from '../../podcasts/entries.service';
+import { EntriesStoreService } from '../../podcasts/entries-store.service';
 import { Observable } from 'rxjs';
 import { AudioService } from '../../core/audio.service';
 
@@ -18,7 +18,7 @@ export class SideOverlayComponent implements OnInit {
     constructor(
         public uiStateService: UiStateService,
         public audioService: AudioService,
-        private entryService: EntriesService
+        private entryService: EntriesStoreService
     ) {
         this.entries$ = entryService.entities$;
         this.loading$ = entryService.loading$;

@@ -1,17 +1,17 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { PodcastService } from './podcast.service';
+import { PodcastStoreService } from './podcast-store.service';
 
 describe('PodcastService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [PodcastService]
+            providers: [PodcastStoreService]
         });
     });
 
     it(
         'should be created',
-        inject([PodcastService], (service: PodcastService) => {
+        inject([PodcastStoreService], (service: PodcastStoreService) => {
             expect(service).toBeTruthy();
         })
     );

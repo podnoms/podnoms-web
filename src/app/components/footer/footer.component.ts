@@ -11,7 +11,6 @@ export class FooterComponent implements OnInit {
     constructor(private audioService: AudioService) {}
 
     ngOnInit() {
-        console.log('footer.component', 'ngOnInit');
         this.audioService.playStateChanged.subscribe(s => {
             this.showPlayer = s !== -1;
         });

@@ -18,7 +18,8 @@
                        [(ngModel)]="entry.title"
                        (onSave)="updateTitle($event)"
                        name="title"
-                       size="32"></inline-editor>
+                       size="32">
+        </inline-editor>
     </p>
     <p class="font-w600 mb-0"
        [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
@@ -78,7 +79,10 @@
             <button type="button"
                     class="btn btn-secondary"
                     (click)="downloadAudio(entry)">
-                <i class="icon icon-cloud-download"></i>
+                <i *ngIf="!preparingDownload"
+                   class="icon icon-cloud-download"></i>
+                <i *ngIf="preparingDownload"
+                   class="fa fa-cog fa-spin text-success"></i>
             </button>
             <button type="button"
                     class="btn btn-danger"
