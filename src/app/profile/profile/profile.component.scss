@@ -1,0 +1,12 @@
+/* fix for broken CSS validation */
+.input-group.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+img.options-item {
+    width: 100%;
+}
+.profile-container {
+    padding-left: 10em;
+    padding-right: 10em;
+}
