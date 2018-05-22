@@ -1,6 +1,6 @@
 import {
-    GoogleLoginProvider,
     FacebookLoginProvider,
+    GoogleLoginProvider,
     AuthServiceConfig
 } from 'angularx-social-login';
 

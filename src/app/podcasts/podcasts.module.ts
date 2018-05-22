@@ -5,7 +5,6 @@ import { PodcastComponent } from './podcast/podcast.component';
 import { SharedModule } from '../shared/shared.module';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { QuillModule } from 'ngx-quill';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
@@ -15,6 +14,7 @@ import { EntryUploadComponent } from './entry-upload/entry-upload.component';
 import { UploadUrlComponent } from './entry-upload/upload-url/upload-url.component';
 import { UploadFileComponent } from './entry-upload/upload-file/upload-file.component';
 import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -23,8 +23,8 @@ import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.
         PodcastsRoutingModule,
         InlineEditorModule,
         MomentModule,
-        QuillModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        QuillModule
     ],
     exports: [PodcastComponent],
     declarations: [

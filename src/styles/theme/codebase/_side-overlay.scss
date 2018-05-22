@@ -39,13 +39,12 @@
         }
 
         .side-overlay-hover & {
-            transform: translateX($side-overlay-width - $space-side)
-                translateY(0) translateZ(0);
+            transform: translateX($side-overlay-width - $space-side) translateY(0) translateZ(0);
         }
 
         .sidebar-r.side-overlay-hover & {
-            transform: translateX(-($side-overlay-width - $space-side))
-                translateY(0) translateZ(0);
+            transform: translateX(-($side-overlay-width - $space-side)) translateY(0)
+                translateZ(0);
         }
 
         .side-overlay-hover &:hover,

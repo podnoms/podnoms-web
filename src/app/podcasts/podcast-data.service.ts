@@ -32,8 +32,10 @@ export class PodcastDataService {
     updatePodcast(podcast: Podcast) {
         return this._http.put(environment.apiHost + '/podcast/', podcast);
     }
-    deletePodcast(id: number) {
-        return this._http.delete(environment.apiHost + '/podcast/' + id);
+    deletePodcast(id: string): Observable<boolean> {
+        return this._http
+            .delete<Response>(environment.apiHost + '/podcast/' + id)
+            .pipe(map(r => r.status === 200));
     }
     //#endregion
     //#region Entries
@@ -56,14 +58,16 @@ export class PodcastDataService {
             JSON.stringify(entry)
         );
     }
-    deleteEntry(id: string) {
-        return this._http.delete(environment.apiHost + '/entry/' + id);
+    deleteEntry(id: string): Observable<boolean> {
+        return this._http
+            .delete<Response>(environment.apiHost + '/entry/' + id)
+            .pipe(map(r => r.status === 200));
     }
     checkEntry(url: string): Observable<boolean> {
         return this._http
             .post<Response>(environment.apiHost + '/entry/isvalid/', `"${url}"`)
             .pipe(
-                map(r => (r.status == 200 ? true : false)),
+                map(r => r.status === 200),
                 catchError((error: any) => {
                     return observableThrowError(new Error(error.status));
                 })
