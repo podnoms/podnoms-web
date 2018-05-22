@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SideOverlayComponent } from './side-overlay/side-overlay.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterPlayerComponent } from './footer/footer-player/footer-player.component';
+import { PasswordCheckerComponent } from './password-checker/password-checker.component';
 
 @NgModule({
     imports: [CommonModule, RouterModule, SharedModule],
@@ -15,8 +16,15 @@ import { FooterPlayerComponent } from './footer/footer-player/footer-player.comp
         SidebarComponent,
         SideOverlayComponent,
         FooterComponent,
-        FooterPlayerComponent
+        FooterPlayerComponent,
+        PasswordCheckerComponent
     ],
-    exports: [SidebarComponent, SideOverlayComponent, FooterComponent, FooterPlayerComponent]
+    exports: [
+        SidebarComponent,
+        SideOverlayComponent,
+        FooterComponent,
+        FooterPlayerComponent,
+        PasswordCheckerComponent
+    ]
 })
 export class ComponentsModule {}

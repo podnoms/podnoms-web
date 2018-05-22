@@ -13,6 +13,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AuthApiProxyService } from './auth-api-proxy.service';
+import { HttpHeaders } from '@angular/common/http/src/headers';
 
 @Injectable({
     providedIn: 'root'
@@ -79,7 +80,22 @@ export class AuthService extends BaseService {
         this._authNavStatusSource.next(false);
         this.router.navigate(['']);
     }
-
+    register(email: string, password: string): Observable<boolean> {
+        return this.podnomsAuthService.register(email, password).pipe(map(r => true));
+    }
+    forgotPassword(userName: string): Observable<any> {
+        return this.podnomsAuthService.forgotPassword(userName);
+    }
+    resetPassword(
+        email: string,
+        newPassword: string,
+        newPasswordRepeat: string,
+        code: string
+    ): Observable<boolean> {
+        return this.podnomsAuthService
+            .resetPassword(email, newPassword, newPasswordRepeat, code)
+            .pipe(map(res => true));
+    }
     private _loginGoogle(): Observable<boolean> {
         const ret = new Subject<boolean>();
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(user => {

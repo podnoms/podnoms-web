@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
     private metadata: Subscription;
+    errorMessage: string = '';
     brandNew: boolean = false;
     justReset: boolean = false;
     username: string;
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
             .login(this.username, this.password)
             .subscribe(
                 success => this.router.navigate(['']),
-                error => console.log('login.component', 'Error logging in', error)
+                error => (this.errorMessage = 'Unable to log you in - have you registered?')
             );
     }
 }

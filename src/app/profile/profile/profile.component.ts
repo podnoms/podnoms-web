@@ -77,15 +77,20 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
                 switchMap(term => this.profileDataService.checkSlug(term))
             )
             .subscribe(r => {
-                if (r) this.slugError = '';
-                else this.slugError = 'Slug already exists';
+                if (r) {
+                    this.slugError = '';
+                } else {
+                    this.slugError = 'Slug already exists';
+                }
                 this.slugging = false;
             });
         this.profile$ = this.profileStoreService.entities$.pipe(
             map(r => r.filter(it => it.slug !== null)[0])
         );
         this.profile$.subscribe(r => {
-            if (r) this.image.src = r.profileImage;
+            if (r) {
+                this.image.src = r.profileImage;
+            }
         });
     }
 
