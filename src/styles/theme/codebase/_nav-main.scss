@@ -320,9 +320,7 @@
 
         @at-root {
             .page-header-inverse #page-header &,
-            .page-header-inverse.page-header-glass.page-header-scroll
-                #page-header
-                & {
+            .page-header-inverse.page-header-glass.page-header-scroll #page-header & {
                 a {
                     color: darken($body-color-light, 9%);
                 }

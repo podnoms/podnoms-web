@@ -120,10 +120,7 @@
 
 // Used for buttons that adapt to light/dark header and sidebar variations
 .btn-dual-secondary {
-    @include button-dual-variant(
-        darken($body-color, 22%),
-        darken($body-bg, 10%)
-    );
+    @include button-dual-variant(darken($body-color, 22%), darken($body-bg, 10%));
 }
 
 .page-header-inverse #page-header .btn-dual-secondary,
