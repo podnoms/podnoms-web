@@ -29,10 +29,7 @@
 @include text-emphasis-variant('.text-elegance-dark', $theme-elegance-dark);
 @include text-emphasis-variant('.text-elegance-darker', $theme-elegance-darker);
 @include text-emphasis-variant('.text-elegance-light', $theme-elegance-light);
-@include text-emphasis-variant(
-    '.text-elegance-lighter',
-    $theme-elegance-lighter
-);
+@include text-emphasis-variant('.text-elegance-lighter', $theme-elegance-lighter);
 
 @include bg-variant('.bg-elegance', $theme-elegance-primary);
 @include bg-variant('.bg-elegance-op', rgba($theme-elegance-primary, 0.75));
@@ -96,15 +93,9 @@
 // Corporate
 @include text-emphasis-variant('.text-corporate', $theme-corporate-primary);
 @include text-emphasis-variant('.text-corporate-dark', $theme-corporate-dark);
-@include text-emphasis-variant(
-    '.text-corporate-darker',
-    $theme-corporate-darker
-);
+@include text-emphasis-variant('.text-corporate-darker', $theme-corporate-darker);
 @include text-emphasis-variant('.text-corporate-light', $theme-corporate-light);
-@include text-emphasis-variant(
-    '.text-corporate-lighter',
-    $theme-corporate-lighter
-);
+@include text-emphasis-variant('.text-corporate-lighter', $theme-corporate-lighter);
 
 @include bg-variant('.bg-corporate', $theme-corporate-primary);
 @include bg-variant('.bg-corporate-op', rgba($theme-corporate-primary, 0.75));

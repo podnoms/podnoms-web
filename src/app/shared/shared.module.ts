@@ -12,17 +12,9 @@ import { UtilityService } from './services/utility.service';
 import { ImageService } from './services/image.service';
 import { RouterModule } from '@angular/router';
 import { SignalRService } from './services/signal-r.service';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        SocialLoginModule,
-        NgxSmartModalModule.forRoot()
-    ],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule],
     exports: [
         FormsModule,
         ReactiveFormsModule,

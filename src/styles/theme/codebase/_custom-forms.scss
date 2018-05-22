@@ -107,34 +107,22 @@
     }
 
     // Color Variations
-    &.css-control-primary
-        .css-control-input:checked
-        ~ .css-control-indicator::after {
+    &.css-control-primary .css-control-input:checked ~ .css-control-indicator::after {
         background-color: $brand-primary;
     }
-    &.css-control-secondary
-        .css-control-input:checked
-        ~ .css-control-indicator::after {
+    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator::after {
         background-color: $gray-dark;
     }
-    &.css-control-info
-        .css-control-input:checked
-        ~ .css-control-indicator::after {
+    &.css-control-info .css-control-input:checked ~ .css-control-indicator::after {
         background-color: $brand-info;
     }
-    &.css-control-success
-        .css-control-input:checked
-        ~ .css-control-indicator::after {
+    &.css-control-success .css-control-input:checked ~ .css-control-indicator::after {
         background-color: $brand-success;
     }
-    &.css-control-warning
-        .css-control-input:checked
-        ~ .css-control-indicator::after {
+    &.css-control-warning .css-control-input:checked ~ .css-control-indicator::after {
         background-color: $brand-warning;
     }
-    &.css-control-danger
-        .css-control-input:checked
-        ~ .css-control-indicator::after {
+    &.css-control-danger .css-control-input:checked ~ .css-control-indicator::after {
         background-color: $brand-danger;
     }
 }
@@ -204,9 +192,7 @@
         border-color: darken($brand-primary, 15%);
     }
 
-    &.css-control-secondary
-        .css-control-input:checked
-        ~ .css-control-indicator {
+    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator {
         background-color: $gray-dark;
         border-color: darken($gray-dark, 15%);
     }
@@ -315,9 +301,7 @@
     &.css-control-primary .css-control-input:checked ~ .css-control-indicator {
         background-color: $brand-primary;
     }
-    &.css-control-secondary
-        .css-control-input:checked
-        ~ .css-control-indicator {
+    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator {
         background-color: $gray-dark;
     }
     &.css-control-info .css-control-input:checked ~ .css-control-indicator {

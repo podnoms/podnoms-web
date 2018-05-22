@@ -62,20 +62,20 @@
         // Mini Sidebar
         .sidebar-o.sidebar-mini & {
             overflow-x: hidden;
-            transform: translateX(-($sidebar-width - $sidebar-mini-width))
-                translateY(0) translateZ(0);
+            transform: translateX(-($sidebar-width - $sidebar-mini-width)) translateY(0)
+                translateZ(0);
             transition: transform $side-transition;
         }
 
         .sidebar-r.sidebar-o.sidebar-mini & {
-            transform: translateX($sidebar-width - $sidebar-mini-width)
-                translateY(0) translateZ(0);
+            transform: translateX($sidebar-width - $sidebar-mini-width) translateY(0)
+                translateZ(0);
         }
 
         .sidebar-o.sidebar-mini & .sidebar-content {
             width: $sidebar-width;
-            transform: translateX(($sidebar-width - $sidebar-mini-width))
-                translateY(0) translateZ(0);
+            transform: translateX(($sidebar-width - $sidebar-mini-width)) translateY(0)
+                translateZ(0);
             transition: transform $side-transition;
             will-change: transform;
         }

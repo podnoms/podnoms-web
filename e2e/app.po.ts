@@ -3,11 +3,7 @@ import { Element } from '@angular/compiler';
 
 by.addLocator(
     'formControlName',
-    (
-        value: string,
-        opt_parentElement: HTMLElement,
-        opt_rootSelector: HTMLElement
-    ) => {
+    (value: string, opt_parentElement: HTMLElement, opt_rootSelector: HTMLElement) => {
         const using = opt_parentElement || document;
         return using.querySelectorAll(`[formControlName="${value}"]`);
     }
@@ -74,11 +70,7 @@ export class AppPage {
     }
 
     async selectFirstItemInList() {
-        const {
-            firstItem,
-            nameElement,
-            name
-        } = await this.getFirstItemInList();
+        const { firstItem, nameElement, name } = await this.getFirstItemInList();
         await firstItem.click();
 
         return {
@@ -114,10 +106,7 @@ export class AppPage {
 
     async clickRefreshButton() {
         const refreshButton = element(
-            by.cssContainingText(
-                '.control-panel .button-panel button',
-                'Refresh'
-            )
+            by.cssContainingText('.control-panel .button-panel button', 'Refresh')
         );
         await refreshButton.click();
     }

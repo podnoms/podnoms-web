@@ -109,9 +109,7 @@
     .custom-control-input:indeterminate ~ .custom-control-label {
         &::before {
             @include gradient-bg($custom-checkbox-indicator-indeterminate-bg);
-            @include box-shadow(
-                $custom-checkbox-indicator-indeterminate-box-shadow
-            );
+            @include box-shadow($custom-checkbox-indicator-indeterminate-box-shadow);
         }
         &::after {
             background-image: $custom-checkbox-indicator-icon-indeterminate;
@@ -164,8 +162,8 @@
     width: 100%;
     height: $custom-select-height;
     padding: $custom-select-padding-y
-        ($custom-select-padding-x + $custom-select-indicator-padding)
-        $custom-select-padding-y $custom-select-padding-x;
+        ($custom-select-padding-x + $custom-select-indicator-padding) $custom-select-padding-y
+        $custom-select-padding-x;
     line-height: $custom-select-line-height;
     color: $custom-select-color;
     vertical-align: middle;
@@ -293,9 +291,7 @@
         content: 'Browse';
         @include gradient-bg($custom-file-button-bg);
         border-left: $custom-file-border-width solid $custom-file-border-color;
-        @include border-radius(
-            0 $custom-file-border-radius $custom-file-border-radius 0
-        );
+        @include border-radius(0 $custom-file-border-radius $custom-file-border-radius 0);
     }
 }
 

@@ -23,9 +23,7 @@ describe('ngrx-data-lab App', () => {
         it(`should navigate to ${entityName}`, async () => {
             const link = page.getActiveLink();
             expect(await link.isPresent()).toBe(true);
-            expect(await page.getListTitle().getText()).toMatch(
-                new RegExp(entityName, 'i')
-            );
+            expect(await page.getListTitle().getText()).toMatch(new RegExp(entityName, 'i'));
         });
 
         it(`should have ${entityName} items > 0`, async () => {
@@ -35,9 +33,7 @@ describe('ngrx-data-lab App', () => {
         it(`should remove item when deleted`, async () => {
             const originalListCount = await page.getListItems().count();
             await page.deleteFirstListItem();
-            expect(await page.getListItems().count()).toEqual(
-                originalListCount - 1
-            );
+            expect(await page.getListItems().count()).toEqual(originalListCount - 1);
             expect(await page.getDetailTitle().isPresent()).toBe(false);
         });
 
@@ -64,32 +60,22 @@ describe('ngrx-data-lab App', () => {
         describe(`when pressing add to create a new ${entityName}`, () => {
             it(`should open detail`, async () => {
                 await page.clickAddButton();
-                expect(await page.getDetailTitle().getText()).toMatch(
-                    'Details'
-                );
+                expect(await page.getDetailTitle().getText()).toMatch('Details');
             });
 
             it(`should NOT have matching name in selected list and detail item`, async () => {
-                const {
-                    name: originalListName
-                } = await page.getFirstItemInList();
+                const { name: originalListName } = await page.getFirstItemInList();
                 await page.clickAddButton();
-                expect(await page.getDetailNameInputValue()).not.toMatch(
-                    originalListName
-                );
+                expect(await page.getDetailNameInputValue()).not.toMatch(originalListName);
                 expect(await page.getDetailNameInputValue()).toMatch('');
             });
 
             it(`should not save when canceling`, async () => {
                 await page.clickAddButton();
-                const {
-                    name: originalListName
-                } = await page.getFirstItemInList();
+                const { name: originalListName } = await page.getFirstItemInList();
                 const newName = await page.changeDetailsName('new name');
                 await page.closeDetails();
-                expect(
-                    await page.getDetailFormElement('name').isPresent()
-                ).toBe(false);
+                expect(await page.getDetailFormElement('name').isPresent()).toBe(false);
                 expect(originalListName).not.toMatch(newName);
             });
 
@@ -103,71 +89,45 @@ describe('ngrx-data-lab App', () => {
                 // const EC = ExpectedConditions;
                 // browser.wait(EC.stalenessOf(page.getDetailTitle()), 5000);
 
-                expect(await page.getListItems().count()).toEqual(
-                    originalListCount + 1
+                expect(await page.getListItems().count()).toEqual(originalListCount + 1);
+
+                expect(await page.getDetailFormElement('name').isPresent()).toBe(false);
+                expect(await page.getElementFromListByClass('name', newName).getText()).toBe(
+                    newName
                 );
 
-                expect(
-                    await page.getDetailFormElement('name').isPresent()
-                ).toBe(false);
-                expect(
-                    await page
-                        .getElementFromListByClass('name', newName)
-                        .getText()
-                ).toBe(newName);
-
-                expect(
-                    await page.getDetailFormElement('saying').isPresent()
-                ).toBe(false);
-                expect(
-                    await page
-                        .getElementFromListByClass('saying', newSaying)
-                        .getText()
-                ).toBe(newSaying);
+                expect(await page.getDetailFormElement('saying').isPresent()).toBe(false);
+                expect(await page.getElementFromListByClass('saying', newSaying).getText()).toBe(
+                    newSaying
+                );
             });
         });
 
         describe(`when selecting an item from ${entityName} list`, () => {
             it(`should open detail`, async () => {
                 await page.selectFirstItemInList();
-                expect(await page.getDetailTitle().getText()).toMatch(
-                    'Details'
-                );
+                expect(await page.getDetailTitle().getText()).toMatch('Details');
             });
 
             it(`should have matching name in selected list and detail item`, async () => {
-                const {
-                    name: originalListName
-                } = await page.selectFirstItemInList();
-                expect(await page.getDetailNameInputValue()).toMatch(
-                    originalListName
-                );
+                const { name: originalListName } = await page.selectFirstItemInList();
+                expect(await page.getDetailNameInputValue()).toMatch(originalListName);
             });
 
             it(`should not save when editing and canceling`, async () => {
-                const {
-                    name: originalListName
-                } = await page.selectFirstItemInList();
+                const { name: originalListName } = await page.selectFirstItemInList();
                 const newName = await page.changeDetailsName('new name');
                 await page.closeDetails();
-                expect(
-                    await page.getDetailFormElement('name').isPresent()
-                ).toBe(false);
+                expect(await page.getDetailFormElement('name').isPresent()).toBe(false);
                 expect(originalListName).not.toMatch(newName);
             });
 
             it(`should save when editing and saving`, async () => {
-                const {
-                    name: originalListName
-                } = await page.selectFirstItemInList();
+                const { name: originalListName } = await page.selectFirstItemInList();
                 const newName = await page.changeDetailsName('new name');
                 await page.saveDetails();
-                const updatedListName = await page
-                    .getFirstElementFromList('name')
-                    .getText();
-                expect(
-                    await page.getDetailFormElement('name').isPresent()
-                ).toBe(false);
+                const updatedListName = await page.getFirstElementFromList('name').getText();
+                expect(await page.getDetailFormElement('name').isPresent()).toBe(false);
                 expect(updatedListName).toMatch(newName);
                 expect(originalListName).not.toMatch(updatedListName);
             });

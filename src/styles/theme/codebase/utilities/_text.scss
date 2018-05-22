@@ -80,8 +80,5 @@
 
 .page-header-inverse #page-header,
 .sidebar-inverse #sidebar {
-    @include text-emphasis-variant(
-        '.text-dual-primary-dark',
-        $body-color-light
-    );
+    @include text-emphasis-variant('.text-dual-primary-dark', $body-color-light);
 }

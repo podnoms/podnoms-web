@@ -32,12 +32,7 @@
     darken($brand-primary, 15%),
     lighten($brand-primary, 5%)
 );
-@include bg-gradient-variant(
-    '.bg-gd-dusk',
-    135deg,
-    $theme-elegance-primary,
-    $brand-primary
-);
+@include bg-gradient-variant('.bg-gd-dusk', 135deg, $theme-elegance-primary, $brand-primary);
 @include bg-gradient-variant(
     '.bg-gd-cherry',
     135deg,
@@ -56,30 +51,10 @@
     $theme-earth-primary,
     $theme-corporate-primary
 );
-@include bg-gradient-variant(
-    '.bg-gd-sea',
-    135deg,
-    darken($brand-primary, 7%),
-    $brand-info
-);
-@include bg-gradient-variant(
-    '.bg-gd-leaf',
-    135deg,
-    $brand-warning,
-    $brand-success
-);
-@include bg-gradient-variant(
-    '.bg-gd-lake',
-    135deg,
-    $brand-info,
-    $brand-success
-);
-@include bg-gradient-variant(
-    '.bg-gd-sun',
-    135deg,
-    $brand-danger,
-    $brand-warning
-);
+@include bg-gradient-variant('.bg-gd-sea', 135deg, darken($brand-primary, 7%), $brand-info);
+@include bg-gradient-variant('.bg-gd-leaf', 135deg, $brand-warning, $brand-success);
+@include bg-gradient-variant('.bg-gd-lake', 135deg, $brand-info, $brand-success);
+@include bg-gradient-variant('.bg-gd-sun', 135deg, $brand-danger, $brand-warning);
 
 // Black/White with opacity
 .bg-black-op {

@@ -96,10 +96,7 @@
 
     .page-header-inverse #page-header,
     .sidebar-inverse #sidebar {
-        @include text-emphasis-variant(
-            '.text-dual-primary-dark',
-            $body-color-light
-        );
+        @include text-emphasis-variant('.text-dual-primary-dark', $body-color-light);
     }
 
     // Contextual colors
@@ -157,10 +154,7 @@
 
     // Used for buttons that adapt to light/dark header and sidebar variations
     .btn-dual-secondary {
-        @include button-dual-variant(
-            darken($body-color, 22%),
-            darken($body-bg, 10%)
-        );
+        @include button-dual-variant(darken($body-color, 22%), darken($body-bg, 10%));
     }
 
     .page-header-inverse #page-header .btn-dual-secondary,
@@ -170,11 +164,7 @@
 
     // Alerts
     .alert-primary {
-        @include alert-variant(
-            $brand-lighter,
-            darken($brand-lighter, 10%),
-            $brand-dark
-        );
+        @include alert-variant($brand-lighter, darken($brand-lighter, 10%), $brand-dark);
     }
 
     // Badges
@@ -643,9 +633,7 @@
         }
 
         // Color Variations
-        &.css-control-primary
-            .css-control-input:checked
-            ~ .css-control-indicator::after {
+        &.css-control-primary .css-control-input:checked ~ .css-control-indicator::after {
             background-color: $brand-primary;
         }
     }
@@ -657,9 +645,7 @@
         }
 
         // Color Variations
-        &.css-control-primary
-            .css-control-input:checked
-            ~ .css-control-indicator {
+        &.css-control-primary .css-control-input:checked ~ .css-control-indicator {
             background-color: $brand-primary;
             border-color: darken($brand-primary, 15%);
         }
@@ -668,9 +654,7 @@
     // CSS Switches
     .css-switch {
         // Color Variations
-        &.css-control-primary
-            .css-control-input:checked
-            ~ .css-control-indicator {
+        &.css-control-primary .css-control-input:checked ~ .css-control-indicator {
             background-color: $brand-primary;
         }
     }
@@ -959,9 +943,7 @@
 
             @at-root {
                 .page-header-inverse #page-header &,
-                .page-header-inverse.page-header-glass.page-header-scroll
-                    #page-header
-                    & {
+                .page-header-inverse.page-header-glass.page-header-scroll #page-header & {
                     a {
                         color: darken($body-color-light, 9%);
                     }
