@@ -1,4 +1,0 @@
-/* fix for broken CSS validation */
-.input-group.is-invalid ~ .invalid-feedback {
-    display: block;
-}

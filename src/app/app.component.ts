@@ -1,81 +1,49 @@
-import { GlobalsService } from './services/globals.service';
-import { Component, HostBinding, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { ToastyService } from 'ng2-toasty';
-import { PodnomsAuthService } from 'app/services/podnoms-auth.service';
-import { AppInsightsService } from 'app/services/app-insights.service';
-import { SignalRService } from 'app/services/signalr.service';
-import { ProfileService } from './services/profile.service';
-import { MessagingService } from 'app/services/messaging.service';
-import { UiStateService } from 'app/services/ui-state.service';
-import { ApplicationState } from 'app/store';
-import * as fromProfile from 'app/reducers';
-import * as fromProfileActions from 'app/actions/profile.actions';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
-import { environment } from 'environments/environment';
+import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
+import { Observable } from 'rxjs';
+import { Profile, ToastService } from './core';
+import { UiStateService } from './core/ui-state.service';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { SignalRService } from './shared/services/signal-r.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
-    isProduction = environment.production;
-
+    profile$: Observable<Profile>;
     constructor(
-        private _authService: PodnomsAuthService,
-        private _store: Store<ApplicationState>,
-        private _toastyService: ToastyService,
-        private _signalrService: SignalRService,
-        private _profileService: ProfileService,
-        private _messagingService: MessagingService,
-        private _uiStateService: UiStateService,
-        _appInsights: AppInsightsService
-    ) {}
-    loggedIn() {
-        return this._authService.isAuthenticated();
-    }
-
-    ngOnInit() {
-        // this._pushNotifications.requestPermissions();
-        this._uiStateService.sidebarChanged.subscribe(
-            (r) => (this.sidebarOpen = r)
-        );
-        this._uiStateService.overlayChanged.subscribe(
-            (r) => (this.overlayOpen = r)
-        );
-        this._authService.authNavStatus$.subscribe(
-            (r) => r && this._bootstrapAuthorisedServices()
-        );
-    }
-    _bootstrapAuthorisedServices() {
-        if (this.loggedIn()) {
-            this._store.dispatch(new fromProfileActions.LoadAction());
-            const profile$ = this._store.select(fromProfile.getProfile);
-            profile$.subscribe((p) => {
-                if (p) {
-                    this._messagingService.getPermission();
-                    this._messagingService.receiveMessage();
-                    const chatterChannel = `${p.id}`;
-                    this._signalrService
-                        .init('userupdates')
-                        .then((listener) => {
-                            listener.on<string>('userupdates', chatterChannel)
-                            .subscribe(result => {
-                                this._toastyService.info(result);
-                            });
-                        })
-                        .catch((err) => {
-                            console.error(
-                                'app.component',
-                                'Unable to initialise site update hub',
-                                err
-                            );
+        private authService: AuthService,
+        public uiStateService: UiStateService,
+        private toast: ToastService,
+        signalr: SignalRService
+    ) {
+        this.profile$ = authService.profile$;
+        authService.bootstrap().subscribe(r => {});
+        authService.authNavStatus$.subscribe(r => {
+            if (r) {
+                signalr
+                    .init('userupdates')
+                    .then(listener => {
+                        listener.on<string>('userupdates', 'site-notices').subscribe(result => {
+                            this.toast.showToast('New message', result);
                         });
-                }
-            });
-        }
+                    })
+                    .catch(err => {
+                        console.error(
+                            'app.component',
+                            'Unable to initialise site update hub',
+                            err
+                        );
+                    });
+            }
+        });
+    }
+    background() {}
+    loggedIn(): boolean {
+        return false;
     }
 }
