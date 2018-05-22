@@ -14,4 +14,10 @@ export class UtilityService {
             hostname: domain
         });
     }
+    checkPassword(password: string): Observable<number> {
+        return this._http.post<number>(
+            `${environment.apiHost}/utility/checkpassword/`,
+            `"${password}"`
+        );
+    }
 }

@@ -59,7 +59,8 @@
         "rxjs-tslint": "^0.1.4",
         "simple-line-icons": "^2.4.1",
         "webpack": "^4.8.3",
-        "zone.js": "^0.8.26"
+        "zone.js": "^0.8.26",
+        "zxcvbn": "^4.4.2"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.6.0",

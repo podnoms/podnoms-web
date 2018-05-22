@@ -27,23 +27,30 @@ export class AuthApiProxyService {
         );
     }
     facebookLogin(accessToken: string): Observable<AuthResponseModel> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const body = JSON.stringify({ accessToken });
         return this.http.post<AuthResponseModel>(
             environment.apiHost + '/externalauth/facebook',
             body,
-            { headers: headers }
+            this.httpOptions
         );
     }
     googleLogin(accessToken: string) {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const body = JSON.stringify({ accessToken });
         return this.http.post<AuthResponseModel>(
             environment.apiHost + '/externalauth/google',
             body,
-            {
-                headers
-            }
+            this.httpOptions
+        );
+    }
+    public register(email: string, password: string): Observable<AuthResponseModel> {
+        const body = JSON.stringify({
+            email,
+            password
+        });
+        return this.http.post<AuthResponseModel>(
+            environment.apiHost + '/accounts',
+            body,
+            this.httpOptions
         );
     }
     public resetPassword(
