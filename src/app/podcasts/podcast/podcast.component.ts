@@ -19,6 +19,7 @@ export class PodcastComponent {
     uploadModes = UploadModes; // do this so it can be used in the template
     uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
 
+    noPodcasts: boolean = false;
     podcasts$: Observable<Podcast[]>;
     selectedPodcast$: BehaviorSubject<Podcast> = new BehaviorSubject<Podcast>(null);
     loading$: Observable<boolean>;
@@ -44,6 +45,8 @@ export class PodcastComponent {
             this.podcastStoreService.entities$.subscribe(r => {
                 if (r && r.length > 0) {
                     this.router.navigate(['podcasts', r[0].slug]);
+                } else {
+                    this.noPodcasts = true;
                 }
             });
         }

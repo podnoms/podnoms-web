@@ -9,12 +9,12 @@
                      role="group"
                      aria-label="Podcast actions">
                     <a [routerLink]="['/podcasts', selected.slug, 'edit']"
-                     class="btn btn-secondary btn-outline">
+                       class="btn btn-secondary btn-outline">
                         <i class="icon icon-pencil"
                            aria-hidden="true"></i> Edit
                     </a>
                     <a (click)="podcastDeleteDialog.show()"
-                           class="btn btn-secondary btn-outline-danger">
+                       class="btn btn-secondary btn-outline-danger">
                         <i class="icon icon-close"
                            aria-hidden="true"></i> Delete
                     </a>
@@ -41,9 +41,9 @@
         </div>
         <div class="block-content">
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
-             [uploadMode]="uploadMode"
-             [podcast]="selected"
-             (podcastUpdated)="podcastUpdated(podcast)">
+                              [uploadMode]="uploadMode"
+                              [podcast]="selected"
+                              (podcastUpdated)="podcastUpdated(podcast)">
             </app-entry-upload>
             <app-podcast-detail [podcast]="selected"></app-podcast-detail>
         </div>
@@ -58,7 +58,11 @@
                         <div class="block-header bg-primary-dark">
                             <h3 class="block-title">Delete this podcast?</h3>
                             <div class="block-options">
-                                <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close" (click)="podcastDeleteDialog.hide()">
+                                <button type="button"
+                                        class="btn-block-option"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                        (click)="podcastDeleteDialog.hide()">
                                     <i class="icon icon-close"></i>
                                 </button>
                             </div>
@@ -69,7 +73,9 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-2 text-md-left text-center">
-                                            <img class="modal-podcast-image rounded-circle" [src]="selected.imageUrl" alt="Generic placeholder image">
+                                            <img class="modal-podcast-image rounded-circle"
+                                                 [src]="selected.imageUrl"
+                                                 alt="Generic placeholder image">
                                         </div>
                                         <div class="col-md-10 text-md-left text-center font-w600">
                                             {{selected.title}}
@@ -77,13 +83,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-20">Deleting this podcast will delete all associated entries and audio with no opportunity to get them back.
-                            It will also be removed from any podcast applications subscribed to this feed..
+                            <p class="mt-20">Deleting this podcast will delete all associated entries and audio with no opportunity to get
+                                them back. It will also be removed from any podcast applications subscribed to this feed..
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-alt-secondary" data-dismiss="modal" (click)="podcastDeleteDialog.hide()">No</button>
-                            <button type="button" class="btn btn-alt-success" data-dismiss="modal" (click)="deletePodcast(selected); podcastDeleteDialog.hide()">
+                            <button type="button"
+                                    class="btn btn-alt-secondary"
+                                    data-dismiss="modal"
+                                    (click)="podcastDeleteDialog.hide()">No</button>
+                            <button type="button"
+                                    class="btn btn-alt-success"
+                                    data-dismiss="modal"
+                                    (click)="deletePodcast(selected); podcastDeleteDialog.hide()">
                                 <i class="fa fa-check"></i> Yes
                             </button>
                         </div>
@@ -91,5 +103,23 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div *ngIf="noPodcasts">
+    <div class="content content-full text-center mt-50">
+        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
+            data-toggle="appear"
+            data-class="animated fadeIn">Welcome!</h1>
+        <h2 class="font-w400 text-body mb-50 js-appear-enabled animated fadeIn"
+            data-toggle="appear"
+            data-class="animated fadeIn"
+            data-timeout="250">Let's get you started.</h2>
+        <a class="btn btn-hero btn-noborder btn-rounded btn-alt-primary js-appear-enabled animated fadeInUp"
+           data-toggle="appear"
+           data-class="animated fadeInUp"
+           data-timeout="300"
+           [routerLink]="['add', {firstRun: 'true'}]">
+            <i class="icon icon-energy mr-10"></i> Create my first podcast
+        </a>
     </div>
 </div>
