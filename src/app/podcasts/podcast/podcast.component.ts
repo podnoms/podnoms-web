@@ -7,7 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EntityOp } from 'ngrx-data';
 
 import { UploadModes } from '../upload-modes.enum';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import { PodcastDataService } from '../podcast-data.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
     selector: 'app-podcast',
@@ -25,11 +26,12 @@ export class PodcastComponent {
     id: any;
 
     constructor(
-        private service: PodcastStoreService,
+        private podcastStoreService: PodcastStoreService,
+        private podcastDataService: PodcastDataService,
         private router: Router,
         private route: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
-        public modalService: NgxSmartModalService
+        private notifier: NotificationsService,
+        private changeDetectorRef: ChangeDetectorRef
     ) {
         this.id = this.route.snapshot.params.podcast;
         if (this.id) {
@@ -39,7 +41,7 @@ export class PodcastComponent {
                 this._initialiseState(); // reset and set based on new parameter this time
             });
         } else {
-            this.service.entities$.subscribe(r => {
+            this.podcastStoreService.entities$.subscribe(r => {
                 if (r && r.length > 0) {
                     this.router.navigate(['podcasts', r[0].slug]);
                 }
@@ -47,7 +49,7 @@ export class PodcastComponent {
         }
     }
     _initialiseState() {
-        this.podcasts$ = this.service.entities$.pipe(
+        this.podcasts$ = this.podcastStoreService.entities$.pipe(
             map(r => r.filter(it => it.slug === this.id))
         );
         this.podcasts$.subscribe(p => {
@@ -57,5 +59,25 @@ export class PodcastComponent {
     podcastUpdated(podcast: Podcast) {
         this.selectedPodcast$.next(podcast[0]);
         this.changeDetectorRef.detectChanges();
+    }
+    deletePodcast(podcast: Podcast) {
+        console.log('PodcastComponent', 'deletePodcast');
+        this.podcastDataService.deletePodcast(podcast.id).subscribe(
+            r => {
+                if (r) {
+                    this.podcastStoreService.delete(podcast);
+                    this.router.navigate(['/']);
+                } else {
+                    this.notifier.error('Error', 'There was an error deleting podcast.');
+                }
+            },
+            err =>
+                this.notifier.error('Error', 'There was an error deleting podcast.', {
+                    timeOut: 3000,
+                    showProgressBar: true,
+                    pauseOnHover: true,
+                    clickToClose: true
+                })
+        );
     }
 }

@@ -30,8 +30,7 @@ export class FooterPlayerComponent implements OnInit {
     }
     doSeek(event) {
         const $bar = $(event.currentTarget);
-        const newPercentage =
-            (event.pageX - $bar.offset().left) / $bar.width() * 100;
+        const newPercentage = (event.pageX - $bar.offset().left) / $bar.width() * 100;
 
         const pos = newPercentage / 100 * this.duration;
         this.audioService.setPosition(pos);
@@ -39,9 +38,7 @@ export class FooterPlayerComponent implements OnInit {
 
     setVolume(event) {
         const $bar = $(event.currentTarget);
-        const volume = Math.round(
-            (event.pageX - $bar.offset().left) / $bar.width() * 100
-        );
+        const volume = Math.round((event.pageX - $bar.offset().left) / $bar.width() * 100);
         this.audioService.setVolume(volume);
     }
 }

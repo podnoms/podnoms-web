@@ -51,11 +51,10 @@ $link-hover-color: darken($link-color, 20%) !default;
 $link-hover-decoration: none !default;
 
 // Typography
-$font-family-sans-serif: -apple-system, system-ui, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol' !default;
-$font-family-monospace: 'SFMono-Regular', Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace !default;
+$font-family-sans-serif: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
+$font-family-monospace: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace !default;
 $font-family-base: $font-family-sans-serif !default;
 
 $font-size-root: 14px !default;

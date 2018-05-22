@@ -3,11 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 
-import {
-    RequestInfo,
-    RequestInfoUtilities,
-    ParsedRequestUrl
-} from 'angular-in-memory-web-api';
+import { RequestInfo, RequestInfoUtilities, ParsedRequestUrl } from 'angular-in-memory-web-api';
 
 import { Hero, Villain, Podcast } from './model';
 
@@ -50,11 +46,7 @@ export class InMemoryDataService {
      */
     genId(collection: { id: number }[], collectionName: string) {
         this.maxId =
-            1 +
-            collection.reduce(
-                (prev, cur) => Math.max(prev, cur.id || 0),
-                this.maxId
-            );
+            1 + collection.reduce((prev, cur) => Math.max(prev, cur.id || 0), this.maxId);
         return this.maxId;
     }
 
@@ -66,16 +58,11 @@ export class InMemoryDataService {
      * @param url from request URL
      * @param utils for manipulating parsed URL
      */
-    parseRequestUrl(
-        url: string,
-        utils: RequestInfoUtilities
-    ): ParsedRequestUrl {
+    parseRequestUrl(url: string, utils: RequestInfoUtilities): ParsedRequestUrl {
         const parsed = utils.parseRequestUrl(url);
         const isDefaultRoot = parsed.apiBase === 'api/';
         parsed.collectionName =
-            this.active && isDefaultRoot
-                ? mapCollectionName(parsed.collectionName)
-                : undefined;
+            this.active && isDefaultRoot ? mapCollectionName(parsed.collectionName) : undefined;
         return parsed;
     }
 }
