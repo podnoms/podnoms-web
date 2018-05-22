@@ -23,7 +23,7 @@ export class AuthService extends BaseService {
     authNavStatus$ = this._authNavStatusSource.asObservable();
 
     profile$ = new BehaviorSubject<Profile>(null);
-    //profile$  = this._profileSource.asObservable();
+    // profile$  = this._profileSource.asObservable();
 
     private profileSubject = new BehaviorSubject<Profile>(null);
     guid: string;

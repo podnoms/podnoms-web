@@ -1,12 +1,12 @@
 {
     "name": "podnoms-web",
-    "version": "0.0.0",
+    "version": "0.26.1",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
         "start": "npx nodemon server/index.js",
-        "start-ng": "ng serve",
         "build": "ng build --prod",
+        "start-ng": "ng serve",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
@@ -37,7 +37,7 @@
         "angular-in-memory-web-api": "^0.6.0",
         "angular2-notifications": "^1.0.2",
         "angular2-uuid": "^1.1.1",
-        "angularx-social-login": "abacritt/angularx-social-login",
+        "angularx-social-login": "^1.1.8",
         "body-parser": "^1.18.2",
         "bootstrap": "4.1.1",
         "core-js": "^2.5.4",
