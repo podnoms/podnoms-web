@@ -1,0 +1,10 @@
+<app-upload-url *ngIf="uploadMode===uploadModes.fromUrl"
+                [podcast]="podcast"
+                (onPlaylistAdded)="processPlaylist($event)"
+                (onEntryCreateComplete)="onEntryCreateComplete($event)"
+                (onPlaylistAdded)="processPlaylist($event)">
+</app-upload-url>
+<app-upload-file *ngIf="uploadMode===uploadModes.fromLocalFile"
+                 [podcast]="podcast"
+                 (onUploadComplete)="onEntryCreateComplete($event)">
+</app-upload-file>

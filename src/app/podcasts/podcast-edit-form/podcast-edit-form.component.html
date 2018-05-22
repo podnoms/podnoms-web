@@ -1,0 +1,193 @@
+<div class="block"
+     *ngIf="podcast$ | async; let podcast; else loading">
+    <div class="block-header block-header-default">
+        <h1 class="block-title">Podcast Details</h1>
+        <div class="block-options">
+            <button (click)="submitForm(podcast)"
+                    class="btn btn-alt-primary btn-block-option"
+                    [disabled]="sending">
+                <i class="fa fa-check mr-5"></i> Add Podcast
+            </button>
+            <div class="dropdown">
+                <button type="button"
+                        class="btn-block-option"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    <i class="fa fa-fw fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right"
+                     x-placement="bottom-end"
+                     style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item"
+                       href="javascript:void(0)">
+                        <i class="fa fa-fw fa-pencil mr-5"></i>Edit
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item"
+                       href="javascript:void(0)"
+                       data-toggle="block-option"
+                       (click)="podcastDeleteDialog.show()"
+                       data-action="close">
+                        <i class="fa fa-fw fa-times text-danger mr-5"></i>Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-content">
+        <div class="row my-20">
+            <div class="col-6 form-left">
+                <form #form="ngForm">
+                    <div class="form-body">
+                        <div class="form-group row">
+                            <label for="podcast-name">Podcast Name</label>
+                            <input id="podcast-name"
+                                   name="podcast-name"
+                                   class="form-control"
+                                   placeholder="Podcast name"
+                                   [(ngModel)]="podcast.title">
+                        </div>
+                        <div class="form-group row"
+                             *ngIf="podcast.id">
+                            <div class="col-6">
+                                <label for="slug-box">Slug</label>
+                                <div class="input-group"
+                                     [ngClass]="domain.hasError('pattern') ? 'is-invalid' : ''">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="slug-box"
+                                           name="slug-box"
+                                           #domain="ngModel"
+                                           pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
+
+                                           autocomplete="off"
+                                           required=""
+                                           (blur)="checkDomain(podcast.customDomain)"
+                                           [(ngModel)]="podcast.customDomain">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-asterisk"
+                                               [ngClass]="checkingDomain ? 'fa-spin' : ''"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"
+                                     *ngIf="domain.hasError('pattern')">This does not look like a valid domain?</div>
+                                <div class="form-text text-muted">You need to setup up a CNAME pointing to rss.podnoms.com</div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group row">
+                            <div class="col-xs-8">
+                                <div class="input-group">
+                                    <label for="custom-domain">Custom Domain</label>
+                                    <input id="custom-domain"
+                                           name="custom-domain"
+                                           class="form-control"
+                                           placeholder="Custom domain"
+                                           pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
+
+                                           #domain="ngModel"
+                                           (blur)="checkDomain()"
+                                           [(ngModel)]="podcast.customDomain">
+
+                                </div>
+                                <div class="invalid-feedback"
+                                     [hidden]="!domain.hasError('pattern')">
+                                    This does not look like a valid domain?</div>
+                            </div>
+                        </div> -->
+                        <div class="form-group row">
+                            <label for="podcast-description">Description</label>
+                            <quill-editor name="description"
+                                          [style]="{height: '400px'}"
+                                          [(ngModel)]="podcast.description"></quill-editor>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit"
+                                [disabled]="sending"
+                                class="btn btn-success">
+                            <i class="fa fa-check"></i> Done!</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-6 form-right"
+                 *ngIf="podcast.id">
+                <div class="form-body">
+
+                    <div class="form-group">
+                        <label for="">Cover Image</label>
+                        <div class="file-upload">
+                            <div class="options-container"
+                                 id="image-container">
+                                <img class="img-fluid options-item img-preview"
+                                     [src]="image.src"
+                                     alt="">
+                                <div class="options-overlay bg-black-op-75">
+                                    <div class="options-overlay-content">
+                                        <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
+                                           (click)="callFileInput()">
+                                            <i class="fa fa-pencil"></i> Replace
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group"
+                                 style="visibility: hidden;">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        Choose image....
+                                        <input type="file"
+                                               (change)="fileChangeEvent()"
+                                               #fileInput>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade"
+         bsModal
+         #podcastDeleteDialog="bs-modal"
+         tabindex="-1"
+         role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Delete this podcast?</h4>
+                    <button type="button"
+                            class="close pull-right"
+                            aria-label="Close"
+                            (click)="podcastDeleteDialog.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button"
+                            class="btn btn-primary pull-right"
+                            (click)="podcastDeleteDialog.hide()">No
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger pull-right"
+                            (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="sk-wave"
+         *ngIf="!selectedPodcast">
+        <div class="sk-rect sk-rect1"></div>
+        <div class="sk-rect sk-rect2"></div>
+        <div class="sk-rect sk-rect3"></div>
+        <div class="sk-rect sk-rect4"></div>
+        <div class="sk-rect sk-rect5"></div>
+    </div>
+</ng-template>
