@@ -34,9 +34,8 @@ export class PodcastComponent {
         private notifier: NotificationsService,
         private changeDetectorRef: ChangeDetectorRef
     ) {
-        this.id = this.route.snapshot.params.podcast;
-        if (this.id) {
-            this._initialiseState(); // reset and set based on new parameter this time
+        if (this.route.snapshot.params.podcast) {
+            this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
             this.podcastStoreService.entities$.subscribe(r => {
                 if (r && r.length > 0) {
@@ -46,15 +45,23 @@ export class PodcastComponent {
                 }
             });
         }
+        this.route.params.subscribe(p => {
+            if (p && p['podcast']) {
+                this._initialiseState(p['podcast']);
+            }
+        });
     }
-    _initialiseState() {
+    _initialiseState(id: string) {
+        this.id = id;
         this.podcasts$ = this.podcastStoreService.entities$.pipe(
-            map(r => r.filter(it => it.slug === this.id))
+            map(r =>
+                r.filter(it => {
+                    return it.slug === id;
+                })
+            )
         );
         this.podcasts$.subscribe(p => {
-            if (p && p.length === 0) {
-                this.router.navigate(['podcasts']);
-            } else {
+            if (p && p.length !== 0) {
                 this.selectedPodcast$.next(p[0]);
             }
         });

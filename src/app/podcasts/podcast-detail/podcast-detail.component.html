@@ -2,7 +2,8 @@
      *ngIf="podcast.podcastEntries.length !== 0; else empty">
     <table class="table table-hover">
         <tbody>
-            <tr *ngFor="let entry of podcast.podcastEntries | orderByDate '-createDate'">
+            <tr *ngFor="let entry of podcast.podcastEntries | orderByDate '-createDate'"
+                [@fade]="''">
                 <app-entry-list-item (entryRemoved)='deleteEntry(entry)'
                                      [entry]="entry"></app-entry-list-item>
             </tr>

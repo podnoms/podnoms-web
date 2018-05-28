@@ -7,7 +7,7 @@
                     <button type="button" (click)="submitForm(podcast)"
                             class="btn btn-alt-primary btn-block-option"
                             [disabled]="sending">
-                        <i class="fa fa-check mr-5"></i> Add Podcast
+                        <i class="fa fa-check mr-5"></i> {{podcast.id ? 'Update' : 'Add'}} Podcast
                     </button>
                     <div class="dropdown">
                         <button type="button"
@@ -20,11 +20,6 @@
                         <div class="dropdown-menu dropdown-menu-right"
                              x-placement="bottom-end"
                              style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <a class="dropdown-item"
-                               href="javascript:void(0)">
-                                <i class="fa fa-fw fa-pencil mr-5"></i>Edit
-                            </a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
                                href="javascript:void(0)"
                                data-toggle="block-option"
@@ -185,7 +180,7 @@
     </div>
     <div *ngIf="firstRun"
                                     class="mx-50">
-        <app-podcast-add-wizard 
+        <app-podcast-add-wizard
                                     [podcast]="podcast"
                                     (finish)="onWizardFinish(podcast)">i
         </app-podcast-add-wizard>
