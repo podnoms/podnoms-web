@@ -2,7 +2,6 @@
     "compileOnSave": false,
     "compilerOptions": {
         "outDir": "./dist/out-tsc",
-        "baseUrl": "src",
         "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
@@ -10,8 +9,7 @@
         "experimentalDecorators": true,
         "target": "es5",
         "typeRoots": ["node_modules/@types"],
-        // "target": "es2015",
-        "lib": ["es2017", "dom"],
-        "plugins": [{ "name": "tslint-language-service" }]
-    }
+        "lib": ["es2017", "dom"]
+    },
+    "exclude": ["wallabyTest.ts"]
 }

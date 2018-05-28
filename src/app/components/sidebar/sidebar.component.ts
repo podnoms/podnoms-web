@@ -1,38 +1,29 @@
-import { PodcastAddFormComponent } from './../podcast/podcast-add-form/podcast-add-form.component';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PodcastModel } from '../../models/podcasts.models';
+import { Component, OnInit } from '@angular/core';
+import { MasterDetailCommands, Podcast } from '../../core';
 
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/skip';
-import { ApplicationState } from 'app/store';
-import * as fromPodcastActions from 'app/actions/podcast.actions';
-import * as fromPodcasts from 'app/reducers';
+import { Observable } from 'rxjs';
+import { ComponentsService } from '../components.service';
+import { PodcastStoreService } from '../../podcasts/podcast-store.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.css']
+    styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
-    podcasts$: Observable<PodcastModel[]>;
-    constructor(
-        private _store: Store<ApplicationState>,
-        private _router: Router
-    ) {
-        this.podcasts$ = _store.skip(1).map((s) => s.podcasts.results);
-        this._store.dispatch(new fromPodcastActions.LoadAction());
-    }
-    onSelect(podcast) {
-        this._store.dispatch(new fromPodcastActions.GetAction(podcast.slug));
-        return false;
-    }
+export class SidebarComponent implements OnInit {
+    selected: Podcast;
+    podcasts$: Observable<Podcast[]>;
+    loading$: Observable<boolean>;
 
+    constructor(private router: Router, private _podcastService: PodcastStoreService) {
+        this.podcasts$ = _podcastService.entities$;
+        this.loading$ = _podcastService.loading$;
+    }
+    ngOnInit() {
+        this._podcastService.getAll();
+    }
     doAddPodcast() {
-        this._router.navigate(['add']);
+        this.router.navigate(['podcasts/add']);
     }
 }
