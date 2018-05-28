@@ -15,8 +15,9 @@ import { ImageService } from '../../shared/services/image.service';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
 import { FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
-import { EntityActions, EntityOp } from 'ngrx-data';
+import { map, filter } from 'rxjs/operators';
+import { EntityOp, EntityAction, ofEntityOp } from 'ngrx-data';
+import { Actions } from '@ngrx/effects';
 @Component({
     selector: 'app-podcast-edit-form',
     templateUrl: './podcast-edit-form.component.html',
@@ -64,7 +65,7 @@ export class PodcastEditFormComponent implements OnInit /*, AfterViewInit*/ {
         private podcastStoreService: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private renderer: Renderer2,
-        private actions$: EntityActions
+        private actions$: Actions
     ) {
         console.log('podcast-edit-form', 'constructor');
         // super();
@@ -72,12 +73,12 @@ export class PodcastEditFormComponent implements OnInit /*, AfterViewInit*/ {
     }
     _createEntitySavedObserver(): any {
         this.actions$
-            .where(a => a.entityName === 'Podcast' && a.op === EntityOp.SAVE_ADD_ONE_SUCCESS)
             .pipe(
-                map(a => a.payload),
-                map(r => {
-                    return { type: 'SUCCESS', payload: r };
-                })
+                ofEntityOp(),
+                filter(
+                    (ea: EntityAction) =>
+                        ea.entityName === 'Podcast' && ea.op === EntityOp.SAVE_ADD_ONE_SUCCESS
+                )
             )
             .subscribe(r => {
                 if (r.type === 'SUCCESS') {

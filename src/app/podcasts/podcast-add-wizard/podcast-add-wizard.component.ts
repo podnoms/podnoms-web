@@ -11,6 +11,7 @@ import { BasePageComponent } from '../../shared/components/base-page/base-page.c
 export class PodcastAddWizardComponent extends BasePageComponent implements OnInit {
     loading: boolean = true;
     currentStep: number = 0;
+    errorMessage: string;
     @Input() podcast: Podcast;
     @Output() finish: EventEmitter<Podcast> = new EventEmitter<Podcast>();
 
@@ -34,7 +35,12 @@ export class PodcastAddWizardComponent extends BasePageComponent implements OnIn
         }
     }
     next() {
+        if (this.currentStep === 0 && !this.podcast.title) {
+            this.errorMessage = 'Please give me a title!';
+            return;
+        }
         if (this.currentStep < 3) {
+            this.errorMessage = '';
             this.currentStep++;
         }
     }

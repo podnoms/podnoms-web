@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
-import { Podcast, PodcastEntry } from '../../../core';
+import { Podcast, PodcastEntry, ToastService } from '../../../core';
 import { EntriesStoreService } from '../../entries-store.service';
 import { PodcastDataService } from '../../podcast-data.service';
 
@@ -10,26 +10,39 @@ import { PodcastDataService } from '../../podcast-data.service';
 })
 export class UploadUrlComponent implements AfterViewInit {
     @Input() podcast: Podcast;
-    @Output() onEntryCreateComplete: EventEmitter<any> = new EventEmitter();
-    @Output() onPlaylistAdded: EventEmitter<any> = new EventEmitter();
+    @Output() entryCreateComplete: EventEmitter<any> = new EventEmitter();
+    @Output() playlistAdded: EventEmitter<any> = new EventEmitter();
 
     newEntrySourceUrl: string;
     errorText: string;
     isPosting: boolean = false;
     @ViewChild('input') vc: any;
     playlistProxy: PodcastEntry = null;
-    constructor(private podcastDataService: PodcastDataService) {}
+    constructor(
+        private podcastDataService: PodcastDataService,
+        private toastService: ToastService
+    ) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
     }
     isValidURL(str) {
-        let a = document.createElement('a');
+        const a = document.createElement('a');
         a.href = str;
-        return a.host && a.host != window.location.host;
+        return a.host && a.host !== window.location.host;
     }
     processPlaylist() {
-        this.onPlaylistAdded.emit(this.playlistProxy);
-        this.resetUrl();
+        const entry = new PodcastEntry(this.podcast.id, this.playlistProxy.sourceUrl);
+        this.podcastDataService.addPlaylist(entry).subscribe(
+            e => {
+                this.resetUrl();
+                this.playlistAdded.emit(e);
+            },
+            err =>
+                this.toastService.showError(
+                    'Error creating playlist',
+                    'There was an error adding this playlist, please refresh page and try again'
+                )
+        );
     }
     resetUrl() {
         this.playlistProxy = null;
@@ -42,7 +55,6 @@ export class UploadUrlComponent implements AfterViewInit {
         this.errorText = '';
 
         if (this.isValidURL(urlToCheck)) {
-            this.podcast;
             this.isPosting = true;
             const entry = new PodcastEntry(this.podcast.id, urlToCheck);
             this.podcastDataService.addEntry(entry).subscribe(
@@ -51,7 +63,7 @@ export class UploadUrlComponent implements AfterViewInit {
                         if (e.processingStatus === 'Deferred') {
                             this.playlistProxy = e;
                         } else {
-                            this.onEntryCreateComplete.emit(e);
+                            this.entryCreateComplete.emit(e);
                         }
                     }
                 },
