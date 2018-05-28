@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-import { Podcast, MasterDetailCommands, PodcastEntry } from '../../core';
+import { Podcast, MasterDetailCommands, PodcastEntry, ToastService } from '../../core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { PodcastStoreService } from '../podcast-store.service';
 import { map, debounceTime } from 'rxjs/operators';
@@ -31,15 +31,23 @@ export class PodcastDetailComponent {
     constructor(
         private podcastStoreService: PodcastStoreService,
         private podcastDataService: PodcastDataService,
+        private toastService: ToastService,
         private actions$: EntityActions
     ) {}
 
     deleteEntry(entry: PodcastEntry) {
-        this.podcastDataService.deleteEntry(entry.id).subscribe(r => {
-            this.podcast.podcastEntries = this.podcast.podcastEntries.filter(
-                p => p.id !== entry.id
-            );
-            this.podcastStoreService.updateOneInCache(this.podcast);
-        });
+        this.podcastDataService.deleteEntry(entry.id).subscribe(
+            r => {
+                this.podcast.podcastEntries = this.podcast.podcastEntries.filter(
+                    p => p.id !== entry.id
+                );
+                this.podcastStoreService.updateOneInCache(this.podcast);
+            },
+            err =>
+                this.toastService.showError(
+                    'Error deleting entry',
+                    'Please refresh page and try again'
+                )
+        );
     }
 }

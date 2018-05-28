@@ -6,5 +6,5 @@
 </app-upload-url>
 <app-upload-file *ngIf="uploadMode===uploadModes.fromLocalFile"
                  [podcast]="podcast"
-                 (onUploadComplete)="onEntryCreateComplete($event)">
+                 (uploadComplete)="onEntryCreateComplete($event)">
 </app-upload-file>

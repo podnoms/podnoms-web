@@ -19,7 +19,7 @@ import * as Dropzone from 'dropzone';
 })
 export class UploadFileComponent implements OnInit {
     @Input() podcast: Podcast;
-    @Output() onUploadComplete: EventEmitter<any> = new EventEmitter();
+    @Output() uploadComplete: EventEmitter<any> = new EventEmitter();
     @ViewChild('uploader') el: ElementRef;
 
     constructor(private toastyService: ToastService, private authService: AuthService) {}
@@ -54,6 +54,6 @@ export class UploadFileComponent implements OnInit {
         console.error(`Boo\n${event}`);
     }
     onUploadSuccess(result) {
-        this.onUploadComplete.emit(result);
+        this.uploadComplete.emit(result);
     }
 }

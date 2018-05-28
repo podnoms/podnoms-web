@@ -19,4 +19,16 @@ export class ToastService {
             });
         }
     }
+    showError(title: string, message: string) {
+        if (isE2E) {
+            console.log(`${title} - ${message}`);
+        } else {
+            this._service.error(title, message, {
+                timeOut: 3000,
+                showProgressBar: true,
+                pauseOnHover: true,
+                clickToClose: true
+            });
+        }
+    }
 }

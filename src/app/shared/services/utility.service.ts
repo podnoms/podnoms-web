@@ -20,4 +20,7 @@ export class UtilityService {
             `"${password}"`
         );
     }
+    getTemporaryPodcastImageUrl(): Observable<string> {
+        return this._http.get<string>(`${environment.apiHost}/utility/temppodcastimage`);
+    }
 }
