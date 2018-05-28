@@ -33,7 +33,7 @@
             <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
         </span>
         <span *ngIf="entry.processingStatus === 'Failed'">
-            <button class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10"
+            <button  type="button" class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10"
                     (click)="retry(entry)">Retry</button>
         </span>
         <span *ngIf="entry.processingStatus!=='Processed' && entry.processingStatus !== 'Accepted' && entry.processingStatus !== 'Failed'"

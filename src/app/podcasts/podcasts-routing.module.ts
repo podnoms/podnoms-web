@@ -18,7 +18,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: ':podcast/edit/',
+        path: ':podcast/edit',
         component: PodcastEditFormComponent,
         canActivate: [AuthGuard]
     }

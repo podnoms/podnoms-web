@@ -24,5 +24,7 @@ export class EntryUploadComponent {
         this.podcast.podcastEntries.unshift(entry);
         this.podcastStoreService.updateOneInCache(this.podcast);
     }
-    processPlaylist() {}
+    processPlaylist() {
+        this.uploadMode = this.uploadModes.none;
+    }
 }

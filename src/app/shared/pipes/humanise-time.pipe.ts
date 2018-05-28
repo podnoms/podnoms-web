@@ -1,9 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import memo from 'memo-decorator';
 
 @Pipe({
     name: 'humaniseTime'
 })
 export class HumaniseTimePipe implements PipeTransform {
+    @memo()
     transform(value: any, args?: any): any {
         let d, h, m, s;
         if (value) {
