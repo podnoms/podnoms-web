@@ -37,10 +37,6 @@ export class PodcastComponent {
         this.id = this.route.snapshot.params.podcast;
         if (this.id) {
             this._initialiseState(); // reset and set based on new parameter this time
-            this.route.params.subscribe(params => {
-                this.id = params['podcast'];
-                this._initialiseState(); // reset and set based on new parameter this time
-            });
         } else {
             this.podcastStoreService.entities$.subscribe(r => {
                 if (r && r.length > 0) {
@@ -56,7 +52,11 @@ export class PodcastComponent {
             map(r => r.filter(it => it.slug === this.id))
         );
         this.podcasts$.subscribe(p => {
-            this.selectedPodcast$.next(p[0]);
+            if (p && p.length === 0) {
+                this.router.navigate(['podcasts']);
+            } else {
+                this.selectedPodcast$.next(p[0]);
+            }
         });
     }
     podcastUpdated(podcast: Podcast) {

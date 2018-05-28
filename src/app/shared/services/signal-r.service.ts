@@ -29,10 +29,10 @@ export class SignalRService {
         return new Promise(resolve => {
             const url = `${environment.signalRHost}/hubs/${hubName}`;
             const token = this.authService.getAuthToken();
-            let hub = this.connectionPool[hubName];
+            const hub = this.connectionPool[hubName];
             if (!hub) {
                 const connection = new HubConnectionBuilder()
-                    .configureLogging(LogLevel.Debug)
+                    .configureLogging(LogLevel.Error)
                     .withUrl(url + '?token=' + token)
                     .build();
                 this.connectionPool[hubName] = new HubListener(connection);

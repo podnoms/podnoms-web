@@ -1,37 +1,38 @@
-<div class="block"
-     *ngIf="podcast$ | async; let podcast; else loading">
+<div *ngIf="podcast$ | async; let podcast; else loading">
     <div *ngIf="!firstRun">
-        <div class="block-header block-header-default">
-            <h1 class="block-title">Podcast Details</h1>
-            <div class="block-options">
-                <button (click)="submitForm(podcast)"
-                        class="btn btn-alt-primary btn-block-option"
-                        [disabled]="sending">
-                    <i class="fa fa-check mr-5"></i> Add Podcast
-                </button>
-                <div class="dropdown">
-                    <button type="button"
-                            class="btn-block-option"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                        <i class="fa fa-fw fa-ellipsis-v"></i>
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h1 class="block-title">Podcast Details</h1>
+                <div class="block-options">
+                    <button type="button" (click)="submitForm(podcast)"
+                            class="btn btn-alt-primary btn-block-option"
+                            [disabled]="sending">
+                        <i class="fa fa-check mr-5"></i> Add Podcast
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right"
-                         x-placement="bottom-end"
-                         style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        <a class="dropdown-item"
-                           href="javascript:void(0)">
-                            <i class="fa fa-fw fa-pencil mr-5"></i>Edit
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item"
-                           href="javascript:void(0)"
-                           data-toggle="block-option"
-                           (click)="podcastDeleteDialog.show()"
-                           data-action="close">
-                            <i class="fa fa-fw fa-times text-danger mr-5"></i>Delete
-                        </a>
+                    <div class="dropdown">
+                        <button type="button"
+                                class="btn-block-option"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="fa fa-fw fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right"
+                             x-placement="bottom-end"
+                             style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item"
+                               href="javascript:void(0)">
+                                <i class="fa fa-fw fa-pencil mr-5"></i>Edit
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item"
+                               href="javascript:void(0)"
+                               data-toggle="block-option"
+                               (click)="podcastDeleteDialog.show()"
+                               data-action="close">
+                                <i class="fa fa-fw fa-times text-danger mr-5"></i>Delete
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,31 +80,31 @@
                                     </div>
                                 </div>
                                 <!-- <div class="form-group row">
-                            <div class="col-xs-8">
-                                <div class="input-group">
+                                    <div class="col-xs-8">
+                                    <div class="input-group">
                                     <label for="custom-domain">Custom Domain</label>
                                     <input id="custom-domain"
-                                           name="custom-domain"
-                                           class="form-control"
-                                           placeholder="Custom domain"
-                                           pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
+                                    name="custom-domain"
+                                    class="form-control"
+                                    placeholder="Custom domain"
+                                    pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
 
-                                           #domain="ngModel"
-                                           (blur)="checkDomain()"
-                                           [(ngModel)]="podcast.customDomain">
+                                    #domain="ngModel"
+                                    (blur)="checkDomain()"
+                                    [(ngModel)]="podcast.customDomain">
 
-                                </div>
-                                <div class="invalid-feedback"
-                                     [hidden]="!domain.hasError('pattern')">
+                                    </div>
+                                    <div class="invalid-feedback"
+                                    [hidden]="!domain.hasError('pattern')">
                                     This does not look like a valid domain?</div>
-                            </div>
-                        </div> -->
-                                <div class="form-group row">
-                                    <label for="podcast-description">Description</label>
-                                    <quill-editor name="description"
-                                                  [style]="{height: '400px'}"
-                                                  [(ngModel)]="podcast.description"></quill-editor>
-                                </div>
+                                    </div>
+                                    </div> -->
+                                    <div class="form-group row">
+                                        <label for="podcast-description">Description</label>
+                                        <quill-editor name="description"
+                                                      [style]="{height: '400px'}"
+                                                      [(ngModel)]="podcast.description"></quill-editor>
+                                    </div>
                             </div>
                             <div class="form-actions">
                                 <button type="submit"
@@ -114,16 +115,15 @@
                         </form>
                     </div>
                     <div class="col-6 form-right"
-                         *ngIf="podcast.id">
+                         *ngIf="podcast.imageUrl">
                         <div class="form-body">
-
                             <div class="form-group">
                                 <label for="">Cover Image</label>
                                 <div class="file-upload">
                                     <div class="options-container"
                                          id="image-container">
                                         <img class="img-fluid options-item img-preview"
-                                             [src]="image.src"
+                                             [src]="podcast.imageUrl"
                                              alt="">
                                         <div class="options-overlay bg-black-op-75">
                                             <div class="options-overlay-content">
@@ -184,17 +184,13 @@
         </div>
     </div>
     <div *ngIf="firstRun"
-         class="mx-50">
-
+                                    class="mx-50">
+        <app-podcast-add-wizard 
+                                    [podcast]="podcast"
+                                    (finish)="onWizardFinish(podcast)">i
+        </app-podcast-add-wizard>
     </div>
 </div>
 <ng-template #loading>
-    <div class="sk-wave"
-         *ngIf="!selectedPodcast">
-        <div class="sk-rect sk-rect1"></div>
-        <div class="sk-rect sk-rect2"></div>
-        <div class="sk-rect sk-rect3"></div>
-        <div class="sk-rect sk-rect4"></div>
-        <div class="sk-rect sk-rect5"></div>
-    </div>
+    Loading...
 </ng-template>

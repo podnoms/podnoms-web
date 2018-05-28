@@ -22,7 +22,7 @@ import { EntityActions, EntityOp } from 'ngrx-data';
     templateUrl: './podcast-edit-form.component.html',
     styleUrls: ['./podcast-edit-form.component.scss']
 })
-export class PodcastEditFormComponent extends BasePageComponent implements OnInit, AfterViewInit {
+export class PodcastEditFormComponent implements OnInit /*, AfterViewInit*/ {
     _imageFileBuffer: File;
     @ViewChild('fileInput') fileInputElement: ElementRef;
     @ViewChild('podcastName') podcastNameElement: ElementRef;
@@ -33,6 +33,7 @@ export class PodcastEditFormComponent extends BasePageComponent implements OnIni
     image: any = new Image();
     checkingDomain: boolean = false;
     domainValid: boolean = false;
+    loading: boolean = false;
     podcast$: Observable<Podcast>;
 
     sending = false;
@@ -65,8 +66,9 @@ export class PodcastEditFormComponent extends BasePageComponent implements OnIni
         private renderer: Renderer2,
         private actions$: EntityActions
     ) {
-        super();
-        this._createEntitySavedObserver();
+        console.log('podcast-edit-form', 'constructor');
+        // super();
+        // this._createEntitySavedObserver();
     }
     _createEntitySavedObserver(): any {
         this.actions$
@@ -84,16 +86,15 @@ export class PodcastEditFormComponent extends BasePageComponent implements OnIni
             });
     }
     ngOnInit() {
+        console.log('ngOnInit');
         const id = this.route.snapshot.params.podcast;
         this.firstRun = this.route.snapshot.params.firstRun || false;
         if (!id) {
-            this.podcast$ = of(new Podcast());
-            this.route.paramMap.pipe(
-                map(r => {
-                    console.log('podcast-edit-form.component', 'paramMap', r);
-                    this.firstRun = r.has('firstRun');
-                })
-            );
+            const podcast = new Podcast();
+            this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
+                podcast.imageUrl = u;
+                this.podcast$ = of(podcast);
+            }, err => (this.podcast$ = of(podcast)));
         } else {
             this.podcastStoreService.entities$
                 .pipe(map(r => r.filter(it => it.slug === id)))
@@ -115,6 +116,11 @@ export class PodcastEditFormComponent extends BasePageComponent implements OnIni
                 }
             }
         });
+    }
+    ngAfterViewInit() {
+        if (!this.firstRun && this.podcastNameElement && this.podcastNameElement.nativeElement) {
+            this.podcastNameElement.nativeElement.focus();
+        }
     }
     deletePodcast(podcast: Podcast) {
         console.log('PodcastComponent', 'deletePodcast');
@@ -138,11 +144,6 @@ export class PodcastEditFormComponent extends BasePageComponent implements OnIni
             }
         }
     }
-    ngAfterViewInit() {
-        if (!this.firstRun) {
-            this.podcastNameElement.nativeElement.focus();
-        }
-    }
     checkDomain(domain: string) {
         this.checkingDomain = true;
         this.utilityService.checkDomain(domain).subscribe(e => (this.domainValid = e));
@@ -153,11 +154,13 @@ export class PodcastEditFormComponent extends BasePageComponent implements OnIni
     uploadPhoto(podcast) {
         return this._imageService.upload(podcast.slug, this._imageFileBuffer);
     }
-
     fileChangeEvent() {
         const nativeElement: HTMLInputElement = this.fileInputElement.nativeElement;
         this._imageFileBuffer = nativeElement.files[0];
         this._parseImageData(this._imageFileBuffer);
+    }
+    onWizardFinish(podcast: Podcast) {
+        this.submitForm(podcast);
     }
     private _parseImageData(file: File) {
         const myReader: FileReader = new FileReader();
