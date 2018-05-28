@@ -1,9 +1,10 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { AppModule } from './app/app.module';
 
+//#region console overwrite
 if (environment.production && location.host !== 'localhost:4200') {
     enableProdMode();
     console.log(
@@ -26,7 +27,12 @@ if (environment.production && location.host !== 'localhost:4200') {
         window.console.warn = function() {};
         window.console.error = function() {};
     }
-    // window.console.error = function () { };
+}
+//#endregion
+if (environment.production) {
+    enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+    .catch(err => console.log(err));
