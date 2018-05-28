@@ -15,6 +15,7 @@ import { UploadUrlComponent } from './entry-upload/upload-url/upload-url.compone
 import { UploadFileComponent } from './entry-upload/upload-file/upload-file.component';
 import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
 import { ModalModule } from 'ngx-bootstrap';
+import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import { ModalModule } from 'ngx-bootstrap';
         EntryUploadComponent,
         UploadUrlComponent,
         UploadFileComponent,
-        PodcastEditFormComponent
+        PodcastEditFormComponent,
+        PodcastAddWizardComponent
     ],
     providers: [PodcastStoreService]
 })

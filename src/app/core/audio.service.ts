@@ -79,6 +79,12 @@ export class AudioService {
 
         this.durationChanged.emit(this._duration);
     }
+    closePlayer() {
+        localStorage.removeItem('audio_state');
+        this._audio.stop();
+        this._playState = 0;
+        this.playStateChanged.emit(this._playState);
+    }
     requestUpdate() {
         this._postEvents();
     }

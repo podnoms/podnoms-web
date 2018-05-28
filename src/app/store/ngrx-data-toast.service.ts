@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { EntityActions, OP_ERROR, OP_SUCCESS } from 'ngrx-data';
-import { ToastService } from '../core/toast.service';
+import { Actions } from '@ngrx/effects';
+import { EntityAction, ofEntityOp, OP_ERROR, OP_SUCCESS } from 'ngrx-data';
 
-/** Report ngrx-data success/error actions as toast messages **/
+import { filter } from 'rxjs/operators';
+import { ToastService } from '../core';
+import { environment } from '../../environments/environment';
 @Injectable()
 export class NgrxDataToastService {
-    constructor(actions$: EntityActions, toast: ToastService) {
+    constructor(actions$: Actions, toast: ToastService) {
         actions$
-            .where(ea => ea.op.endsWith(OP_SUCCESS) || ea.op.endsWith(OP_ERROR))
-            // this service never dies so no need to unsubscribe
-            .subscribe(action => toast.showToast(`${action.entityName} action`, action.op));
+            .pipe(
+                ofEntityOp(),
+                filter(
+                    (ea: EntityAction) => ea.op.endsWith(OP_SUCCESS) || ea.op.endsWith(OP_ERROR)
+                )
+            )
+            .subscribe(action => {
+                if (!environment.production) {
+                    toast.showToast(`${action.entityName} action`, action.op);
+                }
+            });
     }
 }

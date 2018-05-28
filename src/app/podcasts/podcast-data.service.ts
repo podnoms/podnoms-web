@@ -60,8 +60,8 @@ export class PodcastDataService {
     }
     deleteEntry(id: string): Observable<boolean> {
         return this._http
-            .delete<Response>(environment.apiHost + '/entry/' + id)
-            .pipe(map(r => r.status === 200));
+            .delete<Response>(environment.apiHost + '/entry/' + id, { observe: 'response' })
+            .pipe(map(r => r && r.status === 200));
     }
     checkEntry(url: string): Observable<boolean> {
         return this._http

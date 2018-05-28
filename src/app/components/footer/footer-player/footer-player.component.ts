@@ -41,4 +41,7 @@ export class FooterPlayerComponent implements OnInit {
         const volume = Math.round((event.pageX - $bar.offset().left) / $bar.width() * 100);
         this.audioService.setVolume(volume);
     }
+    closePlayer() {
+        this.audioService.closePlayer();
+    }
 }
