@@ -24,7 +24,7 @@ RUN ng build --prod
 FROM nginx:1.13.9-alpine
 
 # copy artifact build from the 'build environment'
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/app/ /usr/share/nginx/html
 
 RUN rm /etc/nginx/conf.d/*
 ADD nginx/conf.d/*.conf /etc/nginx/conf.d/
