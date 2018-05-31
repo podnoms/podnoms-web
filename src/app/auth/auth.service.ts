@@ -11,9 +11,9 @@ import {
 } from 'angularx-social-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
-import { ProfileStoreService } from '../profile/profile-store.service';
 import { AuthApiProxyService } from './auth-api-proxy.service';
 import { HttpHeaders } from '@angular/common/http/src/headers';
+import { ProfileStoreService } from '../profile/profile-store.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +23,6 @@ export class AuthService extends BaseService {
     authNavStatus$ = this._authNavStatusSource.asObservable();
 
     profile$ = new BehaviorSubject<Profile>(null);
-    // profile$  = this._profileSource.asObservable();
 
     private profileSubject = new BehaviorSubject<Profile>(null);
     guid: string;
@@ -31,7 +30,7 @@ export class AuthService extends BaseService {
         private router: Router,
         private socialAuthService: SocialAuthService,
         private podnomsAuthService: AuthApiProxyService,
-        private profileService: ProfileStoreService
+        private profileStoreService: ProfileStoreService
     ) {
         super();
     }
@@ -39,8 +38,8 @@ export class AuthService extends BaseService {
     bootstrap(): Observable<boolean> {
         const ret = new Subject<boolean>();
         if (this.isLoggedIn()) {
-            this.profileService.getAll();
-            this.profileService.entities$.subscribe(results => {
+            this.profileStoreService.getAll();
+            this.profileStoreService.entities$.subscribe(results => {
                 if (results.length !== 0) {
                     this.profile$.next(results[0]);
                     this._authNavStatusSource.next(true);
