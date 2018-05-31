@@ -16,7 +16,10 @@ import { trigger, transition, style, sequence, animate } from '@angular/animatio
                 style({ opacity: '0' }),
                 animate('1s ease-out', style({ opacity: '1' }))
             ]),
-            transition('* => void', [animate(250, style({ transform: 'translateX(100%)' }))])
+            transition('* => void', [
+                style({ opacity: '1' }),
+                animate('.2s ease-in', style({ opacity: '0' }))
+            ])
         ])
     ]
 })
