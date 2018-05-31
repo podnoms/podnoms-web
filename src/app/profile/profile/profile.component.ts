@@ -21,17 +21,12 @@ import {
     switchMap
 } from 'rxjs/operators';
 import { combineLatest, BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ProfileStoreService } from '../profile-store.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProfileDataService } from '../profile-data.service';
 import { ImageService } from '../../shared/services/image.service';
+import { ProfileStoreService } from '../profile-store.service';
 declare let jQuery: any;
 
-@Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
-})
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',

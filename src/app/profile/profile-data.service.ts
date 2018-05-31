@@ -25,7 +25,7 @@ export class ProfileDataService {
             } else {
                 return of(this.profile);
             }
-        } else return of(null);
+        } else { return of(null); }
     }
     updateProfile(profile): Observable<Profile> {
         console.log('ProfileService', 'updateProfile', profile);
