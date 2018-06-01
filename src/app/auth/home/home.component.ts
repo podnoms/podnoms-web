@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
         this.profile$ = profileService.entities$;
         this.profile$.subscribe(
             p => {
-                console.log('home.component', 'loading', p);
                 profileService.entities$.subscribe(profileResult => {
                     if (profileResult && profileResult.length !== 0) {
                         router.navigate(['/podcasts']);
@@ -29,7 +28,7 @@ export class HomeComponent implements OnInit {
                 });
             },
             err => {
-                console.log('home.component', 'err', err);
+                console.error('home.component', 'err', err);
                 authService.logout();
             }
         );
