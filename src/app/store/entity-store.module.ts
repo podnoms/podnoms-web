@@ -31,7 +31,6 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
             collectionResourceUrl: environment.apiHost + '/entry/'
         },
         Profile: {
-            // You must specify the root as part of the resource URL.
             entityResourceUrl: environment.apiHost + '/profile/',
             collectionResourceUrl: environment.apiHost + '/profile/'
         }
