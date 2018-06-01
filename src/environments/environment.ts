@@ -8,7 +8,7 @@ export const environment = {
     signalRHost: 'http://localhost:5000',
     apiHost: 'http://localhost:5000',
     helpUrl: 'https://talk.podnoms.com/',
-    version: '0.28.1-debug',
+    version: '0.30.0-debug',
     appInsights: {
         instrumentationKey: '020b002a-bd3d-4b25-8a74-cab16fd39dfc'
     }
