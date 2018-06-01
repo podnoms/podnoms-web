@@ -12,7 +12,7 @@ export class ToastService {
             console.log(`${title} - ${message}`);
         } else {
             this._service.success(title, message, {
-                timeOut: 3000,
+                timeOut: 10000,
                 showProgressBar: true,
                 pauseOnHover: true,
                 clickToClose: true
