@@ -1,8 +1,10 @@
 <div *ngIf="loading$ | async;else mainContainer">
-    Loading.....
+    <div id="page-loader"
+         class="bg-gd-lake show"></div>
 </div>
 <ng-template #mainContainer>
-    <main id="main-container" *ngIf="loaded">
+    <main id="main-container"
+          *ngIf="loaded">
         <div class="bg-image"
              style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
             <div class="hero">
