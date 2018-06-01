@@ -43,6 +43,9 @@
                        [routerLink]="['/profile']">
                         <i class="fa fa-user mr-5"></i> Profile</a>
                     <a class="dropdown-item"
+                       (click)="about()">
+                        <i class="fa fa-info mr-5"></i> About</a>
+                    <a class="dropdown-item"
                        (click)="logout()">
                         <i class="fa fa-sign-out-alt mr-5"></i> Logout</a>
                 </div>
