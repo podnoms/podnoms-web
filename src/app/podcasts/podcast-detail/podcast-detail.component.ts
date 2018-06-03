@@ -35,10 +35,7 @@ export class PodcastDetailComponent {
     deleteEntry(entry: PodcastEntry) {
         this.podcastDataService.deleteEntry(entry.id).subscribe(
             () => {
-                this.podcast.podcastEntries = this.podcast.podcastEntries.filter(
-                    p => p.id !== entry.id
-                );
-                this.podcastStoreService.updateOneInCache(this.podcast);
+                this.podcastStoreService.removeOneFromCache(this.podcast);
             },
             () =>
                 this.toastService.showError(

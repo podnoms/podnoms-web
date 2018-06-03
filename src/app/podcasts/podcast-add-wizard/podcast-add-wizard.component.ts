@@ -12,6 +12,7 @@ import {
 import { Podcast } from '../../core';
 import { UtilityService } from '../../shared/services/utility.service';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
+import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 
 @Component({
     selector: 'app-podcast-add-wizard',
@@ -25,6 +26,7 @@ export class PodcastAddWizardComponent extends BasePageComponent
     errorMessage: string;
     @Input() podcast: Podcast;
     @Output() finish: EventEmitter<Podcast> = new EventEmitter<Podcast>();
+    @ViewChild('imageControl') imageControl: ImageUploadComponent;
 
     @ViewChild('podcastName') podcastName: ElementRef;
 
@@ -50,6 +52,9 @@ export class PodcastAddWizardComponent extends BasePageComponent
     }
     ngAfterViewInit() {
         this.podcastName.nativeElement.focus();
+    }
+    getImageControl(): ImageUploadComponent {
+        return this.imageControl;
     }
     previous() {
         if (this.currentStep > 0) {

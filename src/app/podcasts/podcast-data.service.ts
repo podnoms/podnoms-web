@@ -29,8 +29,8 @@ export class PodcastDataService {
         const data = JSON.stringify(podcast, PodcastDataService._replacer);
         return this._http.post<Podcast>(environment.apiHost + '/podcast', data);
     }
-    updatePodcast(podcast: Podcast) {
-        return this._http.put(environment.apiHost + '/podcast/', podcast);
+    updatePodcast(podcast: Podcast): Observable<Podcast> {
+        return this._http.put<Podcast>(environment.apiHost + '/podcast/', podcast);
     }
     deletePodcast(id: string): Observable<boolean> {
         return this._http

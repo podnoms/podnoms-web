@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Podcast } from '../../core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilityService } from '../../shared/services/utility.service';
@@ -9,6 +9,8 @@ import { map, filter } from 'rxjs/operators';
 import { EntityOp, EntityAction, ofEntityOp } from 'ngrx-data';
 import { Actions } from '@ngrx/effects';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
+import { UUID } from 'angular2-uuid';
+import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
 @Component({
     selector: 'app-podcast-edit-form',
     templateUrl: './podcast-edit-form.component.html',
@@ -17,8 +19,9 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 export class PodcastEditFormComponent implements OnInit, AfterViewInit {
     @ViewChild('podcastName') podcastNameElement: ElementRef;
     @ViewChild('imageControl') imageControl: ImageUploadComponent;
+    @ViewChild('wizardControl') wizardControl: PodcastAddWizardComponent;
 
-    firstRun: boolean = false;
+    useWizard: boolean = false;
 
     checkingDomain: boolean = false;
     domainValid: boolean = false;
@@ -75,7 +78,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         console.log('ngOnInit');
         const id = this.route.snapshot.params.podcast;
-        this.firstRun = this.route.snapshot.params.firstRun || false;
+        this.useWizard = this.route.snapshot.params.useWizard || false;
         if (!id) {
             const podcast = new Podcast();
             this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
@@ -94,7 +97,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
         }
     }
     ngAfterViewInit() {
-        if (!this.firstRun && this.podcastNameElement && this.podcastNameElement.nativeElement) {
+        if (!this.useWizard && this.podcastNameElement && this.podcastNameElement.nativeElement) {
             this.podcastNameElement.nativeElement.focus();
         }
     }
@@ -107,29 +110,28 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
     }
     submitForm(podcast: Podcast) {
         this.sending = true;
+        const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(p => {
-                this.podcastStoreService.addOneToCache(p);
-                if (this.imageControl) {
-                    this.imageControl
-                        .commitImage(podcast.slug)
-                        .subscribe(r => this.router.navigate(['podcasts', r.slug]));
-                } else {
+                activeImageControl.commitImage(p.id).subscribe(r => {
+                    // TODO: Remove this once image handling is improved
+                    p.imageUrl = r || p.imageUrl;
+                    p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
+                    this.podcastStoreService.addOneToCache(p);
+                    this.podcastStoreService.updateOneInCache(p);
                     this.router.navigate(['podcasts', p.slug]);
-                }
+                });
             });
         } else {
-            if (this.imageControl) {
-                this.imageControl.commitImage(podcast.slug).subscribe(i => {
-                    this.podcastDataService.updatePodcast(podcast).subscribe(p => {
-                        this.podcastStoreService.updateOneInCache(p);
-                    });
-                });
-            } else {
-                this.podcastDataService.updatePodcast(podcast).subscribe(p => {
+            this.podcastDataService.updatePodcast(podcast).subscribe(p => {
+                activeImageControl.commitImage(p.id).subscribe(r => {
+                    // TODO: Remove this once image handling is improved
+                    p.imageUrl = r || p.imageUrl;
+                    p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
                     this.podcastStoreService.updateOneInCache(p);
+                    this.router.navigate(['podcasts', p.slug]);
                 });
-            }
+            });
         }
     }
     checkDomain(domain: string) {
