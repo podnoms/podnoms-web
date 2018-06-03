@@ -9,7 +9,7 @@ import {
     EventEmitter
 } from '@angular/core';
 import { ImageService } from '../../services/image.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
     selector: 'app-image-upload',
@@ -18,9 +18,9 @@ import { Observable } from 'rxjs';
 })
 export class ImageUploadComponent implements OnInit {
     private _imageFileBuffer: File;
-    private imageChanged: boolean = false;
 
     image: any = new Image();
+    imageChanged: boolean = false;
 
     @Input() imageUrl: string;
 
@@ -42,8 +42,11 @@ export class ImageUploadComponent implements OnInit {
         //     }
         // });
     }
-    commitImage(slug: string): Observable<any> {
-        return this.imageService.upload(slug, this._imageFileBuffer);
+    commitImage(slug: string): Observable<string> {
+        if (this.imageChanged) {
+            return this.imageService.upload(slug, this._imageFileBuffer);
+        }
+        return of(null);
     }
     callFileInput() {
         this.fileInputElement.nativeElement.click();
