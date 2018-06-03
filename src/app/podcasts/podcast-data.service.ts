@@ -35,7 +35,7 @@ export class PodcastDataService {
     deletePodcast(id: string): Observable<boolean> {
         return this._http
             .delete<Response>(environment.apiHost + '/podcast/' + id)
-            .pipe(map(r => r.status === 200));
+            .pipe(map(r => true));
     }
     //#endregion
     //#region Entries
