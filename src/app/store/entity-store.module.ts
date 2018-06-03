@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { EntityMetadataMap, NgrxDataModule, DefaultDataServiceConfig } from 'ngrx-data';
-import { NgrxDataToastService } from './ngrx-data-toast.service';
 import { environment } from '../../environments/environment';
 
 export function sortByName(a: { name: string }, b: { name: string }): number {
@@ -46,7 +45,6 @@ export const pluralNames = {};
         })
     ],
     providers: [
-        NgrxDataToastService,
         {
             provide: DefaultDataServiceConfig,
             useValue: defaultDataServiceConfig
@@ -54,5 +52,5 @@ export const pluralNames = {};
     ]
 })
 export class EntityStoreModule {
-    constructor(toastService: NgrxDataToastService) {}
+    constructor() {}
 }

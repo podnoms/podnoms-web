@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ObservableInput, Observable } from 'rxjs';
 import { Podcast } from '../../core';
 
@@ -9,15 +9,16 @@ import { Podcast } from '../../core';
     providedIn: 'root'
 })
 export class ImageService {
-    constructor(private http: HttpClient, private auth: AuthService) {}
-    upload(podcastSlug: string, image): Observable<Podcast> {
+    constructor(private http: HttpClient) {}
+    upload(podcastSlug: string, image: File): Observable<string> {
         const formData = new FormData();
-        formData.append('file', image);
-        const headers = new Headers();
-        headers.append('Authorization', 'Bearer ' + this.auth.getAuthToken());
-        return this.http.post<Podcast>(
+        const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+        formData.append('image', image);
+        console.log('image.service', 'upload', formData);
+        return this.http.post<string>(
             `${environment.apiHost}/podcast/${podcastSlug}/imageupload`,
-            formData
+            formData,
+            { headers: headers }
         );
     }
 }
