@@ -9,8 +9,8 @@ import { map, filter } from 'rxjs/operators';
 import { EntityOp, EntityAction, ofEntityOp } from 'ngrx-data';
 import { Actions } from '@ngrx/effects';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
-import { UUID } from 'angular2-uuid';
 import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
+import { UUID } from 'angular2-uuid';
 @Component({
     selector: 'app-podcast-edit-form',
     templateUrl: './podcast-edit-form.component.html',
@@ -113,10 +113,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
         const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(p => {
-                activeImageControl.commitImage(p.id).subscribe(r => {
-                    // TODO: Remove this once image handling is improved
-                    p.imageUrl = r || p.imageUrl;
-                    p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
+                activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
                     this.podcastStoreService.addOneToCache(p);
                     this.podcastStoreService.updateOneInCache(p);
                     this.router.navigate(['podcasts', p.slug]);
@@ -124,9 +121,8 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
             });
         } else {
             this.podcastDataService.updatePodcast(podcast).subscribe(p => {
-                activeImageControl.commitImage(p.id).subscribe(r => {
-                    // TODO: Remove this once image handling is improved
-                    p.imageUrl = r || p.imageUrl;
+                activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
+                    // nasty dance to force refresh of thumbnails
                     p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
                     this.podcastStoreService.updateOneInCache(p);
                     this.router.navigate(['podcasts', p.slug]);

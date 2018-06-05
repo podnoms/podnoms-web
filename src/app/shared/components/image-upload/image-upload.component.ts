@@ -42,9 +42,9 @@ export class ImageUploadComponent implements OnInit {
         //     }
         // });
     }
-    commitImage(slug: string): Observable<string> {
+    commitImage(slug: string, type: string): Observable<string> {
         if (this.imageChanged) {
-            return this.imageService.upload(slug, this._imageFileBuffer);
+            return this.imageService.upload(type, slug, this._imageFileBuffer);
         }
         return of(null);
     }

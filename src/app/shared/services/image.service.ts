@@ -10,13 +10,13 @@ import { Podcast } from '../../core';
 })
 export class ImageService {
     constructor(private http: HttpClient) {}
-    upload(podcastSlug: string, image: File): Observable<string> {
+    upload(type: string, id: string, image: File): Observable<string> {
         const formData = new FormData();
         const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
         formData.append('image', image);
         console.log('image.service', 'upload', formData);
         return this.http.post<string>(
-            `${environment.apiHost}/podcast/${podcastSlug}/imageupload`,
+            `${environment.apiHost}/${type}/${id}/imageupload`,
             formData,
             { headers: headers }
         );

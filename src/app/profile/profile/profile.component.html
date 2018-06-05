@@ -70,31 +70,8 @@
                                 <div class="form-group row">
                                     <div class="col-md-5">
                                         <label for="mega-bio">Profile Image</label>
-                                        <div class="options-container fx-item-zoom-in fx-overlay-slide-down mx-auto p-10">
-                                            <img class="img-fluid options-item"
-                                                 [src]="image.src"
-                                                 alt="">
-                                            <div class="options-overlay bg-black-op-75">
-                                                <div class="input-group"
-                                                     style="visibility: hidden;">
-                                                    <span class="input-group-btn">
-                                                        <span class="btn btn-default btn-file">
-                                                            Choose image....
-                                                            <input type="file"
-                                                                   (change)="fileChangeEvent()"
-                                                                   #fileInput>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                                <div class="options-overlay-content">
-                                                    <h3 class="h4 text-white mb-5">Profile Image</h3>
-                                                    <a class="btn btn-sm btn-rounded btn-noborder btn-alt-success min-width-75"
-                                                       href="javascript:void(0)"
-                                                       (click)="callFileInput()">
-                                                        <i class="fa fa-pencil"></i> Edit</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <app-image-upload [imageUrl]="profile.profileImage"
+                                                          #imageControl></app-image-upload>
                                     </div>
                                 </div>
                             </form>

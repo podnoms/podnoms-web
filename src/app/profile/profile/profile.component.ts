@@ -23,8 +23,9 @@ import {
 import { combineLatest, BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProfileDataService } from '../profile-data.service';
-import { ImageService } from '../../shared/services/image.service';
 import { ProfileStoreService } from '../profile-store.service';
+import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
+import { UUID } from 'angular2-uuid';
 declare let jQuery: any;
 
 @Component({
@@ -33,6 +34,8 @@ declare let jQuery: any;
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent extends BasePageComponent implements AfterViewInit {
+    @ViewChild('imageControl') imageControl: ImageUploadComponent;
+
     profile$: Observable<Profile>;
     destroy$ = new Subject();
 
@@ -41,10 +44,7 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
     originalSlug: string;
     slugError: string = '';
 
-    private imageChanged = false;
-    image: any = new Image();
     sending = false;
-    _imageFileBuffer: File;
 
     @ViewChild('fileInput') fileInput: ElementRef;
     limits$: Observable<ProfileLimits>;
@@ -59,8 +59,6 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
     constructor(
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
-        private imageService: ImageService,
-        private route: ActivatedRoute,
         private router: Router
     ) {
         super();
@@ -82,25 +80,10 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
         this.profile$ = this.profileStoreService.entities$.pipe(
             map(r => r.filter(it => it.slug !== null)[0])
         );
-        this.profile$.subscribe(r => {
-            if (r) {
-                this.image.src = r.profileImage;
-            }
-        });
     }
 
     ngAfterViewInit() {
         this.refreshLimits();
-    }
-
-    private _parseImageData(file: File) {
-        const myReader: FileReader = new FileReader();
-        myReader.onloadend = (loadEvent: any) => {
-            this.image = new Image();
-            this.image.src = loadEvent.target.result;
-            this.imageChanged = true;
-        };
-        myReader.readAsDataURL(file);
     }
     refreshLimits() {
         this.profileDataService.getLimits().subscribe(l => {
@@ -132,29 +115,17 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
             }
         });
     }
-    uploadPhoto(podcast) {
-        const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-        return this.imageService.upload(podcast.slug, this._imageFileBuffer);
-    }
-
-    fileChangeEvent() {
-        const nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-        this._imageFileBuffer = nativeElement.files[0];
-        this._parseImageData(this._imageFileBuffer);
-    }
-
-    callFileInput() {
-        this.fileInput.nativeElement.click();
-    }
-
     regenerateApiKey(profile: Profile) {
         // this._service.regenerateApiKey().subscribe(a => (profile.apiKey = a));
     }
     doSave(profile: Profile) {
         // TODO: Updating slug is adding new User
         this.profileDataService.updateProfile(profile).subscribe(p => {
-            this.profileStoreService.updateOneInCache(profile);
-            this.router.navigate(['']);
+            this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
+                profile.profileImage = `${r}?v=${UUID.UUID()}`;
+                this.profileStoreService.updateOneInCache(profile);
+                this.router.navigate(['']);
+            });
         });
     }
 }
