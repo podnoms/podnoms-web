@@ -7,7 +7,7 @@ import {
     ViewContainerRef,
     ViewChildren
 } from '@angular/core';
-import { Profile, ProfileLimits } from '../../core';
+import { Profile, ProfileLimits, ToastService } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import {
     debounceTime,
@@ -59,6 +59,7 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
     constructor(
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
+        private toastService: ToastService,
         private router: Router
     ) {
         super();
@@ -119,12 +120,11 @@ export class ProfileComponent extends BasePageComponent implements AfterViewInit
         // this._service.regenerateApiKey().subscribe(a => (profile.apiKey = a));
     }
     doSave(profile: Profile) {
-        // TODO: Updating slug is adding new User
         this.profileDataService.updateProfile(profile).subscribe(p => {
             this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
                 profile.profileImage = `${r}?v=${UUID.UUID()}`;
                 this.profileStoreService.updateOneInCache(profile);
-                this.router.navigate(['']);
+                this.toastService.showToast('Success', 'Profile updated successfully');
             });
         });
     }
