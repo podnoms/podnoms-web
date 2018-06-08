@@ -1,0 +1,27 @@
+<div class="file-upload">
+    <div class="options-container"
+         id="image-container">
+        <img class="img-fluid options-item img-preview"
+             [src]="image.src"
+             alt="">
+        <div class="options-overlay bg-black-op-75">
+            <div class="options-overlay-content">
+                <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
+                   (click)="callFileInput()">
+                    <i class="fa fa-pencil"></i> Replace
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="input-group"
+         style="visibility: hidden;">
+        <span class="input-group-btn">
+            <span class="btn btn-default btn-file">
+                Choose image....
+                <input type="file"
+                       (change)="fileChangeEvent()"
+                       #fileInput>
+            </span>
+        </span>
+    </div>
+</div>
