@@ -4,10 +4,7 @@ import {
     HttpInterceptor,
     HttpHandler,
     HttpRequest,
-    HttpHeaderResponse,
-    HttpHeaders,
-    HttpErrorResponse
-} from '@angular/common/http';
+    HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 @Injectable()
@@ -26,7 +23,7 @@ export class TokenInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
         const authToken = this.authService.getAuthToken();
-        let headers = this.commonHeaders();
+        let headers = req.url.indexOf('imageupload') > -1 ? new HttpHeaders() : this.commonHeaders();
         if (authToken) {
             headers = headers.append('Authorization', `Bearer ${authToken}`);
         }
