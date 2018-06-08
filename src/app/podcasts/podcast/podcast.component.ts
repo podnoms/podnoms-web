@@ -75,7 +75,7 @@ export class PodcastComponent {
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {
-                    this.podcastStoreService.delete(podcast);
+                    this.podcastStoreService.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
                     this.notifier.error('Error', 'There was an error deleting podcast.');
