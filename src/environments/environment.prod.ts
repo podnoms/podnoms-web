@@ -2,7 +2,7 @@ export const environment = {
     production: true,
     apiHost: 'https://api.podnoms.com',
     vapidPublicKey:
-        'BPFj5ZR_5j6OC9dT-KFUxBxfoXCfVSPckUUSv1ziL-YFFeHviPPDRjiEu1IOhilxMabRzll4yNQhPSNm0HAo81E',
+        'BJQY5jNSGoa3SVqxlHH3fyhpBx_7pMrqijh92bM4cwZlmfSYrsRG-8Ci1VYkHr3W13Uh2nWmLTRL00pc7HBdias',
     signalRHost: 'https://rt.podnoms.com/',
     helpUrl: 'https://talk.podnoms.com/',
     version: require('../../package.json').version,
