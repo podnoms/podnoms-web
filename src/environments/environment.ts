@@ -7,6 +7,7 @@ export const environment = {
     production: false,
     signalRHost: 'http://localhost:5000',
     apiHost: 'http://localhost:5000',
+    vapidPublicKey: '',
     helpUrl: 'https://talk.podnoms.com/',
     version: `${require('../../package.json').version}-debug`,
     appInsights: {
