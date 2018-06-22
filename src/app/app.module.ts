@@ -11,7 +11,7 @@ import { ComponentsModule } from './components/components.module';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule, SwPush, SwUpdate } from '@angular/service-worker';
 @NgModule({
     imports: [
         BrowserModule,
@@ -28,4 +28,19 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     declarations: [AppComponent],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+    constructor(update: SwUpdate, push: SwPush) {
+        if (environment.production) {
+            update.available.subscribe(u => {
+                console.log('app.module', 'Update available', u);
+            });
+            push.messages.subscribe(m => {
+                console.log('app.module', 'Push message', m);
+            });
+
+            push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(s => {
+                console.log('app.module', 'requestSubscription', s);
+            });
+        }
+    }
+}
