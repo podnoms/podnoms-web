@@ -39,7 +39,7 @@ export class AppModule {
             });
 
             push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(s => {
-                console.log('app.module', 'requestSubscription', s);
+                console.log('app.module', 'requestSubscription', s.toJSON());
             });
         }
     }
