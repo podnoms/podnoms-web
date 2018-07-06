@@ -12,6 +12,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule, SwPush, SwUpdate } from '@angular/service-worker';
+import { PushRegistrationService } from './shared/services/push-registration.service';
 @NgModule({
     imports: [
         BrowserModule,
@@ -29,17 +30,16 @@ import { ServiceWorkerModule, SwPush, SwUpdate } from '@angular/service-worker';
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor(update: SwUpdate, push: SwPush) {
+    constructor(push: SwPush, registrationService: PushRegistrationService) {
         if (environment.production) {
-            update.available.subscribe(u => {
-                console.log('app.module', 'Update available', u);
-            });
             push.messages.subscribe(m => {
                 console.log('app.module', 'Push message', m);
             });
-
             push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(s => {
                 console.log('app.module', 'requestSubscription', s.toJSON());
+                registrationService
+                    .addSubscriber(s.toJSON())
+                    .subscribe(r => console.log('app.module', 'addSubscriber', 'done', r));
             });
         }
     }
