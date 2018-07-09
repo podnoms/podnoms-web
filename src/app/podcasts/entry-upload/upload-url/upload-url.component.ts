@@ -19,8 +19,7 @@ export class UploadUrlComponent implements AfterViewInit {
     @ViewChild('input') vc: any;
     playlistProxy: PodcastEntry = null;
     constructor(
-        private podcastDataService: PodcastDataService,
-        private toastService: ToastService
+        private podcastDataService: PodcastDataService,        private toastService: ToastService
     ) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
