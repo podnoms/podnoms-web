@@ -12,8 +12,11 @@ export class DebugService {
     getDebugInfo(): Observable<string> {
         return this.http.get<string>(environment.apiHost + '/debug');
     }
-
     ping(): Observable<string> {
-        return this.http.get<string>(environment.apiHost + '/ping');
+        return this.http.get<string>(`${environment.apiHost}/ping`);
+    }
+    sendPushPessage(message: string): any {
+        console.log('debug.service', 'sendPushMessage', message);
+        return this.http.get<string>(`${environment.apiHost}/debug/serverpush?message=${message}`);
     }
 }

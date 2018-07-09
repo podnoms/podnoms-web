@@ -17,7 +17,7 @@ import { PasswordCheckerComponent } from './password-checker/password-checker.co
         SideOverlayComponent,
         FooterComponent,
         FooterPlayerComponent,
-        PasswordCheckerComponent
+        PasswordCheckerComponent,
     ],
     exports: [
         SidebarComponent,

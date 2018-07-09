@@ -14,12 +14,12 @@ export class HomeComponent implements OnInit {
     loading$: Observable<boolean>;
     profile$: Observable<Profile[]>;
     loaded: boolean = false;
-    constructor(router: Router, profileService: ProfileStoreService, authService: AuthService) {
-        this.loading$ = profileService.loading$;
-        this.profile$ = profileService.entities$;
+    constructor(router: Router, profileStoreService: ProfileStoreService, authService: AuthService) {
+        this.loading$ = profileStoreService.loading$;
+        this.profile$ = profileStoreService.entities$;
         this.profile$.subscribe(
             p => {
-                profileService.entities$.subscribe(profileResult => {
+                profileStoreService.entities$.subscribe(profileResult => {
                     if (profileResult && profileResult.length !== 0) {
                         router.navigate(['/podcasts']);
                     } else if (profileResult && profileResult.length === 0) {
@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
                 authService.logout();
             }
         );
-        profileService.getAll();
     }
     ngOnInit() {
         console.log('home.component', 'ngOnInit', this);
