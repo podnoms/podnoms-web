@@ -5,8 +5,8 @@ import { environment } from './environments/environment';
 import { AppModule } from './app/app.module';
 
 //#region console overwrite
-if (environment.production && location.host.indexOf('localhost') !== 0) {
-    enableProdMode();
+if (false && environment.production && location.host.indexOf('localhost') !== 0) {
+enableProdMode();
     console.log(
         `%c ________________________________________
 < mooooooooooooooooooooooooooooooooooooo >
