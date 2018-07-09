@@ -1,9 +1,7 @@
 export const environment = {
     production: true,
-    // apiHost: 'https://api.podnoms.com',
-    apiHost: 'http://localhost:5000',
-    // signalRHost: 'https://rt.podnoms.com/',
-    signalRHost: 'http://localhost:5000',
+    apiHost: 'https://api.podnoms.com',
+    signalRHost: 'https://rt.podnoms.com/',
     vapidPublicKey:
         'BJQY5jNSGoa3SVqxlHH3fyhpBx_7pMrqijh92bM4cwZlmfSYrsRG-8Ci1VYkHr3W13Uh2nWmLTRL00pc7HBdias',
     helpUrl: 'https://talk.podnoms.com/',
