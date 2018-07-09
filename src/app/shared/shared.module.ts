@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { SignalRService } from './services/signal-r.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PushRegistrationService } from './services/push-registration.service';
+import { DebugComponent } from './components/debug/debug.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule],
@@ -33,7 +34,8 @@ import { PushRegistrationService } from './services/push-registration.service';
         OrderByDatePipe,
         BasePageComponent,
         BytesToHumanPipe,
-        ImageUploadComponent
+        ImageUploadComponent,
+        DebugComponent
     ],
     providers: [
         UtilityService,
