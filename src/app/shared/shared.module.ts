@@ -13,6 +13,8 @@ import { ImageService } from './services/image.service';
 import { RouterModule } from '@angular/router';
 import { SignalRService } from './services/signal-r.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { PushRegistrationService } from './services/push-registration.service';
+import { DebugComponent } from './components/debug/debug.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule],
@@ -32,12 +34,14 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
         OrderByDatePipe,
         BasePageComponent,
         BytesToHumanPipe,
-        ImageUploadComponent
+        ImageUploadComponent,
+        DebugComponent
     ],
     providers: [
         UtilityService,
         SignalRService,
         ImageService,
+        PushRegistrationService,
         {
             provide: AuthServiceConfig,
             useFactory: authServiceConfig
