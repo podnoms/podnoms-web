@@ -17,6 +17,6 @@ export class DebugService {
     }
     sendPushPessage(message: string): any {
         console.log('debug.service', 'sendPushMessage', message);
-        return this.http.get<string>(`${environment.apiHost}/debug/serverpush?message=${message}`);
+    return this.http.get<string>(`${environment.apiHost}/debug/serverpush?message=${message}`);
     }
 }
