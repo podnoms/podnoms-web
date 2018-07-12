@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn"
+                    (click)="sendPush()">
+                <i class="fa fa-envelope"></i>&nbsp;Send Push</button>
+        </div>
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-header">
+                    <h3>Jobs</h3>
+                </div>
+                <div class="block-content">
+                    <button type="button"
+                            class="btn btn-danger mr-5 mb-5"
+                            (click)="deleteOrphans()">
+                        <i class="fa fa-times-circle mr-5"></i>
+                        Delete Orphans</button>
+                    <button type="button"
+                            class="btn btn-success mr-5 mb-5"
+                            (click)="processMissing()">
+                        <i class="fa fa-question-circle mr-5"></i>
+                        Process Missing</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
