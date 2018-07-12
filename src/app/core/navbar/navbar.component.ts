@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Profile } from '../model';
 import { AuthService } from '../../auth/auth.service';
 import { UiStateService } from '../ui-state.service';
-import { DebugService } from '../../shared/services/debug.service';
+import { DebugService } from '../../debug/debug.service';
 import { ToastService } from '../toast.service';
 import { environment } from '../../../environments/environment';
 
