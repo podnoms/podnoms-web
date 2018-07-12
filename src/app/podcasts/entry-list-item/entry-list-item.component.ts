@@ -14,7 +14,6 @@ import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
-import { EntriesDataService } from '../../podcast/entries-data.service';
 
 @Component({
     selector: 'app-entry-list-item',
@@ -106,7 +105,7 @@ export class EntryListItemComponent implements OnInit {
         xhr.responseType = 'blob';
 
         xhr.onload = function(e) {
-            if (this['status'] == 200) {
+            if (this['status'] === 200) {
                 const url = window.URL.createObjectURL(
                     new Blob([this['response']], {
                         type: 'application/audio'

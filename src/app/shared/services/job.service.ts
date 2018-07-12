@@ -8,8 +8,8 @@ import { environment } from '../../../environments/environment';
 })
 export class JobService {
     constructor(private http: HttpClient) {}
-    processOrphans(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/processorphans`);
+    deleteOrphans(): Observable<Response> {
+        return this.http.get<Response>(`${environment.apiHost}/job/deleteorphans`);
     }
     processPlaylists(): Observable<Response> {
         return this.http.get<Response>(`${environment.apiHost}/job/processplaylists`);
