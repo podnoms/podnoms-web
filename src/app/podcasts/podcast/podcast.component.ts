@@ -37,9 +37,11 @@ export class PodcastComponent {
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
-            this.podcastStoreService.entities$.subscribe(r => {
+            const listenSub = this.podcastStoreService.entities$.subscribe(r => {
                 if (r && r.length > 0) {
+                    // here lies the problem: r[0] is meaningless!!
                     this.router.navigate(['podcasts', r[0].slug]);
+                    listenSub.unsubscribe(); // don't need to listen for subscriptions anymore as ngrx-data handles this for us
                 } else {
                     this.noPodcasts = true;
                 }
