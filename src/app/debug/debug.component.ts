@@ -25,6 +25,8 @@ export class DebugComponent implements OnInit {
         });
     }
     processMissing() {
-        this.jobService.processMissing().subscribe(r => alert(r));
+        this.jobService.processMissing().subscribe(r => {
+            this.toastService.showToast('Success', 'Job successfully queued');
+        });
     }
 }
