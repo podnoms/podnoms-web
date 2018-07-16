@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AudioService } from '../../core/audio.service';
+import { AudioService, PlayState } from '../../core/audio.service';
 
 @Component({
     selector: 'app-footer',
@@ -12,7 +12,7 @@ export class FooterComponent implements OnInit {
 
     ngOnInit() {
         this.audioService.playStateChanged.subscribe(s => {
-            this.showPlayer = s !== -1;
+            this.showPlayer = s !== PlayState.none;
         });
     }
 }
