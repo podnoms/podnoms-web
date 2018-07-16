@@ -21,7 +21,9 @@ export class FooterPlayerComponent implements OnInit {
         this.audioService.titleChanged.subscribe(t => (this.title = t));
         this.audioService.durationChanged.subscribe(d => (this.duration = d));
         this.audioService.volumeChanged.subscribe(v => (this.volume = v));
-        this.audioService.playStateChanged.subscribe(s => (this.playState = s));
+        this.audioService.playStateChanged.subscribe(s => {
+            this.playState = s;
+        });
 
         this.audioService.requestUpdate();
     }
