@@ -3,7 +3,6 @@ import { AuthService } from './auth/auth.service';
 import { Observable } from 'rxjs';
 import { Profile, ToastService } from './core';
 import { UiStateService } from './core/ui-state.service';
-import { distinctUntilChanged } from 'rxjs/operators';
 import { SignalRService } from './shared/services/signal-r.service';
 
 @Component({

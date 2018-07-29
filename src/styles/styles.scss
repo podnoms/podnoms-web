@@ -6,3 +6,16 @@
 a:hover {
     cursor: pointer;
 }
+.form-group {
+    &.was-validated {
+        &.is-invalid {
+            background-color: #ffe9e6;
+            label {
+                color: #dc3545;
+            }
+            .invalid-feedback {
+                display: block;
+            }
+        }
+    }
+}

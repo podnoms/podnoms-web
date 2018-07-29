@@ -1,35 +1,33 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { OnInit, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Podcast } from '../../core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UtilityService } from '../../shared/services/utility.service';
+import { Observable, of } from 'rxjs';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
-import { map, filter } from 'rxjs/operators';
-import { EntityOp, EntityAction, ofEntityOp } from 'ngrx-data';
 import { Actions } from '@ngrx/effects';
+import { UtilityService } from '../../shared/services/utility.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { validateSearch } from '../../shared/validators/search-validator';
+import { UUID } from 'angular2-uuid';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
-import { UUID } from 'angular2-uuid';
+
 @Component({
     selector: 'app-podcast-edit-form',
     templateUrl: './podcast-edit-form.component.html',
     styleUrls: ['./podcast-edit-form.component.scss']
 })
 export class PodcastEditFormComponent implements OnInit, AfterViewInit {
-    @ViewChild('podcastName') podcastNameElement: ElementRef;
+    podcast$: Observable<Podcast>;
+
+    podcastForm: FormGroup;
     @ViewChild('imageControl') imageControl: ImageUploadComponent;
     @ViewChild('wizardControl') wizardControl: PodcastAddWizardComponent;
 
     useWizard: boolean = false;
-
-    checkingDomain: boolean = false;
-    domainValid: boolean = false;
-    loading: boolean = false;
-    podcast$: Observable<Podcast>;
-
     sending = false;
-    options = {
+    descriptionOptions = {
         toolbarButtons: [
             'undo',
             'redo',
@@ -50,34 +48,40 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
     };
     constructor(
         private route: ActivatedRoute,
-        private router: Router,
         private utilityService: UtilityService,
         private podcastStoreService: PodcastStoreService,
         private podcastDataService: PodcastDataService,
-        private actions$: Actions
+        private router: Router,
+        private fb: FormBuilder
     ) {
         console.log('podcast-edit-form', 'constructor');
-        // super();
-        // this._createEntitySavedObserver();
     }
-    _createEntitySavedObserver(): any {
-        this.actions$
-            .pipe(
-                ofEntityOp(),
-                filter(
-                    (ea: EntityAction) =>
-                        ea.entityName === 'Podcast' && ea.op === EntityOp.SAVE_ADD_ONE_SUCCESS
-                )
-            )
-            .subscribe(r => {
-                if (r.type === 'SUCCESS') {
-                    this.router.navigate(['podcasts', r.payload.slug]);
-                }
-            });
+    _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
+        const form = fb.group({
+            id: [podcast.id],
+            title: [podcast.title, Validators.required],
+            slug: [
+                podcast.slug,
+                Validators.compose([
+                    Validators.required,
+                    Validators.minLength(5),
+                    Validators.maxLength(30)
+                ]),
+                Validators.composeAsync([
+                    validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)
+                ])
+            ],
+            description: [podcast.description]
+        });
+        form.valueChanges.subscribe(() => {
+            console.log('podcast-edit-form.component', 'form.valueChanges', this.podcastForm);
+        });
+        return form;
     }
     ngOnInit() {
-        console.log('ngOnInit');
+        console.log('podcast-edit-form.component', 'ngOnInit');
         const id = this.route.snapshot.params.podcast;
+
         this.useWizard = this.route.snapshot.params.useWizard || false;
         if (!id) {
             const podcast = new Podcast();
@@ -85,6 +89,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
                 podcast.imageUrl = u;
                 this.podcast$ = of(podcast);
             }, () => (this.podcast$ = of(podcast)));
+            this.podcastForm = this._createForm(this.fb, podcast);
         } else {
             this.podcastStoreService.entities$
                 .pipe(map(r => r.filter(it => it.slug === id)))
@@ -92,23 +97,17 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
                     const podcast = p[0];
                     if (podcast) {
                         this.podcast$ = of(podcast);
+                        this.podcastForm = this._createForm(this.fb, podcast);
                     }
                 });
         }
     }
     ngAfterViewInit() {
-        if (!this.useWizard && this.podcastNameElement && this.podcastNameElement.nativeElement) {
-            this.podcastNameElement.nativeElement.focus();
-        }
+        console.log('podcast-edit-form.component', 'ngAfterViewInit');
     }
-    deletePodcast(podcast: Podcast) {
-        console.log('PodcastComponent', 'deletePodcast');
-        this.podcastDataService
-            .deleteEntry(podcast.id)
-            .subscribe(() => this.podcastStoreService.delete(podcast));
-        this.router.navigate(['/']);
-    }
-    submitForm(podcast: Podcast) {
+    updatePodcast() {
+        const podcast: Podcast = Object.assign({}, this.podcastForm.value);
+        console.log('podcast-edit-form.component', 'updatePodcast', podcast);
         this.sending = true;
         const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
@@ -129,12 +128,5 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
                 });
             });
         }
-    }
-    checkDomain(domain: string) {
-        this.checkingDomain = true;
-        this.utilityService.checkDomain(domain).subscribe(e => (this.domainValid = e));
-    }
-    onWizardFinish(podcast: Podcast) {
-        this.submitForm(podcast);
     }
 }
