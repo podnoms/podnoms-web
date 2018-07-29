@@ -1,161 +1,93 @@
 <div *ngIf="podcast$ | async; let podcast; else loading">
     <div *ngIf="!useWizard">
-        <div class="block">
-            <div class="block-header block-header-default">
-                <h1 class="block-title">Podcast Details</h1>
-                <div class="block-options">
-                    <button type="button"
-                            (click)="submitForm(podcast)"
-                            class="btn btn-alt-primary btn-block-option"
-                            [disabled]="sending">
-                        <i class="fa fa-check mr-5"></i> {{podcast.id ? 'Update' : 'Add'}} Podcast
-                    </button>
-                    <div class="dropdown">
-                        <button type="button"
-                                class="btn-block-option"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false">
-                            <i class="fa fa-fw fa-ellipsis-v"></i>
+        <form class="needs-validation" [formGroup]="podcastForm" (submit)="updatePodcast()"
+            novalidate>
+            <div class="block">
+                <div class="block-header block-header-default">
+                    <h1 class="block-title">Podcast Details</h1>
+                    <div class="block-options">
+                        <button type="submit" class="btn btn-alt-primary btn-block-option"
+                            [disabled]="sending || !podcastForm.valid">
+                            <i class="fa fa-check mr-5"></i>
+                            {{podcast.id ? 'Update' : 'Add'}} Podcast
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right"
-                             x-placement="bottom-end"
-                             style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <a class="dropdown-item"
-                               href="javascript:void(0)"
-                               data-toggle="block-option"
-                               (click)="podcastDeleteDialog.show()"
-                               data-action="close">
-                                <i class="fa fa-fw fa-times text-danger mr-5"></i>Delete
-                            </a>
+                        <div class="dropdown">
+                            <button type="button" class="btn-block-option" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-fw fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                                style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="block-option"
+                                    (click)="podcastDeleteDialog.show()"
+                                    data-action="close">
+                                    <i class="fa fa-fw fa-times text-danger mr-5"></i>Delete
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="block-content">
-                <div class="row my-20">
-                    <div class="col-6 form-left">
-                        <form #form="ngForm">
-                            <div class="form-body">
-                                <div class="form-group row">
-                                    <label for="podcast-name">Podcast Name</label>
-                                    <input id="podcast-name"
-                                           name="podcast-name"
-                                           class="form-control"
-                                           placeholder="Podcast name"
-                                           #podcastName
-                                           [(ngModel)]="podcast.title">
+                <div class="block-content">
+                    <div class="row">
+                        <div class="col-md-6 p-30 block">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="podcast-title">Title</label>
+                                    <input type="text" class="form-control" id="title" name="title"
+                                        [ngClass]="{ 'is-invalid': !podcastForm.valid && podcastForm.controls.title.invalid }"
+                                        placeholder="Podcast title"
+                                        formControlName="title" required>
+                                    <div class="invalid-feedback">
+                                        Title is required
+                                    </div>
+                                    <div class="form-text text-muted">Title
+                                        for your podcast player
+                                    </div>
                                 </div>
-                                <div class="form-group row"
-                                     *ngIf="podcast.id">
-                                    <!-- <div class="col-6">
-                                        <label for="slug-box">Slug</label>
-                                        <div class="input-group"
-                                             [ngClass]="domain.hasError('pattern') ? 'is-invalid' : ''">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="slug-box"
-                                                   name="slug-box"
-                                                   #domain="ngModel"
-                                                   pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
-
-                                                   autocomplete="off"
-                                                   required=""
-                                                   (blur)="checkDomain(podcast.customDomain)"
-                                                   [(ngModel)]="podcast.customDomain">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-asterisk"
-                                                       [ngClass]="checkingDomain ? 'fa-spin' : ''"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="invalid-feedback"
-                                             *ngIf="domain.hasError('pattern')">This does not look like a valid domain?</div>
-                                        <div class="form-text text-muted">You need to setup up a CNAME pointing to rss.podnoms.com</div>
-                                    </div> -->
-                                </div>
-                                <!-- <div class="form-group row">
-                                    <div class="col-xs-8">
+                                <div class="col-md-6 mb-3">
+                                    <label for="podcast-slug">Slug</label>
                                     <div class="input-group">
-                                    <label for="custom-domain">Custom Domain</label>
-                                    <input id="custom-domain"
-                                    name="custom-domain"
-                                    class="form-control"
-                                    placeholder="Custom domain"
-                                    pattern="^([a-z0-9])(([a-z0-9-]{1,61})?[a-z0-9]{1})?(\.[a-z0-9](([a-z0-9-]{1,61})?[a-z0-9]{1})?)?(\.[a-zA-Z]{2,4})+$"
-
-                                    #domain="ngModel"
-                                    (blur)="checkDomain()"
-                                    [(ngModel)]="podcast.customDomain">
-
+                                        <input type="text" class="form-control" id="podcast-slug" placeholder="Podcast slug"
+                                            [ngClass]="{ 'is-invalid': !podcastForm.valid && podcastForm.controls.slug.invalid }"
+                                            formControlName="slug"
+                                            autocomplete="off" required>
+                                        <div class="input-group-prepend" *ngIf="false">
+                                            <div class="input-group-text">@</div>
+                                        </div>
                                     </div>
-                                    <div class="invalid-feedback"
-                                    [hidden]="!domain.hasError('pattern')">
-                                    This does not look like a valid domain?</div>
+                                    <div class="invalid-feedback d-block" *ngIf="podcastForm.invalid && podcastForm.controls.slug.invalid">
+                                        {{podcastForm.controls.slug.errors.message}}
                                     </div>
-                                    </div> -->
-                                <div class="form-group row">
-                                    <label for="podcast-description">Description</label>
-                                    <quill-editor name="description"
-                                                  [style]="{height: '400px'}"
-                                                  [(ngModel)]="podcast.description"></quill-editor>
+                                    <div class="form-text text-muted">This
+                                        will be the unique URL
+                                        for your podcast
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-6 form-right"
-                         *ngIf="podcast.imageUrl">
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label for="">Cover Image</label>
-                                <app-image-upload [imageUrl]="podcast.imageUrl"
-                                                  #imageControl></app-image-upload>
+                            <div class="form-group row">
+                                <label for="podcast-description">Description</label>
+                                <quill-editor name="description" [style]="{height: '400px'}"
+                                    formControlName="description"></quill-editor>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-30" *ngIf="podcast.imageUrl">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label for="">Cover Image</label>
+                                    <app-image-upload [imageUrl]="podcast.imageUrl" #imageControl></app-image-upload>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade"
-                 bsModal
-                 #podcastDeleteDialog="bs-modal"
-                 tabindex="-1"
-                 role="dialog"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title pull-left">Delete this podcast?</h4>
-                            <button type="button"
-                                    class="close pull-right"
-                                    aria-label="Close"
-                                    (click)="podcastDeleteDialog.hide()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button"
-                                    class="btn btn-primary pull-right"
-                                    (click)="podcastDeleteDialog.hide()">No
-                            </button>
-                            <button type="button"
-                                    class="btn btn-danger pull-right"
-                                    (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">Yes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-    <div *ngIf="useWizard"
-         class="mx-50">
-        <app-podcast-add-wizard [podcast]="podcast"
-                                (finish)="onWizardFinish(podcast)"
-                                #wizardControl>
+    <div *ngIf="useWizard" class="mx-50">
+        <app-podcast-add-wizard [podcast]="podcast" (finish)="updatePodcast(podcast)"
+            #wizardControl>
         </app-podcast-add-wizard>
     </div>
+
 </div>
-<ng-template #loading>
-    Loading...
-</ng-template>
+<ng-template #loading>Loading....</ng-template>

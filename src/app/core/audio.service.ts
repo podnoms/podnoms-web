@@ -95,10 +95,11 @@ export class AudioService {
     }
     closePlayer() {
         this._audio.stop();
+        localStorage.removeItem('audio_state');
+
         this._playState = PlayState.none;
         this.playStateChanged.emit(this._playState);
         this._playTimerSubscription.unsubscribe();
-        localStorage.removeItem('audio_state');
     }
     requestUpdate() {
         this._postEvents();
