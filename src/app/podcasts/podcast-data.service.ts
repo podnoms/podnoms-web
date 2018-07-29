@@ -38,6 +38,12 @@ export class PodcastDataService {
             .delete<Response>(environment.apiHost + '/podcast/' + id)
             .pipe(map(r => true));
     }
+    checkSlug(slug): Observable<string> {
+        console.log('profile.service.ts', 'checkSlug', slug);
+        return this._http
+            .get<string>(environment.apiHost + '/podcast/checkslug/' + slug);
+    }
+
     //#endregion
     //#region Entries
 
