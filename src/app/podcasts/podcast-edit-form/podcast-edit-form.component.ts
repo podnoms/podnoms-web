@@ -8,10 +8,11 @@ import { PodcastDataService } from '../podcast-data.service';
 import { Actions } from '@ngrx/effects';
 import { UtilityService } from '../../shared/services/utility.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { validateSearch } from '../../shared/validators/search-validator';
 import { UUID } from 'angular2-uuid';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
+import { validateSearch } from '../../shared/validators/search.validator';
+import { validateDomain } from '../../shared/validators/domain.validator';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -70,6 +71,11 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
                 Validators.composeAsync([
                     validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)
                 ])
+            ],
+            domain: [
+                '',
+                Validators.compose([]),
+                Validators.composeAsync([validateDomain(this.utilityService)])
             ],
             description: [podcast.description]
         });
