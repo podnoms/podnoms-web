@@ -72,8 +72,8 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
                     validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)
                 ])
             ],
-            domain: [
-                '',
+            customDomain: [
+                podcast.customDomain,
                 Validators.compose([]),
                 Validators.composeAsync([validateDomain(this.utilityService)])
             ],
