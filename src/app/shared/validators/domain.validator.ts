@@ -24,11 +24,11 @@ export function validateDomain(utilityService: UtilityService): AsyncValidatorFn
                 return utilityService.checkDomain(control.value).pipe(
                     map(e => {
                         return e
-                            ? {
+                            ? null
+                            : {
                                   available: true,
-                                  message: `Domain ${control.value} is available`
-                              }
-                            : null;
+                                  message: `This is not a valid CNAME domain`
+                              };
                     })
                 );
             })
