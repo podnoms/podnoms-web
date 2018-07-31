@@ -65,6 +65,29 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <div class="form-group">
+                                    <label for="podcast-domain">Custom
+                                        Domain
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="podcast-domain" placeholder="Custom domain name"
+                                            [ngClass]="{ 'is-invalid': !podcastForm.valid && podcastForm.controls.domain.invalid }"
+                                            formControlName="domain"
+                                            autocomplete="off">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-asterisk"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback d-block" *ngIf="podcastForm.controls.domain.invalid">
+                                        {{podcastForm.controls.domain.errors.message}}</div>
+                                    <div class="form-text text-muted">You
+                                        need to setup up a CNAME
+                                        pointing to rss.podnoms.com</div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="podcast-description">Description</label>
                                 <quill-editor name="description" [style]="{height: '400px'}"
                                     formControlName="description"></quill-editor>
