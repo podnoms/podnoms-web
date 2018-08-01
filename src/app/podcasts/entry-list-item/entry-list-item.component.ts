@@ -16,7 +16,7 @@ import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
 
 @Component({
-    selector: 'app-entry-list-item',
+    selector: '[app-entry-list-item]',
     templateUrl: './entry-list-item.component.html',
     styleUrls: ['./entry-list-item.component.scss']
 })
