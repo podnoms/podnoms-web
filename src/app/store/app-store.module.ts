@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { EntityStoreModule } from './entity-store.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
+import { PodcastDataService } from '../podcasts/podcast-data.service';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { TokenInterceptor } from './token.interceptor';
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
             multi: true
-        }
+        },
+        PodcastDataService
     ]
 })
 export class AppStoreModule {}
