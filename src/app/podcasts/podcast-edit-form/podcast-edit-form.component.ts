@@ -1,7 +1,7 @@
 import { map } from 'rxjs/operators';
 import { OnInit, AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Podcast } from '../../core';
+import { Podcast, Category } from '../../core';
 import { Observable, of } from 'rxjs';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
@@ -19,8 +19,10 @@ import { validateDomain } from '../../shared/validators/domain.validator';
     templateUrl: './podcast-edit-form.component.html',
     styleUrls: ['./podcast-edit-form.component.scss']
 })
-export class PodcastEditFormComponent implements OnInit, AfterViewInit {
+export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
+    public category: string;
+    public subcategories: Array<string>;
 
     podcastForm: FormGroup;
     @ViewChild('imageControl') imageControl: ImageUploadComponent;
@@ -54,9 +56,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
         private podcastDataService: PodcastDataService,
         private router: Router,
         private fb: FormBuilder
-    ) {
-        console.log('podcast-edit-form', 'constructor');
-    }
+    ) {}
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
         const form = fb.group({
             id: [podcast.id],
@@ -79,13 +79,9 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
             ],
             description: [podcast.description]
         });
-        form.valueChanges.subscribe(() => {
-            console.log('podcast-edit-form.component', 'form.valueChanges', this.podcastForm);
-        });
         return form;
     }
     ngOnInit() {
-        console.log('podcast-edit-form.component', 'ngOnInit');
         const id = this.route.snapshot.params.podcast;
 
         this.useWizard = this.route.snapshot.params.useWizard || false;
@@ -102,18 +98,22 @@ export class PodcastEditFormComponent implements OnInit, AfterViewInit {
                 .subscribe(p => {
                     const podcast = p[0];
                     if (podcast) {
+                        this.category = podcast.category.id;
                         this.podcast$ = of(podcast);
                         this.podcastForm = this._createForm(this.fb, podcast);
                     }
                 });
         }
     }
-    ngAfterViewInit() {
-        console.log('podcast-edit-form.component', 'ngAfterViewInit');
-    }
     updatePodcast() {
+        console.log('podcast-edit-form.component', 'category', this.category);
+        console.log('podcast-edit-form.component', 'subcategories', this.subcategories);
+
         const podcast: Podcast = Object.assign({}, this.podcastForm.value);
-        console.log('podcast-edit-form.component', 'updatePodcast', podcast);
+        podcast.category = new Category(this.category);
+
+        // podcast.subcategories = this.subcategories;
+
         this.sending = true;
         const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
