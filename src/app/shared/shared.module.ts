@@ -14,9 +14,18 @@ import { RouterModule } from '@angular/router';
 import { SignalRService } from './services/signal-r.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PushRegistrationService } from './services/push-registration.service';
+import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
+import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SocialLoginModule,
+        NgxSelectModule
+    ],
     exports: [
         FormsModule,
         ReactiveFormsModule,
@@ -25,7 +34,8 @@ import { PushRegistrationService } from './services/push-registration.service';
         HumaniseTimePipe,
         BytesToHumanPipe,
         BasePageComponent,
-        ImageUploadComponent
+        ImageUploadComponent,
+        CategorySelectorComponent
     ],
     declarations: [
         OrderByPipe,
@@ -33,7 +43,8 @@ import { PushRegistrationService } from './services/push-registration.service';
         OrderByDatePipe,
         BasePageComponent,
         BytesToHumanPipe,
-        ImageUploadComponent
+        ImageUploadComponent,
+        CategorySelectorComponent
     ],
     providers: [
         UtilityService,

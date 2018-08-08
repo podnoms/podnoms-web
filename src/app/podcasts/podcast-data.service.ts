@@ -19,7 +19,6 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     }
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator, logger: Logger) {
         super('Podcast', http, httpUrlGenerator);
-        logger.log('Created custom Podcast EntityDataService');
     }
     //#region Podcasts
 
