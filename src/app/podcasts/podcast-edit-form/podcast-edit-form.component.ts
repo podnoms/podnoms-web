@@ -64,7 +64,7 @@ export class PodcastEditFormComponent implements OnInit {
             slug: [
                 podcast.slug,
                 Validators.compose([
-                    Validators.required,
+                    podcast.id && Validators.required,
                     Validators.minLength(5),
                     Validators.maxLength(30)
                 ]),
@@ -98,7 +98,9 @@ export class PodcastEditFormComponent implements OnInit {
                 .subscribe(p => {
                     const podcast = p[0];
                     if (podcast) {
-                        this.category = podcast.category.id;
+                        if (podcast.category) {
+                            this.category = podcast.category.id;
+                        }
                         this.podcast$ = of(podcast);
                         this.podcastForm = this._createForm(this.fb, podcast);
                     }
