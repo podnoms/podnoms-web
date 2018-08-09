@@ -9,6 +9,7 @@ import { DebugService } from './debug.service';
     styleUrls: ['./debug.component.scss']
 })
 export class DebugComponent implements OnInit {
+
     constructor(
         private debugService: DebugService,
         private jobService: JobService,
