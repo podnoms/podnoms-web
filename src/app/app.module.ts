@@ -41,7 +41,6 @@ export class AppModule {
     ) {
         this.profile$ = profileStoreService.entities$;
         this.profile$.subscribe(p => {
-            console.log('app.module', 'profile$', p);
             if (p && p.length !== 0 && environment.production) {
                 push.messages.subscribe(m => {
                     console.log('app.module', 'Push message', m);
@@ -49,7 +48,6 @@ export class AppModule {
                 push
                     .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
                     .then(s => {
-                        console.log('app.module', 'requestSubscription', s.toJSON());
                         registrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(r =>

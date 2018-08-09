@@ -1,0 +1,28 @@
+<div class="row justify-content-center">
+    <div class="col-md-3">
+        <label for="category">Category</label>
+    </div>
+    <div class="col-md-9">
+        <ngx-select [items]="categories$ | async" optionValueField="id"
+            [(ngModel)]="category" optionTextField="description"
+            (select)="selectCategory($event)"
+            (selectionChanges)="categorySelected($event)"
+            placeholder="Select category">
+        </ngx-select>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-3">
+        <label for="sub-category">Sub categories</label>
+    </div>
+    <div class="col-md-9">
+        <ngx-select [allowClear]="true" [items]="subCategories$|async"
+            [(ngModel)]="subcategories" [disabled]="!subCategoriesAvailable"
+            [multiple]="true" optionValueField="id" optionTextField="description"
+            optGroupLabelField="description" size="small" optGroupOptionsField="subCategories"
+            (select)="selectSubCategory($event)"
+            (selectionChanges)="subCategorySelected($event)"
+            placeholder="Coming soon!!">
+        </ngx-select>
+    </div>
+</div>
