@@ -16,8 +16,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-fw fa-ellipsis-v"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
-                                style="position: absolute; transform: translate3d(28px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                                 <a class="dropdown-item" href="javascript:void(0)" data-toggle="block-option"
                                     (click)="podcastDeleteDialog.show()"
                                     data-action="close">
@@ -30,8 +29,8 @@
                 <div class="block-content">
                     <div class="row">
                         <div class="col-md-6 p-30 block">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
+                            <div class="row  mb-3">
+                                <div class="col-md-6">
                                     <label for="podcast-title">Title</label>
                                     <input type="text" class="form-control" id="title" name="title"
                                         [ngClass]="{ 'is-invalid': !podcastForm.valid && podcastForm.controls.title.invalid }"
@@ -44,7 +43,7 @@
                                         for your podcast player
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <label for="podcast-slug">Slug</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="podcast-slug" placeholder="Podcast slug"
@@ -65,7 +64,14 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="form-group">
+                                <label for="podcast-description">Description</label>
+                                <quill-editor name="description" [style]="{height: '400px'}"
+                                    formControlName="description"></quill-editor>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-30 block">
+                            <div class="row  mb-3">
+                                <div class="col-md-8">
                                     <label for="podcast-domain">Custom
                                         Domain
                                     </label>
@@ -87,17 +93,15 @@
                                         pointing to rss.podnoms.com</div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="podcast-description">Description</label>
-                                <quill-editor name="description" [style]="{height: '400px'}"
-                                    formControlName="description"></quill-editor>
-                            </div>
-                        </div>
-                        <div class="col-md-6 p-30" *ngIf="podcast.imageUrl">
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <label for="">Cover Image</label>
-                                    <app-image-upload [imageUrl]="podcast.imageUrl" #imageControl></app-image-upload>
+                            <app-category-selector (id)="'podcast-tags'" [(category)]="category"
+                                [(subcategories)]="subcategories"></app-category-selector>
+                            <div class="row" *ngIf="podcast.imageUrl">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label for="">Cover Image
+                                        </label>
+                                        <app-image-upload [imageUrl]="podcast.imageUrl" #imageControl></app-image-upload>
+                                    </div>
                                 </div>
                             </div>
                         </div>

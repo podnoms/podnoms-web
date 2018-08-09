@@ -5,8 +5,6 @@ import { DebugRoutingModule } from './debug-routing.module';
 import { DebugComponent } from './debug.component';
 @NgModule({
     imports: [CommonModule, SharedModule, DebugRoutingModule],
-    declarations: [
-        DebugComponent
-    ]
+    declarations: [DebugComponent]
 })
 export class DebugModule {}

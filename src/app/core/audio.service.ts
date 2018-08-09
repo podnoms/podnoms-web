@@ -48,7 +48,6 @@ export class AudioService {
         }
     }
     _timedEvents(r: number) {
-        console.log('audio.service', '_timedEvents', r);
         this._position = this._audio.seek();
         this._postEvents();
         if (r % 1000 === 0) {
