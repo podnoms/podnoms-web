@@ -43,7 +43,7 @@
                                         for your podcast player
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" *ngIf="podcast.id">
                                     <label for="podcast-slug">Slug</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="podcast-slug" placeholder="Podcast slug"
@@ -68,8 +68,6 @@
                                 <quill-editor name="description" [style]="{height: '400px'}"
                                     formControlName="description"></quill-editor>
                             </div>
-                        </div>
-                        <div class="col-md-6 p-30 block">
                             <div class="row  mb-3">
                                 <div class="col-md-8">
                                     <label for="podcast-domain">Custom
@@ -93,14 +91,16 @@
                                         pointing to rss.podnoms.com</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-6 p-30 block">
                             <app-category-selector (id)="'podcast-tags'" [(category)]="category"
                                 [(subcategories)]="subcategories"></app-category-selector>
-                            <div class="row" *ngIf="podcast.imageUrl">
+                            <div class="row" *ngIf="formImageUrl">
                                 <div class="form-body">
                                     <div class="form-group">
                                         <label for="">Cover Image
                                         </label>
-                                        <app-image-upload [imageUrl]="podcast.imageUrl" #imageControl></app-image-upload>
+                                        <app-image-upload [imageUrl]="formImageUrl" #imageControl></app-image-upload>
                                     </div>
                                 </div>
                             </div>
