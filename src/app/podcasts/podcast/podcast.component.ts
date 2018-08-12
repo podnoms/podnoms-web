@@ -41,7 +41,9 @@ export class PodcastComponent {
                 if (r && r.length > 0) {
                     // here lies the problem: r[0] is meaningless!!
                     this.router.navigate(['podcasts', r[0].slug]);
-                    listenSub.unsubscribe(); // don't need to listen for subscriptions anymore as ngrx-data handles this for us
+                    if (listenSub) {
+                        listenSub.unsubscribe(); // don't need to listen for subscriptions anymore as ngrx-data handles this for us
+                    }
                 } else {
                     this.noPodcasts = true;
                 }

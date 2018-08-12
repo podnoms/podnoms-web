@@ -13,6 +13,7 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
 import { validateSearch } from '../../shared/validators/search.validator';
 import { validateDomain } from '../../shared/validators/domain.validator';
+import { ConditionalValidator } from '../../shared/validators/conditional.validator';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -21,6 +22,7 @@ import { validateDomain } from '../../shared/validators/domain.validator';
 })
 export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
+    formImageUrl: string;
     public category: string;
     public subcategories: Array<string>;
 
@@ -63,10 +65,11 @@ export class PodcastEditFormComponent implements OnInit {
             title: [podcast.title, Validators.required],
             slug: [
                 podcast.slug,
+
                 Validators.compose([
-                    podcast.id && Validators.required,
-                    Validators.minLength(5),
-                    Validators.maxLength(30)
+                    ConditionalValidator.conditional(group => podcast.id, Validators.required),
+                    ConditionalValidator.conditional(group => podcast.id, Validators.minLength(5)),
+                    ConditionalValidator.conditional(group => podcast.id, Validators.maxLength(30))
                 ]),
                 Validators.composeAsync([
                     validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)
@@ -88,7 +91,7 @@ export class PodcastEditFormComponent implements OnInit {
         if (!id) {
             const podcast = new Podcast();
             this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
-                podcast.imageUrl = u;
+                this.formImageUrl = u;
                 this.podcast$ = of(podcast);
             }, () => (this.podcast$ = of(podcast)));
             this.podcastForm = this._createForm(this.fb, podcast);
@@ -112,13 +115,15 @@ export class PodcastEditFormComponent implements OnInit {
         console.log('podcast-edit-form.component', 'subcategories', this.subcategories);
 
         const podcast: Podcast = Object.assign({}, this.podcastForm.value);
-        podcast.category = new Category(this.category);
 
+        podcast.category = new Category(this.category);
+        // TODO: Fix this.
         // podcast.subcategories = this.subcategories;
 
         this.sending = true;
         const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
+            podcast.imageUrl = this.formImageUrl;
             this.podcastDataService.addPodcast(podcast).subscribe(p => {
                 activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
                     this.podcastStoreService.addOneToCache(p);
