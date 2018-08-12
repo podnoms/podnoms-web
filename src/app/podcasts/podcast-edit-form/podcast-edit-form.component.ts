@@ -104,6 +104,7 @@ export class PodcastEditFormComponent implements OnInit {
                         if (podcast.category) {
                             this.category = podcast.category.id;
                         }
+                        this.formImageUrl = podcast.imageUrl;
                         this.podcast$ = of(podcast);
                         this.podcastForm = this._createForm(this.fb, podcast);
                     }
