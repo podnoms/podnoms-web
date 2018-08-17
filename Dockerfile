@@ -1,11 +1,8 @@
-FROM nginx:1.13.9-alpine
+FROM nginx:alpine
 
-COPY dist/app/ /usr/share/nginx/html
+COPY nginx/conf.d /etc/nginx/nginx.conf
 
-RUN rm /etc/nginx/conf.d/*
-ADD nginx/conf.d/*.conf /etc/nginx/conf.d/
+WORKDIR /usr/share/nginx/html
+COPY dist/app/ .
 
 EXPOSE 80
-EXPOSE 443
-
-CMD ["nginx", "-g", "daemon off;"]
