@@ -10,6 +10,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#btabs-podcast-notifications">Notifications
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#btabs-podcast-advanced">Nerd
                             stuff (highly experimental)
                         </a>
@@ -66,6 +70,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane" id="btabs-podcast-notifications" role="tabpanel">
+                        <app-podcast-edit-form-notifications (podcast)="podcast"></app-podcast-edit-form-notifications>
+                    </div>
                     <div class="tab-pane" id="btabs-podcast-advanced" role="tabpanel">
                         <div class="col-md-6" *ngIf="podcast.id">
                             <label for="podcast-slug">Slug</label>
@@ -121,7 +128,8 @@
                     <div class="block block-themed block-transparent mb-0">
                         <div class="block-header bg-primary-dark">
                             <h3 class="block-title">Delete this
-                                podcast?</h3>
+                                podcast?
+                            </h3>
                             <div class="block-options">
                                 <button type="button" class="btn-block-option" data-dismiss="modal"
                                     aria-label="Close" (click)="podcastDeleteDialog.hide()">
