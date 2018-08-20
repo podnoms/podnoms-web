@@ -17,6 +17,8 @@ import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.
 import { ModalModule } from 'ngx-bootstrap';
 import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { PodcastEditFormNotificationsComponent } from './podcast-edit-form/podcast-edit-form-notifications/podcast-edit-form-notifications.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
         UploadUrlComponent,
         UploadFileComponent,
         PodcastEditFormComponent,
-        PodcastAddWizardComponent
+        PodcastAddWizardComponent,
+        PodcastEditFormNotificationsComponent
     ],
     providers: [PodcastStoreService]
 })
