@@ -14,6 +14,7 @@ import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wiz
 import { validateSearch } from '../../shared/validators/search.validator';
 import { validateDomain } from '../../shared/validators/domain.validator';
 import { ConditionalValidator } from '../../shared/validators/conditional.validator';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -57,7 +58,8 @@ export class PodcastEditFormComponent implements OnInit {
         private podcastStoreService: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private router: Router,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private notifier: NotificationsService
     ) {}
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
         const form = fb.group({
@@ -68,8 +70,14 @@ export class PodcastEditFormComponent implements OnInit {
 
                 Validators.compose([
                     ConditionalValidator.conditional(group => podcast.id, Validators.required),
-                    ConditionalValidator.conditional(group => podcast.id, Validators.minLength(5)),
-                    ConditionalValidator.conditional(group => podcast.id, Validators.maxLength(30))
+                    ConditionalValidator.conditional(
+                        group => podcast.id,
+                        Validators.minLength(5)
+                    ),
+                    ConditionalValidator.conditional(
+                        group => podcast.id,
+                        Validators.maxLength(30)
+                    )
                 ]),
                 Validators.composeAsync([
                     validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)
@@ -142,5 +150,25 @@ export class PodcastEditFormComponent implements OnInit {
                 });
             });
         }
+    }
+    deletePodcast(podcast: Podcast) {
+        console.log('PodcastComponent', 'deletePodcast');
+        this.podcastDataService.deletePodcast(podcast.id).subscribe(
+            r => {
+                if (r) {
+                    this.podcastStoreService.removeOneFromCache(podcast);
+                    this.router.navigate(['/']);
+                } else {
+                    this.notifier.error('Error', 'There was an error deleting podcast.');
+                }
+            },
+            err =>
+                this.notifier.error('Error', 'There was an error deleting podcast.', {
+                    timeOut: 3000,
+                    showProgressBar: true,
+                    pauseOnHover: true,
+                    clickToClose: true
+                })
+        );
     }
 }
