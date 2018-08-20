@@ -16,8 +16,8 @@
                     </li>
                     <li class="nav-item ml-auto">
                         <div class="block-options mr-15 mt-5">
-                            <button type="button" class="btn btn-alt-danger"
-                                data-toggle="block-option" data-action="fullscreen_toggle">
+                            <button type="button" class="btn btn-alt-danger" data-toggle="block-option"
+                                (click)="podcastDeleteDialog.show()">
                                 Delete&nbsp;<i class="fa fa-times"></i></button>
                             <button type="submit" class="btn" data-toggle="block-option"
                                 [disabled]="sending || !podcastForm.valid"
@@ -114,6 +114,59 @@
             </div>
 
         </form>
+        <div class="modal fade" role="document" bsModal #podcastDeleteDialog="bs-modal"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="block block-themed block-transparent mb-0">
+                        <div class="block-header bg-primary-dark">
+                            <h3 class="block-title">Delete this
+                                podcast?</h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-dismiss="modal"
+                                    aria-label="Close" (click)="podcastDeleteDialog.hide()">
+                                    <i class="icon icon-close"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <h3 class="mb-20">This operation
+                                cannot be undone!
+                            </h3>
+                            <div class="container-fluid cxt-padded bg-faded">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-2 text-md-left text-center">
+                                            <img class="modal-podcast-image rounded-circle" [src]="podcast.imageUrl"
+                                                alt="Generic placeholder image">
+                                        </div>
+                                        <div class="col-md-10 text-md-left text-center font-w600">
+                                            {{podcast.title}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-20">Deleting this podcast
+                                will delete all associated entries
+                                and audio with no opportunity
+                                to get them back. It will also
+                                be removed from any podcast applications
+                                subscribed to this feed..
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-alt-secondary" data-dismiss="modal"
+                                (click)="podcastDeleteDialog.hide()">No</button>
+                            <button type="button" class="btn btn-alt-success" data-dismiss="modal"
+                                (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">
+                                <i class="fa fa-check"></i> Yes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div *ngIf="useWizard" class="mx-50">
         <app-podcast-add-wizard [podcast]="podcast" (finish)="updatePodcast(podcast)"
