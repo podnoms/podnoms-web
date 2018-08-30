@@ -20,7 +20,8 @@ export const entityMetadata: EntityMetadataMap = {
         //     var d2 = new Date(d1);
         // }
     },
-    Profile: {}
+    Profile: {},
+    Notification: {}
 };
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
     root: environment.apiHost,
@@ -38,6 +39,10 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
         Profile: {
             entityResourceUrl: environment.apiHost + '/profile/',
             collectionResourceUrl: environment.apiHost + '/profile/'
+        },
+        Notification: {
+            entityResourceUrl: environment.apiHost + '/notification/',
+            collectionResourceUrl: environment.apiHost + '/notification/'
         }
     }
 };

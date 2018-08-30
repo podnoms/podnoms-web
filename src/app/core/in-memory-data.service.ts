@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { RequestInfo, RequestInfoUtilities, ParsedRequestUrl } from 'angular-in-memory-web-api';
 
-import { Hero, Villain, Podcast } from './model';
+import { Podcast } from './model';
 
 /** In-memory database data */
 interface Db {
@@ -66,17 +66,10 @@ export class InMemoryDataService {
         return parsed;
     }
 }
-
-/**
- * Remap a known singular collection name ("hero")
- * to the plural collection name ("heroes"); else return the name
- * @param name - collection name from the parsed URL
- */
 function mapCollectionName(name: string): string {
     return (
         ({
-            hero: 'heroes',
-            villain: 'villains'
+            podcast: 'podcasts'
         } as any)[name] || name
     );
 }
@@ -85,62 +78,6 @@ function mapCollectionName(name: string): string {
  * Development data
  */
 function getDbData() {
-    const heroes: Hero[] = [
-        {
-            id: 11,
-            name: 'Maxwell Smart',
-            saying: 'Missed it by that much.'
-        },
-        {
-            id: 12,
-            name: 'Bullwinkle J. Moose',
-            saying: 'Watch me pull a rabbit out of a hat.'
-        },
-        {
-            id: 13,
-            name: 'Muhammad Ali',
-            saying: 'Float like a butterfly, sting like a bee.'
-        },
-        {
-            id: 14,
-            name: 'Eleanor Roosevelt',
-            saying: 'No one can make you feel inferior without your consent.'
-        }
-    ];
-
-    const villains: Villain[] = [
-        {
-            id: 21,
-            name: 'Dr. Evil',
-            saying: 'One million dollars!'
-        },
-        {
-            id: 22,
-            name: 'Agent Smith',
-            saying: 'Human beings are a disease.'
-        },
-        {
-            id: 23,
-            name: 'Natasha Fatale',
-            saying: 'You can say that again, dahling.'
-        },
-        {
-            id: 24,
-            name: 'Goldfinger',
-            saying: 'No, I expect you to die!'
-        },
-        {
-            id: 25,
-            name: 'West Witch',
-            saying: "I'll get you, my pretty, and your little dog too!"
-        },
-        {
-            id: 26,
-            name: 'Tony Montana',
-            saying: 'Say hello to my little friend.'
-        }
-    ];
-
     const podcasts: Podcast[] = [
         // {
         //     title: 'Social',
@@ -192,5 +129,5 @@ function getDbData() {
             id: 'test-1'
         }
     ];
-    return { heroes, villains, podcasts } as Db;
+    return { podcasts } as Db;
 }
