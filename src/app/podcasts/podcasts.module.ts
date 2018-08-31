@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
+import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
 import { PodcastStoreService } from './podcast-store.service';
@@ -17,6 +18,12 @@ import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.
 import { ModalModule } from 'ngx-bootstrap';
 import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { NotificationsComponent } from './notifications/notifications-component/notifications.component';
+import { NotificationItemComponent } from './notifications/notification-item/notification-item.component';
+import { NotificationControlService } from './notifications/services/notification-control.service';
+import { NotificationModalComponent } from './notifications/notification-modal/notification-modal.component';
+import { NotificationStoreService } from './notifications/services/notification-store.service';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -26,6 +33,7 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
         MomentModule,
         ModalModule.forRoot(),
         QuillModule,
+        NgbModalModule,
         DropzoneModule
     ],
     exports: [PodcastComponent],
@@ -36,9 +44,12 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
         EntryUploadComponent,
         UploadUrlComponent,
         UploadFileComponent,
+        PodcastAddWizardComponent,
         PodcastEditFormComponent,
-        PodcastAddWizardComponent
+        NotificationsComponent,
+        NotificationItemComponent,
+        NotificationModalComponent
     ],
-    providers: [PodcastStoreService]
+    providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
 })
 export class PodcastsModule {}
