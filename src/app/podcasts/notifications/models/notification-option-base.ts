@@ -1,6 +1,6 @@
 export class NotificationOptionBase<T> {
-    value: T;
     key: string;
+    value: T;
     label: string;
     required: boolean;
     order: number;
@@ -8,8 +8,8 @@ export class NotificationOptionBase<T> {
 
     constructor(
         options: {
-            value?: T;
             key?: string;
+            value?: T;
             label?: string;
             required?: boolean;
             order?: number;

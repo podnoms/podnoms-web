@@ -1,3 +1,15 @@
-<p>
-    This is a notification item
-</p>
+<div class="block block-themed">
+    <div class="block-header bg-corporate-light">
+        <h3 class="block-title">
+            {{notification.type}}
+        </h3>
+        <div class="block-options">
+            <button type="button" class="btn-block-option" (click)="deleteNotification()">
+                <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn-block-option" (click)="editNotification()">
+                <i class="fa fa-cog"></i>
+            </button>
+        </div>
+    </div>
+</div>
