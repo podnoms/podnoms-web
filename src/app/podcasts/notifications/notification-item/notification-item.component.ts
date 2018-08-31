@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Notification } from '../models/notification';
 
 @Component({
     selector: 'app-notification-item',
@@ -6,5 +7,18 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./notification-item.component.scss']
 })
 export class NotificationItemComponent implements OnInit {
+    @Input()
+    notification: Notification;
+
+    @Output()
+    public notificationEdit = new EventEmitter();
+
     ngOnInit() {}
+
+    editNotification() {
+        this.notificationEdit.emit();
+    }
+
+    deleteNotification() {
+    }
 }

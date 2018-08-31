@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NotificationDataService } from '../services/notification-data.service';
 import { Observable } from 'rxjs';
-import { NotificationConfig } from '../models/notification';
+import { Notification } from '../models/notification';
 import { Podcast } from '../../../core';
+import { NotificationStoreService } from '../services/notification-store.service';
 
 @Component({
     selector: 'app-notifications',
@@ -12,12 +13,13 @@ import { Podcast } from '../../../core';
 export class NotificationsComponent implements OnInit {
     @Input()
     podcast: Podcast;
-    notifications: Array<NotificationConfig> = new Array<NotificationConfig>();
+    notifications$: Observable<Notification[]>;
     types$: Observable<string>;
 
-    constructor(private notificationsService: NotificationDataService) {}
+    constructor(private nss: NotificationStoreService, private nds: NotificationDataService) {}
 
     ngOnInit() {
-        this.types$ = this.notificationsService.getTypes();
+        this.types$ = this.nds.getTypes();
+        this.notifications$ = this.nss.getWithQuery({ podcastId: this.podcast.id });
     }
 }
