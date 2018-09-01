@@ -1,28 +1,30 @@
 <div class="table-responsive" *ngIf="podcast.podcastEntries.length !== 0; else empty">
     <table class="table table-striped table-vcenter">
         <tbody>
-            <tr *ngFor="let entry of podcast.podcastEntries" [@fade]="''"
-                app-entry-list-item (entryRemoved)='deleteEntry(entry)'
-                [entry]="entry">
+            <tr *ngFor="let entry of podcast.podcastEntries"
+                [@fade]="''" app-entry-list-item
+                (entryRemoved)='deleteEntry(entry)' [entry]="entry">
             </tr>
         </tbody>
     </table>
 </div>
 <ng-template #empty>
     <div class="row animated lightSpeedIn">
-        <div class="col-md-6 mx-auto">
-            <div class="block-header bg-gd-leaf mb-20 text-center">
-                <h3 class="block-title font-w600 text-white font-weight-bold">Time
+        <div class="col-md-9 mx-auto">
+            <div class="block-header bg-gd-leaf text-center">
+                <span class="col-md-1"><i class="fa fa-smile fa-3x text-white mr-5"></i></span>
+                <h3 class="block-title font-w600 text-white font-weight-bold col-md-3">
+                    Time
                     to add some episodes!</h3>
-                <aside>Click
-                    <b>Add (from URL)</b> to add something from
-                    YouTube, MixCloud, SoundCloud and many more</aside>
-                <aside>Click
-                    <b>Upload (from computer)</b> to add mp3
-                    files from your PC</aside>
-                <div class="block-options">
-                    <i class="fa fa-smile fa-3x text-white mr-5"></i>
-                </div>
+                <p class="col-md-4">Click
+                    <b>Add (from URL)</b> to add something
+                    from
+                    YouTube, MixCloud, SoundCloud and many
+                    more</p>
+                <p class="col-md-4">Click
+                    <b>Upload (from computer)</b> to add
+                    mp3
+                    files from your PC</p>
             </div>
         </div>
     </div>
