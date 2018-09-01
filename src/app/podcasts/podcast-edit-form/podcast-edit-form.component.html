@@ -1,12 +1,16 @@
 <div *ngIf="podcast$ | async; let podcast; else loading">
     <div *ngIf="!useWizard">
         <form class="needs-validation" [formGroup]="podcastForm" (submit)="updatePodcast()"
-            novalidate>
-            <div class="block">
+              novalidate>
+        <div class="block">
                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#btabs-podcast-details">Podcast
+                        <a class="nav-link" data-toggle="tab" href="#btabs-podcast-details">Podcast
                             details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#btabs-podcast-notifications">Notifications
                         </a>
                     </li>
                     <li class="nav-item">
@@ -27,11 +31,11 @@
                     </li>
                 </ul>
                 <div class="block-content tab-content">
-                    <div class="tab-pane active" id="btabs-podcast-details" role="tabpanel">
+                    <div class="tab-pane" id="btabs-podcast-details" role="tabpanel">
                         <div class="row">
                             <div class="col-md-6 pr-50">
                                 <div class="form-group">
-                                    <label for="podcast-title">Title</label>
+                                    <label for="title">Title</label>
                                     <input type="text" class="form-control" id="title" name="title"
                                         [ngClass]="{ 'is-invalid': !podcastForm.valid && podcastForm.controls.title.invalid }"
                                         placeholder="Podcast title"
@@ -47,8 +51,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="podcast-description">Description</label>
-                                    <quill-editor name="description" [style]="{height: '400px'}"
+                                    <label for="description">Description</label>
+                                    <quill-editor id="description" name="description" [style]="{height: '400px'}"
                                         formControlName="description"></quill-editor>
                                 </div>
                             </div>
@@ -66,7 +70,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="btabs-podcast-advanced" role="tabpanel">
+                    <div class="tab-pane active mb-50" id="btabs-podcast-notifications" role="tabpanel">
+                        <app-notifications [podcast]="podcast"></app-notifications>
+                    </div>
+                    <div class="tab-pane mb-50" id="btabs-podcast-advanced" role="tabpanel">
                         <div class="col-md-6" *ngIf="podcast.id">
                             <label for="podcast-slug">Slug</label>
                             <div class="input-group">
@@ -112,7 +119,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
         <div class="modal fade" role="document" bsModal #podcastDeleteDialog="bs-modal"
             aria-hidden="true">
@@ -121,7 +127,8 @@
                     <div class="block block-themed block-transparent mb-0">
                         <div class="block-header bg-primary-dark">
                             <h3 class="block-title">Delete this
-                                podcast?</h3>
+                                podcast?
+                            </h3>
                             <div class="block-options">
                                 <button type="button" class="btn-block-option" data-dismiss="modal"
                                     aria-label="Close" (click)="podcastDeleteDialog.hide()">
