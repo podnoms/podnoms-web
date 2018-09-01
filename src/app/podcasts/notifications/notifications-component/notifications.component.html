@@ -1,0 +1,17 @@
+<button type="button" class="btn btn-primary dropdown-toggle"
+    data-toggle="dropdown">Add notification</button>
+<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+    <a class="dropdown-item" (click)="notificationModal.openModal(type)"
+        *ngFor="let type of types$ | async">
+        <i class="fa fa-fw fa fa-plus mr-5"></i>{{type}}
+    </a>
+</div>
+<app-notification-modal [podcast]="podcast"
+    #notificationModal></app-notification-modal>
+<div class="notifications row p-30">
+    <div class="notification-item mb-30 col-md-3" *ngFor="let n of notifications$|async">
+        <app-notification-item [notification]="n"
+            (notificationEdit)="notificationModal.openEditModal(n)">
+        </app-notification-item>
+    </div>
+</div>
