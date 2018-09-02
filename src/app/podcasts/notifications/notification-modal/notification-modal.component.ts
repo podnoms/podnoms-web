@@ -52,7 +52,11 @@ export class NotificationModalComponent implements OnInit {
             reason => {}
         );
     }
-    openEditModal(notification: Notification) {}
+    openEditModal(notification: Notification) {
+        console.log('notification-modal.component', 'openEditModal', notification);
+        this.notification = notification;
+        this._createForm(notification.options);
+    }
     onSubmit() {
         const model = this.form;
         const notification: Notification = new Notification();
