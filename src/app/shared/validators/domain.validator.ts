@@ -17,7 +17,6 @@ export function validateDomain(utilityService: UtilityService): AsyncValidatorFn
             switchMap(() => {
                 if (!url.test(control.value)) {
                     return of({
-                        urlvalid: false,
                         message: 'Invalid domain name'
                     });
                 }
@@ -26,7 +25,6 @@ export function validateDomain(utilityService: UtilityService): AsyncValidatorFn
                         return e
                             ? null
                             : {
-                                  available: true,
                                   message: `This is not a valid CNAME domain`
                               };
                     })

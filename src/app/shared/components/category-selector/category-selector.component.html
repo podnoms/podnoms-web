@@ -3,12 +3,10 @@
         <label for="category">Category</label>
     </div>
     <div class="col-md-9">
-        <ngx-select [items]="categories$ | async" optionValueField="id"
-            [(ngModel)]="category" optionTextField="description"
-            (select)="selectCategory($event)"
-            (selectionChanges)="categorySelected($event)"
-            placeholder="Select category">
-        </ngx-select>
+        <ng-select [items]="categories$ | async" bindLabel="description"
+            (close)="selectCategory()" bindValue="id"
+            placeholder="Select category" [(ngModel)]="category">
+        </ng-select>
     </div>
 </div>
 <div class="row justify-content-center">
@@ -16,13 +14,19 @@
         <label for="sub-category">Sub categories</label>
     </div>
     <div class="col-md-9">
-        <ngx-select [allowClear]="true" [items]="subCategories$|async"
+        <ng-select [items]="subCategories$|async" bindLabel="description"
+            placeholder="Coming soon!!"
+            bindValue="id">
+        </ng-select>
+
+        <!-- <ng-select [allowClear]="true" [items]="subCategories$|async"
             [(ngModel)]="subcategories" [disabled]="!subCategoriesAvailable"
-            [multiple]="true" optionValueField="id" optionTextField="description"
-            optGroupLabelField="description" size="small" optGroupOptionsField="subCategories"
-            (select)="selectSubCategory($event)"
+            [multiple]="true" optionValueField="id"
+            optionTextField="description"
+            optGroupLabelField="description" size="small"
+            optGroupOptionsField="subCategories" (select)="selectSubCategory($event)"
             (selectionChanges)="subCategorySelected($event)"
             placeholder="Coming soon!!">
-        </ngx-select>
+        </ng-select> -->
     </div>
 </div>

@@ -11,11 +11,11 @@ import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
 import { UtilityService } from './services/utility.service';
 import { ImageService } from './services/image.service';
 import { RouterModule } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { SignalRService } from './services/signal-r.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PushRegistrationService } from './services/push-registration.service';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
-import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
     imports: [
@@ -24,7 +24,7 @@ import { NgxSelectModule } from 'ngx-select-ex';
         ReactiveFormsModule,
         RouterModule,
         SocialLoginModule,
-        NgxSelectModule
+        NgSelectModule
     ],
     exports: [
         FormsModule,
