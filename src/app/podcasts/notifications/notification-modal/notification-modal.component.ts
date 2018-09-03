@@ -61,6 +61,8 @@ export class NotificationModalComponent implements OnInit {
         const model = this.form;
         const notification: Notification = new Notification();
 
+        notification.id = this.notification.id || null;
+
         notification.podcastId = this.podcast.id;
         notification.type = this.notification.type;
         notification.options = [];
