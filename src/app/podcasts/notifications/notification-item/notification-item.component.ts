@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Notification } from '../models/notification';
+import { UtilsService } from '../../../utils/utils.service';
 
 @Component({
     selector: 'app-notification-item',
@@ -12,13 +13,16 @@ export class NotificationItemComponent implements OnInit {
 
     @Output()
     public notificationEdit = new EventEmitter();
-
+    constructor(private us: UtilsService) {}
     ngOnInit() {}
+
+    __(c: string) {
+        return this.us.stringToColour(c);
+    }
 
     editNotification() {
         this.notificationEdit.emit();
     }
 
-    deleteNotification() {
-    }
+    deleteNotification() {}
 }
