@@ -1,6 +1,10 @@
 {
   "name": "podnoms-web",
+<<<<<<< HEAD
   "version": "0.91.0",
+=======
+  "version": "0.87.0",
+>>>>>>> Version update
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -24,13 +28,8 @@
     "@angular/platform-browser": "^6.1.6",
     "@angular/platform-browser-dynamic": "^6.1.6",
     "@angular/pwa": "^0.7.5",
-<<<<<<< HEAD
-    "@angular/router": "^6.1.4",
-    "@angular/service-worker": "^6.1.4",
-=======
     "@angular/router": "^6.1.6",
     "@angular/service-worker": "^6.1.6",
->>>>>>> Fix broken updates and select dropdown
     "@aspnet/signalr": "^3.0.0-alpha1-34847",
     "@auth0/angular-jwt": "^2.0.0",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
