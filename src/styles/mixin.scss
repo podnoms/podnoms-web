@@ -17,8 +17,4 @@ $simple-line-font-path: '~simple-line-icons/fonts/';
 @import 'assets/css/social-buttons.css';
 @import '~dropzone/dist/dropzone.css';
 @import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
-
-// @import '~cookieconsent/build/cookieconsent.min.css';
-// @import '~quill/dist/quill.snow.css';
-// @import '~quill/dist/quill.bubble.css';
-// @import '~ngx-smart-modal/ngx-smart-modal.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
