@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Notification } from '../models/notification';
+import { Notification } from '../../../core/model/notification';
 import { UtilsService } from '../../../utils/utils.service';
 
 @Component({

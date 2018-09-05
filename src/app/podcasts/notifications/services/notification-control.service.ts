@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NotificationOptionBase } from '../models/notification-option-base';
+import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Injectable()
