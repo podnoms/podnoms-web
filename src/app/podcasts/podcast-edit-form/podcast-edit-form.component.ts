@@ -68,8 +68,8 @@ export class PodcastEditFormComponent implements OnInit {
             slug: [
                 podcast.slug,
                 Validators.compose([
-                    Validators.required,
-                    Validators.minLength(5),
+                    // Validators.required,
+                    // Validators.minLength(5),
                     Validators.maxLength(30)
                 ]),
                 Validators.composeAsync([
