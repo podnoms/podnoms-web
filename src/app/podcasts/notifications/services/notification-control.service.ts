@@ -8,7 +8,6 @@ export class NotificationControlService {
 
     toFormGroup(questions: NotificationOptionBase<any>[]) {
         const group: any = {};
-
         questions.forEach(question => {
             group[question.key] = question.required
                 ? new FormControl(question.value || '', Validators.required)
