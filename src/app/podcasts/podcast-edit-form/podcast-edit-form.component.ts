@@ -13,7 +13,7 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
 import { validateSearch } from '../../shared/validators/search.validator';
 import { validateDomain } from '../../shared/validators/domain.validator';
-// import { ConditionalValidator } from '../../shared/validators/conditional.validator';
+import { ConditionalValidator } from '../../shared/validators/conditional.validator';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -68,8 +68,8 @@ export class PodcastEditFormComponent implements OnInit {
             slug: [
                 podcast.slug,
                 Validators.compose([
-                    Validators.required,
-                    Validators.minLength(5),
+                    // Validators.required,
+                    // Validators.minLength(5),
                     Validators.maxLength(30)
                 ]),
                 Validators.composeAsync([
