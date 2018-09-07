@@ -8,6 +8,7 @@ import { Podcast } from '../../../core';
 import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
+import { debug } from 'util';
 
 @Component({
     selector: 'app-notification-modal',
@@ -63,7 +64,7 @@ export class NotificationModalComponent implements OnInit {
     saveChanges() {
         const model = this.form;
         const notification: Notification = new Notification();
-
+        const isNew = this.notification.id == null;
         notification.id = this.notification.id || null;
 
         notification.podcastId = this.podcast.id;
@@ -79,7 +80,16 @@ export class NotificationModalComponent implements OnInit {
         });
         this.nds.saveChanges(notification).subscribe(n => {
             // this.nss.upsertOneInCache(n);
-            this.podcast.notifications[0] = n;
+            // this is shite - ngrx/data doesn't handle master-detail well though
+            if (isNew) {
+                this.podcast.notifications.push(n);
+            } else {
+                // find and update existing
+                const index = this.podcast.notifications.findIndex(r => r.id === n.id);
+                if (index !== -1) {
+                    this.podcast.notifications[index] = n;
+                }
+            }
             this.pss.updateOneInCache(this.podcast);
         });
     }
