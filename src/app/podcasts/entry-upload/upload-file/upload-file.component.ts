@@ -10,10 +10,8 @@ import { DropzoneConfig, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
     styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent implements OnInit {
-    @Input()
-    podcast: Podcast;
-    @Output()
-    uploadComplete: EventEmitter<any> = new EventEmitter();
+    @Input() podcast: Podcast;
+    @Output() uploadComplete: EventEmitter<any> = new EventEmitter();
     // @ViewChild('uploader') el: ElementRef;
     config: DropzoneConfigInterface = {
         acceptedFiles: 'audio/*',
@@ -45,6 +43,6 @@ export class UploadFileComponent implements OnInit {
         this.toastyService.showError('Error', `Error uploading audio\n${event}`);
     }
     onUploadSuccess(result) {
-        this.uploadComplete.emit(result[1]);
+        this.uploadComplete.emit(result);
     }
 }

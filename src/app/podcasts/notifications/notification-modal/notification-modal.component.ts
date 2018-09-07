@@ -5,8 +5,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationDataService } from '../services/notification-data.service';
 import { NotificationStoreService } from '../services/notification-store.service';
 import { Podcast } from '../../../core';
-import { Notification } from '../models/notification';
-import { NotificationOptionBase } from '../models/notification-option-base';
+import { Notification } from '../../../core/model/notification';
+import { NotificationOptionBase } from '../../../core/model/notification-option-base';
+import { PodcastStoreService } from '../../podcast-store.service';
 
 @Component({
     selector: 'app-notification-modal',
@@ -27,7 +28,8 @@ export class NotificationModalComponent implements OnInit {
         private modalService: NgbModal,
         private ncs: NotificationControlService,
         private nds: NotificationDataService,
-        private nss: NotificationStoreService
+        private nss: NotificationStoreService,
+        private pss: PodcastStoreService
     ) {}
 
     ngOnInit() {
@@ -45,11 +47,12 @@ export class NotificationModalComponent implements OnInit {
     _createForm(config: NotificationOptionBase<string>[]) {
         this.form = this.ncs.toFormGroup(config);
         this.modalService.open(this.content, { size: 'lg' }).result.then(
-            result => {
-                // this.nss.upsertOneInCache();
-                console.log('notification-modal.component', 'result', result);
-            },
-            reason => {}
+            result => console.log('notification-modal.component', 'result', result),
+            reason => {
+                if (reason === 'save') {
+                    this.saveChanges();
+                }
+            }
         );
     }
     openEditModal(notification: Notification) {
@@ -57,10 +60,10 @@ export class NotificationModalComponent implements OnInit {
         this.notification = notification;
         this._createForm(notification.options);
     }
-    onSubmit() {
+    saveChanges() {
         const model = this.form;
         const notification: Notification = new Notification();
-
+        const isNew = this.notification.id == null;
         notification.id = this.notification.id || null;
 
         notification.podcastId = this.podcast.id;
@@ -68,13 +71,25 @@ export class NotificationModalComponent implements OnInit {
         notification.options = [];
 
         Object.keys(this.form.value).forEach(e => {
-            console.log('notification-modal.component', 'pushing', model[e]);
             const option = new NotificationOptionBase<string>({
                 key: e,
                 value: model.value[e]
             });
             notification.options.push(option);
         });
-        this.nds.saveChanges(notification).subscribe(n => this.nss.upsertOneInCache(n));
+        this.nds.saveChanges(notification).subscribe(n => {
+            // this.nss.upsertOneInCache(n);
+            // this is shite - ngrx/data doesn't handle master-detail well though
+            if (isNew) {
+                this.podcast.notifications.push(n);
+            } else {
+                // find and update existing
+                const index = this.podcast.notifications.findIndex(r => r.id === n.id);
+                if (index !== -1) {
+                    this.podcast.notifications[index] = n;
+                }
+            }
+            this.pss.updateOneInCache(this.podcast);
+        });
     }
 }

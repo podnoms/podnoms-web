@@ -1,32 +1,43 @@
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #content let-modal>
+
     <div class="block block-themed block-transparent mb-0">
         <div class="block-header bg-primary-dark">
             <h3 class="block-title">{{notification.type}}</h3>
             <div class="block-options">
-                <button type="button" class="btn-block-option" (click)="d('header')" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-block-option"
+                    (click)="modal.dismiss('cancel')"
+                    data-dismiss="modal" aria-label="Close">
                     <i class="fa fa-times-circle"></i>
                 </button>
             </div>
         </div>
-        <div class="block-content mb-30">
-            <form *ngIf="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="block-content">
+            <form *ngIf="form" [formGroup]="form">
                 <div *ngFor="let question of notification.options">
                     <div class="form-group" [formGroup]="form">
                         <label [attr.for]="question.key">{{question.label}}</label>
                         <div [ngSwitch]="question.controlType">
-                            <input class="form-control" *ngSwitchCase="'textbox'" [formControlName]="question.key"
+                            <input class="form-control"
+                                *ngSwitchCase="'textbox'"
+                                [formControlName]="question.key"
                                 [id]="question.key" [type]="question.controlType">
                         </div>
                         <div class="errorMessage" *ngIf="!isValid">{{question.label}}
                             is required</div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <button class="btn btn-success" type="submit" [disabled]="!form.valid">Save</button>
-                </div>
             </form>
         </div>
     </div>
+    <div class="modal-footer">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-alt-secondary"
+                (click)="modal.dismiss('cancel')">Cancel</button>
+            <button type="button" class="btn btn-alt-success"
+                (click)="modal.dismiss('save')">
+                <i class="fa fa-check"></i>
+                Save
+            </button>
+        </div>
+    </div>
 </ng-template>
-
-

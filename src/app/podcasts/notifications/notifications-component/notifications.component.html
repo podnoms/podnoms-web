@@ -9,7 +9,7 @@
 <app-notification-modal [podcast]="podcast"
     #notificationModal></app-notification-modal>
 <div class="notifications row p-30">
-    <div class="notification-item mb-30 col-md-3" *ngFor="let n of notifications$|async">
+    <div class="notification-item mb-30 col-md-3" *ngFor="let n of notifications">
         <app-notification-item [notification]="n"
             (notificationEdit)="notificationModal.openEditModal(n)">
         </app-notification-item>

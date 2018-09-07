@@ -1,4 +1,4 @@
-import { Category, PodcastEntry } from '.';
+import { Category, PodcastEntry, Notification } from '.';
 
 export class Podcast {
     id?: string;
@@ -13,5 +13,5 @@ export class Podcast {
     podcastEntries?: PodcastEntry[];
     category?: Category;
     subcategories?: Array<Category>;
+    notifications?: Array<Notification>;
 }
-

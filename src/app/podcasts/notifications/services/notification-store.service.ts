@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from 'ngrx-data';
-import { Notification } from '../models/notification';
+import { Notification } from '../../../core/model/notification';
 
 @Injectable({
     providedIn: 'root'
