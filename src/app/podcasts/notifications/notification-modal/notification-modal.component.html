@@ -12,6 +12,7 @@
             </div>
         </div>
         <div class="block-content">
+            <p>There is no validation here (yet) - it's up to you to ensure the data are correct.</p>
             <form *ngIf="form" [formGroup]="form">
                 <div *ngFor="let question of notification.options">
                     <div class="form-group" [formGroup]="form">
