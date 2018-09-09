@@ -16,6 +16,7 @@ import { SignalRService } from './services/signal-r.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PushRegistrationService } from './services/push-registration.service';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
+import { CamelCaseToSentencePipe } from './pipes/camel-case-to-sentence.pipe';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import { CategorySelectorComponent } from './components/category-selector/catego
         BasePageComponent,
         BytesToHumanPipe,
         ImageUploadComponent,
-        CategorySelectorComponent
+        CategorySelectorComponent,
+        CamelCaseToSentencePipe
     ],
     providers: [
         UtilityService,
