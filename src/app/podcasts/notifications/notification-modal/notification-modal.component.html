@@ -1,5 +1,4 @@
 <ng-template #content let-modal>
-
     <div class="block block-themed block-transparent mb-0">
         <div class="block-header bg-primary-dark">
             <h3 class="block-title">{{notification.type}}</h3>
@@ -12,21 +11,49 @@
             </div>
         </div>
         <div class="block-content">
-            <form *ngIf="form" [formGroup]="form">
-                <div *ngFor="let question of notification.options">
-                    <div class="form-group" [formGroup]="form">
-                        <label [attr.for]="question.key">{{question.label}}</label>
-                        <div [ngSwitch]="question.controlType">
-                            <input class="form-control"
-                                *ngSwitchCase="'textbox'"
-                                [formControlName]="question.key"
-                                [id]="question.key" [type]="question.controlType">
+            <ul class="nav nav-tabs nav-tabs-alt"
+                data-toggle="tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#tab-settings">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tab-logs">Logs</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="#btabs-alt-static-settings"><i
+                            class="fas fa-school"></i></a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-settings">
+                    <p>There is no validation here (yet) -
+                        it's up
+                        to you to ensure the data are
+                        correct.</p>
+                    <form *ngIf="form" [formGroup]="form">
+                        <div *ngFor="let question of notification.options">
+                            <div class="form-group"
+                                [formGroup]="form">
+                                <label [attr.for]="question.key">{{question.label}}</label>
+                                <div [ngSwitch]="question.controlType">
+                                    <input class="form-control"
+                                        *ngSwitchCase="'textbox'"
+                                        [formControlName]="question.key"
+                                        [id]="question.key"
+                                        [type]="question.controlType">
+                                </div>
+                                <div class="errorMessage"
+                                    *ngIf="!isValid">{{question.label}}
+                                    is required</div>
+                            </div>
                         </div>
-                        <div class="errorMessage" *ngIf="!isValid">{{question.label}}
-                            is required</div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+                <div class="tab-pane" id="tab-logs">
+                    <h1>Logs</h1>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
