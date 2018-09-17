@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,7 +15,8 @@ import { ServiceWorkerModule, SwPush, SwUpdate } from '@angular/service-worker';
 import { PushRegistrationService } from './shared/services/push-registration.service';
 import { ProfileStoreService } from './profile/profile-store.service';
 import { Observable } from 'rxjs';
-import { ProfileDataService } from './profile/profile-data.service';
+import { MonitoringService } from './shared/monitoring/monitoring.service';
+import { MonitoringErrorHandler } from './shared/monitoring/monitoring-error.handler';
 @NgModule({
     imports: [
         BrowserModule,
@@ -28,6 +29,13 @@ import { ProfileDataService } from './profile/profile-data.service';
         SharedModule, // import here to make sure that AuthService is a singleton
         SimpleNotificationsModule.forRoot(),
         ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ],
+    providers: [
+        MonitoringService,
+        {
+            provide: ErrorHandler,
+            useClass: MonitoringErrorHandler
+        }
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent]
@@ -45,15 +53,15 @@ export class AppModule {
                 push.messages.subscribe(m => {
                     console.log('app.module', 'Push message', m);
                 });
-                push
-                    .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
-                    .then(s => {
+                push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(
+                    s => {
                         registrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(r =>
                                 console.log('app.module', 'addSubscriber', 'done', r)
                             );
-                    });
+                    }
+                );
             }
         });
     }
