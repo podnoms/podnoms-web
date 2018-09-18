@@ -1,14 +1,12 @@
-<div class="container-fluid profile-container"
-     *ngIf="profile$ | async; let profile; else loading">
+<div class="container-fluid profile-container" *ngIf="profile$ | async; let profile; else loading">
     <div class="block">
         <div class="block-header block-header-default">
             <h3 class="block-title">Profile Details</h3>
             <div class="block-options">
-                <button type="submit"
-                        class="btn btn-alt-primary"
-                        (click)="doSave(profile)"
-                        [disabled]="slugError">
-                    <i class="fa fa-check mr-5"></i> Update Profile
+                <button type="submit" class="btn btn-alt-primary"
+                    (click)="doSave(profile)" [disabled]="slugError">
+                    <i class="fa fa-check mr-5"></i> Update
+                    Profile
                 </button>
             </div>
         </div>
@@ -17,25 +15,24 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-7">
-                            <form action=""
-                                  method="post"
-                                  onsubmit="return false;">
+                            <form action="" method="post"
+                                onsubmit="return false;">
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label for="first-name">Firstname</label>
                                                 <input type="text"
-                                                       class="form-control form-control-lg-disabled"
-                                                       name="first-name"
-                                                       [(ngModel)]="profile.firstName">
+                                                    class="form-control form-control-lg-disabled"
+                                                    name="first-name"
+                                                    [(ngModel)]="profile.firstName">
                                             </div>
                                             <div class="col-6">
                                                 <label for="last-name">Lastname</label>
                                                 <input type="text"
-                                                       class="form-control form-control-lg-disabled"
-                                                       name="last-name"
-                                                       [(ngModel)]="profile.lastName">
+                                                    class="form-control form-control-lg-disabled"
+                                                    name="last-name"
+                                                    [(ngModel)]="profile.lastName">
                                             </div>
                                         </div>
                                     </div>
@@ -44,89 +41,65 @@
                                             <div class="col-12">
                                                 <label for="slug-box">Slug</label>
                                                 <div class="input-group"
-                                                     [ngClass]="slugError ? 'is-invalid' : ''">
-                                                    <input type="text"
-                                                           class="form-control form-control-lg-disabled"
-                                                           id="slug-box"
-                                                           name="slug-box"
-                                                           autocomplete="off"
-                                                           required=""
-                                                           [(ngModel)]="profile.slug"
-                                                           (keyup)="searchTerm$.next($event.target.value)">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text input-group-lg">
-                                                            <i class="fa fa-asterisk"
-                                                               [ngClass]="slugging ? 'fa-spin' : ''"></i>
+                                                    [ngClass]="slugError ? 'is-invalid' : ''">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control form-control-lg-disabled"
+                                                        id="slug-box"
+                                                        name="slug-box"
+                                                        autocomplete="off"
+                                                        required=""
+                                                        [(ngModel)]="profile.slug"
+                                                        (keyup)="searchTerm$.next($event.target.value)">
+                                                    <div
+                                                        class="input-group-append">
+                                                        <span
+                                                            class="input-group-text input-group-lg">
+                                                            <i
+                                                                class="fa fa-asterisk"
+                                                                [ngClass]="slugging ? 'fa-spin' : ''"></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="invalid-feedback"
-                                             *ngIf="slugError">{{slugError}}</div>
-                                        <div class="form-text text-muted text-danger">Changing this will change all your RSS URLs.</div>
+                                            *ngIf="slugError">{{slugError}}</div>
+                                        <div class="form-text text-muted text-danger">Changing
+                                            this will
+                                            change all your
+                                            RSS URLs.</div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-5">
-                                        <label for="mega-bio">Profile Image</label>
-                                        <app-image-upload [imageUrl]="profile.profileImage"
-                                                          #imageControl></app-image-upload>
+                                        <label for="mega-bio">Profile
+                                            Image</label>
+                                        <app-image-upload
+                                            [imageUrl]="profile.profileImage"
+                                            #imageControl></app-image-upload>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-5">
-                            <div class="block block-themed">
-                                <div class="block-header bg-pulse">
-                                    <h3 class="block-title">My Details</h3>
-                                    <div class="block-options">
-                                        <button type="button"
-                                                class="btn-block-option"
-                                                (click)="refreshLimits()">
-                                            <i class="icon icon-refresh"></i>
-                                        </button>
-                                    </div>
+                            <div class="block">
+                                <div class="block-header block-header-default">
+                                    <h3 class="block-title">Disk
+                                        Quota:
+                                        {{storageAvailable|bytesToHuman}}</h3>
                                 </div>
-                                <div class="block-content block-content-full text-center">
-                                    <div class="chart js-pie-chart pie-chart js-pie-chart-enabled"
-                                         data-percent="60"
-                                         #usageChart
-                                         *ngIf="limit">
-                                        <span>{{limit.storageUsed | bytesToHuman}}
-                                            <br>
-                                            <small class="text-muted">of {{limit.storageQuota| bytesToHuman}}</small>
-                                        </span>
+                                <div class="block-content">
+                                    <div class="js-pie-chart pie-chart js-pie-chart-enabled">
+                                        <canvas baseChart
+                                            [data]="chartData"
+                                            [labels]="chartLabels"
+                                            [chartType]="'doughnut'"
+                                            [options]="chartOptions">
+                                        </canvas>
                                     </div>
-                                    <p class="font-w600 text-center">Storage space used</p>
                                 </div>
                             </div>
-                            <!-- <div class="block">
-                                <div class="block-header block-header-default">
-                                    <h3 class="block-title">My Info</h3>
-                                    <div class="block-options">
-                                        <button type="button"
-                                                class="btn-block-option"
-                                                data-toggle="block-option"
-                                                data-action="state_toggle"
-                                                data-action-mode="demo">
-                                            <i class="si si-refresh"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="block-content block-content-full clearfix">
-                                    <div class="chart js-pie-chart pie-chart js-pie-chart-enabled"
-                                         data-percent="60"
-                                         #usageChart
-                                         *ngIf="limit">
-                                        <span>{{limit.storageUsed | bytesToHuman}}
-                                            <br>
-                                            <small class="text-muted">of {{limit.storageQuota| bytesToHuman}}</small>
-                                        </span>
-                                    </div>
-                                    <p class="font-w600 text-center">Storage space used</p>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>

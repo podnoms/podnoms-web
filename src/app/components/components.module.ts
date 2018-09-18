@@ -8,16 +8,17 @@ import { SideOverlayComponent } from './side-overlay/side-overlay.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterPlayerComponent } from './footer/footer-player/footer-player.component';
 import { PasswordCheckerComponent } from './password-checker/password-checker.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, SharedModule],
+    imports: [CommonModule, RouterModule, SharedModule, ChartsModule],
     providers: [PodcastStoreService],
     declarations: [
         SidebarComponent,
         SideOverlayComponent,
         FooterComponent,
         FooterPlayerComponent,
-        PasswordCheckerComponent,
+        PasswordCheckerComponent
     ],
     exports: [
         SidebarComponent,
