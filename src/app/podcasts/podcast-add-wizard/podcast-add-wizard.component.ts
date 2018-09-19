@@ -21,7 +21,6 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 })
 export class PodcastAddWizardComponent extends BasePageComponent
     implements OnInit, AfterViewInit {
-    loading: boolean = true;
     currentStep: number = 0;
     errorMessage: string;
     @Input() podcast: Podcast;
@@ -40,14 +39,10 @@ export class PodcastAddWizardComponent extends BasePageComponent
         }
     }
     ngOnInit() {
-        console.log('podcast-add-wizard.component', 'ngOnInit', this.loading, this.podcast);
         if (!this.podcast.imageUrl) {
             this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
                 this.podcast.imageUrl = u;
-                this.loading = false;
-            }, err => (this.loading = false));
-        } else {
-            this.loading = false;
+            });
         }
     }
     ngAfterViewInit() {
