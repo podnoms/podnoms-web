@@ -28,8 +28,10 @@ export class PodcastEditFormComponent implements OnInit {
     public subcategories: Array<string>;
 
     podcastForm: FormGroup;
-    @ViewChild('imageControl') imageControl: ImageUploadComponent;
-    @ViewChild('wizardControl') wizardControl: PodcastAddWizardComponent;
+    @ViewChild('imageControl')
+    imageControl: ImageUploadComponent;
+    @ViewChild('wizardControl')
+    wizardControl: PodcastAddWizardComponent;
 
     useWizard: boolean = false;
     sending = false;
@@ -91,10 +93,13 @@ export class PodcastEditFormComponent implements OnInit {
         this.useWizard = this.route.snapshot.params.useWizard || false;
         if (!id) {
             const podcast = new Podcast();
-            this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
-                this.formImageUrl = u;
-                this.podcast$ = of(podcast);
-            }, () => (this.podcast$ = of(podcast)));
+            this.utilityService.getTemporaryPodcastImageUrl().subscribe(
+                u => {
+                    this.formImageUrl = u;
+                    this.podcast$ = of(podcast);
+                },
+                () => (this.podcast$ = of(podcast))
+            );
             this.podcastForm = this._createForm(this.fb, podcast);
         } else {
             this.podcastStoreService.entities$
@@ -112,11 +117,16 @@ export class PodcastEditFormComponent implements OnInit {
                 });
         }
     }
-    updatePodcast() {
+    wizardFinish(podcast: Podcast) {
+        this._updatePodcast(podcast);
+    }
+    submitForm() {
+        const podcast: Podcast = Object.assign({}, this.podcastForm.value);
+        this._updatePodcast(podcast);
+    }
+    private _updatePodcast(podcast: Podcast) {
         console.log('podcast-edit-form.component', 'category', this.category);
         console.log('podcast-edit-form.component', 'subcategories', this.subcategories);
-
-        const podcast: Podcast = Object.assign({}, this.podcastForm.value);
 
         podcast.category = new Category(this.category);
         // TODO: Fix this.

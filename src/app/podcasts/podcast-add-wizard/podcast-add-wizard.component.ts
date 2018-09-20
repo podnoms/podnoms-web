@@ -67,6 +67,7 @@ export class PodcastAddWizardComponent extends BasePageComponent
         }
     }
     finishUp() {
+        debugger;
         this.finish.emit(this.podcast);
     }
 }
