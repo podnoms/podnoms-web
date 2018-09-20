@@ -27,7 +27,7 @@ export class CategorySelectorComponent {
     constructor(categoryService: CategoryService) {
         this.categories$ = categoryService.getCategories();
     }
-    selectCategory($event) {
+    selectCategory() {
         console.log('category-selector.component', 'selectSubCategory', this.category);
         this.categoryChange.emit(this.category);
     }
