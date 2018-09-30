@@ -1,11 +1,4 @@
-import {
-    Component,
-    AfterViewInit,
-    ElementRef,
-    ViewChild,
-    ViewContainerRef,
-    ViewChildren
-} from '@angular/core';
+import { Component, ElementRef, ViewChild, SimpleChanges, OnInit } from '@angular/core';
 import { Profile, ProfileLimits, ToastService } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -14,13 +7,14 @@ import { ProfileDataService } from '../profile-data.service';
 import { ProfileStoreService } from '../profile-store.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent extends BasePageComponent {
+export class ProfileComponent extends BasePageComponent implements OnInit {
     public chartLabels: string[] = ['Used', 'Available'];
     public chartData: number[] = [85, 15];
 
@@ -46,6 +40,8 @@ export class ProfileComponent extends BasePageComponent {
             }
         }
     };
+    @ViewChild(BaseChartDirective)
+    private _chart: BaseChartDirective;
 
     @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
@@ -87,9 +83,10 @@ export class ProfileComponent extends BasePageComponent {
                 }
                 this.slugging = false;
             });
-        this.profile$ = this.profileStoreService.entities$.pipe(
-            map(r => r.filter(it => it.slug !== null)[0])
-        );
+        this.profile$ = this.profileStoreService.entities$.pipe(map(r => r.filter(it => it.slug !== null)[0]));
+    }
+
+    ngOnInit() {
         this.refreshLimits();
     }
     private _bytesToHuman(bytes: number) {
@@ -106,6 +103,15 @@ export class ProfileComponent extends BasePageComponent {
         this.profileDataService.getLimits().subscribe(l => {
             this.storageAvailable = l.storageQuota;
             this.chartData = [l.storageUsed, l.storageQuota - l.storageUsed];
+
+            const used = this._bytesToHuman(l.storageUsed);
+            const available = this._bytesToHuman(l.storageQuota - l.storageUsed);
+
+            this.chartLabels = [`Used: ${used}`, `Available: ${available}`];
+            if (this._chart) {
+                this._chart.ngOnChanges({} as SimpleChanges);
+                this._chart.chart.update();
+            }
         });
     }
     regenerateApiKey() {
