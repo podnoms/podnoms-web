@@ -24,6 +24,7 @@ import { NotificationControlService } from './notifications/services/notificatio
 import { NotificationModalComponent } from './notifications/notification-modal/notification-modal.component';
 import { NotificationStoreService } from './notifications/services/notification-store.service';
 import { UtilsModule } from '../utils/utils.module';
+import { PodcastPrivacyComponent } from './podcast-privacy/podcast-privacy.component';
 
 @NgModule({
     imports: [
@@ -50,7 +51,8 @@ import { UtilsModule } from '../utils/utils.module';
         PodcastEditFormComponent,
         NotificationsComponent,
         NotificationItemComponent,
-        NotificationModalComponent
+        NotificationModalComponent,
+        PodcastPrivacyComponent
     ],
     providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
 })

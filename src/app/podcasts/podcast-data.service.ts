@@ -40,8 +40,8 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     private __mapPodcast(podcast: Podcast) {
         return {
             ...podcast,
-            podcastEntries: podcast.podcastEntries.sort((a, b) =>
-                new Date(b.createDate).getTime() - new Date(a.createDate).getTime()
+            podcastEntries: podcast.podcastEntries.sort(
+                (a, b) => new Date(b.createDate).getTime() - new Date(a.createDate).getTime()
             )
         };
     }
@@ -54,6 +54,10 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
         return this.http.post<Podcast>(environment.apiHost + '/podcast', podcast);
     }
     updatePodcast(podcast: Podcast): Observable<Podcast> {
+        if (!podcast.category) {
+            delete podcast['category'];
+        }
+
         return this.http.put<Podcast>(environment.apiHost + '/podcast/', podcast);
     }
     deletePodcast(id: string): Observable<boolean> {
