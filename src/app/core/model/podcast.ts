@@ -14,4 +14,8 @@ export class Podcast {
     category?: Category;
     subcategories?: Array<Category>;
     notifications?: Array<Notification>;
+
+    private?: boolean;
+    authUserName?: string;
+    authPassword?: string;
 }

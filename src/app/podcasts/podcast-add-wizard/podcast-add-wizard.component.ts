@@ -9,7 +9,7 @@ import {
     AfterViewInit,
     HostListener
 } from '@angular/core';
-import { Podcast } from '../../core';
+import { Podcast, Category } from '../../core';
 import { UtilityService } from '../../shared/services/utility.service';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
@@ -19,15 +19,20 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
     templateUrl: './podcast-add-wizard.component.html',
     styleUrls: ['./podcast-add-wizard.component.scss']
 })
-export class PodcastAddWizardComponent extends BasePageComponent
-    implements OnInit, AfterViewInit {
+export class PodcastAddWizardComponent extends BasePageComponent implements OnInit, AfterViewInit {
     currentStep: number = 0;
     errorMessage: string;
-    @Input() podcast: Podcast;
-    @Output() finish: EventEmitter<Podcast> = new EventEmitter<Podcast>();
-    @ViewChild('imageControl') imageControl: ImageUploadComponent;
+    @Input()
+    podcast: Podcast;
+    @Output()
+    finish: EventEmitter<Podcast> = new EventEmitter<Podcast>();
+    @ViewChild('imageControl')
+    imageControl: ImageUploadComponent;
 
-    @ViewChild('podcastName') podcastName: ElementRef;
+    category: string;
+
+    @ViewChild('podcastName')
+    podcastName: ElementRef;
 
     constructor(private utilityService: UtilityService) {
         super();
@@ -61,13 +66,18 @@ export class PodcastAddWizardComponent extends BasePageComponent
             this.errorMessage = 'Please give me a title!';
             return;
         }
-        if (this.currentStep < 3) {
-            this.errorMessage = '';
+        if (this.currentStep === 3 && !this.category) {
+            this.errorMessage = 'You must add a category!';
+            return;
+        }
+        if (this.currentStep < 4) {
             this.currentStep++;
         }
+        this.errorMessage = '';
     }
     finishUp() {
-        debugger;
+        this.errorMessage = '';
+        this.podcast.category = new Category(this.category);
         this.finish.emit(this.podcast);
     }
 }

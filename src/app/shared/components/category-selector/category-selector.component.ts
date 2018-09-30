@@ -16,11 +16,15 @@ export class CategorySelectorComponent {
 
     @Input()
     category: string;
-    @Output()
-    categoryChange = new EventEmitter<string>();
-
+    @Input()
+    label: string = 'Category';
+    @Input()
+    subcategoriesVisible: boolean = true;
     @Input()
     subcategories: Array<string>;
+
+    @Output()
+    categoryChange = new EventEmitter<string>();
     @Output()
     subcategoriesChange = new EventEmitter<Array<string>>();
 
@@ -28,11 +32,9 @@ export class CategorySelectorComponent {
         this.categories$ = categoryService.getCategories();
     }
     selectCategory() {
-        console.log('category-selector.component', 'selectSubCategory', this.category);
         this.categoryChange.emit(this.category);
     }
     selectSubCategory() {
-        console.log('category-selector.component', 'selectSubCategory', this.subcategories);
         this.subcategoriesChange.emit(this.subcategories);
     }
     categorySelected(selected: Array<NgSelectOption>) {

@@ -74,9 +74,7 @@ export class PodcastEditFormComponent implements OnInit {
                     // Validators.minLength(5),
                     Validators.maxLength(30)
                 ]),
-                Validators.composeAsync([
-                    validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)
-                ])
+                Validators.composeAsync([validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)])
             ],
             customDomain: [
                 podcast.customDomain,
@@ -102,19 +100,17 @@ export class PodcastEditFormComponent implements OnInit {
             );
             this.podcastForm = this._createForm(this.fb, podcast);
         } else {
-            this.podcastStoreService.entities$
-                .pipe(map(r => r.filter(it => it.slug === id)))
-                .subscribe(p => {
-                    const podcast = p[0];
-                    if (podcast) {
-                        if (podcast.category) {
-                            this.category = podcast.category.id;
-                        }
-                        this.formImageUrl = podcast.imageUrl;
-                        this.podcast$ = of(podcast);
-                        this.podcastForm = this._createForm(this.fb, podcast);
+            this.podcastStoreService.entities$.pipe(map(r => r.filter(it => it.slug === id))).subscribe(p => {
+                const podcast = p[0];
+                if (podcast) {
+                    if (podcast.category) {
+                        this.category = podcast.category.id;
                     }
-                });
+                    this.formImageUrl = podcast.imageUrl;
+                    this.podcast$ = of(podcast);
+                    this.podcastForm = this._createForm(this.fb, podcast);
+                }
+            });
         }
     }
     wizardFinish(podcast: Podcast) {
@@ -128,7 +124,9 @@ export class PodcastEditFormComponent implements OnInit {
         console.log('podcast-edit-form.component', 'category', this.category);
         console.log('podcast-edit-form.component', 'subcategories', this.subcategories);
 
-        podcast.category = new Category(this.category);
+        if (this.category) {
+            podcast.category = new Category(this.category);
+        }
         // TODO: Fix this.
         // podcast.subcategories = this.subcategories;
 
