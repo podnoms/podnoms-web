@@ -25,10 +25,24 @@
                     placeholder="********">
             </div>
         </div>
-    <div class="form-group row mb-0">
-        <button (click)="updatePrivacySettings()" class="btn btn-alt-success">
-            <i class="fa fa-plus mr-10"></i> Update
-            privacy settings
-        </button>
+        <div class="form-group row mb-0">
+            <div class="col-mb-2">
+                <button (click)="updatePrivacySettings()"
+                    class="btn btn-alt-success">
+                    <i class="fa fa-plus mr-10"></i> Update
+                    privacy settings
+                </button>
+            </div>
+            <div class="col-md-10">
+                <h5>
+                    Passwords are stored
+                    securely using current best practices,
+                    however most podcast clients will send
+                    your
+                    password in the clear, so don't use
+                    passwords you use for other services.
+                </h5>
+            </div>
+        </div>
     </div>
 </div>
