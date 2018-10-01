@@ -9,18 +9,20 @@ import { PodcastDataService } from '../../podcast-data.service';
     styleUrls: ['./upload-url.component.scss']
 })
 export class UploadUrlComponent implements AfterViewInit {
-    @Input() podcast: Podcast;
-    @Output() entryCreateComplete: EventEmitter<any> = new EventEmitter();
-    @Output() playlistAdded: EventEmitter<any> = new EventEmitter();
+    @Input()
+    podcast: Podcast;
+    @Output()
+    entryCreateComplete: EventEmitter<any> = new EventEmitter();
+    @Output()
+    playlistAdded: EventEmitter<any> = new EventEmitter();
 
     newEntrySourceUrl: string;
     errorText: string;
     isPosting: boolean = false;
-    @ViewChild('input') vc: any;
+    @ViewChild('input')
+    vc: any;
     playlistProxy: PodcastEntry = null;
-    constructor(
-        private podcastDataService: PodcastDataService,        private toastService: ToastService
-    ) {}
+    constructor(private podcastDataService: PodcastDataService, private toastService: ToastService) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
     }
@@ -68,7 +70,12 @@ export class UploadUrlComponent implements AfterViewInit {
                 },
                 err => {
                     this.isPosting = false;
-                    this.errorText = 'This does not look like a valid URL';
+                    if (err.status === 402) {
+                        this.errorText =
+                            'You have exceeded your allowable storage quota, please upgrade to a paid tier';
+                    } else {
+                        this.errorText = 'This does not look like a valid URL';
+                    }
                     this.newEntrySourceUrl = urlToCheck;
                 }
             );
