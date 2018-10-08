@@ -19,7 +19,7 @@
                         "stylePreprocessorOptions": {
                             "includePaths": ["src/styles"]
                         },
-                        "assets": ["src/assets", "src/favicon.ico", "src/manifest.json"],
+                        "assets": ["src/assets", "src/favicon.ico", "src/robots.txt", "src/manifest.json"],
                         "styles": ["src/styles/styles.scss"],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",
@@ -77,12 +77,8 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.spec.json",
                         "scripts": [],
-                        "styles": [
-                            "src/styles/theme.scss",
-                            "src/styles/mixin.scss",
-                            "src/styles/styles.scss"
-                        ],
-                        "assets": ["src/assets", "src/favicon.ico", "src/manifest.json"]
+                        "styles": ["src/styles/theme.scss", "src/styles/mixin.scss", "src/styles/styles.scss"],
+                        "assets": ["src/assets", "src/favicon.ico", "src/robots.txt", "src/manifest.json"]
                     }
                 },
                 "lint": {
