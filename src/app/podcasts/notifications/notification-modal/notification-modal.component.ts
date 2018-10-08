@@ -4,7 +4,7 @@ import { NotificationControlService } from '../services/notification-control.ser
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationDataService } from '../services/notification-data.service';
 import { NotificationStoreService } from '../services/notification-store.service';
-import { Podcast } from '../../../core';
+import { Podcast, ToastService } from '../../../core';
 import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
@@ -29,7 +29,8 @@ export class NotificationModalComponent implements OnInit {
         private ncs: NotificationControlService,
         private nds: NotificationDataService,
         private nss: NotificationStoreService,
-        private pss: PodcastStoreService
+        private pss: PodcastStoreService,
+        private toaster: ToastService
     ) {}
 
     ngOnInit() {
@@ -91,5 +92,8 @@ export class NotificationModalComponent implements OnInit {
             }
             this.pss.updateOneInCache(this.podcast);
         });
+    }
+    testNotification() {
+        this.toaster.showError('Error', 'Coming Soon!!!');
     }
 }

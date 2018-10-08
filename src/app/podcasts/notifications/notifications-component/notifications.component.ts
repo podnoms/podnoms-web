@@ -20,4 +20,7 @@ export class NotificationsComponent implements OnInit {
         this.types$ = this.nds.getTypes();
         this.notifications = this.podcast.notifications;
     }
+    deleteNotification(n: Notification) {
+        this.nds.deleteNotification(n);
+    }
 }
