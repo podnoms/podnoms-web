@@ -13,16 +13,21 @@ export class NotificationItemComponent implements OnInit {
 
     @Output()
     public notificationEdit = new EventEmitter();
-    constructor(private us: UtilsService) {}
+    @Output()
+    public notificationDelete = new EventEmitter();
+
+    constructor(private utilsService: UtilsService) {}
     ngOnInit() {}
 
     __(c: string) {
-        return this.us.stringToColour(c);
+        return this.utilsService.stringToColour(c);
     }
 
     editNotification() {
         this.notificationEdit.emit();
     }
 
-    deleteNotification() {}
+    deleteNotification() {
+        this.notificationDelete.emit();
+    }
 }

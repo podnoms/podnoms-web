@@ -11,7 +11,8 @@
 <div class="notifications row p-30">
     <div class="notification-item mb-30 col-md-3" *ngFor="let n of notifications">
         <app-notification-item [notification]="n"
-            (notificationEdit)="notificationModal.openEditModal(n)">
+            (notificationEdit)="notificationModal.openEditModal(n)"
+            (notificationDelete)="deleteNotification(n)">
         </app-notification-item>
     </div>
 </div>
