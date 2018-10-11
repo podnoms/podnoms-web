@@ -1,7 +1,11 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Notification, NotificationLog } from '../../../core/model/notification';
 import { NotificationDataService } from '../services/notification-data.service';
 import { Observable } from 'rxjs';
+
+import * as $ from 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4';
 
 @Component({
     selector: 'app-notification-logs',
@@ -11,11 +15,23 @@ import { Observable } from 'rxjs';
 export class NotificationLogsComponent implements AfterViewInit {
     @Input()
     notification: Notification;
-    logs$: Observable<NotificationLog[]>;
+    logs: NotificationLog[];
 
-    constructor(private notificationService: NotificationDataService) {}
+    dataTable: any;
+
+    constructor(private notificationService: NotificationDataService, private chRef: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
-        this.logs$ = this.notificationService.getLogs(this.notification.id);
+        this.notificationService.getLogs(this.notification.id).subscribe(l => {
+            this.logs = l;
+            // datatables does not work unless the data are rendered
+            this.chRef.detectChanges();
+
+            const table: any = $('table');
+            this.dataTable = table.DataTable({
+                pageLength: 5,
+                aLengthMenu: [5, 10, 25, 50]
+            });
+        });
     }
 }
