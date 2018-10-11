@@ -6,3 +6,8 @@ export class Notification {
     type: string;
     options: NotificationOptionBase<string>[];
 }
+
+export class NotificationLog {
+    createDate: Date;
+    log: string;
+}
