@@ -1,0 +1,17 @@
+<div>
+
+    <table class="table table-striped table-responsive">
+        <thead class="thead-inverse|thead-default">
+            <tr>
+                <th>Date</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let log of logs">
+                <td scope="row">{{log.createDate | date:'short'}}</td>
+                <td>{{log.log}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
