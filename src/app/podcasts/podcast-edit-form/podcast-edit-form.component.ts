@@ -172,4 +172,7 @@ export class PodcastEditFormComponent implements OnInit {
                 })
         );
     }
+    podcastUpdated(podcast: Podcast) {
+        this.podcastStoreService.updateOneInCache(podcast);
+    }
 }
