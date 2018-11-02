@@ -99,7 +99,7 @@
                     </div>
                     <div class="tab-pane mb-50" id="btabs-podcast-notifications"
                         role="tabpanel">
-                        <app-notifications [podcast]="podcast"></app-notifications>
+                        <app-notifications [podcast]="podcast" (updated)="podcastUpdated(podcast)"></app-notifications>
                     </div>
                     <div class="tab-pane mb-50" id="btabs-podcast-advanced"
                         role="tabpanel">
