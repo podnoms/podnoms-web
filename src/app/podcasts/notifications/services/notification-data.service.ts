@@ -20,7 +20,7 @@ export class NotificationDataService {
         return this.http.get<Notification>(`${environment.apiHost}/notification/config?type=${type}`);
     }
     deleteNotification(notification: Notification): any {
-        alert(notification);
+        return this.http.delete(`${environment.apiHost}/notification?id=${notification.id}`);
     }
     getLogs(id: string): Observable<NotificationLog[]> {
         return this.http.get<NotificationLog[]>(`${environment.apiHost}/notification/logs?notificationId=${id}`);
