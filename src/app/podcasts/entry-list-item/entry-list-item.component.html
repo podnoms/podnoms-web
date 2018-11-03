@@ -10,7 +10,7 @@
 <td class="font-w600">
     <p class="font-w600 mb-10">
         <inline-editor type="text" [(ngModel)]="entry.title" (onSave)="updateTitle($event)"
-            name="title" size="32">
+            name="title" size="32" (click)="__fixTitleEdit()">
         </inline-editor>
     </p>
     <p class="font-w600 mb-0" [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
