@@ -14,16 +14,18 @@ import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
-
+declare var $: any;
 @Component({
     selector: '[app-entry-list-item]',
     templateUrl: './entry-list-item.component.html',
     styleUrls: ['./entry-list-item.component.scss']
 })
 export class EntryListItemComponent implements OnInit {
-    @Input() entry: PodcastEntry;
+    @Input()
+    entry: PodcastEntry;
 
-    @Output() entryRemoved = new EventEmitter<PodcastEntry>();
+    @Output()
+    entryRemoved = new EventEmitter<PodcastEntry>();
 
     preparingDownload: boolean = false;
     percentageProcessed = 0;
@@ -45,35 +47,32 @@ export class EntryListItemComponent implements OnInit {
                 .then(listener => {
                     const updateChannel: string = `${this.entry.id}__progress_update`;
                     const processedChannel: string = `${this.entry.id}__info_processed`;
-                    listener
-                        .on<AudioProcessingMessage>('audioprocessing', updateChannel)
-                        .subscribe(result => {
-                            this.percentageProcessed = result.percentage;
-                            this.currentSpeed = result.currentSpeed;
+                    listener.on<AudioProcessingMessage>('audioprocessing', updateChannel).subscribe(result => {
+                        this.percentageProcessed = result.percentage;
+                        this.currentSpeed = result.currentSpeed;
+                        this.cdr.detectChanges();
+                    });
+                    listener.on<PodcastEntry>('audioprocessing', processedChannel).subscribe(result => {
+                        this.entry = result;
+                        if (this.entry.processingStatus === 'Processed') {
+                            this.entriesStoreService.updateOneInCache(this.entry);
                             this.cdr.detectChanges();
-                        });
-                    listener
-                        .on<PodcastEntry>('audioprocessing', processedChannel)
-                        .subscribe(result => {
-                            this.entry = result;
-                            if (this.entry.processingStatus === 'Processed') {
-                                this.entriesStoreService.updateOneInCache(this.entry);
-                                this.cdr.detectChanges();
-                            }
-                        });
+                        }
+                    });
                 })
-                .catch(err =>
-                    console.error('entry-list-item.component.ts', '_signalrService.init', err)
-                );
+                .catch(err => console.error('entry-list-item.component.ts', '_signalrService.init', err));
         }
+    }
+    __fixTitleEdit() {
+        $('.fa-remove')
+            .removeClass('fa-remove')
+            .addClass('fa-times');
     }
     deleteEntry() {
         this.entryRemoved.emit(this.entry);
     }
     updateTitle($event: Event) {
-        this.podcastDataService
-            .updateEntry(this.entry)
-            .subscribe(e => this.entriesStoreService.updateOneInCache(e));
+        this.podcastDataService.updateEntry(this.entry).subscribe(e => this.entriesStoreService.updateOneInCache(e));
     }
     goto(entry: PodcastEntry) {
         window.open(entry.sourceUrl);
@@ -86,7 +85,7 @@ export class EntryListItemComponent implements OnInit {
     }
     playAudio(source: string) {
         this.audioService.playStateChanged.subscribe(r => {
-            this.playing = r == 1;
+            this.playing = r === 1;
         });
         if (!this.playing) {
             this.audioService.playAudio(this.entry.audioUrl, this.entry.title);
