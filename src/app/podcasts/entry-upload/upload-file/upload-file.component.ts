@@ -43,6 +43,6 @@ export class UploadFileComponent implements OnInit {
         this.toastyService.showError('Error', `Error uploading audio\n${event}`);
     }
     onUploadSuccess(result) {
-        this.uploadComplete.emit(result);
+        this.uploadComplete.emit(result[1]);
     }
 }
