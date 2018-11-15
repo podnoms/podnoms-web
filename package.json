@@ -23,7 +23,7 @@
     "@angular/http": "^7.0.3",
     "@angular/platform-browser": "^7.0.3",
     "@angular/platform-browser-dynamic": "^7.0.3",
-    "@angular/pwa": "^0.10.5",
+    "@angular/pwa": "^0.10.6",
     "@angular/router": "^7.0.3",
     "@angular/service-worker": "^7.0.3",
     "@aspnet/signalr": "^3.0.0-alpha1-34847",
