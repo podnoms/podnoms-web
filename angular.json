@@ -58,6 +58,8 @@
                         "ssl": true,
                         "sslKey": "certs/cert.key",
                         "sslCert": "certs/cert.crt",
+                        "host": "0.0.0.0",
+                        "disableHostCheck": true,
                         "browserTarget": "app:build"
                     },
                     "configurations": {

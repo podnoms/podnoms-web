@@ -18,6 +18,12 @@ http {
         index  index.html index.htm;
         include /etc/nginx/mime.types;
 
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-Xss-Protection "1; mode=block" always;
+        add_header Referrer-Policy: no-referrer;
+        add_header Content-Security-Policy: "default-src https://www.podnoms.com:443";
+        add_header X-Content-Type-Options "nosniff" always;
+
         gzip on;
         gzip_min_length 1000;
         gzip_proxied expired no-cache no-store private auth;
