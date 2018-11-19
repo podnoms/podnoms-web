@@ -18,6 +18,10 @@ http {
         index  index.html index.htm;
         include /etc/nginx/mime.types;
 
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-Xss-Protection "1; mode=block" always;
+        add_header Referrer-Policy: no-referrer
+
         gzip on;
         gzip_min_length 1000;
         gzip_proxied expired no-cache no-store private auth;
