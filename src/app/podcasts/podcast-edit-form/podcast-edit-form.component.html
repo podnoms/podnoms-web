@@ -38,8 +38,7 @@
                                 Delete&nbsp;<i class="fa fa-times"></i></button>
                             <button type="submit" class="btn"
                                 data-toggle="block-option"
-                                [disabled]="sending || !podcastForm.valid"
-                                data-action="fullscreen_toggle">Save&nbsp;
+                                [disabled]="sending || !podcastForm.valid">Save&nbsp;
                                 <i class="fa fa-save"></i></button>
                         </div>
                     </li>
@@ -99,7 +98,8 @@
                     </div>
                     <div class="tab-pane mb-50" id="btabs-podcast-notifications"
                         role="tabpanel">
-                        <app-notifications [podcast]="podcast" (updated)="podcastUpdated(podcast)"></app-notifications>
+                        <app-notifications [podcast]="podcast"
+                            (updated)="podcastUpdated(podcast)"></app-notifications>
                     </div>
                     <div class="tab-pane mb-50" id="btabs-podcast-advanced"
                         role="tabpanel">

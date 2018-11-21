@@ -7,6 +7,18 @@ import { NotificationsService } from 'angular2-notifications';
 export class ToastService {
     constructor(private _service: NotificationsService) {}
 
+    showInfo(title: string, message: string) {
+        if (isE2E) {
+            console.log(`${title} - ${message}`);
+        } else {
+            this._service.info(title, message, {
+                timeOut: 10000,
+                showProgressBar: true,
+                pauseOnHover: true,
+                clickToClose: true
+            });
+        }
+    }
     showToast(title: string, message: string) {
         if (isE2E) {
             console.log(`${title} - ${message}`);
