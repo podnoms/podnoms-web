@@ -62,7 +62,7 @@
     "ngx-bootstrap": "^3.1.1",
     "ngx-dropzone-wrapper": "^7.0.0",
     "ngx-moment": "^3.2.0",
-    "ngx-quill": "^4.1.0",
+    "ngx-quill": "^4.2.0",
     "node-sass": "^4.10.0",
     "npm": "^6.4.1",
     "popper.js": "^1.14.5",
@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.6",
-    "@angular/cli": "~7.0.5",
+    "@angular/cli": "~7.0.6",
     "@angular/compiler-cli": "^7.0.3",
     "@angular/language-service": "^7.0.4",
     "@types/jasmine": "^3.3.0",
