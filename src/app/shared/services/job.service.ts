@@ -20,6 +20,9 @@ export class JobService {
     processMissing(): Observable<Response> {
         return this.http.get<Response>(`${environment.apiHost}/job/processmissing`);
     }
+    updateImages(): Observable<Response> {
+        return this.http.get<Response>(`${environment.apiHost}/job/updateimages`);
+    }
     updateYouTubeDl(): Observable<Response> {
         return this.http.get<Response>(`${environment.apiHost}/job/updateyoutubedl`);
     }

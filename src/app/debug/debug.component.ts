@@ -30,4 +30,9 @@ export class DebugComponent implements OnInit {
             this.toastService.showToast('Success', 'Job successfully queued');
         });
     }
+    updateImages() {
+        this.jobService.updateImages().subscribe(r => {
+            this.toastService.showToast('Success', 'Job successfully queued');
+        });
+    }
 }
