@@ -24,9 +24,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
 
     // TODO: these below inject into the entity store!
     getAll(): Observable<Podcast[]> {
-        return super
-            .getAll()
-            .pipe(map(podcasts => podcasts.map(podcast => this.__mapPodcast(podcast))));
+        return super.getAll().pipe(map(podcasts => podcasts.map(podcast => this.__mapPodcast(podcast))));
     }
 
     getById(id: string | number): Observable<Podcast> {
@@ -61,9 +59,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
         return this.http.put<Podcast>(environment.apiHost + '/podcast/', podcast);
     }
     deletePodcast(id: string): Observable<boolean> {
-        return this.http
-            .delete<Response>(environment.apiHost + '/podcast/' + id)
-            .pipe(map(r => true));
+        return this.http.delete<Response>(environment.apiHost + '/podcast/' + id).pipe(map(r => true));
     }
     checkSlug(slug): Observable<string> {
         console.log('profile.service.ts', 'checkSlug', slug);
@@ -76,20 +72,17 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     getAllEntriesForUser(): Observable<PodcastEntry[]> {
         return this.http.get<PodcastEntry[]>(environment.apiHost + '/entry/users/');
     }
+    getEntry(id: string): Observable<PodcastEntry> {
+        return this.http.get<PodcastEntry>(environment.apiHost + '/entry/' + id);
+    }
     getEntries(slug: string): Observable<PodcastEntry[]> {
         return this.http.get<PodcastEntry[]>(environment.apiHost + '/entry/all/' + slug);
     }
     addEntry(entry: PodcastEntry): Observable<PodcastEntry> {
-        return this.http.post<PodcastEntry>(
-            environment.apiHost + '/entry',
-            JSON.stringify(entry)
-        );
+        return this.http.post<PodcastEntry>(environment.apiHost + '/entry', JSON.stringify(entry));
     }
     updateEntry(entry: PodcastEntry) {
-        return this.http.post<PodcastEntry>(
-            environment.apiHost + '/entry',
-            JSON.stringify(entry)
-        );
+        return this.http.post<PodcastEntry>(environment.apiHost + '/entry', JSON.stringify(entry));
     }
     deleteEntry(id: string): Observable<boolean> {
         return this.http
@@ -111,10 +104,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
 
     //#region Playlists
     addPlaylist(entry: PodcastEntry) {
-        return this.http.post<PodcastEntry>(
-            environment.apiHost + '/playlist',
-            JSON.stringify(entry)
-        );
+        return this.http.post<PodcastEntry>(environment.apiHost + '/playlist', JSON.stringify(entry));
     }
     //#endregion
 }

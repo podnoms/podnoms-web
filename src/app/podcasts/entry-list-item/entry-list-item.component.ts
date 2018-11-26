@@ -14,6 +14,7 @@ import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
     selector: '[app-entry-list-item]',
@@ -33,9 +34,10 @@ export class EntryListItemComponent implements OnInit {
     playing: boolean = false;
 
     constructor(
+        private router: Router,
         private signalr: SignalRService,
         public audioService: AudioService,
-        private entriesStoreService: EntriesStoreService,
+        private entriesStore: EntriesStoreService,
         private podcastDataService: PodcastDataService,
         private notifier: ToastService,
         private cdr: ChangeDetectorRef
@@ -55,7 +57,7 @@ export class EntryListItemComponent implements OnInit {
                     listener.on<PodcastEntry>('audioprocessing', processedChannel).subscribe(result => {
                         this.entry = result;
                         if (this.entry.processingStatus === 'Processed') {
-                            this.entriesStoreService.updateOneInCache(this.entry);
+                            this.entriesStore.updateOneInCache(this.entry);
                             this.cdr.detectChanges();
                         }
                     });
@@ -72,7 +74,7 @@ export class EntryListItemComponent implements OnInit {
         this.entryRemoved.emit(this.entry);
     }
     updateTitle($event: Event) {
-        this.podcastDataService.updateEntry(this.entry).subscribe(e => this.entriesStoreService.updateOneInCache(e));
+        this.podcastDataService.updateEntry(this.entry).subscribe(e => this.entriesStore.updateOneInCache(e));
     }
     goto(entry: PodcastEntry) {
         window.open(entry.sourceUrl);
