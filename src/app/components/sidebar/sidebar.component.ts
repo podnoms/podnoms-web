@@ -16,12 +16,12 @@ export class SidebarComponent implements OnInit {
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
 
-    constructor(private router: Router, private podcastStoreService: PodcastStoreService) {
-        this.podcasts$ = podcastStoreService.entities$;
-        this.loading$ = podcastStoreService.loading$;
+    constructor(private router: Router, private podcastStore: PodcastStoreService) {
+        this.podcasts$ = podcastStore.entities$;
+        this.loading$ = podcastStore.loading$;
     }
     ngOnInit() {
-        this.podcastStoreService.getAll();
+        this.podcastStore.getAll();
     }
     doAddPodcast() {
         this.router.navigate(['podcasts/add']);

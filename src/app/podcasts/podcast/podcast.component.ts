@@ -27,7 +27,7 @@ export class PodcastComponent {
     id: any;
 
     constructor(
-        private podcastStoreService: PodcastStoreService,
+        private podcastStore: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private router: Router,
         private route: ActivatedRoute,
@@ -37,7 +37,7 @@ export class PodcastComponent {
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
-            const listenSub = this.podcastStoreService.entities$.subscribe(r => {
+            const listenSub = this.podcastStore.entities$.subscribe(r => {
                 if (r && r.length > 0) {
                     // here lies the problem: r[0] is meaningless!!
                     this.router.navigate(['podcasts', r[0].slug]);
@@ -57,7 +57,7 @@ export class PodcastComponent {
     }
     _initialiseState(id: string) {
         this.id = id;
-        this.podcasts$ = this.podcastStoreService.entities$.pipe(
+        this.podcasts$ = this.podcastStore.entities$.pipe(
             map(r =>
                 r.filter(it => {
                     return it.slug === id;
@@ -79,7 +79,7 @@ export class PodcastComponent {
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {
-                    this.podcastStoreService.removeOneFromCache(podcast);
+                    this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
                     this.notifier.error('Error', 'There was an error deleting podcast.');

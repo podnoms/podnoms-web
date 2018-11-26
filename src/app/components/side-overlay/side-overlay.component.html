@@ -39,7 +39,7 @@
                 <div class="block-content">
                     <ul class="nav-users push">
                         <li *ngFor="let entry of entries$ | async| orderByDate '-createDate'">
-                            <a [routerLink]="['/podcasts', entry.podcastSlug]">
+                            <a [routerLink]="['/podcasts', entry?.podcastSlug]">
                                 <img class="img-avatar"
                                      [src]="entry.imageUrl"
                                      alt="">

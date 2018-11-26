@@ -57,7 +57,7 @@ export class PodcastEditFormComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private utilityService: UtilityService,
-        private podcastStoreService: PodcastStoreService,
+        private podcastStore: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private router: Router,
         private fb: FormBuilder,
@@ -100,7 +100,7 @@ export class PodcastEditFormComponent implements OnInit {
             );
             this.podcastForm = this._createForm(this.fb, podcast);
         } else {
-            this.podcastStoreService.entities$.pipe(map(r => r.filter(it => it.slug === id))).subscribe(p => {
+            this.podcastStore.entities$.pipe(map(r => r.filter(it => it.slug === id))).subscribe(p => {
                 const podcast = p[0];
                 if (podcast) {
                     if (podcast.category) {
@@ -136,8 +136,8 @@ export class PodcastEditFormComponent implements OnInit {
             podcast.imageUrl = this.formImageUrl;
             this.podcastDataService.addPodcast(podcast).subscribe(p => {
                 activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
-                    this.podcastStoreService.addOneToCache(p);
-                    this.podcastStoreService.updateOneInCache(p);
+                    this.podcastStore.addOneToCache(p);
+                    this.podcastStore.updateOneInCache(p);
                     this.router.navigate(['podcasts', p.slug]);
                 });
             });
@@ -146,7 +146,7 @@ export class PodcastEditFormComponent implements OnInit {
                 activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
                     // nasty dance to force refresh of thumbnails
                     p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
-                    this.podcastStoreService.updateOneInCache(p);
+                    this.podcastStore.updateOneInCache(p);
                     this.router.navigate(['podcasts', p.slug]);
                 });
             });
@@ -157,7 +157,7 @@ export class PodcastEditFormComponent implements OnInit {
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {
-                    this.podcastStoreService.removeOneFromCache(podcast);
+                    this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
                     this.notifier.error('Error', 'There was an error deleting podcast.');
@@ -173,6 +173,6 @@ export class PodcastEditFormComponent implements OnInit {
         );
     }
     podcastUpdated(podcast: Podcast) {
-        this.podcastStoreService.updateOneInCache(podcast);
+        this.podcastStore.updateOneInCache(podcast);
     }
 }

@@ -27,7 +27,7 @@ export class PodcastDetailComponent {
     @Input() podcast: Podcast;
 
     constructor(
-        private podcastStoreService: PodcastStoreService,
+        private podcastStore: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private toastService: ToastService
     ) {}
@@ -36,7 +36,7 @@ export class PodcastDetailComponent {
         this.podcastDataService.deleteEntry(entry.id).subscribe(
             () => {
                 this.podcast.podcastEntries = this.podcast.podcastEntries.filter(( obj ) => obj.id !== entry.id);
-                this.podcastStoreService.updateOneInCache(this.podcast);
+                this.podcastStore.updateOneInCache(this.podcast);
             },
             () =>
                 this.toastService.showError(

@@ -17,12 +17,12 @@ export class EntryUploadComponent {
     @Input() uploadMode: UploadModes;
     @Input() podcast: Podcast;
 
-    constructor(private podcastStoreService: PodcastStoreService) {}
+    constructor(private podcastStore: PodcastStoreService) {}
 
     onEntryCreateComplete(entry: PodcastEntry) {
         this.uploadMode = this.uploadModes.none;
         this.podcast.podcastEntries.unshift(entry);
-        this.podcastStoreService.updateOneInCache(this.podcast);
+        this.podcastStore.updateOneInCache(this.podcast);
     }
     processPlaylist() {
         this.uploadMode = this.uploadModes.none;
