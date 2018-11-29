@@ -3,7 +3,7 @@
         <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
     </div>
     <div class="avatar" *ngIf="entry.processingStatus !== 'Accepted'">
-        <img [src]="entry.imageUrl" class="img-avatar img-avatar48"
+        <img [src]="entry.thumbnailUrl" class="img-avatar img-avatar48"
             alt="">
         <span class="avatar-status badge-success"></span>
     </div>
@@ -67,8 +67,7 @@
                 <i *ngIf="!preparingDownload" class="icon icon-cloud-download"></i>
                 <i *ngIf="preparingDownload" class="fa fa-cog fa-spin text-success"></i>
             </button>
-            <a class="btn btn-secondary"
-               [routerLink]="['../entry', entry?.id, 'edit']">
+            <a class="btn btn-secondary" [routerLink]="['../entry', entry?.id, 'edit']">
                 <i class="icon icon-info"></i>
             </a>
             <button type="button" class="btn btn-danger"
@@ -107,7 +106,7 @@
                             <div class="row">
                                 <div class="col-md-2 text-md-left text-center">
                                     <img class="modal-entry-image rounded-circle"
-                                        [src]="entry.imageUrl"
+                                        [src]="entry.thumbnailUrl"
                                         alt="Generic placeholder image">
                                 </div>
                                 <div class="col-md-10 text-md-left text-center font-w600">
