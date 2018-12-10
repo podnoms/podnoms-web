@@ -2,8 +2,7 @@
 // Reboot
 // --------------------------------------------------
 
-html,
-body {
+html, body {
     font-size: $font-size-root;
 }
 
@@ -20,7 +19,7 @@ strong {
 
 // Links
 a {
-    transition: color 0.12s ease-out;
+    transition: color .12s ease-out;
 
     @include media-breakpoint-up(sm) {
         &.link-effect {
@@ -38,7 +37,7 @@ a {
                 transform: translateY(6px);
                 transform-origin: 50% 50%;
                 opacity: 0;
-                transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+                transition: transform .12s ease-out, opacity .12s ease-out;
             }
         }
     }

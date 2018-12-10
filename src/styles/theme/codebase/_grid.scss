@@ -8,7 +8,7 @@
     margin-left: (-($space-row-gutter-tiny / 2));
 
     > .col,
-    > [class*='col-'] {
+    > [class*="col-"] {
         padding-left: ($space-row-gutter-tiny / 2);
         padding-right: ($space-row-gutter-tiny / 2);
     }

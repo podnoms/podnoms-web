@@ -114,17 +114,17 @@
 
     &-crystal {
         .ribbon-box {
-            background-color: rgba(255, 255, 255, 0.35);
+            background-color: rgba(255,255,255,.35);
         }
 
         &.ribbon-bookmark {
             .ribbon-box::before {
-                border-color: rgba(255, 255, 255, 0.35);
+                border-color: rgba(255,255,255,.35);
                 border-left-color: transparent;
             }
 
             &.ribbon-left .ribbon-box::before {
-                border-color: rgba(255, 255, 255, 0.35);
+                border-color: rgba(255,255,255,.35);
                 border-right-color: transparent;
             }
         }

@@ -17,6 +17,11 @@
     border-top-width: 1px;
 }
 
+// Modal background
+.modal-backdrop {
+    background-color: darken($brand-primary, 45%);
+}
+
 // Top position
 .modal-dialog {
     &.modal-dialog-top {
@@ -27,14 +32,14 @@
 // Modal Transitions
 .modal {
     &.fade .modal-dialog {
-        transition-duration: 0.35s;
+        transition-duration: .35s;
 
         &.modal-dialog-popin {
             transform: scale(1.2, 1.2);
         }
 
         &.modal-dialog-popout {
-            transform: scale(0.8, 0.8);
+            transform: scale(.8, .8);
         }
 
         &.modal-dialog-slideup {
@@ -50,11 +55,11 @@
         }
 
         &.modal-dialog-fromright {
-            transform: translateX(25%) rotate(15deg) scale(0.8);
+            transform: translateX(25%) rotate(15deg) scale(.8);
         }
 
         &.modal-dialog-fromleft {
-            transform: translateX(-25%) rotate(-15deg) scale(0.8);
+            transform: translateX(-25%) rotate(-15deg) scale(.8);
         }
     }
 

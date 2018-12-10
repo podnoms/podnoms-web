@@ -19,7 +19,7 @@
         font-weight: 400;
         cursor: text;
         z-index: 2;
-        transition: all 0.2s ease-out;
+        transition: all .2s ease-out;
         transform: translateY(25px);
     }
 
@@ -64,11 +64,11 @@
         border-radius: 0;
         background-color: transparent;
         box-shadow: 0 1px 0 $input-border-color;
-        transition: box-shadow 0.3s ease-out;
+        transition: box-shadow .3s ease-out;
 
         ~ .input-group-append {
             box-shadow: 0 1px 0 $input-border-color;
-            transition: box-shadow 0.3s ease-out;
+            transition: box-shadow .3s ease-out;
         }
 
         &:focus {
@@ -126,5 +126,5 @@
 }
 
 // Form State Variations
-@include form-validation-state-material('valid', $brand-success);
-@include form-validation-state-material('invalid', $brand-danger);
+@include form-validation-state-material("valid", $brand-success);
+@include form-validation-state-material("invalid", $brand-danger);

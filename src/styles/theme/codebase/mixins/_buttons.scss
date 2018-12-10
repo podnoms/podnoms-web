@@ -2,12 +2,7 @@
 // Buttons
 // --------------------------------------------------
 
-@mixin button-variant(
-    $background,
-    $border,
-    $active-background: darken($background, 12%),
-    $active-border: darken($border, 22%)
-) {
+@mixin button-variant($background, $border, $active-background: darken($background, 12%), $active-border: darken($border, 22%)) {
     $border-default: darken($border, 12%);
 
     color: color-yiq($background);

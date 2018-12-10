@@ -23,7 +23,7 @@
         opacity: 0;
 
         &:focus ~ .css-control-indicator {
-            box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 3px rgba(0,0,0,.35);
         }
 
         ~ .css-control-indicator {
@@ -51,7 +51,7 @@
     }
 
     &.disabled {
-        opacity: 0.5;
+        opacity: .5;
         cursor: not-allowed;
     }
 
@@ -78,7 +78,7 @@
                 background-color: $white;
                 border-radius: 50%;
                 opacity: 0;
-                transition: opacity 0.15s ease-out;
+                transition: opacity .15s ease-out;
             }
         }
 
@@ -107,24 +107,12 @@
     }
 
     // Color Variations
-    &.css-control-primary .css-control-input:checked ~ .css-control-indicator::after {
-        background-color: $brand-primary;
-    }
-    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator::after {
-        background-color: $gray-dark;
-    }
-    &.css-control-info .css-control-input:checked ~ .css-control-indicator::after {
-        background-color: $brand-info;
-    }
-    &.css-control-success .css-control-input:checked ~ .css-control-indicator::after {
-        background-color: $brand-success;
-    }
-    &.css-control-warning .css-control-input:checked ~ .css-control-indicator::after {
-        background-color: $brand-warning;
-    }
-    &.css-control-danger .css-control-input:checked ~ .css-control-indicator::after {
-        background-color: $brand-danger;
-    }
+    &.css-control-primary .css-control-input:checked ~ .css-control-indicator::after { background-color: $brand-primary; }
+    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator::after { background-color: $gray-dark; }
+    &.css-control-info .css-control-input:checked ~ .css-control-indicator::after { background-color: $brand-info; }
+    &.css-control-success .css-control-input:checked ~ .css-control-indicator::after { background-color: $brand-success; }
+    &.css-control-warning .css-control-input:checked ~ .css-control-indicator::after { background-color: $brand-warning; }
+    &.css-control-danger .css-control-input:checked ~ .css-control-indicator::after { background-color: $brand-danger; }
 }
 
 // CSS Checkboxes
@@ -134,14 +122,15 @@
         height: 20px;
         background-color: $white;
         border: 1px solid #ddd;
-        transition: background-color 0.15s;
+        transition: background-color .15s;
 
         &::after {
             top: 0;
             right: 0;
             bottom: 0;
             left: 0;
-            font-family: 'FontAwesome';
+            font-family: $font-family-fontawesome;
+            font-weight: 900;
             font-size: 10px;
             color: $white;
             line-height: 18px;
@@ -228,7 +217,7 @@
             height: 30px;
             background-color: #eee;
             border-radius: 30px;
-            transition: background-color 0.3s;
+            transition: background-color .3s;
 
             &::after {
                 top: 2px;
@@ -237,8 +226,8 @@
                 width: 26px;
                 background-color: $white;
                 border-radius: 50%;
-                box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
-                transition: transform 0.15s ease-out;
+                box-shadow: 1px 0 3px rgba(0,0,0,.1);
+                transition: transform .15s ease-out;
             }
         }
 
@@ -246,7 +235,7 @@
             background-color: #ddd;
 
             &::after {
-                box-shadow: -2px 0 3px rgba(0, 0, 0, 0.3);
+                box-shadow: -2px 0 3px rgba(0,0,0,.3);
                 transform: translateX(20px);
             }
         }
@@ -298,22 +287,10 @@
     }
 
     // Color Variations
-    &.css-control-primary .css-control-input:checked ~ .css-control-indicator {
-        background-color: $brand-primary;
-    }
-    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator {
-        background-color: $gray-dark;
-    }
-    &.css-control-info .css-control-input:checked ~ .css-control-indicator {
-        background-color: $brand-info;
-    }
-    &.css-control-success .css-control-input:checked ~ .css-control-indicator {
-        background-color: $brand-success;
-    }
-    &.css-control-warning .css-control-input:checked ~ .css-control-indicator {
-        background-color: $brand-warning;
-    }
-    &.css-control-danger .css-control-input:checked ~ .css-control-indicator {
-        background-color: $brand-danger;
-    }
+    &.css-control-primary .css-control-input:checked ~ .css-control-indicator { background-color: $brand-primary; }
+    &.css-control-secondary .css-control-input:checked ~ .css-control-indicator { background-color: $gray-dark; }
+    &.css-control-info .css-control-input:checked ~ .css-control-indicator { background-color: $brand-info; }
+    &.css-control-success .css-control-input:checked ~ .css-control-indicator { background-color: $brand-success; }
+    &.css-control-warning .css-control-input:checked ~ .css-control-indicator { background-color: $brand-warning; }
+    &.css-control-danger .css-control-input:checked ~ .css-control-indicator { background-color: $brand-danger; }
 }

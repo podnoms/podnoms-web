@@ -4,7 +4,8 @@
 
 .breadcrumb-item {
     + .breadcrumb-item::before {
-        font-family: 'FontAwesome';
+        font-family: $font-family-fontawesome;
+        font-weight: 900;
         content: '\f105';
     }
 }

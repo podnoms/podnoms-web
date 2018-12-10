@@ -9,7 +9,7 @@
     display: block;
 
     .options-item {
-        transition: transform 0.35s ease-out;
+        transition: transform .35s ease-out;
         will-change: transform;
     }
 
@@ -23,7 +23,7 @@
         content: '';
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease-in;
+        transition: all .3s ease-in;
         will-change: opacity, transform;
 
         &-content {

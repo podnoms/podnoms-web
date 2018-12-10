@@ -7,18 +7,16 @@
         $length-x: map-get($lengths, x);
         $length-y: map-get($lengths, y);
 
-        .#{$abbrev}-#{$size} {
-            #{$prop}: $length-y $length-x !important;
-        }
+        .#{$abbrev}-#{$size}  { #{$prop}:        $length-y $length-x !important; }
 
         .#{$abbrev}t-#{$size},
         .#{$abbrev}y-#{$size} {
-            #{$prop}-top: $length-y !important;
+            #{$prop}-top:    $length-y !important;
         }
 
         .#{$abbrev}r-#{$size},
         .#{$abbrev}x-#{$size} {
-            #{$prop}-right: $length-x !important;
+            #{$prop}-right:  $length-x !important;
         }
 
         .#{$abbrev}b-#{$size},
@@ -28,7 +26,7 @@
 
         .#{$abbrev}l-#{$size},
         .#{$abbrev}x-#{$size} {
-            #{$prop}-left: $length-x !important;
+            #{$prop}-left:   $length-x !important;
         }
     }
 }
