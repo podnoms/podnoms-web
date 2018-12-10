@@ -37,7 +37,7 @@
     "@ngrx/store-devtools": "^6.1.2",
     "@qontu/ngx-inline-editor": "^0.2.0-alpha.12",
     "angular-in-memory-web-api": "^0.7.0",
-    "angular2-notifications": "^1.0.4",
+    "angular2-notifications": "^2.0.0",
     "angular2-uuid": "^1.1.1",
     "angularx-social-login": "^1.2.5",
     "applicationinsights-js": "^1.0.20",
