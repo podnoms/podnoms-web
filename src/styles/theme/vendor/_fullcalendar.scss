@@ -60,7 +60,7 @@
 
 .fc-state-hover {
     color: $body-color-dark;
-    transition: all 0.15s ease-out;
+    transition: all .15s ease-out;
 }
 
 .fc-state-down,
@@ -71,7 +71,7 @@
 }
 
 .fc-state-disabled {
-    opacity: 0.35;
+    opacity: .35;
 }
 
 .fc-toolbar {

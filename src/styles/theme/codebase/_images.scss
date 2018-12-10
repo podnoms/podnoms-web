@@ -41,7 +41,7 @@
 
     &-thumb {
         margin: 5px;
-        box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 0 5px rgba(255,255,255,.4);
     }
 
     &.img-avatar-rounded {
@@ -63,11 +63,11 @@
 // Image Link
 .img-link {
     display: inline-block;
-    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+    transition: transform .25s ease-out, opacity .25s ease-out;
 
     @include hover {
         transform: scale(1.04);
-        opacity: 0.75;
+        opacity: .75;
     }
 
     &:active {

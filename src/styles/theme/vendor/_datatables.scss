@@ -12,7 +12,7 @@ table.dataTable {
         box-sizing: border-box;
     }
 
-    thead {
+    thead  {
         > tr > th.sorting_asc,
         > tr > th.sorting_desc,
         > tr > th.sorting,
@@ -38,21 +38,22 @@ table.dataTable {
             top: 10px;
             right: 6px;
             bottom: auto;
-            font-family: FontAwesome;
+            font-family: $font-family-fontawesome;
+            font-weight: 900;
             font-size: 14px;
-            opacity: 0.6;
+            opacity: .6;
         }
 
         .sorting:after {
-            content: '\f0dc';
+            content: "\f0dc";
         }
 
         .sorting_asc:after {
-            content: '\f106';
+            content: "\f106";
         }
 
         .sorting_desc:after {
-            content: '\f107';
+            content: "\f107";
         }
     }
 }

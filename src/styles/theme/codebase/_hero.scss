@@ -28,3 +28,20 @@
 .hero-static {
     min-height: 100vh;
 }
+
+.hero-promo {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        position: absolute;
+        right: -500px;
+        bottom: -500px;
+        left: 0;
+        height: 640px;
+        content: '';
+        background: rgba(255,255,255,.2);
+        transform: skewY(-20deg);
+        z-index: 0;
+    }
+}

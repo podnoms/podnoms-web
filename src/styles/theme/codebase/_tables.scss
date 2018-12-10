@@ -20,7 +20,7 @@
 
 // Table Responsive
 .table-responsive,
-[class*='table-responsive-'] {
+[class*="table-responsive-"] {
     > .table.table-bordered thead th {
         border-top: 1px solid $table-border-color;
     }
@@ -42,7 +42,7 @@
 
 .js-table-sections-header {
     > tr > td:first-child > i {
-        transition: transform 0.2s ease-in-out;
+        transition: transform .2s ease-in-out;
     }
 
     + tbody {
