@@ -146,21 +146,21 @@
     font-size: $font-size-sm;
     font-weight: 600;
     background-color: $brand-info-light;
-    border-left: 3px dotted rgba(0, 0, 0, 0.1);
-    transition: transform 0.25s ease-out;
+    border-left: 3px dotted rgba(0,0,0,.1);
+    transition: transform .25s ease-out;
 
     &::before {
         @include vertical-align;
         right: 10px;
         display: inline-block;
-        font-family: 'FontAwesome';
-        color: rgba(0, 0, 0, 0.3);
+        font-family: $font-family-fontawesome;
+        color: rgba(0,0,0,.3);
         content: '\f073';
     }
 
     @include hover {
         cursor: move;
-        border-left-color: rgba(0, 0, 0, 0.3);
+        border-left-color: rgba(0,0,0,.3);
         transform: translateX(-5px);
     }
 }

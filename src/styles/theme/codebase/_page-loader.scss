@@ -10,7 +10,7 @@
     left: 0;
     background-color: $brand-primary;
     z-index: 999998;
-    transition: transform 0.35s ease-out;
+    transition: transform .35s ease-out;
     transform: translateY(-100%);
     will-change: transform;
 
@@ -34,8 +34,8 @@
         margin-left: -100px;
         width: 200px;
         height: 200px;
-        background-color: rgba(255, 255, 255, 0.5);
-        border: 3px solid rgba(255, 255, 255, 0.75);
+        background-color: rgba(255,255,255,.5);
+        border: 3px solid rgba(255,255,255,.75);
         -webkit-animation: page-loader-inner 1.5s infinite ease-out;
         animation: page-loader-inner 1.5s infinite ease-out;
     }
@@ -45,25 +45,14 @@
         margin-left: -30px;
         width: 60px;
         height: 60px;
-        background-color: rgba(255, 255, 255, 1);
+        background-color: rgba(255,255,255,1);
         -webkit-animation: page-loader-outer 1.5s infinite ease-in;
         animation: page-loader-outer 1.5s infinite ease-in;
-    }
-
-    .lt-ie10 &::after {
-        text-align: center;
-        content: 'Loading..';
-        background-color: transparent;
-    }
-
-    .lt-ie10 &::before {
-        display: none;
     }
 }
 
 @-webkit-keyframes page-loader-inner {
-    0%,
-    40% {
+    0%, 40% {
         -webkit-transform: scale(0);
         transform: scale(0);
     }
@@ -76,8 +65,7 @@
 }
 
 @keyframes page-loader-inner {
-    0%,
-    40% {
+    0%, 40% {
         -webkit-transform: scale(0);
         transform: scale(0);
     }
@@ -95,8 +83,7 @@
         transform: scale(1);
     }
 
-    40%,
-    100% {
+    40%, 100% {
         -webkit-transform: scale(0);
         transform: scale(0);
         opacity: 0;
@@ -109,8 +96,7 @@
         transform: scale(1);
     }
 
-    40%,
-    100% {
+    40%, 100% {
         -webkit-transform: scale(0);
         transform: scale(0);
         opacity: 0;

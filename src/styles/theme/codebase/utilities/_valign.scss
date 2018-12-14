@@ -2,9 +2,7 @@
 // Vertical Align
 // --------------------------------------------------
 
-.align-parent {
-    position: relative;
-}
+.align-parent { position: relative; }
 
 .align-v {
     @include vertical-align(50%, auto, auto, 0, -50%);

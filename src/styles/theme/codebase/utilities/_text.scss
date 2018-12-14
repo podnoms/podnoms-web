@@ -3,51 +3,25 @@
 // --------------------------------------------------
 
 // Font weight
-.font-w300 {
-    font-weight: 300 !important;
-}
-.font-w400 {
-    font-weight: 400 !important;
-}
-.font-w600 {
-    font-weight: 600 !important;
-}
-.font-w700 {
-    font-weight: 700 !important;
-}
+.font-w300 { font-weight: 300 !important; }
+.font-w400 { font-weight: 400 !important; }
+.font-w600 { font-weight: 600 !important; }
+.font-w700 { font-weight: 700 !important; }
 
 // Font sizes
-.font-size-default {
-    font-size: $font-size-base !important;
-}
-.font-size-xl {
-    font-size: $font-size-xl !important;
-}
-.font-size-lg {
-    font-size: $font-size-lg !important;
-}
-.font-size-md {
-    font-size: $font-size-md !important;
-}
-.font-size-sm {
-    font-size: $font-size-sm !important;
-}
-.font-size-xs {
-    font-size: $font-size-xs !important;
-}
+.font-size-default { font-size: $font-size-base  !important; }
+.font-size-xl { font-size: $font-size-xl !important; }
+.font-size-lg { font-size: $font-size-lg !important; }
+.font-size-md { font-size: $font-size-md !important; }
+.font-size-sm { font-size: $font-size-sm !important; }
+.font-size-xs { font-size: $font-size-xs !important; }
 
 // Line height
-.line-height-base {
-    line-height: $line-height-base !important;
-}
+.line-height-base { line-height: $line-height-base !important; }
 
 // Helpers
-.text-wrap-break-word {
-    word-wrap: break-word;
-}
-.text-uppercase {
-    letter-spacing: 0.0625em;
-}
+.text-wrap-break-word { word-wrap: break-word; }
+.text-uppercase { letter-spacing: .0625rem; }
 
 // Contextual colors
 @include text-emphasis-variant('.text-primary-dark', $brand-dark);
@@ -66,9 +40,9 @@
 @include text-emphasis-variant('.text-info-light', $brand-info-light);
 @include text-emphasis-variant('.text-danger-light', $brand-danger-light);
 @include text-emphasis-variant('.text-white', $white);
-@include text-emphasis-variant('.text-white-op', rgba(255, 255, 255, 0.8));
+@include text-emphasis-variant('.text-white-op', rgba(255,255,255,.8));
 @include text-emphasis-variant('.text-black', $black);
-@include text-emphasis-variant('.text-black-op', rgba(0, 0, 0, 0.5));
+@include text-emphasis-variant('.text-black-op', rgba(0,0,0,.5));
 @include text-emphasis-variant('.text-gray', $gray);
 @include text-emphasis-variant('.text-gray-dark', $gray-dark);
 @include text-emphasis-variant('.text-gray-darker', $gray-darker);

@@ -33,8 +33,8 @@
         font-weight: 600;
         color: darken($brand-warning, 25%);
         background-color: $brand-warning-light;
-        border-bottom: 1px solid rgba(darken($brand-warning, 25%), 0.1);
-        box-shadow: 0 5px 8px rgba(darken($brand-warning, 25%), 0.05);
+        border-bottom: 1px solid rgba(darken($brand-warning, 25%), .1);
+        box-shadow: 0 5px 8px rgba(darken($brand-warning, 25%), .05);
     }
 
     .scrumboard-item-options {

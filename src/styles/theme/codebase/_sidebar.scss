@@ -28,7 +28,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: $zindex-fixed + 3;
+    z-index: $zindex-sidebar;
     width: 100%;
     background-color: $sidebar-bg;
     overflow-y: auto;
@@ -62,20 +62,17 @@
         // Mini Sidebar
         .sidebar-o.sidebar-mini & {
             overflow-x: hidden;
-            transform: translateX(-($sidebar-width - $sidebar-mini-width)) translateY(0)
-                translateZ(0);
+            transform: translateX(-($sidebar-width - $sidebar-mini-width)) translateY(0) translateZ(0);
             transition: transform $side-transition;
         }
 
         .sidebar-r.sidebar-o.sidebar-mini & {
-            transform: translateX($sidebar-width - $sidebar-mini-width) translateY(0)
-                translateZ(0);
+            transform: translateX($sidebar-width - $sidebar-mini-width) translateY(0) translateZ(0);
         }
 
         .sidebar-o.sidebar-mini & .sidebar-content {
             width: $sidebar-width;
-            transform: translateX(($sidebar-width - $sidebar-mini-width)) translateY(0)
-                translateZ(0);
+            transform: translateX(($sidebar-width - $sidebar-mini-width)) translateY(0) translateZ(0);
             transition: transform $side-transition;
             will-change: transform;
         }

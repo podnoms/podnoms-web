@@ -2,34 +2,32 @@
 // Theme
 // --------------------------------------------------
 
-@mixin color-theme(
-    $brand-primary,
-    $brand-light,
-    $brand-lighter,
-    $brand-dark,
-    $brand-darker,
-    $body-bg,
-    $body-bg-dark,
-    $body-bg-light,
-    $body-color,
-    $body-color-dark,
-    $body-color-light,
-    $link-color,
-    $link-hover-color,
-    $headings-color,
-    $headings-small-color,
-    $header-bg,
-    $header-inverse-bg,
-    $sidebar-bg,
-    $sidebar-inverse-bg,
-    $side-overlay-bg,
-    $input-color,
-    $input-focus-color,
-    $input-border-color,
-    $input-focus-border-color,
-    $input-bg,
-    $input-focus-bg
-) {
+@mixin color-theme($brand-primary,
+                   $brand-light,
+                   $brand-lighter,
+                   $brand-dark,
+                   $brand-darker,
+                   $body-bg,
+                   $body-bg-dark,
+                   $body-bg-light,
+                   $body-color,
+                   $body-color-dark,
+                   $body-color-light,
+                   $link-color,
+                   $link-hover-color,
+                   $headings-color,
+                   $headings-small-color,
+                   $header-bg,
+                   $header-inverse-bg,
+                   $sidebar-bg,
+                   $sidebar-inverse-bg,
+                   $side-overlay-bg,
+                   $input-color,
+                   $input-focus-color,
+                   $input-border-color,
+                   $input-focus-border-color,
+                   $input-bg,
+                   $input-focus-bg) {
     // Scaffolding
     body {
         color: $body-color;
@@ -50,18 +48,8 @@
     }
 
     // Typography
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .h1,
-    .h2,
-    .h3,
-    .h4,
-    .h5,
-    .h6 {
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6 {
         color: $headings-color;
     }
 
@@ -101,9 +89,9 @@
 
     // Contextual colors
     @include bg-variant('.bg-primary', $brand-primary);
-    @include bg-variant('.bg-primary-op', rgba($brand-primary, 0.75));
+    @include bg-variant('.bg-primary-op', rgba($brand-primary, .75));
     @include bg-variant('.bg-primary-dark', $brand-dark);
-    @include bg-variant('.bg-primary-dark-op', rgba($brand-dark, 0.8));
+    @include bg-variant('.bg-primary-dark-op', rgba($brand-dark, .8));
     @include bg-variant('.bg-primary-darker', $brand-darker);
     @include bg-variant('.bg-primary-light', $brand-light);
     @include bg-variant('.bg-primary-lighter', $brand-lighter);
@@ -112,12 +100,7 @@
     @include bg-variant('.bg-body-dark', $body-bg-dark);
 
     // Gradients
-    @include bg-gradient-variant(
-        '.bg-gd-primary',
-        135deg,
-        darken($brand-primary, 15%),
-        lighten($brand-primary, 5%)
-    );
+    @include bg-gradient-variant('.bg-gd-primary', 135deg, darken($brand-primary, 15%), lighten($brand-primary, 5%));
 
     // Buttons
     .btn-link {
@@ -347,16 +330,16 @@
         }
 
         &.bs-tooltip-auto {
-            &[x-placement^='top'] {
+            &[x-placement^="top"] {
                 @extend .bs-tooltip-top;
             }
-            &[x-placement^='right'] {
+            &[x-placement^="right"] {
                 @extend .bs-tooltip-right;
             }
-            &[x-placement^='bottom'] {
+            &[x-placement^="bottom"] {
                 @extend .bs-tooltip-bottom;
             }
-            &[x-placement^='left'] {
+            &[x-placement^="left"] {
                 @extend .bs-tooltip-left;
             }
         }
@@ -370,7 +353,7 @@
     .popover {
         border-color: $body-bg-dark;
         border-radius: 2px;
-        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 15px 25px rgba(0,0,0,.05);
 
         &.bs-popover-top {
             .arrow::before {
@@ -413,16 +396,16 @@
         }
 
         &.bs-popover-auto {
-            &[x-placement^='top'] {
+            &[x-placement^="top"] {
                 @extend .bs-popover-top;
             }
-            &[x-placement^='right'] {
+            &[x-placement^="right"] {
                 @extend .bs-popover-right;
             }
-            &[x-placement^='bottom'] {
+            &[x-placement^="bottom"] {
                 @extend .bs-popover-bottom;
             }
-            &[x-placement^='left'] {
+            &[x-placement^="left"] {
                 @extend .bs-popover-left;
             }
         }
@@ -435,6 +418,10 @@
 
     .modal-footer {
         border-top-color: $body-bg-dark;
+    }
+
+    .modal-backdrop {
+        background-color: darken($brand-primary, 45%);
     }
 
     // Dropdowns
@@ -497,8 +484,8 @@
         }
     }
 
-    @include table-row-variant('active', $body-bg);
-    @include table-row-variant('primary', $brand-lighter);
+    @include table-row-variant("active", $body-bg);
+    @include table-row-variant("primary", $brand-lighter);
 
     .table-dark {
         background-color: $brand-dark;
@@ -511,7 +498,7 @@
     }
 
     .table-responsive,
-    [class*='table-responsive-'] {
+    [class*="table-responsive-"] {
         > .table.table-bordered thead th {
             border-top: 1px solid $body-bg-dark;
         }
@@ -590,8 +577,8 @@
     }
 
     // Form feedback
-    @include form-validation-state('valid', $brand-success);
-    @include form-validation-state('invalid', $brand-danger);
+    @include form-validation-state("valid", $brand-success);
+    @include form-validation-state("invalid", $brand-danger);
 
     // Material Forms
     .form-material {
@@ -623,8 +610,8 @@
         }
     }
 
-    @include form-validation-state-material('valid', $brand-success);
-    @include form-validation-state-material('invalid', $brand-danger);
+    @include form-validation-state-material("valid", $brand-success);
+    @include form-validation-state-material("invalid", $brand-danger);
 
     // CSS Radios
     .css-radio {
@@ -633,9 +620,7 @@
         }
 
         // Color Variations
-        &.css-control-primary .css-control-input:checked ~ .css-control-indicator::after {
-            background-color: $brand-primary;
-        }
+        &.css-control-primary .css-control-input:checked ~ .css-control-indicator::after { background-color: $brand-primary; }
     }
 
     // CSS Checkboxes
@@ -654,47 +639,38 @@
     // CSS Switches
     .css-switch {
         // Color Variations
-        &.css-control-primary .css-control-input:checked ~ .css-control-indicator {
-            background-color: $brand-primary;
-        }
+        &.css-control-primary .css-control-input:checked ~ .css-control-indicator { background-color: $brand-primary; }
     }
 
     // Border
     .border {
         border-color: $body-bg-dark !important;
 
-        &-t {
-            border-top-color: $body-bg-dark !important;
-        }
-        &-r {
-            border-right-color: $body-bg-dark !important;
-        }
-        &-b {
-            border-bottom-color: $body-bg-dark !important;
-        }
-        &-l {
-            border-left-color: $body-bg-dark !important;
-        }
+        &-t { border-top-color: $body-bg-dark !important; }
+        &-r { border-right-color: $body-bg-dark !important; }
+        &-b { border-bottom-color: $body-bg-dark !important; }
+        &-l { border-left-color: $body-bg-dark !important; }
     }
 
     .border-light {
         border-color: $body-bg-light !important;
 
-        &-t {
-            border-top-color: $body-bg-light !important;
-        }
-        &-r {
-            border-right-color: $body-bg-light !important;
-        }
-        &-b {
-            border-bottom-color: $body-bg-light !important;
-        }
-        &-l {
-            border-left-color: $body-bg-light !important;
-        }
+        &-t { border-top-color: $body-bg-light !important; }
+        &-r { border-right-color: $body-bg-light !important; }
+        &-b { border-bottom-color: $body-bg-light !important; }
+        &-l { border-left-color: $body-bg-light !important; }
     }
 
     // Main Structure
+    #page-overlay {
+        background: rgba(darken($brand-primary, 45%), .4);
+        background: linear-gradient(to right, rgba(darken($brand-primary, 45%), 0), rgba(darken($brand-primary, 45%), .6));
+
+        .sidebar-r & {
+            background: linear-gradient(to right, rgba(darken($brand-primary, 45%),.6), rgba(darken($brand-primary, 45%),0));
+        }
+    }
+
     #page-header {
         background-color: $header-bg;
     }
@@ -748,6 +724,10 @@
             &.page-header-modern #sidebar {
                 box-shadow: 5px 0 10px $body-bg-dark;
             }
+
+            &.page-header-modern.sidebar-r #sidebar {
+                box-shadow: -5px 0 10px $body-bg-dark;
+            }
         }
 
         &.sidebar-inverse #sidebar {
@@ -797,11 +777,11 @@
         &.block-mode-loading {
             &::after {
                 color: $brand-dark;
-                box-shadow: 0 0 15px 15px rgba($brand-dark, 0.05);
+                box-shadow: 0 0 15px 15px rgba($brand-dark,.05);
             }
 
             &.block-mode-hidden::after {
-                box-shadow: 0 0 8px 8px rgba($brand-dark, 0.05);
+                box-shadow: 0 0 8px 8px rgba($brand-dark,.05);
             }
 
             &.block-mode-loading-inverse::after {
@@ -859,14 +839,14 @@
     .nav-main {
         // Default links
         a {
-            color: rgba($body-color, 0.9);
+            color: rgba($body-color, .9);
 
             @at-root .sidebar-inverse #sidebar & {
-                color: rgba($body-color-light, 0.75);
+                color: rgba($body-color-light, .75);
             }
 
             > i {
-                color: rgba($brand-dark, 0.75);
+                color: rgba($brand-dark, .75);
 
                 @at-root .sidebar-inverse #sidebar & {
                     color: $body-color-light;
@@ -889,7 +869,7 @@
         // Sub menus
         ul {
             a {
-                color: rgba($body-color, 0.6);
+                color: rgba($body-color, .6);
             }
         }
 
@@ -958,7 +938,7 @@
                     li.open > a.nav-submenu,
                     li:hover > a.nav-submenu {
                         color: $white;
-                        background-color: rgba(0, 0, 0, 0.25);
+                        background-color: rgba(0,0,0,.25);
                     }
 
                     ul,
@@ -1258,6 +1238,15 @@
 
         .select2-results__option--highlighted[aria-selected] {
             background-color: $brand-primary;
+        }
+    }
+
+    // Simple Bar
+    .simplebar-scrollbar::before {
+        background: $brand-darker;
+
+        .sidebar-inverse #sidebar & {
+            background: $brand-lighter;
         }
     }
 

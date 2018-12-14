@@ -32,33 +32,15 @@
 }
 
 .btn.btn-hero {
-    @include button-size(
-        $btn-hero-padding-y,
-        $btn-hero-padding-x,
-        $font-size-base,
-        $pbf-line-height,
-        3px
-    );
+    @include button-size($btn-hero-padding-y, $btn-hero-padding-x, $font-size-base, $pbf-line-height, 3px);
     height: auto;
 
     &.btn-sm {
-        @include button-size(
-            $btn-hero-padding-y-sm,
-            $btn-hero-padding-x-sm,
-            $font-size-base,
-            $pbf-line-height-sm,
-            3px
-        );
+        @include button-size($btn-hero-padding-y-sm, $btn-hero-padding-x-sm, $font-size-base, $pbf-line-height-sm, 3px);
     }
 
     &.btn-lg {
-        @include button-size(
-            $btn-hero-padding-y-lg,
-            $btn-hero-padding-x-lg,
-            $font-size-md,
-            $pbf-line-height-lg,
-            3px
-        );
+        @include button-size($btn-hero-padding-y-lg, $btn-hero-padding-x-lg, $font-size-md, $pbf-line-height-lg, 3px);
     }
 }
 
