@@ -15,9 +15,9 @@ export class AppComponent {
     overlayOpen: boolean = false;
     profile$: Observable<Profile>;
     constructor(
-        private authService: AuthService,
         public uiStateService: UiStateService,
         private toast: ToastService,
+        authService: AuthService,
         signalr: SignalRService
     ) {
         this.profile$ = authService.profile$;
@@ -32,11 +32,7 @@ export class AppComponent {
                         });
                     })
                     .catch(err => {
-                        console.error(
-                            'app.component',
-                            'Unable to initialise site update hub',
-                            err
-                        );
+                        console.error('app.component', 'Unable to initialise site update hub', err);
                     });
             }
         });
