@@ -63,9 +63,7 @@ export class AudioService {
                 console.log('onplay', id, pos);
                 this._playState = PlayState.playing;
                 this._duration = this._audio.duration();
-                this._playTimerSubscription = this.__playTimer.subscribe(r =>
-                    this._timedEvents(r)
-                );
+                this._playTimerSubscription = this.__playTimer.subscribe(r => this._timedEvents(r));
             }
         });
         this._audio.on('end', () => {
@@ -119,6 +117,7 @@ export class AudioService {
             this._playTimerSubscription.unsubscribe();
         }
         this._initialiseAudio(source, title);
+        this._audio.once('play', () => this.playStateChanged.emit((this._playState = PlayState.playing)));
         this._audio.once('load', () => this._audio.play());
     }
     toggle() {
