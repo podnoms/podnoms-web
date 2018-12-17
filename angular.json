@@ -33,12 +33,10 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -82,7 +80,7 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.spec.json",
                         "scripts": [],
-                        "styles": ["src/styles/theme.scss", "src/styles/mixin.scss", "src/styles/styles.scss"],
+                        "styles": ["src/styles/styles.scss"],
                         "assets": ["src/assets", "src/favicon.ico", "src/robots.txt", "src/manifest.json"]
                     }
                 },

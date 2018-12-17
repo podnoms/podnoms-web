@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AudioService, PlayState } from '../../core/audio.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-footer',
