@@ -54,7 +54,7 @@
     "install": "^0.12.2",
     "jquery": "^3.3.1",
     "memo-decorator": "^1.0.2",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "ng2-charts": "^1.6.0",
     "ng2-validation": "^4.2.0",
     "ng2modules-easypiechart": "0.0.4",
