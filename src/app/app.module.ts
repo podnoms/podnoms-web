@@ -28,7 +28,7 @@ import { MonitoringErrorHandler } from './shared/monitoring/monitoring-error.han
         AppStoreModule,
         SharedModule, // import here to make sure that AuthService is a singleton
         SimpleNotificationsModule.forRoot(),
-        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+        // ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         MonitoringService,
@@ -48,21 +48,21 @@ export class AppModule {
         registrationService: PushRegistrationService
     ) {
         this.profile$ = profileStoreService.entities$;
-        this.profile$.subscribe(p => {
-            if (p && p.length !== 0 && environment.production) {
-                push.messages.subscribe(m => {
-                    console.log('app.module', 'Push message', m);
-                });
-                push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(
-                    s => {
-                        registrationService
-                            .addSubscriber(s.toJSON())
-                            .subscribe(r =>
-                                console.log('app.module', 'addSubscriber', 'done', r)
-                            );
-                    }
-                );
-            }
-        });
+        // this.profile$.subscribe(p => {
+        //     if (p && p.length !== 0 && environment.production) {
+        //         push.messages.subscribe(m => {
+        //             console.log('app.module', 'Push message', m);
+        //         });
+        //         push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(
+        //             s => {
+        //                 registrationService
+        //                     .addSubscriber(s.toJSON())
+        //                     .subscribe(r =>
+        //                         console.log('app.module', 'addSubscriber', 'done', r)
+        //                     );
+        //             }
+        //         );
+        //     }
+        // });
     }
 }

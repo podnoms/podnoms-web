@@ -59,7 +59,7 @@ export class AudioService {
             src: [source],
             html5: true,
             volume: this._volume / 100,
-            onplay: (id, pos) => {
+            onplay: (id: any, pos: any) => {
                 console.log('onplay', id, pos);
                 this._playState = PlayState.playing;
                 this._duration = this._audio.duration();
@@ -139,7 +139,7 @@ export class AudioService {
             this.playStateChanged.emit(this._playState);
         }
     }
-    setPosition(position) {
+    setPosition(position: number) {
         this._audio.seek(position);
     }
 }
