@@ -11,3 +11,7 @@
                     [podcast]="podcast"
                     (entryCreateComplete)="onEntryCreateComplete($event)">
 </app-upload-dropbox>
+<app-upload-gdrive *ngIf="uploadMode===uploadModes.fromGoogleDrive"
+                    [podcast]="podcast"
+                    (entryCreateComplete)="onEntryCreateComplete($event)">
+</app-upload-gdrive>
