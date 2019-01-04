@@ -31,7 +31,7 @@ export class UploadDropboxComponent extends BaseJsUploadComponent implements OnI
                 that.isPosting = true;
                 const name = files[0].name;
                 const urlToCheck = files[0].link;
-                that.processPodcast(name, urlToCheck).subscribe(e => this.entryCreateComplete.emit(e));
+                that.processPodcast(name, urlToCheck).subscribe(e => that.entryCreateComplete.emit(e));
             },
             linkType: 'direct', // or "direct"
             multiselect: false, // or true
