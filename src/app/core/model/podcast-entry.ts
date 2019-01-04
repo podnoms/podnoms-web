@@ -7,7 +7,7 @@ export class PodcastEntry {
     sourceUrl: string;
     audioUrl?: string;
     imageUrl?: string;
-    thumbnailImageUrl?: string;
+    thumbnailUrl?: string;
     processed: boolean;
     createDate?: Date;
     processingStatus?: string;

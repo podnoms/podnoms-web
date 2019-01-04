@@ -1,4 +1,10 @@
 @import 'theme/main';
 @import 'theme/codebase/custom-forms';
 
-@import 'theme/codebase/themes/elegance';
+@import 'theme/codebase/themes/pulse';
+
+$body-bg: white;
+
+body {
+    background-color: white;
+}

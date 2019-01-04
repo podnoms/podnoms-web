@@ -7,3 +7,7 @@
                  [podcast]="podcast"
                  (uploadComplete)="onEntryCreateComplete($event)">
 </app-upload-file>
+<app-upload-dropbox *ngIf="uploadMode===uploadModes.fromDropbox"
+                    [podcast]="podcast"
+                    (entryCreateComplete)="onEntryCreateComplete($event)">
+</app-upload-dropbox>

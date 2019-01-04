@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { JobService } from '../shared/services/job.service';
 import { ToastService } from '../core';
 import { DebugService } from './debug.service';
+import { SwPush } from '@angular/service-worker';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
     selector: 'app-debug',
@@ -9,8 +11,8 @@ import { DebugService } from './debug.service';
     styleUrls: ['./debug.component.scss']
 })
 export class DebugComponent implements OnInit {
-
     constructor(
+        private swPush: SwPush,
         private debugService: DebugService,
         private jobService: JobService,
         private toastService: ToastService
@@ -18,7 +20,14 @@ export class DebugComponent implements OnInit {
 
     ngOnInit() {}
     sendPush() {
-        this.debugService.sendPushPessage('Hello Sailor').subscribe(r => alert(r));
+        this.swPush
+            .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
+            .then(sub => {
+                this.debugService
+                    .sendPushPessage('Hello Sailor')
+                    .subscribe((r: any) => console.log('debug.component.ts', 'sendPushPessage', r));
+            })
+            .catch(err => console.error('debug.component', 'swPush', err));
     }
     deleteOrphans() {
         this.jobService.deleteOrphans().subscribe(r => {
