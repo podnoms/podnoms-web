@@ -1,0 +1,20 @@
+<p>
+  <button class="btn" (click)="browseDropbox()">
+    <i class="fa fa-folder-open"
+        *ngIf="!isPosting"></i>
+    <i class="fa fa-cog fa-spin"
+        *ngIf="isPosting"></i>
+        Open Dropbox Browser
+  </button>
+</p>
+<div class="alert alert-danger alert-dismissible fade show animated fadeInDown"
+     role="alert"
+     *ngIf="errorText">
+    <strong>Error!</strong> {{errorText}}
+    <button type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

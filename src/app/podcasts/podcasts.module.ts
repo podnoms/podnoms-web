@@ -27,6 +27,7 @@ import { UtilsModule } from '../utils/utils.module';
 import { PodcastPrivacyComponent } from './podcast-privacy/podcast-privacy.component';
 import { NotificationLogsComponent } from './notifications/notification-logs/notification-logs.component';
 import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.component';
+import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dropbox.component';
 
 @NgModule({
     imports: [
@@ -56,7 +57,8 @@ import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.compon
         NotificationModalComponent,
         PodcastPrivacyComponent,
         NotificationLogsComponent,
-        EntryEditFormComponent
+        EntryEditFormComponent,
+        UploadDropboxComponent
     ],
     providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
 })

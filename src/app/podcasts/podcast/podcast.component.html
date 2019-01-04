@@ -24,6 +24,9 @@
                     <a class="btn btn-secondary"
                        (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromLocalFile : uploadModes.none;">
                         <i class="icon icon-cloud-upload"></i> Upload (from computer)</a>
+                    <a class="btn btn-secondary"
+                       (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromDropbox : uploadModes.none;">
+                        <i class="icon icon-social-dropbox"></i> Upload (from Dropbox)</a>
                 </div>
                 <div class="btn-group"
                      role="group"
