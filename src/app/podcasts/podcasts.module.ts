@@ -28,6 +28,8 @@ import { PodcastPrivacyComponent } from './podcast-privacy/podcast-privacy.compo
 import { NotificationLogsComponent } from './notifications/notification-logs/notification-logs.component';
 import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.component';
 import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dropbox.component';
+import { UploadGdriveComponent } from './entry-upload/upload-gdrive/upload-gdrive.component';
+import { BaseJsUploadComponent } from './base-js-upload.component';
 
 @NgModule({
     imports: [
@@ -44,6 +46,7 @@ import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dro
     ],
     exports: [PodcastComponent],
     declarations: [
+        BaseJsUploadComponent,
         PodcastComponent,
         PodcastDetailComponent,
         EntryListItemComponent,
@@ -58,7 +61,8 @@ import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dro
         PodcastPrivacyComponent,
         NotificationLogsComponent,
         EntryEditFormComponent,
-        UploadDropboxComponent
+        UploadDropboxComponent,
+        UploadGdriveComponent
     ],
     providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
 })
