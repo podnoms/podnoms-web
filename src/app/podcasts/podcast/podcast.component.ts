@@ -70,6 +70,9 @@ export class PodcastComponent {
             }
         });
     }
+    startUpload(uploadMode: UploadModes) {
+        this.uploadMode = uploadMode;
+    }
     podcastUpdated(podcast: Podcast) {
         this.selectedPodcast$.next(podcast[0]);
         this.changeDetectorRef.detectChanges();

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Podcast } from '../../../core';
+import { Podcast, ToastService } from '../../../core';
 import { PodcastDataService } from '../../podcast-data.service';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
 
@@ -23,7 +23,7 @@ export class UploadGdriveComponent extends BaseJsUploadComponent implements OnIn
 
     pickerApiLoaded = false;
 
-    constructor(podcastDataService: PodcastDataService) {
+    constructor(podcastDataService: PodcastDataService, private toastyService: ToastService) {
         super(podcastDataService);
     }
 
@@ -54,9 +54,17 @@ export class UploadGdriveComponent extends BaseJsUploadComponent implements OnIn
         this.isPosting = true;
         if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
             const doc = data[google.picker.Response.DOCUMENTS][0];
-            const fileID = doc[google.picker.Document.ID];
-            const url = `http://drive.google.com/uc?id=${fileID}&export=download`;
-            this.processPodcast(doc.name, url).subscribe(e => this.entryCreateComplete.emit(e));
+            if (this.isValidFileType(doc.name, 'audio')) {
+                const fileID = doc[google.picker.Document.ID];
+                const url = `http://drive.google.com/uc?id=${fileID}&export=download`;
+                this.processPodcast(doc.name, url).subscribe(e => this.entryCreateComplete.emit(e));
+            } else {
+                const types = this.getSupportedFileTypes('audio');
+                const parsedTypes = [types.slice(0, -1).join(', '), types.slice(-1)[0]].join(
+                    types.length < 2 ? '' : ' and '
+                );
+                this.errorText = `This filetype is not supported, supported filetypes are ${parsedTypes}`;
+            }
         }
     }
     handleAuthResult(authResult) {
