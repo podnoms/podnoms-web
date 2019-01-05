@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
 import { Podcast, PodcastEntry, ToastService } from '../../../core';
-import { EntriesStoreService } from '../../entries-store.service';
 import { PodcastDataService } from '../../podcast-data.service';
 
 @Component({
@@ -38,7 +37,7 @@ export class UploadUrlComponent implements AfterViewInit {
                 this.resetUrl();
                 this.playlistAdded.emit(e);
             },
-            err =>
+            () =>
                 this.toastService.showError(
                     'Error creating playlist',
                     'There was an error adding this playlist, please refresh page and try again'
