@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Podcast, ToastService } from '../../../core';
-import { PodcastDataService } from '../../podcast-data.service';
+import { Component, OnInit } from '@angular/core';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
+import { EntryDataService } from '../../entry-data.service';
 
 declare var gapi: any;
 declare var google: any;
@@ -23,8 +22,8 @@ export class UploadGdriveComponent extends BaseJsUploadComponent implements OnIn
 
     pickerApiLoaded = false;
 
-    constructor(podcastDataService: PodcastDataService, private toastyService: ToastService) {
-        super(podcastDataService);
+    constructor(podcastEntryDataService: EntryDataService) {
+        super(podcastEntryDataService);
     }
 
     ngOnInit() {

@@ -7,6 +7,7 @@ import { EntityStoreModule } from './entity-store.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
+import { EntryDataService } from '../podcasts/entry-data.service';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { PodcastDataService } from '../podcasts/podcast-data.service';
             useClass: TokenInterceptor,
             multi: true
         },
-        PodcastDataService
+        PodcastDataService,
+        EntryDataService
     ]
 })
 export class AppStoreModule {}

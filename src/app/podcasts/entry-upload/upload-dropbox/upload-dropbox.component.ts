@@ -3,6 +3,7 @@ import { Podcast, PodcastEntry } from '../../../core';
 import { environment } from '../../../../environments/environment';
 import { PodcastDataService } from '../../podcast-data.service';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
+import { EntryDataService } from '../../entry-data.service';
 declare var Dropbox: any;
 
 @Component({
@@ -14,8 +15,8 @@ export class UploadDropboxComponent extends BaseJsUploadComponent implements OnI
     errorText: string;
     isPosting: boolean = false;
 
-    constructor(podcastDataService: PodcastDataService) {
-        super(podcastDataService);
+    constructor(podcastEntryDataService: EntryDataService) {
+        super(podcastEntryDataService);
         this.loadScript('https://www.dropbox.com/static/api/2/dropins.js', 'dropboxjs', {
             'data-app-key': environment.dropboxAppKey
         });

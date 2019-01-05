@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { KeyValue } from '@angular/common';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PodcastEntry, Podcast } from '../core';
-import { PodcastDataService } from './podcast-data.service';
 import { Observable } from 'rxjs';
 import { BasePageComponent } from '../shared/components/base-page/base-page.component';
+import { EntryDataService } from './entry-data.service';
 
 @Component({
     template: ''
@@ -20,7 +19,9 @@ export class BaseJsUploadComponent extends BasePageComponent {
         image: ['jpg', 'gif', 'bmp', 'png']
     };
 
-    constructor(private podcastDataService: PodcastDataService) {
+    constructor(
+        private podcastEntryDataService: EntryDataService
+    ) {
         super();
     }
 
@@ -62,7 +63,7 @@ export class BaseJsUploadComponent extends BasePageComponent {
         const entry = new PodcastEntry(this.podcast.id, url);
         entry.title = name;
         return Observable.create(observer => {
-            this.podcastDataService.addEntry(entry).subscribe(
+            this.podcastEntryDataService.addEntry(entry).subscribe(
                 e => {
                     if (e) {
                         observer.next(e);

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
 import { Podcast, PodcastEntry, ToastService } from '../../../core';
-import { PodcastDataService } from '../../podcast-data.service';
+import { EntryDataService } from '../../entry-data.service';
 
 @Component({
     selector: 'app-upload-url',
@@ -21,7 +21,7 @@ export class UploadUrlComponent implements AfterViewInit {
     @ViewChild('input')
     vc: any;
     playlistProxy: PodcastEntry = null;
-    constructor(private podcastDataService: PodcastDataService, private toastService: ToastService) {}
+    constructor(private podcastEntryDataService: EntryDataService, private toastService: ToastService) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
     }
@@ -32,7 +32,7 @@ export class UploadUrlComponent implements AfterViewInit {
     }
     processPlaylist() {
         const entry = new PodcastEntry(this.podcast.id, this.playlistProxy.sourceUrl);
-        this.podcastDataService.addPlaylist(entry).subscribe(
+        this.podcastEntryDataService.addPlaylist(entry).subscribe(
             e => {
                 this.resetUrl();
                 this.playlistAdded.emit(e);
@@ -57,7 +57,7 @@ export class UploadUrlComponent implements AfterViewInit {
         if (this.isValidURL(urlToCheck)) {
             this.isPosting = true;
             const entry = new PodcastEntry(this.podcast.id, urlToCheck);
-            this.podcastDataService.addEntry(entry).subscribe(
+            this.podcastEntryDataService.addEntry(entry).subscribe(
                 e => {
                     if (e) {
                         if (e.processingStatus === 'Deferred') {
