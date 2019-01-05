@@ -54,6 +54,14 @@ export class UploadUrlComponent implements AfterViewInit {
         this.newEntrySourceUrl = 'Checking (please wait).....';
         this.errorText = '';
 
+        // TODO: Send URL to the server and let it figure out it's authenticity
+        // get rid of the creating a PodcastEntry and seeing if it saves as validation, that's icky!
+
+        // server should return a result that says either
+        // 1. This URL is fine
+        // 2. This URL contains multiple audio files
+        // 3. This URL is mince
+
         if (this.isValidURL(urlToCheck)) {
             this.isPosting = true;
             const entry = new PodcastEntry(this.podcast.id, urlToCheck);
