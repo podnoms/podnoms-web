@@ -1,10 +1,21 @@
 img.sidebar-icon {
-    width: 32px;
-    height: 32px;
-    margin: 0 4px;
+    width: 22px;
+    height: 22px;
     border-radius: 50em;
 }
 
 nav {
     margin-bottom: 56px;
+}
+
+//style the image as if it were an icon font
+.nav-main a > img {
+    position: absolute;
+    top: 49%;
+    right: auto;
+    left: 18px;
+    -webkit-transform: translateX(0) translateY(-50%);
+    transform: translateX(0) translateY(-50%);
+    font-size: 14px;
+    color: rgba(52, 58, 64, 0.75);
 }
