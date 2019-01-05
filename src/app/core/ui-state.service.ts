@@ -16,7 +16,7 @@ export class UiStateService {
 
     toggleSidebar() {
         this._sidebarOpen = !this._sidebarOpen;
-        this.sidebarOpen.next(!this._sidebarOpen);
+        this.sidebarOpen.next(this._sidebarOpen);
     }
     toggleOverlay() {
         this.overlayOpen = !this.overlayOpen;
