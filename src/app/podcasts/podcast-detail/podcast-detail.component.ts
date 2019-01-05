@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Podcast, PodcastEntry, ToastService } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
@@ -6,6 +6,8 @@ import { PodcastDataService } from '../podcast-data.service';
 import { trigger, transition, style, sequence, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { EntriesStoreService } from '../entries-store.service';
+import { debug } from 'util';
+import { EntryDataService } from '../entry-data.service';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -19,23 +21,27 @@ import { EntriesStoreService } from '../entries-store.service';
         ])
     ]
 })
-export class PodcastDetailComponent implements OnInit {
+export class PodcastDetailComponent implements OnInit, OnChanges {
     entries$: Observable<PodcastEntry[]>;
     @Input() podcast: Podcast;
 
     constructor(
         private podcastStore: PodcastStoreService,
-        private podcastDataService: PodcastDataService,
+        private podcastEntryDataService: EntryDataService,
         private entriesStore: EntriesStoreService,
         private toastService: ToastService
     ) {}
 
     ngOnInit() {
-        this.entries$ = this.entriesStore.getWithQuery({ podcastId: this.podcast.id });
+        this.entries$ = this.entriesStore.getWithQuery({ podcastSlug: this.podcast.slug });
     }
-
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.podcast) {
+            this.entries$ = this.entriesStore.getWithQuery({ podcastSlug: changes.podcast.currentValue.slug });
+        }
+    }
     deleteEntry(entry: PodcastEntry) {
-        this.podcastDataService.deleteEntry(entry.id).subscribe(
+        this.podcastEntryDataService.deleteEntry(entry.id).subscribe(
             () => {
                 this.podcast.podcastEntries = this.podcast.podcastEntries.filter(obj => obj.id !== entry.id);
                 this.podcastStore.updateOneInCache(this.podcast);

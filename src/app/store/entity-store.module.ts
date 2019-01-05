@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
-import {
-    EntityMetadataMap,
-    NgrxDataModule,
-    DefaultDataServiceConfig,
-    EntityDataService
-} from 'ngrx-data';
+import { EntityMetadataMap, NgrxDataModule, DefaultDataServiceConfig, EntityDataService } from 'ngrx-data';
 import { environment } from '../../environments/environment';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
+import { EntryDataService } from '../podcasts/entry-data.service';
 
 export function sortByName(a: { name: string }, b: { name: string }): number {
     return a.name.localeCompare(b.name);
@@ -63,7 +59,12 @@ export const pluralNames = {};
     ]
 })
 export class EntityStoreModule {
-    constructor(entityDataService: EntityDataService, podcastDataService: PodcastDataService) {
+    constructor(
+        entityDataService: EntityDataService,
+        podcastDataService: PodcastDataService,
+        podcastEntryDataService: EntryDataService
+    ) {
         entityDataService.registerService('Podcast', podcastDataService);
+        entityDataService.registerService('Entry', podcastEntryDataService);
     }
 }

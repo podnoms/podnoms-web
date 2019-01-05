@@ -7,6 +7,7 @@ import { PodcastDataService } from '../podcast-data.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { EntryDataService } from '../entry-data.service';
 
 @Component({
     selector: 'app-entry-edit-form',
@@ -27,7 +28,7 @@ export class EntryEditFormComponent implements OnInit {
         private router: Router,
         private fb: FormBuilder,
         private entriesStore: EntriesStoreService,
-        private entryDataService: PodcastDataService,
+        private entryDataService: EntryDataService,
         private toastService: ToastService
     ) {
         this.entryId = route.snapshot.params['entry'];

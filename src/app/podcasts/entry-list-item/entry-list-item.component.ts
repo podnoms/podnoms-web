@@ -15,6 +15,7 @@ import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
 import { Router } from '@angular/router';
+import { EntryDataService } from '../entry-data.service';
 declare var $: any;
 @Component({
     selector: '[app-entry-list-item]',
@@ -38,7 +39,7 @@ export class EntryListItemComponent implements OnInit {
         private signalr: SignalRService,
         public audioService: AudioService,
         private entriesStore: EntriesStoreService,
-        private podcastDataService: PodcastDataService,
+        private podcastEntryDataService: EntryDataService,
         private notifier: ToastService,
         private cdr: ChangeDetectorRef
     ) {}
@@ -74,13 +75,13 @@ export class EntryListItemComponent implements OnInit {
         this.entryRemoved.emit(this.entry);
     }
     updateTitle($event: Event) {
-        this.podcastDataService.updateEntry(this.entry).subscribe(e => this.entriesStore.updateOneInCache(e));
+        this.podcastEntryDataService.updateEntry(this.entry).subscribe(e => this.entriesStore.updateOneInCache(e));
     }
     goto(entry: PodcastEntry) {
         window.open(entry.sourceUrl);
     }
     retry(entry: PodcastEntry) {
-        this.podcastDataService.reSubmitEntry(entry).subscribe(r => {
+        this.podcastEntryDataService.reSubmitEntry(entry).subscribe(r => {
             this.entry = r;
             this.notifier.showToast('Success', 'Submitted podcast for re-processing');
         });
