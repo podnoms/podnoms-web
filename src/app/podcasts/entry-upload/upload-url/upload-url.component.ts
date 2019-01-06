@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
 import { Podcast, PodcastEntry, ToastService } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
+import { UtilityService } from '../../../shared/services/utility.service';
 
 @Component({
     selector: 'app-upload-url',
@@ -18,10 +19,15 @@ export class UploadUrlComponent implements AfterViewInit {
     newEntrySourceUrl: string;
     errorText: string;
     isPosting: boolean = false;
+    remoteAudioList: any = null;
     @ViewChild('input')
     vc: any;
     playlistProxy: PodcastEntry = null;
-    constructor(private podcastEntryDataService: EntryDataService, private toastService: ToastService) {}
+    constructor(
+        private podcastEntryDataService: EntryDataService,
+        private utilityService: UtilityService,
+        private toastService: ToastService
+    ) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
     }
@@ -47,41 +53,74 @@ export class UploadUrlComponent implements AfterViewInit {
     resetUrl() {
         this.playlistProxy = null;
         this.isPosting = false;
+        this.remoteAudioList = '';
         this.newEntrySourceUrl = '';
     }
     addEntry() {
-        const urlToCheck = this.newEntrySourceUrl;
+        const url = this.newEntrySourceUrl;
         this.newEntrySourceUrl = 'Checking (please wait).....';
         this.errorText = '';
 
-        if (this.isValidURL(urlToCheck)) {
+        // TODO: Send URL to the server and let it figure out it's authenticity
+        // get rid of the creating a PodcastEntry and seeing if it saves as validation, that's icky!
+
+        // server should return a result that says either
+        // 1. This URL is fine
+        // 2. This URL contains multiple audio files
+        // 3. This URL is mince
+
+        if (this.isValidURL(url)) {
             this.isPosting = true;
-            const entry = new PodcastEntry(this.podcast.id, urlToCheck);
-            this.podcastEntryDataService.addEntry(entry).subscribe(
-                e => {
-                    if (e) {
-                        if (e.processingStatus === 'Deferred') {
-                            this.playlistProxy = e;
-                        } else {
-                            this.entryCreateComplete.emit(e);
-                        }
+
+            this.utilityService.checkAudioUrl(url).subscribe(
+                r => {
+                    if (r.type === 'native') {
+                        this.createEntry(url);
+                    }
+                    if ((r.type = 'proxied')) {
+                        this.isPosting = false;
+                        this.remoteAudioList = r.data;
                     }
                 },
                 err => {
                     this.isPosting = false;
-                    if (err.status === 402) {
-                        this.errorText =
-                            'You have exceeded your allowable storage quota, please upgrade to a paid tier';
-                    } else {
-                        this.errorText = 'This does not look like a valid URL';
-                    }
-                    this.newEntrySourceUrl = urlToCheck;
+                    this.errorText = 'Could not find any supported audio at that URL';
+                    this.resetUrl();
                 }
             );
         } else {
-            this.isPosting = false;
             this.errorText = 'This does not look like a valid URL';
-            this.newEntrySourceUrl = urlToCheck;
+            this.resetUrl();
         }
+    }
+    onPageEntryChosen($event) {
+        if ($event) {
+            this.createEntry($event);
+        } else {
+            this.resetUrl();
+        }
+    }
+    private createEntry(url: string) {
+        const entry = new PodcastEntry(this.podcast.id, url);
+        this.podcastEntryDataService.addEntry(entry).subscribe(
+            e => {
+                if (e) {
+                    if (e.processingStatus === 'Deferred') {
+                        this.playlistProxy = e;
+                    } else {
+                        this.entryCreateComplete.emit(e);
+                    }
+                }
+            },
+            err => {
+                this.isPosting = false;
+                if (err.status === 402) {
+                    this.errorText = 'You have exceeded your allowable storage quota, please upgrade to a paid tier';
+                } else {
+                    this.errorText = 'This does not look like a valid URL';
+                }
+                this.newEntrySourceUrl = url;
+            }
+        );
     }
 }

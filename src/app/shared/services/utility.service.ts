@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CheckResult } from '../../core/model/check-result';
+import 'rxjs/add/operator/map';
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +13,7 @@ export class UtilityService {
 
     checkForDupes(table: string, field: string, value: string): Observable<CheckResult> {
         return this._http.get<CheckResult>(
-            environment.apiHost +
-                `/utility/checkdupes?table=${table}&field=${field}&value=${value}`
+            environment.apiHost + `/utility/checkdupes?table=${table}&field=${field}&value=${value}`
         );
     }
     checkDomain(domain: string): Observable<boolean> {
@@ -22,12 +22,12 @@ export class UtilityService {
         });
     }
     checkPassword(password: string): Observable<number> {
-        return this._http.post<number>(
-            `${environment.apiHost}/utility/checkpassword/`,
-            `"${password}"`
-        );
+        return this._http.post<number>(`${environment.apiHost}/utility/checkpassword/`, `"${password}"`);
     }
     getTemporaryPodcastImageUrl(): Observable<string> {
         return this._http.get<string>(`${environment.apiHost}/utility/temppodcastimage`);
+    }
+    checkAudioUrl(url: string): Observable<any> {
+        return this._http.get<any>(`${environment.apiHost}/urlprocess/validate?url=${url}`);
     }
 }
