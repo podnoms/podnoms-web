@@ -1,0 +1,35 @@
+<div *ngIf="remoteAudioList block">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">
+            Multiple
+            audio sources
+            found,
+            please choose one</h3>
+    </div>
+    <div class="block-content">
+        <div class="form-group row">
+            <label class="col-12"></label>
+            <div class="col-12"
+                 id="radioGrou[p">
+                <div class="col-md-4"
+                     *ngFor="let row of remoteAudioList | keyvalue; let i = index">
+                    <div class="custom-control custom-radio mb-5">
+                        <input class="custom-control-input"
+                               [(ngModel)]="selectedAudioUrl"
+                               type="radio"
+                               name="example-radios"
+                               id="{{row.key}}"
+                               [checked]="i===0"
+                               [value]="row.value">
+                        <label class="custom-control-label"
+                               for="{{row.key}}">{{row.key}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success"
+                (click)="createEntry(selectedAudioUrl)">Create</button>
+        <button class="btn btn-danget"
+                (click)="createEntry('')">Cancel</button>
+    </div>
+</div>

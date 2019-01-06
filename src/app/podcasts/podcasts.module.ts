@@ -30,6 +30,7 @@ import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.compon
 import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dropbox.component';
 import { UploadGdriveComponent } from './entry-upload/upload-gdrive/upload-gdrive.component';
 import { BaseJsUploadComponent } from './base-js-upload.component';
+import { RemotePageParserComponent } from './entry-upload/remote-page-parser/remote-page-parser.component';
 
 @NgModule({
     imports: [
@@ -62,7 +63,8 @@ import { BaseJsUploadComponent } from './base-js-upload.component';
         NotificationLogsComponent,
         EntryEditFormComponent,
         UploadDropboxComponent,
-        UploadGdriveComponent
+        UploadGdriveComponent,
+        RemotePageParserComponent
     ],
     providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
 })

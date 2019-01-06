@@ -1,4 +1,5 @@
-<form class="push">
+<form class="push"
+      *ngIf="!remoteAudioList">
     <div class="input-group input-group-lg">
         <input type="text"
                name="entry-url"
@@ -21,11 +22,21 @@
         </div>
     </div>
 </form>
+
+<app-remote-page-parser *ngIf="remoteAudioList"
+                        (pageEntryChosen)="onPageEntryChosen($event)"
+                        [remoteAudioList]="remoteAudioList">
+</app-remote-page-parser>
+
 <div class="block block-themed"
      *ngIf="playlistProxy !== null">
     <div class="block-header bg-corporate-light">
         <h3 class="block-title font-w600">
-            This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes being downloaded to
+            This looks like a playlist?
+            Shall we add all items
+            (please note, this may
+            result in a lot of episodes
+            being downloaded to
             your device).</h3>
         <div class="block-options">
             <button type="button"
@@ -44,7 +55,8 @@
 <div class="alert alert-danger alert-dismissible fade show animated fadeInDown"
      role="alert"
      *ngIf="errorText">
-    <strong>Error!</strong> {{errorText}}
+    <strong>Error!</strong>
+    {{errorText}}
     <button type="button"
             class="close"
             data-dismiss="alert"
