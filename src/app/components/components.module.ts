@@ -9,10 +9,21 @@ import { FooterComponent } from './footer/footer.component';
 import { FooterPlayerComponent } from './footer/footer-player/footer-player.component';
 import { PasswordCheckerComponent } from './password-checker/password-checker.component';
 import { ChartsModule } from 'ng2-charts';
-
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
 @NgModule({
-    imports: [CommonModule, RouterModule, SharedModule, ChartsModule],
-    providers: [PodcastStoreService],
+    imports: [CommonModule, RouterModule, SharedModule, ChartsModule, PerfectScrollbarModule],
+    providers: [
+        PodcastStoreService,
+        {
+            provide: PERFECT_SCROLLBAR_CONFIG,
+            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+        }
+    ],
     declarations: [
         SidebarComponent,
         SideOverlayComponent,
@@ -20,12 +31,6 @@ import { ChartsModule } from 'ng2-charts';
         FooterPlayerComponent,
         PasswordCheckerComponent
     ],
-    exports: [
-        SidebarComponent,
-        SideOverlayComponent,
-        FooterComponent,
-        FooterPlayerComponent,
-        PasswordCheckerComponent
-    ]
+    exports: [SidebarComponent, SideOverlayComponent, FooterComponent, FooterPlayerComponent, PasswordCheckerComponent]
 })
 export class ComponentsModule {}
