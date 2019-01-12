@@ -41,6 +41,7 @@ export class UploadGdriveComponent extends BaseJsUploadComponent implements OnIn
             {
                 client_id: this.clientId,
                 scope: this.scope,
+
                 immediate: false
             },
             this.handleAuthResult.bind(this)
@@ -52,17 +53,21 @@ export class UploadGdriveComponent extends BaseJsUploadComponent implements OnIn
     pickerCallback(data) {
         this.isPosting = true;
         if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
-            const doc = data[google.picker.Response.DOCUMENTS][0];
-            if (this.isValidFileType(doc.name, 'audio')) {
-                const fileID = doc[google.picker.Document.ID];
-                const url = `http://drive.google.com/uc?id=${fileID}&export=download`;
-                this.processPodcast(doc.name, url).subscribe(e => this.entryCreateComplete.emit(e));
-            } else {
+            const files = data[google.picker.Response.DOCUMENTS].map(doc => {
+                if (this.isValidFileType(doc.name, 'audio')) {
+                    return {
+                        name: doc[google.picker.Document.ID],
+                        link: `http://drive.google.com/uc?id=${doc[google.picker.Document.ID]}&export=download`
+                    };
+                }
                 const types = this.getSupportedFileTypes('audio');
                 const parsedTypes = [types.slice(0, -1).join(', '), types.slice(-1)[0]].join(
                     types.length < 2 ? '' : ' and '
                 );
-                this.errorText = `This filetype is not supported, supported filetypes are ${parsedTypes}`;
+                this.errorText += `This filetype is not supported, supported filetypes are ${parsedTypes}`;
+            });
+            if (files && files.length !== 0) {
+                this.parseFileList(files);
             }
         }
     }
@@ -70,13 +75,15 @@ export class UploadGdriveComponent extends BaseJsUploadComponent implements OnIn
         if (authResult && !authResult.error) {
             if (authResult.access_token) {
                 const view = new google.picker.View(google.picker.ViewId.DOCS);
-                // view.setMimeTypes('audio/mpeg', 'audio/x-wav');
+                view.setMimeTypes(this.getMimeTypes('audio').join());
                 const pickerBuilder = new google.picker.PickerBuilder();
                 const picker = pickerBuilder
-                    .enableFeature(google.picker.Feature.NAV_HIDDEN)
+                    // .enableFeature(google.picker.Feature.NAV_HIDDEN)
+                    .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
                     .setOAuthToken(authResult.access_token)
                     .addView(view)
                     .setCallback(this.pickerCallback.bind(this))
+                    .setInitialView(view)
                     .build();
                 picker.setVisible(true);
             }

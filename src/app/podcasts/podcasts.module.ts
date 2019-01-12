@@ -31,6 +31,7 @@ import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dro
 import { UploadGdriveComponent } from './entry-upload/upload-gdrive/upload-gdrive.component';
 import { BaseJsUploadComponent } from './base-js-upload.component';
 import { RemotePageParserComponent } from './entry-upload/remote-page-parser/remote-page-parser.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import { RemotePageParserComponent } from './entry-upload/remote-page-parser/rem
         QuillModule,
         NgbModalModule,
         DropzoneModule,
+        NgSelectModule,
         ModalModule.forRoot(),
     ],
     exports: [PodcastComponent],
