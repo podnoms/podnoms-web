@@ -30,4 +30,7 @@ export class UtilityService {
     checkAudioUrl(url: string): Observable<any> {
         return this._http.get<any>(`${environment.apiHost}/urlprocess/validate?url=${url}`);
     }
+    checkForApiServer(): Observable<any> {
+        return this._http.get<any>(`${environment.apiHost}/hc`);
+    }
 }

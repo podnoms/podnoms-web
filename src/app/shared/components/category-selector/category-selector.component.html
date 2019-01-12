@@ -1,21 +1,35 @@
 <div class="row justify-content-center">
-    <div class="col-md-3" *ngIf="label">
+    <div class="col-md-3"
+         *ngIf="label">
         <label for="category">{{label}}</label>
     </div>
     <div class="col-md-9">
-        <ng-select [items]="categories$ | async" bindLabel="description"
-            (close)="selectCategory()" bindValue="id"
-            placeholder="Select category" [(ngModel)]="category">
+        <ng-select
+                   [items]="categories$ | async"
+                   bindLabel="description"
+                   (close)="selectCategory()"
+                   bindValue="id"
+                   placeholder="Select category"
+                   [(ngModel)]="category">
         </ng-select>
+        <small *ngIf="hasError"
+               id="category-validator"
+               class="invalid-feedback animated fadeInDown">Category
+            is
+            required.</small>
     </div>
 </div>
-<div class="row justify-content-center" *ngIf="subcategoriesVisible">
+<div class="row justify-content-center"
+     *ngIf="subcategoriesVisible">
     <div class="col-md-3">
-        <label for="sub-category">Sub categories</label>
+        <label for="sub-category">Sub
+            categories</label>
     </div>
     <div class="col-md-9">
-        <ng-select [items]="subCategories$|async" bindLabel="description"
-            placeholder="Coming soon!!" bindValue="id">
+        <ng-select [items]="subCategories$|async"
+                   bindLabel="description"
+                   placeholder="Coming soon!!"
+                   bindValue="id">
         </ng-select>
     </div>
 </div>
