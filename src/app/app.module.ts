@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { WebStorageModule } from 'ngx-store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,7 @@ import { MonitoringErrorHandler } from './shared/monitoring/monitoring-error.han
         AppStoreModule,
         SharedModule, // import here to make sure that AuthService is a singleton
         SimpleNotificationsModule.forRoot(),
+        WebStorageModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [

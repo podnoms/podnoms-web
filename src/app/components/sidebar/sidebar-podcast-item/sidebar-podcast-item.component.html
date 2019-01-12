@@ -1,0 +1,9 @@
+<a [routerLink]="['/podcasts', podcast.slug]"
+   [routerLinkActive]="['active']">
+    <img class="img-avatar"
+         [src]="podcast.thumbnailUrl"
+         alt="" />
+    <i class="fa fa-circle text-success" *ngIf="newEpisodes"></i>
+    {{podcast.title}}
+    <div class="font-w400 font-size-xs text-muted">{{podcast.podcastEntries.length}} episodes</div>
+</a>
