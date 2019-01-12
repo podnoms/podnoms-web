@@ -15,16 +15,21 @@ export class BaseJsUploadComponent extends BasePageComponent {
     isPosting: boolean = false;
     extensionLists = {
         video: ['m4v', 'avi', 'mpg', 'mp4', 'webm'],
-        audio: ['mp3', 'ogg', 'flac', 'aiff', 'wav'],
+        audio: ['mp3', 'ogg', 'flac', 'aiff', 'm4a', 'wav'],
+        image: ['jpg', 'gif', 'bmp', 'png']
+    };
+    mimeLists = {
+        video: ['m4v', 'avi', 'mpg', 'mp4', 'webm'],
+        audio: ['audio/mpeg', 'audio/mp4', 'audio/x-aiff', 'audio/ogg', 'audio/vorbis', 'audio/vnd.wav'],
         image: ['jpg', 'gif', 'bmp', 'png']
     };
 
-    constructor(
-        private podcastEntryDataService: EntryDataService
-    ) {
+    constructor(private podcastEntryDataService: EntryDataService) {
         super();
     }
-
+    protected getMimeTypes(type: string) {
+        return this.mimeLists[type];
+    }
     protected getSupportedFileTypes(type: string): string[] {
         return this.extensionLists[type];
     }
@@ -59,6 +64,15 @@ export class BaseJsUploadComponent extends BasePageComponent {
         }
     }
 
+    protected parseFileList(files: Array<any>) {
+        this.isPosting = true;
+        const that = this;
+        files.forEach(file => {
+            if (file && file.name && file.link) {
+                that.processPodcast(file.name, file.link).subscribe(e => this.entryCreateComplete.emit(e));
+            }
+        });
+    }
     public processPodcast(name: string, url: string): Observable<string> {
         const entry = new PodcastEntry(this.podcast.id, url);
         entry.title = name;
