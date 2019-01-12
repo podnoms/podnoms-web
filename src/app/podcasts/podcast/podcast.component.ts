@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { MasterDetailCommands, Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
 import { BehaviorSubject, Observable } from 'rxjs';

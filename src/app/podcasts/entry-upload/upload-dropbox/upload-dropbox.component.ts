@@ -12,8 +12,6 @@ declare var Dropbox: any;
     styleUrls: ['./upload-dropbox.component.scss']
 })
 export class UploadDropboxComponent extends BaseJsUploadComponent implements OnInit {
-    errorText: string;
-    isPosting: boolean = false;
 
     constructor(podcastEntryDataService: EntryDataService) {
         super(podcastEntryDataService);
@@ -28,15 +26,10 @@ export class UploadDropboxComponent extends BaseJsUploadComponent implements OnI
         const that = this;
         const options = {
             // Required. Called when a user selects an item in the Chooser.
-            success: function(files) {
-                that.isPosting = true;
-                const name = files[0].name;
-                const urlToCheck = files[0].link;
-                that.processPodcast(name, urlToCheck).subscribe(e => that.entryCreateComplete.emit(e));
-            },
+            success: this.parseFileList.bind(this),
             linkType: 'direct', // or "direct"
-            multiselect: false, // or true
-            extensions: ['.mp3', '.wav'],
+            multiselect: true, // or true
+            extensions: this.getSupportedFileTypes('audio'),
             folderselect: false // or true
         };
 
