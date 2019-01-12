@@ -14,38 +14,25 @@ export class HomeComponent implements OnInit {
     loading$: Observable<boolean>;
     profile$: Observable<Profile[]>;
     loaded: boolean = false;
-    constructor(
-        router: Router,
-        profileStoreService: ProfileStoreService,
-        utilityService: UtilityService,
-        authService: AuthService
-    ) {
-        //first off, check if the API is up
-
-        if (authService.getAuthToken()) {
-            this.utilityService.getForApiServer().subscribe(
-                r => {
-                    this.loading$ = profileStoreService.loading$;
-                    this.profile$ = profileStoreService.entities$;
-                    this.profile$.subscribe(
-                        p => {
-                            profileStoreService.entities$.subscribe(profileResult => {
-                                if (profileResult && profileResult.length !== 0) {
-                                    router.navigate(['/podcasts']);
-                                } else if (profileResult && profileResult.length === 0) {
-                                    this.loaded = true;
-                                }
-                            });
-                        },
-                        err => {
-                            console.error('home.component', 'err', err);
-                            authService.logout();
-                        }
-                    );
-                },
-                err => router.navigateByUrl('/error')
-            );
-        }
+    constructor(router: Router, profileStoreService: ProfileStoreService, authService: AuthService) {
+        this.loading$ = profileStoreService.loading$;
+        this.profile$ = profileStoreService.entities$;
+        this.profile$.subscribe(
+            p => {
+                profileStoreService.entities$.subscribe(profileResult => {
+                    if (profileResult && profileResult.length !== 0) {
+                        router.navigate(['/podcasts']);
+                    } else if (profileResult && profileResult.length === 0) {
+                        this.loaded = true;
+                    }
+                });
+            },
+            err => {
+                console.error('home.component', 'err', err);
+                authService.logout();
+            }
+        );
     }
-    ngOnInit() {}
+    ngOnInit() {
+    }
 }
