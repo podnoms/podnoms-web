@@ -37,22 +37,26 @@ export class AuthService extends BaseService {
 
     bootstrap(): Observable<boolean> {
         const ret = new Subject<boolean>();
-        if (this.isLoggedIn()) {
-            this.profileStoreService.getAll();
-            this.profileStoreService.entities$.subscribe(results => {
-                if (results.length !== 0) {
-                    this.profile$.next(results[0]);
-                    this._authNavStatusSource.next(true);
-                    ret.next(true);
-                }
-            });
+        try {
+            if (this.isLoggedIn()) {
+                this.profileStoreService.getAll();
+                this.profileStoreService.entities$.subscribe(results => {
+                    if (results.length !== 0) {
+                        this.profile$.next(results[0]);
+                        this._authNavStatusSource.next(true);
+                        ret.next(true);
+                    }
+                });
+            }
+            return ret;
+        } catch (err) {
+            this.logout();
         }
-        return ret;
     }
     isLoggedIn(): boolean {
         const helper = new JwtHelperService();
         const token = this.getAuthToken();
-        return token && !helper.isTokenExpired(token);
+        return helper.isTokenExpired(token);
     }
     getAuthToken(): string {
         return localStorage.getItem('auth_token');
@@ -78,6 +82,7 @@ export class AuthService extends BaseService {
         this.profile$.next(null);
         this._authNavStatusSource.next(false);
         this.router.navigate(['']);
+        window.location.reload();
     }
     register(email: string, password: string): Observable<boolean> {
         return this.podnomsAuthService.register(email, password).pipe(map(r => true));
@@ -85,12 +90,7 @@ export class AuthService extends BaseService {
     forgotPassword(userName: string): Observable<any> {
         return this.podnomsAuthService.forgotPassword(userName);
     }
-    resetPassword(
-        email: string,
-        newPassword: string,
-        newPasswordRepeat: string,
-        code: string
-    ): Observable<boolean> {
+    resetPassword(email: string, newPassword: string, newPasswordRepeat: string, code: string): Observable<boolean> {
         return this.podnomsAuthService
             .resetPassword(email, newPassword, newPasswordRepeat, code)
             .pipe(map(res => true));
