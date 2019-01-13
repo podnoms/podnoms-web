@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AudioService } from '../../../core/audio.service';
+import { AudioService, PlayState as PlayStates } from '../../../core/audio.service';
 declare var $;
 
 @Component({
@@ -12,7 +12,8 @@ export class FooterPlayerComponent implements OnInit {
     duration: number = 0;
     volume: number = 0;
     position: number = 0;
-    playState: number = 0;
+    playStates = PlayStates;
+    playState: PlayStates = PlayStates.none;
 
     constructor(private audioService: AudioService) {}
 

@@ -1,8 +1,7 @@
 <div class="player-wrapper">
-<button type="button"
-        class="closeButton btn btn-sm bg-corporate-light"
-        (click)="closePlayer()"><i
-       class="fa fa-times"></i></button>
+    <button type="button" class="closeButton btn btn-sm bg-corporate-light" (click)="closePlayer()">
+        <i class="fa fa-times"></i>
+    </button>
     <div class="webPlayer light audioPlayer bg-corporate-light footer-player">
         <div class="controls">
             <div class="leftblock">
@@ -10,7 +9,7 @@
                     (click)="playPause()"
                     tabindex="1"
                     class="smooth noload"
-                    [ngClass]="playState === 1 ? 'pause' : 'play'"
+                    [ngClass]="playState === playStates.playing ? 'pause' : 'play'"
                 ></a>
             </div>
             <div class="play-progress">

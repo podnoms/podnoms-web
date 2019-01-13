@@ -1,10 +1,10 @@
 <div class="podcast-container-wrapper"
      *ngIf="(podcasts$ | async) as podcast">
-    <div class="block"
+    <div class="block block-themed block-rounded"
          *ngIf="(selectedPodcast$ | async) as selected">
-        <div class="block-header block-header-default">
-            <h3 class="block-title">{{
-                selected.title }}</h3>
+        <div class="block-header bg-gd-sun">
+            <h2 class="block-title">{{
+                selected.title }}</h2>
             <div class="block-options">
                 <div class="btn-group"
                      role="group"
@@ -15,17 +15,17 @@
                            aria-hidden="true"></i>
                         Edit
                     </a>
-                    <a (click)="podcastDeleteDialog.show()"
-                       class="btn btn-secondary btn-outline-danger">
+                    <button (click)="podcastDeleteDialog.show()"
+                            class="btn btn-secondary">
                         <i class="icon icon-close"
                            aria-hidden="true"></i>
                         Delete
-                    </a>
-                    <a class="btn btn-secondary"
-                       (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
+                    </button>
+                    <button class="btn btn-secondary"
+                            (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
                         <i class="icon icon-plus"></i>
-                        Add
-                        (from URL)</a>
+                        Add (from URL)
+                    </button>
                     <div class="btn-group"
                          role="group">
                         <button type="button"
@@ -210,8 +210,7 @@
            data-timeout="300"
            [routerLink]="['add', { useWizard: 'true' }]">
             <i class="icon icon-energy mr-10"></i>
-            Create
-            my first podcast
+            Create my first podcast
         </a>
     </div>
 </div>
