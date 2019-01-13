@@ -13,12 +13,10 @@ export class EntryDataService extends DefaultDataService<PodcastEntry> {
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator, logger: Logger) {
         super('Entry', http, httpUrlGenerator);
     }
-
     getWithQuery(queryParams: QueryParams | string): Observable<PodcastEntry[]> {
         const params = new HttpParams();
         return this.execute('GET', `${this.entitiesUrl}all/${queryParams['podcastSlug']}`, undefined, params);
     }
-
     getAllEntriesForUser(): Observable<PodcastEntry[]> {
         return this.http.get<PodcastEntry[]>(environment.apiHost + '/entry/users/');
     }
@@ -27,6 +25,9 @@ export class EntryDataService extends DefaultDataService<PodcastEntry> {
     }
     getEntries(slug: string): Observable<PodcastEntry[]> {
         return this.http.get<PodcastEntry[]>(environment.apiHost + '/entry/all/' + slug);
+    }
+    getDownloadUrl(id: string): Observable<string> {
+        return this.http.get<string>(environment.apiHost + '/entry/downloadurl/' + id);
     }
     addEntry(entry: PodcastEntry): Observable<PodcastEntry> {
         return this.http.post<PodcastEntry>(environment.apiHost + '/entry', JSON.stringify(entry));

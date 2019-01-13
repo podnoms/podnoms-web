@@ -16,6 +16,7 @@ import { EntriesStoreService } from '../entries-store.service';
 import { PodcastDataService } from '../podcast-data.service';
 import { Router } from '@angular/router';
 import { EntryDataService } from '../entry-data.service';
+import { AudioDownloadService } from '../../shared/services/audio-download.service';
 declare var $: any;
 @Component({
     selector: '[app-entry-list-item]',
@@ -40,7 +41,8 @@ export class EntryListItemComponent implements OnInit {
         public audioService: AudioService,
         private entriesStore: EntriesStoreService,
         private podcastEntryDataService: EntryDataService,
-        private notifier: ToastService,
+        private downloader: AudioDownloadService,
+        private toasty: ToastService,
         private cdr: ChangeDetectorRef
     ) {}
     ngOnInit() {
@@ -83,7 +85,7 @@ export class EntryListItemComponent implements OnInit {
     retry(entry: PodcastEntry) {
         this.podcastEntryDataService.reSubmitEntry(entry).subscribe(r => {
             this.entry = r;
-            this.notifier.showToast('Success', 'Submitted podcast for re-processing');
+            this.toasty.showToast('Success', 'Submitted podcast for re-processing');
         });
     }
     playAudio(source: string) {
@@ -100,29 +102,12 @@ export class EntryListItemComponent implements OnInit {
         return window.URL.createObjectURL(file);
     }
     downloadAudio(entry: PodcastEntry) {
-        const that = this;
         this.preparingDownload = true;
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', entry.audioUrl, true);
-        xhr.responseType = 'blob';
-
-        xhr.onload = function(e) {
-            if (this['status'] === 200) {
-                const url = window.URL.createObjectURL(
-                    new Blob([this['response']], {
-                        type: 'application/audio'
-                    })
-                );
-                const link = document.createElement('A');
-                link.setAttribute('href', url);
-                link.setAttribute('download', `${entry.title}.mp3`);
-                link.appendChild(document.createTextNode('Download'));
-                document.getElementsByTagName('body')[0].appendChild(link);
-
-                link.click();
-                setTimeout(() => (that.preparingDownload = false), 500);
-            }
-        };
-        xhr.send();
+        this.downloader
+            .downloadAudio(this.entry.id)
+            .subscribe(
+                r => (this.preparingDownload = false),
+                err => this.toasty.showError('Error', 'Unable to download this episode')
+            );
     }
 }
