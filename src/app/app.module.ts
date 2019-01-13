@@ -50,11 +50,11 @@ export class AppModule {
                 push.messages.subscribe(m => {
                     console.log('app.module', 'Push message', m);
                 });
-                push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(s => {
-                    registrationService
-                        .addSubscriber(s.toJSON())
-                        .subscribe(r => console.log('app.module', 'addSubscriber', 'done', r));
-                });
+                // push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(s => {
+                //     registrationService
+                //         .addSubscriber(s.toJSON())
+                //         .subscribe(r => console.log('app.module', 'addSubscriber', 'done', r));
+                // });
             }
         });
     }

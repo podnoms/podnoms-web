@@ -56,7 +56,7 @@ export class AuthService extends BaseService {
     isLoggedIn(): boolean {
         const helper = new JwtHelperService();
         const token = this.getAuthToken();
-        return helper.isTokenExpired(token);
+        return token && !helper.isTokenExpired(token);
     }
     getAuthToken(): string {
         return localStorage.getItem('auth_token');

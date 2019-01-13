@@ -19,21 +19,23 @@ export class ExpiredInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService, private router: Router) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req).pipe(
-            tap(
-                event => {},
-                err => {
-                    if (
-                        this.authService.getAuthToken() &&
-                        req.url.startsWith(environment.apiHost) &&
-                        err instanceof HttpErrorResponse &&
-                        err.status === 401
-                    ) {
-                        // handle 401 errors
-                        this.authService.logout();
-                    }
-                }
-            )
-        );
+        return next.handle(req);
+
+        // .pipe(
+        //     tap(
+        //         event => {},
+        //         err => {
+        //             if (
+        //                 this.authService.getAuthToken() &&
+        //                 req.url.startsWith(environment.apiHost) &&
+        //                 err instanceof HttpErrorResponse &&
+        //                 err.status === 401
+        //             ) {
+        //                 // handle 401 errors
+        //                 this.authService.logout();
+        //             }
+        //         }
+        //     )
+        // );
     }
 }

@@ -17,11 +17,7 @@ export class LoginComponent implements OnInit {
     password: string;
     isRequesting: boolean = false;
 
-    constructor(
-        private authService: AuthService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) {}
+    constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.metadata = this.activatedRoute.queryParams.subscribe((param: any) => {
@@ -39,11 +35,13 @@ export class LoginComponent implements OnInit {
             );
     }
     login() {
-        this.authService
-            .login(this.username, this.password)
-            .subscribe(
-                success => this.router.navigate(['']),
-                error => (this.errorMessage = 'Unable to log you in - have you registered?')
-            );
+        this.authService.login(this.username, this.password).subscribe(
+            success => {
+                this.router.navigate(['']);
+            },
+            error => {
+                this.errorMessage = 'Unable to log you in - have you registered?';
+            }
+        );
     }
 }
