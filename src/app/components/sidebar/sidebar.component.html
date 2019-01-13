@@ -28,14 +28,19 @@
         <button type="button"
                 class="btn btn-block btn-info push d-flex align-items-center justify-content-between"
                 (click)="doAddPodcast()">
-            <span>Add Podcast</span> <i class="fas fa-plus float-right"></i>
+            <span>Add Podcast</span> <i
+               class="fas fa-plus float-right"></i>
         </button>
-        <ul class="nav-users pull-all">
-            <li class="nav-main-heading"
-                *ngIf="false"><span>My Podcasts</span></li>
-            <li *ngFor="let podcast of (podcasts$ | async | orderByDate: '-createDate')">
-                <app-sidebar-podcast-item [podcast]="podcast"></app-sidebar-podcast-item>
-            </li>
-        </ul>
+        <perfect-scrollbar>
+            <ul class="nav-users pull-all">
+                <li class="nav-main-heading"
+                    *ngIf="false"><span>My
+                        Podcasts</span></li>
+                <li *ngFor="let podcast of (podcasts$ | async | orderByDate: '-createDate')">
+                    <app-sidebar-podcast-item
+                                              [podcast]="podcast"></app-sidebar-podcast-item>
+                </li>
+            </ul>
+        </perfect-scrollbar>
     </div>
 </nav>
