@@ -1,7 +1,8 @@
 <a
     [routerLink]="['/podcasts', podcast.slug]"
     [routerLinkActive]="['active']"
-    placement="top"
+    placement="right"
+    container="body"
     ngbTooltip="{{ podcast.title }}"
 >
     <img class="img-avatar" [src]="podcast.thumbnailUrl" alt="" />
