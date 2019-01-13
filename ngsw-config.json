@@ -1,7 +1,16 @@
 {
     "index": "/index.html",
-    "assetGroups": [
-        {
+    "dataGroups": [{
+        "name": "audio",
+        "urls": ["https://podnomscdn.blob.core.windows.net/audio/**"],
+        "cacheConfig": {
+            "timeout": "10s",
+            "maxSize": 0,
+            "maxAge": "0u",
+            "strategy": "freshness"
+        }
+    }],
+    "assetGroups": [{
             "name": "app",
             "installMode": "prefetch",
             "resources": {
