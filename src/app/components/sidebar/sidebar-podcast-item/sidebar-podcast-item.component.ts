@@ -17,9 +17,9 @@ export class SidebarPodcastItemComponent implements OnInit {
     constructor(private podcastStateService: PodcastLocalStateService) { }
 
     ngOnInit() {
-        const state = this.podcastStateService.getPodcastState(this.podcast.id);
-        console.log('SidebarPodcastItemComponent', 'ngOnInit', state);
-        this.newEpisodes = state.fullValue.hasNewEpisodes;
+        // const state = this.podcastStateService.getPodcastState(this.podcast.id);
+        // console.log('SidebarPodcastItemComponent', 'ngOnInit', state);
+        // this.newEpisodes = state.fullValue.hasNewEpisodes;
     }
 
 }
