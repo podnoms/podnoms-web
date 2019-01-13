@@ -32,7 +32,7 @@
             <span>Add Podcast</span> <i class="fas fa-plus float-right"></i>
         </button>
         <perfect-scrollbar>
-            <ul class="nav-users pull-all">
+            <ul class="nav-users">
                 <li class="nav-main-heading" *ngIf="false"><span>My Podcasts</span></li>
                 <li *ngFor="let podcast of (podcasts$ | async | orderByDate: '-createDate')">
                     <a [routerLink]="['/podcasts', podcast.slug]" [routerLinkActive]="['active']">

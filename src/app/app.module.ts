@@ -47,14 +47,22 @@ export class AppModule {
         this.profile$ = profileStoreService.entities$;
         this.profile$.subscribe(p => {
             if (p && p.length !== 0 && environment.production) {
+                console.log('app.module', 'Requesting SW Push subscription');
                 push.messages.subscribe(m => {
                     console.log('app.module', 'Push message', m);
                 });
-                push.requestSubscription({ serverPublicKey: environment.vapidPublicKey }).then(s => {
-                    registrationService
-                        .addSubscriber(s.toJSON())
-                        .subscribe(r => console.log('app.module', 'addSubscriber', 'done', r));
-                });
+                console.log('app.module', 'Key', environment.vapidPublicKey);
+                push.requestSubscription({ serverPublicKey: environment.vapidPublicKey })
+                    .then(s => {
+                        console.log('app.module', 'Request subscription succeeded', s);
+                        registrationService
+                            .addSubscriber(s.toJSON())
+                            .subscribe(
+                                r => console.log('app.module', 'addSubscriber', 'done', r),
+                                err => console.error('app.module', 'Error calling registration service', err)
+                            );
+                    })
+                    .catch(err => console.error('app.module', 'Error requesting push subscription', err));
             }
         });
     }
