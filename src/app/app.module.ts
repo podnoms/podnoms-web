@@ -46,7 +46,9 @@ export class AppModule {
     constructor(profileStoreService: ProfileStoreService, push: SwPush, registrationService: PushRegistrationService) {
         this.profile$ = profileStoreService.entities$;
         this.profile$.subscribe(p => {
+            console.log('app.module', 'Profile Loaded', p);
             if (p && p.length !== 0 && environment.production) {
+                console.log('app.module', 'Subscribing to swpush');
                 push.messages.subscribe(m => {
                     console.log('app.module', 'Push message', m);
                 });
