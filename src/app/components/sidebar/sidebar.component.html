@@ -35,13 +35,7 @@
             <ul class="nav-users">
                 <li class="nav-main-heading" *ngIf="false"><span>My Podcasts</span></li>
                 <li *ngFor="let podcast of (podcasts$ | async | orderByDate: '-createDate')">
-                    <a [routerLink]="['/podcasts', podcast.slug]" [routerLinkActive]="['active']">
-                        <img class="img-avatar" [src]="podcast.thumbnailUrl" alt="" />
-                        <i class="fa fa-circle text-success"></i> {{ podcast.title }}
-                        <div class="font-w400 font-size-xs text-muted">
-                            {{ podcast.podcastEntries.length }} episodes
-                        </div>
-                    </a>
+                    <app-sidebar-podcast-item [podcast]="podcast"></app-sidebar-podcast-item>
                 </li>
             </ul>
         </perfect-scrollbar>
