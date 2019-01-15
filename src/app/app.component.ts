@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Observer, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { Profile, ToastService } from './core';
 import { UiStateService } from './core/ui-state.service';
 import { SignalRService } from './shared/services/signal-r.service';
 import { UtilityService } from './shared/services/utility.service';
 import { Router } from '@angular/router';
-
+import { UpdateService } from './shared/services/update.service';
+import { ProfileStoreService } from './profile/profile-store.service';
+import { environment } from '../environments/environment';
+import { SwPush } from '@angular/service-worker';
+import { PushRegistrationService } from './shared/services/push-registration.service';
+import { skip, take } from 'rxjs/operators';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -19,29 +24,20 @@ export class AppComponent {
     constructor(
         public uiStateService: UiStateService,
         private toast: ToastService,
-        router: Router,
-        utilityService: UtilityService,
-        authService: AuthService,
-        signalr: SignalRService
+        private updateService: UpdateService,
+        private router: Router,
+        private push: SwPush,
+        private registrationService: PushRegistrationService,
+        private utilityService: UtilityService,
+        private profileStoreService: ProfileStoreService,
+        private authService: AuthService,
+        private signalr: SignalRService
     ) {
+        updateService.checkForUpdates();
         utilityService.checkForApiServer().subscribe(
             response => {
                 this.profile$ = authService.profile$;
-                authService.bootstrap().subscribe(r => {});
-                authService.authNavStatus$.subscribe(r => {
-                    if (r) {
-                        signalr
-                            .init('userupdates')
-                            .then(listener => {
-                                listener.on<string>('userupdates', 'site-notices').subscribe(result => {
-                                    this.toast.showToast('New message', result);
-                                });
-                            })
-                            .catch(err => {
-                                console.error('app.component', 'Unable to initialise site update hub', err);
-                            });
-                    }
-                });
+                this._bootstrapAuth().subscribe(r => this._bootstrapUpdates(r));
             },
             err => {
                 console.error('home.component', 'checkForApiServer', err);
@@ -52,5 +48,57 @@ export class AppComponent {
     background() {}
     loggedIn(): boolean {
         return false;
+    }
+
+    _bootstrapAuth(): Observable<boolean> {
+        const observer = new BehaviorSubject<boolean>(false);
+        this.authService.bootstrap().subscribe(r => {});
+        this.authService.authNavStatus$.subscribe(r => {
+            if (r) {
+                this.signalr
+                    .init('userupdates')
+                    .then(listener => {
+                        listener.on<string>('userupdates', 'site-notices').subscribe(result => {
+                            this.toast.showToast('New message', result);
+                        });
+                        observer.next(true);
+                    })
+                    .catch(err => {
+                        console.error('app.component', 'Unable to initialise site update hub', err);
+                        observer.error(err);
+                    });
+            } else {
+                observer.next(false);
+            }
+        });
+        return observer;
+    }
+    _bootstrapUpdates(isReady: boolean) {
+        if (!isReady) {
+            return;
+        }
+
+        const profile$ = this.profileStoreService.entities$.pipe((skip(1), take(1))).map(r => r[0]);
+
+        profile$.subscribe(p => {
+            if (p && environment.production) {
+                console.log('app.module', 'Requesting SW Push subscription', p);
+                this.push
+                    .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
+                    .then(s => {
+                        this.registrationService.addSubscriber(s.toJSON()).subscribe(
+                            r => {
+                                this.push.messages.subscribe(m => {
+                                    console.log('app.component', 'Push message', m);
+                                });
+                            },
+                            err => console.error('app.module', 'Error calling registration service', err)
+                        );
+                    })
+                    .catch(err => console.error('app.module', 'Error requesting push subscription', err));
+            } else {
+                console.log('app.component', 'Unable to load profile from store');
+            }
+        });
     }
 }

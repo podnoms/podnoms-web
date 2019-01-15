@@ -7,36 +7,36 @@ import { interval } from 'rxjs';
     providedIn: 'root'
 })
 export class UpdateService {
-    constructor(swUpdate: SwUpdate, ngZone: NgZone, notificationsService: NotificationsService) {
-        console.log('update.service', 'Subscribing to updates');
-        if (!swUpdate.isEnabled) {
-            console.error('Update service is currently unavailable');
-        }
-        swUpdate.available.subscribe(evt => {
-            // an update is available, add some logic here.
-            console.log('update.service', 'Update detected', evt);
-            const toast = notificationsService.success(
-                'A new version of PodNoms is available!',
-                'Click here to reload...',
-                {
-                    timeOut: 0,
-                    showProgressBar: false,
-                    pauseOnHover: true,
-                    clickToClose: false,
-                    clickIconToClose: true
-                }
-            );
-
-            toast.clickIcon.subscribe(event => {
-                window.location.reload();
-            });
-        });
-        console.log('update.service', 'Scheduling updates');
-        ngZone.runOutsideAngular(() => {
-            interval(6000).subscribe(() => {
+    constructor(public updates: SwUpdate, public notifier: NotificationsService) {
+        if (updates.isEnabled) {
+            console.log('update.service', 'Auto updates are enabled');
+            interval(6 * 60 * 60).subscribe(() => {
                 console.log('update.service', 'Checking for updates');
-                ngZone.run(() => swUpdate.checkForUpdate());
+                updates.checkForUpdate().then(() => {});
             });
+        } else {
+            console.log('update.service', 'Auto updates are currently unavailable');
+        }
+    }
+
+    public checkForUpdates(): void {
+        this.updates.available.subscribe(event => this.promptUser());
+    }
+
+    private promptUser(): void {
+        console.log('update.service', 'Updating to latest version');
+        const toast = this.notifier.success('A new version of PodNoms is available!', 'Click here to reload...', {
+            timeOut: 0,
+            showProgressBar: false,
+            pauseOnHover: true,
+            clickToClose: true,
+            clickIconToClose: true
+        });
+        toast.click.subscribe((e) => {
+            this.updates.activateUpdate().then(() => document.location.reload());
+        });
+        toast.clickIcon.subscribe(event => {
+            this.updates.activateUpdate().then(() => document.location.reload());
         });
     }
 }

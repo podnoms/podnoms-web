@@ -9,7 +9,7 @@ export class AudioDownloadService {
     constructor(private entryService: EntryDataService) {}
 
     downloadAudio(id: string) {
-        return this.entryService.getDownloadUrl(id).pipe(
+    return this.entryService.getDownloadUrl(id).pipe(
             map(result => {
                 if (result) {
                     this._sendDownloadXHR(result['url'], result['title']);

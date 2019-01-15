@@ -57,7 +57,7 @@ export class AudioService {
     _initialiseAudio(source: string, title: any): any {
         this._audio = new Howl({
             src: [source],
-            html5: true,
+            html5: true, // this MUST be set, otherwise WebAudio API will download entire mp3 before starting
             volume: this._volume / 100,
             onplay: (id: any, pos: any) => {
                 console.log('onplay', id, pos);
