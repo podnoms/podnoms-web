@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Podcast } from '../core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { map } from 'rxjs/operators';
+import { map, switchAll } from 'rxjs/operators';
 import { DefaultDataService, QueryParams, HttpUrlGenerator, Logger } from 'ngrx-data';
 
 @Injectable({
@@ -24,7 +24,11 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
 
     // TODO: these below inject into the entity store!
     getAll(): Observable<Podcast[]> {
-        return super.getAll().pipe(map(podcasts => podcasts.map(podcast => this.__mapPodcast(podcast))));
+        return super.getAll().pipe(
+            map(podcasts => podcasts.map(
+                podcast => this.__mapPodcast(podcast)
+            ))
+        );
     }
 
     getById(id: string | number): Observable<Podcast> {

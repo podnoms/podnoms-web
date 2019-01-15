@@ -18,6 +18,7 @@ import { PushRegistrationService } from './services/push-registration.service';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
 import { CamelCaseToSentencePipe } from './pipes/camel-case-to-sentence.pipe';
 import { ErrorComponent } from './components/error/error.component';
+import { AudioDownloadService } from './services/audio-download.service';
 
 @NgModule({
     imports: [
@@ -54,6 +55,7 @@ import { ErrorComponent } from './components/error/error.component';
         UtilityService,
         SignalRService,
         ImageService,
+        AudioDownloadService,
         PushRegistrationService,
         {
             provide: AuthServiceConfig,
