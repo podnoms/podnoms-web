@@ -5,7 +5,20 @@ img.sidebar-icon {
 }
 
 nav {
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
     margin-bottom: 56px;
 }
 
+.nav-users {
+    height: 95%;
+    overflow: auto;
+}
 
+.nav-users {
+    padding-bottom: 32px;
+    position: fixed;
+    overflow-y: scroll;
+    // top: 0;
+    // bottom: 0;
+}
