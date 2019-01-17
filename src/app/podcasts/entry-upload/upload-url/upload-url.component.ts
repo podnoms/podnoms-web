@@ -18,6 +18,7 @@ export class UploadUrlComponent implements AfterViewInit {
 
     newEntrySourceUrl: string;
     errorText: string;
+    progressText: string = 'Checking URL...';
     isPosting: boolean = false;
     remoteAudioList: any = null;
     @ViewChild('input')
@@ -58,7 +59,7 @@ export class UploadUrlComponent implements AfterViewInit {
     }
     addEntry() {
         const url = this.newEntrySourceUrl;
-        this.newEntrySourceUrl = 'Checking (please wait).....';
+        this.progressText = 'Checking URL...';
         this.errorText = '';
 
         // TODO: Send URL to the server and let it figure out it's authenticity
@@ -76,8 +77,7 @@ export class UploadUrlComponent implements AfterViewInit {
                 r => {
                     if (r.type === 'native') {
                         this.createEntry(url);
-                    }
-                    if ((r.type = 'proxied')) {
+                    } else if ((r.type = 'proxied')) {
                         this.isPosting = false;
                         this.remoteAudioList = r.data;
                     }
@@ -101,6 +101,7 @@ export class UploadUrlComponent implements AfterViewInit {
         }
     }
     private createEntry(url: string) {
+        this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
