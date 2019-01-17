@@ -11,7 +11,6 @@ export class UpdateService {
         if (updates.isEnabled) {
             console.log('update.service', 'Auto updates are enabled');
             interval(6 * 60 * 60).subscribe(() => {
-                console.log('update.service', 'Checking for updates');
                 updates.checkForUpdate().then(() => {});
             });
         } else {
