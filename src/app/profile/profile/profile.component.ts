@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, SimpleChanges, OnInit } from '@angular/core';
-import { Profile, ProfileLimits, ToastService } from '../../core';
+import { Profile, ProfileLimits } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { ProfileStoreService } from '../profile-store.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
 import { BaseChartDirective } from 'ng2-charts';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-profile',
@@ -65,7 +66,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     constructor(
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
-        private toastService: ToastService
+        private alertService: AlertService
     ) {
         super();
         console.log('profile.component', 'loading', new Date().getTime());
@@ -122,7 +123,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
                 profile.profileImage = `${r}?v=${UUID.UUID()}`;
                 this.profileStoreService.updateOneInCache(profile);
-                this.toastService.showToast('Success', 'Profile updated successfully');
+                this.alertService.info('Success', 'Profile updated successfully');
             });
         });
     }

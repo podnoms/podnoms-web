@@ -4,7 +4,7 @@ import { Profile } from '../model';
 import { AuthService } from '../../auth/auth.service';
 import { UiStateService } from '../ui-state.service';
 import { DebugService } from '../../debug/debug.service';
-import { ToastService } from '../toast.service';
+import { AlertService } from '../alert.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -18,7 +18,7 @@ export class NavbarComponent {
     constructor(
         private authService: AuthService,
         private debugService: DebugService,
-        private toastService: ToastService,
+        private alertService: AlertService,
         private uiStateService: UiStateService
     ) {}
     toggleSidebar() {
@@ -33,7 +33,7 @@ export class NavbarComponent {
     about() {
         this.debugService.getDebugInfo().subscribe(r => {
             console.log('navbar.component', 'about', r);
-            this.toastService.showToast(
+            this.alertService.info(
                 'About',
                 `Client Version: ${environment.version}<br />` +
                     `API Version: ${r['version']}<br />` +

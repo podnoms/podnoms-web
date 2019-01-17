@@ -1,7 +1,7 @@
 import { map } from 'rxjs/operators';
 import { OnInit, AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Podcast, Category, ToastService } from '../../core';
+import { Podcast, Category } from '../../core';
 import { Observable, of } from 'rxjs';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
@@ -14,8 +14,8 @@ import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wiz
 import { validateSearch } from '../../shared/validators/search.validator';
 import { validateDomain } from '../../shared/validators/domain.validator';
 // import { ConditionalValidator } from '../../shared/validators/conditional.validator';
-import { NotificationsService } from 'angular2-notifications';
 import { CategoryService } from '../../shared/services/category.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -61,8 +61,7 @@ export class PodcastEditFormComponent implements OnInit {
         categoryService: CategoryService,
         private router: Router,
         private fb: FormBuilder,
-        private toasty: ToastService,
-        private notifier: NotificationsService
+        private alertService: AlertService
     ) {
         this.categories$ = categoryService.getCategories();
     }
@@ -137,7 +136,7 @@ export class PodcastEditFormComponent implements OnInit {
                     });
                 },
                 err => {
-                    this.toasty.showError(
+                    this.alertService.error(
                         'Error',
                         'There was an error adding this podcast, please check all your values and try again'
                     );
@@ -155,7 +154,7 @@ export class PodcastEditFormComponent implements OnInit {
                     });
                 },
                 err => {
-                    this.toasty.showError(
+                    this.alertService.error(
                         'Error',
                         'There was an error updating this podcast, please check all your values and try again'
                     );
@@ -172,16 +171,11 @@ export class PodcastEditFormComponent implements OnInit {
                     this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
-                    this.notifier.error('Error', 'There was an error deleting podcast.');
+                    this.alertService.info('Error', 'There was an error deleting podcast.');
                 }
             },
             err =>
-                this.notifier.error('Error', 'There was an error deleting podcast.', {
-                    timeOut: 3000,
-                    showProgressBar: true,
-                    pauseOnHover: true,
-                    clickToClose: true
-                })
+                this.alertService.error('Error', 'There was an error deleting podcast.')
         );
     }
     podcastUpdated(podcast: Podcast) {

@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { Podcast, ToastService } from '../../../core';
+import { Podcast } from '../../../core';
 import { AuthService } from '../../../auth/auth.service';
 import { environment } from '../../../../environments/environment';
 import { DropzoneConfig, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { AlertService } from '../../../core/alert.service';
 
 @Component({
     selector: 'app-upload-file',
@@ -35,12 +36,12 @@ export class UploadFileComponent implements OnInit {
             </div>
         </div>`
     };
-    constructor(private toastyService: ToastService, private authService: AuthService) {}
+    constructor(private alertService: AlertService, private authService: AuthService) {}
     ngOnInit() {
         this.config.url = `${environment.apiHost}/podcast/${this.podcast.slug}/audioupload`;
     }
     onUploadError(event) {
-        this.toastyService.showError('Error', `Error uploading audio\n${event}`);
+        this.alertService.error('Error', `Error uploading audio\n${event}`);
         this.uploadComplete.emit(null);
     }
     onUploadSuccess(result) {

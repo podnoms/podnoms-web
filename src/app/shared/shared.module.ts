@@ -20,6 +20,8 @@ import { CamelCaseToSentencePipe } from './pipes/camel-case-to-sentence.pipe';
 import { ErrorComponent } from './components/error/error.component';
 import { AudioDownloadService } from './services/audio-download.service';
 import { LoaderComponent } from './components/loader/loader.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { ToastItemComponent } from './components/toast/toast-item.component';
 
 @NgModule({
     imports: [
@@ -40,6 +42,7 @@ import { LoaderComponent } from './components/loader/loader.component';
         BasePageComponent,
         ImageUploadComponent,
         LoaderComponent,
+        ToastComponent,
         CategorySelectorComponent
     ],
     declarations: [
@@ -48,12 +51,14 @@ import { LoaderComponent } from './components/loader/loader.component';
         OrderByDatePipe,
         BasePageComponent,
         BytesToHumanPipe,
+        ToastComponent,
         ImageUploadComponent,
         LoaderComponent,
         CategorySelectorComponent,
         CamelCaseToSentencePipe,
         ErrorComponent,
-        LoaderComponent
+        LoaderComponent,
+        ToastItemComponent
     ],
     providers: [
         UtilityService,
