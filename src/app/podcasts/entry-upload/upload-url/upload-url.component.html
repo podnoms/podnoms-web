@@ -1,9 +1,12 @@
+<div *ngIf="isPosting">
+    <app-loader [loadingText]="progressText">
+    </app-loader>
+</div>
 <form class="push"
-      *ngIf="!remoteAudioList">
+      *ngIf="!remoteAudioList && !isPosting">
     <div class="input-group input-group-lg">
         <input type="text"
                name="entry-url"
-               [ngClass]="isPosting ? 'bg-gd-leaf' : ''"
                #input
                [disabled]="isPosting"
                [(ngModel)]="newEntrySourceUrl"
