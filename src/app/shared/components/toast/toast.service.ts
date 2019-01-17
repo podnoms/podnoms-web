@@ -21,6 +21,7 @@ export class ToastService {
         const args = {
             title: title,
             message: message,
+            autoClose: true,
             ...options
         };
         const m = <ToastMessage>args;

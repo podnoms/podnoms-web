@@ -10,14 +10,6 @@ export class ToastMessage {
     state: string;
 
     click?: EventEmitter<{}>;
-
-    constructor(init?: Partial<ToastMessage>) {
-        this.id = Math.random()
-            .toString(36)
-            .substring(3);
-        this.state = 'fromRight';
-        Object.assign(this, init);
-    }
 }
 export enum ToastType {
     Success = 'success',

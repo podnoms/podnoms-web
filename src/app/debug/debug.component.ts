@@ -40,7 +40,10 @@ export class DebugComponent implements OnInit {
             const toast = this.alertService.info(
                 'Argle',
                 'Bargle',
-                'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png'
+                'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png',
+                {
+                    autoClose: false
+                }
             );
             toast.click.subscribe(() => alert('Toasty!'));
         }

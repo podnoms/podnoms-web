@@ -6,10 +6,11 @@ import { ToastType, ToastMessage } from '../shared/components/toast/toast-models
 export class AlertService {
     constructor(private toaster: ToastService) {}
 
-    info(title: string, message: string, image: string = ''): ToastMessage {
+    info(title: string, message: string, image: string = '', options: any = null): ToastMessage {
         const m = this.toaster.showToast(title, message, {
             image: image,
-            type: ToastType.Info
+            type: ToastType.Info,
+            ...options
         });
 
         return m;

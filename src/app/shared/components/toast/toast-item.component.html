@@ -3,7 +3,7 @@
     <div id="toast-{{toast.id}}"
          class="toast-item nav-users">
         <a href="javascript:void(0)"
-        (click)="clickItem()"
+           (click)="clickItem()"
            class="{{cssClass(toast)}}">
             <img class="img-avatar"
                  [src]="toast.image"
@@ -15,6 +15,7 @@
 
         </a>
         <div class="progress"
+             *ngIf="toast.autoClose"
              style="height: 8px;">
             <div class="progress-bar"
                  role="progressbar"
