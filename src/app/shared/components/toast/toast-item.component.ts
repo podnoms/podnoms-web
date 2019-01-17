@@ -2,9 +2,8 @@ import { Component, OnInit, Input, NgZone, OnDestroy, ChangeDetectorRef } from '
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ToastMessage, ToastType } from './toast-models';
 import { ToastService } from './toast.service';
-import { Observable, timer, interval } from 'rxjs';
-import { take, map, takeWhile, timeout } from 'rxjs/operators';
-import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
+import { timer, Observable } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 @Component({
     animations: [
@@ -89,32 +88,31 @@ import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
 export class ToastItemComponent implements OnInit, OnDestroy {
     @Input() toast: ToastMessage;
     timerPercentageRemaining: number = 100;
-    intervalId: NodeJS.Timeout;
-    timerSub: any;
+    counter$: Observable<number>;
 
     constructor(private toastService: ToastService, private zone: NgZone, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
+        let time = this.toast.timeOut;
         if (this.toast.autoClose) {
-            let count = this.toast.timeOut * 100;
-
-            const counter = setInterval(() => {
-                if (count <= 0) {
-                    clearInterval(counter);
+            this.counter$ = timer(0, 1000).pipe(
+                take(time),
+                map(() => --time)
+            );
+            this.counter$.subscribe(t => {
+                console.log('toast-item.component', 'subscribe', t);
+                if (t <= 0) {
                     this.remove();
                     return;
                 }
-                this.timerPercentageRemaining = Math.round((count / 300) * 100);
+                this.timerPercentageRemaining = Math.round((t / this.toast.timeOut) * 100);
                 this.zone.run(() => this.cdr.detectChanges());
-                count--;
-            }, 10);
+                // console.log('toast-item.component', 'countdown', count);
+                // console.log('toast-item.component', 'percentage', this.timerPercentageRemaining);
+            });
         }
     }
-    ngOnDestroy() {
-        if (this.timerSub) {
-            this.timerSub.unsubscribe();
-        }
-    }
+    ngOnDestroy() {}
 
     clickItem() {
         this.remove();
