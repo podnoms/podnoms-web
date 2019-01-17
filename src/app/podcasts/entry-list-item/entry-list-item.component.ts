@@ -8,7 +8,7 @@ import {
     OnChanges,
     ChangeDetectorRef
 } from '@angular/core';
-import { PodcastEntry, ToastService } from '../../core';
+import { PodcastEntry } from '../../core';
 import { AudioService } from '../../core/audio.service';
 import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
@@ -17,6 +17,7 @@ import { PodcastDataService } from '../podcast-data.service';
 import { Router } from '@angular/router';
 import { EntryDataService } from '../entry-data.service';
 import { AudioDownloadService } from '../../shared/services/audio-download.service';
+import { AlertService } from '../../core/alert.service';
 declare var $: any;
 @Component({
     selector: '[app-entry-list-item]',
@@ -42,7 +43,7 @@ export class EntryListItemComponent implements OnInit {
         private entriesStore: EntriesStoreService,
         private podcastEntryDataService: EntryDataService,
         private downloader: AudioDownloadService,
-        private toasty: ToastService,
+        private alertService: AlertService,
         private cdr: ChangeDetectorRef
     ) {}
     ngOnInit() {
@@ -85,7 +86,7 @@ export class EntryListItemComponent implements OnInit {
     retry(entry: PodcastEntry) {
         this.podcastEntryDataService.reSubmitEntry(entry).subscribe(r => {
             this.entry = r;
-            this.toasty.showToast('Success', 'Submitted podcast for re-processing');
+            this.alertService.info('Success', 'Submitted podcast for re-processing');
         });
     }
     playAudio(source: string) {
@@ -107,7 +108,7 @@ export class EntryListItemComponent implements OnInit {
             .downloadAudio(this.entry.id)
             .subscribe(
                 r => (this.preparingDownload = false),
-                err => this.toasty.showError('Error', 'Unable to download this episode')
+                err => this.alertService.error('Error', 'Unable to download this episode')
             );
     }
 }

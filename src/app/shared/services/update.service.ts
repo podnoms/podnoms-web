@@ -1,13 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { NotificationsService } from 'angular2-notifications';
 import { interval } from 'rxjs';
+import { AlertService } from '../../core/alert.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UpdateService {
-    constructor(public updates: SwUpdate, public notifier: NotificationsService) {
+    constructor(public updates: SwUpdate, public alertService: AlertService) {
         if (updates.isEnabled) {
             console.log('update.service', 'Auto updates are enabled');
             interval(6 * 60 * 60).subscribe(() => {
@@ -25,18 +25,12 @@ export class UpdateService {
 
     private promptUser(): void {
         console.log('update.service', 'Updating to latest version');
-        const toast = this.notifier.success('A new version of PodNoms is available!', 'Click here to reload...', {
-            timeOut: 0,
-            showProgressBar: false,
-            pauseOnHover: true,
-            clickToClose: true,
-            clickIconToClose: true
-        });
-        toast.click.subscribe((e) => {
-            this.updates.activateUpdate().then(() => document.location.reload());
-        });
-        toast.clickIcon.subscribe(event => {
-            this.updates.activateUpdate().then(() => document.location.reload());
-        });
+        const toast = this.alertService.success('A new version of PodNoms is available!', 'Click here to reload...');
+        // toast.click.subscribe((e) => {
+        //     this.updates.activateUpdate().then(() => document.location.reload());
+        // });
+        // toast.clickIcon.subscribe(event => {
+        //     this.updates.activateUpdate().then(() => document.location.reload());
+        // });
     }
 }

@@ -1,0 +1,24 @@
+@import '~styles/theme/codebase/_variables.scss';
+
+.toast-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+}
+
+.toast-item {
+    position: relative;
+    margin: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.toast-image {
+    width: 48px;
+    height: 48px;
+}
+
+.nav-users {
+    background-color: $body-bg-light;
+}

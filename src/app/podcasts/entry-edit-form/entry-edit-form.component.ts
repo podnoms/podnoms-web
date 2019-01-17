@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntriesStoreService } from '../entries-store.service';
-import { PodcastEntry, ToastService } from '../../core';
+import { PodcastEntry, } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { EntryDataService } from '../entry-data.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-entry-edit-form',
@@ -29,7 +30,7 @@ export class EntryEditFormComponent implements OnInit {
         private fb: FormBuilder,
         private entriesStore: EntriesStoreService,
         private entryDataService: EntryDataService,
-        private toastService: ToastService
+        private alertService: AlertService
     ) {
         this.entryId = route.snapshot.params['entry'];
     }
@@ -63,7 +64,7 @@ export class EntryEditFormComponent implements OnInit {
                 this.entriesStore.updateOneInCache(e);
                 this.formImageUrl = e.imageUrl;
 
-                this.toastService.showInfo('Success', 'Entry updated');
+                this.alertService.info('Success', 'Entry updated');
                 this.router.navigate(['podcasts', e.podcastSlug]);
             });
         });

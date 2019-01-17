@@ -1,14 +1,13 @@
 import { map } from 'rxjs/operators';
-import { Component, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { MasterDetailCommands, Podcast } from '../../core';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EntityOp } from 'ngrx-data';
 
 import { UploadModes } from '../upload-modes.enum';
 import { PodcastDataService } from '../podcast-data.service';
-import { NotificationsService } from 'angular2-notifications';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-podcast',
@@ -31,7 +30,7 @@ export class PodcastComponent {
         private podcastDataService: PodcastDataService,
         private router: Router,
         private route: ActivatedRoute,
-        private notifier: NotificationsService,
+        private alertService: AlertService,
         private changeDetectorRef: ChangeDetectorRef
     ) {
         if (this.route.snapshot.params.podcast) {
@@ -85,16 +84,11 @@ export class PodcastComponent {
                     this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
-                    this.notifier.error('Error', 'There was an error deleting podcast.');
+                    this.alertService.error('Error', 'There was an error deleting podcast.');
                 }
             },
-            err =>
-                this.notifier.error('Error', 'There was an error deleting podcast.', {
-                    timeOut: 3000,
-                    showProgressBar: true,
-                    pauseOnHover: true,
-                    clickToClose: true
-                })
+            () =>
+                this.alertService.error('Error', 'There was an error deleting podcast.')
         );
     }
 }

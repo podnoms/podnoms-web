@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
-import { Podcast, PodcastEntry, ToastService } from '../../../core';
+import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
+import { AlertService } from '../../../core/alert.service';
 
 @Component({
     selector: 'app-upload-url',
@@ -26,7 +27,7 @@ export class UploadUrlComponent implements AfterViewInit {
     constructor(
         private podcastEntryDataService: EntryDataService,
         private utilityService: UtilityService,
-        private toastService: ToastService
+        private alertService: AlertService
     ) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
@@ -44,7 +45,7 @@ export class UploadUrlComponent implements AfterViewInit {
                 this.playlistAdded.emit(e);
             },
             () =>
-                this.toastService.showError(
+                this.alertService.error(
                     'Error creating playlist',
                     'There was an error adding this playlist, please refresh page and try again'
                 )

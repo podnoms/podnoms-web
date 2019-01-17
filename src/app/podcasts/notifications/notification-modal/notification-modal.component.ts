@@ -4,10 +4,11 @@ import { NotificationControlService } from '../services/notification-control.ser
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationDataService } from '../services/notification-data.service';
 import { NotificationStoreService } from '../services/notification-store.service';
-import { Podcast, ToastService } from '../../../core';
+import { Podcast, } from '../../../core';
 import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
+import { AlertService } from '../../../core/alert.service';
 
 @Component({
     selector: 'app-notification-modal',
@@ -30,7 +31,7 @@ export class NotificationModalComponent implements OnInit {
         private nds: NotificationDataService,
         private nss: NotificationStoreService,
         private pss: PodcastStoreService,
-        private toaster: ToastService
+        private alertService: AlertService
     ) {}
 
     ngOnInit() {
@@ -94,6 +95,6 @@ export class NotificationModalComponent implements OnInit {
         });
     }
     testNotification() {
-        this.toaster.showError('Error', 'Coming Soon!!!');
+        this.alertService.error('Error', 'Coming Soon!!!');
     }
 }
