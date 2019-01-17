@@ -87,6 +87,7 @@ export class AppComponent {
         profile$.subscribe(p => {
             if (p && environment.production) {
                 console.log('app.module', 'Requesting SW Push subscription', p);
+                console.log('app.module', 'Public key', environment.vapidPublicKey);
                 this.push
                     .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
                     .then(s => {
@@ -101,7 +102,17 @@ export class AppComponent {
                             err => console.error('app.module', 'Error calling registration service', err)
                         );
                     })
-                    .catch(err => console.error('app.module', 'Error requesting push subscription', err));
+                    .catch(err => {
+                        this._unsubscribe();
+                        console.error(
+                            'app.module',
+                            'Error requesting push subscription',
+                            err,
+                            err.code,
+                            err.message,
+                            err.name
+                        );
+                    });
             } else {
                 console.log('app.component', 'Unable to load profile from store');
             }
@@ -112,6 +123,12 @@ export class AppComponent {
                 this.messagingService.receiveMessage();
                 const message = this.messagingService.currentMessage;
             }
+        });
+    }
+    _unsubscribe() {
+        this.push.subscription.pipe(take(1)).subscribe(pushSubscription => {
+            console.log('[App] pushSubscription', pushSubscription);
+            pushSubscription.unsubscribe();
         });
     }
 }
