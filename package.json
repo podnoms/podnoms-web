@@ -76,7 +76,7 @@
     "rxjs-tslint": "^0.1.6",
     "simple-line-icons": "^2.4.1",
     "tslib": "^1.9.0",
-    "zone.js": "^0.8.26",
+    "zone.js": "^0.8.28",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
