@@ -11,7 +11,6 @@ export class UpdateService {
         if (updates.isEnabled) {
             console.log('update.service', 'Auto updates are enabled');
             interval(6 * 60 * 60).subscribe(() => {
-                console.log('update.service', 'Checking for updates');
                 updates.checkForUpdate().then(() => {});
             });
         } else {
@@ -26,9 +25,9 @@ export class UpdateService {
     private promptUser(): void {
         console.log('update.service', 'Updating to latest version');
         const toast = this.alertService.success('A new version of PodNoms is available!', 'Click here to reload...');
-        // toast.click.subscribe((e) => {
-        //     this.updates.activateUpdate().then(() => document.location.reload());
-        // });
+        toast.click.subscribe(e => {
+            this.updates.activateUpdate().then(() => document.location.reload());
+        });
         // toast.clickIcon.subscribe(event => {
         //     this.updates.activateUpdate().then(() => document.location.reload());
         // });

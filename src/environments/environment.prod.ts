@@ -4,8 +4,7 @@ export const environment = {
     // signalRHost: 'https://rt.podnoms.com',
     signalRHost: 'http://localhost:5000',
     apiHost: 'http://localhost:5000',
-    vapidPublicKey:
-        'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
+    vapidPublicKey: 'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
     helpUrl: 'https://talk.podnoms.com/',
     version: require('../../package.json').version,
     appInsightsConfig: { instrumentationKey: '020b002a-bd3d-4b25-8a74-cab16fd39dfc' },

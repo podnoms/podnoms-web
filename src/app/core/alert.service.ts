@@ -8,24 +8,24 @@ export class AlertService {
     constructor(private toaster: ToastService) {}
 
     info(title: string, message: string, image?: string, options?: any): ToastMessage {
-        const m = this.toaster.showToast(title, message, {
+        return this.toaster.showToast(title, message, {
             image: image || 'assets/img/feedback/information.png',
             type: ToastType.Info,
             ...options
         });
-
-        return m;
     }
-    success(title: string, message: string, image: string = '') {
-        this.toaster.showToast(title, message, {
+    success(title: string, message: string, image?: string, options?: any) {
+        return this.toaster.showToast(title, message, {
             image: image || 'assets/img/feedback/success.png',
-            type: ToastType.Success
+            type: ToastType.Success,
+            ...options
         });
     }
-    error(title: string, message: string, image: string = '') {
-        this.toaster.showToast(title, message, {
+    error(title: string, message: string, image?: string, options?: any) {
+        return this.toaster.showToast(title, message, {
             image: image || 'assets/img/feedback/warning.png',
-            type: ToastType.Error
+            type: ToastType.Error,
+            ...options
         });
     }
 }
