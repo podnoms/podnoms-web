@@ -10,15 +10,24 @@ import { FooterPlayerComponent } from './footer/footer-player/footer-player.comp
 import { PasswordCheckerComponent } from './password-checker/password-checker.component';
 import { ChartsModule } from 'ng2-charts';
 import { SidebarPodcastItemComponent } from './sidebar/sidebar-podcast-item/sidebar-podcast-item.component';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
 };
 @NgModule({
-    imports: [CommonModule, RouterModule, SharedModule, ChartsModule, PerfectScrollbarModule, NgbTooltipModule],
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        ChartsModule,
+        PerfectScrollbarModule,
+        NgbTooltipModule,
+        NgbProgressbarModule
+    ],
     providers: [
         PodcastStoreService,
         {

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
-import { Podcast, PodcastEntry, ToastService } from '../../../core';
+import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
+import { AlertService } from '../../../core/alert.service';
 
 @Component({
     selector: 'app-upload-url',
@@ -18,6 +19,7 @@ export class UploadUrlComponent implements AfterViewInit {
 
     newEntrySourceUrl: string;
     errorText: string;
+    progressText: string = 'Checking URL...';
     isPosting: boolean = false;
     remoteAudioList: any = null;
     @ViewChild('input')
@@ -26,7 +28,7 @@ export class UploadUrlComponent implements AfterViewInit {
     constructor(
         private podcastEntryDataService: EntryDataService,
         private utilityService: UtilityService,
-        private toastService: ToastService
+        private alertService: AlertService
     ) {}
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
@@ -44,7 +46,7 @@ export class UploadUrlComponent implements AfterViewInit {
                 this.playlistAdded.emit(e);
             },
             () =>
-                this.toastService.showError(
+                this.alertService.error(
                     'Error creating playlist',
                     'There was an error adding this playlist, please refresh page and try again'
                 )
@@ -58,7 +60,7 @@ export class UploadUrlComponent implements AfterViewInit {
     }
     addEntry() {
         const url = this.newEntrySourceUrl;
-        this.newEntrySourceUrl = 'Checking (please wait).....';
+        this.progressText = 'Checking URL...';
         this.errorText = '';
 
         // TODO: Send URL to the server and let it figure out it's authenticity
@@ -76,8 +78,7 @@ export class UploadUrlComponent implements AfterViewInit {
                 r => {
                     if (r.type === 'native') {
                         this.createEntry(url);
-                    }
-                    if ((r.type = 'proxied')) {
+                    } else if ((r.type = 'proxied')) {
                         this.isPosting = false;
                         this.remoteAudioList = r.data;
                     }
@@ -101,6 +102,7 @@ export class UploadUrlComponent implements AfterViewInit {
         }
     }
     private createEntry(url: string) {
+        this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {

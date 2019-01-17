@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { CoreModule, Profile } from './core';
 import { AppStoreModule } from './store/app-store.module';
 import { ComponentsModule } from './components/components.module';
-import { SimpleNotificationsModule } from 'angular2-notifications';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -18,6 +17,11 @@ import { Observable } from 'rxjs';
 import { MonitoringService } from './shared/monitoring/monitoring.service';
 import { MonitoringErrorHandler } from './shared/monitoring/monitoring-error.handler';
 import { UpdateService } from './shared/services/update.service';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 @NgModule({
     imports: [
@@ -29,8 +33,17 @@ import { UpdateService } from './shared/services/update.service';
         AppRoutingModule,
         AppStoreModule,
         SharedModule, // import here to make sure that AuthService is a singleton
-        SimpleNotificationsModule.forRoot(),
         WebStorageModule,
+        AngularFireModule.initializeApp({
+            apiKey: environment.firebase.apiKey,
+            authDomain: environment.firebase.authDomain,
+            databaseURL: environment.firebase.databaseURL,
+            storageBucket: environment.firebase.storageBucket,
+            messagingSenderId: environment.firebase.messagingSenderId
+        }),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+        AngularFireMessagingModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [

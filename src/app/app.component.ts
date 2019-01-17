@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { Observable, Observer, ReplaySubject, BehaviorSubject } from 'rxjs';
-import { Profile, ToastService } from './core';
+import { Profile } from './core';
 import { UiStateService } from './core/ui-state.service';
 import { SignalRService } from './shared/services/signal-r.service';
 import { UtilityService } from './shared/services/utility.service';
@@ -12,6 +12,9 @@ import { environment } from '../environments/environment';
 import { SwPush } from '@angular/service-worker';
 import { PushRegistrationService } from './shared/services/push-registration.service';
 import { skip, take } from 'rxjs/operators';
+import { SiteUpdateMessage } from './core/model/site-update-message';
+import { AlertService } from './core/alert.service';
+import { MessagingService } from './shared/services/messaging.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -23,7 +26,8 @@ export class AppComponent {
     profile$: Observable<Profile>;
     constructor(
         public uiStateService: UiStateService,
-        private toast: ToastService,
+        private alertService: AlertService,
+        private messagingService: MessagingService,
         private updateService: UpdateService,
         private router: Router,
         private push: SwPush,
@@ -58,8 +62,8 @@ export class AppComponent {
                 this.signalr
                     .init('userupdates')
                     .then(listener => {
-                        listener.on<string>('userupdates', 'site-notices').subscribe(result => {
-                            this.toast.showToast('New message', result);
+                        listener.on<SiteUpdateMessage>('userupdates', 'site-notices').subscribe(result => {
+                            this.alertService.info(result.title, result.message, result.imageUrl);
                         });
                         observer.next(true);
                     })
@@ -98,6 +102,13 @@ export class AppComponent {
                     .catch(err => console.error('app.module', 'Error requesting push subscription', err));
             } else {
                 console.log('app.component', 'Unable to load profile from store');
+            }
+
+            if (p) {
+                const userId = p.id;
+                this.messagingService.requestPermission(userId);
+                this.messagingService.receiveMessage();
+                const message = this.messagingService.currentMessage;
             }
         });
     }

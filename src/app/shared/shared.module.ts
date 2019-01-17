@@ -19,6 +19,9 @@ import { CategorySelectorComponent } from './components/category-selector/catego
 import { CamelCaseToSentencePipe } from './pipes/camel-case-to-sentence.pipe';
 import { ErrorComponent } from './components/error/error.component';
 import { AudioDownloadService } from './services/audio-download.service';
+import { LoaderComponent } from './components/loader/loader.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { ToastItemComponent } from './components/toast/toast-item.component';
 
 @NgModule({
     imports: [
@@ -38,6 +41,8 @@ import { AudioDownloadService } from './services/audio-download.service';
         BytesToHumanPipe,
         BasePageComponent,
         ImageUploadComponent,
+        LoaderComponent,
+        ToastComponent,
         CategorySelectorComponent
     ],
     declarations: [
@@ -46,10 +51,14 @@ import { AudioDownloadService } from './services/audio-download.service';
         OrderByDatePipe,
         BasePageComponent,
         BytesToHumanPipe,
+        ToastComponent,
         ImageUploadComponent,
+        LoaderComponent,
         CategorySelectorComponent,
         CamelCaseToSentencePipe,
-        ErrorComponent
+        ErrorComponent,
+        LoaderComponent,
+        ToastItemComponent
     ],
     providers: [
         UtilityService,
