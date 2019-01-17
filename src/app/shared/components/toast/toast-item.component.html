@@ -5,9 +5,12 @@
         <a href="javascript:void(0)"
            (click)="clickItem()"
            class="{{cssClass(toast)}}">
-            <img class="img-avatar"
+            <img *ngIf="toast.image"
+                 class="img-avatar"
                  [src]="toast.image"
                  alt="">
+            <i class="fa fa-check fa-2x"
+               *ngIf="!toast.image"></i>
             {{toast.title}}
             <div class="font-w400 font-size-xs text-muted">
                 {{toast.message}}

@@ -69,6 +69,15 @@ export class PodcastComponent {
             }
         });
     }
+    copyUrl(url: string) {
+        const el = document.createElement('textarea');
+        el.value = url;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        this.alertService.success('Success', 'URL Copied to clipboard');
+    }
     startUpload(uploadMode: UploadModes) {
         this.uploadMode = uploadMode;
     }
@@ -87,8 +96,7 @@ export class PodcastComponent {
                     this.alertService.error('Error', 'There was an error deleting podcast.');
                 }
             },
-            () =>
-                this.alertService.error('Error', 'There was an error deleting podcast.')
+            () => this.alertService.error('Error', 'There was an error deleting podcast.')
         );
     }
 }

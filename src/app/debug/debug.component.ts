@@ -20,27 +20,22 @@ export class DebugComponent implements OnInit {
 
     ngOnInit() {}
     sendPush() {
-        this.swPush
-            .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
-            .then(sub => {
-                this.debugService
-                    .sendPushPessage('Hello Sailor')
-                    .subscribe((r: any) => console.log('debug.component.ts', 'sendPushPessage', r));
-            })
-            .catch(err => console.error('debug.component', 'swPush', err));
+        this.debugService
+            .sendPushPessage('Hello Sailor')
+            .subscribe((r: any) => console.log('debug.component.ts', 'sendPushPessage', r));
     }
     toastMe(type: string) {
         if (type === 'error') {
             this.alertService.error(
                 'Argle',
-                'Bargle',
-                'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png'
+                'Bargle'
             );
         } else {
             const toast = this.alertService.info(
                 'Argle',
                 'Bargle',
-                'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png',
+                undefined,
+                // 'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png',
                 {
                     autoClose: false
                 }

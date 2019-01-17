@@ -107,7 +107,6 @@ export class ToastItemComponent implements OnInit, OnDestroy {
                 }
                 this.timerPercentageRemaining = Math.round((count / 300) * 100);
                 this.zone.run(() => this.cdr.detectChanges());
-                console.log('toast-item.component', 'timer', this.timerPercentageRemaining);
                 count--;
             }, 10);
         }
