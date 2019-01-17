@@ -90,8 +90,10 @@ export class AppComponent {
                 this.push
                     .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
                     .then(s => {
+                        console.log('app.component', 'Subscription granted', s);
                         this.registrationService.addSubscriber(s.toJSON()).subscribe(
                             r => {
+                                console.log('app.component', 'Registered subscription', r);
                                 this.push.messages.subscribe(m => {
                                     console.log('app.component', 'Push message', m);
                                 });

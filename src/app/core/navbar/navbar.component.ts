@@ -37,7 +37,11 @@ export class NavbarComponent {
                 'About',
                 `Client Version: ${environment.version}<br />` +
                     `API Version: ${r['version']}<br />` +
-                    `Host: ${r['osVersion']['versionString']}`
+                    `Host: ${r['osVersion']['versionString']}`,
+                'assets/img/logo-icon.png',
+                {
+                    autoClose: false
+                }
             );
         });
     }
