@@ -12,10 +12,9 @@
             <i class="fa fa-check fa-2x"
                *ngIf="!toast.image"></i>
             {{toast.title}}
-            <div class="font-w400 font-size-xs text-muted">
-                {{toast.message}}
+            <div class="font-w400 font-size-xs text-muted"
+                 [innerHTML]="toast.message">
             </div>
-
         </a>
         <div class="progress"
              *ngIf="toast.autoClose"

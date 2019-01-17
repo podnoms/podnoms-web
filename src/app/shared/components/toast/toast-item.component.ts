@@ -88,7 +88,6 @@ import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
 })
 export class ToastItemComponent implements OnInit, OnDestroy {
     @Input() toast: ToastMessage;
-    @Input() timeOut: number;
     timerPercentageRemaining: number = 100;
     intervalId: NodeJS.Timeout;
     timerSub: any;
@@ -97,7 +96,7 @@ export class ToastItemComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.toast.autoClose) {
-            let count = 300;
+            let count = this.toast.timeOut * 100;
 
             const counter = setInterval(() => {
                 if (count <= 0) {
