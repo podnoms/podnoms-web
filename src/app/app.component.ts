@@ -14,6 +14,7 @@ import { PushRegistrationService } from './shared/services/push-registration.ser
 import { skip, take } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alert.service';
+import { MessagingService } from './shared/services/messaging.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -26,6 +27,7 @@ export class AppComponent {
     constructor(
         public uiStateService: UiStateService,
         private alertService: AlertService,
+        private messagingService: MessagingService,
         private updateService: UpdateService,
         private router: Router,
         private push: SwPush,
@@ -100,6 +102,13 @@ export class AppComponent {
                     .catch(err => console.error('app.module', 'Error requesting push subscription', err));
             } else {
                 console.log('app.component', 'Unable to load profile from store');
+            }
+
+            if (p) {
+                const userId = p.id;
+                this.messagingService.requestPermission(userId);
+                this.messagingService.receiveMessage();
+                const message = this.messagingService.currentMessage;
             }
         });
     }
