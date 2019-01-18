@@ -1,3 +1,15 @@
-<p>
-  make-payment works!
-</p>
+<form #checkout="ngForm"
+      (ngSubmit)="onSubmit(checkout)"
+      class="checkout">
+    <div class="form-row">
+        <label for="card-info">Card
+            Info</label>
+        <div id="card-info"
+             #payElement></div>
+
+        <div id="card-errors"
+             role="alert"
+             *ngIf="error">{{ error }}</div>
+    </div>
+    <button type="submit">Pay $777</button>
+</form>
