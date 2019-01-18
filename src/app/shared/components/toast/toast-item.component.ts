@@ -150,9 +150,6 @@ export class ToastItemComponent implements OnInit {
     private remove() {
         this.toast.state = this.toast.state + 'Out';
         this.toastService.set(this.toast, false);
-        // setTimeout(() => {
-        //     this.toastService.set(this.toast, false);
-        // }, 310);
     }
     cssClass(toast: ToastMessage) {
         if (!toast) {

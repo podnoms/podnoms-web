@@ -22,7 +22,6 @@ export class PushRegistrationService {
     }
 
     addSubscriber(registration): Observable<any> {
-        console.log('push-registration.service', 'addSubscriber', registration);
         return this._http
             .post<any>(`${environment.apiHost}/webpush/subscribe`, registration)
             .catch(this.handleError);
