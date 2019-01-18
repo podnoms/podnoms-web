@@ -1,61 +1,70 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+    Component,
+    AfterViewInit,
+    OnDestroy,
+    ViewChild,
+    ElementRef,
+    ChangeDetectorRef,
+    OnInit,
+    HostListener
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PaymentsService } from '../payments.service';
+import { environment } from '../../../environments/environment';
+import { AlertService } from '../../core/alert.service';
+import { Router, ActivatedRoute } from '@angular/router';
+declare var StripeCheckout: any;
+
 @Component({
     selector: 'app-make-payment',
     templateUrl: './make-payment.component.html',
     styleUrls: ['./make-payment.component.scss']
 })
-export class MakePaymentComponent implements AfterViewInit, OnDestroy {
+export class MakePaymentComponent implements AfterViewInit, OnInit {
     @ViewChild('payElement') payElement: ElementRef;
+
+    handler: any;
     error: string;
-    amount: number = 10;
+    amount: number = 10 * 100;
     label: string = 'PodNoms Monthly *Advanced* subscription';
     elements: any;
     paymentRequest: any;
     prButton: any;
-
-    constructor(private cd: ChangeDetectorRef, private paymentService: PaymentsService) {}
-
-    ngAfterViewInit() {
-        this.paymentRequest = this.paymentService.stripe.paymentRequest({
-            country: 'IE',
-            currency: 'eur',
-            total: {
-                amount: this.amount,
-                label: this.label
+    type: string;
+    constructor(
+        private cd: ChangeDetectorRef,
+        private router: Router,
+        private route: ActivatedRoute,
+        private paymentService: PaymentsService,
+        private alertService: AlertService
+    ) {}
+    ngOnInit() {
+        this.type = this.route.snapshot.params.type || 'advanced';
+        this.handler = StripeCheckout.configure({
+            key: environment.stripeKey,
+            image: 'https://www.podnoms.com/assets/img/logo-icon.png',
+            locale: 'auto',
+            token: token => {
+                this.paymentService.processPayment(token.id, this.amount, this.type).subscribe(r => {
+                    if (r) {
+                        this.alertService.success('Success', 'Payment successfully received.');
+                        this.router.navigate(['']);
+                    }
+                });
             }
         });
-
-        this.elements = this.paymentService.stripe.elements();
-
-        this.paymentRequest.on('source', async event => {
-            console.log('make-payment.component', 'paymentRequest', event);
-
-            // TODO: Call the backend API here to handle the payment
-            setTimeout(() => {
-                event.component('success');
-            }, 1000);
-        });
-
-        this.prButton = this.elements.create('paymentRequestButton', {
-            paymentRequest: this.paymentRequest
-        });
-
-        this.mountButton();
     }
-    mountButton() {
-        this.prButton.mount(this.payElement.nativeElement);
-        // this.paymentRequest
-        //     .canMakePayment()
-        //     .then(r => {
-        //         this.prButton.mount(this.payElement.nativeElement);
-        //     })
-        //     .error(err => console.log('make-payment.component', 'mountButton', 'Unable to create payments form', err));
+    handlePayment() {
+        this.handler.open({
+            name: 'PodNoms',
+            description: this.label,
+            amount: this.amount
+        });
     }
-    ngOnDestroy() {}
+    ngAfterViewInit() {}
 
-    onChange({ error }) {}
-
-    async onSubmit(form: NgForm) {}
+    @HostListener('window:popstate')
+    onpopstate() {
+        this.handler.close();
+    }
 }

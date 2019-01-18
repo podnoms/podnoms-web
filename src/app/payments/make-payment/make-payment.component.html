@@ -1,15 +1,21 @@
-<form #checkout="ngForm"
-      (ngSubmit)="onSubmit(checkout)"
-      class="checkout">
-    <div class="form-row">
-        <label for="card-info">Card
-            Info</label>
-        <div id="card-info"
-             #payElement></div>
-
-        <div id="card-errors"
-             role="alert"
-             *ngIf="error">{{ error }}</div>
+<div class="block">
+    <div class="block-header">
+        <h3 class="block-title">Purchase
+            subscription</h3>
     </div>
-    <button type="submit">Pay $777</button>
-</form>
+    <div class="block-content">
+
+        <p>We use <a href="https://stripe.com/">Stripe</a>
+            for payment processing</p>
+        <p>At no point do we have
+            access to your credit card
+            number, and it is NEVER
+            stored in our system.</p>
+        <button class="btn btn-secondary"
+                (click)="handlePayment()">
+            <i class="fa fa-th-large text-primary mr-5 "></i>
+            Purchase 1 month
+            subscription
+        </button>
+    </div>
+</div>
