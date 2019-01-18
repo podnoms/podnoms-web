@@ -22,8 +22,16 @@
         <div class="content-header-section">
             <a href="https://talk.podnoms.com/"
                target="_blank"
-               class="btn btn-circle btn-dual-secondary btn-twitter">
-                <i class="fa fa-life-ring"></i>&nbsp; Help & Support
+               class="btn btn-dual-secondary">
+                <i class="fa fa-life-ring"></i>&nbsp;
+                Help & Support
+            </a>
+        </div>
+        <div class="content-header-section">
+            <a [routerLink]="['payments/pricing']"
+               class="btn btn-dual-secondary">
+                <i class="fa fa-credit-card"></i>&nbsp;
+                Pricing
             </a>
         </div>
         <div class="content-header-section">
@@ -35,19 +43,23 @@
                         class="btn btn-rounded btn-dual-secondary"
                         id="page-header-user-dropdown"
                         data-toggle="dropdown">
-                    {{profile.firstName}} {{profile.lastName}}
+                    {{profile.firstName}}
+                    {{profile.lastName}}
                     <i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-150">
                     <a class="dropdown-item"
                        [routerLink]="['/profile']">
-                        <i class="fa fa-user mr-5"></i> Profile</a>
+                        <i class="fa fa-user mr-5"></i>
+                        Profile</a>
                     <a class="dropdown-item"
                        (click)="about()">
-                        <i class="fa fa-info mr-5"></i> About</a>
+                        <i class="fa fa-info mr-5"></i>
+                        About</a>
                     <a class="dropdown-item"
                        (click)="logout()">
-                        <i class="fa fa-sign-out-alt mr-5"></i> Logout</a>
+                        <i class="fa fa-sign-out-alt mr-5"></i>
+                        Logout</a>
                 </div>
             </div>
             <button type="button"
