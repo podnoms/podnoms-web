@@ -2,26 +2,27 @@
      *ngIf="(podcasts$ | async) as podcast">
     <div class="block block-themed block-rounded"
          *ngIf="(selectedPodcast$ | async) as selected">
-        <div class="block-header bg-gd-sun">
-            <h2 class="block-title">{{
-                selected.title }}</h2>
+        <div class="block-header bg-elegance-light">
+            <p class="font-size-h2 text-white">
+                {{selected.title}}
+            </p>
             <div class="block-options">
                 <div class="btn-group"
                      role="group"
                      aria-label="Podcast actions">
                     <a [routerLink]="['/podcasts', selected.slug, 'edit']"
-                       class="btn btn-secondary btn-outline">
+                       class="btn btn-alt-secondary">
                         <i class="icon icon-pencil"
                            aria-hidden="true"></i>
                         Edit
                     </a>
                     <button (click)="podcastDeleteDialog.show()"
-                            class="btn btn-secondary">
+                            class="btn btn-alt-secondary">
                         <i class="icon icon-close"
                            aria-hidden="true"></i>
                         Delete
                     </button>
-                    <button class="btn btn-secondary"
+                    <button class="btn btn-alt-secondary"
                             (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
                         <i class="icon icon-plus"></i>
                         Add (from URL)
@@ -29,7 +30,7 @@
                     <div class="btn-group"
                          role="group">
                         <button type="button"
-                                class="btn btn-secondary dropdown-toggle"
+                                class="btn btn-alt-secondary dropdown-toggle"
                                 id="file-upload-group"
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
@@ -62,10 +63,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn-group"
+                <div class="btn-group ml-10"
                      role="group"
                      aria-label="Podcast actions">
-                    <a class="btn btn-secondary btn-outline-warning"
+                    <a class="btn btn-alt-secondary btn-outline-warning"
                        [href]="selected.rssUrl"
                        target="_blank">
                         <i class="text-warning fas fa-rss"></i>
@@ -73,7 +74,7 @@
                     </a>
                     <button type="button"
                             (click)="copyUrl(selected.rssUrl)"
-                            class="btn btn-secondary btn-outline-warning">
+                            class="btn btn-alt-secondary btn-outline-warning">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div>
