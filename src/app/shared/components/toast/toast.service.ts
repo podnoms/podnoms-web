@@ -25,6 +25,9 @@ export class ToastService {
             ...options
         };
         const m = <ToastMessage>args;
+        m.id = Math.random()
+            .toString(36)
+            .substring(3);
         m.click = new EventEmitter<{}>();
         this.subject.next(args);
         return m;

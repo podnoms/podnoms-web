@@ -84,15 +84,11 @@ export class AppComponent {
 
         profile$.subscribe(p => {
             if (p && environment.production) {
-                console.log('app.module', 'Requesting SW Push subscription', p);
-                console.log('app.module', 'Public key', environment.vapidPublicKey);
                 this.push
                     .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
                     .then(s => {
-                        console.log('app.component', 'Subscription granted', s);
                         this.registrationService.addSubscriber(s.toJSON()).subscribe(
                             r => {
-                                console.log('app.component', 'Registered subscription', r);
                                 this.push.messages.subscribe(m => {
                                     console.log('app.component', 'Push message', m);
                                 });
@@ -118,7 +114,6 @@ export class AppComponent {
     }
     _unsubscribe() {
         this.push.subscription.pipe(take(1)).subscribe(pushSubscription => {
-            console.log('[App] pushSubscription', pushSubscription);
             pushSubscription.unsubscribe();
         });
     }

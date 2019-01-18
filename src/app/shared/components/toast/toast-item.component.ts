@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, NgZone, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, NgZone, ChangeDetectorRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ToastMessage, ToastType } from './toast-models';
 import { ToastService } from './toast.service';
-import { Observable, timer, interval } from 'rxjs';
-import { take, map, takeWhile, timeout } from 'rxjs/operators';
-import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
+import { Observable } from 'rxjs';
 
 @Component({
     animations: [
@@ -86,35 +84,62 @@ import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
     templateUrl: './toast-item.component.html',
     styleUrls: ['./toast-item.component.scss']
 })
-export class ToastItemComponent implements OnInit, OnDestroy {
+export class ToastItemComponent implements OnInit {
     @Input() toast: ToastMessage;
-    timerPercentageRemaining: number = 100;
-    intervalId: NodeJS.Timeout;
-    timerSub: any;
+    timerPercentageRemaining: number = 0;
+    counter$: Observable<number>;
+
+    private stopTime = false;
+    private timer: any;
+    private framesPerSecond = 40;
+    private sleepTime: number;
+    private startTime: number;
+    private endTime: number;
+    private timeOut: number;
 
     constructor(private toastService: ToastService, private zone: NgZone, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
-        if (this.toast.autoClose) {
-            let count = this.toast.timeOut * 100;
+        this.timeOut = this.toast.timeOut || 5000;
+        this.startTimeout();
+    }
+    startTimeout() {
+        this.sleepTime = 1000 / this.framesPerSecond /* ms */;
+        this.startTime = new Date().getTime();
+        this.endTime = this.startTime + this.timeOut;
+        this.zone.runOutsideAngular(() => (this.timer = setTimeout(this.instance, this.sleepTime)));
+    }
+    private instance = () => {
+        const now = new Date().getTime();
 
-            const counter = setInterval(() => {
-                if (count <= 0) {
-                    clearInterval(counter);
+        if (this.endTime < now) {
+            this.remove();
+        } else if (!this.stopTime) {
+            if (this.toast.timeOut) {
+                this.timerPercentageRemaining = Math.min(
+                    ((now -
+                        this.startTime +
+                        this.sleepTime) /* We add this.sleepTime just to have 100% before close */ *
+                        100) /
+                        this.timeOut,
+                    100
+                );
+                console.log('toast-item.component', 'percentage', this.timerPercentageRemaining);
+                console.log('toast-item.component', 'timeout', this.timeOut);
+
+                if (this.timerPercentageRemaining >= 100) {
                     this.remove();
                     return;
                 }
-                this.timerPercentageRemaining = Math.round((count / 300) * 100);
-                this.zone.run(() => this.cdr.detectChanges());
-                count--;
-            }, 10);
+            }
+            this.timer = setTimeout(this.instance, this.sleepTime);
         }
-    }
-    ngOnDestroy() {
-        if (this.timerSub) {
-            this.timerSub.unsubscribe();
-        }
-    }
+        this.zone.run(() => {
+            if (!this.cdr['destroyed']) {
+                this.cdr.detectChanges();
+            }
+        });
+    };
 
     clickItem() {
         this.remove();
@@ -124,9 +149,7 @@ export class ToastItemComponent implements OnInit, OnDestroy {
     }
     private remove() {
         this.toast.state = this.toast.state + 'Out';
-        setTimeout(() => {
-            this.toastService.set(this.toast, false);
-        }, 310);
+        this.toastService.set(this.toast, false);
     }
     cssClass(toast: ToastMessage) {
         if (!toast) {

@@ -8,7 +8,7 @@ export class ToastMessage {
     image?: string;
     autoClose: boolean = true;
     state: string;
-    timeOut: number;
+    timeOut: number = 5000;
     click?: EventEmitter<{}>;
 }
 export enum ToastType {

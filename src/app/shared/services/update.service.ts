@@ -9,12 +9,9 @@ import { AlertService } from '../../core/alert.service';
 export class UpdateService {
     constructor(public updates: SwUpdate, public alertService: AlertService) {
         if (updates.isEnabled) {
-            console.log('update.service', 'Auto updates are enabled');
             interval(6 * 60 * 60).subscribe(() => {
                 updates.checkForUpdate().then(() => {});
             });
-        } else {
-            console.log('update.service', 'Auto updates are currently unavailable');
         }
     }
 

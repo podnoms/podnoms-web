@@ -34,7 +34,7 @@ export class DebugComponent implements OnInit {
                 'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png',
                 {
                     autoClose: true,
-                    timeOut: 10
+                    timeOut: 5000
                 }
             );
             toast.click.subscribe(() => alert('Toasty!'));
