@@ -1,5 +1,7 @@
 export enum UploadModes {
     none,
     fromUrl,
-    fromLocalFile
+    fromLocalFile,
+    fromDropbox,
+    fromGoogleDrive
 }

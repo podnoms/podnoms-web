@@ -27,6 +27,11 @@ import { UtilsModule } from '../utils/utils.module';
 import { PodcastPrivacyComponent } from './podcast-privacy/podcast-privacy.component';
 import { NotificationLogsComponent } from './notifications/notification-logs/notification-logs.component';
 import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.component';
+import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dropbox.component';
+import { UploadGdriveComponent } from './entry-upload/upload-gdrive/upload-gdrive.component';
+import { BaseJsUploadComponent } from './base-js-upload.component';
+import { RemotePageParserComponent } from './entry-upload/remote-page-parser/remote-page-parser.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
@@ -39,10 +44,12 @@ import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.compon
         QuillModule,
         NgbModalModule,
         DropzoneModule,
+        NgSelectModule,
         ModalModule.forRoot(),
     ],
     exports: [PodcastComponent],
     declarations: [
+        BaseJsUploadComponent,
         PodcastComponent,
         PodcastDetailComponent,
         EntryListItemComponent,
@@ -56,7 +63,10 @@ import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.compon
         NotificationModalComponent,
         PodcastPrivacyComponent,
         NotificationLogsComponent,
-        EntryEditFormComponent
+        EntryEditFormComponent,
+        UploadDropboxComponent,
+        UploadGdriveComponent,
+        RemotePageParserComponent
     ],
     providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
 })

@@ -1,4 +1,10 @@
 @import 'theme/main';
 @import 'theme/codebase/custom-forms';
 
-@import 'theme/codebase/themes/elegance';
+@import 'theme/codebase/themes/flat.scss';
+
+$body-bg: white;
+
+body {
+    background-color: white;
+}

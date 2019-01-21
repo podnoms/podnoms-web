@@ -1,9 +1,14 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-import { Podcast, PodcastEntry, ToastService } from '../../core';
+import { Podcast, PodcastEntry } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
 import { trigger, transition, style, sequence, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { EntriesStoreService } from '../entries-store.service';
+import { debug } from 'util';
+import { EntryDataService } from '../entry-data.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -12,37 +17,37 @@ import { trigger, transition, style, sequence, animate } from '@angular/animatio
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('fade', [
-            transition('void => *', [
-                style({ opacity: '0' }),
-                animate('1s ease-out', style({ opacity: '1' }))
-            ]),
-            transition('* => void', [
-                style({ opacity: '1' }),
-                animate('.2s ease-in', style({ opacity: '0' }))
-            ])
+            transition('void => *', [style({ opacity: '0' }), animate('1s ease-out', style({ opacity: '1' }))]),
+            transition('* => void', [style({ opacity: '1' }), animate('.2s ease-in', style({ opacity: '0' }))])
         ])
     ]
 })
-export class PodcastDetailComponent {
+export class PodcastDetailComponent implements OnInit, OnChanges {
+    entries$: Observable<PodcastEntry[]>;
     @Input() podcast: Podcast;
 
     constructor(
         private podcastStore: PodcastStoreService,
-        private podcastDataService: PodcastDataService,
-        private toastService: ToastService
+        private podcastEntryDataService: EntryDataService,
+        private entriesStore: EntriesStoreService,
+        private alertService: AlertService
     ) {}
 
+    ngOnInit() {
+        this.entries$ = this.entriesStore.getWithQuery({ podcastSlug: this.podcast.slug });
+    }
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.podcast) {
+            this.entries$ = this.entriesStore.getWithQuery({ podcastSlug: changes.podcast.currentValue.slug });
+        }
+    }
     deleteEntry(entry: PodcastEntry) {
-        this.podcastDataService.deleteEntry(entry.id).subscribe(
+        this.podcastEntryDataService.deleteEntry(entry.id).subscribe(
             () => {
-                this.podcast.podcastEntries = this.podcast.podcastEntries.filter(( obj ) => obj.id !== entry.id);
+                this.podcast.podcastEntries = this.podcast.podcastEntries.filter(obj => obj.id !== entry.id);
                 this.podcastStore.updateOneInCache(this.podcast);
             },
-            () =>
-                this.toastService.showError(
-                    'Error deleting entry',
-                    'Please refresh page and try again'
-                )
+            () => this.alertService.error('Error deleting entry', 'Please refresh page and try again')
         );
     }
 }

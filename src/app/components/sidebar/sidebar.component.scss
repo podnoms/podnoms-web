@@ -1,6 +1,21 @@
 img.sidebar-icon {
-    width: 32px;
-    height: 32px;
-    margin: 0 4px;
+    width: 28px;
+    height: 28px;
     border-radius: 50em;
+}
+
+nav {
+    margin-bottom: 56px;
+}
+
+.nav-users {
+    height: 95%;
+    overflow: auto;
+}
+
+.nav-users {
+    padding-bottom: 32px;
+    position: fixed;
+    // top: 0;
+    // bottom: 0;
 }
