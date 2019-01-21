@@ -1,11 +1,16 @@
+@import '~styles/theme/codebase/_variables.scss';
+
 body {
-    margin-bottom: 90px; /* Margin bottom by footer height */
+    margin-bottom: 90px;
+    /* Margin bottom by footer height */
 }
+
 .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
 }
+
 .foooter-player-wrapper {
-    padding: 0 0 0 320px;
+    /* padding: 0 0 0 $sidebar-width - 1; */
 }

@@ -11,7 +11,7 @@ export class PushRegistrationService {
     constructor(private _http: HttpClient) {}
 
     urlBase64ToUint8Array(base64String) {
-        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
         const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
         const rawData = window.atob(base64);
         const outputArray = new Uint8Array(rawData.length);
@@ -21,10 +21,10 @@ export class PushRegistrationService {
         return outputArray;
     }
 
-    addSubscriber(registration) {
-        console.log('push-registration.service', 'addSubscriber', registration);
-        const url = `${environment.apiHost}/webpush/subscribe`;
-        return this._http.post(url, registration).catch(this.handleError);
+    addSubscriber(registration): Observable<any> {
+        return this._http
+            .post<any>(`${environment.apiHost}/webpush/subscribe`, registration)
+            .catch(this.handleError);
     }
 
     deleteSubscriber(subscription) {
@@ -33,11 +33,11 @@ export class PushRegistrationService {
             action: 'unsubscribe',
             subscription: subscription
         };
-
         return this._http.post(url, JSON.stringify(body)).catch(this.handleError);
     }
 
     private handleError(error: Response | any) {
+        console.error('push-registration.service', 'Error registering for push', error);
         let errMsg: string;
         if (error instanceof Response) {
             errMsg = `${error.statusText || 'Network error'}`;

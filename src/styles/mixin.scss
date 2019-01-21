@@ -1,10 +1,10 @@
-@import 'theme';
-
 $fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
 @import '~@fortawesome/fontawesome-free-webfonts/scss/fa-regular';
 @import '~@fortawesome/fontawesome-free-webfonts/scss/fa-solid';
 @import '~@fortawesome/fontawesome-free-webfonts/scss/fa-brands';
 @import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome';
+
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 
 @import '~quill/dist/quill.snow.css';
 @import '~quill/dist/quill.bubble.css';

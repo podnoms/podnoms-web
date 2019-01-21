@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
-import { ToastService } from './toast.service';
 import { throwIfAlreadyLoaded } from './module-import-check';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AudioService } from './audio.service';
 import { AuthService } from '../auth/auth.service';
+import { AlertService } from './alert.service';
 
 @NgModule({
     imports: [
@@ -17,7 +17,7 @@ import { AuthService } from '../auth/auth.service';
     ],
     declarations: [NavbarComponent],
     exports: [NavbarComponent],
-    providers: [ToastService, AudioService, AuthService]
+    providers: [AudioService, AuthService, AlertService]
 })
 export class CoreModule {
     constructor(

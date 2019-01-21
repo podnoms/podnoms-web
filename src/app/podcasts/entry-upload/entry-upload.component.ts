@@ -15,14 +15,19 @@ export class EntryUploadComponent {
     uploadModes = UploadModes; // do this so it can be used in the template
 
     @Input() uploadMode: UploadModes;
+    @Output() uploadModeChange = new EventEmitter();
     @Input() podcast: Podcast;
 
     constructor(private podcastStore: PodcastStoreService) {}
 
     onEntryCreateComplete(entry: PodcastEntry) {
         this.uploadMode = this.uploadModes.none;
-        this.podcast.podcastEntries.unshift(entry);
-        this.podcastStore.updateOneInCache(this.podcast);
+        if (entry !== null) {
+            // file was not passed correctly, probably an unsupported type
+            this.podcast.podcastEntries.unshift(entry);
+            this.podcastStore.updateOneInCache(this.podcast);
+        }
+        this.uploadModeChange.emit(this.uploadMode);
     }
     processPlaylist() {
         this.uploadMode = this.uploadModes.none;

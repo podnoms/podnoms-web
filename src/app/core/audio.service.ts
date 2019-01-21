@@ -57,21 +57,22 @@ export class AudioService {
     _initialiseAudio(source: string, title: any): any {
         this._audio = new Howl({
             src: [source],
-            html5: true,
+            html5: true, // this MUST be set, otherwise WebAudio API will download entire mp3 before starting
             volume: this._volume / 100,
-            onplay: (id, pos) => {
+            onplay: (id: any, pos: any) => {
                 console.log('onplay', id, pos);
                 this._playState = PlayState.playing;
                 this._duration = this._audio.duration();
-                this._playTimerSubscription = this.__playTimer.subscribe(r =>
-                    this._timedEvents(r)
-                );
+                this.playStateChanged.emit(this._playState);
+                this._playTimerSubscription = this.__playTimer.subscribe(r => this._timedEvents(r));
             }
         });
         this._audio.on('end', () => {
             this._playState = PlayState.inProgress;
             this.playStateChanged.emit(this._playState);
-            this._playTimerSubscription.unsubscribe();
+            if (this._playTimerSubscription) {
+                this._playTimerSubscription.unsubscribe();
+            }
         });
     }
     private _saveState() {
@@ -119,6 +120,7 @@ export class AudioService {
             this._playTimerSubscription.unsubscribe();
         }
         this._initialiseAudio(source, title);
+        this._audio.once('play', () => this.playStateChanged.emit((this._playState = PlayState.playing)));
         this._audio.once('load', () => this._audio.play());
     }
     toggle() {
@@ -140,7 +142,7 @@ export class AudioService {
             this.playStateChanged.emit(this._playState);
         }
     }
-    setPosition(position) {
+    setPosition(position: number) {
         this._audio.seek(position);
     }
 }

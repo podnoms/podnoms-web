@@ -9,8 +9,7 @@ export class BasePageComponent {
     constructor() {}
 
     protected formatError(error: string): string {
-        return `${error}<br />Please visit <a href="${
-            environment.helpUrl
-        }" target="_blank">here</a> and request help.`;
+        return `${error}<br />Please visit <a href="${environment.helpUrl}" target="_blank">here</a> and request help.`;
     }
+
 }

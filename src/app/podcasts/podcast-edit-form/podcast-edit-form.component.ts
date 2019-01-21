@@ -14,7 +14,8 @@ import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wiz
 import { validateSearch } from '../../shared/validators/search.validator';
 import { validateDomain } from '../../shared/validators/domain.validator';
 // import { ConditionalValidator } from '../../shared/validators/conditional.validator';
-import { NotificationsService } from 'angular2-notifications';
+import { CategoryService } from '../../shared/services/category.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -24,9 +25,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
     formImageUrl: string;
-    public category: string;
-    public subcategories: Array<string>;
-
+    public categories$: Observable<Category[]>;
     podcastForm: FormGroup;
     @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
@@ -59,10 +58,13 @@ export class PodcastEditFormComponent implements OnInit {
         private utilityService: UtilityService,
         private podcastStore: PodcastStoreService,
         private podcastDataService: PodcastDataService,
+        categoryService: CategoryService,
         private router: Router,
         private fb: FormBuilder,
-        private notifier: NotificationsService
-    ) {}
+        private alertService: AlertService
+    ) {
+        this.categories$ = categoryService.getCategories();
+    }
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
         const form = fb.group({
             id: [podcast.id],
@@ -76,6 +78,7 @@ export class PodcastEditFormComponent implements OnInit {
                 ]),
                 Validators.composeAsync([validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)])
             ],
+            category: [podcast.category, Validators.required],
             customDomain: [
                 podcast.customDomain,
                 Validators.compose([]),
@@ -87,7 +90,6 @@ export class PodcastEditFormComponent implements OnInit {
     }
     ngOnInit() {
         const id = this.route.snapshot.params.podcast;
-
         this.useWizard = this.route.snapshot.params.useWizard || false;
         if (!id) {
             const podcast = new Podcast();
@@ -103,9 +105,6 @@ export class PodcastEditFormComponent implements OnInit {
             this.podcastStore.entities$.pipe(map(r => r.filter(it => it.slug === id))).subscribe(p => {
                 const podcast = p[0];
                 if (podcast) {
-                    if (podcast.category) {
-                        this.category = podcast.category.id;
-                    }
                     this.formImageUrl = podcast.imageUrl;
                     this.podcast$ = of(podcast);
                     this.podcastForm = this._createForm(this.fb, podcast);
@@ -121,12 +120,6 @@ export class PodcastEditFormComponent implements OnInit {
         this._updatePodcast(podcast);
     }
     private _updatePodcast(podcast: Podcast) {
-        console.log('podcast-edit-form.component', 'category', this.category);
-        console.log('podcast-edit-form.component', 'subcategories', this.subcategories);
-
-        if (this.category) {
-            podcast.category = new Category(this.category);
-        }
         // TODO: Fix this.
         // podcast.subcategories = this.subcategories;
 
@@ -134,22 +127,40 @@ export class PodcastEditFormComponent implements OnInit {
         const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
             podcast.imageUrl = this.formImageUrl;
-            this.podcastDataService.addPodcast(podcast).subscribe(p => {
-                activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
-                    this.podcastStore.addOneToCache(p);
-                    this.podcastStore.updateOneInCache(p);
-                    this.router.navigate(['podcasts', p.slug]);
-                });
-            });
+            this.podcastDataService.addPodcast(podcast).subscribe(
+                p => {
+                    activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
+                        this.podcastStore.addOneToCache(p);
+                        this.podcastStore.updateOneInCache(p);
+                        this.router.navigate(['podcasts', p.slug]);
+                    });
+                },
+                err => {
+                    this.alertService.error(
+                        'Error',
+                        'There was an error adding this podcast, please check all your values and try again'
+                    );
+                    this.sending = false;
+                }
+            );
         } else {
-            this.podcastDataService.updatePodcast(podcast).subscribe(p => {
-                activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
-                    // nasty dance to force refresh of thumbnails
-                    p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
-                    this.podcastStore.updateOneInCache(p);
-                    this.router.navigate(['podcasts', p.slug]);
-                });
-            });
+            this.podcastDataService.updatePodcast(podcast).subscribe(
+                p => {
+                    activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
+                        // nasty dance to force refresh of thumbnails
+                        p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
+                        this.podcastStore.updateOneInCache(p);
+                        this.router.navigate(['podcasts', p.slug]);
+                    });
+                },
+                err => {
+                    this.alertService.error(
+                        'Error',
+                        'There was an error updating this podcast, please check all your values and try again'
+                    );
+                    this.sending = false;
+                }
+            );
         }
     }
     deletePodcast(podcast: Podcast) {
@@ -160,16 +171,11 @@ export class PodcastEditFormComponent implements OnInit {
                     this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
-                    this.notifier.error('Error', 'There was an error deleting podcast.');
+                    this.alertService.info('Error', 'There was an error deleting podcast.');
                 }
             },
             err =>
-                this.notifier.error('Error', 'There was an error deleting podcast.', {
-                    timeOut: 3000,
-                    showProgressBar: true,
-                    pauseOnHover: true,
-                    clickToClose: true
-                })
+                this.alertService.error('Error', 'There was an error deleting podcast.')
         );
     }
     podcastUpdated(podcast: Podcast) {

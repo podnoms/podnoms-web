@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Podcast, ToastService, Category } from '../../core';
+import { Podcast, Category } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
     selector: 'app-podcast-privacy',
@@ -13,7 +14,7 @@ export class PodcastPrivacyComponent implements OnInit {
 
     constructor(
         private podcastDataService: PodcastDataService,
-        private toastService: ToastService
+        private alertService: AlertService
     ) {}
 
     ngOnInit() {}
@@ -26,7 +27,7 @@ export class PodcastPrivacyComponent implements OnInit {
         this.podcast.category = this.podcast.category || null;
         this.podcastDataService
             .updatePodcast(this.podcast)
-            .subscribe(r => this.toastService.showToast('Success', 'Updated privacy settings'));
+            .subscribe(r => this.alertService.info('Success', 'Updated privacy settings'));
         return false;
     }
 }

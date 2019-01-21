@@ -15,6 +15,9 @@ export class CategorySelectorComponent {
     public subCategoriesAvailable: boolean = false;
 
     @Input()
+    hasError: boolean = false;
+
+    @Input()
     category: string;
     @Input()
     label: string = 'Category';
