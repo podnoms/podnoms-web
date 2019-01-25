@@ -13,6 +13,7 @@ import { PaymentsService } from '../payments.service';
 import { environment } from '../../../environments/environment';
 import { AlertService } from '../../core/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ScriptService } from '../../core/scripts/script.service';
 declare var StripeCheckout: any;
 
 @Component({
@@ -23,6 +24,7 @@ declare var StripeCheckout: any;
 export class MakePaymentComponent implements AfterViewInit, OnInit {
     @ViewChild('payElement') payElement: ElementRef;
 
+    ready: boolean = false;
     handler: any;
     error: string;
     amount: number = 10 * 100;
@@ -35,24 +37,31 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         private cd: ChangeDetectorRef,
         private router: Router,
         private route: ActivatedRoute,
+        private scriptService: ScriptService,
         private paymentService: PaymentsService,
         private alertService: AlertService
     ) {}
     ngOnInit() {
         this.type = this.route.snapshot.params.type || 'advanced';
-        this.handler = StripeCheckout.configure({
-            key: environment.stripeKey,
-            image: 'https://www.podnoms.com/assets/img/logo-icon.png',
-            locale: 'auto',
-            token: token => {
-                this.paymentService.processPayment(token.id, this.amount, this.type).subscribe(r => {
-                    if (r) {
-                        this.alertService.success('Success', 'Payment successfully received.');
-                        this.router.navigate(['']);
+        this.scriptService
+            .load('stripe')
+            .then(() => {
+                this.handler = StripeCheckout.configure({
+                    key: environment.stripeKey,
+                    image: 'https://www.podnoms.com/assets/img/logo-icon.png',
+                    locale: 'auto',
+                    token: (token: { id: any }) => {
+                        this.paymentService.processPayment(token.id, this.amount, this.type).subscribe(r => {
+                            if (r) {
+                                this.alertService.success('Success', 'Payment successfully received.');
+                                this.router.navigate(['']);
+                            }
+                        });
                     }
                 });
-            }
-        });
+                this.ready = true;
+            })
+            .catch(err => console.error('make-payment.component', 'Error loading stripe', err));
     }
     handlePayment() {
         this.handler.open({

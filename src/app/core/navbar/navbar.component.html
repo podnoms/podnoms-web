@@ -1,4 +1,5 @@
-<header id="page-header">
+<header id="page-header"
+        *ngIf="profile$ | async as profile">
     <div class="content-header">
         <div class="content-header-section">
             <button type="button"
@@ -60,6 +61,48 @@
                        (click)="logout()">
                         <i class="fa fa-sign-out-alt mr-5"></i>
                         Logout</a>
+                </div>
+            </div>
+            <div class="btn-group"
+                 role="group"
+                 *ngIf="profile.hasSubscribed">
+                <button type="button"
+                        class="btn btn-rounded btn-dual-secondary"
+                        id="page-header-notifications"
+                        data-toggle="dropdown"
+                        title="Payment Info"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    <i class="fa fa-shopping-cart text-danger swing"></i>
+                    <!-- <span class="badge badge-primary badge-pill">5</span> -->
+                </button>
+                <div class="dropdown-menu dropdown-menu-right min-width-300"
+                     aria-labelledby="page-header-notifications"
+                     x-placement="bottom-end"
+                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-231px, 34px, 0px);">
+                    <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Notifications</h5>
+                    <ul class="list-unstyled my-20">
+                        <li>
+                            <a class="text-body-color-dark media mb-15"
+                               href="javascript:void(0)">
+                                <div class="ml-5 mr-15">
+                                    <i class="fa fa-fw fa-check text-success"></i>
+                                </div>
+                                <div class="media-body pr-10">
+                                    <p class="mb-0">You’ve
+                                        upgraded to a VIP
+                                        account successfully!</p>
+                                    <div class="text-muted font-size-sm font-italic">15
+                                        min ago</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-center mb-0"
+                       href="javascript:void(0)">
+                        <i class="fa fa-flag mr-5"></i> View All
+                    </a>
                 </div>
             </div>
             <button type="button"

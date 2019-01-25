@@ -13,14 +13,17 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-    @Input() profile: Profile;
+    profile$: Observable<Profile>;
+    pricingEnabled: boolean = false;
 
     constructor(
         private authService: AuthService,
         private debugService: DebugService,
         private alertService: AlertService,
         private uiStateService: UiStateService
-    ) {}
+    ) {
+        this.profile$ = authService.profile$;
+    }
     toggleSidebar() {
         this.uiStateService.toggleSidebar();
     }

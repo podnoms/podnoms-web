@@ -1,10 +1,9 @@
-<div class="block">
+<div class="block block-rounded block-bordered pb-30">
     <div class="block-header">
-        <h3 class="block-title">Purchase
-            subscription</h3>
+        <h3 class="block-title">Purchase subscription</h3>
     </div>
-    <div class="block-content">
-
+    <div class="block-content"
+         *ngIf="ready">
         <p>We use <a href="https://stripe.com/">Stripe</a>
             for payment processing</p>
         <p>At no point do we have
@@ -17,5 +16,9 @@
             Purchase 1 month
             subscription
         </button>
+    </div>
+    <div class="block-content"
+         *ngIf="!ready">
+        <app-loader [loadingText]="'Loading payment methods'"></app-loader>
     </div>
 </div>
