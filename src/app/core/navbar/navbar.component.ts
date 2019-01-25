@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment';
 })
 export class NavbarComponent {
     @Input() profile: Profile;
+    pricingEnabled: boolean = false;
 
     constructor(
         private authService: AuthService,
