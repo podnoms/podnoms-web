@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, SimpleChanges, OnInit } from '@angular/core';
-import { Profile, ProfileLimits } from '../../core';
+import { Profile, ProfileLimits, Payment } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -100,6 +100,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
     refreshLimits() {
         this.profileDataService.getLimits().subscribe(l => {
             this.storageAvailable = l.storageQuota;

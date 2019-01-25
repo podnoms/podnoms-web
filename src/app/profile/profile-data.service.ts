@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Profile, ProfileLimits } from '../core';
+import { Profile, ProfileLimits, Payment } from '../core';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ProfileDataService {
+
     profile: Profile;
     constructor(private _http: HttpClient, private authService: AuthService) {}
 
@@ -40,5 +41,8 @@ export class ProfileDataService {
     }
     getLimits(): Observable<ProfileLimits> {
         return this._http.get<ProfileLimits>(environment.apiHost + '/profile/limits');
+    }
+    getPayments(): Observable<Payment[]> {
+        return this._http.get<Payment[]>(environment.apiHost + '/profile/payments');
     }
 }

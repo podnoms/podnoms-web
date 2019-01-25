@@ -1,0 +1,37 @@
+<div class="table-responsive">
+    <table class="table table-striped table-vcenter">
+        <thead>
+            <tr>
+                <th>Transaction Id</th>
+                <th style="width: 30%;">Start Date</th>
+                <th style="width: 15%;">End Date</th>
+                <th style="width: 15%;">Type</th>
+                <th class="text-center"
+                    style="width: 100px;">Invoice</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let payment of payments$ | async">
+                <td class="font-w600">
+                    {{payment.transactionId}}
+                </td>
+                <td>{{payment.startDate |
+                    date:'short'}}</td>
+                <td>{{payment.startDate |
+                    date:'short'}}</td>
+                <td>
+                    <span *ngIf="payment.type==='professional'"
+                          class="badge badge-secondary">Professional</span>
+                    <span *ngIf="payment.type==='advanced'"
+                          class="badge badge-warning">Advanced</span>
+                </td>
+                <td class="text-center">
+                    <a [href]="payment.receiptURL"
+                       class="btn btn-alt-danger">
+                        <i class="fa fa-download"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

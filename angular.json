@@ -26,7 +26,10 @@
                             "src/firebase-messaging-sw.js",
                             "src/manifest.json"
                         ],
-                        "styles": ["src/styles/styles.scss"],
+                        "styles": [
+                            "src/styles/styles.scss",
+                            "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+                        ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",
                             "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -34,7 +37,8 @@
                             "node_modules/quill/dist/quill.js",
                             "node_modules/zxcvbn/dist/zxcvbn.js",
                             "node_modules/easy-pie-chart/dist/easypiechart.js",
-                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js"
+                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js",
+                            "node_modules/datatables.net/js/jquery.dataTables.js"
                         ]
                     },
                     "configurations": {
