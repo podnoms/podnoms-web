@@ -6,12 +6,12 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../components/components.module';
 import { ChartsModule } from 'ng2-charts';
-import { PaymentListComponent } from '../payments/components/payment-list/payment-list.component';
+import { PaymentsModule } from '../payments/payments.module';
 
 @NgModule({
-    imports: [CommonModule, SharedModule, ComponentsModule, ProfileRoutingModule, ChartsModule],
+    imports: [CommonModule, SharedModule, ComponentsModule, ProfileRoutingModule, ChartsModule, PaymentsModule],
     exports: [],
-    declarations: [ProfileComponent, PaymentListComponent],
+    declarations: [ProfileComponent],
     providers: [AuthService]
 })
 export class ProfileModule {}

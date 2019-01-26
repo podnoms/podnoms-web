@@ -5,20 +5,23 @@
         data-toggle="tabs"
         role="tablist">
         <li class="nav-item">
-            <a class="nav-link active"
+            <a class="nav-link"
+               [ngClass]="view === 'profile' ? 'active' : ''"
                data-toggle="tab"
                href="#btabs-profile-details">My
                 details </a>
         </li>
         <li class="nav-item">
             <a class="nav-link"
+               [ngClass]="view === 'invoices' ? 'active' : ''"
                data-toggle="tab"
                href="#btabs-profile-payments">
                 Payments </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active"
+        <div class="tab-pane"
+             [ngClass]="view === 'profile' ? 'active' : ''"
              id="btabs-profile-details"
              role="tabpanel">
             <div class="block">
@@ -143,6 +146,7 @@
             </div>
         </div>
         <div class="tab-pane"
+             [ngClass]="view === 'invoices' ? 'active' : ''"
              id="btabs-profile-payments"
              role="tabpanel">
             <app-payment-list></app-payment-list>

@@ -12,6 +12,7 @@ import { ScriptService } from '../core/scripts/script.service';
 @NgModule({
     declarations: [PricingTablesComponent, MakePaymentComponent, PaymentListComponent],
     imports: [CommonModule, FormsModule, DataTablesModule, SharedModule, PaymentsRoutingModule],
+    exports: [PaymentListComponent],
     providers: [ScriptService]
 })
 export class PaymentsModule {}

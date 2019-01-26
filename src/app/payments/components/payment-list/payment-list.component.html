@@ -26,12 +26,24 @@
                           class="badge badge-warning">Advanced</span>
                 </td>
                 <td class="text-center">
-                    <a [href]="payment.receiptURL"
+                    <!-- <a [href]="payment.receiptURL"
+                       target="_blank"
+                       download="PodNoms Invoice - {{payment.startDate}}.pdf"
                        class="btn btn-alt-danger">
                         <i class="fa fa-download"></i>
-                    </a>
+                    </a> -->
+                    <button class="btn btn-outline"
+                            data-toggle="tooltip"
+                            title="Download invoice"
+                            (click)="downloadInvoice(payment)"
+                            class="btn btn-alt-danger">
+                        <i class="fa fa-download"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+<iframe id="downloader"
+        #downloader
+        style="display:none"></iframe>
