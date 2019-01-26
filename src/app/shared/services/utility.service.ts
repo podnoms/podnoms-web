@@ -9,28 +9,28 @@ import 'rxjs/add/operator/map';
     providedIn: 'root'
 })
 export class UtilityService {
-    constructor(private _http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
     checkForDupes(table: string, field: string, value: string): Observable<CheckResult> {
-        return this._http.get<CheckResult>(
+        return this.http.get<CheckResult>(
             environment.apiHost + `/utility/checkdupes?table=${table}&field=${field}&value=${value}`
         );
     }
     checkDomain(domain: string): Observable<boolean> {
-        return this._http.post<boolean>(environment.apiHost + '/utility/checkdomain', {
+        return this.http.post<boolean>(environment.apiHost + '/utility/checkdomain', {
             hostname: domain
         });
     }
     checkPassword(password: string): Observable<number> {
-        return this._http.post<number>(`${environment.apiHost}/utility/checkpassword/`, `"${password}"`);
+        return this.http.post<number>(`${environment.apiHost}/utility/checkpassword/`, `"${password}"`);
     }
     getTemporaryPodcastImageUrl(): Observable<string> {
-        return this._http.get<string>(`${environment.apiHost}/utility/temppodcastimage`);
+        return this.http.get<string>(`${environment.apiHost}/utility/temppodcastimage`);
     }
     checkAudioUrl(url: string): Observable<any> {
-        return this._http.get<any>(`${environment.apiHost}/urlprocess/validate?url=${url}`);
+        return this.http.get<any>(`${environment.apiHost}/urlprocess/validate?url=${url}`);
     }
     checkForApiServer(): Observable<any> {
-        return this._http.get<any>(`${environment.apiHost}/hc`);
+        return this.http.get<any>(`${environment.apiHost}/hc`);
     }
 }

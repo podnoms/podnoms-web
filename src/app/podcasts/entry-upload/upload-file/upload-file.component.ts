@@ -13,7 +13,7 @@ import { AlertService } from '../../../core/alert.service';
 export class UploadFileComponent implements OnInit {
     @Input() podcast: Podcast;
     @Output() uploadComplete: EventEmitter<any> = new EventEmitter();
-    // @ViewChild('uploader') el: ElementRef;
+
     config: DropzoneConfigInterface = {
         acceptedFiles: 'audio/*',
         maxFilesize: 4000, // 4Gb

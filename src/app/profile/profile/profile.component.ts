@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, SimpleChanges, OnInit } from '@angular/core';
-import { Profile, ProfileLimits } from '../../core';
+import { Profile, ProfileLimits, Payment } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { UUID } from 'angular2-uuid';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertService } from '../../core/alert.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -62,14 +63,15 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     limits$: Observable<ProfileLimits>;
 
     slugging: boolean = false;
+    view: string = 'profile';
 
     constructor(
+        private route: ActivatedRoute,
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
         private alertService: AlertService
     ) {
         super();
-        console.log('profile.component', 'loading', new Date().getTime());
         this.searchTerm$
             .pipe(
                 debounceTime(400),
@@ -88,6 +90,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.view = this.route.snapshot.params.view || 'profile';
         this.refreshLimits();
     }
     private _bytesToHuman(bytes: number) {
@@ -100,6 +103,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
     refreshLimits() {
         this.profileDataService.getLimits().subscribe(l => {
             this.storageAvailable = l.storageQuota;

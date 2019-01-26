@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PodcastStoreService } from '../podcasts/podcast-store.service';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
 import { SharedModule } from '../shared/shared.module';
 import { SideOverlayComponent } from './side-overlay/side-overlay.component';
 import { FooterComponent } from './footer/footer.component';
@@ -15,6 +16,7 @@ import { NgbTooltipModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstr
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { MomentModule } from 'ngx-moment';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -24,6 +26,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         RouterModule,
         SharedModule,
         ChartsModule,
+        MomentModule,
         PerfectScrollbarModule,
         NgbTooltipModule,
         NgbProgressbarModule
@@ -41,8 +44,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FooterComponent,
         FooterPlayerComponent,
         PasswordCheckerComponent,
+        NavbarComponent,
         SidebarPodcastItemComponent
     ],
-    exports: [SidebarComponent, SideOverlayComponent, FooterComponent, FooterPlayerComponent, PasswordCheckerComponent]
+    exports: [
+        SidebarComponent,
+        SideOverlayComponent,
+        NavbarComponent,
+        FooterComponent,
+        FooterPlayerComponent,
+        PasswordCheckerComponent
+    ]
 })
 export class ComponentsModule {}

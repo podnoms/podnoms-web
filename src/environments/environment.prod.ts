@@ -14,5 +14,6 @@ export const environment = {
         projectId: 'podnoms-api',
         storageBucket: 'podnoms-api.appspot.com',
         messagingSenderId: '357461672895'
-    }
+    },
+    stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa'
 };

@@ -34,7 +34,9 @@ export class AuthService extends BaseService {
     ) {
         super();
     }
-
+    reloadProfile(): Observable<boolean> {
+        return this.bootstrap();
+    }
     bootstrap(): Observable<boolean> {
         const ret = new Subject<boolean>();
         try {
