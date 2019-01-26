@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +22,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { registerLocaleData } from '@angular/common';
+import localeIE from '@angular/common/locales/en-IE';
 
+registerLocaleData(localeIE, 'ie');
 @NgModule({
     imports: [
         BrowserModule,
@@ -52,7 +55,8 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
         {
             provide: ErrorHandler,
             useClass: MonitoringErrorHandler
-        }
+        },
+        { provide: LOCALE_ID, useValue: 'en-IE' }
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent]

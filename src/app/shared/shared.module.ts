@@ -24,14 +24,7 @@ import { ToastComponent } from './components/toast/toast.component';
 import { ToastItemComponent } from './components/toast/toast-item.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        SocialLoginModule,
-        NgSelectModule
-    ],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule, NgSelectModule],
     exports: [
         FormsModule,
         ReactiveFormsModule,

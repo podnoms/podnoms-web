@@ -8,6 +8,10 @@ export class Profile {
     apiKey: string;
     firstName: string;
     lastName: string;
+
+    hasSubscribed: boolean;
+    subscriptionType: string;
+    subscriptionValidUntil: Date;
 }
 export class ProfileLimits {
     user: Profile;

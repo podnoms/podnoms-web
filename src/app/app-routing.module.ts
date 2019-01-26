@@ -18,6 +18,11 @@ const routes: Routes = [
         path: 'podcasts',
         loadChildren: 'app/podcasts/podcasts.module#PodcastsModule',
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'payments',
+        loadChildren: 'app/payments/payments.module#PaymentsModule',
+        canActivate: [AuthGuard]
     }
 ];
 

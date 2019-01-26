@@ -14,6 +14,7 @@ export const environment = {
         projectId: 'podnoms-api',
         storageBucket: 'podnoms-api.appspot.com',
         messagingSenderId: '357461672895'
-    }
+    },
+    stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7'
 };
 import 'zone.js/dist/zone-error'; // Included with Angular CLI.

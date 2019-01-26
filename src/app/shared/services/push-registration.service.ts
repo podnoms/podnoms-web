@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
     providedIn: 'root'
 })
 export class PushRegistrationService {
-    constructor(private _http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
     urlBase64ToUint8Array(base64String) {
         const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -22,7 +22,7 @@ export class PushRegistrationService {
     }
 
     addSubscriber(registration): Observable<any> {
-        return this._http
+        return this.http
             .post<any>(`${environment.apiHost}/webpush/subscribe`, registration)
             .catch(this.handleError);
     }
@@ -33,7 +33,7 @@ export class PushRegistrationService {
             action: 'unsubscribe',
             subscription: subscription
         };
-        return this._http.post(url, JSON.stringify(body)).catch(this.handleError);
+        return this.http.post(url, JSON.stringify(body)).catch(this.handleError);
     }
 
     private handleError(error: Response | any) {
