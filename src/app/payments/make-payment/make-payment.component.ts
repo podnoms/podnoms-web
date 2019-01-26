@@ -23,6 +23,7 @@ declare var StripeCheckout: any;
 })
 export class MakePaymentComponent implements AfterViewInit, OnInit {
     loadingText: string = 'Loading payment methods';
+    headerText: string = '';
     handler: any;
     error: string;
     amount: number = 10 * 100;
@@ -42,6 +43,17 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
     ) {}
     ngOnInit() {
         this.type = this.route.snapshot.params.type || 'advanced';
+        switch (this.type) {
+            case 'donation':
+                this.headerText = 'Buy me a coffee, or a beer, or an Aston Martin';
+                break;
+            case 'advanced':
+                this.headerText = 'Purchase 1 month advanced subscription';
+                break;
+            case 'professional':
+                this.headerText = 'Purchase 1 month professional subscription';
+                break;
+        }
         this.amount = (this.type === 'advanced' ? 10 : this.type === 'professional' ? 100 : 0) * 100;
         this.scriptService
             .load('stripe')
@@ -52,14 +64,24 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                     locale: 'auto',
                     token: (token: { id: any }) => {
                         this.loadingText = 'Processing payment';
-                        this.paymentService.processPayment(token.id, this.amount, this.type).subscribe(r => {
-                            if (r) {
-                                this.authService.reloadProfile().subscribe(() => {
-                                    this.alertService.success('Success', 'Payment successfully received.');
-                                    this.router.navigate(['']);
-                                });
-                            }
-                        });
+                        this.paymentService.processPayment(token.id, this.amount, this.type).subscribe(
+                            r => {
+                                if (r) {
+                                    this.authService.reloadProfile().subscribe(() => {
+                                        this.alertService.success(
+                                            'Success',
+                                            this.type === 'donation'
+                                                ? 'THANK YOU SO MUCH!!!!'
+                                                : 'Payment successfully received.'
+                                        );
+                                        this.router.navigate(['']);
+                                    });
+                                }
+                            },
+                            error =>
+                                (this.loadingText =
+                                    'There was an error processing your payment, please refresh and try again')
+                        );
                     }
                 });
                 this.loadingText = '';
@@ -67,6 +89,15 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
             .catch(err => console.error('make-payment.component', 'Error loading stripe', err));
     }
     handlePayment() {
+        this.handler.open({
+            name: 'PodNoms',
+            description: this.label,
+            amount: this.amount
+        });
+    }
+    handleDonation(amount) {
+        this.amount = amount * 100;
+        console.log('make-payment.component', 'handleDonation', amount);
         this.handler.open({
             name: 'PodNoms',
             description: this.label,

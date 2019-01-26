@@ -29,6 +29,11 @@
             </a>
         </div>
         <div class="content-header-section">
+            <a [routerLink]="['payments/pay', {type:'donation'}]"
+               class="btn btn-dual-secondary">
+                <i class="fa fa-beer"></i>&nbsp;
+                Buy me a beer
+            </a>
             <a [routerLink]="['payments/pricing']"
                class="btn btn-dual-secondary">
                 <i class="fa fa-credit-card"></i>&nbsp;
@@ -81,7 +86,8 @@
                      aria-labelledby="page-header-notifications"
                      x-placement="bottom-end"
                      style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-231px, 34px, 0px);">
-                    <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Notifications</h5>
+                    <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Payment
+                        Log</h5>
                     <ul class="list-unstyled my-20">
                         <li *ngFor="let invoice of invoices$ | async">
                             <a class="text-body-color-dark media mb-15"
@@ -90,9 +96,14 @@
                                     <i class="fa fa-fw fa-check text-success"></i>
                                 </div>
                                 <div class="media-body pr-10">
-                                    <p class="mb-0">Payment for {{invoice.type}}</p>
-                                    <div class="text-muted font-size-sm font-italic">15
-                                        min ago</div>
+                                    <p class="mb-0">Payment for
+                                        {{invoice.type}}</p>
+                                    <p class="mb-0">{{invoice.startDate
+                                        | date:'dd/MM/yyyy'}}
+                                        to {{invoice.endDate
+                                        |date:'dd/MM/yyyy'}}</p>
+                                    <div class="text-muted font-size-sm font-italic">{{invoice.createDate
+                                        | humaniseTime}}</div>
                                 </div>
                             </a>
                         </li>

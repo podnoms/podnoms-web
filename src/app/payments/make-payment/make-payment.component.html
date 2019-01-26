@@ -1,7 +1,7 @@
 <div class="block block-rounded block-bordered pb-30"
-     *ngIf="type !== 'donate'">
-    <div class="block-header">
-        <h3 class="block-title">Purchase subscription</h3>
+     *ngIf="type !== 'donate_torevisit'">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">{{headerText}}</h3>
     </div>
     <div class="block-content"
          *ngIf="!loadingText">
@@ -12,11 +12,29 @@
             number, and it is NEVER
             stored in our system.</p>
         <button class="btn btn-secondary"
-                (click)="handlePayment()">
+                (click)="handlePayment()"
+                *ngIf="type !== 'donation'">
             <i class="fa fa-th-large text-primary mr-5 "></i>
-            Purchase 1 month
+            1 month
             subscription @ {{this.amount/100 | currency}}
         </button>
+        <div class="col-md-3">
+            <div class="input-group"
+                 *ngIf="type === 'donation'">
+                <input type="number"
+                       #amount
+                       value="10.00"
+                       class="form-control"
+                       placeholder="Enter amount">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary"
+                            (click)="handleDonation(amount.value)">
+                        <i class="fa fa-th-large text-primary mr-5 "></i>
+                        Donate
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="block-content"
          *ngIf="loadingText">
@@ -24,19 +42,12 @@
     </div>
 </div>
 <div class="block block-rounded block-bordered pb-30"
-     *ngIf="type === 'donate'">
+     *ngIf="type === 'donate_torevisit'">
     <div class="block-header">
         <h3 class="block-title">Buy me a coffee, or a beer, or
             an Aston Martin</h3>
     </div>
     <div class="block-content">
-        <div>
-            <a class="donate-with-crypto"
-               href="https://commerce.coinbase.com/checkout/a12ad2e1-02c0-474b-84c0-91312835916f">
-                <span>Donate with Crypto</span>
-            </a>
-            <script src="">
-            </script>
-        </div>
+        <app-donation></app-donation>
     </div>
 </div>
