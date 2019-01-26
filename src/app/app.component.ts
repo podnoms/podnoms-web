@@ -14,6 +14,7 @@ import { PushRegistrationService } from './shared/services/push-registration.ser
 import { skip, take } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alert.service';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',

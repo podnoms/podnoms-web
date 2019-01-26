@@ -23,15 +23,12 @@ declare var StripeCheckout: any;
 })
 export class MakePaymentComponent implements AfterViewInit, OnInit {
     loadingText: string = 'Loading payment methods';
+    errorText: string = '';
     headerText: string = '';
     handler: any;
     error: string;
-    amount: number = 10 * 100;
-    label: string = 'PodNoms Monthly *Advanced* subscription';
-    elements: any;
-    paymentRequest: any;
-    prButton: any;
-    type: string;
+    tier: any;
+    chargingAmount: number = -1;
     constructor(
         private cd: ChangeDetectorRef,
         private router: Router,
@@ -42,19 +39,31 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         private alertService: AlertService
     ) {}
     ngOnInit() {
-        this.type = this.route.snapshot.params.type || 'advanced';
-        switch (this.type) {
-            case 'donation':
+        const type = this.route.snapshot.params.type || 'advanced';
+        switch (type) {
+            case 'Free':
                 this.headerText = 'Buy me a coffee, or a beer, or an Aston Martin';
                 break;
-            case 'advanced':
+            case 'Personal':
                 this.headerText = 'Purchase 1 month advanced subscription';
                 break;
-            case 'professional':
+            case 'Professional':
                 this.headerText = 'Purchase 1 month professional subscription';
                 break;
         }
-        this.amount = (this.type === 'advanced' ? 10 : this.type === 'professional' ? 100 : 0) * 100;
+
+        this.paymentService.getPricingTier(type).subscribe(
+            p => {
+                this.tier = p;
+                this._spinUpMerchant(p);
+            },
+            err => {
+                console.log('make-payment.component', 'getPricingTier', err);
+                this.errorText = 'Unable to load pricing tier, please try again later';
+            }
+        );
+    }
+    _spinUpMerchant(pricingTier: any) {
         this.scriptService
             .load('stripe')
             .then(() => {
@@ -62,15 +71,16 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                     key: environment.stripeKey,
                     image: 'https://www.podnoms.com/assets/img/logo-icon.png',
                     locale: 'auto',
+                    currency: 'EUR',
                     token: (token: { id: any }) => {
                         this.loadingText = 'Processing payment';
-                        this.paymentService.processPayment(token.id, this.amount, this.type).subscribe(
+                        this.paymentService.processPayment(token.id, this.chargingAmount, pricingTier.type).subscribe(
                             r => {
                                 if (r) {
                                     this.authService.reloadProfile().subscribe(() => {
                                         this.alertService.success(
                                             'Success',
-                                            this.type === 'donation'
+                                            pricingTier.type === 'Free'
                                                 ? 'THANK YOU SO MUCH!!!!'
                                                 : 'Payment successfully received.'
                                         );
@@ -78,9 +88,13 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                                     });
                                 }
                             },
-                            error =>
-                                (this.loadingText =
-                                    'There was an error processing your payment, please refresh and try again')
+                            error => {
+                                this.loadingText = '';
+                                this.errorText =
+                                    'There was an error processing your payment, ' +
+                                    'please open a ticket at ' +
+                                    '<a href="https://talk.podnoms.com/"> PodNoms Support</a> so we can track your payment';
+                            }
                         );
                     }
                 });
@@ -89,19 +103,20 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
             .catch(err => console.error('make-payment.component', 'Error loading stripe', err));
     }
     handlePayment() {
+        this.chargingAmount = this.tier.costPerMonth;
         this.handler.open({
             name: 'PodNoms',
-            description: this.label,
-            amount: this.amount
+            description: this.tier.title,
+            amount: this.chargingAmount
         });
     }
     handleDonation(amount) {
-        this.amount = amount * 100;
+        this.chargingAmount = amount * 100;
         console.log('make-payment.component', 'handleDonation', amount);
         this.handler.open({
             name: 'PodNoms',
-            description: this.label,
-            amount: this.amount
+            description: this.tier.title,
+            amount: this.chargingAmount
         });
     }
     ngAfterViewInit() {}

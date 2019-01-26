@@ -1,86 +1,25 @@
 <div class="container-fluid">
     <div class="row center">
-        <div class="col-md-8 col-xl-3">
-            <a class="block block-rounded text-center"
-               [routerLink]="['../pay', {type:'donation'}]">
+        <div class="col-md-6 col-xl-3"
+             *ngFor="let item of pricingTiers$ | async">
+            <a class="block block-link-pop block-rounded block-bordered text-center"
+               href="javascript:void(0)">
                 <div class="block-header">
-                    <h3 class="block-title">Personal</h3>
+                    <h3 class="block-title">{{item.title}}</h3>
                 </div>
-                <div class="block-content bg-primary">
-                    <div class="h1 font-w700 mb-10 text-white">Free</div>
-                    <div class="h5 text-muted text-white-op">(as
-                        in beer)</div>
-                </div>
-                <div class="block-content">
-                    <p><strong>Unlimited</strong>
-                        Podcasts</p>
-                    <p><strong>1GB</strong>
-                        Storage</p>
-                    <p><strong>10</strong>
-                        Episodes per
-                        podcast</p>
-                    <p>Email Support</p>
-                </div>
-                <div class="block-content block-content-full bg-gray-lighter">
-                    <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-primary">Donate
-                        Now</span>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-8 col-xl-3">
-            <a class="block block-rounded text-center"
-               [routerLink]="['../pay', {type:'advanced'}]">
-                <div class="
-               block-header">
-                    <h3 class="block-title">Advanced</h3>
-                </div>
-                <div class="block-content bg-warning">
-                    <div class="h1 font-w700 mb-10 text-white">€10</div>
-                    <div class="h5 text-muted text-white-op">per
-                        month</div>
+                <div class="block-content bg-gray-lighter">
+                    <div class="h1 font-w700 mb-10">{{item.costPerMonth/100
+                        | currency: 'EUR': true}}</div>
+                    <div class="h5 text-muted">per month</div>
                 </div>
                 <div class="block-content">
-                    <p><strong>Unlimited</strong>
-                        Podcasts</p>
-                    <p><strong>100GB</strong>
-                        Storage</p>
-                    <p><strong>Unlimited</strong>
-                        Episodes per
-                        podcast</p>
-                    <p><strong>Priority</strong>
-                        Email Support</p>
+                    <p *ngFor="let detail of item.details">
+                        {{detail}}</p>
                 </div>
                 <div class="block-content block-content-full bg-gray-lighter">
-                    <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-warning">Pay
-                        Now</span>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-8 col-xl-3">
-            <a class="block block-link-shadow block-rounded text-center"
-               [routerLink]="['../pay', {type:'professional'}]">
-                <div class="block-header">
-                    <h3 class="block-title">Professional</h3>
-                </div>
-                <div class="block-content bg-danger">
-                    <div class="h1 font-w700 mb-10 text-white">€100</div>
-                    <div class="h5 text-muted text-white-op">per
-                        month</div>
-                </div>
-                <div class="block-content">
-                    <p><strong>Unlimited</strong>
-                        Podcasts</p>
-                    <p><strong>Unlimited</strong>
-                        Storage</p>
-                    <p><strong>Unlimited</strong>
-                        Episodes per
-                        podcast</p>
-                    <p><strong>Telephone</strong>
-                        Support</p>
-                </div>
-                <div class="block-content block-content-full bg-gray-lighter">
-                    <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-danger">Pay
-                        Now</span>
+                    <a class="btn btn-hero btn-sm btn-rounded btn-noborder btn-success"
+                       [routerLink]="['../pay', {type:item.type}]">{{item.costPerMonth
+                        === 0 ? 'Donate' : 'Pay Now'}}</a>
                 </div>
             </a>
         </div>

@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Profile, Payment } from '../model';
 import { AuthService } from '../../auth/auth.service';
-import { UiStateService } from '../ui-state.service';
 import { DebugService } from '../../debug/debug.service';
-import { AlertService } from '../alert.service';
 import { environment } from '../../../environments/environment';
 import { PaymentsService } from '../../payments/payments.service';
+import { Profile, Payment } from '../../core';
+import { AlertService } from '../../core/alert.service';
+import { UiStateService } from '../../core/ui-state.service';
 
 @Component({
     selector: 'app-navbar',

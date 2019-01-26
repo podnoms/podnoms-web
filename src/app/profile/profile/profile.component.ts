@@ -72,7 +72,6 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
         private alertService: AlertService
     ) {
         super();
-        console.log('profile.component', 'loading', new Date().getTime());
         this.searchTerm$
             .pipe(
                 debounceTime(400),

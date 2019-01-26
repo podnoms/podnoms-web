@@ -29,7 +29,7 @@
             </a>
         </div>
         <div class="content-header-section">
-            <a [routerLink]="['payments/pay', {type:'donation'}]"
+            <a [routerLink]="['payments/pay', {type:'Free'}]"
                class="btn btn-dual-secondary">
                 <i class="fa fa-beer"></i>&nbsp;
                 Buy me a beer
@@ -103,7 +103,7 @@
                                         to {{invoice.endDate
                                         |date:'dd/MM/yyyy'}}</p>
                                     <div class="text-muted font-size-sm font-italic">{{invoice.createDate
-                                        | humaniseTime}}</div>
+                                        | amTimeAgo}}</div>
                                 </div>
                             </a>
                         </li>

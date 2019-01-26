@@ -6,5 +6,6 @@ export class Payment {
     startDate: Date;
     endDate: Date;
     type: string;
+    amount: number;
     receiptURL: string;
 }

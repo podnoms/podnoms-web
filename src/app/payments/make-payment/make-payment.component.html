@@ -1,10 +1,9 @@
-<div class="block block-rounded block-bordered pb-30"
-     *ngIf="type !== 'donate_torevisit'">
+<div class="block block-rounded block-bordered pb-30">
     <div class="block-header block-header-default">
         <h3 class="block-title">{{headerText}}</h3>
     </div>
     <div class="block-content"
-         *ngIf="!loadingText">
+         *ngIf="!loadingText && !errorText">
         <p>We use <a href="https://stripe.com/">Stripe</a>
             for payment processing</p>
         <p>At no point do we have
@@ -13,15 +12,16 @@
             stored in our system.</p>
         <button class="btn btn-secondary"
                 (click)="handlePayment()"
-                *ngIf="type !== 'donation'">
+                *ngIf="tier.type !== 'Free'">
             <i class="fa fa-th-large text-primary mr-5 "></i>
             1 month
-            subscription @ {{this.amount/100 | currency}}
+            subscription @ {{tier.costPerMonth/100 | currency: 'EUR': true}}
         </button>
         <div class="col-md-3">
             <div class="input-group"
-                 *ngIf="type === 'donation'">
+                 *ngIf="tier.type === 'Free'">
                 <input type="number"
+                       min="1"
                        #amount
                        value="10.00"
                        class="form-control"
@@ -40,14 +40,10 @@
          *ngIf="loadingText">
         <app-loader [loadingText]="loadingText"></app-loader>
     </div>
-</div>
-<div class="block block-rounded block-bordered pb-30"
-     *ngIf="type === 'donate_torevisit'">
-    <div class="block-header">
-        <h3 class="block-title">Buy me a coffee, or a beer, or
-            an Aston Martin</h3>
-    </div>
-    <div class="block-content">
-        <app-donation></app-donation>
+    <div class="block-content"
+         *ngIf="errorText">
+        <div class="alert alert-danger"
+             role="alert"
+             [innerHTML]="errorText"></div>
     </div>
 </div>

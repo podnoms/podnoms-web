@@ -13,6 +13,12 @@ export class PaymentsService {
     getPayments(): Observable<Payment[]> {
         return this.http.get<Payment[]>(environment.apiHost + '/payments');
     }
+    getPricingTiers(): Observable<any> {
+        return this.http.get<any>(environment.apiHost + '/payments/pricingtiers');
+    }
+    getPricingTier(type: string): Observable<any> {
+        return this.http.get<any>(`${environment.apiHost}/payments/pricingtier/${type}`);
+    }
     processPayment(token: any, amount: number, type: string): Observable<Boolean> {
         console.log('payments.service', 'processPayment', token, amount);
         const data = JSON.stringify({ token: token, amount: amount, type: type });

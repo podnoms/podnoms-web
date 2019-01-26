@@ -26,7 +26,6 @@ import { registerLocaleData } from '@angular/common';
 import localeIE from '@angular/common/locales/en-IE';
 
 registerLocaleData(localeIE, 'ie');
-
 @NgModule({
     imports: [
         BrowserModule,
