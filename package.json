@@ -52,7 +52,7 @@
         "datatables.net-dt": "^1.10.19",
         "dropzone": "5.5.1",
         "easy-pie-chart": "^2.1.7",
-        "feather-icons": "^4.10.0",
+        "feather-icons": "^4.12.1",
         "firebase": "^5.8.0",
         "howler": "^2.1.1",
         "install": "^0.12.2",
