@@ -21,7 +21,9 @@ export class UpdateService {
 
     private promptUser(): void {
         console.log('update.service', 'Updating to latest version');
-        const toast = this.alertService.success('A new version of PodNoms is available!', 'Click here to reload...');
+        const toast = this.alertService.success('A new version of PodNoms is available!', 'Click here to reload...',
+            '', { autoClose: false }
+        );
         toast.click.subscribe(e => {
             this.updates.activateUpdate().then(() => document.location.reload());
         });
