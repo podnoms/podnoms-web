@@ -73,7 +73,6 @@ export class UploadUrlComponent implements AfterViewInit {
 
         if (this.isValidURL(url)) {
             this.isPosting = true;
-
             this.utilityService.checkAudioUrl(url).subscribe(
                 r => {
                     if (r.type === 'native') {

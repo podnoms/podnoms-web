@@ -11,6 +11,7 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
     @Output()
     pageEntryChosen: EventEmitter<string> = new EventEmitter();
     selectedAudioUrl = 0;
+    errorText = '';
 
     constructor() {}
 
@@ -21,7 +22,14 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
         }
     }
     createEntry(url: string) {
-        this.pageEntryChosen.emit(url);
+        if (url) {
+            this.pageEntryChosen.emit(url);
+        } else {
+            this.errorText = 'Please select an item';
+        }
+    }
+    cancelCreate() {
+        this.pageEntryChosen.emit('');
     }
     _paintAudio() {
         for (const name in this.remoteAudioList) {

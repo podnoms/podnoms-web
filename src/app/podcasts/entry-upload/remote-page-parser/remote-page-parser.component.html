@@ -10,9 +10,9 @@
         <div class="form-group row">
             <label class="col-12"></label>
             <div class="col-12"
-                 id="radioGrou[p">
+                 id="radioGroup">
                 <div class="col-md-4"
-                     *ngFor="let row of remoteAudioList | keyvalue; let i = index">
+                     *ngFor="let row of remoteAudioList; let i = index">
                     <div class="custom-control custom-radio mb-5">
                         <input class="custom-control-input"
                                [(ngModel)]="selectedAudioUrl"
@@ -27,9 +27,14 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-success"
-                (click)="createEntry(selectedAudioUrl)">Create</button>
-        <button class="btn btn-danget"
-                (click)="createEntry('')">Cancel</button>
+        <div class="row m-20 m-20">
+            <button class="btn btn-success"
+                    (click)="createEntry(selectedAudioUrl)">Create</button>
+            <button class="btn btn-danget"
+                    (click)="cancelCreate()">Cancel</button>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorText">
+            {{errorText}}
+        </div>
     </div>
 </div>
