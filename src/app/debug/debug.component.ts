@@ -4,6 +4,7 @@ import { DebugService } from './debug.service';
 import { SwPush } from '@angular/service-worker';
 import { environment } from '../../environments/environment.prod';
 import { AlertService } from '../core/alert.service';
+import { UtilityService } from '../shared/services/utility.service';
 
 @Component({
     selector: 'app-debug',
@@ -11,14 +12,20 @@ import { AlertService } from '../core/alert.service';
     styleUrls: ['./debug.component.scss']
 })
 export class DebugComponent implements OnInit {
+    fileSize: number = -1;
     constructor(
         private swPush: SwPush,
         private debugService: DebugService,
+        private utilityService: UtilityService,
         private jobService: JobService,
         private alertService: AlertService
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.utilityService
+            .getRemoteFileSize('https://traffic.megaphone.fm/GLT8967905844.mp3')
+            .subscribe(r => (this.fileSize = r));
+    }
     sendPush() {
         this.debugService
             .sendPushPessage('Hello Sailor')

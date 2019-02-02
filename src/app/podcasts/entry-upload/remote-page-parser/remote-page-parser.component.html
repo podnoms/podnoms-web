@@ -1,38 +1,55 @@
-<div *ngIf="remoteAudioList block">
-    <div class="block-header block-header-default">
-        <h3 class="block-title">
+<div *ngIf="remoteAudioList"
+     class="block block-themed col-md-6">
+    <div class="block-content block-content-full block-content-sm bg-primary">
+        <span class="font-w600 text-white">
             Multiple
             audio sources
             found,
-            please choose one</h3>
+            please choose one</span>
     </div>
     <div class="block-content">
-        <div class="form-group row">
-            <label class="col-12"></label>
-            <div class="col-12"
-                 id="radioGroup">
-                <div class="col-md-4"
-                     *ngFor="let row of remoteAudioList; let i = index">
-                <div class="custom-control custom-radio mb-5">
-                    <input class="custom-control-input"
-                               [(ngModel)]="selectedAudioUrl"
-                        type="radio" name="selected-audio"
-                                     id="selected-audio-{{i}}" value="{{row.value}}"
-
-                        checked="">
-                    <label class="custom-control-label" for="selected-audio-{{i}}">{{row.key}} - {{row.value}}</label>
-                </div>
-                </div>
-            </div>
-        </div>
-        <div class="row m-20 m-20">
-            <button class="btn btn-success"
-                    (click)="createEntry(selectedAudioUrl)">Create</button>
-            <button class="btn btn-danget"
-                    (click)="cancelCreate()">Cancel</button>
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="errorText">
+        <table class="table table-sm table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th class="d-none d-sm-table-cell">File
+                        name</th>
+                    <th class="text-center">File size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of remoteAudioList; let i = index">
+                    <td scope="row">
+                        <div class="form-check">
+                            <input type="radio"
+                                   [(ngModel)]="selectedAudioUrl"
+                                   class="form-check-input"
+                                   name="selected-audio"
+                                   id="selected-audio-{{i}}"
+                                   value="{{row.value}}">
+                        </div>
+                    </td>
+                    <td>
+                        {{row.key}}
+                    </td>
+                    <td>{{row.value}}</td>
+                    <td class="text-right">
+                        <app-file-size [remoteUrl]="row.value"></app-file-size>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-danger"
+             role="alert"
+             *ngIf="errorText">
             {{errorText}}
+        </div>
+        <div class="row mt-5 mb-20">
+            <button class="btn btn-success mr-5 m5-5"
+                    (click)="createEntry(selectedAudioUrl)">Create</button>
+            <button class="btn btn-danger  mr-5 m5-5"
+                    (click)="cancelCreate()">Cancel</button>
         </div>
     </div>
 </div>
