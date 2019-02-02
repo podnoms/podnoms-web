@@ -22,6 +22,7 @@ import { AudioDownloadService } from './services/audio-download.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToastItemComponent } from './components/toast/toast-item.component';
+import { FileSizeComponent } from './components/file-size/file-size.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule, NgSelectModule],
@@ -36,6 +37,7 @@ import { ToastItemComponent } from './components/toast/toast-item.component';
         ImageUploadComponent,
         LoaderComponent,
         ToastComponent,
+        FileSizeComponent,
         CategorySelectorComponent
     ],
     declarations: [
@@ -51,7 +53,8 @@ import { ToastItemComponent } from './components/toast/toast-item.component';
         CamelCaseToSentencePipe,
         ErrorComponent,
         LoaderComponent,
-        ToastItemComponent
+        ToastItemComponent,
+        FileSizeComponent
     ],
     providers: [
         UtilityService,
