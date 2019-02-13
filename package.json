@@ -31,7 +31,7 @@
     "@aspnet/signalr": "^3.0.0-preview3-19112-04",
     "@auth0/angular-jwt": "^2.1.0",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
-    "@ng-bootstrap/ng-bootstrap": "^4.0.2",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.3",
     "@ng-select/ng-select": "^2.15.3",
     "@ngrx/effects": "^7.2.0",
     "@ngrx/entity": "^7.2.0",
