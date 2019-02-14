@@ -44,7 +44,7 @@
     "angularx-social-login": "^1.2.6",
     "applicationinsights-js": "^1.0.20",
     "body-parser": "^1.18.3",
-    "bootstrap": "4.3.0",
+    "bootstrap": "4.3.1",
     "chart.js": "^2.7.3",
     "core-js": "^2.6.4",
     "datatables.net": "^1.10.19",
