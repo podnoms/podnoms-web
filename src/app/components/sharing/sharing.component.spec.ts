@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EntrySharingComponent } from './entry-sharing.component';
+import { SharingComponent } from './sharing.component';
 
 describe('EntrySharingComponent', () => {
-  let component: EntrySharingComponent;
-  let fixture: ComponentFixture<EntrySharingComponent>;
+  let component: SharingComponent;
+  let fixture: ComponentFixture<SharingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EntrySharingComponent ]
+      declarations: [ SharingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EntrySharingComponent);
+    fixture = TestBed.createComponent(SharingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { JobService } from '../shared/services/job.service';
-import { DebugService } from './debug.service';
-import { SwPush } from '@angular/service-worker';
-import { environment } from '../../environments/environment.prod';
-import { AlertService } from '../core/alert.service';
-import { UtilityService } from '../shared/services/utility.service';
+import { PodcastDataService } from '../podcasts/podcast-data.service';
+import { Podcast, PodcastEntry } from '../core';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-debug',
@@ -12,54 +9,17 @@ import { UtilityService } from '../shared/services/utility.service';
     styleUrls: ['./debug.component.scss']
 })
 export class DebugComponent implements OnInit {
+    entry$: Observable<Podcast>;
+    entry: PodcastEntry;
     fileSize: number = -1;
-    constructor(
-        private swPush: SwPush,
-        private debugService: DebugService,
-        private utilityService: UtilityService,
-        private jobService: JobService,
-        private alertService: AlertService
-    ) {}
+    constructor(private podcastDataService: PodcastDataService) {
+        this.entry$ = podcastDataService.getById('10298d03-c08e-4904-4012-08d678528682');
+    }
 
     ngOnInit() {
-        this.utilityService
-            .getRemoteFileSize('https://traffic.megaphone.fm/GLT8967905844.mp3')
-            .subscribe(r => (this.fileSize = r));
-    }
-    sendPush() {
-        this.debugService
-            .sendPushPessage('Hello Sailor')
-            .subscribe((r: any) => console.log('debug.component.ts', 'sendPushPessage', r));
-    }
-    toastMe(type: string) {
-        if (type === 'error') {
-            this.alertService.error('Argle', 'Bargle');
-        } else {
-            const toast = this.alertService.info(
-                'Argle',
-                'Bargle',
-                'https://podnomscdn.blob.core.windows.net/debugimages/entry/cached/75884b3b-911b-4227-eb81-08d67bf147a2-32x32.png',
-                {
-                    autoClose: true,
-                    timeOut: 5000
-                }
-            );
-            toast.click.subscribe(() => alert('Toasty!'));
-        }
-    }
-    deleteOrphans() {
-        this.jobService.deleteOrphans().subscribe(r => {
-            this.alertService.info('Success', 'Job successfully queued');
-        });
-    }
-    processMissing() {
-        this.jobService.processMissing().subscribe(r => {
-            this.alertService.info('Success', 'Job successfully queued');
-        });
-    }
-    updateImages() {
-        this.jobService.updateImages().subscribe(r => {
-            this.alertService.info('Success', 'Job successfully queued');
+        this.podcastDataService.getById('10298d03-c08e-4904-4012-08d678528682').subscribe(p => {
+            console.log('debug.component', 'ngOnInit', p);
+            this.entry = p.podcastEntries[0];
         });
     }
 }
