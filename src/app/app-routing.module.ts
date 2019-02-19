@@ -8,6 +8,8 @@ const routes: Routes = [
     { path: 'error', pathMatch: 'full', component: ErrorComponent },
     { path: 'home', loadChildren: 'app/auth/auth.module#AuthModule' },
     { path: 'auth', loadChildren: 'app/auth/auth.module#AuthModule' },
+    { path: 'public', loadChildren: 'app/public/public.module#PublicModule' },
+    { path: 'sharing', loadChildren: 'app/public/public.module#PublicModule' },
     { path: 'debug', loadChildren: 'app/debug/debug.module#DebugModule' },
     {
         path: 'profile',

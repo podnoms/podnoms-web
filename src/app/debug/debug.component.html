@@ -1,42 +1,10 @@
 <div class="container">
-    <div class="row">
-        {{fileSize | bytesToHuman}}
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <button class="btn"
-                    (click)="sendPush()">
-                <i class="fa fa-envelope"></i>&nbsp;Send Push</button>
-            <button class="btn"
-                    (click)="toastMe('info')">
-                <i class="fa fa-envelope"></i>&nbsp;Toast me</button>
-            <button class="btn"
-                    (click)="toastMe('error')">
-                <i class="fa fa-envelope"></i>&nbsp;Error me</button>
-        </div>
-        <div class="col-md-6">
-            <div class="block">
-                <div class="block-header">
-                    <h5>Jobs</h5>
-                </div>
-                <div class="block-content">
-                    <button type="button"
-                            class="btn btn-danger mr-5 mb-5"
-                            (click)="deleteOrphans()">
-                        <i class="fa fa-times-circle mr-5"></i>
-                        Delete Orphans</button>
-                    <button type="button"
-                            class="btn btn-success mr-5 mb-5"
-                            (click)="processMissing()">
-                        <i class="fa fa-question-circle mr-5"></i>
-                        Process Missing</button>
-                    <button type="button"
-                            class="btn btn-success mr-5 mb-5"
-                            (click)="updateImages()">
-                        <i class="fa fa-question-circle mr-5"></i>
-                        Update Images</button>
-                </div>
-            </div>
+    <div class="row"
+         style="border: red; border-width: 3px;"
+         *ngIf="entry">
+        <div class="col-md-5">
+            <app-sharing [entry]="entry">
+            </app-sharing>
         </div>
     </div>
 </div>
