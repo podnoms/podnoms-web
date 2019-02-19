@@ -1,4 +1,4 @@
-import { Shareable } from '.';
+import { Shareable } from './shareable';
 
 export class PodcastEntry extends Shareable {
     uid?: string;

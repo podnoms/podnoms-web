@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { SharingService } from '../../services/sharing.service';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alert.service';
+import { SharingService } from '../../shared/services/sharing.service';
 
 @Component({
     selector: 'app-sharing',
