@@ -1,0 +1,46 @@
+<div id="page-container"
+     *ngIf="sharedItem$ | async as item; else loading"
+     class="main-content-boxed side-trans-enabled">
+    <main id="main-container"
+          style="min-height: 523px;">
+        <div class="bg-image">
+            <div class="hero bg-black-op">
+                <div class="hero-inner">
+                    <div class="content content-full">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 py-30 text-center">
+                                <h1 class="display-4 font-w700 text-white mb-10">
+                                    <span class="text-primary-dark">pod</span>
+                                    <span class="ftext-white-op">:</span>
+                                    <span class="text-primary-dark">:</span>
+                                    <span class="ftext-white-op">noms</span>
+                                </h1>
+                                <h2 class="h4 font-w400 text-white-op pb-30 mb-20 border-white-op-b">We’re
+                                    {{item.title}}</h2>
+                                <div class="mb-20">
+                                    <audio #audioElement
+                                           class="wp-audio-shortcode"
+                                           preload="none"
+                                           controls="controls"
+                                           controlsList="nodownload">
+                                        <source [src]="item.audioUrl"
+                                                type="audio/mpeg" />
+                                    </audio>
+                                </div>
+                                <button class="btn btn-hero btn-noborder btn-rounded btn-outline-warning"
+                                        (click)="downloadShareLink(item.audioUrl)">
+                                    <i class="fa fa-cloud-download-alt mr-10"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<ng-template #loading>
+    <div id="page-loader"
+         class="bg-image show"></div>
+</ng-template>

@@ -1,8 +1,7 @@
 import { Category, PodcastEntry, Notification } from '.';
+import { Shareable } from './shareable';
 
-export class Podcast {
-    id?: string;
-    title: string;
+export class Podcast extends Shareable {
     description?: string;
     slug?: string;
     imageUrl?: string;

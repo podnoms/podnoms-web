@@ -1,8 +1,8 @@
-export class PodcastEntry {
-    id?: string;
+import { Shareable } from './shareable';
+
+export class PodcastEntry extends Shareable {
     uid?: string;
     author?: string;
-    title?: string;
     description?: string;
     sourceUrl: string;
     audioUrl?: string;
@@ -16,6 +16,7 @@ export class PodcastEntry {
     podcastTitle?: string;
     podcastId?: string;
     constructor(podcastId?: string, sourceUrl?: string) {
+        super();
         this.podcastId = podcastId;
         this.sourceUrl = sourceUrl;
         this.processed = false;

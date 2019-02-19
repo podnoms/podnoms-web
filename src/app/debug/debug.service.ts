@@ -10,7 +10,7 @@ export class DebugService {
     constructor(private http: HttpClient) {}
 
     getDebugInfo(): Observable<string> {
-        return this.http.get<string>(environment.apiHost + '/debug');
+        return this.http.get<string>(`${environment.apiHost}/debug`);
     }
     ping(): Observable<string> {
         return this.http.get<string>(`${environment.apiHost}/ping`);

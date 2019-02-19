@@ -45,7 +45,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         NgbModalModule,
         DropzoneModule,
         NgSelectModule,
-        ModalModule.forRoot(),
+        ModalModule.forRoot()
     ],
     exports: [PodcastComponent],
     declarations: [
