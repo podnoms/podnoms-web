@@ -15,6 +15,9 @@ export const environment = {
         storageBucket: 'podnoms-api.appspot.com',
         messagingSenderId: '357461672895'
     },
-    stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7'
+    stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
+
+    // tslint:disable-next-line:max-line-length
+    emailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 };
 import 'zone.js/dist/zone-error'; // Included with Angular CLI.

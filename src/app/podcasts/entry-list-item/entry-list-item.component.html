@@ -77,14 +77,11 @@
             </button>
             <button type="button"
                     class="btn btn-secondary"
-                    data-toggle="dropdown"
-                    title="Share episode">
+                    data-toggle="tooltip"
+                    title="Share episode"
+                    (click)="shareEpisode(entry)">
                 <i class="fa fa-share-alt"></i>
             </button>
-            <div class="dropdown-menu dropdown-menu-center min-width-300">
-                <!-- <app-sharing [entry]="entry">
-                </app-sharing> -->
-            </div>
             <button type="button"
                     class="btn btn-secondary"
                     (click)="downloadAudio(entry)"
@@ -180,3 +177,8 @@
             </div>
         </div>
     </div>
+</div>
+<ng-template #shareDialog>
+    <app-sharing [entry]="entry" (shareComplete)="shareComplete(result)">
+    </app-sharing>
+</ng-template>

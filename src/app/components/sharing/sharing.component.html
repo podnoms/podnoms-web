@@ -20,6 +20,7 @@
                         <div class="col-12">
                             <div class="form-material floating">
                                 <textarea class="form-control"
+                                          [(ngModel)]="message"
                                           id="message"
                                           name="message"
                                           rows="8"></textarea>
@@ -52,7 +53,8 @@
                 <div class="col-12"
                      *ngIf="email">
                     <button type="submit"
-                            class="btn btn-alt-primary float-right">Share</button>
+                            class="btn btn-alt-primary float-right"
+                            (click)="shareToEmail()">Share</button>
                 </div>
             </div>
         </form>
