@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-sharing',
@@ -11,7 +12,9 @@ import { SharingService } from '../../shared/services/sharing.service';
 export class SharingComponent implements OnInit {
     @ViewChild('emailAddress') emailControl;
     @Input() entry: Shareable;
+    @Output() shareComplete: EventEmitter<string> = new EventEmitter<string>();
 
+    error: string = '';
     email: string = '';
     message: string = '';
     linkUrl: string = '';
@@ -22,6 +25,15 @@ export class SharingComponent implements OnInit {
     }
     getSharingLink() {
         this.sharingService.getSharingLink(this.entry.id).subscribe(l => (this.linkUrl = l));
+    }
+    shareToEmail() {
+        if (!environment.emailRegex.test(this.email)) {
+            this.error = 'This does not look like an email address?';
+        } else {
+            this.sharingService
+                .shareToEmail(this.entry.id, this.email, this.message)
+                .subscribe(r => this.shareComplete.emit(r));
+        }
     }
     copyUrl(url: string) {
         const el = document.createElement('textarea');

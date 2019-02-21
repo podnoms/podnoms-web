@@ -32,6 +32,7 @@ import { UploadGdriveComponent } from './entry-upload/upload-gdrive/upload-gdriv
 import { BaseJsUploadComponent } from './base-js-upload.component';
 import { RemotePageParserComponent } from './entry-upload/remote-page-parser/remote-page-parser.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         NgbModalModule,
         DropzoneModule,
         NgSelectModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        ComponentsModule
     ],
     exports: [PodcastComponent],
     declarations: [
