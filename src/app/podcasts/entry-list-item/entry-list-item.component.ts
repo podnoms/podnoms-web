@@ -6,7 +6,9 @@ import {
     Output,
     SimpleChanges,
     OnChanges,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    ElementRef,
+    ViewChild
 } from '@angular/core';
 import { PodcastEntry } from '../../core';
 import { AudioService } from '../../core/audio.service';
@@ -18,6 +20,8 @@ import { Router } from '@angular/router';
 import { EntryDataService } from '../entry-data.service';
 import { AudioDownloadService } from '../../shared/services/audio-download.service';
 import { AlertService } from '../../core/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService } from '../../shared/components/toast/toast.service';
 declare var $: any;
 @Component({
     selector: '[app-entry-list-item]',
@@ -31,13 +35,16 @@ export class EntryListItemComponent implements OnInit {
     @Output()
     entryRemoved = new EventEmitter<PodcastEntry>();
 
+    @ViewChild('shareDialog')
+    shareDialog: ElementRef;
+
     preparingDownload: boolean = false;
     percentageProcessed = 0;
     currentSpeed: string = '';
     playing: boolean = false;
 
     constructor(
-        private router: Router,
+        private modalService: NgbModal,
         private signalr: SignalRService,
         public audioService: AudioService,
         private entriesStore: EntriesStoreService,
@@ -110,5 +117,19 @@ export class EntryListItemComponent implements OnInit {
                 r => (this.preparingDownload = false),
                 err => this.alertService.error('Error', 'Unable to download this episode')
             );
+    }
+    shareEpisode(entry: PodcastEntry) {
+        this.modalService
+            .open(this.shareDialog, { size: 'lg' })
+            .result.then(
+                result => console.log('entry-list-item.component', 'shareEpisode-result', result),
+                reason => console.log('entry-list-item.component', 'shareEpisode-reason', reason)
+            );
+    }
+    shareComplete(result) {
+        this.modalService.dismissAll();
+        if (result) {
+            this.alertService.success('Success', 'Entry shared successfully');
+        }
     }
 }

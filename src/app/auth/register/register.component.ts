@@ -4,6 +4,7 @@ import { FormGroup, FormsModule, FormControl, FormBuilder, Validators } from '@a
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-register',
@@ -34,8 +35,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                 [
                     Validators.required,
                     Validators.pattern(
-                        // tslint:disable-next-line:max-line-length
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                        environment.emailRegex
                     )
                 ]
             ],
