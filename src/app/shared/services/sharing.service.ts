@@ -16,7 +16,7 @@ export class SharingService {
             .map(r => r.url);
     }
     getSharingItem(sharingLink: string): Observable<any> {
-        return this.http.get<any>(`${environment.apiHost}/pub/sharing/${sharingLink}`);
+        return this.http.get<any>(`${environment.apiHost}/pub/sharing/details/${sharingLink}`);
     }
     shareToEmail(id: string, email: string, message: string): any {
         return this.http.post<any>(`${environment.apiHost}/sharing/`, {
