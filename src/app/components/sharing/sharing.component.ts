@@ -30,9 +30,10 @@ export class SharingComponent implements OnInit {
         if (!environment.emailRegex.test(this.email)) {
             this.error = 'This does not look like an email address?';
         } else {
-            this.sharingService
-                .shareToEmail(this.entry.id, this.email, this.message)
-                .subscribe(r => this.shareComplete.emit(r));
+            this.sharingService.shareToEmail(this.entry.id, this.email, this.message).subscribe(r => {
+                this.alertService.success('Link shared successfully', `${this.email}'s got mail!!!`);
+                this.shareComplete.emit(r);
+            });
         }
     }
     copyUrl(url: string) {
@@ -43,5 +44,18 @@ export class SharingComponent implements OnInit {
         document.execCommand('copy');
         document.body.removeChild(el);
         this.alertService.success('Success', 'URL Copied to clipboard');
+    }
+    share(service: string) {
+        switch (service) {
+            case 'facebook':
+                this.sharingService.shareToFacebook(this.entry.id).subscribe(r => this.shareComplete.emit());
+                break;
+            case 'twitter':
+                this.sharingService.shareToTwitter(this.entry.id).subscribe(r => this.shareComplete.emit());
+                break;
+        }
+    }
+    closeModal() {
+        this.shareComplete.emit();
     }
 }

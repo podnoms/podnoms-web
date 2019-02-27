@@ -15,6 +15,10 @@ export const environment = {
         storageBucket: 'podnoms-api.appspot.com',
         messagingSenderId: '357461672895'
     },
+    facebook: {
+        appId: '1887182031397435',
+        version: 'v3.2'
+    },
     stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
 
     // tslint:disable-next-line:max-line-length

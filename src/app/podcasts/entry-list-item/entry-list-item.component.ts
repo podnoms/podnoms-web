@@ -120,7 +120,7 @@ export class EntryListItemComponent implements OnInit {
     }
     shareEpisode(entry: PodcastEntry) {
         this.modalService
-            .open(this.shareDialog, { size: 'lg' })
+            .open(this.shareDialog)
             .result.then(
                 result => console.log('entry-list-item.component', 'shareEpisode-result', result),
                 reason => console.log('entry-list-item.component', 'shareEpisode-reason', reason)

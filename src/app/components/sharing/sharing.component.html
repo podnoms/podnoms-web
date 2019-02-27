@@ -1,7 +1,30 @@
-<div class="block">
-    <div class="block-header block-header-default">
-        <h5 class="h6 text-center py-10 mb-0 text-uppercase">Sharing
-            Options</h5>
+<div class="block block-themed block-transparent mb-0">
+    <div class="block-header bg-corporate-darker">
+        <h3 class="block-title">Sharing
+            Options</h3>
+        <div class="block-options">
+            <button type="button"
+                    class="btn-block-option"
+                    data-toggle="tooltip"
+                    title="Share to facebook"
+                    (click)="share('facebook')">
+                <i class="fab fa-facebook"></i>
+            </button>
+            <button type="button"
+                    class="btn-block-option"
+                    data-toggle="tooltip"
+                    title="Share to twitter"
+                    (click)="share('twitter')">
+                <i class="fab fa-twitter"></i>
+            </button>
+            <button type="button"
+                    class="btn-block-option"
+                    data-toggle="tooltip"
+                    title="Close"
+                    (click)="closeModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
     </div>
     <div class="block-content">
         <form action="">
