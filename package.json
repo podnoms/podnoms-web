@@ -45,7 +45,7 @@
     "applicationinsights-js": "^1.0.20",
     "body-parser": "^1.18.3",
     "bootstrap": "4.3.1",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
     "datatables.net": "^1.10.19",
     "datatables.net-bs4": "^1.10.19",
