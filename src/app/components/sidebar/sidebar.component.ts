@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ComponentsService } from '../components.service';
 import { PodcastStoreService } from '../../podcasts/podcast-store.service';
 import { Router } from '@angular/router';
+import { EntryDataService } from '../../podcasts/entry-data.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -16,7 +17,8 @@ export class SidebarComponent implements OnInit {
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
 
-    constructor(private router: Router, private podcastStore: PodcastStoreService) {
+    constructor(private router: Router, private podcastStore: PodcastStoreService,
+        entryDataService: EntryDataService) {
         this.podcasts$ = podcastStore.entities$;
         this.loading$ = podcastStore.loading$;
     }

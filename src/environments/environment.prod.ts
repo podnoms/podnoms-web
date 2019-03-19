@@ -1,3 +1,7 @@
+// tslint:disable-next-line:max-line-length
+const before = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const after = { re: '\\+', flags: 'gi' };
+
 export const environment = {
     production: true,
     apiHost: 'https://api.podnoms.com',
@@ -20,6 +24,5 @@ export const environment = {
         version: 'v3.2'
     },
     stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
-    // tslint:disable-next-line:max-line-length
-    emailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    emailRegex: new RegExp(after.re, after.flags)
 };

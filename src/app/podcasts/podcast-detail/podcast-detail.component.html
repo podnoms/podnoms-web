@@ -3,6 +3,8 @@
     <table class="table table-striped table-vcenter">
         <tbody>
             <tr *ngFor="let entry of entries$ | async"
+                draggable="true"
+                (dragstart)="dragStart($event, entry)"
                 [@fade]="''"
                 app-entry-list-item
                 (entryRemoved)='deleteEntry(entry)'

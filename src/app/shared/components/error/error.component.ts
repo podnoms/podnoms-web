@@ -8,20 +8,14 @@ import { timer, Observable } from 'rxjs';
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.scss']
 })
-export class ErrorComponent implements OnInit, OnDestroy {
+export class ErrorComponent implements OnInit {
     errorText: string;
-    private retrySubscription;
 
     constructor(private utilityService: UtilityService, private router: Router) {}
 
     ngOnInit() {
-        this._createRetryTimer();
     }
-    ngOnDestroy() {
-        if (this.retrySubscription) {
-            this.retrySubscription.unsubscribe();
-        }
-    }
+
     tryForReload() {
         this.utilityService.checkForApiServer().subscribe(
             r => {
@@ -31,12 +25,5 @@ export class ErrorComponent implements OnInit, OnDestroy {
                 this.errorText = 'Still down, sorry..';
             }
         );
-    }
-    _createRetryTimer() {
-        if (!this.retrySubscription) {
-            this.retrySubscription = timer(0, 1000).subscribe(r => {
-                this.tryForReload();
-            });
-        }
     }
 }

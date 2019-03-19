@@ -1,7 +1,14 @@
+const emailRegex = {
+    re:
+        // tslint:disable-next-line:max-line-length
+        '/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/',
+    flags: 'gi'
+};
+
 export const environment = {
     production: false,
-    signalRHost: 'http://localhost:5000',
-    apiHost: 'http://localhost:5000',
+    signalRHost: 'https://localhost:5001',
+    apiHost: 'https://localhost:5001',
     vapidPublicKey: 'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
     helpUrl: 'https://talk.podnoms.com/',
     version: `${require('../../package.json').version}-debug`,
@@ -20,8 +27,6 @@ export const environment = {
         version: 'v3.2'
     },
     stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
-
-    // tslint:disable-next-line:max-line-length
-    emailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    emailRegex: new RegExp(emailRegex.re, emailRegex.flags)
 };
-import 'zone.js/dist/zone-error'; // Included with Angular CLI.
+import 'zone.js/dist/zone-error';

@@ -9,6 +9,7 @@ import { EntriesStoreService } from '../entries-store.service';
 import { debug } from 'util';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alert.service';
+import { DragDropService } from '../../shared/services/drag-drop.service';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -30,6 +31,7 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
         private podcastStore: PodcastStoreService,
         private podcastEntryDataService: EntryDataService,
         private entriesStore: EntriesStoreService,
+        private dragDropService: DragDropService,
         private alertService: AlertService
     ) {}
 
@@ -49,5 +51,9 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
             },
             () => this.alertService.error('Error deleting entry', 'Please refresh page and try again')
         );
+    }
+    dragStart($event: DragEvent, entry: PodcastEntry) {
+        $event.dataTransfer.setData('text/plain', JSON.stringify(entry));
+        this.dragDropService.dragEvents.emit('argle');
     }
 }
