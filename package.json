@@ -36,7 +36,7 @@
     "@ngrx/effects": "^7.2.0",
     "@ngrx/entity": "^7.2.0",
     "@ngrx/store": "^7.2.0",
-    "@ngrx/store-devtools": "^7.2.0",
+    "@ngrx/store-devtools": "^7.3.0",
     "@qontu/ngx-inline-editor": "^0.2.0-alpha.12",
     "angular-datatables": "^7.0.0",
     "angular-in-memory-web-api": "^0.8.0",
