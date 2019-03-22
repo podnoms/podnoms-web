@@ -46,7 +46,7 @@
     "body-parser": "^1.18.3",
     "bootstrap": "4.3.1",
     "chart.js": "^2.7.3",
-    "core-js": "^2.6.5",
+    "core-js": "^3.0.0",
     "datatables.net": "^1.10.19",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
