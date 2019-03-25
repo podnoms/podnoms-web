@@ -1,11 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MasterDetailCommands, Podcast, PodcastEntry } from '../../../core';
-import { LocalStorage } from 'ngx-store';
-import { PodcastLocalStateService } from '../../../shared/services/podcast-local-state.service';
+import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../../podcasts/entry-data.service';
 import { PodcastStoreService } from '../../../podcasts/podcast-store.service';
-import { DragDropService } from '../../../shared/services/drag-drop.service';
-import { EntriesStoreService } from '../../../podcasts/entries-store.service';
+import { AlertService } from '../../../core/alert.service';
 
 @Component({
     selector: 'app-sidebar-podcast-item',
@@ -18,7 +15,7 @@ export class SidebarPodcastItemComponent implements OnInit {
 
     newEpisodes: boolean = false;
     constructor(
-        private dragDropService: DragDropService,
+        private alertService: AlertService,
         private entryDataService: EntryDataService,
         private podcastStoreService: PodcastStoreService
     ) {}
@@ -36,6 +33,10 @@ export class SidebarPodcastItemComponent implements OnInit {
             this.podcast.podcastEntries.push(entry);
             this.podcastStoreService.updateOneInCache(p);
             this.podcastStoreService.updateOneInCache(this.podcast);
+            entry.podcastId = this.podcast.id;
+            this.entryDataService.updateEntry(entry).subscribe(() => {
+                this.alertService.success('Success', 'Entry moved');
+            });
         });
     }
 }

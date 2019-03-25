@@ -11,8 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "pretty-quick": "pretty-quick",
-    "precommit": "pretty-quick --staged",
-    "prepare": "patch-package"
+    "precommit": "pretty-quick --staged"
   },
   "private": true,
   "dependencies": {
@@ -91,7 +90,6 @@
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "~11.11.6",
     "codelyzer": "~5.0.0-beta.1",
-    "patch-package": "^6.0.5",
     "prettier": "~1.16.4",
     "pretty-quick": "^1.10.0",
     "ts-node": "~8.0.3",
