@@ -33,7 +33,7 @@
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@ng-bootstrap/ng-bootstrap": "^4.1.0",
     "@ng-select/ng-select": "^2.16.2",
-    "@ngrx/effects": "^7.2.0",
+    "@ngrx/effects": "^7.3.0",
     "@ngrx/entity": "^7.3.0",
     "@ngrx/store": "^7.3.0",
     "@ngrx/store-devtools": "^7.3.0",
