@@ -23,6 +23,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToastItemComponent } from './components/toast/toast-item.component';
 import { FileSizeComponent } from './components/file-size/file-size.component';
+import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule, NgSelectModule],
@@ -36,6 +37,7 @@ import { FileSizeComponent } from './components/file-size/file-size.component';
         BasePageComponent,
         ImageUploadComponent,
         LoaderComponent,
+        SpinnerButtonComponent,
         ToastComponent,
         FileSizeComponent,
         CategorySelectorComponent
@@ -52,7 +54,7 @@ import { FileSizeComponent } from './components/file-size/file-size.component';
         CategorySelectorComponent,
         CamelCaseToSentencePipe,
         ErrorComponent,
-        LoaderComponent,
+        SpinnerButtonComponent,
         ToastItemComponent,
         FileSizeComponent
     ],

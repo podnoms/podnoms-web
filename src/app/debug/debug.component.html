@@ -1,8 +1,11 @@
 <div class="container">
-    <div class="row"
-         style="border: red; border-width: 3px;"
-         *ngIf="entry">
+    <div class="row">
         <div class="col-md-5">
+            <app-spinner-button
+                [iconClass]="'fas fa-rocket'"
+                (clicked)="clickProcess($event)">
+                    Hello Sailor
+            </app-spinner-button>
         </div>
     </div>
 </div>
