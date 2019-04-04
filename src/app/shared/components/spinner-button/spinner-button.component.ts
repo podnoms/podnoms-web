@@ -6,6 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     styleUrls: ['./spinner-button.component.scss']
 })
 export class SpinnerButtonComponent implements OnInit {
+    @Input() buttonClass: string = '';
     @Input() iconClass: string = '';
     @Output() clicked: EventEmitter<any> = new EventEmitter();
     processing: boolean = false;

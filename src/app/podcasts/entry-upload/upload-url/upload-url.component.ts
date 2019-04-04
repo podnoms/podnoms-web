@@ -95,16 +95,17 @@ export class UploadUrlComponent implements AfterViewInit {
     }
     onPageEntryChosen($event) {
         if ($event) {
-            this.createEntry($event);
+            this.createEntry($event.url, $event.callback);
         } else {
             this.resetUrl();
         }
     }
-    private createEntry(url: string) {
+    private createEntry(url: string, callback: any) {
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
+                callback();
                 if (e) {
                     if (e.processingStatus === 'Deferred') {
                         this.playlistProxy = e;

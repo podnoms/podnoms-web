@@ -9,7 +9,7 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
     @Input()
     remoteAudioList: any;
     @Output()
-    pageEntryChosen: EventEmitter<string> = new EventEmitter();
+    pageEntryChosen: EventEmitter<any> = new EventEmitter();
     selectedAudioUrl = 0;
     errorText = '';
 
@@ -21,11 +21,14 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
             this._paintAudio();
         }
     }
-    createEntry(url: string) {
+    createEntry(url: string, $event) {
         if (url) {
-            this.pageEntryChosen.emit(url);
+            this.pageEntryChosen.emit({
+                url: url,
+                callback: $event
+            });
         } else {
-            this.errorText = 'Please select an item';
+            this.errorText = '^^ select something please?';
         }
     }
     cancelCreate() {
