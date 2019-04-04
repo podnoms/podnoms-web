@@ -68,10 +68,16 @@
                           class="mr-10">No link created</span>
                     <span *ngIf="linkUrl"
                           class="mr-10">{{linkUrl}}</span>
-                    <button type="submit"
+                    <app-spinner-button
+                            [iconClass]="'fas fa-link'"
+                            [buttonClass]="'btn btn-alt-primary float-right'"
+                            (clicked)="getSharingLink($event)">
+                        Create link
+                    </app-spinner-button>
+                    <!-- <button type="submit"
                             (click)="getSharingLink()"
                             class="btn btn-alt-primary float-right">Create
-                        link</button>
+                        link</button> -->
                 </div>
                 <div class="col-12"
                      *ngIf="email">
