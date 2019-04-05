@@ -23,8 +23,11 @@ export class SharingComponent implements OnInit {
     ngOnInit() {
         this.emailControl.nativeElement.focus();
     }
-    getSharingLink() {
-        this.sharingService.getSharingLink(this.entry.id).subscribe(l => (this.linkUrl = l));
+    getSharingLink($event) {
+        this.sharingService.getSharingLink(this.entry.id).subscribe(l => {
+            this.linkUrl = l;
+            $event();
+        });
     }
     shareToEmail() {
         if (!environment.emailRegex.test(this.email)) {

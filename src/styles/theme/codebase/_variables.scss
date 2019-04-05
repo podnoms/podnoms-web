@@ -53,7 +53,7 @@ $link-hover-decoration:     none !default;
 
 
 // Typography
-$font-family-sans-serif:    "Muli", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-sans-serif:    "Muli", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
 $font-family-monospace:     "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:          $font-family-sans-serif !default;
 
@@ -93,29 +93,17 @@ $zindex-side-overlay:       1034 !default;
 $zindex-block-fullscreen:   1035 !default;
 
 
-// Pagination, Buttons and Forms
-$pbf-height:                34px !default;
-$pbf-height-sm:             28px !default;
-$pbf-height-lg:             40px !default;
-
-$pbf-line-height:           16px !default;
-$pbf-line-height-sm:        16px !default;
-$pbf-line-height-lg:        20px !default;
-
-$pbf-font-size:             $font-size-base !default;
-$pbf-font-size-sm:          $font-size-base !default;
-$pbf-font-size-lg:          $font-size-md !default;
-
-$pbf-padding-y:             ($pbf-height - $pbf-line-height - 2px) / 2 !default;
-$pbf-padding-y-sm:          ($pbf-height-sm - $pbf-line-height-sm - 2px) / 2 !default;
-$pbf-padding-y-lg:          ($pbf-height-lg - $pbf-line-height-lg - 2px) / 2 !default;
-
-
 // Buttons
+$btn-hero-line-height:      16px !default;
+$btn-hero-line-height-sm:   16px !default;
+$btn-hero-line-height-lg:   20px !default;
+
 $btn-hero-padding-x:        38px !default;
 $btn-hero-padding-y:        14px !default;
+
 $btn-hero-padding-x-sm:     34px !default;
 $btn-hero-padding-y-sm:     11px !default;
+
 $btn-hero-padding-x-lg:     42px !default;
 $btn-hero-padding-y-lg:     15px !default;
 

@@ -35,7 +35,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-    padding: (($header-height - $pbf-height) / 2) $space-side;
+    padding: (($header-height - 34px) / 2) $space-side;
     height: $header-height;
 
     &.content-header-fullrow {
@@ -53,8 +53,8 @@
 
     &-item {
         display: inline-block;
-        height: $pbf-height;
-        line-height: $pbf-height;
+        height: 34px;
+        line-height: 34px;
         vertical-align: middle;
 
         &-align {
@@ -63,7 +63,7 @@
     }
 
     &-logo {
-        height: $pbf-height;
+        height: 34px;
     }
 
     @at-root #page-header > & {

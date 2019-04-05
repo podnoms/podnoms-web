@@ -16,10 +16,10 @@ $theme-colors: (
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
 $yiq-contrasted-threshold:          200 !default;
 
-// Components
-$line-height-lg:                    $pbf-line-height-lg !default;
-$line-height-sm:                    $pbf-line-height-sm !default;
+// Options
+$enable-validation-icons:           false !default;
 
+// Components
 $border-width:                      1px !default;
 
 $border-radius:                     .25rem !default;
@@ -71,18 +71,37 @@ $table-dark-border-color:           lighten($brand-dark, 5%) !default;
 $table-dark-color:                  $body-color-light !default;
 
 
+// Buttons + Forms
+$input-btn-padding-x:               1rem !default;
+$input-btn-padding-y:               .4285714rem !default;
+$btn-font-size:                     $font-size-base !default;
+$input-btn-line-height:             1.428572 !default;
+
+$input-btn-padding-x-sm:            .6429rem !default;
+$input-btn-padding-y-sm:            .3571429rem !default;
+$input-btn-font-size-sm:            $font-size-base !default;
+$input-btn-line-height-sm:          1.1428572 !default;
+
+$input-btn-padding-x-lg:            1.286rem !default;
+$input-btn-padding-y-lg:            .64285714rem !default;
+$input-btn-font-size-lg:            1.14285714rem !default;
+$input-btn-line-height-lg:          1.25 !default;
+
 // Buttons
-$input-btn-padding-y:               $pbf-padding-y !default;
-$input-btn-padding-x:               14px !default;
-$input-btn-line-height:             $pbf-line-height !default;
+$btn-padding-y:                     .57142857rem !default;
+$btn-padding-x:                     1rem !default;
+$btn-font-size:                     $font-size-base !default;
+$btn-line-height:                   16px !default;
 
-$input-btn-padding-y-sm:            $pbf-padding-y-sm !default;
-$input-btn-padding-x-sm:            9px !default;
-$input-btn-line-height-sm:          $pbf-line-height-sm !default;
+$btn-padding-y-sm:                  .3571429rem  !default;
+$btn-padding-x-sm:                  .64285714rem !default;
+$btn-font-size-sm:                  .9286rem !default;
+$btn-line-height-sm:                16px !default;
 
-$input-btn-padding-y-lg:            $pbf-padding-y-lg !default;
-$input-btn-padding-x-lg:            18px !default;
-$input-btn-line-height-lg:          $pbf-line-height-lg !default;
+$btn-padding-y-lg:                  .64285714rem !default;
+$btn-padding-x-lg:                  1.285714rem !default;
+$btn-font-size-lg:                  1.285714rem !default;
+$btn-line-height-lg:                20px !default;
 
 $input-btn-focus-box-shadow:        none !default;
 
@@ -106,17 +125,6 @@ $input-focus-bg:                    $input-bg !default;
 $input-focus-border-color:          darken($body-bg-dark, 25%) !default;
 $input-focus-box-shadow:            none !default;
 
-$input-height-border:               $input-btn-border-width * 2 !default;
-
-$input-height-inner:                $pbf-height - 2px !default;
-$input-height:                      $pbf-height !default;
-
-$input-height-inner-sm:             $pbf-height-sm - 2px !default;
-$input-height-sm:                   $pbf-height-sm !default;
-
-$input-height-inner-lg:             $pbf-height-lg - 2px !default;
-$input-height-lg:                   $pbf-height-lg !default;
-
 $input-transition:                  border-color ease-in-out .15s !default;
 
 $form-group-margin-bottom:          16px !default;
@@ -124,18 +132,12 @@ $form-group-margin-bottom:          16px !default;
 $input-group-addon-bg:              $body-bg-light !default;
 $input-group-addon-border-color:    $input-border-color !default;
 
-$custom-control-gutter:             24px !default;
-$custom-control-spacer-x:           16px !default;
-
 $custom-control-indicator-size:     1.143rem !default;
 
 $custom-control-indicator-focus-box-shadow:     0 0 0 1px $body-bg, 0 0 0 3px theme-color("primary") !default;
 
 $custom-select-focus-border-color:  lighten(theme-color("primary"), 25%) !default;
 $custom-select-focus-box-shadow:    inset 0 1px 2px rgba($black, .075), 0 0 5px rgba($custom-select-focus-border-color, .5) !default;
-
-$custom-select-font-size-sm:        75% !default;
-$custom-select-height-sm:           $input-height-sm !default;
 
 $custom-file-color:                 $body-color !default;
 $custom-file-bg:                    $white !default;
@@ -164,13 +166,13 @@ $dropdown-header-color:             $headings-color !default;
 
 
 // Pagination
-$pagination-padding-y:              $pbf-padding-y !default;
-$pagination-padding-x:              10px !default;
-$pagination-padding-y-sm:           $pbf-padding-y-sm !default;
-$pagination-padding-x-sm:           7px !default;
-$pagination-padding-y-lg:           $pbf-padding-y-lg !default;
-$pagination-padding-x-lg:           20px !default;
-$pagination-line-height:            $pbf-line-height !default;
+$pagination-padding-y:              .57142857rem !default;
+$pagination-padding-x:              .71428571rem !default;
+$pagination-padding-y-sm:           .35714286rem !default;
+$pagination-padding-x-sm:           .5rem !default;
+$pagination-padding-y-lg:           .64285714rem !default;
+$pagination-padding-x-lg:           1.42857143rem !default;
+$pagination-line-height:            1.2 !default;
 
 $pagination-color:                  $body-color-dark !default;
 $pagination-bg:                     $body-bg !default;
