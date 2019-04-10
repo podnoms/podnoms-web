@@ -27,7 +27,7 @@
     "@angular/pwa": "^0.13.8",
     "@angular/router": "^7.2.10",
     "@angular/service-worker": "^7.2.10",
-    "@aspnet/signalr": "^1.1.2",
+    "@aspnet/signalr": "^1.1.4",
     "@auth0/angular-jwt": "^2.1.0",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
