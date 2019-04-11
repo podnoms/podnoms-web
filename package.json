@@ -55,7 +55,7 @@
     "firebase": "^5.9.3",
     "howler": "^2.1.1",
     "install": "^0.12.2",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "memo-decorator": "^1.0.2",
     "moment": "^2.24.0",
     "ng2-charts": "^2.2.2",
