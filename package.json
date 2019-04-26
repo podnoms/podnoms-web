@@ -89,7 +89,7 @@
     "@angular/language-service": "^7.2.14",
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "~11.13.7",
-    "codelyzer": "~5.0.0",
+    "codelyzer": "~5.0.1",
     "prettier": "~1.17.0",
     "pretty-quick": "^1.10.0",
     "ts-node": "~8.1.0",
