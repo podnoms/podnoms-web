@@ -68,7 +68,7 @@
     "ngx-perfect-scrollbar": "^7.2.1",
     "ngx-quill": "^4.8.0",
     "ngx-store": "^2.1.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "npm": "^6.9.0",
     "popper.js": "^1.15.0",
     "quill": "^1.3.6",
