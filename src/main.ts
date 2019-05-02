@@ -32,6 +32,8 @@ import { AppModule } from './app/app.module';
 //#endregion
 if (environment.production) {
     enableProdMode();
+} else {
+    console.log('main', 'Development mode');
 }
 
 platformBrowserDynamic()
