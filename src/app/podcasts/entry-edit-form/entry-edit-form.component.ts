@@ -2,11 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntriesStoreService } from '../entries-store.service';
-import { PodcastEntry, } from '../../core';
+import { PodcastEntry } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alert.service';
 
@@ -52,7 +51,10 @@ export class EntryEditFormComponent implements OnInit {
         });
     }
     submitForm() {
-        const entry: PodcastEntry = Object.assign(this.entry, this.entryEditForm.value);
+        const entry: PodcastEntry = Object.assign(
+            this.entry,
+            this.entryEditForm.value
+        );
         this.entryDataService.updateEntry(entry).subscribe(e => {
             this.imageControl.commitImage(e.id, 'entry').subscribe(result => {
                 if (result !== null) {
