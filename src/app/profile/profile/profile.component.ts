@@ -43,7 +43,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
         }
     };
     @ViewChild(BaseChartDirective)
-    private _chart: BaseChartDirective;
+    private _chart: BaseChartDirective<any>;
 
     @ViewChild('imageControl')
     imageControl: ImageUploadComponent;

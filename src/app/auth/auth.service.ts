@@ -12,7 +12,6 @@ import {
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
 import { AuthApiProxyService } from './auth-api-proxy.service';
-import { HttpHeaders } from '@angular/common/http/src/headers';
 import { ProfileStoreService } from '../profile/profile-store.service';
 
 @Injectable({
