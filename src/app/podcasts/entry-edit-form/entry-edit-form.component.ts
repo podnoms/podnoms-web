@@ -55,20 +55,42 @@ export class EntryEditFormComponent implements OnInit {
             this.entry,
             this.entryEditForm.value
         );
-        this.entryDataService.updateEntry(entry).subscribe(e => {
-            this.imageControl.commitImage(e.id, 'entry').subscribe(result => {
-                if (result !== null) {
-                    e = result;
-                }
-                // nasty dance to force refresh of thumbnails
-                e.imageUrl = `${e.imageUrl}?v=${UUID.UUID()}`;
-                e.thumbnailUrl = `${e.thumbnailUrl}?v=${UUID.UUID()}`;
-                this.entriesStore.updateOneInCache(e);
-                this.formImageUrl = e.imageUrl;
+        this.entryDataService.updateEntry(entry).subscribe(
+            e => {
+                this.imageControl.commitImage(e.id, 'entry').subscribe(
+                    result => {
+                        if (result !== null) {
+                            e = result;
+                        }
+                        // nasty dance to force refresh of thumbnails
+                        e.imageUrl = `${e.imageUrl}?v=${UUID.UUID()}`;
+                        e.thumbnailUrl = `${e.thumbnailUrl}?v=${UUID.UUID()}`;
+                        this.entriesStore.updateOneInCache(e);
+                        this.formImageUrl = e.imageUrl;
 
-                this.alertService.info('Success', 'Entry updated');
-                this.router.navigate(['podcasts', e.podcastSlug]);
-            });
-        });
+                        this.alertService.info('Success', 'Entry updated');
+                        this.router.navigate(['podcasts', e.podcastSlug]);
+                    },
+                    error => {
+                        console.error(
+                            'entry-edit-form.component',
+                            'sendImage',
+                            error
+                        );
+                        this.alertService.error(
+                            'Error',
+                            'There was an error updating the image, please refresh and try again'
+                        );
+                    }
+                );
+            },
+            error => {
+                console.log('entry-edit-form.component', 'updateEntry', error);
+                this.alertService.error(
+                    'Error',
+                    'There was an error updating the entry, please refresh and try again'
+                );
+            }
+        );
     }
 }

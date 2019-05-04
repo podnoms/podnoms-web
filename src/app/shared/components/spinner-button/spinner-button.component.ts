@@ -8,6 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class SpinnerButtonComponent implements OnInit {
     @Input() buttonClass: string = '';
     @Input() iconClass: string = '';
+    @Input() disabled: boolean = false;
     @Output() clicked: EventEmitter<any> = new EventEmitter();
     processing: boolean = false;
     constructor() {}
