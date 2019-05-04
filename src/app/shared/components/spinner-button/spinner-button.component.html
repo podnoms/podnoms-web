@@ -1,5 +1,5 @@
 <button class="btn" [ngClass]="buttonClass || 'btn-primary'"
-        type="button" (click)="click()">
+        [disabled]="disabled" type="button" (click)="click()">
     <i *ngIf="!processing && iconClass" [ngClass]="iconClass"></i>
     <i *ngIf="processing" class="fas fa-spin fa-sync-alt"></i>
     &nbsp;
