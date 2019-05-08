@@ -6,7 +6,6 @@ import { PodcastDataService } from '../podcast-data.service';
 import { trigger, transition, style, sequence, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { EntriesStoreService } from '../entries-store.service';
-import { debug } from 'util';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';

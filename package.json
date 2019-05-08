@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.0.49",
+  "version": "1.0.50",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -24,7 +24,7 @@
     "@angular/http": "^8.0.0-beta.10",
     "@angular/platform-browser": "^8.0.0-rc.0",
     "@angular/platform-browser-dynamic": "^8.0.0-rc.0",
-    "@angular/pwa": "^0.800.0-rc.0",
+    "@angular/pwa": "^0.800.0-rc.3",
     "@angular/router": "^8.0.0-rc.0",
     "@angular/service-worker": "^8.0.0-rc.0",
     "@aspnet/signalr": "^1.1.4",
@@ -66,7 +66,7 @@
     "ngx-dropzone-wrapper": "^7.2.1",
     "ngx-moment": "^3.4.0",
     "ngx-perfect-scrollbar": "^7.2.1",
-    "ngx-quill": "^5.0.0",
+    "ngx-quill": "^5.1.0",
     "ngx-store": "^2.1.0",
     "node-sass": "^4.12.0",
     "npm": "^6.9.1-next.0",
@@ -81,14 +81,14 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@angular/cli": "~8.0.0-rc.0",
+    "@angular/cli": "~8.0.0-rc.3",
     "@angular-devkit/build-angular": "~0.800.0-rc.0",
     "@angular/compiler-cli": "^8.0.0-rc.0",
     "@types/datatables.net": "^1.10.17",
     "@types/jasmine": "^3.3.12",
-    "@angular/language-service": "^8.0.0-rc.0",
+    "@angular/language-service": "^8.0.0-rc.3",
     "@types/jasminewd2": "~2.0.6",
-    "@types/node": "~11.13.9",
+    "@types/node": "~12.0.0",
     "codelyzer": "~5.0.1",
     "prettier": "~1.17.0",
     "pretty-quick": "^1.10.0",
