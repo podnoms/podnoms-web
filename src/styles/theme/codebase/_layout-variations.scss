@@ -74,8 +74,8 @@
             box-shadow: 0 5px 10px rgba(0,0,0,.02);
 
             > .content-header {
-                padding-top: (($header-height - $pbf-height) / 2);
-                padding-bottom: (($header-height - $pbf-height) / 2);
+                padding-top: (($header-height - 34px) / 2);
+                padding-bottom: (($header-height - 34px) / 2);
             }
         }
 

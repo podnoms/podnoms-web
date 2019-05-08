@@ -3,7 +3,6 @@
 // --------------------------------------------------
 
 .btn {
-    height: $pbf-height;
     font-family: $font-family-base;
     font-weight: 600;
 
@@ -21,46 +20,36 @@
     }
 }
 
-.btn-sm,
-.btn-group-sm > .btn {
-    height: $pbf-height-sm;
-}
-
-.btn-lg,
-.btn-group-lg > .btn {
-    height: $pbf-height-lg;
-}
-
 .btn.btn-hero {
-    @include button-size($btn-hero-padding-y, $btn-hero-padding-x, $font-size-base, $pbf-line-height, 3px);
+    @include button-size($btn-hero-padding-y, $btn-hero-padding-x, $font-size-base, $btn-hero-line-height, 3px);
     height: auto;
 
     &.btn-sm {
-        @include button-size($btn-hero-padding-y-sm, $btn-hero-padding-x-sm, $font-size-base, $pbf-line-height-sm, 3px);
+        @include button-size($btn-hero-padding-y-sm, $btn-hero-padding-x-sm, $font-size-base, $btn-hero-line-height-sm, 3px);
     }
 
     &.btn-lg {
-        @include button-size($btn-hero-padding-y-lg, $btn-hero-padding-x-lg, $font-size-md, $pbf-line-height-lg, 3px);
+        @include button-size($btn-hero-padding-y-lg, $btn-hero-padding-x-lg, $font-size-md, $btn-hero-line-height-lg, 3px);
     }
 }
 
 .btn.btn-circle {
     @include button-size(9px, 0, $font-size-base, 1, inherit);
-    min-width: $pbf-height;
-    height: $pbf-height;
+    min-width: 34px;
+    height: 34px;
     text-align: center;
     border-radius: 50% !important;
 
     &.btn-sm {
         @include button-size(6px, 0, $font-size-base, 1, inherit);
-        min-width: $pbf-height-sm;
-        height: $pbf-height-sm;
+        min-width: 28px;
+        height: 28px;
     }
 
     &.btn-lg {
         @include button-size(12px, 0, $font-size-base, 1, inherit);
-        min-width: $pbf-height-lg;
-        height: $pbf-height-lg;
+        min-width: 40px;
+        height: 40px;
     }
 
     > .si {

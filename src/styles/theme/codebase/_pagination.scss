@@ -3,9 +3,6 @@
 // --------------------------------------------------
 
 .page-link {
-    height: $pbf-height;
-    line-height: $pbf-line-height;
-    font-size: $pbf-font-size;
     font-weight: 600;
 
     &:focus {
@@ -13,16 +10,14 @@
         background-color: $body-bg-dark;
         border-color: $body-bg-dark;
     }
+}
 
-    .pagination-lg & {
-        height: $pbf-height-lg;
-        line-height: $pbf-line-height-lg;
-        font-size: $pbf-font-size-lg;
-    }
+.pagination-sm .page-link {
+    font-size: 1rem;
+    line-height: 16px;
+}
 
-    .pagination-sm & {
-        height: $pbf-height-sm;
-        line-height: $pbf-line-height-sm;
-        font-size: $pbf-font-size-sm;
-    }
+.pagination-lg .page-link {
+    font-size: 1.142857rem;
+    line-height: 20px;
 }

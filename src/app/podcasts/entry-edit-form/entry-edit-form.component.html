@@ -3,9 +3,12 @@
         (submit)="submitForm()" novalidate>
         <div class="block">
             <div class="block-header">
-                <button type="submit" class="btn"
-                    [disabled]="sending || !entryEditForm.valid">Save&nbsp;
-                    <i class="fa fa-save"></i></button>
+                <app-spinner-button
+                    type="submit" [buttonClass]="'btn-success'"
+                    (click)="submitForm()"
+                    [disabled]="sending || !entryEditForm.valid"
+                    [iconClass]="'fa fa-save'">Save&nbsp;
+                </app-spinner-button>
             </div>
             <div class="block-content">
                 <div class="row">
