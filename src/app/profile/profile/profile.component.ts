@@ -1,7 +1,18 @@
-import { Component, ElementRef, ViewChild, SimpleChanges, OnInit } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    ViewChild,
+    SimpleChanges,
+    OnInit
+} from '@angular/core';
 import { Profile, ProfileLimits, Payment } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
-import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    switchMap
+} from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { ProfileDataService } from '../profile-data.service';
 import { ProfileStoreService } from '../profile-store.service';
@@ -33,8 +44,15 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
                     const meta = dataset._meta[Object.keys(dataset._meta)[0]];
                     const total = meta.total;
                     const currentValue = dataset.data[tooltipItem.index];
-                    const percentage = parseFloat(((currentValue / total) * 100).toFixed(1));
-                    return this._bytesToHuman(currentValue) + ' (' + percentage + '%)';
+                    const percentage = parseFloat(
+                        ((currentValue / total) * 100).toFixed(1)
+                    );
+                    return (
+                        this._bytesToHuman(currentValue) +
+                        ' (' +
+                        percentage +
+                        '%)'
+                    );
                 },
                 title: function(tooltipItem, data) {
                     return data.labels[tooltipItem[0].index];
@@ -42,10 +60,10 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             }
         }
     };
-    @ViewChild(BaseChartDirective)
+    @ViewChild(BaseChartDirective, { static: false })
     private _chart: BaseChartDirective<any>;
 
-    @ViewChild('imageControl')
+    @ViewChild('imageControl', { static: false })
     imageControl: ImageUploadComponent;
 
     profile$: Observable<Profile>;
@@ -58,7 +76,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
 
     sending = false;
 
-    @ViewChild('fileInput')
+    @ViewChild('fileInput', { static: false })
     fileInput: ElementRef;
     limits$: Observable<ProfileLimits>;
 
@@ -86,7 +104,9 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
                 }
                 this.slugging = false;
             });
-        this.profile$ = this.profileStoreService.entities$.pipe(map(r => r.filter(it => it.slug !== null)[0]));
+        this.profile$ = this.profileStoreService.entities$.pipe(
+            map(r => r.filter(it => it.slug !== null)[0])
+        );
     }
 
     ngOnInit() {
@@ -101,7 +121,9 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             dm = 0,
             sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        return (
+            parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+        );
     }
 
     refreshLimits() {
@@ -110,7 +132,9 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             this.chartData = [l.storageUsed, l.storageQuota - l.storageUsed];
 
             const used = this._bytesToHuman(l.storageUsed);
-            const available = this._bytesToHuman(l.storageQuota - l.storageUsed);
+            const available = this._bytesToHuman(
+                l.storageQuota - l.storageUsed
+            );
 
             this.chartLabels = [`Used: ${used}`, `Available: ${available}`];
             if (this._chart) {
@@ -127,7 +151,10 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
             this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
                 profile.profileImage = `${r}?v=${UUID.UUID()}`;
                 this.profileStoreService.updateOneInCache(profile);
-                this.alertService.info('Success', 'Profile updated successfully');
+                this.alertService.info(
+                    'Success',
+                    'Profile updated successfully'
+                );
             });
         });
     }

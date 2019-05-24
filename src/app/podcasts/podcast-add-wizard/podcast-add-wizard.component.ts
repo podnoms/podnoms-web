@@ -19,19 +19,20 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
     templateUrl: './podcast-add-wizard.component.html',
     styleUrls: ['./podcast-add-wizard.component.scss']
 })
-export class PodcastAddWizardComponent extends BasePageComponent implements OnInit, AfterViewInit {
+export class PodcastAddWizardComponent extends BasePageComponent
+    implements OnInit, AfterViewInit {
     currentStep: number = 0;
     errorMessage: string;
     @Input()
     podcast: Podcast;
     @Output()
     finish: EventEmitter<Podcast> = new EventEmitter<Podcast>();
-    @ViewChild('imageControl')
+    @ViewChild('imageControl', { static: false })
     imageControl: ImageUploadComponent;
 
     category: string;
 
-    @ViewChild('podcastName')
+    @ViewChild('podcastName', { static: false })
     podcastName: ElementRef;
 
     constructor(private utilityService: UtilityService) {

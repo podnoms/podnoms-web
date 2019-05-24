@@ -4,7 +4,7 @@ import { NotificationControlService } from '../services/notification-control.ser
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationDataService } from '../services/notification-data.service';
 import { NotificationStoreService } from '../services/notification-store.service';
-import { Podcast, } from '../../../core';
+import { Podcast } from '../../../core';
 import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
@@ -19,7 +19,7 @@ export class NotificationModalComponent implements OnInit {
     @Input()
     podcast: Podcast;
 
-    @ViewChild('content')
+    @ViewChild('content', { static: false })
     content: ElementRef;
 
     notification: Notification;
@@ -49,7 +49,8 @@ export class NotificationModalComponent implements OnInit {
     _createForm(config: NotificationOptionBase<string>[]) {
         this.form = this.ncs.toFormGroup(config);
         this.modalService.open(this.content, { size: 'lg' }).result.then(
-            result => console.log('notification-modal.component', 'result', result),
+            result =>
+                console.log('notification-modal.component', 'result', result),
             reason => {
                 if (reason === 'save') {
                     this.saveChanges();
@@ -58,7 +59,11 @@ export class NotificationModalComponent implements OnInit {
         );
     }
     openEditModal(notification: Notification) {
-        console.log('notification-modal.component', 'openEditModal', notification);
+        console.log(
+            'notification-modal.component',
+            'openEditModal',
+            notification
+        );
         this.notification = notification;
         this._createForm(notification.options);
     }
@@ -86,7 +91,9 @@ export class NotificationModalComponent implements OnInit {
                 this.podcast.notifications.push(n);
             } else {
                 // find and update existing
-                const index = this.podcast.notifications.findIndex(r => r.id === n.id);
+                const index = this.podcast.notifications.findIndex(
+                    r => r.id === n.id
+                );
                 if (index !== -1) {
                     this.podcast.notifications[index] = n;
                 }

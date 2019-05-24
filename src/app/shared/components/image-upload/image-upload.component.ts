@@ -24,9 +24,12 @@ export class ImageUploadComponent implements OnInit {
 
     @Input() imageUrl: string;
 
-    @ViewChild('fileInput') fileInputElement: ElementRef;
+    @ViewChild('fileInput', { static: false }) fileInputElement: ElementRef;
 
-    constructor(private imageService: ImageService, private renderer: Renderer2) {}
+    constructor(
+        private imageService: ImageService,
+        private renderer: Renderer2
+    ) {}
     ngOnInit() {
         this.image.src = this.imageUrl;
     }
@@ -52,7 +55,8 @@ export class ImageUploadComponent implements OnInit {
         this.fileInputElement.nativeElement.click();
     }
     fileChangeEvent() {
-        const nativeElement: HTMLInputElement = this.fileInputElement.nativeElement;
+        const nativeElement: HTMLInputElement = this.fileInputElement
+            .nativeElement;
         this._imageFileBuffer = nativeElement.files[0];
         this._parseImageData(this._imageFileBuffer);
     }

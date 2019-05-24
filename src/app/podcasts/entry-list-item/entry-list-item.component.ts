@@ -35,7 +35,7 @@ export class EntryListItemComponent implements OnInit {
     @Output()
     entryRemoved = new EventEmitter<PodcastEntry>();
 
-    @ViewChild('shareDialog')
+    @ViewChild('shareDialog', { static: false })
     shareDialog: ElementRef;
 
     preparingDownload: boolean = false;
@@ -54,26 +54,47 @@ export class EntryListItemComponent implements OnInit {
         private cdr: ChangeDetectorRef
     ) {}
     ngOnInit() {
-        if (this.entry && !this.entry.processed && this.entry.processingStatus !== 'Failed') {
+        if (
+            this.entry &&
+            !this.entry.processed &&
+            this.entry.processingStatus !== 'Failed'
+        ) {
             this.signalr
                 .init('audioprocessing')
                 .then(listener => {
-                    const updateChannel: string = `${this.entry.id}__progress_update`;
-                    const processedChannel: string = `${this.entry.id}__info_processed`;
-                    listener.on<AudioProcessingMessage>('audioprocessing', updateChannel).subscribe(result => {
-                        this.percentageProcessed = result.percentage;
-                        this.currentSpeed = result.currentSpeed;
-                        this.cdr.detectChanges();
-                    });
-                    listener.on<PodcastEntry>('audioprocessing', processedChannel).subscribe(result => {
-                        this.entry = result;
-                        if (this.entry.processingStatus === 'Processed') {
-                            this.entriesStore.updateOneInCache(this.entry);
+                    const updateChannel: string = `${
+                        this.entry.id
+                    }__progress_update`;
+                    const processedChannel: string = `${
+                        this.entry.id
+                    }__info_processed`;
+                    listener
+                        .on<AudioProcessingMessage>(
+                            'audioprocessing',
+                            updateChannel
+                        )
+                        .subscribe(result => {
+                            this.percentageProcessed = result.percentage;
+                            this.currentSpeed = result.currentSpeed;
                             this.cdr.detectChanges();
-                        }
-                    });
+                        });
+                    listener
+                        .on<PodcastEntry>('audioprocessing', processedChannel)
+                        .subscribe(result => {
+                            this.entry = result;
+                            if (this.entry.processingStatus === 'Processed') {
+                                this.entriesStore.updateOneInCache(this.entry);
+                                this.cdr.detectChanges();
+                            }
+                        });
                 })
-                .catch(err => console.error('entry-list-item.component.ts', '_signalrService.init', err));
+                .catch(err =>
+                    console.error(
+                        'entry-list-item.component.ts',
+                        '_signalrService.init',
+                        err
+                    )
+                );
         }
     }
     __fixTitleEdit() {
@@ -85,7 +106,9 @@ export class EntryListItemComponent implements OnInit {
         this.entryRemoved.emit(this.entry);
     }
     updateTitle($event: Event) {
-        this.podcastEntryDataService.updateEntry(this.entry).subscribe(e => this.entriesStore.updateOneInCache(e));
+        this.podcastEntryDataService
+            .updateEntry(this.entry)
+            .subscribe(e => this.entriesStore.updateOneInCache(e));
     }
     goto(entry: PodcastEntry) {
         window.open(entry.sourceUrl);
@@ -93,7 +116,10 @@ export class EntryListItemComponent implements OnInit {
     retry(entry: PodcastEntry) {
         this.podcastEntryDataService.reSubmitEntry(entry).subscribe(r => {
             this.entry = r;
-            this.alertService.info('Success', 'Submitted podcast for re-processing');
+            this.alertService.info(
+                'Success',
+                'Submitted podcast for re-processing'
+            );
         });
     }
     playAudio(source: string) {
@@ -115,15 +141,29 @@ export class EntryListItemComponent implements OnInit {
             .downloadAudio(this.entry.id)
             .subscribe(
                 r => (this.preparingDownload = false),
-                err => this.alertService.error('Error', 'Unable to download this episode')
+                err =>
+                    this.alertService.error(
+                        'Error',
+                        'Unable to download this episode'
+                    )
             );
     }
     shareEpisode(entry: PodcastEntry) {
         this.modalService
             .open(this.shareDialog)
             .result.then(
-                result => console.log('entry-list-item.component', 'shareEpisode-result', result),
-                reason => console.log('entry-list-item.component', 'shareEpisode-reason', reason)
+                result =>
+                    console.log(
+                        'entry-list-item.component',
+                        'shareEpisode-result',
+                        result
+                    ),
+                reason =>
+                    console.log(
+                        'entry-list-item.component',
+                        'shareEpisode-reason',
+                        reason
+                    )
             );
     }
     shareComplete(result) {

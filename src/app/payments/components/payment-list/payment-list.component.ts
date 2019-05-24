@@ -10,10 +10,13 @@ import { PaymentsService } from '../../payments.service';
     styleUrls: ['./payment-list.component.scss']
 })
 export class PaymentListComponent implements OnInit {
-    @ViewChild('downloader')
+    @ViewChild('downloader', { static: false })
     downloader: ElementRef;
 
-    constructor(private profileDataService: ProfileDataService, private paymentService: PaymentsService) {}
+    constructor(
+        private profileDataService: ProfileDataService,
+        private paymentService: PaymentsService
+    ) {}
     payments$: Observable<Payment[]>;
 
     ngOnInit() {
