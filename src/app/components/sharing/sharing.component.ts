@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    ViewChild,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
@@ -10,7 +17,7 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./sharing.component.scss']
 })
 export class SharingComponent implements OnInit {
-    @ViewChild('emailAddress') emailControl;
+    @ViewChild('emailAddress', { static: false }) emailControl;
     @Input() entry: Shareable;
     @Output() shareComplete: EventEmitter<string> = new EventEmitter<string>();
 
@@ -18,7 +25,10 @@ export class SharingComponent implements OnInit {
     email: string = '';
     message: string = '';
     linkUrl: string = '';
-    constructor(private sharingService: SharingService, private alertService: AlertService) {}
+    constructor(
+        private sharingService: SharingService,
+        private alertService: AlertService
+    ) {}
 
     ngOnInit() {
         this.emailControl.nativeElement.focus();
@@ -33,10 +43,15 @@ export class SharingComponent implements OnInit {
         if (!environment.emailRegex.test(this.email)) {
             this.error = 'This does not look like an email address?';
         } else {
-            this.sharingService.shareToEmail(this.entry.id, this.email, this.message).subscribe(r => {
-                this.alertService.success('Link shared successfully', `${this.email}'s got mail!!!`);
-                this.shareComplete.emit(r);
-            });
+            this.sharingService
+                .shareToEmail(this.entry.id, this.email, this.message)
+                .subscribe(r => {
+                    this.alertService.success(
+                        'Link shared successfully',
+                        `${this.email}'s got mail!!!`
+                    );
+                    this.shareComplete.emit(r);
+                });
         }
     }
     copyUrl(url: string) {
@@ -51,10 +66,14 @@ export class SharingComponent implements OnInit {
     share(service: string) {
         switch (service) {
             case 'facebook':
-                this.sharingService.shareToFacebook(this.entry.id).subscribe(r => this.shareComplete.emit());
+                this.sharingService
+                    .shareToFacebook(this.entry.id)
+                    .subscribe(r => this.shareComplete.emit());
                 break;
             case 'twitter':
-                this.sharingService.shareToTwitter(this.entry.id).subscribe(r => this.shareComplete.emit());
+                this.sharingService
+                    .shareToTwitter(this.entry.id)
+                    .subscribe(r => this.shareComplete.emit());
                 break;
         }
     }

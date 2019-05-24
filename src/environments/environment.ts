@@ -8,7 +8,7 @@ const emailRegex = {
 export const environment = {
     production: false,
     signalRHost: 'https://localhost:5001',
-    apiHost: 'http://localhost:5000',
+    apiHost: 'https://localhost:5001',
     vapidPublicKey:
         'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
     helpUrl: 'https://talk.podnoms.com/',

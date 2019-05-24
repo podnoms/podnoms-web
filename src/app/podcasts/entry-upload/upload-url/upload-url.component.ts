@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewChild,
+    AfterViewInit
+} from '@angular/core';
 import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
@@ -22,8 +29,10 @@ export class UploadUrlComponent implements AfterViewInit {
     progressText: string = 'Checking URL...';
     isPosting: boolean = false;
     remoteAudioList: any = null;
-    @ViewChild('input')
+
+    @ViewChild('input', { static: false })
     vc: any;
+
     playlistProxy: PodcastEntry = null;
     constructor(
         private podcastEntryDataService: EntryDataService,
@@ -39,7 +48,10 @@ export class UploadUrlComponent implements AfterViewInit {
         return a.host && a.host !== window.location.host;
     }
     processPlaylist() {
-        const entry = new PodcastEntry(this.podcast.id, this.playlistProxy.sourceUrl);
+        const entry = new PodcastEntry(
+            this.podcast.id,
+            this.playlistProxy.sourceUrl
+        );
         this.podcastEntryDataService.addPlaylist(entry).subscribe(
             e => {
                 this.resetUrl();
@@ -76,7 +88,13 @@ export class UploadUrlComponent implements AfterViewInit {
             this.utilityService.checkAudioUrl(url).subscribe(
                 r => {
                     if (r.type === 'native') {
-                        this.createEntry(url, () => console.log('upload-url.component', 'native', 'done'));
+                        this.createEntry(url, () =>
+                            console.log(
+                                'upload-url.component',
+                                'native',
+                                'done'
+                            )
+                        );
                     } else if ((r.type = 'proxied')) {
                         this.isPosting = false;
                         this.remoteAudioList = r.data;
@@ -84,7 +102,8 @@ export class UploadUrlComponent implements AfterViewInit {
                 },
                 err => {
                     this.isPosting = false;
-                    this.errorText = 'Could not find any supported audio at that URL';
+                    this.errorText =
+                        'Could not find any supported audio at that URL';
                     this.resetUrl();
                 }
             );
@@ -117,7 +136,8 @@ export class UploadUrlComponent implements AfterViewInit {
             err => {
                 this.isPosting = false;
                 if (err.status === 402) {
-                    this.errorText = 'You have exceeded your allowable storage quota, please upgrade to a paid tier';
+                    this.errorText =
+                        'You have exceeded your allowable storage quota, please upgrade to a paid tier';
                 } else {
                     this.errorText = 'This does not look like a valid URL';
                 }

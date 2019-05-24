@@ -27,9 +27,9 @@ export class PodcastEditFormComponent implements OnInit {
     formImageUrl: string;
     public categories$: Observable<Category[]>;
     podcastForm: FormGroup;
-    @ViewChild('imageControl')
+    @ViewChild('imageControl', { static: false })
     imageControl: ImageUploadComponent;
-    @ViewChild('wizardControl')
+    @ViewChild('wizardControl', { static: false })
     wizardControl: PodcastAddWizardComponent;
 
     useWizard: boolean = false;
@@ -76,7 +76,14 @@ export class PodcastEditFormComponent implements OnInit {
                     // Validators.minLength(5),
                     Validators.maxLength(30)
                 ]),
-                Validators.composeAsync([validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug)])
+                Validators.composeAsync([
+                    validateSearch(
+                        this.utilityService,
+                        'Podcasts',
+                        'Slug',
+                        podcast.slug
+                    )
+                ])
             ],
             category: [podcast.category, Validators.required],
             customDomain: [
@@ -102,14 +109,16 @@ export class PodcastEditFormComponent implements OnInit {
             );
             this.podcastForm = this._createForm(this.fb, podcast);
         } else {
-            this.podcastStore.entities$.pipe(map(r => r.filter(it => it.slug === id))).subscribe(p => {
-                const podcast = p[0];
-                if (podcast) {
-                    this.formImageUrl = podcast.imageUrl;
-                    this.podcast$ = of(podcast);
-                    this.podcastForm = this._createForm(this.fb, podcast);
-                }
-            });
+            this.podcastStore.entities$
+                .pipe(map(r => r.filter(it => it.slug === id)))
+                .subscribe(p => {
+                    const podcast = p[0];
+                    if (podcast) {
+                        this.formImageUrl = podcast.imageUrl;
+                        this.podcast$ = of(podcast);
+                        this.podcastForm = this._createForm(this.fb, podcast);
+                    }
+                });
         }
     }
     wizardFinish(podcast: Podcast) {
@@ -124,16 +133,19 @@ export class PodcastEditFormComponent implements OnInit {
         // podcast.subcategories = this.subcategories;
 
         this.sending = true;
-        const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
+        const activeImageControl =
+            this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
             podcast.imageUrl = this.formImageUrl;
             this.podcastDataService.addPodcast(podcast).subscribe(
                 p => {
-                    activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
-                        this.podcastStore.addOneToCache(p);
-                        this.podcastStore.updateOneInCache(p);
-                        this.router.navigate(['podcasts', p.slug]);
-                    });
+                    activeImageControl
+                        .commitImage(p.id, 'podcast')
+                        .subscribe(r => {
+                            this.podcastStore.addOneToCache(p);
+                            this.podcastStore.updateOneInCache(p);
+                            this.router.navigate(['podcasts', p.slug]);
+                        });
                 },
                 err => {
                     this.alertService.error(
@@ -146,12 +158,15 @@ export class PodcastEditFormComponent implements OnInit {
         } else {
             this.podcastDataService.updatePodcast(podcast).subscribe(
                 p => {
-                    activeImageControl.commitImage(p.id, 'podcast').subscribe(r => {
-                        // nasty dance to force refresh of thumbnails
-                        p.thumbnailUrl = `${r || p.imageUrl}?v=${UUID.UUID()}`;
-                        this.podcastStore.updateOneInCache(p);
-                        this.router.navigate(['podcasts', p.slug]);
-                    });
+                    activeImageControl
+                        .commitImage(p.id, 'podcast')
+                        .subscribe(r => {
+                            // nasty dance to force refresh of thumbnails
+                            p.thumbnailUrl = `${r ||
+                                p.imageUrl}?v=${UUID.UUID()}`;
+                            this.podcastStore.updateOneInCache(p);
+                            this.router.navigate(['podcasts', p.slug]);
+                        });
                 },
                 err => {
                     this.alertService.error(
@@ -171,11 +186,17 @@ export class PodcastEditFormComponent implements OnInit {
                     this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
-                    this.alertService.info('Error', 'There was an error deleting podcast.');
+                    this.alertService.info(
+                        'Error',
+                        'There was an error deleting podcast.'
+                    );
                 }
             },
             err =>
-                this.alertService.error('Error', 'There was an error deleting podcast.')
+                this.alertService.error(
+                    'Error',
+                    'There was an error deleting podcast.'
+                )
         );
     }
     podcastUpdated(podcast: Podcast) {
