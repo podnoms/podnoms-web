@@ -31,8 +31,7 @@ export class UploadUrlComponent implements AfterViewInit {
     remoteAudioList: any = null;
     title: string = '';
 
-    testTitle: string =
-        "The Government's Bar Tab at Mar-a-Lago | Trump, Inc. | WNYC Studios";
+    testTitle: string = 'Argle Bargle Sonnny Jim';
     testData: Array<any> = [
         {
             key: 'Download',
@@ -41,8 +40,7 @@ export class UploadUrlComponent implements AfterViewInit {
         },
         {
             key: 'Download',
-            value:
-                'https://www.concretepage.com/angular-2/angular-2-radio-button-and-checkbox-example'
+            value: 'https://traffic.megaphone.fm/ADV8534430497.mp3'
         }
     ];
 
@@ -55,8 +53,8 @@ export class UploadUrlComponent implements AfterViewInit {
         private utilityService: UtilityService,
         private alertService: AlertService
     ) {
-        this.title = this.testTitle;
-        this.remoteAudioList = this.testData;
+        // this.title = this.testTitle;
+        // this.remoteAudioList = this.testData;
     }
     ngAfterViewInit() {
         // this.vc.nativeElement.focus();
@@ -148,7 +146,7 @@ export class UploadUrlComponent implements AfterViewInit {
     private createEntry(title: string, url: string, callback: any) {
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
-        entry.title = title;
+        entry.title = this.title;
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
                 callback();
