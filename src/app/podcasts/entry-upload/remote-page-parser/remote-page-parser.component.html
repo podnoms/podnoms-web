@@ -1,5 +1,5 @@
 <div *ngIf="remoteAudioList"
-     class="block block-themed col-md-6">
+    class="block block-themed col-md-6">
     <div class="block-content block-content-full block-content-sm bg-primary">
         <span class="font-w600 text-white">
             Multiple
@@ -23,11 +23,11 @@
                     <td scope="row">
                         <div class="form-check">
                             <input type="radio"
-                                   [(ngModel)]="selectedAudioUrl"
-                                   class="form-check-input"
-                                   name="selected-audio"
-                                   id="selected-audio-{{i}}"
-                                   value="{{row.value}}">
+                                [(ngModel)]="selectedItem"
+                                class="form-check-input"
+                                name="selected-audio"
+                                id="selected-audio-{{i}}"
+                                value="{{i}}">
                         </div>
                     </td>
                     <td>
@@ -41,17 +41,18 @@
             </tbody>
         </table>
         <div class="alert alert-danger"
-             role="alert"
-             *ngIf="errorText">
+            role="alert"
+            *ngIf="errorText">
             {{errorText}}
         </div>
         <div class="row mt-5 mb-20">
-            <app-spinner-button [iconClass]="'fas fa-thumbs-up'" [buttonClass]="'btn-success'"
-                (clicked)="createEntry(selectedAudioUrl, $event)">
+            <app-spinner-button [iconClass]="'fas fa-thumbs-up'"
+                [buttonClass]="'btn-success'"
+                (clicked)="createEntry($event)">
                 Create link
             </app-spinner-button>
             <button class="btn btn-danger  mr-5 m5-5"
-                    (click)="cancelCreate()">Cancel</button>
+                (click)="cancelCreate()">Cancel</button>
         </div>
     </div>
 </div>

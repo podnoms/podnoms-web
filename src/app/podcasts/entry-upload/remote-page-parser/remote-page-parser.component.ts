@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    EventEmitter,
+    Output
+} from '@angular/core';
 
 @Component({
     selector: 'app-remote-page-parser',
@@ -10,7 +18,7 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
     remoteAudioList: any;
     @Output()
     pageEntryChosen: EventEmitter<any> = new EventEmitter();
-    selectedAudioUrl = 0;
+    selectedItem: string = '0';
     errorText = '';
 
     constructor() {}
@@ -21,7 +29,8 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
             this._paintAudio();
         }
     }
-    createEntry(url: string, $event) {
+    createEntry($event) {
+        const url = this.remoteAudioList[this.selectedItem].value;
         if (url) {
             this.pageEntryChosen.emit({
                 url: url,

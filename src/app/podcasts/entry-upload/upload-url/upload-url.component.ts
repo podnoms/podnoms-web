@@ -28,16 +28,21 @@ export class UploadUrlComponent implements AfterViewInit {
     errorText: string;
     progressText: string = 'Checking URL...';
     isPosting: boolean = false;
-    // remoteAudioList: any = null;
-    // title: string = '';
+    remoteAudioList: any = null;
+    title: string = '';
 
-    title: string =
+    testTitle: string =
         "The Government's Bar Tab at Mar-a-Lago | Trump, Inc. | WNYC Studios";
-    remoteAudioList: any = [
+    testData: Array<any> = [
         {
             key: 'Download',
             value:
                 'https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/trumpinc/trumpinc050119_cms932417_pod.mp3'
+        },
+        {
+            key: 'Download',
+            value:
+                'https://www.concretepage.com/angular-2/angular-2-radio-button-and-checkbox-example'
         }
     ];
 
@@ -49,9 +54,12 @@ export class UploadUrlComponent implements AfterViewInit {
         private podcastEntryDataService: EntryDataService,
         private utilityService: UtilityService,
         private alertService: AlertService
-    ) {}
+    ) {
+        this.title = this.testTitle;
+        this.remoteAudioList = this.testData;
+    }
     ngAfterViewInit() {
-        this.vc.nativeElement.focus();
+        // this.vc.nativeElement.focus();
     }
     isValidURL(str) {
         const a = document.createElement('a');
@@ -107,6 +115,12 @@ export class UploadUrlComponent implements AfterViewInit {
                             )
                         );
                     } else if ((r.type = 'proxied')) {
+                        console.log(
+                            'upload-url.component',
+                            'testData',
+                            this.testData
+                        );
+                        console.log('upload-url.component', 'apiData', r.data);
                         this.isPosting = false;
                         this.title = r.title;
                         this.remoteAudioList = r.data;

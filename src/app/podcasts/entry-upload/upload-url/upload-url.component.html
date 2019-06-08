@@ -15,7 +15,6 @@
     </div>
 </form>
 <h5>{{title}}</h5>
-Remote: {{remoteAudioList}}
 <app-remote-page-parser *ngIf="remoteAudioList" (pageEntryChosen)="onPageEntryChosen($event)"
     [remoteAudioList]="remoteAudioList">
 </app-remote-page-parser>
