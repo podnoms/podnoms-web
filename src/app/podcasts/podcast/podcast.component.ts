@@ -16,7 +16,7 @@ import { AlertService } from '../../core/alert.service';
 })
 export class PodcastComponent {
     uploadModes = UploadModes; // do this so it can be used in the template
-    uploadMode: UploadModes = UploadModes.fromUrl; // UploadModes.none; // do this so it can be used in the template
+    uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
 
     noPodcasts: boolean = false;
     podcasts$: Observable<Podcast[]>;
