@@ -28,7 +28,18 @@ export class UploadUrlComponent implements AfterViewInit {
     errorText: string;
     progressText: string = 'Checking URL...';
     isPosting: boolean = false;
-    remoteAudioList: any = null;
+    // remoteAudioList: any = null;
+    // title: string = '';
+
+    title: string =
+        "The Government's Bar Tab at Mar-a-Lago | Trump, Inc. | WNYC Studios";
+    remoteAudioList: any = [
+        {
+            key: 'Download',
+            value:
+                'https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/trumpinc/trumpinc050119_cms932417_pod.mp3'
+        }
+    ];
 
     @ViewChild('input', { static: false })
     vc: any;
@@ -88,7 +99,7 @@ export class UploadUrlComponent implements AfterViewInit {
             this.utilityService.checkAudioUrl(url).subscribe(
                 r => {
                     if (r.type === 'native') {
-                        this.createEntry(url, () =>
+                        this.createEntry(this.title, url, () =>
                             console.log(
                                 'upload-url.component',
                                 'native',
@@ -97,6 +108,7 @@ export class UploadUrlComponent implements AfterViewInit {
                         );
                     } else if ((r.type = 'proxied')) {
                         this.isPosting = false;
+                        this.title = r.title;
                         this.remoteAudioList = r.data;
                     }
                 },
@@ -114,14 +126,15 @@ export class UploadUrlComponent implements AfterViewInit {
     }
     onPageEntryChosen($event) {
         if ($event) {
-            this.createEntry($event.url, $event.callback);
+            this.createEntry(this.title, $event.url, $event.callback);
         } else {
             this.resetUrl();
         }
     }
-    private createEntry(url: string, callback: any) {
+    private createEntry(title: string, url: string, callback: any) {
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
+        entry.title = title;
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
                 callback();
