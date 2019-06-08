@@ -20,7 +20,9 @@ export class PodcastComponent {
 
     noPodcasts: boolean = false;
     podcasts$: Observable<Podcast[]>;
-    selectedPodcast$: BehaviorSubject<Podcast> = new BehaviorSubject<Podcast>(null);
+    selectedPodcast$: BehaviorSubject<Podcast> = new BehaviorSubject<Podcast>(
+        null
+    );
     loading$: Observable<boolean>;
     mode: UploadModes = UploadModes.fromUrl;
     id: any;
@@ -93,10 +95,17 @@ export class PodcastComponent {
                     this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
-                    this.alertService.error('Error', 'There was an error deleting podcast.');
+                    this.alertService.error(
+                        'Error',
+                        'There was an error deleting podcast.'
+                    );
                 }
             },
-            () => this.alertService.error('Error', 'There was an error deleting podcast.')
+            () =>
+                this.alertService.error(
+                    'Error',
+                    'There was an error deleting podcast.'
+                )
         );
     }
 }

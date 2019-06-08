@@ -1,0 +1,13 @@
+{
+    "wrap_attributes": "force",
+    "beautify.language": {
+        "html": {
+            "indent_size": 4,
+            "indent_char": " ",
+            "wrap_attributes": "force"
+        },
+        "css": {
+            "indent_size": 2
+        }
+    }
+}

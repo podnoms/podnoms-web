@@ -29,6 +29,20 @@ export class UploadUrlComponent implements AfterViewInit {
     progressText: string = 'Checking URL...';
     isPosting: boolean = false;
     remoteAudioList: any = null;
+    title: string = '';
+
+    testTitle: string = 'Argle Bargle Sonnny Jim';
+    testData: Array<any> = [
+        {
+            key: 'Download',
+            value:
+                'https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/trumpinc/trumpinc050119_cms932417_pod.mp3'
+        },
+        {
+            key: 'Download',
+            value: 'https://traffic.megaphone.fm/ADV8534430497.mp3'
+        }
+    ];
 
     @ViewChild('input', { static: false })
     vc: any;
@@ -38,9 +52,12 @@ export class UploadUrlComponent implements AfterViewInit {
         private podcastEntryDataService: EntryDataService,
         private utilityService: UtilityService,
         private alertService: AlertService
-    ) {}
+    ) {
+        // this.title = this.testTitle;
+        // this.remoteAudioList = this.testData;
+    }
     ngAfterViewInit() {
-        this.vc.nativeElement.focus();
+        // this.vc.nativeElement.focus();
     }
     isValidURL(str) {
         const a = document.createElement('a');
@@ -88,7 +105,7 @@ export class UploadUrlComponent implements AfterViewInit {
             this.utilityService.checkAudioUrl(url).subscribe(
                 r => {
                     if (r.type === 'native') {
-                        this.createEntry(url, () =>
+                        this.createEntry(this.title, url, () =>
                             console.log(
                                 'upload-url.component',
                                 'native',
@@ -96,7 +113,14 @@ export class UploadUrlComponent implements AfterViewInit {
                             )
                         );
                     } else if ((r.type = 'proxied')) {
+                        console.log(
+                            'upload-url.component',
+                            'testData',
+                            this.testData
+                        );
+                        console.log('upload-url.component', 'apiData', r.data);
                         this.isPosting = false;
+                        this.title = r.title;
                         this.remoteAudioList = r.data;
                     }
                 },
@@ -114,14 +138,15 @@ export class UploadUrlComponent implements AfterViewInit {
     }
     onPageEntryChosen($event) {
         if ($event) {
-            this.createEntry($event.url, $event.callback);
+            this.createEntry(this.title, $event.url, $event.callback);
         } else {
             this.resetUrl();
         }
     }
-    private createEntry(url: string, callback: any) {
+    private createEntry(title: string, url: string, callback: any) {
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
+        entry.title = this.title;
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
                 callback();
