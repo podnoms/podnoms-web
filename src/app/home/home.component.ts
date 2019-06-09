@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ProfileStoreService } from '../../profile/profile-store.service';
-import { AuthService } from '../auth.service';
-import { Profile } from '../../core';
+import { Profile } from '../core';
+import { ProfileStoreService } from '../profile/profile-store.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-home',

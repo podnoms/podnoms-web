@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { HomeComponent } from './home/home.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -17,11 +16,6 @@ import { ComponentsModule } from '../components/components.module';
         ComponentsModule,
         NgxCaptchaModule
     ],
-    declarations: [
-        HomeComponent,
-        LoginComponent,
-        RegisterComponent,
-        ForgotPasswordComponent
-    ]
+    declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent]
 })
 export class AuthModule {}

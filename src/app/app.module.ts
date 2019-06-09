@@ -24,6 +24,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { registerLocaleData } from '@angular/common';
 import localeIE from '@angular/common/locales/en-IE';
+import { HomeComponent } from './home/home.component';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -47,7 +48,9 @@ registerLocaleData(localeIE, 'ie');
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         AngularFireMessagingModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production
+        })
     ],
     providers: [
         MonitoringService,
@@ -58,7 +61,7 @@ registerLocaleData(localeIE, 'ie');
         },
         { provide: LOCALE_ID, useValue: 'en-IE' }
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent, HomeComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {

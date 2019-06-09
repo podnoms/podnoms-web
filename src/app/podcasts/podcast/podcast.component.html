@@ -183,7 +183,8 @@
         </div>
     </div>
 </div>
-<div *ngIf="noPodcasts">
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="noPodcasts && !loading">
     <div class="content content-full text-center mt-50">
         <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
             data-toggle="appear"
