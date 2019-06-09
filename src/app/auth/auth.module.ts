@@ -7,7 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SharedModule } from '../shared/shared.module';
-import { ResetComponent } from './reset/reset.component';
 import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
@@ -22,8 +21,7 @@ import { ComponentsModule } from '../components/components.module';
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        ForgotPasswordComponent,
-        ResetComponent
+        ForgotPasswordComponent
     ]
 })
 export class AuthModule {}

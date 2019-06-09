@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
 import { environment } from '../../../environments/environment';
+import { ConstantsService } from '../../shared/services/constants.service';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -19,7 +20,6 @@ import { environment } from '../../../environments/environment';
 export class RegisterComponent extends BasePageComponent implements OnInit {
     environment = environment;
     // tslint:disable-next-line: max-line-length
-    emailRegex: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     form: FormGroup;
     signupForm: FormGroup;
 
@@ -30,10 +30,10 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private router: Router,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private constants: ConstantsService
     ) {
         super();
-        console.log('register.component', 'ctor');
         this._buildForm();
     }
     //#region Form Control Getters
@@ -41,7 +41,10 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         this.signupForm = this.fb.group({
             email: [
                 '',
-                [Validators.required, Validators.pattern(this.emailRegex)]
+                [
+                    Validators.required,
+                    Validators.pattern(this.constants.emailRegex)
+                ]
             ],
             passwordGroup: this.fb.group(
                 {
