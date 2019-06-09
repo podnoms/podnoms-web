@@ -11,7 +11,6 @@ import { AuthService } from '../auth/auth.service';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    loading$: Observable<boolean>;
     profile$: Observable<Profile[]>;
     loaded: boolean = false;
     constructor(
@@ -22,7 +21,6 @@ export class HomeComponent implements OnInit {
         console.log('home.component', 'ctor');
         if (authService.getAuthToken()) {
             // no point doing any of this if we have no JWT
-            this.loading$ = profileStoreService.loading$;
             this.profile$ = profileStoreService.entities$;
             this.profile$.subscribe(
                 p => {
@@ -33,7 +31,7 @@ export class HomeComponent implements OnInit {
                             profileResult &&
                             profileResult.length === 0
                         ) {
-                            this.loaded = true;
+                            // this.loaded = true;
                         }
                     });
                 },

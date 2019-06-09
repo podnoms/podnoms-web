@@ -1,71 +1,70 @@
-<div *ngIf="loading$ | async;else mainContainer">
+<div *ngIf="!loaded">
     <div id="page-loader"
-        class="bg-gd-lake show"></div>
+        class="bg-gd-lake show">
+    </div>
 </div>
-<ng-template #mainContainer>
-    <main *ngIf="loaded">
-        <div class="bg-image">
-            <div class="hero">
-                <div class="hero-inner">
-                    <div class="content content-full">
-                        <div class="row justify-content-center bump-top">
-                            <div class="col-md-6 py-30 text-center">
-                                <h1 class="display-4 font-w700 text-white mb-10">
-                                    <span class="text-primary-dark">pod</span>
-                                    <span class="ftext-white-op">:</span>
-                                    <span class="text-primary-dark">:</span>
-                                    <span class="ftext-white-op">noms</span>
-                                </h1>
-                                <h2 class="h2 font-w400 text-body-bg-light pb-30 mb-20 border-white-op-b">
-                                    Robot powered podcasts</h2>
-                                <div class="js-countdown mb-20">
-                                    <div class="row items-push text-center">
-                                        <div class="col-6 col-sm-3">
-                                            <div class="font-size-h1 font-w700 text-white">Create</div>
-                                            <div class="font-size-xs font-w700 text-white-op">Your
-                                                own podcast
-                                                feeds from
-                                                diverse
-                                                sources</div>
-                                        </div>
-                                        <div class="col-6 col-sm-3">
-                                            <div class="font-size-h1 font-w700 text-white">Curate</div>
-                                            <div class="font-size-xs font-w700 text-white-op">Add
-                                                YouTube
-                                                videos,
-                                                Mixcloud/Soundcloud
-                                                audio and
-                                                many, many
-                                                more</div>
-                                        </div>
-                                        <div class="col-6 col-sm-3">
-                                            <div class="font-size-h1 font-w700 text-white">Monitor</div>
-                                            <div class="font-size-xs font-w700 text-white-op">Automatically
-                                                add new
-                                                episodes as
-                                                they arrive</div>
-                                        </div>
-                                        <div class="col-6 col-sm-3">
-                                            <div class="font-size-h1 font-w700 text-white">Customise</div>
-                                            <div class="font-size-xs font-w700 text-white-op">Custom
-                                                domains,
-                                                IFTT/Slack
-                                                notifications
-                                                and much
-                                                more!!</div>
-                                        </div>
+<main *ngIf="loaded">
+    <div class="bg-image">
+        <div class="hero">
+            <div class="hero-inner">
+                <div class="content content-full">
+                    <div class="row justify-content-center bump-top">
+                        <div class="col-md-6 py-30 text-center">
+                            <h1 class="display-4 font-w700 text-white mb-10">
+                                <span class="text-primary-dark">pod</span>
+                                <span class="ftext-white-op">:</span>
+                                <span class="text-primary-dark">:</span>
+                                <span class="ftext-white-op">noms</span>
+                            </h1>
+                            <h2 class="h2 font-w400 text-body-bg-light pb-30 mb-20 border-white-op-b">
+                                Robot powered podcasts</h2>
+                            <div class="js-countdown mb-20">
+                                <div class="row items-push text-center">
+                                    <div class="col-6 col-sm-3">
+                                        <div class="font-size-h1 font-w700 text-white">Create</div>
+                                        <div class="font-size-xs font-w700 text-white-op">Your
+                                            own podcast
+                                            feeds from
+                                            diverse
+                                            sources</div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="font-size-h1 font-w700 text-white">Curate</div>
+                                        <div class="font-size-xs font-w700 text-white-op">Add
+                                            YouTube
+                                            videos,
+                                            Mixcloud/Soundcloud
+                                            audio and
+                                            many, many
+                                            more</div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="font-size-h1 font-w700 text-white">Monitor</div>
+                                        <div class="font-size-xs font-w700 text-white-op">Automatically
+                                            add new
+                                            episodes as
+                                            they arrive</div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="font-size-h1 font-w700 text-white">Customise</div>
+                                        <div class="font-size-xs font-w700 text-white-op">Custom
+                                            domains,
+                                            IFTT/Slack
+                                            notifications
+                                            and much
+                                            more!!</div>
                                     </div>
                                 </div>
-                                <a class="btn btn-large btn-hero btn-rounded btn-outline-warning mt-20"
-                                    [routerLink]="['auth/login']">
-                                    <i class="fas fa-rocket mr-10"></i>
-                                    Let's Go!!!!
-                                </a>
                             </div>
+                            <a class="btn btn-large btn-hero btn-rounded btn-outline-warning mt-20"
+                                [routerLink]="['auth/login']">
+                                <i class="fas fa-rocket mr-10"></i>
+                                Let's Go!!!!
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
-</ng-template>
+    </div>
+</main>
