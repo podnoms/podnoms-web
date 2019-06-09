@@ -6,6 +6,7 @@ import { ComponentsService } from '../components.service';
 import { PodcastStoreService } from '../../podcasts/podcast-store.service';
 import { Router } from '@angular/router';
 import { EntryDataService } from '../../podcasts/entry-data.service';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: 'app-sidebar',
@@ -16,9 +17,12 @@ export class SidebarComponent implements OnInit {
     selected: Podcast;
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
-
-    constructor(private router: Router, private podcastStore: PodcastStoreService,
-        entryDataService: EntryDataService) {
+    public config: PerfectScrollbarConfigInterface = {};
+    constructor(
+        private router: Router,
+        private podcastStore: PodcastStoreService,
+        entryDataService: EntryDataService
+    ) {
         this.podcasts$ = podcastStore.entities$;
         this.loading$ = podcastStore.loading$;
     }
