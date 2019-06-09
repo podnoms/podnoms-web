@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
-import { FormGroup, FormsModule, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {
+    FormGroup,
+    FormsModule,
+    FormControl,
+    FormBuilder,
+    Validators
+} from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
-import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-register',
@@ -12,6 +17,9 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent extends BasePageComponent implements OnInit {
+    // tslint:disable-next-line: max-line-length
+    emailRegex: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     form: FormGroup;
     signupForm: FormGroup;
 
@@ -25,6 +33,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         private fb: FormBuilder
     ) {
         super();
+        console.log('register.component', 'ctor');
         this._buildForm();
     }
     //#region Form Control Getters
@@ -32,22 +41,23 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         this.signupForm = this.fb.group({
             email: [
                 '',
-                [
-                    Validators.required,
-                    Validators.pattern(
-                        environment.emailRegex
-                    )
-                ]
+                [Validators.required, Validators.pattern(this.emailRegex)]
             ],
             passwordGroup: this.fb.group(
                 {
                     password: [
                         '',
-                        Validators.compose([Validators.required, Validators.minLength(4)])
+                        Validators.compose([
+                            Validators.required,
+                            Validators.minLength(4)
+                        ])
                     ],
                     confirmPassword: [
                         '',
-                        Validators.compose([Validators.required, Validators.minLength(4)])
+                        Validators.compose([
+                            Validators.required,
+                            Validators.minLength(4)
+                        ])
                     ]
                 },
                 { validator: PasswordValidation.matchPassword }
@@ -71,25 +81,28 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
 
     doRegister() {
         this._isRequesting = true;
-        this.authService.register(this.email.value, this.password.value).subscribe(
-            result => {
-                if (result) {
-                    this.router.navigate(['/auth/login'], {
-                        queryParams: {
-                            brandNew: true,
-                            email: this.email.value
-                        }
-                    });
-                } else {
-                    this.errorMessage = 'Error signing up, please try again later';
+        this.authService
+            .register(this.email.value, this.password.value)
+            .subscribe(
+                result => {
+                    if (result) {
+                        this.router.navigate(['/auth/login'], {
+                            queryParams: {
+                                brandNew: true,
+                                email: this.email.value
+                            }
+                        });
+                    } else {
+                        this.errorMessage =
+                            'Error signing up, please try again later';
+                    }
+                },
+                errors => {
+                    // TODO - remote logging of this error
+                    this.errorMessage =
+                        'Error signing up, have you already signed up with this email?';
                 }
-            },
-            errors => {
-                // TODO - remote logging of this error
-                this.errorMessage =
-                    'Error signing up, have you already signed up with this email?';
-            }
-        );
+            );
     }
     onPasswordErrors(errors) {
         this.errorMessage = errors;

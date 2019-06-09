@@ -1,82 +1,81 @@
 <div class="podcast-container-wrapper"
-     *ngIf="(podcasts$ | async) as podcast">
+    *ngIf="(podcasts$ | async) as podcast">
     <div class="block block-themed block-rounded"
-         *ngIf="(selectedPodcast$ | async) as selected">
-        <div class="block-header bg-elegance-light">
-            <p class="font-size-h2 text-white">
+        *ngIf="(selectedPodcast$ | async) as selected">
+        <div class="block-header bg-pulse-dark">
+            <h3 class="block-title">
                 {{selected.title}}
-            </p>
+            </h3>
             <div class="block-options">
                 <div class="btn-group"
-                     role="group"
-                     aria-label="Podcast actions">
+                    role="group"
+                    aria-label="Podcast actions">
                     <a [routerLink]="['/podcasts', selected.slug, 'edit']"
-                       class="btn btn-alt-secondary">
+                        class="btn-block-option">
                         <i class="icon icon-pencil"
-                           aria-hidden="true"></i>
+                            aria-hidden="true"></i>
                         Edit
                     </a>
                     <button (click)="podcastDeleteDialog.show()"
-                            class="btn btn-alt-secondary">
+                        class="btn-block-option">
                         <i class="icon icon-close"
-                           aria-hidden="true"></i>
+                            aria-hidden="true"></i>
                         Delete
                     </button>
-                    <button class="btn btn-alt-secondary"
-                            (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
+                    <button class="btn-block-option"
+                        (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
                         <i class="icon icon-plus"></i>
                         Add (from URL)
                     </button>
                     <div class="btn-group"
-                         role="group">
+                        role="group">
                         <button type="button"
-                                class="btn btn-alt-secondary dropdown-toggle"
-                                id="file-upload-group"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false">
+                            class="btn-block-option dropdown-toggle"
+                            id="file-upload-group"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
                             <i class="fa fa-fw fa-file mr-5"></i>
                             Upload from
                             file
                         </button>
                         <div class="dropdown-menu"
-                             aria-labelledby="file-upload-group`">
+                            aria-labelledby="file-upload-group`">
                             <a class="dropdown-item"
-                               (click)="startUpload(uploadModes.fromLocalFile)">
-                                <i
-                                   class="icon icon-cloud-upload  mr-5"></i>
+                                (click)="startUpload(uploadModes.fromLocalFile)">
+                                <i class="icon icon-cloud-upload  mr-5"></i>
                                 Local
                                 PC</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
-                               href="javascript:void(0)"
-                               (click)="startUpload(uploadModes.fromDropbox)">
-                                <i
-                                   class="icon icon-social-dropbox  mr-5"></i>Dropbox
+                                href="javascript:void(0)"
+                                (click)="startUpload(uploadModes.fromDropbox)">
+                                <i class="icon icon-social-dropbox  mr-5"></i>Dropbox
                             </a>
                             <a class="dropdown-item"
-                               href="javascript:void(0)"
-                               (click)="startUpload(uploadModes.fromGoogleDrive)">
-                                <i
-                                   class="icon icon-social-google  mr-5"></i>Google
+                                href="javascript:void(0)"
+                                (click)="startUpload(uploadModes.fromGoogleDrive)">
+                                <i class="icon icon-social-google  mr-5"></i>Google
                                 Drive</a>
                         </div>
                     </div>
                 </div>
                 <div class="btn-group ml-10"
-                     role="group"
-                     aria-label="Podcast actions">
-                    <a class="btn btn-alt-secondary btn-outline-warning"
-                       [href]="selected.rssUrl"
-                       data-toggle="tooltip"
-                       title="Copy url to clipboard"
-                       target="_blank">
+                    role="group"
+                    aria-label="Podcast actions">
+                    <a class="btn-block-option "
+                        [href]="selected.rssUrl"
+                        title="Open rss feed in new tab"
+                        data-toggle="tooltip"
+                        target="_blank">
                         <i class="text-warning fas fa-rss"></i>
                         Rss Url
                     </a>
                     <button type="button"
-                            (click)="copyUrl(selected.rssUrl)"
-                            class="btn btn-alt-secondary btn-outline-warning">
+                        (click)="copyUrl(selected.rssUrl)"
+                        title="Copy url to clipboard"
+                        data-toggle="tooltip"
+                        class="btn-block-option ">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div>
@@ -84,18 +83,17 @@
         </div>
         <div class="block-content">
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
-                              [(uploadMode)]="uploadMode"
-                              [podcast]="selected"
-                              (podcastUpdated)="podcastUpdated(podcast)">
+                [(uploadMode)]="uploadMode"
+                [podcast]="selected"
+                (podcastUpdated)="podcastUpdated(podcast)">
             </app-entry-upload>
-            <app-podcast-detail
-                                [podcast]="selected"></app-podcast-detail>
+            <app-podcast-detail [podcast]="selected"></app-podcast-detail>
         </div>
         <div class="modal fade"
-             role="document"
-             bsModal
-             #podcastDeleteDialog="bs-modal"
-             aria-hidden="true">
+            role="document"
+            bsModal
+            #podcastDeleteDialog="bs-modal"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="block block-themed block-transparent mb-0">
@@ -104,14 +102,12 @@
                                 this
                                 podcast?</h3>
                             <div class="block-options">
-                                <button
-                                        type="button"
-                                        class="btn-block-option"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                        (click)="podcastDeleteDialog.hide()">
-                                    <i
-                                       class="icon icon-close"></i>
+                                <button type="button"
+                                    class="btn-block-option"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    (click)="podcastDeleteDialog.hide()">
+                                    <i class="icon icon-close"></i>
                                 </button>
                             </div>
                         </div>
@@ -122,19 +118,14 @@
                                 be
                                 undone!</h3>
                             <div class="container-fluid cxt-padded bg-faded">
-                                <div
-                                     class="container">
-                                    <div
-                                         class="row">
-                                        <div
-                                             class="col-md-2 text-md-left text-center">
-                                            <img
-                                                 class="modal-podcast-image rounded-circle"
-                                                 [src]="selected.imageUrl"
-                                                 alt="Generic placeholder image" />
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-2 text-md-left text-center">
+                                            <img class="modal-podcast-image rounded-circle"
+                                                [src]="selected.imageUrl"
+                                                alt="Generic placeholder image" />
                                         </div>
-                                        <div
-                                             class="col-md-10 text-md-left text-center font-w600">
+                                        <div class="col-md-10 text-md-left text-center font-w600">
                                             {{
                                             selected.title
                                             }}
@@ -172,20 +163,17 @@
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button
-                                    type="button"
-                                    class="btn btn-alt-secondary"
-                                    data-dismiss="modal"
-                                    (click)="podcastDeleteDialog.hide()">
+                            <button type="button"
+                                class="btn-block-option"
+                                data-dismiss="modal"
+                                (click)="podcastDeleteDialog.hide()">
                                 No
                             </button>
-                            <button
-                                    type="button"
-                                    class="btn btn-alt-success"
-                                    data-dismiss="modal"
-                                    (click)="deletePodcast(selected); podcastDeleteDialog.hide()">
-                                <i
-                                   class="fa fa-check"></i>
+                            <button type="button"
+                                class="btn btn-alt-success"
+                                data-dismiss="modal"
+                                (click)="deletePodcast(selected); podcastDeleteDialog.hide()">
+                                <i class="fa fa-check"></i>
                                 Yes
                             </button>
                         </div>
@@ -209,10 +197,10 @@
             Let's get you started.
         </h2>
         <a class="btn btn-hero btn-noborder btn-rounded btn-alt-primary js-appear-enabled animated fadeInUp"
-           data-toggle="appear"
-           data-class="animated fadeInUp"
-           data-timeout="300"
-           [routerLink]="['add', { useWizard: 'true' }]">
+            data-toggle="appear"
+            data-class="animated fadeInUp"
+            data-timeout="300"
+            [routerLink]="['add', { useWizard: 'true' }]">
             <i class="icon icon-energy mr-10"></i>
             Create my first podcast
         </a>

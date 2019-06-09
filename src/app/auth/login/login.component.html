@@ -1,8 +1,8 @@
 <div id="page-container"
-     class="main-content-boxed">
+    class="main-content-boxed">
     <main id="main-container">
         <div class="bg-image"
-             style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
+            style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
             <div class="hero-static content content-full bg-white">
                 <div class="py-30 px-5 text-center">
                     <a class="link-effect font-w700">
@@ -17,43 +17,36 @@
                         *ngIf="isRequesting">Logging in</h2>
                 </div>
                 <div *ngIf="!isRequesting">
-                    <div class="row justify-content-center px-5">
-                        <div class="row">
-                            <div class="col-sm-6 mb-6">
-                                <button type="button"
-                                        class="btn btn-facebook"
-                                        (click)="socialLogin('facebook')"
-                                        style="width: 100%">
-                                    <i class="fab fa-facebook-f"></i>&nbsp;Facebook</button>
-                            </div>
-                            <div class="col-sm-6 mb-6">
-                                <button type="button" class="btn btn-google-plus"
-                                        (click)="socialLogin('google-oauth2')"
-                                        style="width: 100%">
-                                    <i class="fab fa-google"></i>&nbsp;Google</button>
-                            </div>
-                            <!-- <div class="col-sm-4 mb-5">
-                                <button type="button" class="btn btn-twitter" (click)="login('twitter')" style="width: 100%">
-                                    <i class="fas fa-twitter"></i>&nbsp;Twitter</button>
-                            </div> -->
-                        </div>
-                    </div>
                     <hr />
                     <div class="row justify-content-center">
-                        <div class="col-sm-8 col-md-6 col-xl-4">
+                        <div class="col-sm-9 col-md-7 col-xl-5">
                             <form class="js-validation-signin"
-                                  action=""
-                                  (ngSubmit)="login()"
-                                  method="post">
+                                action=""
+                                (ngSubmit)="login()"
+                                method="post">
+                                <div class="form-group row gutters-tiny">
+                                    <div class="col-sm-6 mb-5">
+                                        <button class="btn btn-block btn-social btn-facebook"
+                                            (click)="socialLogin('facebook')">
+                                            <span class="fab fa-facebook"></span> Sign in with Facebook
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 mb-5">
+                                        <button class="btn btn-block btn-social btn-google"
+                                            (click)="socialLogin('google-oauth2')">
+                                            <span class="fab fa-google"></span> Sign in with Google
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <div class="form-material ">
                                             <input type="text"
-                                                   autocomplete="username"
-                                                   class="form-control"
-                                                   id="login-username"
-                                                   name="login-username"
-                                                   [(ngModel)]="username">
+                                                autocomplete="username"
+                                                class="form-control"
+                                                id="login-username"
+                                                name="login-username"
+                                                [(ngModel)]="username">
                                             <label for="login-username">Email Address</label>
                                         </div>
                                     </div>
@@ -62,50 +55,50 @@
                                     <div class="col-12">
                                         <div class="form-material">
                                             <input type="password"
-                                                   autocomplete="current-password"
-                                                   class="form-control"
-                                                   id="login-password"
-                                                   name="login-password"
-                                                   [(ngModel)]="password">
+                                                autocomplete="current-password"
+                                                class="form-control"
+                                                id="login-password"
+                                                name="login-password"
+                                                [(ngModel)]="password">
                                             <label for="login-password">Password</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="alert alert-danger"
-                                     *ngIf="errorMessage"
-                                     role="alert"
-                                     [innerHTML]="errorMessage">
+                                    *ngIf="errorMessage"
+                                    role="alert"
+                                    [innerHTML]="errorMessage">
                                 </div>
                                 <div class="col-md-12 new-user-alert"
-                                     *ngIf="brandNew">
+                                    *ngIf="brandNew">
                                     <div class="alert alert-success"
-                                         role="alert">
+                                        role="alert">
                                         <strong>Account created!</strong> Please login with your new details
                                     </div>
                                 </div>
                                 <div class="col-md-12 new-user-alert"
-                                     *ngIf="justReset">
+                                    *ngIf="justReset">
                                     <div class="alert alert-success"
-                                         role="alert">
+                                        role="alert">
                                         <strong>Password succesfully reset!</strong> Please login with your new details
                                     </div>
                                 </div>
                                 <div class="form-group row gutters-tiny">
-                                    <div class="col-12 mb-10">
+                                    <div class="col-12 mb-20">
                                         <button type="submit"
-                                                class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
+                                            class="btn btn-block btn-info">
                                             <i class="icon icon-login mr-10"></i> Sign In
                                         </button>
                                     </div>
                                     <div class="col-sm-6 mb-5">
-                                        <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                           [routerLink]="['/auth/register']">
+                                        <a class="btn btn-block btn-outline-secondary"
+                                            [routerLink]="['/auth/register']">
                                             <i class="fa fa-plus text-muted mr-5"></i> New Account
                                         </a>
                                     </div>
                                     <div class="col-sm-6 mb-5">
-                                        <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"
-                                           [routerLink]="['/auth/reset']">
+                                        <a class="btn btn-block btn-outline-secondary"
+                                            [routerLink]="['/auth/reset']">
                                             <i class="fa fa-unlock-alt text-muted mr-5"></i> Forgot password
                                         </a>
                                     </div>
@@ -115,7 +108,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center px-5"
-                     *ngIf="isRequesting">
+                    *ngIf="isRequesting">
                     <i class="fas fa-4x fa-sun-o fa-spin text-warning"></i>
                 </div>
             </div>

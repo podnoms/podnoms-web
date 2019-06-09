@@ -1,8 +1,8 @@
 <div id="page-container"
-     class="main-content-boxed">
+    class="main-content-boxed">
     <main id="main-container">
         <div class="bg-image"
-             style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
+            style="background-image: url('/assets/img/robothand.jpg'); background-size: 100% 100%;">
             <div class="hero-static content content-full bg-white">
                 <div class="py-30 px-5 text-center">
                     <a class="link-effect font-w700">
@@ -15,13 +15,20 @@
                 </div>
                 <div class="row justify-content-center px-5">
                     <div class="col-md-6 col-md-offset-3">
-                        <form class="js-validation-signup" [formGroup]="signupForm" (ngSubmit)="doRegister()">
+                        <form class="js-validation-signup"
+                            [formGroup]="signupForm"
+                            (ngSubmit)="doRegister()">
                             <div class="form-group row">
                                 <div class="col-12">
                                     <div class="form-material">
                                         <label for="inputEmail">Email</label>
-                                        <input type="text" class="form-control" id="inputEmail" formControlName="email" placeholder="Email">
-                                        <div class="text-danger animated fadeInDown" *ngIf="email.invalid && email.touched">
+                                        <input type="text"
+                                            class="form-control"
+                                            id="inputEmail"
+                                            formControlName="email"
+                                            placeholder="Email">
+                                        <div class="text-danger animated fadeInDown"
+                                            *ngIf="email.invalid && email.touched">
                                             <div *ngIf="email.errors['required']">
                                                 Email field can't be blank
                                             </div>
@@ -37,8 +44,13 @@
                                     <div class="col-12">
                                         <div class="form-material">
                                             <label for="password">Password</label>
-                                            <input type="password" formControlName="password" id="password" class="form-control" placeholder="Password">
-                                            <div class="text-danger animated fadeInDown" *ngIf="password.invalid && password.touched">
+                                            <input type="password"
+                                                formControlName="password"
+                                                id="password"
+                                                class="form-control"
+                                                placeholder="Password">
+                                            <div class="text-danger animated fadeInDown"
+                                                *ngIf="password.invalid && password.touched">
                                                 <div *ngIf="password.errors['minlength']">
                                                     Password needs to be more than 4 characters
                                                 </div>
@@ -50,9 +62,13 @@
                                     <div class="col-12">
                                         <div class="form-material">
                                             <label for="confirmPassword">Confirm Password</label>
-                                            <input type="password" formControlName="confirmPassword" id="confirmPassword" class="form-control" placeholder="Repeat password">
+                                            <input type="password"
+                                                formControlName="confirmPassword"
+                                                id="confirmPassword"
+                                                class="form-control"
+                                                placeholder="Repeat password">
                                             <div class="text-danger animated fadeInDown"
-                                                 *ngIf="(confirmPassword.invalid || passwordGroup.invalid) && confirmPassword.touched">
+                                                *ngIf="(confirmPassword.invalid || passwordGroup.invalid) && confirmPassword.touched">
                                                 <div *ngIf="passwordGroup.errors['matchPassword']">
                                                     Passwords do not match
                                                 </div>
@@ -61,11 +77,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="alert alert-danger animated fadeInDown" *ngIf="errorMessage" [innerHTML]="errorMessage">
+                            <div class="alert alert-danger animated fadeInDown"
+                                *ngIf="errorMessage"
+                                [innerHTML]="errorMessage">
                             </div>
                             <div class="form-group row gutters-tiny">
                                 <div class="col-12 mb-10">
-                                    <button [disabled]="!signupForm.valid" type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-success">
+                                    <button [disabled]="!signupForm.valid"
+                                        type="submit"
+                                        class="btn btn-block btn-outline-secondary">
                                         <i class="si si-user-follow mr-10"></i> Sign Up
                                     </button>
                                 </div>

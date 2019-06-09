@@ -1,80 +1,47 @@
 <div class="row">
     <div class="col-md-8 offset-2">
         <div class="js-wizard-simple block">
-            <ul class="nav nav-tabs nav-tabs-block nav-fill"
+            <ul class="nav nav-tabs nav-tabs-alt nav-fill"
                 role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link show" [class.active]="currentStep==0"
+                    <a class="nav-link show"
+                        [class.active]="currentStep==0"
                         href="#wizard-progress-step0"
                         data-toggle="tab">1. Podcast info</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [class.active]="currentStep==1"
+                    <a class="nav-link"
+                        [class.active]="currentStep==1"
                         href="#wizard-progress-step1"
                         data-toggle="tab">2. Podcast
                         description</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [class.active]="currentStep==2"
+                    <a class="nav-link"
+                        [class.active]="currentStep==2"
                         href="#wizard-progress-step2"
                         data-toggle="tab">3. Podcast image</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [class.active]="currentStep==3"
+                    <a class="nav-link"
+                        [class.active]="currentStep==3"
                         href="#wizard-progress-step3"
                         data-toggle="tab">4. Podcast
                         category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [class.active]="currentStep==4"
+                    <a class="nav-link"
+                        [class.active]="currentStep==4"
                         href="#wizard-progress-step4"
                         data-toggle="tab">5. Finish up</a>
                 </li>
             </ul>
             <form>
-                <div class="block-content block-content-sm">
-                    <div class="progress" data-wizard="progress"
-                        style="height: 8px;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                            role="progressbar"
-                            [style.width.%]="((currentStep+1)/5)*100"
-                            aria-valuenow="30"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-                <hr />
-                <div class="block-content block-content-sm block-content-full bg-body-light">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button"
-                                [disabled]="currentStep===0"
-                                class="btn btn-alt-secondary"
-                                data-wizard="prev" (click)="previous()">
-                                <i class="fa fa-angle-left mr-5"></i>
-                                Previous
-                            </button>
-                        </div>
-                        <div class="col-6 text-right">
-                            <button type="button"
-                                [disabled]="currentStep===4"
-                                class="btn btn-alt-secondary"
-                                (click)="next()"
-                                data-wizard="next">
-                                Next
-                                <i class="fa fa-angle-right ml-5"></i>
-                            </button>
-                            <button type="submit" class="btn btn-alt-primary d-none"
-                                data-wizard="finish">
-                                <i class="fa fa-check mr-5"></i>
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
                 <div class="block-content block-content-full tab-content"
                     style="min-height: 265px;">
                     <div class="tab-pane show"
-                        [class.active]="currentStep==0" id="wizard-progress-step0"
+                        [class.active]="currentStep==0"
+                        id="wizard-progress-step0"
                         role="tabpanel">
                         <div class="nice-copy text-center">
                             <h3 class="font-w700 mb-10">A
@@ -94,18 +61,23 @@
                                 later.</p>
                         </div>
                         <div class="form-group">
-                            <input id="podcastName" name="podcast-name"
+                            <input id="podcastName"
+                                name="podcast-name"
                                 class="form-control"
                                 placeholder="Podcast title"
-                                #podcastName [(ngModel)]="podcast.title">
+                                #podcastName
+                                [(ngModel)]="podcast.title">
                         </div>
                         <div class="alert alert-danger"
-                            *ngIf="errorMessage " role="alert "
+                            *ngIf="errorMessage "
+                            role="alert "
                             [innerHTML]="errorMessage ">
                         </div>
                     </div>
-                    <div class="tab-pane" [class.active]="currentStep==1"
-                        id="wizard-progress-step1" role="tabpanel">
+                    <div class="tab-pane"
+                        [class.active]="currentStep==1"
+                        id="wizard-progress-step1"
+                        role="tabpanel">
                         <div class="nice-copy text-center">
                             <p class="mb-10">Here you can
                                 add some information about
@@ -125,8 +97,10 @@
 
                         </div>
                     </div>
-                    <div class="tab-pane" [class.active]="currentStep==2"
-                        id="wizard-progress-step2" role="tabpanel">
+                    <div class="tab-pane"
+                        [class.active]="currentStep==2"
+                        id="wizard-progress-step2"
+                        role="tabpanel">
                         <div class="nice-copy text-center">
                             <p class="mb-10">We've chosen a
                                 nice kitten for your
@@ -141,8 +115,10 @@
                                 #imageControl></app-image-upload>
                         </div>
                     </div>
-                    <div class="tab-pane" [class.active]="currentStep==3"
-                        id="wizard-progress-step3" role="tabpanel">
+                    <div class="tab-pane"
+                        [class.active]="currentStep==3"
+                        id="wizard-progress-step3"
+                        role="tabpanel">
                         <div class="nice-copy text-center col-md-8 offset-1">
                             <p class="mb-10">Choose a
                                 category (this is required
@@ -150,28 +126,61 @@
                         </div>
                         <div class="form-group col-md-8 offset-1">
                             <div class="form-group">
-                                <app-category-selector
-                                    [subcategoriesVisible]="false"
+                                <app-category-selector [subcategoriesVisible]="false"
                                     [label]="''"
                                     [(category)]="category"></app-category-selector>
                             </div>
                             <div class="alert alert-danger"
-                                *ngIf="errorMessage " role="alert "
+                                *ngIf="errorMessage "
+                                role="alert "
                                 [innerHTML]="errorMessage ">
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" [class.active]="currentStep==4"
-                        id="wizard-progress-step4" role="tabpanel">
+                    <div class="tab-pane"
+                        [class.active]="currentStep==4"
+                        id="wizard-progress-step4"
+                        role="tabpanel">
                         <div class="nice-copy text-center">
                             <h3 class="font-w700 mb-10">Woot!
                                 Woot! You're done!</h3>
                         </div>
                         <div class="form-group col-md-4 offset-4">
-                            <button type="button" class="btn btn-lg btn-rounded btn-alt-primary"
+                            <button type="button"
+                                class="btn btn-lg btn-rounded btn-alt-primary"
                                 (click)="finishUp()">
                                 <i class="fa fa-cog mr-5"></i>
                                 Let's add some episodes!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-sm block-content-full bg-body-light">
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button"
+                                [disabled]="currentStep===0"
+                                class="btn btn-alt-secondary"
+                                data-wizard="prev"
+                                (click)="previous()">
+                                <i class="fa fa-angle-left mr-5"></i>
+                                Previous
+                            </button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button type="button"
+                                [disabled]="currentStep===4"
+                                class="btn btn-alt-secondary"
+                                (click)="next()"
+                                data-wizard="next">
+                                Next
+                                <i class="fa fa-angle-right ml-5"></i>
+                            </button>
+                            <button type="submit"
+                                class="btn btn-alt-primary d-none"
+                                data-wizard="finish">
+                                <i class="fa fa-check mr-5"></i>
+                                Submit
                             </button>
                         </div>
                     </div>
