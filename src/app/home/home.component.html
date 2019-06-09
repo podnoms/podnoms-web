@@ -1,6 +1,6 @@
 <div *ngIf="loading$ | async;else mainContainer">
     <div id="page-loader"
-         class="bg-gd-lake show"></div>
+        class="bg-gd-lake show"></div>
 </div>
 <ng-template #mainContainer>
     <main *ngIf="loaded">
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <a class="btn btn-large btn-hero btn-rounded btn-outline-warning mt-20"
-                                   [routerLink]="['login']">
+                                    [routerLink]="['auth/login']">
                                     <i class="fas fa-rocket mr-10"></i>
                                     Let's Go!!!!
                                 </a>

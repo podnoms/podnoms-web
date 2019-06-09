@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, skip } from 'rxjs/operators';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
@@ -17,18 +17,17 @@ import { AlertService } from '../../core/alert.service';
 export class PodcastComponent {
     uploadModes = UploadModes; // do this so it can be used in the template
     uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
-
-    noPodcasts: boolean = false;
+    loading: boolean = true;
+    noPodcasts: boolean = true;
     podcasts$: Observable<Podcast[]>;
     selectedPodcast$: BehaviorSubject<Podcast> = new BehaviorSubject<Podcast>(
         null
     );
-    loading$: Observable<boolean>;
     mode: UploadModes = UploadModes.fromUrl;
     id: any;
 
     constructor(
-        private podcastStore: PodcastStoreService,
+        private podcastStoreService: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private router: Router,
         private route: ActivatedRoute,
@@ -38,15 +37,16 @@ export class PodcastComponent {
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
-            const listenSub = this.podcastStore.entities$.subscribe(r => {
-                if (r && r.length > 0) {
+            this.loading = true;
+            // const listenSub = this.podcastStoreService.entities$.pipe(skip(1));
+
+            this.podcastDataService.getActivePodcast().subscribe(r => {
+                if (r) {
                     // here lies the problem: r[0] is meaningless!!
-                    this.router.navigate(['podcasts', r[0].slug]);
-                    if (listenSub) {
-                        listenSub.unsubscribe(); // don't need to listen for subscriptions anymore as ngrx-data handles this for us
-                    }
+                    this.router.navigate(['podcasts', r]);
                 } else {
                     this.noPodcasts = true;
+                    this.loading = false;
                 }
             });
         }
@@ -58,7 +58,7 @@ export class PodcastComponent {
     }
     _initialiseState(id: string) {
         this.id = id;
-        this.podcasts$ = this.podcastStore.entities$.pipe(
+        this.podcasts$ = this.podcastStoreService.entities$.pipe(
             map(r =>
                 r.filter(it => {
                     return it.slug === id;
@@ -67,7 +67,9 @@ export class PodcastComponent {
         );
         this.podcasts$.subscribe(p => {
             if (p && p.length !== 0) {
+                this.noPodcasts = !(p.entries.length === 0);
                 this.selectedPodcast$.next(p[0]);
+                this.loading = false;
             }
         });
     }
@@ -92,7 +94,7 @@ export class PodcastComponent {
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {
-                    this.podcastStore.removeOneFromCache(podcast);
+                    this.podcastStoreService.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
                     this.alertService.error(
