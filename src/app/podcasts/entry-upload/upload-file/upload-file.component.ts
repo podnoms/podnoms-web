@@ -36,9 +36,12 @@ export class UploadFileComponent implements OnInit {
             </div>
         </div>`
     };
-    constructor(private alertService: AlertService, private authService: AuthService) {}
+    constructor(
+        private alertService: AlertService,
+        private authService: AuthService
+    ) {}
     ngOnInit() {
-        this.config.url = `${environment.apiHost}/podcast/${this.podcast.slug}/audioupload`;
+        this.config.url = `${environment.apiHost}/podcast/${this.podcast.slug}/audioupload?ngsw-bypass`;
     }
     onUploadError(event) {
         this.alertService.error('Error', `Error uploading audio\n${event}`);
