@@ -4,9 +4,12 @@ import { AuthGuard } from './auth/auth-guard.guard';
 import { ErrorComponent } from './shared/components/error/error.component';
 
 const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
+    {
+        path: '',
+        pathMatch: 'full',
+        loadChildren: 'app/auth/auth.module#AuthModule'
+    },
     { path: 'error', pathMatch: 'full', component: ErrorComponent },
-    { path: 'home', loadChildren: 'app/auth/auth.module#AuthModule' },
     { path: 'auth', loadChildren: 'app/auth/auth.module#AuthModule' },
     { path: 'public', loadChildren: 'app/public/public.module#PublicModule' },
     { path: 'sharing', loadChildren: 'app/public/public.module#PublicModule' },

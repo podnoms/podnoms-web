@@ -22,5 +22,6 @@ export const environment = {
         appId: '1887182031397435',
         version: 'v3.2'
     },
-    stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa'
+    stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
+    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k'
 };

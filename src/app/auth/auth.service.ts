@@ -82,34 +82,50 @@ export class AuthService extends BaseService {
         localStorage.clear();
         this.profile$.next(null);
         this._authNavStatusSource.next(false);
-        this.router.navigate(['']);
-        window.location.reload();
+        this.router.navigateByUrl('/', {
+            replaceUrl: true
+        });
+        // window.location.reload();
     }
     register(email: string, password: string): Observable<boolean> {
-        return this.podnomsAuthService.register(email, password).pipe(map(r => true));
+        return this.podnomsAuthService
+            .register(email, password)
+            .pipe(map(r => true));
     }
     forgotPassword(userName: string): Observable<any> {
         return this.podnomsAuthService.forgotPassword(userName);
     }
-    resetPassword(email: string, newPassword: string, newPasswordRepeat: string, code: string): Observable<boolean> {
+    resetPassword(
+        email: string,
+        newPassword: string,
+        newPasswordRepeat: string,
+        code: string
+    ): Observable<boolean> {
         return this.podnomsAuthService
             .resetPassword(email, newPassword, newPasswordRepeat, code)
             .pipe(map(res => true));
     }
     private _loginGoogle(): Observable<boolean> {
         const ret = new Subject<boolean>();
-        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(user => {
-            if (user) {
-                const rpc = this.podnomsAuthService.googleLogin(user.idToken).subscribe(
-                    res => {
-                        localStorage.setItem('auth_token', res.auth_token);
-                        this.bootstrap();
-                        ret.next(true);
-                    },
-                    err => ret.next(false)
-                );
-            }
-        });
+        this.socialAuthService
+            .signIn(GoogleLoginProvider.PROVIDER_ID)
+            .then(user => {
+                if (user) {
+                    const rpc = this.podnomsAuthService
+                        .googleLogin(user.idToken)
+                        .subscribe(
+                            res => {
+                                localStorage.setItem(
+                                    'auth_token',
+                                    res.auth_token
+                                );
+                                this.bootstrap();
+                                ret.next(true);
+                            },
+                            err => ret.next(false)
+                        );
+                }
+            });
         return ret;
     }
     private _loginFacebook(): Observable<boolean> {
@@ -117,18 +133,25 @@ export class AuthService extends BaseService {
         const options: LoginOpt = {
             scope: 'email public_profile'
         };
-        this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, options).then(user => {
-            if (user) {
-                this.podnomsAuthService.facebookLogin(user.authToken).subscribe(
-                    res => {
-                        localStorage.setItem('auth_token', res.auth_token);
-                        this.bootstrap();
-                        ret.next(true);
-                    },
-                    err => ret.next(false)
-                );
-            }
-        });
+        this.socialAuthService
+            .signIn(FacebookLoginProvider.PROVIDER_ID, options)
+            .then(user => {
+                if (user) {
+                    this.podnomsAuthService
+                        .facebookLogin(user.authToken)
+                        .subscribe(
+                            res => {
+                                localStorage.setItem(
+                                    'auth_token',
+                                    res.auth_token
+                                );
+                                this.bootstrap();
+                                ret.next(true);
+                            },
+                            err => ret.next(false)
+                        );
+                }
+            });
         return ret;
     }
 }
