@@ -77,6 +77,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row text-center">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8 text-center">
+                                    <span class="d-inline-block">
+                                        <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
+                                            formControlName="recaptcha">
+                                        </ngx-recaptcha2>
+                                    </span>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
                             <div class="alert alert-danger animated fadeInDown"
                                 *ngIf="errorMessage"
                                 [innerHTML]="errorMessage">
@@ -85,7 +96,7 @@
                                 <div class="col-12 mb-10">
                                     <button [disabled]="!signupForm.valid"
                                         type="submit"
-                                        class="btn btn-block btn-outline-secondary">
+                                        class="btn btn-block btn-info">
                                         <i class="si si-user-follow mr-10"></i> Sign Up
                                     </button>
                                 </div>

@@ -20,7 +20,8 @@ export class SharingComponent implements OnInit {
     @ViewChild('emailAddress', { static: false }) emailControl;
     @Input() entry: Shareable;
     @Output() shareComplete: EventEmitter<string> = new EventEmitter<string>();
-
+    // tslint:disable-next-line: max-line-length
+    emailRegex: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     error: string = '';
     email: string = '';
     message: string = '';
@@ -40,7 +41,7 @@ export class SharingComponent implements OnInit {
         });
     }
     shareToEmail() {
-        if (!environment.emailRegex.test(this.email)) {
+        if (!this.emailRegex.test(this.email)) {
             this.error = 'This does not look like an email address?';
         } else {
             this.sharingService

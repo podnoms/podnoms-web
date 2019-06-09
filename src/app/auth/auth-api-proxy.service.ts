@@ -42,7 +42,10 @@ export class AuthApiProxyService {
             this.httpOptions
         );
     }
-    public register(email: string, password: string): Observable<AuthResponseModel> {
+    public register(
+        email: string,
+        password: string
+    ): Observable<AuthResponseModel> {
         const body = JSON.stringify({
             email,
             password

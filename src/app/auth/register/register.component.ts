@@ -10,16 +10,16 @@ import {
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
-
+import { environment } from '../../../environments/environment';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent extends BasePageComponent implements OnInit {
+    environment = environment;
     // tslint:disable-next-line: max-line-length
     emailRegex: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     form: FormGroup;
     signupForm: FormGroup;
 
@@ -61,7 +61,8 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                     ]
                 },
                 { validator: PasswordValidation.matchPassword }
-            )
+            ),
+            recaptcha: ['', Validators.required]
         });
     }
     get email() {
