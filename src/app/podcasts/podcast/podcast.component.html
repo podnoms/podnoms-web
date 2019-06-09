@@ -183,7 +183,18 @@
         </div>
     </div>
 </div>
-<div *ngIf="loading">Loading...</div>
+<div *ngIf="loading">
+    <div class="content content-full text-center mt-50">
+        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
+            data-toggle="appear"
+            data-class="animated fadeIn">
+            <div class="spinner-border text-success"
+                role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </h1>
+    </div>
+</div>
 <div *ngIf="noPodcasts && !loading">
     <div class="content content-full text-center mt-50">
         <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"

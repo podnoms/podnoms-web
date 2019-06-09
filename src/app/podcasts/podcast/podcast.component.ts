@@ -34,21 +34,31 @@ export class PodcastComponent {
         private alertService: AlertService,
         private changeDetectorRef: ChangeDetectorRef
     ) {
+        console.log('podcast.component', 'constructor');
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
             this.loading = true;
             // const listenSub = this.podcastStoreService.entities$.pipe(skip(1));
-
-            this.podcastDataService.getActivePodcast().subscribe(r => {
-                if (r) {
-                    // here lies the problem: r[0] is meaningless!!
-                    this.router.navigate(['podcasts', r]);
-                } else {
-                    this.noPodcasts = true;
-                    this.loading = false;
-                }
-            });
+            const selectedPodcast =
+                localStorage.getItem('selectedPodcast') || '';
+            if (!selectedPodcast) {
+                this.podcastDataService.getActivePodcast().subscribe(
+                    r => {
+                        if (r) {
+                            // here lies the problem: r[0] is meaningless!!
+                            this.router.navigate(['podcasts', r]);
+                        } else {
+                            this.noPodcasts = true;
+                            this.loading = false;
+                        }
+                    },
+                    error =>
+                        console.error(`Error loading active podcast ${error}`)
+                );
+            } else {
+                this.router.navigate(['podcasts', selectedPodcast]);
+            }
         }
         this.route.params.subscribe(p => {
             if (p && p['podcast']) {
@@ -58,6 +68,7 @@ export class PodcastComponent {
     }
     _initialiseState(id: string) {
         this.id = id;
+        localStorage.setItem('selectedPodcast', id);
         this.podcasts$ = this.podcastStoreService.entities$.pipe(
             map(r =>
                 r.filter(it => {
