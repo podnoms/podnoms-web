@@ -1,10 +1,3 @@
-const emailRegex = {
-    re:
-        // tslint:disable-next-line:max-line-length
-        '/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/',
-    flags: 'gi'
-};
-
 export const environment = {
     production: false,
     signalRHost: 'https://localhost:5001',
@@ -30,6 +23,6 @@ export const environment = {
         version: 'v3.2'
     },
     stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
-    emailRegex: new RegExp(emailRegex.re, emailRegex.flags)
+    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k'
 };
 import 'zone.js/dist/zone-error';

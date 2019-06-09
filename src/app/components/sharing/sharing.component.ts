@@ -1,3 +1,4 @@
+import { ConstantsService } from './../../shared/services/constants.service';
 import {
     Component,
     OnInit,
@@ -20,14 +21,15 @@ export class SharingComponent implements OnInit {
     @ViewChild('emailAddress', { static: false }) emailControl;
     @Input() entry: Shareable;
     @Output() shareComplete: EventEmitter<string> = new EventEmitter<string>();
-
+    // tslint:disable-next-line: max-line-length
     error: string = '';
     email: string = '';
     message: string = '';
     linkUrl: string = '';
     constructor(
         private sharingService: SharingService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private constants: ConstantsService
     ) {}
 
     ngOnInit() {
@@ -40,7 +42,7 @@ export class SharingComponent implements OnInit {
         });
     }
     shareToEmail() {
-        if (!environment.emailRegex.test(this.email)) {
+        if (!this.constants.emailRegex.test(this.email)) {
             this.error = 'This does not look like an email address?';
         } else {
             this.sharingService
