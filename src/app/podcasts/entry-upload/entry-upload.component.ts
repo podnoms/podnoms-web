@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Podcast, PodcastEntry } from '../../core';
 import { UploadModes } from '../upload-modes.enum';
 import { Subject, Observable } from 'rxjs';
-import { EntityOp } from 'ngrx-data';
+import { EntityOp } from '@ngrx/data';
 import { map, delay, takeUntil } from 'rxjs/operators';
 import { PodcastStoreService } from '../podcast-store.service';
 

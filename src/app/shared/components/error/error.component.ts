@@ -18,10 +18,10 @@ export class ErrorComponent implements OnInit {
 
     tryForReload() {
         this.utilityService.checkForApiServer().subscribe(
-            r => {
+            () => {
                 this.router.navigateByUrl('/podcasts').then(() => window.location.reload());
             },
-            err => {
+            () => {
                 this.errorText = 'Still down, sorry..';
             }
         );

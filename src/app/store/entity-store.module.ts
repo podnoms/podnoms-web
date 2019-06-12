@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { EntityMetadataMap, NgrxDataModule, DefaultDataServiceConfig, EntityDataService } from 'ngrx-data';
+import {
+    EntityMetadataMap,
+    DefaultDataServiceConfig,
+    EntityDataService,
+    EntityDataModule
+} from '@ngrx/data';
 import { environment } from '../../environments/environment';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
 import { EntryDataService } from '../podcasts/entry-data.service';
@@ -46,7 +51,7 @@ export const pluralNames = {};
 
 @NgModule({
     imports: [
-        NgrxDataModule.forRoot({
+        EntityDataModule.forRoot({
             entityMetadata: entityMetadata,
             pluralNames: pluralNames
         })
