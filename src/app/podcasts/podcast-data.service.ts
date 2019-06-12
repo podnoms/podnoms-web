@@ -9,7 +9,7 @@ import {
     QueryParams,
     HttpUrlGenerator,
     Logger
-} from 'ngrx-data';
+} from '@ngrx/data';
 
 @Injectable({
     providedIn: 'root'

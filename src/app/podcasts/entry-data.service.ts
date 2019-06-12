@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DefaultDataService, HttpUrlGenerator, Logger, QueryParams } from 'ngrx-data';
+import {
+    DefaultDataService,
+    HttpUrlGenerator,
+    Logger,
+    QueryParams
+} from '@ngrx/data';
 import { PodcastEntry } from '../core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';

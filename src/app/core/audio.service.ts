@@ -23,6 +23,7 @@ export class AudioService {
     private __playTimer: Observable<number> = observableTimer(0, 10);
     // events
     positionChanged: EventEmitter<number> = new EventEmitter();
+    // TODO: this (and others) can probably be refactored to observables
     playStateChanged: EventEmitter<PlayState> = new EventEmitter();
     titleChanged: EventEmitter<string> = new EventEmitter();
     durationChanged: EventEmitter<number> = new EventEmitter();
