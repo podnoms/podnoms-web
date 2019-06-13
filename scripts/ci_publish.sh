@@ -1,8 +1,8 @@
-git ls-files --others --error-unmatch . >/dev/null 2>&1; ec=$?
-if test "$ec" = 0; then
-    echo 'Git needs commmit'
-    elif test "$ec" = 1; then
-    echo no untracked files
+#1 /usr/bin/env bash
+
+if [ -z "$(git status --porcelain)" ]; then
+    echo 'Good to go'
 else
-    echo error from ls-files
+    echo 'Please commit all changes first'
+    git status --porcelain
 fi
