@@ -21,6 +21,7 @@ export class AuthService extends BaseService {
     private _authNavStatusSource = new BehaviorSubject<boolean>(false);
     authNavStatus$ = this._authNavStatusSource.asObservable();
 
+    currentUser: Profile;
     profile$ = new BehaviorSubject<Profile>(null);
 
     private profileSubject = new BehaviorSubject<Profile>(null);
@@ -37,6 +38,7 @@ export class AuthService extends BaseService {
         return this.bootstrap();
     }
     bootstrap(): Observable<boolean> {
+        this.profile$.subscribe(p => (this.currentUser = p));
         const ret = new Subject<boolean>();
         try {
             if (this.isLoggedIn()) {
@@ -58,6 +60,15 @@ export class AuthService extends BaseService {
         const helper = new JwtHelperService();
         const token = this.getAuthToken();
         return token && !helper.isTokenExpired(token);
+    }
+    checkHasRoles(roles: string[]) {
+        if (this.currentUser && this.currentUser.roles) {
+            const matches = roles.filter(e =>
+                this.currentUser.roles.includes(e)
+            );
+            return matches.length === roles.length;
+        }
+        return false;
     }
     getAuthToken(): string {
         return localStorage.getItem('auth_token');
