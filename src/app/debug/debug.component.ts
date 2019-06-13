@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
-import { Podcast, PodcastEntry } from '../core';
-import { Observable } from 'rxjs';
+import { AlertService } from 'app/core/alerts/alert.service';
 
 @Component({
     selector: 'app-debug',
@@ -9,11 +8,21 @@ import { Observable } from 'rxjs';
     styleUrls: ['./debug.component.scss']
 })
 export class DebugComponent implements OnInit {
-    constructor(private podcastDataService: PodcastDataService) {}
+    constructor(private alertService: AlertService) {}
 
     ngOnInit() {}
 
     clickProcess($event: () => void) {
         setTimeout(() => $event(), 2000);
+    }
+    showToast() {
+        this.alertService.success(
+            'Hello Sailor',
+            'Lorem ipsum motherfucker',
+            '',
+            {
+                autoClose: false
+            }
+        );
     }
 }

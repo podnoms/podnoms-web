@@ -19,7 +19,7 @@ import { ProfileStoreService } from '../profile-store.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
 import { BaseChartDirective } from 'ng2-charts';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

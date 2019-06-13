@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../../podcasts/entry-data.service';
 import { PodcastStoreService } from '../../../podcasts/podcast-store.service';
-import { AlertService } from '../../../core/alert.service';
+import { AlertService } from '../../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-sidebar-podcast-item',

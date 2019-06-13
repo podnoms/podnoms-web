@@ -5,7 +5,7 @@ import { DebugService } from '../../debug/debug.service';
 import { environment } from '../../../environments/environment';
 import { PaymentsService } from '../../payments/payments.service';
 import { Profile, Payment } from '../../core';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 import { UiStateService } from '../../core/ui-state.service';
 
 @Component({

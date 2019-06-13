@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { UploadModes } from '../upload-modes.enum';
 import { PodcastDataService } from '../podcast-data.service';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-podcast',

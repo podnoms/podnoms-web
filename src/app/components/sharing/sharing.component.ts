@@ -8,7 +8,7 @@ import {
     EventEmitter
 } from '@angular/core';
 import { Shareable } from '../../core';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
 import { environment } from '../../../environments/environment';
 

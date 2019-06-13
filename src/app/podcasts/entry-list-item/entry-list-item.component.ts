@@ -19,7 +19,7 @@ import { PodcastDataService } from '../podcast-data.service';
 import { Router } from '@angular/router';
 import { EntryDataService } from '../entry-data.service';
 import { AudioDownloadService } from '../../shared/services/audio-download.service';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../shared/components/toast/toast.service';
 declare var $: any;

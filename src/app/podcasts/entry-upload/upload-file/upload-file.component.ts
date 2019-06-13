@@ -3,7 +3,7 @@ import { Podcast } from '../../../core';
 import { AuthService } from '../../../auth/auth.service';
 import { environment } from '../../../../environments/environment';
 import { DropzoneConfig, DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-import { AlertService } from '../../../core/alert.service';
+import { AlertService } from '../../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-upload-file',

@@ -13,7 +13,7 @@ import { SwPush } from '@angular/service-worker';
 import { PushRegistrationService } from './shared/services/push-registration.service';
 import { skip, take } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
-import { AlertService } from './core/alert.service';
+import { AlertService } from './core/alerts/alert.service';
 
 @Component({
     selector: 'app-root',

@@ -7,7 +7,7 @@ import { PodcastDataService } from '../podcast-data.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
 import { EntryDataService } from '../entry-data.service';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-entry-edit-form',

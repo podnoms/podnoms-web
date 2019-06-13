@@ -5,6 +5,7 @@
     top: 0;
     right: 0;
     width: 320px;
+    z-index: 99999;
 }
 
 .toast-item {
@@ -22,4 +23,3 @@
 .nav-users {
     background-color: $body-bg-light;
 }
-

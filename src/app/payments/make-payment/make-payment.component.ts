@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { PaymentsService } from '../payments.service';
 import { environment } from '../../../environments/environment';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ScriptService } from '../../core/scripts/script.service';
 import { AuthService } from '../../auth/auth.service';

@@ -7,7 +7,7 @@ import { trigger, transition, style, sequence, animate } from '@angular/animatio
 import { Observable } from 'rxjs';
 import { EntriesStoreService } from '../entries-store.service';
 import { EntryDataService } from '../entry-data.service';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';
 
 @Component({

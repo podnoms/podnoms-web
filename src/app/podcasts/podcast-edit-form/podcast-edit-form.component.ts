@@ -15,7 +15,7 @@ import { validateSearch } from '../../shared/validators/search.validator';
 import { validateDomain } from '../../shared/validators/domain.validator';
 // import { ConditionalValidator } from '../../shared/validators/conditional.validator';
 import { CategoryService } from '../../shared/services/category.service';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-podcast-edit-form',

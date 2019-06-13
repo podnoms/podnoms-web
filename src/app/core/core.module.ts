@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { throwIfAlreadyLoaded } from './module-import-check';
 import { AudioService } from './audio.service';
 import { AuthService } from '../auth/auth.service';
-import { AlertService } from './alert.service';
+import { AlertService } from './alerts/alert.service';
 
 @NgModule({
     imports: [

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Podcast, Category } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
-import { AlertService } from '../../core/alert.service';
+import { AlertService } from '../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-podcast-privacy',

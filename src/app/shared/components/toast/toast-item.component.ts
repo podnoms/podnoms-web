@@ -1,5 +1,17 @@
-import { Component, OnInit, Input, NgZone, ChangeDetectorRef } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+    Component,
+    OnInit,
+    Input,
+    NgZone,
+    ChangeDetectorRef
+} from '@angular/core';
+import {
+    animate,
+    state,
+    style,
+    transition,
+    trigger
+} from '@angular/animations';
 import { ToastMessage, ToastType } from './toast-models';
 import { ToastService } from './toast.service';
 import { Observable } from 'rxjs';
@@ -9,9 +21,15 @@ import { Observable } from 'rxjs';
         trigger('enterLeave', [
             // Fade
             state('fade', style({ opacity: 1 })),
-            transition('* => fade', [style({ opacity: 0 }), animate('400ms ease-in-out')]),
+            transition('* => fade', [
+                style({ opacity: 0 }),
+                animate('400ms ease-in-out')
+            ]),
             state('fadeOut', style({ opacity: 0 })),
-            transition('fade => fadeOut', [style({ opacity: 1 }), animate('300ms ease-in-out')]),
+            transition('fade => fadeOut', [
+                style({ opacity: 1 }),
+                animate('300ms ease-in-out')
+            ]),
 
             // Enter from top
             state('fromTop', style({ opacity: 1, transform: 'translateY(0)' })),
@@ -19,43 +37,64 @@ import { Observable } from 'rxjs';
                 style({ opacity: 0, transform: 'translateY(-5%)' }),
                 animate('400ms ease-in-out')
             ]),
-            state('fromTopOut', style({ opacity: 0, transform: 'translateY(5%)' })),
+            state(
+                'fromTopOut',
+                style({ opacity: 0, transform: 'translateY(5%)' })
+            ),
             transition('fromTop => fromTopOut', [
                 style({ opacity: 1, transform: 'translateY(0)' }),
                 animate('300ms ease-in-out')
             ]),
 
             // Enter from right
-            state('fromRight', style({ opacity: 1, transform: 'translateX(0)' })),
+            state(
+                'fromRight',
+                style({ opacity: 1, transform: 'translateX(0)' })
+            ),
             transition('* => fromRight', [
                 style({ opacity: 0, transform: 'translateX(5%)' }),
                 animate('400ms ease-in-out')
             ]),
-            state('fromRightOut', style({ opacity: 0, transform: 'translateX(-5%)' })),
+            state(
+                'fromRightOut',
+                style({ opacity: 0, transform: 'translateX(-5%)' })
+            ),
             transition('fromRight => fromRightOut', [
                 style({ opacity: 1, transform: 'translateX(0)' }),
                 animate('300ms ease-in-out')
             ]),
 
             // Enter from bottom
-            state('fromBottom', style({ opacity: 1, transform: 'translateY(0)' })),
+            state(
+                'fromBottom',
+                style({ opacity: 1, transform: 'translateY(0)' })
+            ),
             transition('* => fromBottom', [
                 style({ opacity: 0, transform: 'translateY(5%)' }),
                 animate('400ms ease-in-out')
             ]),
-            state('fromBottomOut', style({ opacity: 0, transform: 'translateY(-5%)' })),
+            state(
+                'fromBottomOut',
+                style({ opacity: 0, transform: 'translateY(-5%)' })
+            ),
             transition('fromBottom => fromBottomOut', [
                 style({ opacity: 1, transform: 'translateY(0)' }),
                 animate('300ms ease-in-out')
             ]),
 
             // Enter from left
-            state('fromLeft', style({ opacity: 1, transform: 'translateX(0)' })),
+            state(
+                'fromLeft',
+                style({ opacity: 1, transform: 'translateX(0)' })
+            ),
             transition('* => fromLeft', [
                 style({ opacity: 0, transform: 'translateX(-5%)' }),
                 animate('400ms ease-in-out')
             ]),
-            state('fromLeftOut', style({ opacity: 0, transform: 'translateX(5%)' })),
+            state(
+                'fromLeftOut',
+                style({ opacity: 0, transform: 'translateX(5%)' })
+            ),
             transition('fromLeft => fromLeftOut', [
                 style({ opacity: 1, transform: 'translateX(0)' }),
                 animate('300ms ease-in-out')
@@ -63,7 +102,10 @@ import { Observable } from 'rxjs';
 
             // Rotate
             state('scale', style({ opacity: 1, transform: 'scale(1)' })),
-            transition('* => scale', [style({ opacity: 0, transform: 'scale(0)' }), animate('400ms ease-in-out')]),
+            transition('* => scale', [
+                style({ opacity: 0, transform: 'scale(0)' }),
+                animate('400ms ease-in-out')
+            ]),
             state('scaleOut', style({ opacity: 0, transform: 'scale(0)' })),
             transition('scale => scaleOut', [
                 style({ opacity: 1, transform: 'scale(1)' }),
@@ -72,8 +114,14 @@ import { Observable } from 'rxjs';
 
             // Scale
             state('rotate', style({ opacity: 1, transform: 'rotate(0deg)' })),
-            transition('* => rotate', [style({ opacity: 0, transform: 'rotate(5deg)' }), animate('400ms ease-in-out')]),
-            state('rotateOut', style({ opacity: 0, transform: 'rotate(-5deg)' })),
+            transition('* => rotate', [
+                style({ opacity: 0, transform: 'rotate(5deg)' }),
+                animate('400ms ease-in-out')
+            ]),
+            state(
+                'rotateOut',
+                style({ opacity: 0, transform: 'rotate(-5deg)' })
+            ),
             transition('rotate => rotateOut', [
                 style({ opacity: 1, transform: 'rotate(0deg)' }),
                 animate('400ms ease-in-out')
@@ -97,17 +145,25 @@ export class ToastItemComponent implements OnInit {
     private endTime: number;
     private timeOut: number;
 
-    constructor(private toastService: ToastService, private zone: NgZone, private cdr: ChangeDetectorRef) {}
+    constructor(
+        private toastService: ToastService,
+        private zone: NgZone,
+        private cdr: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
         this.timeOut = this.toast.timeOut || 5000;
-        this.startTimeout();
+        if (this.toast.timeOut !== 0 && this.toast.autoClose === true) {
+            this.startTimeout();
+        }
     }
     startTimeout() {
         this.sleepTime = 1000 / this.framesPerSecond /* ms */;
         this.startTime = new Date().getTime();
         this.endTime = this.startTime + this.timeOut;
-        this.zone.runOutsideAngular(() => (this.timer = setTimeout(this.instance, this.sleepTime)));
+        this.zone.runOutsideAngular(
+            () => (this.timer = setTimeout(this.instance, this.sleepTime))
+        );
     }
     private instance = () => {
         const now = new Date().getTime();
@@ -119,12 +175,17 @@ export class ToastItemComponent implements OnInit {
                 this.timerPercentageRemaining = Math.min(
                     ((now -
                         this.startTime +
-                        this.sleepTime) /* We add this.sleepTime just to have 100% before close */ *
+                        this
+                            .sleepTime) /* We add this.sleepTime just to have 100% before close */ *
                         100) /
                         this.timeOut,
                     100
                 );
-                console.log('toast-item.component', 'percentage', this.timerPercentageRemaining);
+                console.log(
+                    'toast-item.component',
+                    'percentage',
+                    this.timerPercentageRemaining
+                );
                 console.log('toast-item.component', 'timeout', this.timeOut);
 
                 if (this.timerPercentageRemaining >= 100) {

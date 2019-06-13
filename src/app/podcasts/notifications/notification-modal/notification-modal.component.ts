@@ -8,7 +8,7 @@ import { Podcast } from '../../../core';
 import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
-import { AlertService } from '../../../core/alert.service';
+import { AlertService } from '../../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-notification-modal',

@@ -9,7 +9,7 @@ import {
 import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
-import { AlertService } from '../../../core/alert.service';
+import { AlertService } from '../../../core/alerts/alert.service';
 
 @Component({
     selector: 'app-upload-url',
