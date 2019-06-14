@@ -17,7 +17,7 @@ export class NavbarComponent {
     profile$: Observable<Profile>;
     invoices$: Observable<Payment[]>;
     pricingEnabled: boolean = false;
-
+    profileHasAdmin: boolean = false;
     constructor(
         paymentService: PaymentsService,
         private authService: AuthService,
@@ -26,6 +26,12 @@ export class NavbarComponent {
         private uiStateService: UiStateService
     ) {
         this.profile$ = authService.profile$;
+        this.profile$.subscribe(
+            p =>
+                (this.profileHasAdmin = this.authService.checkHasRoles([
+                    'client-admin'
+                ]))
+        );
         this.invoices$ = paymentService.getPayments();
     }
     toggleSidebar() {

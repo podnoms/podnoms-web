@@ -12,6 +12,7 @@ export class Profile {
     hasSubscribed: boolean;
     subscriptionType: string;
     subscriptionValidUntil: Date;
+    roles: string[];
 }
 export class ProfileLimits {
     user: Profile;
