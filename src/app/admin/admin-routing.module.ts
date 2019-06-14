@@ -7,9 +7,7 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        component: ActivityComponent,
-        canActivate: [AuthGuard],
-        data: { roles: ['podnoms-admin'] }
+        component: ActivityComponent
     }
 ];
 
