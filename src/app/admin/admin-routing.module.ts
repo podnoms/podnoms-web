@@ -7,7 +7,9 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        component: ActivityComponent
+        component: ActivityComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['client-admin'] }
     }
 ];
 

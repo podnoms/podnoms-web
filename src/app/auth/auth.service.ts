@@ -83,8 +83,7 @@ export class AuthService extends BaseService {
     login(userName: string, password: string): Observable<boolean> {
         return this.podnomsAuthService.login(userName, password).pipe(
             map(res => {
-                localStorage.setItem('auth_token', res.auth_token);
-                this.bootstrap();
+                this._storeAuth(res);
                 return true;
             })
         );
@@ -116,6 +115,11 @@ export class AuthService extends BaseService {
             .resetPassword(email, newPassword, newPasswordRepeat, code)
             .pipe(map(res => true));
     }
+    private _storeAuth(response) {
+        localStorage.setItem('auth_token', response.auth_token);
+        const jwtHelper = new JwtHelperService();
+        this.bootstrap();
+    }
     private _loginGoogle(): Observable<boolean> {
         const ret = new Subject<boolean>();
         this.socialAuthService
@@ -126,11 +130,7 @@ export class AuthService extends BaseService {
                         .googleLogin(user.idToken)
                         .subscribe(
                             res => {
-                                localStorage.setItem(
-                                    'auth_token',
-                                    res.auth_token
-                                );
-                                this.bootstrap();
+                                this._storeAuth(res);
                                 ret.next(true);
                             },
                             err => ret.next(false)
@@ -152,11 +152,7 @@ export class AuthService extends BaseService {
                         .facebookLogin(user.authToken)
                         .subscribe(
                             res => {
-                                localStorage.setItem(
-                                    'auth_token',
-                                    res.auth_token
-                                );
-                                this.bootstrap();
+                                this._storeAuth(res);
                                 ret.next(true);
                             },
                             err => ret.next(false)
