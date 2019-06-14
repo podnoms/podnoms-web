@@ -17,4 +17,6 @@ $simple-line-font-path: '~simple-line-icons/fonts/';
 @import '~dropzone/dist/dropzone.css';
 @import '~@qontu/ngx-inline-editor/themes/bootstrap.css';
 @import "~@ng-select/ng-select/themes/default.theme.css";
-@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';

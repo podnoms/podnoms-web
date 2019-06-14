@@ -8,7 +8,8 @@
             "core-js/es7/reflect": [
                 "../node_modules/core-js/proposals/reflect-metadata"
             ],
-            "core-js/es6/*": ["../node_modules/core-js/es/*"]
+            "core-js/es6/*": ["../node_modules/core-js/es/*"],
+            "jszip": ["../node_modules/jszip/dist/jszip.min.js"]
         },
         "importHelpers": true,
         "outDir": "./dist/out-tsc",

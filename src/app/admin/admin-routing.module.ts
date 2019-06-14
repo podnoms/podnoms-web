@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { AuthGuard } from '../auth/auth.guard';
-import { DebugComponent } from './debug.component';
+import { AuthGuard } from 'app/auth/auth.guard';
+import { ActivityComponent } from './activity/activity.component';
 
 const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        component: DebugComponent,
-        canActivate: [AuthGuard]
+        component: ActivityComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['client-admin'] }
     }
 ];
 
@@ -17,4 +17,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DebugRoutingModule {}
+export class AdminRoutingModule {}

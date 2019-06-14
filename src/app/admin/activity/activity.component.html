@@ -1,0 +1,84 @@
+<div class="user-container-wrapper">
+    <div class="block block-themed block-rounded">
+        <div class="block-header bg-pulse-dark">
+            <h3 class="block-title">User list</h3>
+        </div>
+        <div class="block-content">
+            <ngx-datatable #userTable
+                class="bootstrap striped expandable"
+                [rows]="users$ | async"
+                [columnMode]="'force'"
+                [headerHeight]="40"
+                [summaryRow]="true"
+                [summaryPosition]="'bottom'"
+                [footerHeight]="40"
+                [limit]="10"
+                [rowHeight]="'auto'"
+                [reorderable]="true">
+                <ngx-datatable-row-detail [rowHeight]="100">
+                    <ng-template let-row="row"
+                        let-expanded="expanded"
+                        ngx-datatable-row-detail-template>
+                        <ngx-datatable #userTable
+                            class="bootstrap striped expandable"
+                            [rows]="row.podcasts"
+                            [columnMode]="'force'"
+                            [headerHeight]="40"
+                            [summaryRow]="true"
+                            [summaryPosition]="'bottom'"
+                            [footerHeight]="40"
+                            [limit]="10"
+                            [rowHeight]="'auto'"
+                            [reorderable]="true">
+                            <ngx-datatable-column name="Slug">
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Title">
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="CreateDate">
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </ng-template>
+                </ngx-datatable-row-detail>
+
+                <ngx-datatable-column [width]="50"
+                    [resizeable]="false"
+                    [sortable]="false"
+                    [draggable]="false"
+                    [canAutoResize]="false">
+                    <ng-template let-row="row"
+                        let-expanded="expanded"
+                        ngx-datatable-cell-template>
+                        <a href="javascript:void(0)"
+                            [class.datatable-icon-right]="!expanded"
+                            [class.datatable-icon-down]="expanded"
+                            title="Expand/Collapse Row"
+                            (click)="toggleExpandRow(row)">
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Name"
+                    width="200">
+                    <ng-template let-value="value"
+                        ngx-datatable-cell-template>
+                        <strong>{{ value }}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Email"
+                    width="200">
+                    <ng-template let-value="value"
+                        ngx-datatable-cell-template>
+                        <strong>{{ value }}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Slug">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="PodcastCount">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="EntryCount">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="IsAdmin">
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

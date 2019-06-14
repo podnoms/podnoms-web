@@ -63,6 +63,11 @@
                         <i class="fa fa-info mr-5"></i>
                         About</a>
                     <a class="dropdown-item"
+                        *ngIf="profileHasAdmin"
+                        [routerLink]="['/admin']">
+                        <i class="fa fa-flag mr-5"></i>
+                        Admin</a>
+                    <a class="dropdown-item"
                         (click)="logout()">
                         <i class="fa fa-sign-out-alt mr-5"></i>
                         Logout</a>

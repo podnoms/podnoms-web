@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.0.64",
+    "version": "1.0.67",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -37,7 +37,7 @@
         "@ngrx/store": "^8.0.1",
         "@ngrx/store-devtools": "^8.0.1",
         "@qontu/ngx-inline-editor": "^0.2.0-alpha.12",
-        "angular-datatables": "^7.0.0",
+        "@swimlane/ngx-datatable": "^15.0.2",
         "angular-in-memory-web-api": "^0.8.0",
         "angular2-uuid": "^1.1.1",
         "angularx-social-login": "^1.2.7",
@@ -46,9 +46,6 @@
         "bootstrap": "4.3.1",
         "chart.js": "^2.8.0",
         "core-js": "^3.1.3",
-        "datatables.net": "^1.10.19",
-        "datatables.net-bs4": "^1.10.19",
-        "datatables.net-dt": "^1.10.19",
         "dropzone": "5.5.1",
         "easy-pie-chart": "^2.1.7",
         "feather-icons": "^4.22.0",
