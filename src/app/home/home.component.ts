@@ -41,9 +41,7 @@ export class HomeComponent implements OnInit {
                 }
             );
         } else {
-            setTimeout(() => {
-                // this.loaded = true;
-            }, 3000);
+            this.loaded = true;
         }
     }
     ngOnInit() {}
