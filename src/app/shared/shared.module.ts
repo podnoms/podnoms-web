@@ -26,7 +26,14 @@ import { FileSizeComponent } from './components/file-size/file-size.component';
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SocialLoginModule, NgSelectModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SocialLoginModule,
+        NgSelectModule
+    ],
     exports: [
         FormsModule,
         ReactiveFormsModule,

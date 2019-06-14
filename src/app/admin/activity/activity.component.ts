@@ -11,13 +11,34 @@ import { Profile } from 'app/core';
 })
 export class ActivityComponent implements OnInit {
     @ViewChild('userTable', { static: false }) table: any;
-    users$: Observable<any>;
+    loading: boolean = true;
+    users: any;
     constructor(private http: HttpClient) {
-        this.users$ = http.get<any>(`${environment.apiHost}/admin/user`);
+        http.get<any>(
+            `${environment.apiHost}/admin/user/activity?currentPage=1&pageSize=10`
+        ).subscribe(r => {
+            this.users = r.queryable;
+            this.loading = false;
+        });
     }
     ngOnInit() {}
 
     toggleExpandRow(row) {
         this.table.rowDetail.toggleExpandRow(row);
+    }
+    onSort($event) {
+        this.loading = true;
+        console.log('activity.component', 'onSort', $event);
+        const field = $event.sorts[0].prop;
+        const ascending = $event.sorts[0].dir === 'asc';
+        //
+        this.http
+            .get<any>(
+                `${environment.apiHost}/admin/user/activity?currentPage=1&pageSize=10&sortBy=${field}&ascending=${ascending}`
+            )
+            .subscribe(r => {
+                this.users = r.queryable;
+                this.loading = false;
+            });
     }
 }

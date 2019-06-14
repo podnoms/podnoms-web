@@ -6,15 +6,17 @@
         <div class="block-content">
             <ngx-datatable #userTable
                 class="bootstrap striped expandable"
-                [rows]="users$ | async"
+                [rows]="users"
                 [columnMode]="'force'"
                 [headerHeight]="40"
                 [summaryRow]="true"
                 [summaryPosition]="'bottom'"
                 [footerHeight]="40"
                 [limit]="10"
+                [loadingIndicator]="loading"
                 [rowHeight]="'auto'"
-                [reorderable]="true">
+                [externalSorting]="true"
+                (sort)="onSort($event)">
                 <ngx-datatable-row-detail [rowHeight]="100">
                     <ng-template let-row="row"
                         let-expanded="expanded"
