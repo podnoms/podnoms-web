@@ -26,6 +26,7 @@ import { registerLocaleData } from '@angular/common';
 import localeIE from '@angular/common/locales/en-IE';
 import { HomeComponent } from './home/home.component';
 import { InterstitialComponent } from './shared/components/interstitial/interstitial.component';
+import { AppDispatchers } from './store/app-config/dispatchers';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -56,6 +57,7 @@ registerLocaleData(localeIE, 'ie');
     providers: [
         MonitoringService,
         UpdateService,
+        AppDispatchers,
         {
             provide: ErrorHandler,
             useClass: MonitoringErrorHandler

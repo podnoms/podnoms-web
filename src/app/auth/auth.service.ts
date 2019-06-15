@@ -13,6 +13,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
 import { AuthApiProxyService } from './auth-api-proxy.service';
 import { ProfileStoreService } from '../profile/profile-store.service';
+import { AppDispatchers } from 'app/store/app-config/dispatchers';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,8 @@ export class AuthService extends BaseService {
         private router: Router,
         private socialAuthService: SocialAuthService,
         private podnomsAuthService: AuthApiProxyService,
-        private profileStoreService: ProfileStoreService
+        private profileStoreService: ProfileStoreService,
+        private appDispatchers: AppDispatchers
     ) {
         super();
     }
@@ -92,9 +94,14 @@ export class AuthService extends BaseService {
         localStorage.clear();
         this.profile$.next(null);
         this._authNavStatusSource.next(false);
-        this.router.navigateByUrl('/', {
-            replaceUrl: true
-        });
+        this.appDispatchers.clearAllStorage();
+
+        setTimeout(() => {
+            this.router.navigateByUrl('/?action=Reload', {
+                skipLocationChange: false,
+                replaceUrl: true
+            });
+        }, 500);
         // window.location.reload();
     }
     register(email: string, password: string): Observable<boolean> {
