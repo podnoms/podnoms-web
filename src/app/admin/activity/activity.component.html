@@ -7,7 +7,7 @@
             <ngx-datatable #userTable
                 class="bootstrap striped expandable"
                 [rows]="users"
-                [columnMode]="'force'"
+                [columnMode]="'flex'"
                 [headerHeight]="40"
                 [summaryRow]="true"
                 [summaryPosition]="'bottom'"
@@ -59,26 +59,56 @@
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Name"
-                    width="200">
+                    [flexGrow]="2">
                     <ng-template let-value="value"
                         ngx-datatable-cell-template>
                         <strong>{{ value }}</strong>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Email"
-                    width="200">
-                    <ng-template let-value="value"
-                        ngx-datatable-cell-template>
-                        <strong>{{ value }}</strong>
+                    [flexGrow]="2">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="
+                    Slug"
+                    [flexGrow]="2">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="PodcastCount"
+                    [flexGrow]="1"
+                    [cellClass]="'text-right float-right'">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Podcasts</span>
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Slug">
+                <ngx-datatable-column name="EntryCount"
+                    [flexGrow]="1"
+                    [cellClass]="'text-right float-right'">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Entries</span>
+                    </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="PodcastCount">
+
+                <ngx-datatable-column name="City"
+                    [flexGrow]="1">
                 </ngx-datatable-column>
-                <ngx-datatable-column name="EntryCount">
+                <ngx-datatable-column name="CountryCode"
+                    [flexGrow]="1">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Country</span>
+                    </ng-template>
+                    <ng-template let-value="value"
+                        ngx-datatable-cell-template>
+                        {{value}}&nbsp;<span [className]="getClassName(value)"></span>
+                    </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="IsAdmin">
+                <ngx-datatable-column name="LastSeen"
+                    [flexGrow]="2">
+                    <ng-template let-value="value"
+                        ngx-datatable-cell-template>
+                        <strong>{{ value | amTimeAgo}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="IsAdmin"
+                    [flexGrow]="1">
                 </ngx-datatable-column>
             </ngx-datatable>
         </div>

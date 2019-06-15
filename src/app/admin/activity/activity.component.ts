@@ -41,4 +41,10 @@ export class ActivityComponent implements OnInit {
                 this.loading = false;
             });
     }
+    getClassName(countryCode: string) {
+        if (countryCode) {
+            return `flag-icon flag-icon-${countryCode.toLowerCase()}`;
+        }
+        return 'd-none';
+    }
 }
