@@ -73,16 +73,32 @@
                     [flexGrow]="2">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="PodcastCount"
-                    [flexGrow]="1">
+                    [flexGrow]="1"
+                    [cellClass]="'text-right float-right'">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Podcasts</span>
+                    </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="EntryCount"
+                    [flexGrow]="1"
+                    [cellClass]="'text-right float-right'">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Entries</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="City"
                     [flexGrow]="1">
                 </ngx-datatable-column>
                 <ngx-datatable-column name="CountryCode"
                     [flexGrow]="1">
-                </ngx-datatable-column>
-                <ngx-datatable-column name="City"
-                    [flexGrow]="1">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Country</span>
+                    </ng-template>
+                    <ng-template let-value="value"
+                        ngx-datatable-cell-template>
+                        {{value}}&nbsp;<span [className]="getClassName(value)"></span>
+                    </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="LastSeen"
                     [flexGrow]="2">
