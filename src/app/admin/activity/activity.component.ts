@@ -12,32 +12,41 @@ import { Profile } from 'app/core';
 export class ActivityComponent implements OnInit {
     @ViewChild('userTable', { static: false }) table: any;
     loading: boolean = true;
+    sortIsAscending: boolean = false;
+    sortField: string = 'LastSeen';
+    page: any = {
+        rowCount: 0,
+        currentPage: 1,
+        pageSize: 10
+    };
     users: any;
     constructor(private http: HttpClient) {
-        http.get<any>(
-            `${environment.apiHost}/admin/user/activity?currentPage=1&pageSize=10`
-        ).subscribe(r => {
-            this.users = r.queryable;
-            this.loading = false;
-        });
+        this._loadActivityData();
     }
     ngOnInit() {}
 
     toggleExpandRow(row) {
         this.table.rowDetail.toggleExpandRow(row);
     }
+    setPage($event) {
+        this.page.currentPage = $event.offset + 1;
+        this._loadActivityData();
+    }
     onSort($event) {
         this.loading = true;
-        console.log('activity.component', 'onSort', $event);
-        const field = $event.sorts[0].prop;
-        const ascending = $event.sorts[0].dir === 'asc';
-        //
+        this.sortField = $event.sorts[0].prop;
+        this.sortIsAscending = $event.sorts[0].dir === 'asc';
+        this._loadActivityData();
+    }
+    _loadActivityData() {
         this.http
             .get<any>(
-                `${environment.apiHost}/admin/user/activity?currentPage=1&pageSize=10&sortBy=${field}&ascending=${ascending}`
+                `${environment.apiHost}/admin/user/activity?currentPage=${this.page.currentPage}` +
+                    `&pageSize=10&sortBy=${this.sortField}&ascending=${this.sortIsAscending}`
             )
             .subscribe(r => {
-                this.users = r.queryable;
+                this.users = r.results;
+                this.page = r;
                 this.loading = false;
             });
     }
