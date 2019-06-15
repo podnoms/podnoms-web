@@ -25,6 +25,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { registerLocaleData } from '@angular/common';
 import localeIE from '@angular/common/locales/en-IE';
 import { HomeComponent } from './home/home.component';
+import { InterstitialComponent } from './shared/components/interstitial/interstitial.component';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -61,7 +62,7 @@ registerLocaleData(localeIE, 'ie');
         },
         { provide: LOCALE_ID, useValue: 'en-IE' }
     ],
-    declarations: [AppComponent, HomeComponent],
+    declarations: [AppComponent, InterstitialComponent, HomeComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {
