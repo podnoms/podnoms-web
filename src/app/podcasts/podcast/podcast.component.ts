@@ -40,8 +40,7 @@ export class PodcastComponent {
         } else {
             this.loading = true;
             // const listenSub = this.podcastStoreService.entities$.pipe(skip(1));
-            const selectedPodcast =
-                localStorage.getItem('selectedPodcast') || '';
+            const selectedPodcast = localStorage.getItem('__spslug') || '';
             if (!selectedPodcast) {
                 this.podcastDataService.getActivePodcast().subscribe(
                     r => {
@@ -68,7 +67,6 @@ export class PodcastComponent {
     }
     _initialiseState(id: string) {
         this.id = id;
-        localStorage.setItem('selectedPodcast', id);
         this.podcasts$ = this.podcastStoreService.entities$.pipe(
             map(r =>
                 r.filter(it => {
@@ -81,6 +79,7 @@ export class PodcastComponent {
                 this.noPodcasts = !(p.entries.length === 0);
                 this.selectedPodcast$.next(p[0]);
                 this.loading = false;
+                localStorage.setItem('__spslug', id);
             }
         });
     }

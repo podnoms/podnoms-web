@@ -82,7 +82,15 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
     }
     //#endregion
     ngOnInit() {}
-
+    socialLogin(method: string) {
+        this.authService
+            .socialLogin(method)
+            .subscribe(
+                success => this.router.navigate(['']),
+                error =>
+                    console.log('login.component', 'Error logging in', error)
+            );
+    }
     doRegister() {
         this._isRequesting = true;
         this.authService

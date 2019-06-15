@@ -11,6 +11,33 @@
                         <span class="font-size-xl">noms</span>
                     </a>
                     <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <div class="text-center">
+                            <div class="form-group row gutters-tiny">
+                                <div class="col-sm-6 mb-5">
+                                    <button type="button"
+                                        class="btn btn-block btn-social btn-facebook"
+                                        (click)="socialLogin('facebook')">
+                                        <span class="fab fa-facebook"></span> Register with Facebook
+                                    </button>
+                                </div>
+                                <div class="col-sm-6 mb-5">
+                                    <button type="button"
+                                        class="btn btn-block btn-social btn-google"
+                                        (click)="socialLogin('google-oauth2')">
+                                        <span class="fab fa-google"></span> Register with Google
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="px-5 text-center">
+                    <aside class="text-muted">--or--</aside>
                     <h2 class="h4 font-w400 text-muted mb-0">Please add your details</h2>
                 </div>
                 <div class="row justify-content-center px-5">
