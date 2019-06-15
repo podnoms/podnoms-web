@@ -16,8 +16,14 @@
                 [loadingIndicator]="loading"
                 [rowHeight]="'auto'"
                 [externalSorting]="true"
-                (sort)="onSort($event)">
-                <ngx-datatable-row-detail [rowHeight]="100">
+                [externalPaging]="true"
+                [count]="page.rowCount"
+                [offset]="page.currentPage-1"
+                [limit]="page.pageSize"
+                (sort)="onSort($event)"
+                (page)="setPage($event)">
+                <ngx-datatable-row-detail [rowHeight]="
+                100">
                     <ng-template let-row="row"
                         let-expanded="expanded"
                         ngx-datatable-row-detail-template>
@@ -75,15 +81,20 @@
                 <ngx-datatable-column name="PodcastCount"
                     [flexGrow]="1"
                     [cellClass]="'text-right float-right'">
-                    <ng-template ngx-datatable-header-template>
-                        <span>Podcasts</span>
+                    <ng-template let-column="column"
+                        ngx-datatable-header-template
+                        let-sort="sortFn">
+                        <span (click)="sort()">
+                            Podcasts</span>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="EntryCount"
                     [flexGrow]="1"
                     [cellClass]="'text-right float-right'">
-                    <ng-template ngx-datatable-header-template>
-                        <span>Entries</span>
+                    <ng-template let-column="column"
+                        ngx-datatable-header-template
+                        let-sort="sortFn">
+                        <span (click)="sort()">Entries</span>
                     </ng-template>
                 </ngx-datatable-column>
 
