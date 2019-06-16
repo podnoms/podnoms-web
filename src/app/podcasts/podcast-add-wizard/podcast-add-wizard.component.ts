@@ -48,6 +48,7 @@ export class PodcastAddWizardComponent extends BasePageComponent
         if (!this.podcast.imageUrl) {
             this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
                 this.podcast.imageUrl = u;
+                this.imageControl.updateImage(u);
             });
         }
     }

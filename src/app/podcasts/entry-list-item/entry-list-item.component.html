@@ -3,25 +3,25 @@
         <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
     </div>
     <div class="avatar"
-         *ngIf="entry.processingStatus !== 'Accepted'">
+        *ngIf="entry.processingStatus !== 'Accepted'">
         <img [src]="entry.thumbnailUrl"
-             class="img-avatar img-avatar48"
-             alt="">
+            class="img-avatar img-avatar48"
+            alt="">
         <span class="avatar-status badge-success"></span>
     </div>
 </td>
 <td class="font-w600">
     <p class="font-w600 mb-10">
         <inline-editor type="text"
-                       [(ngModel)]="entry.title"
-                       (onSave)="updateTitle($event)"
-                       name="title"
-                       size="32"
-                       (click)="__fixTitleEdit()">
+            [(ngModel)]="entry.title"
+            (onSave)="updateTitle($event)"
+            name="title"
+            size="32"
+            (click)="__fixTitleEdit()">
         </inline-editor>
     </p>
     <p class="font-w600 mb-0"
-       [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
+        [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : 'text-muted'">
         <span>{{entry.processingStatus}}</span>|
         {{entry.createDate
         | amTimeAgo}}
@@ -30,16 +30,16 @@
 <td>
     <em class="text-muted">
         <span *ngIf="entry.processingStatus === 'Accepted'"
-              style="width: 100%">
+            style="width: 100%">
             <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
         </span>
         <span *ngIf="entry.processingStatus === 'Failed'">
             <button type="button"
-                    class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10"
-                    (click)="retry(entry)">Retry</button>
+                class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10"
+                (click)="retry(entry)">Retry</button>
         </span>
         <span *ngIf="entry.processingStatus!=='Processed' && entry.processingStatus !== 'Accepted' && entry.processingStatus !== 'Failed'"
-              style="width: 100%">
+            style="width: 100%">
             <div class="clearfix">
                 <div class="float-left">
                     <strong>{{percentageProcessed}}%</strong>
@@ -52,16 +52,16 @@
             </div>
             <div class="progress progress-xs">
                 <div class="progress-bar bg-success"
-                     role="progressbar"
-                     [style.width]="percentageProcessed + '%'"
-                     [attr.aria-valuenow]="percentageProcessed"
-                     aria-valuemin="0"
-                     aria-valuemax="100"></div>
+                    role="progressbar"
+                    [style.width]="percentageProcessed + '%'"
+                    [attr.aria-valuenow]="percentageProcessed"
+                    aria-valuemin="0"
+                    aria-valuemax="100"></div>
             </div>
         </span>
         <span *ngIf="entry.processingStatus==='Processed'"
-              style="width: 100%"
-              class="mt-25">
+            style="width: 100%"
+            class="mt-25">
         </span>
     </em>
 </td>
@@ -70,49 +70,49 @@
     <div class="tools-wrapper">
         <div class="btn-group">
             <button type="button"
-                    class="btn btn-success"
-                    (click)="audioService.playAudio(entry.audioUrl, entry.title)">
+                class="btn btn-success"
+                (click)="audioService.playAudio(entry.audioUrl, entry.title)">
                 <i class="icon"
-                   [ngClass]="{'icon-control-pause': playing, 'icon-control-play': !playing}"></i>
+                    [ngClass]="{'icon-control-pause': playing, 'icon-control-play': !playing}"></i>
             </button>
             <button type="button"
-                    class="btn btn-secondary"
-                    data-toggle="tooltip"
-                    title="Share episode"
-                    (click)="shareEpisode(entry)">
+                class="btn btn-secondary"
+                data-toggle="tooltip"
+                title="Share episode"
+                (click)="shareEpisode(entry)">
                 <i class="fa fa-share-alt"></i>
             </button>
             <button type="button"
-                    class="btn btn-secondary"
-                    (click)="downloadAudio(entry)"
-                    data-toggle="tooltip"
-                    title="Download episode">
+                class="btn btn-secondary"
+                (click)="downloadAudio(entry)"
+                data-toggle="tooltip"
+                title="Download episode">
                 <i *ngIf="!preparingDownload"
-                   class="icon icon-cloud-download"></i>
+                    class="icon icon-cloud-download"></i>
                 <i *ngIf="preparingDownload"
-                   class="fa fa-cog fa-spin text-success"></i>
+                    class="fa fa-cog fa-spin text-success"></i>
             </button>
             <a class="btn btn-secondary"
-               [routerLink]="['../entry', entry?.id, 'edit']"
-               data-toggle="tooltip"
-               title="Edit episode">
+                [routerLink]="['../entry', entry?.id, 'edit']"
+                data-toggle="tooltip"
+                title="Edit episode">
                 <i class="icon icon-pencil"></i>
             </a>
             <button type="button"
-                    class="btn btn-danger"
-                    (click)="entryDeleteDialog.show()"
-                    data-toggle="tooltip"
-                    title="Delete episode">
+                class="btn btn-danger"
+                (click)="entryDeleteDialog.show()"
+                data-toggle="tooltip"
+                title="Delete episode">
                 <i class="icon icon-close"></i>
             </button>
         </div>
     </div>
 </td>
 <div class="modal fade"
-     role="document"
-     bsModal
-     #entryDeleteDialog="bs-modal"
-     aria-hidden="true">
+    role="document"
+    bsModal
+    #entryDeleteDialog="bs-modal"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="block block-themed block-transparent mb-0">
@@ -123,10 +123,10 @@
                     </h3>
                     <div class="block-options">
                         <button type="button"
-                                class="btn-block-option"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                (click)="entryDeleteDialog.hide()">
+                            class="btn-block-option"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                            (click)="entryDeleteDialog.hide()">
                             <i class="icon icon-close"></i>
                         </button>
                     </div>
@@ -142,8 +142,8 @@
                             <div class="row">
                                 <div class="col-md-2 text-md-left text-center">
                                     <img class="modal-entry-image rounded-circle"
-                                         [src]="entry.thumbnailUrl"
-                                         alt="Generic placeholder image">
+                                        [src]="entry.thumbnailUrl"
+                                        alt="Generic placeholder image">
                                 </div>
                                 <div class="col-md-10 text-md-left text-center font-w600">
                                     {{entry.title}}
@@ -164,13 +164,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button"
-                            class="btn btn-alt-secondary"
-                            data-dismiss="modal"
-                            (click)="entryDeleteDialog.hide()">No</button>
+                        class="btn btn-alt-secondary"
+                        data-dismiss="modal"
+                        (click)="entryDeleteDialog.hide()">No</button>
                     <button type="button"
-                            class="btn btn-alt-success"
-                            data-dismiss="modal"
-                            (click)="deleteEntry(); entryDeleteDialog.hide()">
+                        class="btn btn-alt-success"
+                        data-dismiss="modal"
+                        (click)="deleteEntry(); entryDeleteDialog.hide()">
                         <i class="fas fa-check"></i> Yes
                     </button>
                 </div>
@@ -179,6 +179,7 @@
     </div>
 </div>
 <ng-template #shareDialog>
-    <app-sharing [entry]="entry" (shareComplete)="shareComplete(result)">
+    <app-sharing [entry]="entry"
+        (shareComplete)="shareComplete(result)">
     </app-sharing>
 </ng-template>

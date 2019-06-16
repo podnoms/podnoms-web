@@ -1,6 +1,6 @@
 <div class="podcast-list-wrapper"
     *ngIf="podcast.podcastEntries.length !== 0; else empty">
-    <table class="table table-striped table-vcenter">
+    <table class="table">
         <tbody>
             <tr *ngFor="let entry of entries$ | async"
                 draggable="true"
@@ -8,7 +8,8 @@
                 [@fade]="''"
                 app-entry-list-item
                 (entryRemoved)='deleteEntry(entry)'
-                [entry]="entry">
+                [entry]="entry"
+                class="podcast-entry-table-row mt-20">
             </tr>
         </tbody>
     </table>

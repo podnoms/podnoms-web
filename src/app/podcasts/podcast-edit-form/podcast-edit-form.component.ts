@@ -98,27 +98,32 @@ export class PodcastEditFormComponent implements OnInit {
     ngOnInit() {
         const id = this.route.snapshot.params.podcast;
         this.useWizard = this.route.snapshot.params.useWizard || false;
-        if (!id) {
-            const podcast = new Podcast();
-            this.utilityService.getTemporaryPodcastImageUrl().subscribe(
-                u => {
-                    this.formImageUrl = u;
-                    this.podcast$ = of(podcast);
-                },
-                () => (this.podcast$ = of(podcast))
-            );
-            this.podcastForm = this._createForm(this.fb, podcast);
+        if (!this.useWizard) {
+            if (!id) {
+                this.utilityService.getTemporaryPodcastImageUrl().subscribe(
+                    u => {
+                        this.formImageUrl = u;
+                        this.podcast$ = of(new Podcast());
+                    },
+                    () => {}
+                );
+            } else {
+                this.podcastStore.entities$
+                    .pipe(map(r => r.filter(it => it.slug === id)))
+                    .subscribe(p => {
+                        const podcast = p[0];
+                        if (podcast) {
+                            this.formImageUrl = podcast.imageUrl;
+                            this.podcast$ = of(podcast);
+                            this.podcastForm = this._createForm(
+                                this.fb,
+                                podcast
+                            );
+                        }
+                    });
+            }
         } else {
-            this.podcastStore.entities$
-                .pipe(map(r => r.filter(it => it.slug === id)))
-                .subscribe(p => {
-                    const podcast = p[0];
-                    if (podcast) {
-                        this.formImageUrl = podcast.imageUrl;
-                        this.podcast$ = of(podcast);
-                        this.podcastForm = this._createForm(this.fb, podcast);
-                    }
-                });
+            this.podcast$ = of(new Podcast());
         }
     }
     wizardFinish(podcast: Podcast) {
