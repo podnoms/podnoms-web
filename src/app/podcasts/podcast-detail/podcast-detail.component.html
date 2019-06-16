@@ -1,4 +1,5 @@
-<div class="podcast-list-wrapper"
+<div survivedTheTrip
+    class="podcast-list-wrapper"
     *ngIf="podcast.podcastEntries.length !== 0; else empty">
     <table class="table">
         <tbody>
@@ -8,7 +9,7 @@
                 [@fade]="''"
                 app-entry-list-item
                 (entryRemoved)='deleteEntry(entry)'
-                [entry]="entry"
+                [(entry)]="entry"
                 class="podcast-entry-table-row mt-20">
             </tr>
         </tbody>

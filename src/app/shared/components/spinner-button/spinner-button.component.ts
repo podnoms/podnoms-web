@@ -17,8 +17,10 @@ export class SpinnerButtonComponent implements OnInit {
 
     click() {
         this.processing = true;
+        this.disabled = true;
         this.clicked.emit(() => {
             this.processing = false;
+            this.disabled = false;
         });
     }
 }
