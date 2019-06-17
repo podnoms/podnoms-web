@@ -23,7 +23,7 @@
     "@angular/forms": "~8.0.0",
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
-    "@angular/pwa": "^0.800.2",
+    "@angular/pwa": "^0.800.3",
     "@angular/router": "~8.0.0",
     "@angular/service-worker": "~8.0.0",
     "@aspnet/signalr": "^1.1.4",
