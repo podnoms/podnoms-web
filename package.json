@@ -80,7 +80,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.2",
-    "@angular/cli": "~8.0.2",
+    "@angular/cli": "~8.0.3",
     "@angular/compiler-cli": "~8.0.0",
     "@types/datatables.net": "^1.10.17",
     "@types/jasmine": "^3.3.12",
