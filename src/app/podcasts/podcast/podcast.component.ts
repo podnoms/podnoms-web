@@ -1,8 +1,8 @@
-import { map, skip } from 'rxjs/operators';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { map, skip, takeUntil } from 'rxjs/operators';
+import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UploadModes } from '../upload-modes.enum';
@@ -14,7 +14,7 @@ import { AlertService } from '../../core/alerts/alert.service';
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.scss']
 })
-export class PodcastComponent {
+export class PodcastComponent implements OnDestroy {
     uploadModes = UploadModes; // do this so it can be used in the template
     uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
     loading: boolean = true;
@@ -25,6 +25,7 @@ export class PodcastComponent {
     );
     mode: UploadModes = UploadModes.fromUrl;
     id: any;
+    private onComponentDestroy$: Subject<void>;
 
     constructor(
         private podcastStoreService: PodcastStoreService,
@@ -35,6 +36,8 @@ export class PodcastComponent {
         private changeDetectorRef: ChangeDetectorRef
     ) {
         console.log('podcast.component', 'constructor');
+        this.onComponentDestroy$ = new Subject();
+
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
@@ -65,6 +68,9 @@ export class PodcastComponent {
             }
         });
     }
+    ngOnDestroy() {
+        this.onComponentDestroy$.next();
+    }
     _initialiseState(id: string) {
         this.id = id;
         this.podcasts$ = this.podcastStoreService.entities$.pipe(
@@ -74,14 +80,16 @@ export class PodcastComponent {
                 })
             )
         );
-        this.podcasts$.subscribe(p => {
-            if (p && p.length !== 0) {
-                this.noPodcasts = !(p.entries.length === 0);
-                this.selectedPodcast$.next(p[0]);
-                this.loading = false;
-                localStorage.setItem('__spslug', id);
-            }
-        });
+        this.podcasts$
+            .pipe(takeUntil(this.onComponentDestroy$))
+            .subscribe(p => {
+                if (p && p.length !== 0) {
+                    this.noPodcasts = !(p.entries.length === 0);
+                    this.selectedPodcast$.next(p[0]);
+                    this.loading = false;
+                    localStorage.setItem('__spslug', id);
+                }
+            });
     }
     copyUrl(url: string) {
         const el = document.createElement('textarea');
