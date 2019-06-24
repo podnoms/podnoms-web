@@ -64,7 +64,7 @@
     "ngx-dropzone-wrapper": "^8.0.0",
     "ngx-moment": "^3.4.0",
     "ngx-perfect-scrollbar": "^8.0.0",
-    "ngx-quill": "^5.2.0",
+    "ngx-quill": "^6.0.1",
     "ngx-store": "^2.1.0",
     "node-sass": "^4.12.0",
     "npm": "^6.9.1-next.0",
