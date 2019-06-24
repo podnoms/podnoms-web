@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Profile } from '../core';
 import { ProfileStoreService } from '../profile/profile-store.service';
@@ -15,49 +15,33 @@ export class HomeComponent implements OnInit {
     loaded: boolean = false;
     constructor(
         router: Router,
-        route: ActivatedRoute,
         profileStoreService: ProfileStoreService,
         authService: AuthService
     ) {
         console.log('home.component', 'ctor');
-        const action = route.snapshot.queryParams.action || '';
-        if (action === 'Reload') {
-            // we're here from a logout action, reload the page until i can figure out
-            // how to clear the ngrx/data stores
-            router.navigateByUrl('/', { replaceUrl: true }).then(r => {
-                localStorage.clear();
-                window.location.reload();
-            });
+        if (authService.getAuthToken()) {
+            // no point doing any of this if we have no JWT
+            this.profile$ = profileStoreService.entities$;
+            this.profile$.subscribe(
+                p => {
+                    profileStoreService.entities$.subscribe(profileResult => {
+                        if (profileResult && profileResult.length !== 0) {
+                            router.navigate(['/podcasts']);
+                        } else if (
+                            profileResult &&
+                            profileResult.length === 0
+                        ) {
+                            // this.loaded = true;
+                        }
+                    });
+                },
+                err => {
+                    console.error('home.component', 'err', err);
+                    authService.logout();
+                }
+            );
         } else {
-            if (authService.getAuthToken()) {
-                // no point doing any of this if we have no JWT
-                this.profile$ = profileStoreService.entities$;
-                this.profile$.subscribe(
-                    p => {
-                        profileStoreService.entities$.subscribe(
-                            profileResult => {
-                                if (
-                                    profileResult &&
-                                    profileResult.length !== 0
-                                ) {
-                                    router.navigate(['/podcasts']);
-                                } else if (
-                                    profileResult &&
-                                    profileResult.length === 0
-                                ) {
-                                    // this.loaded = true;
-                                }
-                            }
-                        );
-                    },
-                    err => {
-                        console.error('home.component', 'err', err);
-                        authService.logout();
-                    }
-                );
-            } else {
-                this.loaded = true;
-            }
+            this.loaded = true;
         }
     }
     ngOnInit() {}
