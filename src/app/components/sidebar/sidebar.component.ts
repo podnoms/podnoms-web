@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Podcast } from 'app/core';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -21,6 +22,7 @@ export class SidebarComponent implements OnInit {
     public config: PerfectScrollbarConfigInterface = {};
     constructor(
         private router: Router,
+        private uiStateService: UiStateService,
         private audioService: AudioService,
         private podcastStore: PodcastStoreService
     ) {
@@ -32,6 +34,9 @@ export class SidebarComponent implements OnInit {
         this.audioService.playStateChanged.subscribe(s => {
             this.playerOpen = s !== PlayState.none;
         });
+    }
+    closeSidebar() {
+        this.uiStateService.closeMobileSidebar();
     }
     doAddPodcast() {
         this.router.navigate(['podcasts/add']);

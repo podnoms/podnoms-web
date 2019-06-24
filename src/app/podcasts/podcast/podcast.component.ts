@@ -1,3 +1,4 @@
+import { UiStateService } from './../../core/ui-state.service';
 import { map, skip, takeUntil } from 'rxjs/operators';
 import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Podcast } from '../../core';
@@ -37,7 +38,6 @@ export class PodcastComponent implements OnDestroy {
     ) {
         console.log('podcast.component', 'constructor');
         this.onComponentDestroy$ = new Subject();
-
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time
         } else {
