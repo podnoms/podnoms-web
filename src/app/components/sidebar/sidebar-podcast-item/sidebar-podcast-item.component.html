@@ -4,6 +4,7 @@
     container="body"
     (dragover)="dragover($event)"
     (drop)="drop($event)"
+    (click)="closeSidebar()"
     ngbTooltip="{{ podcast.title }}">
     <img class="img-avatar"
         [src]="podcast.thumbnailUrl"

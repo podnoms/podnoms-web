@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { Observable, Observer, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { Profile } from './core';
@@ -24,6 +24,8 @@ export class AppComponent {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     profile$: Observable<Profile>;
+    viewportWidth: number;
+
     constructor(
         public uiStateService: UiStateService,
         private alertService: AlertService,
@@ -48,7 +50,7 @@ export class AppComponent {
             }
         );
     }
-    background() {}
+
     loggedIn(): boolean {
         return false;
     }
@@ -61,13 +63,26 @@ export class AppComponent {
                 this.signalr
                     .init('userupdates')
                     .then(listener => {
-                        listener.on<SiteUpdateMessage>('userupdates', 'site-notices').subscribe(result => {
-                            this.alertService.info(result.title, result.message, result.imageUrl);
-                        });
+                        listener
+                            .on<SiteUpdateMessage>(
+                                'userupdates',
+                                'site-notices'
+                            )
+                            .subscribe(result => {
+                                this.alertService.info(
+                                    result.title,
+                                    result.message,
+                                    result.imageUrl
+                                );
+                            });
                         observer.next(true);
                     })
                     .catch(err => {
-                        console.error('app.component', 'Unable to initialise site update hub', err);
+                        console.error(
+                            'app.component',
+                            'Unable to initialise site update hub',
+                            err
+                        );
                         observer.error(err);
                     });
             } else {
@@ -81,21 +96,36 @@ export class AppComponent {
             return;
         }
 
-        const profile$ = this.profileStoreService.entities$.pipe((skip(1), take(1))).map(r => r[0]);
+        const profile$ = this.profileStoreService.entities$
+            .pipe((skip(1), take(1)))
+            .map(r => r[0]);
 
         profile$.subscribe(p => {
             if (p && environment.production) {
                 this.push
-                    .requestSubscription({ serverPublicKey: environment.vapidPublicKey })
+                    .requestSubscription({
+                        serverPublicKey: environment.vapidPublicKey
+                    })
                     .then(s => {
-                        this.registrationService.addSubscriber(s.toJSON()).subscribe(
-                            r => {
-                                this.push.messages.subscribe(m => {
-                                    console.log('app.component', 'Push message', m);
-                                });
-                            },
-                            err => console.error('app.module', 'Error calling registration service', err)
-                        );
+                        this.registrationService
+                            .addSubscriber(s.toJSON())
+                            .subscribe(
+                                r => {
+                                    this.push.messages.subscribe(m => {
+                                        console.log(
+                                            'app.component',
+                                            'Push message',
+                                            m
+                                        );
+                                    });
+                                },
+                                err =>
+                                    console.error(
+                                        'app.module',
+                                        'Error calling registration service',
+                                        err
+                                    )
+                            );
                     })
                     .catch(err => {
                         this._unsubscribe();
@@ -109,7 +139,10 @@ export class AppComponent {
                         );
                     });
             } else {
-                console.log('app.component', 'Unable to load profile from store');
+                console.log(
+                    'app.component',
+                    'Unable to load profile from store'
+                );
             }
         });
     }
