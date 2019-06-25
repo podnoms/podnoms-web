@@ -53,8 +53,7 @@ export class UploadUrlComponent implements AfterViewInit {
         private utilityService: UtilityService,
         private alertService: AlertService
     ) {
-        // this.title = this.testTitle;
-        // this.remoteAudioList = this.testData;
+        console.log('upload-url.component', 'ctor');
     }
     ngAfterViewInit() {
         // this.vc.nativeElement.focus();
@@ -74,11 +73,12 @@ export class UploadUrlComponent implements AfterViewInit {
                 this.resetUrl();
                 this.playlistAdded.emit(e);
             },
-            () =>
-                this.alertService.error(
-                    'Error creating playlist',
-                    'There was an error adding this playlist, please refresh page and try again'
-                )
+            error => {
+                this.playlistProxy = null;
+                this.isPosting = false;
+                this.errorText = error.error;
+                // this.alertService.error('Error creating playlist', error.error);
+            }
         );
     }
     resetUrl() {
@@ -144,6 +144,7 @@ export class UploadUrlComponent implements AfterViewInit {
         }
     }
     private createEntry(title: string, url: string, callback: any) {
+        // TODO: API should tell us that this is a playlist without calling addEntry
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
         entry.title = this.title;

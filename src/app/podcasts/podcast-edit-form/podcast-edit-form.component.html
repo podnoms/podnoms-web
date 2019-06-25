@@ -1,51 +1,61 @@
 <div *ngIf="(podcast$ | async); let podcast; else: loading">
     <div *ngIf="!useWizard">
-        <form class="needs-validation" [formGroup]="podcastForm" (submit)="submitForm()" novalidate>
+        <form class="needs-validation"
+            [formGroup]="podcastForm"
+            (submit)="submitForm()"
+            novalidate>
             <div class="block">
-                <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                <ul class="nav nav-tabs nav-tabs-alt"
+                    data-toggle="tabs"
+                    role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#btabs-podcast-details">Podcast details </a>
+                        <a class="nav-link active"
+                            data-toggle="tab"
+                            href="#btabs-podcast-details">Details </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#btabs-podcast-privacy"> Privacy </a>
+                        <a class="nav-link"
+                            data-toggle="tab"
+                            href="#btabs-podcast-privacy">Privacy</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#btabs-podcast-notifications"> Notifications </a>
+                        <a class="nav-link"
+                            data-toggle="tab"
+                            href="#btabs-podcast-notifications">Alerts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#btabs-podcast-advanced">
-                            Nerd stuff (highly experimental)
+                        <a class="nav-link"
+                            data-toggle="tab"
+                            href="#btabs-podcast-advanced">
+                            Nerds
                         </a>
                     </li>
                     <li class="nav-item ml-auto">
                         <div class="block-options mr-15 mt-5">
-                            <button
-                                type="button"
+                            <button type="button"
                                 class="btn btn-alt-danger"
                                 data-toggle="block-option"
-                                (click)="podcastDeleteDialog.show()"
-                            >
-                                Delete&nbsp;<i class="fa fa-times"></i>
+                                (click)="podcastDeleteDialog.show()">
+                                <span class="d-none d-md-inline-block">Delete</span>&nbsp;<i class="fa fa-times"></i>
                             </button>
-                            <button
-                                type="submit"
+                            <button type="submit"
                                 class="btn"
                                 data-toggle="block-option"
-                                [disabled]="sending || !podcastForm.valid"
-                            >
-                                Save&nbsp; <i class="fa fa-save"></i>
+                                [disabled]="sending || !podcastForm.valid">
+                                <span class="d-none d-md-inline-block">Save</span>&nbsp; <i class="fa fa-save"></i>
                             </button>
                         </div>
                     </li>
                 </ul>
                 <div class="block-content tab-content">
-                    <div class="tab-pane active" id="btabs-podcast-details" role="tabpanel">
+                    <div class="tab-pane active"
+                        id="btabs-podcast-details"
+                        role="tabpanel">
                         <div class="row">
                             <div class="col-md-6 pr-50">
                                 <div class="form-group">
                                     <label for="title">Title</label>
-                                    <input
-                                        type="text"
+                                    <input type="text"
                                         class="form-control"
                                         id="title"
                                         name="title"
@@ -54,20 +64,18 @@
                                         }"
                                         placeholder="Podcast title"
                                         formControlName="title"
-                                        required
-                                    />
+                                        required />
                                     <div class="invalid-feedback">Title is required</div>
                                 </div>
                                 <div class="p-20">
                                     <div class="form-group">
-                                        <div class="col-md-3" d><label for="category">Category</label></div>
+                                        <div class="col-md-3"
+                                            d><label for="category">Category</label></div>
                                         <div class="col-md-9">
-                                            <ng-select
-                                                formControlName="category"
+                                            <ng-select formControlName="category"
                                                 [items]="categories$ | async"
                                                 bindLabel="description"
-                                                placeholder="Select category"
-                                            >
+                                                placeholder="Select category">
                                             </ng-select>
                                             <!-- <app-category-selector
                                                                [hasError]="categoryError"
@@ -78,41 +86,45 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <quill-editor
-                                        id="description"
+                                    <quill-editor id="description"
                                         name="description"
                                         [style]="{ height: '400px' }"
-                                        formControlName="description"
-                                    ></quill-editor>
+                                        formControlName="description"></quill-editor>
                                 </div>
                             </div>
                             <div class="col-md-6 pl-50">
-                                <div class="row" *ngIf="formImageUrl">
+                                <div class="row"
+                                    *ngIf="formImageUrl">
                                     <div class="form-body">
                                         <div class="form-group">
                                             <label for="">Cover Image </label>
-                                            <app-image-upload
-                                                [imageUrl]="formImageUrl"
-                                                #imageControl
-                                            ></app-image-upload>
+                                            <app-image-upload [imageUrl]="formImageUrl"
+                                                #imageControl></app-image-upload>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane mb-50" id="btabs-podcast-privacy" role="tabpanel">
+                    <div class="tab-pane mb-50"
+                        id="btabs-podcast-privacy"
+                        role="tabpanel">
                         <app-podcast-privacy [podcast]="podcast"></app-podcast-privacy>
                     </div>
-                    <div class="tab-pane mb-50" id="btabs-podcast-notifications" role="tabpanel">
-                        <app-notifications [podcast]="podcast" (updated)="podcastUpdated(podcast)"></app-notifications>
+                    <div class="tab-pane mb-50"
+                        id="btabs-podcast-notifications"
+                        role="tabpanel">
+                        <app-notifications [podcast]="podcast"
+                            (updated)="podcastUpdated(podcast)"></app-notifications>
                     </div>
-                    <div class="tab-pane mb-50" id="btabs-podcast-advanced" role="tabpanel">
-                        <div class="col-md-6" *ngIf="podcast.id">
+                    <div class="tab-pane mb-50"
+                        id="btabs-podcast-advanced"
+                        role="tabpanel">
+                        <div class="col-md-6"
+                            *ngIf="podcast.id">
                             <label for="podcast-slug">Slug</label>
                             <div class="input-group">
-                                <input
-                                    type="text"
+                                <input type="text"
                                     class="form-control"
                                     id="podcast-slug"
                                     placeholder="Podcast slug"
@@ -121,16 +133,14 @@
                                     }"
                                     formControlName="slug"
                                     autocomplete="off"
-                                    required
-                                />
-                                <div class="input-group-prepend" *ngIf="false">
+                                    required />
+                                <div class="input-group-prepend"
+                                    *ngIf="false">
                                     <div class="input-group-text">@</div>
                                 </div>
                             </div>
-                            <div
-                                class="invalid-feedback d-block"
-                                *ngIf="podcastForm.invalid && podcastForm.controls.slug.invalid"
-                            >
+                            <div class="invalid-feedback d-block"
+                                *ngIf="podcastForm.invalid && podcastForm.controls.slug.invalid">
                                 {{ podcastForm.controls.slug.errors.message }}
                             </div>
                             <div class="form-text text-muted">This will be the unique URL for your podcast</div>
@@ -139,8 +149,7 @@
                             <div class="col-md-8">
                                 <label for="podcast-domain">Custom Domain </label>
                                 <div class="input-group">
-                                    <input
-                                        type="text"
+                                    <input type="text"
                                         class="form-control"
                                         id="podcast-domain"
                                         placeholder="Custom domain name"
@@ -149,13 +158,13 @@
                                                 !podcastForm.valid && podcastForm.controls.customDomain.invalid
                                         }"
                                         formControlName="customDomain"
-                                        autocomplete="off"
-                                    />
+                                        autocomplete="off" />
                                     <div class="input-group-append">
                                         <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
                                     </div>
                                 </div>
-                                <div class="invalid-feedback d-block" *ngIf="podcastForm.controls.customDomain.invalid">
+                                <div class="invalid-feedback d-block"
+                                    *ngIf="podcastForm.controls.customDomain.invalid">
                                     {{ podcastForm.controls.customDomain.errors.message }}
                                 </div>
                                 <div class="form-text text-muted">
@@ -167,20 +176,22 @@
                 </div>
             </div>
         </form>
-        <div class="modal fade" role="document" bsModal #podcastDeleteDialog="bs-modal" aria-hidden="true">
+        <div class="modal fade"
+            role="document"
+            bsModal
+            #podcastDeleteDialog="bs-modal"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="block block-themed block-transparent mb-0">
                         <div class="block-header bg-primary-dark">
                             <h3 class="block-title">Delete this podcast?</h3>
                             <div class="block-options">
-                                <button
-                                    type="button"
+                                <button type="button"
                                     class="btn-block-option"
                                     data-dismiss="modal"
                                     aria-label="Close"
-                                    (click)="podcastDeleteDialog.hide()"
-                                >
+                                    (click)="podcastDeleteDialog.hide()">
                                     <i class="icon icon-close"></i>
                                 </button>
                             </div>
@@ -191,11 +202,9 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-2 text-md-left text-center">
-                                            <img
-                                                class="modal-podcast-image rounded-circle"
+                                            <img class="modal-podcast-image rounded-circle"
                                                 [src]="podcast.imageUrl"
-                                                alt="Generic placeholder image"
-                                            />
+                                                alt="Generic placeholder image" />
                                         </div>
                                         <div class="col-md-10 text-md-left text-center font-w600">
                                             {{ podcast.title }}
@@ -210,20 +219,16 @@
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button
-                                type="button"
+                            <button type="button"
                                 class="btn btn-alt-secondary"
                                 data-dismiss="modal"
-                                (click)="podcastDeleteDialog.hide()"
-                            >
+                                (click)="podcastDeleteDialog.hide()">
                                 No
                             </button>
-                            <button
-                                type="button"
+                            <button type="button"
                                 class="btn btn-alt-success"
                                 data-dismiss="modal"
-                                (click)="deletePodcast(podcast); podcastDeleteDialog.hide()"
-                            >
+                                (click)="deletePodcast(podcast); podcastDeleteDialog.hide()">
                                 <i class="fa fa-check"></i> Yes
                             </button>
                         </div>
@@ -232,8 +237,11 @@
             </div>
         </div>
     </div>
-    <div *ngIf="useWizard" class="mx-50">
-        <app-podcast-add-wizard [podcast]="podcast" (finish)="wizardFinish(podcast)" #wizardControl>
+    <div *ngIf="useWizard"
+        class="mx-50">
+        <app-podcast-add-wizard [podcast]="podcast"
+            (finish)="wizardFinish(podcast)"
+            #wizardControl>
         </app-podcast-add-wizard>
     </div>
 </div>

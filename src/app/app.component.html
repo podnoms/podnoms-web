@@ -3,6 +3,7 @@
     <div id="page-container"
         class="page-header-fixed page-header-modern side-scroll side-trans-enabled"
         [class.sidebar-o]="(uiStateService.sidebarOpen | async)"
+        [class.sidebar-o-xs]="(uiStateService.sidebarOpenMobile | async)"
         [class.side-overlay-o]="uiStateService.overlayOpen">
         <app-side-overlay [profile]="profile"></app-side-overlay>
         <app-sidebar></app-sidebar>

@@ -3,8 +3,8 @@
     <div class="content-header">
         <div class="content-header-section">
             <button type="button"
-                class="btn btn-circle btn-dual-secondary"
-                (click)="toggleSidebar()">
+                (click)="toggleSidebar()"
+                class="btn btn-circle btn-dual-secondary">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -25,19 +25,19 @@
                 target="_blank"
                 class="btn btn-dual-secondary">
                 <i class="fa fa-life-ring"></i>&nbsp;
-                Help & Support
+                <span class="d-none d-md-inline-block">Help & Support</span>
             </a>
         </div>
         <div class="content-header-section">
             <a [routerLink]="['payments/pay', {type:'Free'}]"
                 class="btn btn-dual-secondary">
                 <i class="fa fa-beer"></i>&nbsp;
-                Buy me a beer
+                <span class="d-none d-md-inline-block">Buy me a beer</span>
             </a>
             <a [routerLink]="['payments/pricing']"
                 class="btn btn-dual-secondary">
                 <i class="fa fa-credit-card"></i>&nbsp;
-                Pricing
+                <span class="d-none d-md-inline-block">Pricing</span>
             </a>
         </div>
         <div class="content-header-section">
@@ -49,8 +49,10 @@
                     class="btn btn-rounded btn-dual-secondary"
                     id="page-header-user-dropdown"
                     data-toggle="dropdown">
-                    {{profile.firstName}}
-                    {{profile.lastName}}
+                    <span class="d-none d-md-inline-block">
+                        {{profile.firstName}}
+                        {{profile.lastName}}
+                    </span>
                     <i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-150">
