@@ -11,39 +11,43 @@
                     role="group"
                     aria-label="Podcast actions">
                     <a [routerLink]="['/podcasts', selected.slug, 'edit']"
+                        title="Edit podcast"
                         class="btn-block-option">
                         <i class="icon icon-pencil"
                             aria-hidden="true"></i>
-                        Edit
+                        <span class="d-none d-md-inline-block">&nbsp;Edit</span>
                     </a>
                     <button (click)="podcastDeleteDialog.show()"
+                        title="Delete this podcast"
                         class="btn-block-option">
                         <i class="icon icon-close"
                             aria-hidden="true"></i>
-                        Delete
+                        <span class="d-none d-md-inline-block">&nbsp;Delete</span>
                     </button>
                     <button class="btn-block-option"
+                        title="Add podcast from URL"
                         (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
                         <i class="icon icon-plus"></i>
-                        Add (from URL)
+                        <span class="d-none d-md-inline-block">&nbsp;Add (from URL)</span>
                     </button>
                     <div class="btn-group"
                         role="group">
                         <button type="button"
                             class="btn-block-option dropdown-toggle"
+                            title="Upload from local or remote audio file"
                             id="file-upload-group"
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
-                            <i class="fa fa-fw fa-file mr-5"></i>
-                            Upload from
-                            file
+                            <i class="icon icon-cloud-upload"></i>
+                            <span class="d-none d-md-inline-block">&nbsp;Upload from
+                                file</span>
                         </button>
                         <div class="dropdown-menu"
                             aria-labelledby="file-upload-group`">
                             <a class="dropdown-item"
                                 (click)="startUpload(uploadModes.fromLocalFile)">
-                                <i class="icon icon-cloud-upload  mr-5"></i>
+                                <i class="icon icon-cloud-upload mr-5"></i>
                                 Local
                                 PC</a>
                             <div class="dropdown-divider"></div>
@@ -65,11 +69,11 @@
                     aria-label="Podcast actions">
                     <a class="btn-block-option "
                         [href]="selected.rssUrl"
-                        title="Open rss feed in new tab"
+                        title="Open RSS feed in new tab"
                         data-toggle="tooltip"
                         target="_blank">
                         <i class="text-warning fas fa-rss"></i>
-                        Rss Url
+                        <span class="d-none d-md-inline-block">&nbsp;Rss Url</span>
                     </a>
                     <button type="button"
                         (click)="copyUrl(selected.rssUrl)"

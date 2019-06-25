@@ -1,3 +1,4 @@
+import { UiStateService } from './../../../core/ui-state.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../../podcasts/entry-data.service';
@@ -16,6 +17,7 @@ export class SidebarPodcastItemComponent implements OnInit {
     newEpisodes: boolean = false;
     constructor(
         private alertService: AlertService,
+        private uiStateService: UiStateService,
         private entryDataService: EntryDataService,
         private podcastStoreService: PodcastStoreService
     ) {}
@@ -26,10 +28,14 @@ export class SidebarPodcastItemComponent implements OnInit {
     }
     drop($event: DragEvent) {
         console.log('sidebar.component.ts', 'drop', $event);
-        const entry: PodcastEntry = JSON.parse($event.dataTransfer.getData('text/plain'));
+        const entry: PodcastEntry = JSON.parse(
+            $event.dataTransfer.getData('text/plain')
+        );
         console.log('sidebar.component.ts', 'data:entry:id', entry);
         this.podcastStoreService.getByKey(entry.podcastId).subscribe(p => {
-            p.podcastEntries = p.podcastEntries.filter(obj => obj.id !== entry.id);
+            p.podcastEntries = p.podcastEntries.filter(
+                obj => obj.id !== entry.id
+            );
             this.podcast.podcastEntries.push(entry);
             this.podcastStoreService.updateOneInCache(p);
             this.podcastStoreService.updateOneInCache(this.podcast);
@@ -38,5 +44,8 @@ export class SidebarPodcastItemComponent implements OnInit {
                 this.alertService.success('Success', 'Entry moved');
             });
         });
+    }
+    closeSidebar() {
+        this.uiStateService.closeMobileSidebar();
     }
 }
