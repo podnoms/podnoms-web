@@ -67,7 +67,7 @@
     "ngx-quill": "^6.0.1",
     "ngx-store": "^2.1.0",
     "node-sass": "^4.12.0",
-    "npm": "^6.9.1-next.0",
+    "npm": "^6.9.1",
     "popper.js": "^2.0.0-next.4",
     "quill": "^1.3.6",
     "rxjs": "^6.5.2",
