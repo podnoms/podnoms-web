@@ -6,16 +6,13 @@ import { AppModule } from './app/app.module';
 
 //#region console overwrite
 
-if (
-    environment.production &&
-    location.host.indexOf('localhost') !== 0 &&
-    false
-) {
+if (environment.production &&
+    location.host.indexOf('localhost') !== 0 || true) {
     enableProdMode();
     console.log(
         `%c ________________________________________
 < mooooooooooooooooooooooooooooooooooooo >
-<        Looking under the hood?         >
+<   🦄🧙Looking under the hood🦄?        >
 <  Join us: http://github.com/podnoms    >
  ----------------------------------------
         \\   ^__^
