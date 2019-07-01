@@ -21,7 +21,7 @@
     "@angular/core": "~8.0.2",
     "@angular/fire": "^5.2.1",
     "@angular/forms": "~8.0.2",
-    "@angular/platform-browser": "~8.0.2",
+    "@angular/platform-browser": "~8.0.3",
     "@angular/platform-browser-dynamic": "~8.0.2",
     "@angular/pwa": "^0.800.3",
     "@angular/router": "~8.0.3",
