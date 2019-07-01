@@ -24,7 +24,7 @@
     "@angular/platform-browser": "~8.0.2",
     "@angular/platform-browser-dynamic": "~8.0.2",
     "@angular/pwa": "^0.800.3",
-    "@angular/router": "~8.0.2",
+    "@angular/router": "~8.0.3",
     "@angular/service-worker": "~8.0.2",
     "@aspnet/signalr": "^1.1.4",
     "@auth0/angular-jwt": "^2.1.0",
