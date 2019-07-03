@@ -7,7 +7,8 @@ import { AppModule } from './app/app.module';
 //#region console overwrite
 
 if (environment.production &&
-    location.host.indexOf('localhost') !== 0 || true) {
+    location.host.indexOf('localhost') !== 0 &&
+    location.host.indexOf('dev.podnoms.com') !== 0) {
     enableProdMode();
     console.log(
         `%c ________________________________________
