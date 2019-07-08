@@ -1,11 +1,10 @@
 import { map } from 'rxjs/operators';
-import { OnInit, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { OnInit, Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Podcast, Category } from '../../core';
 import { Observable, of } from 'rxjs';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
-import { Actions } from '@ngrx/effects';
 import { UtilityService } from '../../shared/services/utility.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UUID } from 'angular2-uuid';
@@ -146,13 +145,13 @@ export class PodcastEditFormComponent implements OnInit {
                 p => {
                     activeImageControl
                         .commitImage(p.id, 'podcast')
-                        .subscribe(r => {
+                        .subscribe(() => {
                             this.podcastStore.addOneToCache(p);
                             this.podcastStore.updateOneInCache(p);
                             this.router.navigate(['podcasts', p.slug]);
                         });
                 },
-                err => {
+                () => {
                     this.alertService.error(
                         'Error',
                         'There was an error adding this podcast, please check all your values and try again'
@@ -173,7 +172,7 @@ export class PodcastEditFormComponent implements OnInit {
                             this.router.navigate(['podcasts', p.slug]);
                         });
                 },
-                err => {
+                () => {
                     this.alertService.error(
                         'Error',
                         'There was an error updating this podcast, please check all your values and try again'
@@ -197,7 +196,7 @@ export class PodcastEditFormComponent implements OnInit {
                     );
                 }
             },
-            err =>
+            () =>
                 this.alertService.error(
                     'Error',
                     'There was an error deleting podcast.'

@@ -42,7 +42,7 @@ import { ComponentsModule } from '../components/components.module';
         PodcastsRoutingModule,
         InlineEditorModule,
         MomentModule,
-        QuillModule,
+        QuillModule.forRoot(),
         NgbModalModule,
         DropzoneModule,
         NgSelectModule,
@@ -70,6 +70,10 @@ import { ComponentsModule } from '../components/components.module';
         UploadGdriveComponent,
         RemotePageParserComponent
     ],
-    providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
+    providers: [
+        PodcastStoreService,
+        NotificationStoreService,
+        NotificationControlService
+    ]
 })
 export class PodcastsModule {}

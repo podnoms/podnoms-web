@@ -24,7 +24,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../shared/components/toast/toast.service';
 declare var $: any;
 @Component({
-    selector: '[app-entry-list-item]',
+    selector: 'app-entry-list-item',
     templateUrl: './entry-list-item.component.html',
     styleUrls: ['./entry-list-item.component.scss']
 })
@@ -62,12 +62,8 @@ export class EntryListItemComponent implements OnInit {
             this.signalr
                 .init('audioprocessing')
                 .then(listener => {
-                    const updateChannel: string = `${
-                        this.entry.id
-                    }__progress_update`;
-                    const processedChannel: string = `${
-                        this.entry.id
-                    }__info_processed`;
+                    const updateChannel: string = `${this.entry.id}__progress_update`;
+                    const processedChannel: string = `${this.entry.id}__info_processed`;
                     listener
                         .on<AudioProcessingMessage>(
                             'audioprocessing',
