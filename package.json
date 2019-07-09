@@ -30,7 +30,7 @@
     "@auth0/angular-jwt": "^2.1.1",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
-    "@ng-select/ng-select": "^2.20.5",
+    "@ng-select/ng-select": "^3.0.0",
     "@ngrx/data": "^8.0.1",
     "@ngrx/effects": "^8.0.1",
     "@ngrx/entity": "^8.0.1",
