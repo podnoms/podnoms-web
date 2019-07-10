@@ -39,7 +39,10 @@
                              entry.processingStatus !== 'Failed'"
                     style="width: 100%">
                     <div *ngIf="entry.processingStatus==='Processing'">
-                        <i class="fas fa fa-cog fa-spin fa-1x text-info"></i>&nbsp;Preparing......
+                        <div class="spinner-border spinner-border-sm text-primary"
+                            role="status">
+                            <span class="sr-only">{{entry.processingStatus || 'Preparing'}}......</span>
+                        </div>
                     </div>
                     <div class="progress progress-xs"
                         *ngIf="entry.processingStatus==='Downloading' || entry.processingStatus==='Uploading'">
@@ -107,9 +110,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    Status: {{entry.processingStatus}}
 </div>
 <ng-template #shareDialog>
     <app-sharing [entry]="
