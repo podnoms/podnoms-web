@@ -42,6 +42,7 @@ export class EntryListItemComponent implements OnInit {
     percentageProcessed = 0;
     currentSpeed: string = '';
     playing: boolean = false;
+    narrative: string = '';
 
     constructor(
         private modalService: NgbModal,
@@ -76,6 +77,7 @@ export class EntryListItemComponent implements OnInit {
                             this.entry.processingStatus = AudioProcessingMessage.getProcessingStatus(
                                 result.processingStatus
                             );
+                            this.narrative = result.progress;
                             if (
                                 this.entry.processingStatus === 'Downloading' ||
                                 this.entry.processingStatus === 'Uploading'

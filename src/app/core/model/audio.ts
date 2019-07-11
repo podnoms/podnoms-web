@@ -1,5 +1,6 @@
 export class AudioProcessingMessage {
     processingStatus: number;
+    progress: string;
     payload: any;
     /*
     percentage: number;
@@ -12,18 +13,20 @@ export class AudioProcessingMessage {
             case 0:
                 return 'Accepted';
             case 1:
-                return 'Processing';
+                return 'Parsing';
             case 2:
-                return 'Downloading';
+                return 'Processing';
             case 3:
-                return 'Converting';
+                return 'Downloading';
             case 4:
-                return 'Uploading';
+                return 'Converting';
             case 5:
-                return 'Processed';
+                return 'Uploading';
             case 6:
-                return 'Failed';
+                return 'Processed';
             case 7:
+                return 'Failed';
+            case 8:
                 return 'Deferred';
         }
     }

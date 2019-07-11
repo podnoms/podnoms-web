@@ -38,19 +38,21 @@
                 <span *ngIf="entry.processingStatus!=='Processed' &&
                              entry.processingStatus !== 'Failed'"
                     style="width: 100%">
-                    <div *ngIf="entry.processingStatus==='Processing'">
+                    <div *ngIf="entry.processingStatus==='Processing' ||
+                                entry.processingStatus==='Parsing' ||
+                                entry.processingStatus==='Converting'">
                         <div class="spinner-border spinner-border-sm text-primary"
                             role="status">
-                            <span class="sr-only">{{entry.processingStatus || 'Preparing'}}......</span>
                         </div>
+                        <span class="ml-5">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
                     </div>
                     <div class="progress progress-xs"
                         *ngIf="entry.processingStatus==='Downloading' || entry.processingStatus==='Uploading'">
                         <div class="progress progress-xs">
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                 role="progressbar"
-                                [style.width]="12 + '%'"
-                                [attr.aria-valuenow]="12"
+                                [style.width]="percentageProcessed + '%'"
+                                [attr.aria-valuenow]="percentageProcessed"
                                 aria-valuemin="0"
                                 aria-valuemax="100">
                                 <span class="progress-bar-label text-dark ml-10 text-center">
@@ -68,6 +70,7 @@
         </div>
     </div>
     <div class="col-md-3 text-center"
+        *ngIf="entry.processingStatus==='Processed'"
         valign="middle">
         <div class="tools-wrapper">
             <div class="btn-group">
@@ -111,6 +114,8 @@
         </div>
     </div>
 </div>
+<pre>{{percentageProcessed}}</pre>
+<!-- <pre>{{entry|json}}</pre> -->
 <ng-template #shareDialog>
     <app-sharing [entry]="
         entry"
@@ -141,11 +146,9 @@
                     </div>
                 </div>
                 <div class="block-content">
-                    <h3 class="mb-20">This operation cannot
-                        be
-                        undone!
+                    <h3 class="mb-20">
+                        This operation cannot be undone!
                     </h3>
-
                     <div class="container-fluid cxt-padded bg-faded">
                         <div class="container">
                             <div class="row">
