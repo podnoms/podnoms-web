@@ -42,6 +42,7 @@ export class EntryListItemComponent implements OnInit {
     percentageProcessed = 0;
     currentSpeed: string = '';
     playing: boolean = false;
+    narrative: string = '';
 
     constructor(
         private modalService: NgbModal,
@@ -62,26 +63,30 @@ export class EntryListItemComponent implements OnInit {
             this.signalr
                 .init('audioprocessing')
                 .then(listener => {
-                    const updateChannel: string = `${this.entry.id}__progress_update`;
-                    const processedChannel: string = `${this.entry.id}__info_processed`;
                     listener
                         .on<AudioProcessingMessage>(
                             'audioprocessing',
-                            updateChannel
+                            this.entry.id
                         )
-                        .subscribe(result => {
-                            this.percentageProcessed = result.percentage;
-                            this.currentSpeed = result.currentSpeed;
-                            this.cdr.detectChanges();
-                        });
-                    listener
-                        .on<PodcastEntry>('audioprocessing', processedChannel)
-                        .subscribe(result => {
-                            this.entry = result;
-                            if (this.entry.processingStatus === 'Processed') {
-                                this.entriesStore.updateOneInCache(this.entry);
-                                this.cdr.detectChanges();
+                        .subscribe((result: AudioProcessingMessage) => {
+                            console.log(
+                                'entry-list-item.component',
+                                'audioprocessing',
+                                result
+                            );
+                            this.entry.processingStatus = AudioProcessingMessage.getProcessingStatus(
+                                result.processingStatus
+                            );
+                            this.narrative = result.progress;
+                            if (
+                                this.entry.processingStatus === 'Downloading' ||
+                                this.entry.processingStatus === 'Uploading'
+                            ) {
+                                this.percentageProcessed =
+                                    result.payload.percentage;
+                                this.currentSpeed = result.payload.currentSpeed;
                             }
+                            this.cdr.detectChanges();
                         });
                 })
                 .catch(err =>
@@ -93,6 +98,7 @@ export class EntryListItemComponent implements OnInit {
                 );
         }
     }
+
     __fixTitleEdit() {
         $('.fa-remove')
             .removeClass('fa-remove')

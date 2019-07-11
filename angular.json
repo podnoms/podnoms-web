@@ -63,7 +63,7 @@
                     "options": {
                         "ssl": true,
                         "sslKey": "certs/server.key",
-                        "sslCert": "/usr/local/share/ca-certificates/dev.podnoms/server.crt",
+                        "sslCert": "certs/server.crt",
                         "disableHostCheck": true,
                         "host": "0.0.0.0",
                         "browserTarget": "app:build"
