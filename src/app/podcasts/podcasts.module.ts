@@ -7,6 +7,7 @@ import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
 import { PodcastStoreService } from './podcast-store.service';
@@ -46,6 +47,7 @@ import { ComponentsModule } from '../components/components.module';
         NgbModalModule,
         DropzoneModule,
         NgSelectModule,
+        NgbModule,
         ModalModule.forRoot(),
         ComponentsModule
     ],

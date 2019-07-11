@@ -46,21 +46,13 @@
                         </div>
                         <span class="ml-5">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
                     </div>
-                    <div class="progress progress-xs"
-                        *ngIf="entry.processingStatus==='Downloading' || entry.processingStatus==='Uploading'">
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                                role="progressbar"
-                                [style.width]="percentageProcessed + '%'"
-                                [attr.aria-valuenow]="percentageProcessed"
-                                aria-valuemin="0"
-                                aria-valuemax="100">
-                                <span class="progress-bar-label text-dark ml-10 text-center">
-                                    {{entry.processingStatus}}:{{currentSpeed}} - {{percentageProcessed}}%
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    <p *ngIf="entry.processingStatus==='Downloading' || entry.processingStatus==='Uploading'">
+                        <ngb-progressbar type="info"
+                            height="10px"
+                            [value]="percentageProcessed">
+                            {{entry.processingStatus}}:{{currentSpeed}} - {{percentageProcessed}}%
+                        </ngb-progressbar>
+                    </p>
                 </span>
                 <span *ngIf="entry.processingStatus==='Processed'"
                     style="width: 100%"
@@ -114,8 +106,6 @@
         </div>
     </div>
 </div>
-<pre>{{percentageProcessed}}</pre>
-<!-- <pre>{{entry|json}}</pre> -->
 <ng-template #shareDialog>
     <app-sharing [entry]="
         entry"
