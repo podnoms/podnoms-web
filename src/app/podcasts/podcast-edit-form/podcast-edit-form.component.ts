@@ -106,6 +106,12 @@ export class PodcastEditFormComponent implements OnInit {
                     u => {
                         this.formImageUrl = u;
                         this.podcast$ = of(new Podcast());
+                        this.podcast$.subscribe(podcast => {
+                            this.podcastForm = this._createForm(
+                                this.fb,
+                                podcast
+                            );
+                        });
                     },
                     () => {}
                 );
@@ -126,6 +132,7 @@ export class PodcastEditFormComponent implements OnInit {
             }
         } else {
             this.podcast$ = of(new Podcast());
+            this.podcastForm = this._createForm(this.fb, podcast);
         }
     }
     wizardFinish(podcast: Podcast) {
