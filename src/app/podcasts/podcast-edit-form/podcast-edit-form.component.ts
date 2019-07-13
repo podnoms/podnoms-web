@@ -132,7 +132,9 @@ export class PodcastEditFormComponent implements OnInit {
             }
         } else {
             this.podcast$ = of(new Podcast());
-            this.podcastForm = this._createForm(this.fb, podcast);
+            this.podcast$.subscribe(podcast => {
+                this.podcastForm = this._createForm(this.fb, podcast);
+            });
         }
     }
     wizardFinish(podcast: Podcast) {
