@@ -102,19 +102,10 @@ export class PodcastEditFormComponent implements OnInit {
         this.useWizard = this.route.snapshot.params.useWizard || false;
         if (!this.useWizard) {
             if (!id) {
-                this.utilityService.getTemporaryPodcastImageUrl().subscribe(
-                    u => {
-                        this.formImageUrl = u;
-                        this.podcast$ = of(new Podcast());
-                        this.podcast$.subscribe(podcast => {
-                            this.podcastForm = this._createForm(
-                                this.fb,
-                                podcast
-                            );
-                        });
-                    },
-                    () => {}
-                );
+            this.podcast$ = of(new Podcast());
+            this.podcast$.subscribe(podcast => {
+                this.podcastForm = this._createForm(this.fb, podcast);
+            });
             } else {
                 this.podcastStore.entities$
                     .pipe(map(r => r.filter(it => it.slug === id)))
@@ -132,7 +123,9 @@ export class PodcastEditFormComponent implements OnInit {
             }
         } else {
             this.podcast$ = of(new Podcast());
-            this.podcastForm = this._createForm(this.fb, podcast);
+            this.podcast$.subscribe(podcast => {
+                this.podcastForm = this._createForm(this.fb, podcast);
+            });
         }
     }
     wizardFinish(podcast: Podcast) {

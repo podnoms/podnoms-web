@@ -1,28 +1,29 @@
 <div class="file-upload">
     <div class="options-container"
-         id="image-container">
-        <img class="img-fluid options-item img-preview"
-             [src]="image.src"
-             alt="">
-        <div class="options-overlay bg-black-op-75">
-            <div class="options-overlay-content">
-                <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
-                   (click)="callFileInput()">
-                    <i class="fa fa-pencil"></i> Replace
-                </a>
+        id="image-container">
+        <div class="fileinput fileinput-new"
+            data-provides="fileinput">
+            <div *ngIf="image.src"
+                class="fileinput-new img-thumbnail"
+                style="width: 600px; height: 420px;">
+                <img [src]="image.src"
+                    style="width: 580px; height: 400px;"
+                    alt="...">
+            </div>
+            <div class="fileinput-preview fileinput-exists img-thumbnail"
+                style="max-width: 600px; max-height: 420px;"></div>
+            <div>
+                <span class="btn btn-outline-secondary btn-file">
+                    <span class="fileinput-new">Select image</span>
+                    <span class="fileinput-exists">Change</span>
+                    <input accept="image/x-png,image/gif,image/jpeg"
+                        (change)="fileChangeEvent()"
+                        #fileInput
+                        type="file"></span>
+                <a href="#"
+                    class="btn btn-outline-secondary fileinput-exists"
+                    data-dismiss="fileinput">Remove</a>
             </div>
         </div>
-    </div>
-    <div class="input-group"
-         style="visibility: hidden;">
-        <span class="input-group-btn">
-            <span class="btn btn-default btn-file">
-                Choose image....
-                <input type="file"
-                       accept="image/x-png,image/gif,image/jpeg"
-                       (change)="fileChangeEvent()"
-                       #fileInput>
-            </span>
-        </span>
     </div>
 </div>
