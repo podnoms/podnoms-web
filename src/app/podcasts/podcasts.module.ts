@@ -16,7 +16,6 @@ import { EntryUploadComponent } from './entry-upload/entry-upload.component';
 import { UploadUrlComponent } from './entry-upload/upload-url/upload-url.component';
 import { UploadFileComponent } from './entry-upload/upload-file/upload-file.component';
 import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
-import { ModalModule } from 'ngx-bootstrap';
 import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { NotificationsComponent } from './notifications/notifications-component/notifications.component';
@@ -48,7 +47,6 @@ import { ComponentsModule } from '../components/components.module';
         DropzoneModule,
         NgSelectModule,
         NgbModule,
-        ModalModule.forRoot(),
         ComponentsModule
     ],
     exports: [PodcastComponent],
