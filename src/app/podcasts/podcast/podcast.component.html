@@ -17,7 +17,7 @@
                             aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Edit</span>
                     </a>
-                    <button (click)="podcastDeleteDialog.show()"
+                    <button (click)="showPodcastDeleteDialog(selected)"
                         title="Delete this podcast"
                         class="btn-block-option">
                         <i class="icon icon-close"
@@ -92,98 +92,6 @@
                 (podcastUpdated)="podcastUpdated(podcast)">
             </app-entry-upload>
             <app-podcast-detail [podcast]="selected"></app-podcast-detail>
-        </div>
-        <div class="modal fade"
-            role="document"
-            bsModal
-            #podcastDeleteDialog="bs-modal"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="block block-themed block-transparent mb-0">
-                        <div class="block-header bg-primary-dark">
-                            <h3 class="block-title">Delete
-                                this
-                                podcast?</h3>
-                            <div class="block-options">
-                                <button type="button"
-                                    class="btn-block-option"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                    (click)="podcastDeleteDialog.hide()">
-                                    <i class="icon icon-close"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="block-content">
-                            <h3 class="mb-20">This
-                                operation
-                                cannot
-                                be
-                                undone!</h3>
-                            <div class="container-fluid cxt-padded bg-faded">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-2 text-md-left text-center">
-                                            <img class="modal-podcast-image rounded-circle"
-                                                [src]="selected.imageUrl"
-                                                alt="Generic placeholder image" />
-                                        </div>
-                                        <div class="col-md-10 text-md-left text-center font-w600">
-                                            {{
-                                            selected.title
-                                            }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-20">
-                                Deleting
-                                this
-                                podcast
-                                will
-                                delete
-                                all
-                                associated
-                                entries
-                                and
-                                audio
-                                with no
-                                opportunity
-                                to get
-                                them
-                                back.
-                                It will
-                                also be
-                                removed
-                                from
-                                any
-                                podcast
-                                applications
-                                subscribed
-                                to
-                                this
-                                feed..
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button"
-                                class="btn-block-option"
-                                data-dismiss="modal"
-                                (click)="podcastDeleteDialog.hide()">
-                                No
-                            </button>
-                            <button type="button"
-                                class="btn btn-alt-success"
-                                data-dismiss="modal"
-                                (click)="deletePodcast(selected); podcastDeleteDialog.hide()">
-                                <i class="fa fa-check"></i>
-                                Yes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

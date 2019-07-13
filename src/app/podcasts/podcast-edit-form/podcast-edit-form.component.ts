@@ -1,3 +1,4 @@
+import { PodcastDeleteComponent } from '../podcast-delete.component';
 import { map } from 'rxjs/operators';
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -15,6 +16,7 @@ import { validateDomain } from '../../shared/validators/domain.validator';
 // import { ConditionalValidator } from '../../shared/validators/conditional.validator';
 import { CategoryService } from '../../shared/services/category.service';
 import { AlertService } from '../../core/alerts/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -60,6 +62,7 @@ export class PodcastEditFormComponent implements OnInit {
         categoryService: CategoryService,
         private router: Router,
         private fb: FormBuilder,
+        private modalService: NgbModal,
         private alertService: AlertService
     ) {
         this.categories$ = categoryService.getCategories();
@@ -182,11 +185,23 @@ export class PodcastEditFormComponent implements OnInit {
             );
         }
     }
+    showPodcastDeleteDialog(podcast: Podcast) {
+        const modalRef = this.modalService.open(PodcastDeleteComponent);
+        modalRef.componentInstance.podcast = podcast;
+        modalRef.result.then(r => {
+            if (r === 'delete') {
+                this.deletePodcast(podcast);
+            }
+        });
+    }
     deletePodcast(podcast: Podcast) {
         console.log('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {
+                    if (localStorage.getItem('__spslug') === podcast.slug) {
+                        localStorage.removeItem('__spslug');
+                    }
                     this.podcastStore.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
