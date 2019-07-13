@@ -42,6 +42,12 @@ export class AuthApiProxyService {
             this.httpOptions
         );
     }
+    validateCaptchaToken(token: string): Observable<any> {
+        return this.http.post<any>(
+            `${environment.apiHost}/auth/validaterecaptha`,
+            { token: token, isValid: false }
+        );
+    }
     public register(
         email: string,
         password: string
