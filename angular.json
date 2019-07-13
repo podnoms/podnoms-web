@@ -62,10 +62,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "ssl": true,
-                        "sslKey": "certs/cert.key",
-                        "sslCert": "certs/cert.crt",
-                        "host": "0.0.0.0",
+                        "sslKey": "certs/server.key",
+                        "sslCert": "certs/server.crt",
                         "disableHostCheck": true,
+                        "host": "0.0.0.0",
                         "browserTarget": "app:build"
                     },
                     "configurations": {

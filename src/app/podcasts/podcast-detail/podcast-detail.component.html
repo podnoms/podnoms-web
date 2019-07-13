@@ -1,5 +1,4 @@
-<div survivedTheTrip
-    class="podcast-list-wrapper"
+<!-- <div class="podcast-list-wrapper"
     *ngIf="podcast.podcastEntries.length !== 0; else empty">
     <table class="table">
         <tbody>
@@ -14,6 +13,16 @@
             </tr>
         </tbody>
     </table>
+</div> -->
+<div class="podcast-list-wrapper"
+    *ngIf="podcast.podcastEntries.length !== 0; else empty">
+    <app-entry-list-item *ngFor="let entry of entries$ | async"
+        class="podcast-entry-table-row mt-20"
+        draggable="true"
+        (dragstart)="dragStart($event, entry)"
+        (entryRemoved)='deleteEntry(entry)'
+        [(entry)]="entry">
+    </app-entry-list-item>
 </div>
 <ng-template #empty>
     <div class="row">

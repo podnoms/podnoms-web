@@ -7,6 +7,7 @@ import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
 import { PodcastStoreService } from './podcast-store.service';
@@ -42,10 +43,11 @@ import { ComponentsModule } from '../components/components.module';
         PodcastsRoutingModule,
         InlineEditorModule,
         MomentModule,
-        QuillModule,
+        QuillModule.forRoot(),
         NgbModalModule,
         DropzoneModule,
         NgSelectModule,
+        NgbModule,
         ModalModule.forRoot(),
         ComponentsModule
     ],
@@ -70,6 +72,10 @@ import { ComponentsModule } from '../components/components.module';
         UploadGdriveComponent,
         RemotePageParserComponent
     ],
-    providers: [PodcastStoreService, NotificationStoreService, NotificationControlService]
+    providers: [
+        PodcastStoreService,
+        NotificationStoreService,
+        NotificationControlService
+    ]
 })
 export class PodcastsModule {}
