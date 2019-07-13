@@ -34,6 +34,7 @@ import { RemotePageParserComponent } from './entry-upload/remote-page-parser/rem
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ComponentsModule } from '../components/components.module';
 import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-item-modal.component';
+import { NotificationItemDeleteComponent } from './notifications/notification-item/notification-item-delete.component';
 
 @NgModule({
     imports: [
@@ -65,6 +66,7 @@ import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-it
         NotificationsComponent,
         NotificationItemComponent,
         NotificationModalComponent,
+        NotificationItemDeleteComponent,
         PodcastPrivacyComponent,
         NotificationLogsComponent,
         EntryEditFormComponent,
@@ -72,7 +74,10 @@ import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-it
         UploadGdriveComponent,
         RemotePageParserComponent
     ],
-    entryComponents: [EntryDeleteItemModalComponent],
+    entryComponents: [
+        EntryDeleteItemModalComponent,
+        NotificationItemDeleteComponent
+    ],
     providers: [
         PodcastStoreService,
         NotificationStoreService,

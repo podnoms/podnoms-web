@@ -1,6 +1,8 @@
+import { NotificationItemDeleteComponent } from './notification-item-delete.component';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Notification } from '../../../core/model/notification';
 import { UtilsService } from '../../../utils/utils.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-notification-item',
@@ -16,7 +18,10 @@ export class NotificationItemComponent implements OnInit {
     @Output()
     public notificationDelete = new EventEmitter();
 
-    constructor(private utilsService: UtilsService) {}
+    constructor(
+        private modalService: NgbModal,
+        private utilsService: UtilsService
+    ) {}
     ngOnInit() {}
 
     __(c: string) {
@@ -26,8 +31,15 @@ export class NotificationItemComponent implements OnInit {
     editNotification() {
         this.notificationEdit.emit();
     }
-
-    deleteNotification() {
-        this.notificationDelete.emit();
+    showNotificationDeleteDialog() {
+        const modalRef = this.modalService.open(
+            NotificationItemDeleteComponent
+        );
+        modalRef.componentInstance.entry = this.entry;
+        modalRef.result.then(r => {
+            if (r === 'delete') {
+                this.notificationDelete.emit();
+            }
+        });
     }
 }

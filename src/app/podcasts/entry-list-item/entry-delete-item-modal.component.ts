@@ -3,7 +3,7 @@ import { Input, Component } from '@angular/core';
 import { PodcastEntry } from 'app/core';
 
 @Component({
-    selector: 'ngbd-modal-content',
+    selector: 'app-entry-delete-modal-content',
     styles: [
         `
             .modal-entry-image {
