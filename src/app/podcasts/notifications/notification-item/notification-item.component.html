@@ -1,50 +1,20 @@
 <div class="block block-themed">
-    <div class="block-header" [style.background-color]="__(notification.id)">
+    <div class="block-header"
+        [style.background-color]="__(notification.id)">
         <h3 class="block-title">
             {{notification.type}}
         </h3>
         <div class="block-options">
-            <button type="button" class="btn-block-option"
-                (click)="notificationDeleteDialog.show()">
+            <button type="button"
+                class="btn-block-option"
+                (click)="showNotificationDeleteDialog()">
                 <i class="fa fa-times"></i>
             </button>
-            <button type="button" class="btn-block-option"
+            <button type="button"
+                class="btn-block-option"
                 (click)="editNotification()">
                 <i class="fa fa-cog"></i>
             </button>
         </div>
     </div>
 </div>
-<div class="modal fade" role="document" bsModal
-    #notificationDeleteDialog="bs-modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="block block-themed block-transparent mb-0">
-                <div class="block-header bg-primary-dark">
-                    <h3 class="block-title">Delete this notification?
-                    </h3>
-                    <div class="block-options">
-                        <button type="button" class="btn-block-option"
-                            data-dismiss="modal" aria-label="Close"
-                            (click)="notificationDeleteDialog.hide()">
-                            <i class="icon icon-close"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="block-content">
-                    <h3 class="mb-20">This operation cannot
-                        be
-                        undone!
-                    </h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-alt-secondary"
-                        data-dismiss="modal" (click)="notificationDeleteDialog.hide()">No</button>
-                    <button type="button" class="btn btn-alt-success"
-                        data-dismiss="modal" (click)="deleteNotification(); notificationDeleteDialog.hide()">
-                        <i class="fas fa fa-check"></i> Yes
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
