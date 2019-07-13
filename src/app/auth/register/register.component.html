@@ -109,7 +109,8 @@
                                 <div class="col-md-8 text-center">
                                     <span class="d-inline-block">
                                         <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
-                                            formControlName="recaptcha">
+                                            formControlName="recaptcha"
+                                            #captchaElem>
                                         </ngx-recaptcha2>
                                     </span>
                                 </div>

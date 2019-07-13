@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import {
     FormGroup,
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
 import { environment } from '../../../environments/environment';
 import { ConstantsService } from '../../shared/services/constants.service';
+import { ReCaptcha2Component } from 'ngx-captcha';
+import { AuthApiProxyService } from '../auth-api-proxy.service';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -27,8 +29,12 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
     sending = false;
     _isRequesting: boolean = false;
     errorMessage: string;
+    @ViewChild('captchaElem', { static: false })
+    captchaElem: ReCaptcha2Component;
+
     constructor(
         private authService: AuthService,
+        private podnomsAuthService: AuthApiProxyService,
         private router: Router,
         private fb: FormBuilder,
         private constants: ConstantsService
@@ -91,30 +97,49 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                     console.log('login.component', 'Error logging in', error)
             );
     }
+
     doRegister() {
         this._isRequesting = true;
-        this.authService
-            .register(this.email.value, this.password.value)
-            .subscribe(
-                result => {
-                    if (result) {
-                        this.router.navigate(['/auth/login'], {
-                            queryParams: {
-                                brandNew: true,
-                                email: this.email.value
+        // first check recaptcha server side
+        const currentResponse = this.captchaElem.getCurrentResponse();
+        if (!currentResponse) {
+            alert("Don't do this");
+        }
+        this.podnomsAuthService.validateCaptchaToken(currentResponse).subscribe(
+            r => {
+                if (r && r.isValid === true) {
+                    this.authService
+                        .register(this.email.value, this.password.value)
+                        .subscribe(
+                            result => {
+                                if (result) {
+                                    this.router.navigate(['/auth/login'], {
+                                        queryParams: {
+                                            brandNew: true,
+                                            email: this.email.value
+                                        }
+                                    });
+                                } else {
+                                    this.errorMessage =
+                                        'Error signing up, please try again later';
+                                }
+                            },
+                            errors => {
+                                // TODO - remote logging of this error
+                                this.errorMessage =
+                                    'Error signing up, have you already signed up with this email?';
                             }
-                        });
-                    } else {
-                        this.errorMessage =
-                            'Error signing up, please try again later';
-                    }
-                },
-                errors => {
-                    // TODO - remote logging of this error
+                        );
+                } else {
                     this.errorMessage =
-                        'Error signing up, have you already signed up with this email?';
+                        'Captcha did not validate, please refresh page and try again.';
                 }
-            );
+            },
+            error => {
+                this.errorMessage =
+                    'Captcha did not validate, please refresh page and try again.';
+            }
+        );
     }
     onPasswordErrors(errors) {
         this.errorMessage = errors;
