@@ -21,20 +21,17 @@
                 (click)="__fixTitleEdit()">
             </inline-editor>
         </div>
-        <div class="font-w600 mb-0"
-            [ngClass]="entry.processingStatus==='Failed' ? 'text-danger' : ''">
+        <div class="font-w600 mb-0">
+            <div *ngIf="entry.processingStatus==='Failed'"
+                class="text-danger">
+                <span>Failed!</span>
+            </div>
             <div *ngIf="entry.processingStatus==='Processed'"
                 class="text-muted">
                 <span>{{entry.processingStatus}}</span>|
                 {{entry.createDate | amTimeAgo}}
             </div>
             <div *ngIf="entry.processingStatus!=='Processed'">
-                <span *ngIf="entry.processingStatus === 'Failed'"
-                    class="text-danger">
-                    <button type="button"
-                        class="btn btn-hero btn-lg btn-outline-success text-uppercase mb-10"
-                        (click)="retry(entry)">Retry</button>
-                </span>
                 <span *ngIf="entry.processingStatus!=='Processed' &&
                              entry.processingStatus !== 'Failed'"
                     style="width: 100%">
@@ -62,17 +59,18 @@
         </div>
     </div>
     <div class="col-md-3 text-center"
-        *ngIf="entry.processingStatus==='Processed'"
         valign="middle">
         <div class="tools-wrapper">
             <div class="btn-group">
                 <button type="button"
                     class="btn btn-success"
+                    *ngIf="entry.processingStatus==='Processed'"
                     (click)="audioService.playAudio(entry.audioUrl, entry.title)">
                     <i class="icon"
                         [ngClass]="{'icon-control-pause': playing, 'icon-control-play': !playing}"></i>
                 </button>
                 <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
                     class="btn btn-secondary"
                     data-toggle="tooltip"
                     title="Share episode"
@@ -80,6 +78,7 @@
                     <i class="fa fa-share-alt"></i>
                 </button>
                 <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
                     class="btn btn-secondary"
                     (click)="downloadAudio(entry)"
                     data-toggle="tooltip"
@@ -89,7 +88,15 @@
                     <i *ngIf="preparingDownload"
                         class="fa fa-cog fa-spin text-success"></i>
                 </button>
+                <button type="button"
+                    *ngIf="entry.processingStatus === 'Failed'"
+                    class="btn btn-success"
+                    (click)="retry(entry)"
+                    data-toggle="tooltip"
+                    title="Retry"><i class="fas fa fa-redo"></i>&nbsp;Retry
+                </button>
                 <a class="btn btn-secondary"
+                    *ngIf="entry.processingStatus==='Processed'"
                     [routerLink]="['../entry', entry?.id, 'edit']"
                     data-toggle="tooltip"
                     title="Edit episode">
