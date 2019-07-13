@@ -35,7 +35,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ComponentsModule } from '../components/components.module';
 import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-item-modal.component';
 import { NotificationItemDeleteComponent } from './notifications/notification-item/notification-item-delete.component';
-
+import { PodcastDeleteComponent } from './podcast-delete.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -62,6 +62,7 @@ import { NotificationItemDeleteComponent } from './notifications/notification-it
         UploadUrlComponent,
         UploadFileComponent,
         PodcastAddWizardComponent,
+        PodcastDeleteComponent,
         PodcastEditFormComponent,
         NotificationsComponent,
         NotificationItemComponent,
@@ -75,6 +76,7 @@ import { NotificationItemDeleteComponent } from './notifications/notification-it
         RemotePageParserComponent
     ],
     entryComponents: [
+        PodcastDeleteComponent,
         EntryDeleteItemModalComponent,
         NotificationItemDeleteComponent
     ],

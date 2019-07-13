@@ -35,7 +35,6 @@ export class NotificationItemComponent implements OnInit {
         const modalRef = this.modalService.open(
             NotificationItemDeleteComponent
         );
-        modalRef.componentInstance.entry = this.entry;
         modalRef.result.then(r => {
             if (r === 'delete') {
                 this.notificationDelete.emit();

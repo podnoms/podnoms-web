@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UploadModes } from '../upload-modes.enum';
 import { PodcastDataService } from '../podcast-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PodcastDeleteComponent } from '../podcast-delete.component';
 
 @Component({
     selector: 'app-podcast',
@@ -33,6 +35,7 @@ export class PodcastComponent implements OnDestroy {
         private podcastDataService: PodcastDataService,
         private router: Router,
         private route: ActivatedRoute,
+        private modalService: NgbModal,
         private alertService: AlertService,
         private changeDetectorRef: ChangeDetectorRef
     ) {
@@ -89,6 +92,14 @@ export class PodcastComponent implements OnDestroy {
                     this.loading = false;
                     localStorage.setItem('__spslug', id);
                 }
+                // } else {
+                //     //TODO: Check this is correct, have a feeling that this is called twice
+                //     //so this else will always be hit the first time
+                //     this.noPodcasts = true;
+                //     localStorage.removeItem('__spslug');
+                //     this.loading = false;
+                //     this.router.navigate(['podcasts/add']);
+                // }
             });
     }
     copyUrl(url: string) {
@@ -107,11 +118,23 @@ export class PodcastComponent implements OnDestroy {
         this.selectedPodcast$.next(podcast[0]);
         this.changeDetectorRef.detectChanges();
     }
+    showPodcastDeleteDialog(podcast: Podcast) {
+        const modalRef = this.modalService.open(PodcastDeleteComponent);
+        modalRef.componentInstance.podcast = podcast;
+        modalRef.result.then(r => {
+            if (r === 'delete') {
+                this.deletePodcast(podcast);
+            }
+        });
+    }
     deletePodcast(podcast: Podcast) {
         console.log('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {
+                    if (localStorage.getItem('__spslug') === podcast.slug) {
+                        localStorage.removeItem('__spslug');
+                    }
                     this.podcastStoreService.removeOneFromCache(podcast);
                     this.router.navigate(['/']);
                 } else {
