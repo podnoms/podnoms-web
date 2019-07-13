@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
@@ -33,6 +33,7 @@ import { BaseJsUploadComponent } from './base-js-upload.component';
 import { RemotePageParserComponent } from './entry-upload/remote-page-parser/remote-page-parser.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ComponentsModule } from '../components/components.module';
+import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-item-modal.component';
 
 @NgModule({
     imports: [
@@ -55,6 +56,7 @@ import { ComponentsModule } from '../components/components.module';
         PodcastComponent,
         PodcastDetailComponent,
         EntryListItemComponent,
+        EntryDeleteItemModalComponent,
         EntryUploadComponent,
         UploadUrlComponent,
         UploadFileComponent,
@@ -70,10 +72,31 @@ import { ComponentsModule } from '../components/components.module';
         UploadGdriveComponent,
         RemotePageParserComponent
     ],
+    entryComponents: [EntryDeleteItemModalComponent],
     providers: [
         PodcastStoreService,
         NotificationStoreService,
         NotificationControlService
     ]
 })
-export class PodcastsModule {}
+export class PodcastsModule {
+    constructor() {
+        //bring in animations to ng-bootstrap modal
+        NgbModalRef.prototype['c'] = NgbModalRef.prototype.close;
+        NgbModalRef.prototype.close = function(reason: string) {
+            document.querySelector('.modal-backdrop').classList.remove('show');
+            document.querySelector('.modal').classList.remove('show');
+            setTimeout(() => {
+                this['c'](reason);
+            }, 500);
+        };
+        NgbModalRef.prototype['d'] = NgbModalRef.prototype.dismiss;
+        NgbModalRef.prototype.dismiss = function(reason: string) {
+            document.querySelector('.modal-backdrop').classList.remove('show');
+            document.querySelector('.modal').classList.remove('show');
+            setTimeout(() => {
+                this['d'](reason);
+            }, 500);
+        };
+    }
+}

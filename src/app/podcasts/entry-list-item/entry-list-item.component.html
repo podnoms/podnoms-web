@@ -104,7 +104,7 @@
                 </a>
                 <button type="button"
                     class="btn btn-danger"
-                    (click)="entryDeleteDialog.show()"
+                    (click)="showEntryDeleteDialog()"
                     data-toggle="tooltip"
                     title="Delete episode">
                     <i class="icon icon-close"></i>
@@ -119,71 +119,3 @@
         (shareComplete)="shareComplete($event)">
     </app-sharing>
 </ng-template>
-<div class="modal fade"
-    role="document"
-    bsModal
-    #entryDeleteDialog="bs-modal"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="block block-themed block-transparent mb-0">
-                <div class="block-header bg-primary-dark">
-                    <h3 class="block-title">Delete this
-                        podcast
-                        entry?
-                    </h3>
-                    <div class="block-options">
-                        <button type="button"
-                            class="btn-block-option"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            (click)="entryDeleteDialog.hide()">
-                            <i class="icon icon-close"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="block-content">
-                    <h3 class="mb-20">
-                        This operation cannot be undone!
-                    </h3>
-                    <div class="container-fluid cxt-padded bg-faded">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-2 text-md-left text-center">
-                                    <img class="modal-entry-image rounded-circle"
-                                        [src]="entry.thumbnailUrl"
-                                        alt="Generic placeholder image">
-                                </div>
-                                <div class="col-md-10 text-md-left text-center font-w600">
-                                    {{entry.title}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="mt-20">Deleting this entry
-                        will
-                        delete all associated audio with no
-                        opportunity
-                        to get it back. It will also be
-                        removed
-                        from any podcast applications
-                        subscribed
-                        to this feed..
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                        class="btn btn-alt-secondary"
-                        data-dismiss="modal"
-                        (click)="entryDeleteDialog.hide()">No</button>
-                    <button type="button"
-                        class="btn btn-alt-success"
-                        data-dismiss="modal"
-                        (click)="deleteEntry(); entryDeleteDialog.hide()">
-                        <i class="fas fa fa-check"></i> Yes
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
