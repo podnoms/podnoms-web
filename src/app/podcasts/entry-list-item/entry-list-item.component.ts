@@ -1,3 +1,4 @@
+import { EntryDeleteItemModalComponent } from './entry-delete-item-modal.component';
 import {
     Component,
     OnInit,
@@ -104,9 +105,16 @@ export class EntryListItemComponent implements OnInit {
             .removeClass('fa-remove')
             .addClass('fa-times');
     }
-    deleteEntry() {
-        this.entryRemoved.emit(this.entry);
+    showEntryDeleteDialog() {
+        const modalRef = this.modalService.open(EntryDeleteItemModalComponent);
+        modalRef.componentInstance.entry = this.entry;
+        modalRef.result.then(r => {
+            if (r === 'delete') {
+                this.entryRemoved.emit(this.entry);
+            }
+        });
     }
+    deleteEntry() {}
     updateTitle($event: Event) {
         this.podcastEntryDataService
             .updateEntry(this.entry)

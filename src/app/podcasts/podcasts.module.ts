@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
@@ -16,7 +16,6 @@ import { EntryUploadComponent } from './entry-upload/entry-upload.component';
 import { UploadUrlComponent } from './entry-upload/upload-url/upload-url.component';
 import { UploadFileComponent } from './entry-upload/upload-file/upload-file.component';
 import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
-import { ModalModule } from 'ngx-bootstrap';
 import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { NotificationsComponent } from './notifications/notifications-component/notifications.component';
@@ -34,7 +33,9 @@ import { BaseJsUploadComponent } from './base-js-upload.component';
 import { RemotePageParserComponent } from './entry-upload/remote-page-parser/remote-page-parser.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ComponentsModule } from '../components/components.module';
-
+import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-item-modal.component';
+import { NotificationItemDeleteComponent } from './notifications/notification-item/notification-item-delete.component';
+import { PodcastDeleteComponent } from './podcast-delete.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -48,7 +49,6 @@ import { ComponentsModule } from '../components/components.module';
         DropzoneModule,
         NgSelectModule,
         NgbModule,
-        ModalModule.forRoot(),
         ComponentsModule
     ],
     exports: [PodcastComponent],
@@ -57,14 +57,17 @@ import { ComponentsModule } from '../components/components.module';
         PodcastComponent,
         PodcastDetailComponent,
         EntryListItemComponent,
+        EntryDeleteItemModalComponent,
         EntryUploadComponent,
         UploadUrlComponent,
         UploadFileComponent,
         PodcastAddWizardComponent,
+        PodcastDeleteComponent,
         PodcastEditFormComponent,
         NotificationsComponent,
         NotificationItemComponent,
         NotificationModalComponent,
+        NotificationItemDeleteComponent,
         PodcastPrivacyComponent,
         NotificationLogsComponent,
         EntryEditFormComponent,
@@ -72,10 +75,35 @@ import { ComponentsModule } from '../components/components.module';
         UploadGdriveComponent,
         RemotePageParserComponent
     ],
+    entryComponents: [
+        PodcastDeleteComponent,
+        EntryDeleteItemModalComponent,
+        NotificationItemDeleteComponent
+    ],
     providers: [
         PodcastStoreService,
         NotificationStoreService,
         NotificationControlService
     ]
 })
-export class PodcastsModule {}
+export class PodcastsModule {
+    constructor() {
+        //bring in animations to ng-bootstrap modal
+        NgbModalRef.prototype['c'] = NgbModalRef.prototype.close;
+        NgbModalRef.prototype.close = function(reason: string) {
+            document.querySelector('.modal-backdrop').classList.remove('show');
+            document.querySelector('.modal').classList.remove('show');
+            setTimeout(() => {
+                this['c'](reason);
+            }, 500);
+        };
+        NgbModalRef.prototype['d'] = NgbModalRef.prototype.dismiss;
+        NgbModalRef.prototype.dismiss = function(reason: string) {
+            document.querySelector('.modal-backdrop').classList.remove('show');
+            document.querySelector('.modal').classList.remove('show');
+            setTimeout(() => {
+                this['d'](reason);
+            }, 500);
+        };
+    }
+}
