@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         this.authService
             .socialLogin(method)
             .subscribe(
-                success => this.router.navigate(['']),
+                success => this._routePostLogin(),
                 error =>
                     console.log('login.component', 'Error logging in', error)
             );
@@ -44,12 +44,15 @@ export class LoginComponent implements OnInit {
     login() {
         this.authService.login(this.username, this.password).subscribe(
             success => {
-                this.router.navigate(['']);
+                this._routePostLogin();
             },
             error => {
                 this.errorMessage =
                     'Unable to log you in - have you registered?';
             }
         );
+    }
+    _routePostLogin() {
+        this.router.navigate(['']);
     }
 }

@@ -1,11 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ProfileDataService } from './../../profile/profile-data.service';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    AfterContentInit
+} from '@angular/core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import {
     FormGroup,
     FormsModule,
     FormControl,
     FormBuilder,
-    Validators
+    Validators,
+    AbstractControl
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -14,6 +22,9 @@ import { environment } from '../../../environments/environment';
 import { ConstantsService } from '../../shared/services/constants.service';
 import { ReCaptcha2Component } from 'ngx-captcha';
 import { AuthApiProxyService } from '../auth-api-proxy.service';
+import { timer } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { checkSlugUniqueValidator } from '../validators/check-slug-unique.validator';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -35,6 +46,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private podnomsAuthService: AuthApiProxyService,
+        private profileDataService: ProfileDataService,
         private router: Router,
         private fb: FormBuilder,
         private constants: ConstantsService
@@ -42,37 +54,58 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         super();
         this._buildForm();
     }
+    ngOnInit() {}
     //#region Form Control Getters
+
     private _buildForm() {
-        this.signupForm = this.fb.group({
-            email: [
-                '',
-                [
-                    Validators.required,
-                    Validators.pattern(this.constants.emailRegex)
-                ]
-            ],
-            passwordGroup: this.fb.group(
-                {
-                    password: [
-                        '',
-                        Validators.compose([
+        this.signupForm = this.fb.group(
+            {
+                username: [
+                    null,
+                    {
+                        validators: [
                             Validators.required,
-                            Validators.minLength(4)
-                        ])
-                    ],
-                    confirmPassword: [
-                        '',
-                        Validators.compose([
-                            Validators.required,
-                            Validators.minLength(4)
-                        ])
+                            Validators.pattern(/^[a-zA-Z 0-9\_\-]*$/)
+                        ],
+                        asyncValidators: [
+                            checkSlugUniqueValidator(this.profileDataService)
+                        ]
+                    }
+                ],
+                email: [
+                    '',
+                    [
+                        // this.profileDataService.checkSlug(term)
+                        Validators.required,
+                        Validators.pattern(this.constants.emailRegex)
                     ]
-                },
-                { validator: PasswordValidation.matchPassword }
-            ),
-            recaptcha: ['', Validators.required]
-        });
+                ],
+                passwordGroup: this.fb.group(
+                    {
+                        password: [
+                            '',
+                            Validators.compose([
+                                Validators.required,
+                                Validators.minLength(4)
+                            ])
+                        ],
+                        confirmPassword: [
+                            '',
+                            Validators.compose([
+                                Validators.required,
+                                Validators.minLength(4)
+                            ])
+                        ]
+                    },
+                    { validator: PasswordValidation.matchPassword }
+                ),
+                recaptcha: ['', Validators.required]
+            },
+            { updateOn: 'change' }
+        );
+    }
+    get username() {
+        return this.signupForm.get('username');
     }
     get email() {
         return this.signupForm.get('email');
@@ -87,7 +120,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         return this.passwordGroup.get('confirmPassword');
     }
     //#endregion
-    ngOnInit() {}
+
     socialLogin(method: string) {
         this.authService
             .socialLogin(method)
@@ -109,7 +142,11 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
             r => {
                 if (r && r.isValid === true) {
                     this.authService
-                        .register(this.email.value, this.password.value)
+                        .register(
+                            this.username.value,
+                            this.email.value,
+                            this.password.value
+                        )
                         .subscribe(
                             result => {
                                 if (result) {
