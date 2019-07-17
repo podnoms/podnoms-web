@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Podcast } from 'app/core';
 
 @Component({
-    selector: 'app-notification-delete-modal-content',
+    selector: 'app-podcast-delete-modal',
     template: `
         <div class="block block-themed block-transparent mb-0">
             <div class="block-header bg-primary-dark">

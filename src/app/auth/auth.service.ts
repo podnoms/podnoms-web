@@ -104,9 +104,13 @@ export class AuthService extends BaseService {
         }, 500);
         // window.location.reload();
     }
-    register(email: string, password: string): Observable<boolean> {
+    register(
+        username: string,
+        email: string,
+        password: string
+    ): Observable<boolean> {
         return this.podnomsAuthService
-            .register(email, password)
+            .register(username, email, password)
             .pipe(map(r => true));
     }
     forgotPassword(userName: string): Observable<any> {

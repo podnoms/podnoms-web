@@ -24,6 +24,11 @@ import { ToastComponent } from './components/toast/toast.component';
 import { ToastItemComponent } from './components/toast/toast-item.component';
 import { FileSizeComponent } from './components/file-size/file-size.component';
 import { SpinnerButtonComponent } from './components/spinner-button/spinner-button.component';
+import { ModalUpdatesComponent } from './components/modal-updates/modal-updates.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserSlugModalComponent } from './components/modal-updates/user-slug-modal.component';
+import { UserSlugChangeComponent } from './components/modal-updates/user-slug-change.component';
+import { AutofocusDirective } from './directives/auto-focus.directive';
 
 @NgModule({
     imports: [
@@ -32,12 +37,14 @@ import { SpinnerButtonComponent } from './components/spinner-button/spinner-butt
         ReactiveFormsModule,
         RouterModule,
         SocialLoginModule,
+        NgbModule,
         NgSelectModule
     ],
     exports: [
         FormsModule,
         ReactiveFormsModule,
         OrderByPipe,
+        AutofocusDirective,
         OrderByDatePipe,
         HumaniseTimePipe,
         BytesToHumanPipe,
@@ -47,10 +54,12 @@ import { SpinnerButtonComponent } from './components/spinner-button/spinner-butt
         SpinnerButtonComponent,
         ToastComponent,
         FileSizeComponent,
+        ModalUpdatesComponent,
         CategorySelectorComponent
     ],
     declarations: [
         OrderByPipe,
+        AutofocusDirective,
         HumaniseTimePipe,
         OrderByDatePipe,
         BasePageComponent,
@@ -63,8 +72,12 @@ import { SpinnerButtonComponent } from './components/spinner-button/spinner-butt
         ErrorComponent,
         SpinnerButtonComponent,
         ToastItemComponent,
-        FileSizeComponent
+        FileSizeComponent,
+        ModalUpdatesComponent,
+        UserSlugModalComponent,
+        UserSlugChangeComponent
     ],
+    entryComponents: [UserSlugModalComponent],
     providers: [
         UtilityService,
         SignalRService,

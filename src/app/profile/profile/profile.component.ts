@@ -20,7 +20,7 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { UUID } from 'angular2-uuid';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertService } from '../../core/alerts/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -85,6 +85,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
         private alertService: AlertService
@@ -148,14 +149,19 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     }
     doSave(profile: Profile) {
         this.profileDataService.updateProfile(profile).subscribe(p => {
-            this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
-                profile.profileImage = `${r}?v=${UUID.UUID()}`;
-                this.profileStoreService.updateOneInCache(profile);
-                this.alertService.info(
-                    'Success',
-                    'Profile updated successfully'
-                );
-            });
+            if (this.imageControl.imageChanged) {
+                this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
+                    profile.profileImage = `${r}?v=${UUID.UUID()}`;
+                    this.profileStoreService.updateOneInCache(profile);
+                    this.alertService.info(
+                        'Success',
+                        'Profile updated successfully'
+                    );
+                    this.router.navigate(['/']);
+                });
+            } else {
+                this.router.navigate(['/']);
+            }
         });
     }
 }

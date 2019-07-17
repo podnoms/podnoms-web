@@ -44,7 +44,42 @@
                     <div class="col-md-6 col-md-offset-3">
                         <form class="js-validation-signup"
                             [formGroup]="signupForm"
+                            autocomplete="off"
                             (ngSubmit)="doRegister()">
+                            <!-- This hooks the autocomplete so it doesn't for our identifier below-->
+                            <input type="text"
+                                id="username"
+                                style="width:0;height:0;visibility:hidden;position:absolute;left:0;top:0" />
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <div class="form-material">
+                                        <label for="identifier">Username</label>
+                                        <input type="search"
+                                            onfocus="this.removeAttribute('readonly');"
+                                            readonly
+                                            class="form-control"
+                                            id="identifier"
+                                            name="identifier"
+                                            appAutoFocus
+                                            autocomplete="new-identifier"
+                                            formControlName="username"
+                                            required="">
+                                        <div class="form-text text-muted">This is important as it will form part of the URL for your RSS feeds.</div>
+                                        <div class="text-danger animated fadeInDown"
+                                            *ngIf="username.invalid && username.touched">
+                                            <div *ngIf="username.errors['required']">
+                                                Username field can't be blank
+                                            </div>
+                                            <div *ngIf="username.errors['pattern']">
+                                                Only letters, numbers, underscore & hyphen are allowed
+                                            </div>
+                                            <div *ngIf="username.errors['slugTaken']">
+                                                This identifier has already been taken
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <div class="col-12">
                                     <div class="form-material">
