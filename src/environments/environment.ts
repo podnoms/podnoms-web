@@ -1,6 +1,7 @@
 export const environment = {
     production: false,
     signalRHost: 'https://localhost:5001',
+    // signalRHost: 'https://rt.podnoms.com',
     apiHost: 'https://localhost:5001',
     // apiHost: 'http://localhost:5000',
     vapidPublicKey:
