@@ -9,10 +9,7 @@ describe('AudioService', () => {
         });
     });
 
-    it(
-        'should be created',
-        inject([AudioService], (service: AudioService) => {
-            expect(service).toBeTruthy();
-        })
-    );
+    it('should be created', inject([AudioService], (service: AudioService) => {
+        expect(service).toBeTruthy();
+    }));
 });

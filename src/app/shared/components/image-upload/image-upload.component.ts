@@ -20,7 +20,7 @@ export class ImageUploadComponent implements OnInit {
     private _imageFileBuffer: File;
 
     image: any = new Image();
-    imageChanged: boolean = false;
+    public imageChanged: boolean = false;
 
     @Input() imageUrl: string;
 

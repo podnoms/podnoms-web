@@ -24,16 +24,17 @@ export class AppComponent {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     profile$: Observable<Profile>;
+    action$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     viewportWidth: number;
-
+    modalAction$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     constructor(
+        utilityService: UtilityService,
         public uiStateService: UiStateService,
         private alertService: AlertService,
         private updateService: UpdateService,
         private router: Router,
         private push: SwPush,
         private registrationService: PushRegistrationService,
-        private utilityService: UtilityService,
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
         private signalr: SignalRService
@@ -101,6 +102,10 @@ export class AppComponent {
             .map(r => r[0]);
 
         profile$.subscribe(p => {
+            if (p) {
+                if (!p.slug) {
+                }
+            }
             if (p && environment.production) {
                 this.push
                     .requestSubscription({

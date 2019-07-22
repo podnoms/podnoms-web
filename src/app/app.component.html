@@ -23,3 +23,7 @@
     <router-outlet></router-outlet>
 </ng-template>
 <app-toast></app-toast>
+<div *ngIf="profile$">
+    <app-modal-updates [(action$)]="action$">
+    </app-modal-updates>
+</div>
