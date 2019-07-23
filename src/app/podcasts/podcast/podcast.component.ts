@@ -107,29 +107,29 @@ export class PodcastComponent implements OnDestroy {
                 // }
             });
     }
-    @HostListener('dragover', ['$event']) onDragOver(evt) {
-        console.log('podcast.component', 'onDragOver', evt);
-        evt.preventDefault();
-        evt.stopPropagation();
-        if (this.uploadMode !== this.uploadModes.fromLocalFile) {
-            this.uploadMode = this.uploadModes.fromLocalFile;
-        } else {
-            // this.uploadMode = this.uploadModes.none;
-        }
-    }
-    @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
-        console.log('podcast.component', 'onDragLeave', evt);
-        if (this.uploadMode !== this.uploadModes.fromLocalFile) {
-            evt.preventDefault();
-            evt.stopPropagation();
-            this.uploadMode = this.uploadModes.none;
-        }
-    }
-    @HostListener('drop', ['$event']) public onDrop(evt) {
-        evt.preventDefault();
-        evt.stopPropagation();
-        this.uploadMode = this.uploadModes.none;
-    }
+    // @HostListener('dragover', ['$event']) onDragOver(evt) {
+    //     // console.log('podcast.component', 'onDragOver', evt);
+    //     // evt.preventDefault();
+    //     // evt.stopPropagation();
+    //     // if (this.uploadMode === this.uploadModes.none) {
+    //     //     this.uploadMode = this.uploadModes.fromLocalFile;
+    //     // } else {
+    //     //     // this.uploadMode = this.uploadModes.none;
+    //     // }
+    // }
+    // @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
+    //     // console.log('podcast.component', 'onDragLeave', evt);
+    //     // if (this.uploadMode !== this.uploadModes.fromLocalFile) {
+    //     //     evt.preventDefault();
+    //     //     evt.stopPropagation();
+    //     //     this.uploadMode = this.uploadModes.none;
+    //     // }
+    // }
+    // @HostListener('drop', ['$event']) public onDrop(evt) {
+    //     // evt.preventDefault();
+    //     // evt.stopPropagation();
+    //     // this.uploadMode = this.uploadModes.none;
+    // }
     copyUrl(url: string) {
         const el = document.createElement('textarea');
         el.value = url;
