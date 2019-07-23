@@ -21,3 +21,16 @@ ol {
 .block-content {
     background-color: $body-bg;
 }
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    top: 35% !important;
+    /* Bottom of button */
+    right: 0;
+    margin-left: -100px;
+    /* More to the left */
+}
