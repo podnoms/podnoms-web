@@ -28,6 +28,8 @@ export class AudioProcessingMessage {
                 return 'Failed';
             case 8:
                 return 'Deferred';
+            case 9:
+                return 'Caching';
         }
     }
 }
