@@ -1,17 +1,27 @@
-<app-upload-url *ngIf="uploadMode===uploadModes.fromUrl"
-                [podcast]="podcast"
-                (playlistAdded)="processPlaylist($event)"
-                (entryCreateComplete)="onEntryCreateComplete($event)">
-</app-upload-url>
-<app-upload-file *ngIf="uploadMode===uploadModes.fromLocalFile"
-                 [podcast]="podcast"
-                 (uploadComplete)="onEntryCreateComplete($event)">
-</app-upload-file>
-<app-upload-dropbox *ngIf="uploadMode===uploadModes.fromDropbox"
-                    [podcast]="podcast"
-                    (entryCreateComplete)="onEntryCreateComplete($event)">
-</app-upload-dropbox>
-<app-upload-gdrive *ngIf="uploadMode===uploadModes.fromGoogleDrive"
-                    [podcast]="podcast"
-                    (entryCreateComplete)="onEntryCreateComplete($event)">
-</app-upload-gdrive>
+<div class="container-fluid"
+    *ngIf="uploadMode===uploadModes.fromUrl">
+    <app-upload-url [podcast]="podcast"
+        (playlistAdded)="processPlaylist($event)"
+        (entryCreateComplete)="onEntryCreateComplete($event)">
+    </app-upload-url>
+</div>
+<div class="container-fluid"
+    *ngIf="uploadMode===uploadModes.fromLocalFile">
+    <app-upload-file [podcast]="podcast"
+        (uploadComplete)="onEntryCreateComplete($event)">
+    </app-upload-file>
+</div>
+
+<div class="container-fluid text-right"
+    *ngIf="uploadMode===uploadModes.fromDropbox">
+    <app-upload-dropbox [podcast]="podcast"
+        (entryCreateComplete)="onEntryCreateComplete($event)">
+    </app-upload-dropbox>
+</div>
+<div class="container-fluid text-right"
+    *ngIf="uploadMode===uploadModes.fromGoogleDrive">
+    <app-upload-gdrive *ngIf="uploadMode===uploadModes.fromGoogleDrive"
+        [podcast]="podcast"
+        (entryCreateComplete)="onEntryCreateComplete($event)">
+    </app-upload-gdrive>
+</div>
