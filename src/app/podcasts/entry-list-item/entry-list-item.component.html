@@ -43,7 +43,9 @@
                         </div>
                         <span class="ml-5">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
                     </div>
-                    <p *ngIf="entry.processingStatus==='Downloading' || entry.processingStatus==='Uploading'">
+                    <p *ngIf="entry.processingStatus==='Downloading' ||
+                              entry.processingStatus==='Uploading' ||
+                              entry.processingStatus==='Caching'">
                         <ngb-progressbar type="warning"
                             [value]="percentageProcessed">
                             {{entry.processingStatus}}:{{currentSpeed}} - {{percentageProcessed}}%

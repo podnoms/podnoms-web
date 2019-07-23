@@ -114,7 +114,7 @@ export class PodcastComponent implements OnDestroy {
         if (this.uploadMode !== this.uploadModes.fromLocalFile) {
             this.uploadMode = this.uploadModes.fromLocalFile;
         } else {
-            this.uploadMode = this.uploadModes.none;
+            // this.uploadMode = this.uploadModes.none;
         }
     }
     @HostListener('dragleave', ['$event']) public onDragLeave(evt) {

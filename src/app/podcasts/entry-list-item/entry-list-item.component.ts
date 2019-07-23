@@ -80,8 +80,12 @@ export class EntryListItemComponent implements OnInit {
                             );
                             this.narrative = result.progress;
                             if (
-                                this.entry.processingStatus === 'Downloading' ||
-                                this.entry.processingStatus === 'Uploading'
+                                (this.entry.processingStatus ===
+                                    'Downloading' ||
+                                    this.entry.processingStatus ===
+                                        'Caching' ||
+                                    this.entry.processingStatus ===
+                                        'Uploading')
                             ) {
                                 this.percentageProcessed =
                                     result.payload.percentage;
