@@ -1,6 +1,11 @@
 import { UiStateService } from './../../core/ui-state.service';
 import { map, skip, takeUntil } from 'rxjs/operators';
-import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+    Component,
+    ChangeDetectorRef,
+    OnDestroy,
+    HostListener
+} from '@angular/core';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -101,6 +106,17 @@ export class PodcastComponent implements OnDestroy {
                 //     this.router.navigate(['podcasts/add']);
                 // }
             });
+    }
+    @HostListener('dragover', ['$event']) onDragOver(evt) {
+        console.log('podcast.component', 'onDragOver', evt);
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.uploadMode = this.uploadModes.fromLocalFile;
+    }
+    @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.uploadMode = this.uploadModes.none;
     }
     copyUrl(url: string) {
         const el = document.createElement('textarea');
