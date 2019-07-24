@@ -7,11 +7,19 @@ import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../components/components.module';
 import { ChartsModule } from 'ng2-charts';
 import { PaymentsModule } from '../payments/payments.module';
+import { UserNotificationsSettingsComponent } from './notifications/user-notifications-settings/user-notifications-settings.component';
 
 @NgModule({
-    imports: [CommonModule, SharedModule, ComponentsModule, ProfileRoutingModule, ChartsModule, PaymentsModule],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ComponentsModule,
+        ProfileRoutingModule,
+        ChartsModule,
+        PaymentsModule
+    ],
     exports: [],
-    declarations: [ProfileComponent],
+    declarations: [ProfileComponent, UserNotificationsSettingsComponent],
     providers: [AuthService]
 })
 export class ProfileModule {}
