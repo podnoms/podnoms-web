@@ -40,16 +40,23 @@ export class AppComponent {
         private signalr: SignalRService
     ) {
         updateService.checkForUpdates();
-        utilityService.checkForApiServer().subscribe(
-            response => {
-                this.profile$ = authService.profile$;
-                this._bootstrapAuth().subscribe(r => this._bootstrapUpdates(r));
-            },
-            err => {
-                console.error('home.component', 'checkForApiServer', err);
-                router.navigateByUrl('/error');
-            }
-        );
+        if (environment.production) {
+            utilityService.checkForApiServer().subscribe(
+                response => {
+                    this.profile$ = authService.profile$;
+                    this._bootstrapAuth().subscribe(r =>
+                        this._bootstrapUpdates(r)
+                    );
+                },
+                err => {
+                    console.error('home.component', 'checkForApiServer', err);
+                    router.navigateByUrl('/error');
+                }
+            );
+        } else {
+            this.profile$ = authService.profile$;
+            this._bootstrapAuth().subscribe(r => this._bootstrapUpdates(r));
+        }
     }
 
     loggedIn(): boolean {
