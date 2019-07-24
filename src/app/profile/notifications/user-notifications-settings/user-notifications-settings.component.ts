@@ -32,6 +32,12 @@ export class UserNotificationsSettingsComponent implements OnInit {
         );
         this.profileService
             .updateProfile(this.user)
-            .subscribe(r => console.log('user-notifications-settings.component', 'updateProfile', r));
+            .subscribe(r =>
+                console.log(
+                    'user-notifications-settings.component',
+                    'updateProfile',
+                    r
+                )
+            );
     }
 }

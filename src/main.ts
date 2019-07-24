@@ -10,7 +10,7 @@ if (
     environment.production &&
     false &&
     location.host.indexOf('localhost') !== 0 &&
-    location.host.indexOf('dev.podnoms.com') !== 0
+    location.host.indexOf('podnoms.local') !== 0
 ) {
     enableProdMode();
     console.log(

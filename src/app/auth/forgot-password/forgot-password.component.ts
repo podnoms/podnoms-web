@@ -47,8 +47,7 @@ export class ForgotPasswordComponent extends BasePageComponent
         confirmPassword: [
             '',
             Validators.compose([Validators.required, Validators.minLength(4)])
-        ],
-        recaptcha: ['', Validators.required]
+        ]
     });
     @ViewChild('emailControl', { static: false }) emailField: ElementRef;
     @ViewChild('passwordControl', { static: false }) passwordField: ElementRef;
