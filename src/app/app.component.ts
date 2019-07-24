@@ -102,6 +102,7 @@ export class AppComponent {
             .map(r => r[0]);
 
         profile$.subscribe(p => {
+            this.action$.next('redirectslug');
             if (p && environment.production) {
                 this.push
                     .requestSubscription({
