@@ -1,0 +1,59 @@
+<div class="container m-20"
+    *ngIf="user">
+    <div class="col-md-6">
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title">Email Notifications</h3>
+            </div>
+            <div class="block-content">
+                <div class="row no-gutters items-push">
+                    <div class="col-6">
+                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
+                            <input type="checkbox"
+                                class="css-control-input"
+                                (change)="updateOption($event, notificationTypes.newPlaylistEpisode)"
+                                [checked]="isEnabled(notificationTypes.newPlaylistEpisode)">
+                            <span class="css-control-indicator"></span> New playlist episode
+                        </label>
+                    </div>
+                    <div class="col-6">
+                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
+                            <input type="checkbox"
+                                class="css-control-input"
+                                (change)="updateOption($event, notificationTypes.uploadCompleted)"
+                                [checked]="isEnabled(notificationTypes.uploadCompleted)">
+                            <span class="css-control-indicator"></span> Upload finished processing
+                        </label>
+                    </div>
+                    <div class="col-6">
+                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
+                            <input type="checkbox"
+                                class="css-control-input"
+                                (change)="updateOption($event, notificationTypes.recommendedPodcasts)"
+                                [checked]="isEnabled(notificationTypes.recommendedPodcasts)">
+                            <span class="css-control-indicator"></span> Podcasts you might like
+                        </label>
+                    </div>
+                    <div class="col-6">
+                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
+                            <input type="checkbox"
+                                class="css-control-input"
+                                (change)="updateOption($event, notificationTypes.storageExceeded)"
+                                [checked]="isEnabled(notificationTypes.storageExceeded)">
+                            <span class="css-control-indicator"></span> Storage space exceeded
+                        </label>
+                    </div>
+                    <div class="col-6">
+                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
+                            <input type="checkbox"
+                                class="css-control-input"
+                                (change)="updateOption($event, notificationTypes.playlistEntryCountExceeded)"
+                                [checked]="isEnabled(notificationTypes.playlistEntryCountExceeded)">
+                            <span class="css-control-indicator"></span> Playlist entry count exceeded
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

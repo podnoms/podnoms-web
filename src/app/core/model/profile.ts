@@ -8,7 +8,7 @@ export class Profile {
     apiKey: string;
     firstName: string;
     lastName: string;
-
+    emailNotificationOptions: number;
     hasSubscribed: boolean;
     subscriptionType: string;
     subscriptionValidUntil: Date;
