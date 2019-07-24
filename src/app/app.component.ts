@@ -102,10 +102,6 @@ export class AppComponent {
             .map(r => r[0]);
 
         profile$.subscribe(p => {
-            if (p) {
-                if (!p.slug) {
-                }
-            }
             if (p && environment.production) {
                 this.push
                     .requestSubscription({
