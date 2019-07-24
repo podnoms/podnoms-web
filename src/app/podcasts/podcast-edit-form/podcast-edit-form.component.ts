@@ -140,8 +140,7 @@ export class PodcastEditFormComponent implements OnInit {
         // podcast.subcategories = this.subcategories;
 
         this.sending = true;
-        const activeImageControl =
-            this.imageControl || this.wizardControl.getImageControl();
+        const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
             podcast.imageUrl = this.formImageUrl;
             this.podcastDataService.addPodcast(podcast).subscribe(

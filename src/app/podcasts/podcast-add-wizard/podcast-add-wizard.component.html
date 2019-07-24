@@ -102,17 +102,16 @@
                         id="wizard-progress-step2"
                         role="tabpanel">
                         <div class="nice-copy text-center">
-                            <p class="mb-10">We've chosen a
-                                nice kitten for your
-                                podcast image.
-                                <br /> You can change it to
-                                something else if you're a
-                                monster and you hate
-                                kitties.</p>
+                            <p class="mb-10">Please choose a cover image for your podcast</p>
+                            <div class="form-group ">
+                                <app-image-upload [imageUrl]="podcast.imageUrl"
+                                    #imageControl></app-image-upload>
+                            </div>
                         </div>
-                        <div class="form-group col-md-4 offset-4">
-                            <app-image-upload [imageUrl]="podcast.imageUrl"
-                                #imageControl></app-image-upload>
+                        <div class="alert alert-danger"
+                            *ngIf="errorMessage "
+                            role="alert "
+                            [innerHTML]="errorMessage ">
                         </div>
                     </div>
                     <div class="tab-pane"

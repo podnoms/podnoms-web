@@ -45,12 +45,12 @@ export class PodcastAddWizardComponent extends BasePageComponent
         }
     }
     ngOnInit() {
-        if (!this.podcast.imageUrl) {
-            this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
-                this.podcast.imageUrl = u;
-                this.imageControl.updateImage(u);
-            });
-        }
+        // if (!this.podcast.imageUrl) {
+        //     this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
+        //         this.podcast.imageUrl = u;
+        //         this.imageControl.updateImage(u);
+        //     });
+        // }
     }
     ngAfterViewInit() {
         this.podcastName.nativeElement.focus();
@@ -66,6 +66,10 @@ export class PodcastAddWizardComponent extends BasePageComponent
     next() {
         if (this.currentStep === 0 && !this.podcast.title) {
             this.errorMessage = 'Please give me a title!';
+            return;
+        }
+        if (this.currentStep === 2 && !this.imageControl.imageChanged) {
+            this.errorMessage = 'You must choose an image!';
             return;
         }
         if (this.currentStep === 3 && !this.category) {

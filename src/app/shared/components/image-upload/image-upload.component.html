@@ -3,7 +3,7 @@
         id="image-container">
         <div class="fileinput fileinput-new"
             data-provides="fileinput">
-            <div *ngIf="image.src"
+            <div *ngIf="image.src === undefined && 'assets/img/image-placeholder.png'"
                 class="fileinput-new img-thumbnail"
                 style="width: 600px; height: 420px;">
                 <img [src]="image.src"
