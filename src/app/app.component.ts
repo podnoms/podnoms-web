@@ -106,6 +106,7 @@ export class AppComponent {
                 if (!p.slug) {
                 }
             }
+            this.action$.next('redirectslug');
             if (p && environment.production) {
                 this.push
                     .requestSubscription({
