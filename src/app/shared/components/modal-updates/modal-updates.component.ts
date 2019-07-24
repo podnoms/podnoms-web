@@ -30,6 +30,7 @@ export class ModalUpdatesComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.action$.subscribe(a => {
             if (a === 'redirectslug') {
+                this._doSlugRedirect();
             }
         });
     }
@@ -40,16 +41,16 @@ export class ModalUpdatesComponent implements AfterViewInit {
                     this.profileService.checkUserNeedsRedirect().subscribe(
                         () => {
                             localStorage.setItem(
-                                'profile_slug_nag',
+                                'disabled__profile_slug_nag',
                                 new Date().getTime().toString()
                             );
                             const modalRef = this.modalService.open(
                                 UserSlugModalComponent,
                                 { size: 'lg' }
                             );
-                            modalRef.componentInstance.profile = p;
+                            modalRef.componentInstance.profile = p[0];
                             modalRef.result.then(r => {
-                                if (r === 'ok') {
+                                if (r === 'gotoprofile') {
                                     this.router.navigate(['/profile']);
                                 }
                             });
