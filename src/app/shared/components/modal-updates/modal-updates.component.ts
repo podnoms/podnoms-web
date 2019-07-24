@@ -35,15 +35,15 @@ export class ModalUpdatesComponent implements AfterViewInit {
         });
     }
     _doSlugRedirect() {
-        if (!localStorage.getItem('profile_slug_nag')) {
+        let value = parseInt(localStorage.getItem('profile_slug_nag'), 10);
+        if (!value) {
+            value = 0;
+        }
+        if (value % 10 === 0) {
             this.profileService.getProfile().subscribe(p => {
                 if (p) {
                     this.profileService.checkUserNeedsRedirect().subscribe(
                         () => {
-                            localStorage.setItem(
-                                'disabled__profile_slug_nag',
-                                new Date().getTime().toString()
-                            );
                             const modalRef = this.modalService.open(
                                 UserSlugModalComponent,
                                 { size: 'lg' }
@@ -64,5 +64,6 @@ export class ModalUpdatesComponent implements AfterViewInit {
                 }
             });
         }
+        localStorage.setItem('profile_slug_nag', (++value).toString());
     }
 }
