@@ -121,8 +121,10 @@ export class ProfileComponent extends BasePageComponent
     }
     ngAfterViewInit() {
         setTimeout(() => {
-            if (this.route.snapshot.params.do) {
-                this.tabs.select(this.route.snapshot.params.do);
+            const routeAction =
+                this.route.snapshot.queryParamMap.get('do') || '';
+            if (routeAction) {
+                this.tabs.select(routeAction);
             }
         }, 1000);
     }
