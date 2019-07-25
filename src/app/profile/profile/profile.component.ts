@@ -3,7 +3,8 @@ import {
     ElementRef,
     ViewChild,
     SimpleChanges,
-    OnInit
+    OnInit,
+    AfterViewInit
 } from '@angular/core';
 import { Profile, ProfileLimits, Payment } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
@@ -21,13 +22,15 @@ import { UUID } from 'angular2-uuid';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent extends BasePageComponent implements OnInit {
+export class ProfileComponent extends BasePageComponent
+    implements OnInit, AfterViewInit {
     public chartLabels: string[] = ['Used', 'Available'];
     public chartData: number[] = [85, 15];
 
@@ -66,6 +69,9 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     @ViewChild('imageControl', { static: false })
     imageControl: ImageUploadComponent;
 
+    @ViewChild('tabs', { static: false })
+    private tabs: NgbTabset;
+
     profile$: Observable<Profile>;
     destroy$ = new Subject();
 
@@ -81,7 +87,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     limits$: Observable<ProfileLimits>;
 
     slugging: boolean = false;
-    view: string = 'profile';
+    do: string = 'profile';
 
     constructor(
         private route: ActivatedRoute,
@@ -111,8 +117,14 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.view = this.route.snapshot.params.view || 'profile';
         this.refreshLimits();
+    }
+    ngAfterViewInit() {
+        setTimeout(() => {
+            if (this.route.snapshot.params.do) {
+                this.tabs.select(this.route.snapshot.params.do);
+            }
+        }, 1000);
     }
     private _bytesToHuman(bytes: number) {
         if (bytes === 0) {
