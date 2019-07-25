@@ -16,21 +16,22 @@ export class LoginComponent implements OnInit {
     username: string;
     password: string;
     isRequesting: boolean = false;
+    returnUrl: any;
 
     constructor(
         private authService: AuthService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit() {
-        this.metadata = this.activatedRoute.queryParams.subscribe(
-            (param: any) => {
-                this.brandNew = param['brandNew'];
-                this.justReset = param['justReset'];
-                this.username = param['email'];
-            }
-        );
+        this.returnUrl = this.route.snapshot.params['returnUrl'] || '';
+        this.metadata = this.route.queryParams.subscribe((param: any) => {
+            this.brandNew = param['brandNew'];
+            this.justReset = param['justReset'];
+            this.username = param['email'];
+            this.returnUrl = param['returnUrl'];
+        });
     }
     socialLogin(method: string) {
         this.authService
@@ -53,6 +54,10 @@ export class LoginComponent implements OnInit {
         );
     }
     _routePostLogin() {
-        this.router.navigate(['']);
+        if (this.returnUrl) {
+            this.router.navigateByUrl(this.returnUrl);
+        } else {
+            this.router.navigate(['']);
+        }
     }
 }
