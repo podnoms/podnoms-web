@@ -8,6 +8,7 @@ import { ComponentsModule } from '../components/components.module';
 import { ChartsModule } from 'ng2-charts';
 import { PaymentsModule } from '../payments/payments.module';
 import { UserNotificationsSettingsComponent } from './notifications/user-notifications-settings/user-notifications-settings.component';
+import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { UserNotificationsSettingsComponent } from './notifications/user-notific
         ComponentsModule,
         ProfileRoutingModule,
         ChartsModule,
-        PaymentsModule
+        PaymentsModule,
+        NgbTabsetModule
     ],
     exports: [],
     declarations: [ProfileComponent, UserNotificationsSettingsComponent],

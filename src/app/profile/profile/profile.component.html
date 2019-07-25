@@ -1,129 +1,106 @@
 <div class="container-fluid profile-container"
     *ngIf="profile$ | async; let profile; else loading">
     <div class="block">
-        <ul class="nav nav-tabs nav-tabs-alt"
-            data-toggle="tabs"
-            role="tablist">
-            <li class="nav-item">
-                <a class="nav-link"
-                    [ngClass]="view === 'profile' ? 'active' : ''"
-                    data-toggle="tab"
-                    href="#btabs-profile-details">My
-                    details </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                    [ngClass]="view === 'notifications' ? 'active' : ''"
-                    data-toggle="tab"
-                    href="#btabs-notifications">Notifications </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                    [ngClass]="view === 'invoices' ? 'active' : ''"
-                    data-toggle="tab"
-                    href="#btabs-profile-payments">
-                    Payments </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane"
-                [ngClass]="view === 'profile' ? 'active' : ''"
-                id="btabs-profile-details"
-                role="tabpanel">
-                <div class="block">
-                    <div class="block-content">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <form action=""
-                                            method="post"
-                                            onsubmit="return false;">
-                                            <div class="row">
-                                                <div class="col-md-7">
-                                                    <div class="form-group row">
-                                                        <div class="col-6">
-                                                            <label for="first-name">Firstname</label>
-                                                            <input type="text"
-                                                                class="form-control form-control-lg-disabled"
-                                                                name="first-name"
-                                                                [(ngModel)]="profile.firstName">
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label for="last-name">Lastname</label>
-                                                            <input type="text"
-                                                                class="form-control form-control-lg-disabled"
-                                                                name="last-name"
-                                                                [(ngModel)]="profile.lastName">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <div class="form-group row">
-                                                        <div class="col-12">
-                                                            <label for="slug-box">Username</label>
-                                                            <div class="input-group"
-                                                                [ngClass]="slugError ? 'is-invalid' : ''">
+
+        <ngb-tabset #tabs>
+            <ngb-tab id="profile"
+                title="Details">
+                <ng-template ngbTabContent>
+                    <div class="block">
+                        <div class="block-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <form action=""
+                                                method="post"
+                                                onsubmit="return false;">
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <div class="form-group row">
+                                                            <div class="col-6">
+                                                                <label for="first-name">Firstname</label>
                                                                 <input type="text"
                                                                     class="form-control form-control-lg-disabled"
-                                                                    id="slug-box"
-                                                                    name="slug-box"
-                                                                    autocomplete="off"
-                                                                    required=""
-                                                                    [(ngModel)]="profile.slug"
-                                                                    (keyup)="searchTerm$.next($event.target.value)">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text input-group-lg">
-                                                                        <i class="fa fa-asterisk"
-                                                                            [ngClass]="slugging ? 'fa-spin' : ''"></i>
-                                                                    </span>
-                                                                </div>
+                                                                    name="first-name"
+                                                                    [(ngModel)]="profile.firstName">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="last-name">Lastname</label>
+                                                                <input type="text"
+                                                                    class="form-control form-control-lg-disabled"
+                                                                    name="last-name"
+                                                                    [(ngModel)]="profile.lastName">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="invalid-feedback"
-                                                        *ngIf="slugError">{{slugError}}</div>
-                                                    <div class="form-text text-muted text-danger">
-                                                        Changing this will change all your RSS URLs but we will redirect the old one to the new one.
+                                                    <div class="col-md-5">
+                                                        <div class="form-group row">
+                                                            <div class="col-12">
+                                                                <label for="slug-box">Username</label>
+                                                                <div class="input-group"
+                                                                    [ngClass]="slugError ? 'is-invalid' : ''">
+                                                                    <input type="text"
+                                                                        class="form-control form-control-lg-disabled"
+                                                                        id="slug-box"
+                                                                        name="slug-box"
+                                                                        autocomplete="off"
+                                                                        required=""
+                                                                        [(ngModel)]="profile.slug"
+                                                                        (keyup)="searchTerm$.next($event.target.value)">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text input-group-lg">
+                                                                            <i class="fa fa-asterisk"
+                                                                                [ngClass]="slugging ? 'fa-spin' : ''"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="slugError">{{slugError}}</div>
+                                                        <div class="form-text text-muted text-danger">
+                                                            Changing this will change all your RSS URLs but we will redirect the old one to the new one.
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
-                                                    <label for="mega-bio">Profile
-                                                        Image</label>
-                                                    <app-image-upload [imageUrl]="profile.profileImage"
-                                                        #imageControl></app-image-upload>
+                                                <div class="form-group row">
+                                                    <div class="col-md-12">
+                                                        <label for="mega-bio">Profile
+                                                            Image</label>
+                                                        <app-image-upload [imageUrl]="profile.profileImage"
+                                                            #imageControl></app-image-upload>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <button type="submit"
-                                            class="btn btn-rounded btn-success mb-30"
-                                            (click)="doSave(profile)"
-                                            [disabled]="slugError"
-                                            style="width: 100%">
-                                            <i class="fa fa-check mr-5"></i>
-                                            Update
-                                            Profile
-                                        </button>
-                                        <div class="block">
-                                            <div class="block-header block-header-default">
-                                                <h3 class="block-title">Disk
-                                                    Quota:
-                                                    {{storageAvailable|bytesToHuman}}</h3>
-                                            </div>
-                                            <div class="block-content">
-                                                <div class="js-pie-chart pie-chart js-pie-chart-enabled">
-                                                    <canvas baseChart
-                                                        #usageChart
-                                                        class="chart"
-                                                        [data]="chartData"
-                                                        [labels]="chartLabels"
-                                                        [chartType]="'doughnut'"
-                                                        [options]="chartOptions">
-                                                    </canvas>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <button type="submit"
+                                                class="btn btn-rounded btn-success mb-30"
+                                                (click)="doSave(profile)"
+                                                [disabled]="slugError"
+                                                style="width: 100%">
+                                                <i class="fa fa-check mr-5"></i>
+                                                Update
+                                                Profile
+                                            </button>
+                                            <div class="block">
+                                                <div class="block-header block-header-default">
+                                                    <h3 class="block-title">Disk
+                                                        Quota:
+                                                        {{storageAvailable|bytesToHuman}}</h3>
+                                                </div>
+                                                <div class="block-content">
+                                                    <div class="js-pie-chart pie-chart js-pie-chart-enabled">
+                                                        <canvas baseChart
+                                                            #usageChart
+                                                            class="chart"
+                                                            [data]="chartData"
+                                                            [labels]="chartLabels"
+                                                            [chartType]="'doughnut'"
+                                                            [options]="chartOptions">
+                                                        </canvas>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,23 +109,21 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane"
-                [ngClass]="view === 'notifications' ? 'active' : ''"
-                id="btabs-notifications"
-                role="tabpanel">
-                <app-user-notifications-settings [user]="profile"></app-user-notifications-settings>
-            </div>
-            <div class="tab-pane"
-                [ngClass]="view === 'invoices' ? 'active' : ''"
-                id="btabs-profile-payments"
-                role="tabpanel">
-                <div class="mt-15">
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="notifications"
+                title="Notifications">
+                <ng-template ngbTabContent>
+                    <app-user-notifications-settings [user]="profile"></app-user-notifications-settings>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="payments"
+                title="Payments">
+                <ng-template ngbTabContent>
                     <app-payment-list></app-payment-list>
-                </div>
-            </div>
-        </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
     </div>
 </div>
 <ng-template #loading>
