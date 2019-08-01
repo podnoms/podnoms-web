@@ -1,4 +1,4 @@
-<div *ngIf="isPosting">
+<div *ngIf="isPosting && !playlistProxy">
     <app-loader [loadingText]="progressText">
     </app-loader>
 </div>
@@ -32,7 +32,7 @@
 </app-remote-page-parser>
 <div class="block block-themed"
     *ngIf="playlistProxy !== null">
-    <div class="block-header bg-corporate-light">
+    <div class="block-header bg-danger">
         <h3 class="block-title font-w600">
             This looks like a playlist?
             Shall we add all items
