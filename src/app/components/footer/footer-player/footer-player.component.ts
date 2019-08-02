@@ -1,50 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { AudioService, PlayState as PlayStates } from '../../../core/audio.service';
-declare var $;
+import {
+    Component,
+    OnInit,
+    AfterViewInit,
+    ViewChild,
+    ElementRef,
+    ViewChildren,
+    QueryList
+} from '@angular/core';
+import {
+    AudioService,
+    PlayState as PlayStates
+} from '../../../core/audio.service';
+import { ScriptService } from 'app/core/scripts/script.service';
+import { NowPlaying } from 'app/core/model/now-playing';
+declare var dzsap_init: any;
 
 @Component({
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
     styleUrls: ['./footer-player.component.scss']
 })
-export class FooterPlayerComponent implements OnInit {
-    title: string;
-    duration: number = 0;
-    volume: number = 0;
-    position: number = 0;
-    playStates = PlayStates;
-    playState: PlayStates = PlayStates.none;
+export class FooterPlayerComponent implements OnInit, AfterViewInit {
+    @ViewChild('player', { static: true })
+    player: ElementRef;
 
-    constructor(private audioService: AudioService) {}
+    nowPlaying: NowPlaying = new NowPlaying('', '', '', '');
 
-    ngOnInit() {
-        this.audioService.positionChanged.subscribe(p => (this.position = p));
-        this.audioService.titleChanged.subscribe(t => (this.title = t));
-        this.audioService.durationChanged.subscribe(d => (this.duration = d));
-        this.audioService.volumeChanged.subscribe(v => (this.volume = v));
-        this.audioService.playStateChanged.subscribe(s => {
-            this.playState = s;
+    playerSettings = {
+        disable_volume: 'off',
+        autoplay: 'on',
+        disable_scrub: 'default',
+        pcm_data_try_to_generate: 'on',
+        design_skin: 'skin-wave',
+        skinwave_dynamicwaves: 'on',
+        skinwave_enableSpectrum: 'off',
+        settings_backup_type: 'full',
+        settings_useflashplayer: 'auto',
+        skinwave_spectrummultiplier: '4',
+        skinwave_comments_enable: 'off',
+        skinwave_mode: 'small',
+        construct_player_list_for_sync: 'on',
+        footer_btn_playlist: 'on'
+    };
+    constructor(
+        private audioService: AudioService,
+        private scriptService: ScriptService
+    ) {}
+    ngOnInit() {}
+    ngAfterViewInit() {
+        this.audioService.nowPlaying$.subscribe(r => {
+            if (r.url) {
+                this.scriptService.load('zoom').then(() => {
+                    console.log(
+                        'footer-player.component',
+                        'ngOnInit',
+                        'Scripts loaded successfully'
+                    );
+                    dzsap_init(this.player.nativeElement, this.playerSettings);
+                });
+            }
         });
-
-        this.audioService.requestUpdate();
-    }
-    playPause() {
-        this.audioService.toggle();
-    }
-    doSeek(event) {
-        const $bar = $(event.currentTarget);
-        const newPercentage = (event.pageX - $bar.offset().left) / $bar.width() * 100;
-
-        const pos = newPercentage / 100 * this.duration;
-        this.audioService.setPosition(pos);
-    }
-
-    setVolume(event) {
-        const $bar = $(event.currentTarget);
-        const volume = Math.round((event.pageX - $bar.offset().left) / $bar.width() * 100);
-        this.audioService.setVolume(volume);
-    }
-    closePlayer() {
-        this.audioService.closePlayer();
     }
 }

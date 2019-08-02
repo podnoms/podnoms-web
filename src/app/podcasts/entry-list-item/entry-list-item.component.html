@@ -66,7 +66,7 @@
                 <button type="button"
                     class="btn btn-success"
                     *ngIf="entry.processingStatus==='Processed'"
-                    (click)="audioService.playAudio(entry.audioUrl, entry.title)">
+                    (click)="audioService.playAudio(entry.audioUrl, entry.podcastTitle, entry.title, entry.imageUrl)">
                     <i class="icon"
                         [ngClass]="{'icon-control-pause': playing, 'icon-control-play': !playing}"></i>
                 </button>
