@@ -4,9 +4,11 @@ import {
     HttpInterceptor,
     HttpHandler,
     HttpRequest,
-    HttpHeaders} from '@angular/common/http';
+    HttpHeaders
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
+import { environment } from 'environments/environment';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) {}
@@ -18,12 +20,18 @@ export class TokenInterceptor implements HttpInterceptor {
         return headers;
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (!this.authService) {
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
+        if (!this.authService || !req.url.startsWith(environment.apiHost)) {
             return next.handle(req);
         }
         const authToken = this.authService.getAuthToken();
-        let headers = req.url.indexOf('imageupload') > -1 ? new HttpHeaders() : this.commonHeaders();
+        let headers =
+            req.url.indexOf('imageupload') > -1
+                ? new HttpHeaders()
+                : this.commonHeaders();
         if (authToken) {
             headers = headers.append('Authorization', `Bearer ${authToken}`);
         }

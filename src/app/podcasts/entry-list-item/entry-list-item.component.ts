@@ -23,6 +23,7 @@ import { AudioDownloadService } from '../../shared/services/audio-download.servi
 import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../shared/components/toast/toast.service';
+import { NowPlaying } from 'app/core/model/now-playing';
 declare var $: any;
 @Component({
     selector: 'app-entry-list-item',
@@ -104,7 +105,11 @@ export class EntryListItemComponent implements OnInit {
                 );
         }
     }
-
+    playAudio() {
+        this.audioService.playAudio(
+            new NowPlaying(this.entry.audioUrl, this.entry)
+        );
+    }
     __fixTitleEdit() {
         $('.fa-remove')
             .removeClass('fa-remove')
@@ -136,16 +141,6 @@ export class EntryListItemComponent implements OnInit {
                 'Submitted podcast for re-processing'
             );
         });
-    }
-    playAudio(source: string) {
-        this.audioService.playStateChanged.subscribe(r => {
-            this.playing = r === 1;
-        });
-        if (!this.playing) {
-            this.audioService.playAudio(this.entry.audioUrl, this.entry.title);
-        } else {
-            this.audioService.pauseAudio();
-        }
     }
     createObjectURL(file) {
         return window.URL.createObjectURL(file);
