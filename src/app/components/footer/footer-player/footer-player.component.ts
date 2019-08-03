@@ -82,6 +82,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
                 settings_backup_type: 'full',
                 skinwave_spectrummultiplier: '4',
                 skinwave_comments_enable: 'off',
+                skinwave_enableReflect: 'on',
                 skinwave_mode: 'small'
             };
             if (!this.initialised) {
