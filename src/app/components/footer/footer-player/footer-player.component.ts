@@ -30,22 +30,6 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
     nowPlaying: NowPlaying = new NowPlaying(null, null);
     pcm: string = '';
 
-    playerSettings = {
-        disable_volume: 'off',
-        autoplay: 'on',
-        disable_scrub: 'default',
-        pcm_data_try_to_generate: 'on',
-        design_skin: 'skin-wave',
-        skinwave_dynamicwaves: 'on',
-        skinwave_enableSpectrum: 'off',
-        settings_backup_type: 'full',
-        settings_useflashplayer: 'auto',
-        skinwave_spectrummultiplier: '4',
-        skinwave_comments_enable: 'off',
-        skinwave_mode: 'small',
-        construct_player_list_for_sync: 'on',
-        footer_btn_playlist: 'on'
-    };
     initialised: boolean = false;
     constructor(
         private audioService: AudioService,
@@ -60,17 +44,24 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
                     .subscribe(d => {
-                        this.waveformService
-                            .getRemotePeakData(d)
-                            .subscribe(peaks => {
+                        this.waveformService.getRemotePeakData(d).subscribe(
+                            peaks => {
                                 this.pcm = peaks.toString();
-                                this.nowPlaying = nowPlaying;
-                                this.cdRef.detectChanges();
-                                setTimeout(() => this._setupPlayer(), 1000);
-                            });
+                                this._startPlayerSetupHook(nowPlaying);
+                            },
+                            error => {
+                                this.pcm = null;
+                                this._startPlayerSetupHook(nowPlaying);
+                            }
+                        );
                     });
             }
         });
+    }
+    _startPlayerSetupHook(nowPlaying: NowPlaying) {
+        this.nowPlaying = nowPlaying;
+        this.cdRef.detectChanges();
+        setTimeout(() => this._setupPlayer(), 1000);
     }
     _setupPlayer() {
         this.scriptService.load('zoom').then(() => {
@@ -108,7 +99,6 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
                     pcm: '[' + this.pcm + ']'
                 });
             }
-            // dzsap_init(this.player.nativeElement, this.playerSettings);
         });
     }
 }

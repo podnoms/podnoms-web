@@ -5,7 +5,7 @@
          [attr.data-pcm]="'[' + pcm + ']'"
          [attr.data-thumb]="nowPlaying.entry && nowPlaying.entry.imageUrl"
          [attr.data-thumb_link]="nowPlaying.entry && nowPlaying.entry.imageUrl"
-         [attr.data-source]="nowPlaying.url"
+         [attr.data-source]="nowPlaying.url + '?ngsw-bypass'"
          data-type="mediafile">
          <div class="the-comments">
          </div>
