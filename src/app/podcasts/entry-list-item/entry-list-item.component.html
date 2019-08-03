@@ -66,9 +66,19 @@
                 <button type="button"
                     class="btn btn-success"
                     *ngIf="entry.processingStatus==='Processed'"
-                    (click)="audioService.playAudio(entry.audioUrl, entry.title)">
-                    <i class="icon"
-                        [ngClass]="{'icon-control-pause': playing, 'icon-control-play': !playing}"></i>
+                    (click)="playAudio()">
+                    <div [ngSwitch]="(playState$ | async)">
+
+                        <i *ngSwitchCase="playStates.loading"
+                            class="fa fa-cog fa-spin">
+                        </i>
+                        <i *ngSwitchCase="playStates.playing"
+                            class="icon icon-control-pause">
+                        </i>
+                        <i *ngSwitchDefault
+                            class="icon icon-control-play">
+                        </i>
+                    </div>
                 </button>
                 <button type="button"
                     *ngIf="entry.processingStatus==='Processed'"

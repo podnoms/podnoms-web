@@ -1,0 +1,364 @@
+
+.audioplayer.skin-redlights{
+  .audioplayer-inner{
+    height: 80px;
+    padding: 10px;
+    background-color: #e2e2e2;
+
+
+
+    $transition-property: background;
+    $transition-duration: .3s;
+    $transition-timing: linear;
+    @include apply_transition($transition-property, $transition-duration, $transition-timing);
+
+    >.the-thumb-con{
+      display: none;
+    }
+  }
+
+  .volume_static:before{
+    display: none;
+  }
+  .ap-controls{
+
+    .playbtn{
+      border-width: 12px;
+      border-left-width: 20px;
+      border-left-color: #FFFFFF;
+
+
+      $transition-property: border,margin;
+      $transition-duration: .3s;
+      $transition-timing: ease-out;
+      @include apply_transition($transition-property, $transition-duration, $transition-timing);
+    }
+
+    .playbtn:before{
+      content:"";
+
+      position: absolute;
+
+      top:0;
+
+
+      background-color: #FFFFFF;
+
+      width:0px;
+
+      height: 25px;
+
+      margin-top:-12px;
+
+      left:-19px;
+
+
+      $transition-property: width,left;
+      $transition-duration: .3s;
+      $transition-timing: ease-out;
+      @include apply_transition($transition-property, $transition-duration, $transition-timing);
+    }
+
+    > .the-bg{
+      display: none;
+    }
+    height: 100%;
+    .ap-controls-left{
+      width: 60px;
+      height: 100%;
+      position: relative;
+      float:left;
+
+      margin-right: 10px;
+
+
+      .con-playpause{
+
+        width: 60px;
+        height: 60px;
+        top:0;
+        left:0;
+        position: relative;
+
+        background-color: #222222;
+
+
+        $transition-property: background;
+        $transition-duration: .2s;
+        $transition-timing: ease-out;
+        @include apply_transition($transition-property, $transition-duration, $transition-timing);
+
+
+        .playbtn{
+
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-left: -9px;
+          margin-top: -13px;
+          width: auto;height:auto;
+
+          path{
+            fill: #fff;
+          }
+          //display: none!important;
+        }
+        .pausebtn{
+
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-left: -10px;
+          margin-top: -13px;
+
+          width: 20px;height:25px;
+          border: 0px solid #191d21;
+
+          //display: block!important;
+
+          path{
+            fill: #e1d9ca;
+          }
+        }
+        .pausebtn:before,.pausebtn:after{
+          content: "";
+          position: absolute;
+          width: 6px;
+          height: 100%;
+
+          background-color: #222222;
+
+
+          $transition-property: right, top, height,background;
+          $transition-duration: .3s;
+          $transition-timing: ease-out;
+          @include apply_transition($transition-property, $transition-duration, $transition-timing);
+        }
+
+
+
+        .pausebtn:after{
+          left: auto; right:7px;
+          top:0%;
+
+          height: 50%;
+
+
+        }
+      }
+
+      .con-playpause:hover{
+        background-color: $color_highlight;
+
+        .pausebtn:before,.pausebtn:after{
+          content: "";
+          position: absolute;
+          width: 6px;
+          height: 100%;
+
+          background-color: #FFFFFF;
+        }
+
+      }
+    }
+
+    .controls-right{
+      float:right;
+      width: auto;
+      min-width: 40%;
+
+      text-align: right;
+
+      padding: 10px 10px 5px 0;
+    }
+    .ap-controls-right{
+      float:none;
+      overflow: hidden;
+      background-color: transparent;
+      height: auto;
+
+      position: relative;
+
+      border-radius: 0 3px 3px 0;
+
+      padding-top: 8px;
+      padding-left: 13px;
+
+      padding-right: 13px;
+
+      >*{
+        float:none;
+      }
+
+      .meta-artist{
+        overflow: hidden;
+
+        white-space: nowrap;
+      }
+
+      .meta-artist-con{
+        position: relative;
+        top:0;
+        left:0;
+        color: #774b5e;
+        white-space: nowrap;
+        max-width: 100%;
+        margin-bottom: 5px;
+
+        float:left;
+
+
+        .the-artist{
+          font-weight: bold;
+
+          display: inline-block;
+
+          font-family: "Lato", "Open Sans", sans-serif;
+
+          color: #222222;
+          font-size: 14px;
+          margin-right: 10px;
+        }
+
+
+        .the-name{
+          font-size: 14px;
+          font-weight: 300;
+        }
+      }
+
+      .controls-volume{
+
+        width: 57px;
+        height: 12px;
+
+
+        position: absolute;
+        float: none;
+        bottom: auto;
+        left: auto;
+        right: 15px;
+        top: 14px;
+
+        .volume_static{
+          width: auto;
+          height: auto;
+          background: transparent;
+          top:0;
+
+          rect{
+            fill: #a9a9a9;
+          }
+        }
+
+        .volumeicon, .volume_static, .volume_cut{
+          position: relative;
+          left:0;
+        }
+        .volume_active{
+          position: absolute;
+          height: auto;
+          background: transparent;
+          width: auto;
+
+          overflow: hidden;
+
+
+          top:0;
+
+          left:0;
+
+
+          rect{
+            fill: #222222;
+          }
+
+        }
+
+        .volumeicon{
+          display: none;
+        }
+      }
+
+      .scrubbar{
+        margin-top: 7px;
+        height: 10px;
+
+        > .scrub-bg{
+          border-radius: 0px;
+          height: 10px;
+          background-color: #FFFFFF;
+          border: 1px solid #222222;
+        }
+
+        >.scrub-prog{
+
+          border-radius: 0px;
+          height: 6px;
+          top:2px;
+          left: 2px;
+          max-width: calc(100% - 4px);
+          background-color: #222222;
+        }
+      }
+
+      .total-time{
+        position: relative;
+        top:0; left: 0;
+        color: #774b5e;
+        padding:0;
+        font-size: 14px;
+        margin-top: 8px;
+      }
+    }
+  }
+
+}
+
+.audioplayer.skin-aria.under-400 .meta-artist-con{
+  display: block;
+}
+
+
+
+.audioplayer.skin-redlights.is-playing {
+  .audioplayer-inner {
+
+    .con-playpause {
+
+      background-color: #FFFFFF;
+
+      .playbtn {
+        border-left-width: 5px;
+        margin-left: -10px;
+      }
+
+      .playbtn:before {
+        width: 6px;
+        left: -5px;
+      }
+
+      .pausebtn:after {
+        left: auto;
+        right: 0px;
+        top: 0%;
+
+        height: 100%;
+
+      }
+    }
+  }
+}
+
+.audioplayer.skin-redlights.under-400{
+
+  .controls-right{
+    display: none;
+  }
+}
+
+.audioplayer.skin-redlights.theme-dark{
+  .audioplayer-inner{
+    background-color: #3e3e3e;
+  }
+}

@@ -31,8 +31,8 @@ export class SidebarComponent implements OnInit {
     }
     ngOnInit() {
         this.podcastStore.getAll();
-        this.audioService.playStateChanged.subscribe(s => {
-            this.playerOpen = s !== PlayState.none;
+        this.audioService.playState$.subscribe(s => {
+            this.playerOpen = s === PlayState.paused || s === PlayState.playing;
         });
     }
     closeSidebar() {

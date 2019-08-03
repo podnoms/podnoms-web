@@ -12,7 +12,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { PodcastEntry } from '../../core';
-import { AudioService } from '../../core/audio.service';
+import { AudioService, PlayState } from '../../core/audio.service';
 import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
@@ -23,6 +23,8 @@ import { AudioDownloadService } from '../../shared/services/audio-download.servi
 import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../shared/components/toast/toast.service';
+import { NowPlaying } from 'app/core/model/now-playing';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 declare var $: any;
 @Component({
     selector: 'app-entry-list-item',
@@ -44,6 +46,9 @@ export class EntryListItemComponent implements OnInit {
     currentSpeed: string = '';
     playing: boolean = false;
     narrative: string = '';
+    playStates = PlayState;
+    playState$ = new BehaviorSubject<PlayState>(PlayState.none);
+    playStateSub$: Subscription;
 
     constructor(
         private modalService: NgbModal,
@@ -104,7 +109,20 @@ export class EntryListItemComponent implements OnInit {
                 );
         }
     }
-
+    playAudio() {
+        if (this.playStateSub$ !== null) {
+            this.audioService.stopAudio();
+        }
+        this.audioService.playAudio(
+            new NowPlaying(this.entry.audioUrl, this.entry)
+        );
+        this.playStateSub$ = this.audioService.playState$.subscribe(r => {
+            this.playState$.next(r);
+            if (r === PlayState.none && this.playStateSub$ !== null) {
+                this.playStateSub$.unsubscribe();
+            }
+        });
+    }
     __fixTitleEdit() {
         $('.fa-remove')
             .removeClass('fa-remove')
@@ -136,16 +154,6 @@ export class EntryListItemComponent implements OnInit {
                 'Submitted podcast for re-processing'
             );
         });
-    }
-    playAudio(source: string) {
-        this.audioService.playStateChanged.subscribe(r => {
-            this.playing = r === 1;
-        });
-        if (!this.playing) {
-            this.audioService.playAudio(this.entry.audioUrl, this.entry.title);
-        } else {
-            this.audioService.pauseAudio();
-        }
     }
     createObjectURL(file) {
         return window.URL.createObjectURL(file);
