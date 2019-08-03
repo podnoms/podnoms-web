@@ -6,34 +6,35 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UiStateService {
     private _sidebarOpen: boolean = true;
-    sidebarOpen: BehaviorSubject<boolean>;
-    sidebarOpenMobile: BehaviorSubject<boolean>;
+    sidebarOpen$ = new BehaviorSubject<boolean>(this._sidebarOpen);
+    sidebarOpenMobile$ = new BehaviorSubject<boolean>(false);
+    footerOpen$ = new BehaviorSubject<boolean>(false);
 
     overlayOpen: boolean = false;
     viewportWidth: number;
 
-    constructor() {
-        this.sidebarOpen = new BehaviorSubject<boolean>(this._sidebarOpen);
-        this.sidebarOpenMobile = new BehaviorSubject<boolean>(false);
-    }
+    constructor() {}
 
     toggleSidebar() {
         if (this.isMobile()) {
             this._sidebarOpen = true;
-            this.sidebarOpenMobile.next(this._sidebarOpen);
+            this.sidebarOpenMobile$.next(this._sidebarOpen);
         } else {
             this._sidebarOpen = !this._sidebarOpen;
         }
-        this.sidebarOpen.next(this._sidebarOpen);
+        this.sidebarOpen$.next(this._sidebarOpen);
     }
     toggleOverlay() {
         this.overlayOpen = !this.overlayOpen;
     }
+    setFooterOpen(open: boolean) {
+        this.footerOpen$.next(open);
+    }
     closeMobileSidebar() {
         if (this.isMobile()) {
             this._sidebarOpen = false;
-            this.sidebarOpen.next(this._sidebarOpen);
-            this.sidebarOpenMobile.next(this._sidebarOpen);
+            this.sidebarOpen$.next(this._sidebarOpen);
+            this.sidebarOpenMobile$.next(this._sidebarOpen);
         }
     }
     @HostListener('window:resize', ['$event'])

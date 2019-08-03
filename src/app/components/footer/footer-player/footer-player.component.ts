@@ -96,7 +96,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
                     type: 'audio',
                     fakeplayer_is_feeder: 'off',
                     artist: this.nowPlaying.entry.podcastTitle,
-                    source: this.nowPlaying.entry.audioUrl,
+                    source: `${this.nowPlaying.entry.audioUrl}?ngsw-bypass`,
                     song_name: this.nowPlaying.entry.title,
                     autoplay: 'on',
                     thumb: this.nowPlaying.entry.thumbnailUrl,
