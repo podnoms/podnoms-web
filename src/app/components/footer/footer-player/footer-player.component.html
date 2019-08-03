@@ -1,59 +1,20 @@
-<div class="player-ui-wrapper">
-    <div #player
-        class="audioplayer-tobe dzsap_footer button-aspect-noir button-aspect-noir--filled"
-        style="width:100%; "
-        [attr.data-thumb]="nowPlaying.imageUrl"
-        [attr.data-thumb_link]="nowPlaying.imageUrl"
-        data-bgimage="/assets/zoom/demo/img/bg.jpg"
-        data-scrubbg="/assets/zoom/demo/waves/scrubbg.png"
-        data-scrubprog="/assets/zoom/demo/waves/scrubprog.png"
-        [attr.data-source]="nowPlaying.url">
-        <!--  data-sourceogg="sounds/adg3.ogg"  -->
-        <div class="the-comments">
-        </div>
-        <div class="meta-artist">
-            <span class="the-artist">{{nowPlaying.podcastTitle}}</span>
-            <span class="the-name">
-                <a href="http://codecanyon.net/item/zoomsounds-wordpress-audio-player/6181433?ref=ZoomIt"
-                    target="_blank">{{ nowPlaying.episodeTitle }}</a>
-            </span>
-        </div>
-    </div>
-</div>
-<!-- <div class="player-wrapper">
-    <button type="button" class="closeButton btn btn-sm bg-corporate-light" (click)="closePlayer()">
-        <i class="fa fa-times"></i>
-    </button>
-    <div class="webPlayer light audioPlayer bg-corporate-light footer-player">
-        <div class="controls">
-            <div class="leftblock">
-                <a
-                    (click)="playPause()"
-                    tabindex="1"
-                    class="smooth noload"
-                    [ngClass]="playState === playStates.playing ? 'pause' : 'play'"
-                ></a>
-            </div>
-            <div class="play-progress">
-                <span> {{ title }} </span>
-                <div class="progressbar">
-                    <div class="seekBar horizontal" style="width: 100%;" (click)="doSeek($event)">
-                        <div class="playBar" [style.width.%]="(position / duration) * 100"></div>
-                        <a [style.left.%]="(position / duration) * 100"> <div></div> </a>
-                        <input type="hidden" name="" ng-model="vm.playPos" />
-                    </div>
-                </div>
-                <div class="time current">{{ position | humaniseTime }}</div>
-                <div class="time duration">{{ duration | humaniseTime }}</div>
-            </div>
-            <div class="rightblock">
-                <div class="volumeBar">
-                    <div class="currentVolume horizontal" (click)="setVolume($event)">
-                        <div class="curvol" [style.width.%]="volume"></div>
-                    </div>
-                </div>
-                <div class="volumeText">Volume: {{ volume }}</div>
-            </div>
-        </div>
-    </div>
-</div> -->
+ <div class="player-ui-wrapper">
+     <div #player
+         class="audioplayer-tobe dzsap_footer button-aspect-noir button-aspect-noir--filled"
+         style="width:100%; "
+         [attr.data-pcm]="'[' + pcm + ']'"
+         [attr.data-thumb]="nowPlaying.entry && nowPlaying.entry.imageUrl"
+         [attr.data-thumb_link]="nowPlaying.entry && nowPlaying.entry.imageUrl"
+         [attr.data-source]="nowPlaying.url"
+         data-type="mediafile">
+         <div class="the-comments">
+         </div>
+         <div class="meta-artist"
+             *ngIf="nowPlaying.entry">
+             <span class="the-artist">{{nowPlaying.entry.podcastTitle}}</span>
+             <span class="the-name">
+                 <a [routerLink]="['/podcasts', nowPlaying.entry.podcastSlug]">{{ nowPlaying.entry.title }}</a>
+             </span>
+         </div>
+     </div>
+ </div>

@@ -1,17 +1,10 @@
+import { PodcastEntry } from '.';
+
 export class NowPlaying {
-    constructor(
-        url: string,
-        podcastTitle: string,
-        episodeTitle: string,
-        imageUrl: string
-    ) {
+    constructor(url: string, entry: PodcastEntry) {
         this.url = url;
-        this.podcastTitle = podcastTitle;
-        this.episodeTitle = episodeTitle;
-        this.imageUrl = imageUrl;
+        this.entry = entry;
     }
     url: string;
-    podcastTitle: string;
-    episodeTitle: string;
-    imageUrl: string;
+    entry: PodcastEntry;
 }
