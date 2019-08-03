@@ -83,7 +83,10 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
                 skinwave_spectrummultiplier: '4',
                 skinwave_comments_enable: 'off',
                 skinwave_enableReflect: 'on',
-                skinwave_mode: 'small'
+                skinwave_mode: 'small',
+                action_audio_play: () => this.audioService.audioLoaded(),
+                action_audio_pause: () => this.audioService.pauseAudio(),
+                action_audio_end: () => this.audioService.stopAudio()
             };
             if (!this.initialised) {
                 const c = dzsap_init(this.player.nativeElement, settings_ap);

@@ -10,7 +10,7 @@ import { NowPlaying } from './model/now-playing';
 
 export enum PlayState {
     none = -1,
-    inProgress = 0,
+    loading = 0,
     playing = 1,
     paused = 0
 }
@@ -19,10 +19,23 @@ export enum PlayState {
     providedIn: 'root'
 })
 export class AudioService {
-    nowPlaying$: BehaviorSubject<NowPlaying> = new BehaviorSubject<NowPlaying>(
-        null
-    );
+    playState$ = new BehaviorSubject<PlayState>(PlayState.none);
+    nowPlaying$ = new BehaviorSubject<NowPlaying>(null);
     playAudio(nowPlaying: NowPlaying) {
         this.nowPlaying$.next(nowPlaying);
+        this.playState$.next(PlayState.loading);
+    }
+    pauseAudio() {
+        console.log('audio.service', 'pauseAudio');
+        this.playState$.next(PlayState.paused);
+    }
+    stopAudio() {
+        console.log('audio.service', 'stopAudio');
+        this.nowPlaying$.next(new NowPlaying(null, null));
+        this.playState$.next(PlayState.none);
+    }
+    audioLoaded() {
+        console.log('audio.service', 'audioLoaded');
+        this.playState$.next(PlayState.playing);
     }
 }
