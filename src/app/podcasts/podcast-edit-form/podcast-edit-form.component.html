@@ -185,4 +185,7 @@
         </app-podcast-add-wizard>
     </div>
 </div>
-<ng-template #loading>Loading....</ng-template>
+<ng-template #loading>
+    <app-loader [loadingText]="'Loading....'">
+    </app-loader>
+</ng-template>
