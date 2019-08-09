@@ -25,7 +25,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
-    formImageUrl: string;
     public categories$: Observable<Category[]>;
     podcastForm: FormGroup;
     @ViewChild('imageControl', { static: false })
@@ -112,7 +111,6 @@ export class PodcastEditFormComponent implements OnInit {
                     .subscribe(p => {
                         const podcast = p[0];
                         if (podcast) {
-                            this.formImageUrl = podcast.imageUrl;
                             this.podcast$ = of(podcast);
                             this.podcastForm = this._createForm(
                                 this.fb,
@@ -140,9 +138,9 @@ export class PodcastEditFormComponent implements OnInit {
         // podcast.subcategories = this.subcategories;
 
         this.sending = true;
-        const activeImageControl = this.imageControl || this.wizardControl.getImageControl();
+        const activeImageControl =
+            this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
-            podcast.imageUrl = this.formImageUrl;
             this.podcastDataService.addPodcast(podcast).subscribe(
                 p => {
                     activeImageControl
@@ -159,6 +157,7 @@ export class PodcastEditFormComponent implements OnInit {
                         'There was an error adding this podcast, please check all your values and try again'
                     );
                     this.sending = false;
+                    //
                 }
             );
         } else {
