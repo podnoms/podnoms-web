@@ -35,6 +35,7 @@
                 <span class="d-none d-md-inline-block">Buy me a beer</span>
             </a>
             <a [routerLink]="['payments/pricing']"
+                *ngIf="pricingEnabled"
                 class="btn btn-dual-secondary">
                 <i class="fa fa-credit-card"></i>&nbsp;
                 <span class="d-none d-md-inline-block">Pricing</span>
