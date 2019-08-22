@@ -15,7 +15,7 @@ import {
 import { ScriptService } from 'app/core/scripts/script.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { WaveformService } from 'app/shared/services/waveform.service';
-declare var dzsap_init: any;
+declare var pnplayer_init: any;
 declare var change_media: any;
 
 @Component({
@@ -64,7 +64,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
         setTimeout(() => this._setupPlayer(), 1000);
     }
     _setupPlayer() {
-        this.scriptService.load('zoom').then(() => {
+        this.scriptService.load('pnplayer').then(() => {
             console.log(
                 'footer-player.component',
                 'ngOnInit',
@@ -89,7 +89,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
                 action_audio_end: () => this.audioService.stopAudio()
             };
             if (!this.initialised) {
-                const c = dzsap_init(this.player.nativeElement, settings_ap);
+                const c = pnplayer_init(this.player.nativeElement, settings_ap);
                 this.initialised = true;
             } else {
                 this.player.nativeElement.api_change_media(null, {
