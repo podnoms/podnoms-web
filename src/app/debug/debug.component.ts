@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
 import { AlertService } from 'app/core/alerts/alert.service';
+import { HubConnection } from '@aspnet/signalr';
 
 @Component({
     selector: 'app-debug',
@@ -15,6 +16,7 @@ export class DebugComponent implements OnInit {
     clickProcess($event: () => void) {
         setTimeout(() => $event(), 2000);
     }
+
     showToast() {
         this.alertService.success(
             'Hello Sailor',
