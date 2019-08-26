@@ -71,6 +71,16 @@
                         <i class="fa fa-flag mr-5"></i>
                         Admin</a>
                     <a class="dropdown-item"
+                        *ngIf="profileHasAdmin"
+                        [routerLink]="['/debug']">
+                        <i class="fa fa-bug mr-5"></i>
+                        Debug</a>
+                    <a class="dropdown-item"
+                        *ngIf="profileHasAdmin"
+                        [routerLink]="['/debug/signalr']">
+                        <i class="fa fa-chalkboard-teacher mr-5"></i>
+                        SignalR</a>
+                    <a class="dropdown-item"
                         (click)="logout()">
                         <i class="fa fa-sign-out-alt mr-5"></i>
                         Logout</a>
