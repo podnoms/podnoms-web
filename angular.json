@@ -35,8 +35,7 @@
                             "node_modules/zxcvbn/dist/zxcvbn.js",
                             "node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.js",
                             "node_modules/easy-pie-chart/dist/easypiechart.js",
-                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js",
-                            "src/assets/pnplayer/wavesurfer.js"
+                            "node_modules/easy-pie-chart/dist/jquery.easypiechart.js"
                         ]
                     },
                     "configurations": {
