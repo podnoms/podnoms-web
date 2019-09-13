@@ -20,7 +20,14 @@ export class BaseJsUploadComponent extends BasePageComponent {
     };
     mimeLists = {
         video: ['m4v', 'avi', 'mpg', 'mp4', 'webm'],
-        audio: ['audio/mpeg', 'audio/mp4', 'audio/x-aiff', 'audio/ogg', 'audio/vorbis', 'audio/vnd.wav'],
+        audio: [
+            'audio/mpeg',
+            'audio/mp4',
+            'audio/x-aiff',
+            'audio/ogg',
+            'audio/vorbis',
+            'audio/vnd.wav'
+        ],
         image: ['jpg', 'gif', 'bmp', 'png']
     };
 
@@ -44,11 +51,13 @@ export class BaseJsUploadComponent extends BasePageComponent {
         let isFound = false;
         const scripts = document.getElementsByTagName('script');
         for (let i = 0; i < scripts.length; ++i) {
-            if (scripts[i].getAttribute('src') != null && scripts[i].getAttribute('src') === scriptUrl) {
+            if (
+                scripts[i].getAttribute('src') != null &&
+                scripts[i].getAttribute('src') === scriptUrl
+            ) {
                 isFound = true;
             }
         }
-
         if (!isFound) {
             const node = document.createElement('script');
             for (const key in attributes) {
@@ -63,13 +72,14 @@ export class BaseJsUploadComponent extends BasePageComponent {
             document.getElementsByTagName('head')[0].appendChild(node);
         }
     }
-
     protected parseFileList(files: Array<any>) {
         this.isPosting = true;
         const that = this;
         files.forEach(file => {
             if (file && file.name && file.link) {
-                that.processPodcast(file.name, file.link).subscribe(e => this.entryCreateComplete.emit(e));
+                that.processPodcast(file.name, file.link).subscribe(e =>
+                    this.entryCreateComplete.emit(e)
+                );
             }
         });
     }
