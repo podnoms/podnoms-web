@@ -6,7 +6,11 @@ import { SharedModule } from '../shared/shared.module';
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
-import { NgbModalRef, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbModalRef,
+    NgbProgressbarModule,
+    NgbTabsetModule
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
 import { PodcastStoreService } from './podcast-store.service';
@@ -47,6 +51,7 @@ import { PodcastDeleteComponent } from './podcast-delete.component';
         DropzoneModule,
         NgSelectModule,
         NgbProgressbarModule,
+        NgbTabsetModule,
         ComponentsModule
     ],
     exports: [PodcastComponent],

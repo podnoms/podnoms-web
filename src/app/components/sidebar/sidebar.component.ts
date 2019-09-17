@@ -17,13 +17,11 @@ export class SidebarComponent implements OnInit {
     selected: Podcast;
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
-    playerOpen: boolean;
 
     public config: PerfectScrollbarConfigInterface = {};
     constructor(
         private router: Router,
-        private uiStateService: UiStateService,
-        private audioService: AudioService,
+        public uiStateService: UiStateService,
         private podcastStore: PodcastStoreService
     ) {
         this.podcasts$ = podcastStore.entities$;
@@ -31,9 +29,6 @@ export class SidebarComponent implements OnInit {
     }
     ngOnInit() {
         this.podcastStore.getAll();
-        this.audioService.playStateChanged.subscribe(s => {
-            this.playerOpen = s !== PlayState.none;
-        });
     }
     closeSidebar() {
         this.uiStateService.closeMobileSidebar();

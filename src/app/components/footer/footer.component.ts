@@ -12,8 +12,8 @@ export class FooterComponent implements OnInit {
     constructor(private audioService: AudioService) {}
 
     ngOnInit() {
-        this.audioService.playStateChanged.subscribe(s => {
-            this.showPlayer = s !== PlayState.none;
+        this.audioService.playState$.subscribe(s => {
+            this.showPlayer = s === PlayState.playing || s === PlayState.paused;
         });
     }
 }

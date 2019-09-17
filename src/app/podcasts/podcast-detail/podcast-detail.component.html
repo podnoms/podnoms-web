@@ -1,28 +1,14 @@
-<!-- <div class="podcast-list-wrapper"
-    *ngIf="podcast.podcastEntries.length !== 0; else empty">
-    <table class="table">
-        <tbody>
-            <tr *ngFor="let entry of entries$ | async"
-                draggable="true"
-                (dragstart)="dragStart($event, entry)"
-                [@fade]="''"
-                app-entry-list-item
-                (entryRemoved)='deleteEntry(entry)'
-                [(entry)]="entry"
-                class="podcast-entry-table-row mt-20">
-            </tr>
-        </tbody>
-    </table>
-</div> -->
 <div class="podcast-list-wrapper"
-    *ngIf="podcast.podcastEntries.length !== 0; else empty">
-    <app-entry-list-item *ngFor="let entry of entries$ | async"
-        class="podcast-entry-table-row mt-20"
-        draggable="true"
-        (dragstart)="dragStart($event, entry)"
-        (entryRemoved)='deleteEntry(entry)'
-        [(entry)]="entry">
-    </app-entry-list-item>
+    *ngIf="(entries$ | async) as entries; else loading">
+    <div *ngIf="entries.length !== 0; else empty">
+        <app-entry-list-item *ngFor="let entry of entries"
+            class="podcast-entry-table-row mt-20"
+            draggable="true"
+            (dragstart)="dragStart($event, entry)"
+            (entryRemoved)='deleteEntry(entry)'
+            [(entry)]="entry">
+        </app-entry-list-item>
+    </div>
 </div>
 <ng-template #empty>
     <div class="row">
@@ -45,4 +31,8 @@
             </div>
         </div>
     </div>
+</ng-template>
+<ng-template #loading>
+    <app-loader [loadingText]="'Loading....'">
+    </app-loader>
 </ng-template>

@@ -6,7 +6,9 @@ import {
     Renderer2,
     OnInit,
     Output,
-    EventEmitter
+    EventEmitter,
+    SimpleChange,
+    OnChanges
 } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { Observable, of } from 'rxjs';
@@ -16,7 +18,7 @@ import { Observable, of } from 'rxjs';
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss']
 })
-export class ImageUploadComponent implements OnInit {
+export class ImageUploadComponent implements OnInit, OnChanges {
     private _imageFileBuffer: File;
 
     image: any = new Image();
@@ -32,6 +34,12 @@ export class ImageUploadComponent implements OnInit {
     ) {}
     ngOnInit() {
         this.image.src = this.imageUrl;
+    }
+    ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
+        // console.log('image-upload.component', 'ngOnchanges', changes);
+        // if (changes && changes.imageUrl && !this.image.src) {
+        //     this.image.src = changes.imageUrl.currentValue;
+        // }
     }
     __PASTEdummyCodeHolderFunction() {
         // this.renderer.listen('document', 'paste', e => {

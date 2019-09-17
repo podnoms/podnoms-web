@@ -40,7 +40,7 @@ export class AppComponent {
         private signalr: SignalRService
     ) {
         updateService.checkForUpdates();
-        if (environment.production) {
+        if (environment.production && false) {
             utilityService.checkForApiServer().subscribe(
                 response => {
                     this.profile$ = authService.profile$;

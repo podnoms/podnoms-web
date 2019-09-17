@@ -4,9 +4,14 @@ interface Scripts {
 }
 export const ScriptStore: Scripts[] = [
     { name: 'stripe', src: 'https://checkout.stripe.com/checkout.js' },
+    { name: 'pnplayer', src: '/assets/pnplayer/audioplayer.js' },
+    { name: 'waveplayer', src: '/assets/pnplayer/waveplayer.js' },
     {
         name: 'coinbase',
         src: 'https://commerce.coinbase.com/v1/checkout.js?version=201807'
     },
-    { name: 'facebook', src: 'https://connect.facebook.net/en_US/sdk.js' }
+    {
+        name: 'facebook',
+        src: 'https://connect.facebook.net/en_US/sdk.js'
+    }
 ];

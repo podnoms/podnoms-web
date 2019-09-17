@@ -1,5 +1,7 @@
 <div *ngIf="!loaded">
-    \ <app-interstitial></app-interstitial>
+    <div id="page-loader"
+        class="bg-gd-lake show">
+    </div>
 </div>
 <main *ngIf="loaded">
     <div class="bg-image">
@@ -56,7 +58,7 @@
                             </div>
                             <a class="btn btn-large btn-hero btn-rounded btn-outline-warning mt-20"
                                 [routerLink]="['auth/login']">
-                                <i class="fas fa-rocket mr-10"></i>
+                                <i class="fas fa fa-rocket mr-10"></i>
                                 Let's Go!!!!
                             </a>
                         </div>

@@ -1,50 +1,108 @@
-import { Component, OnInit } from '@angular/core';
-import { AudioService, PlayState as PlayStates } from '../../../core/audio.service';
-declare var $;
+import {
+    Component,
+    OnInit,
+    AfterViewInit,
+    ViewChild,
+    ElementRef,
+    ViewChildren,
+    QueryList,
+    ChangeDetectorRef
+} from '@angular/core';
+import {
+    AudioService,
+    PlayState as PlayStates
+} from '../../../core/audio.service';
+import { ScriptService } from 'app/core/scripts/script.service';
+import { NowPlaying } from 'app/core/model/now-playing';
+import { WaveformService } from 'app/shared/services/waveform.service';
+declare var pnplayer_init: any;
+declare var change_media: any;
 
 @Component({
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
     styleUrls: ['./footer-player.component.scss']
 })
-export class FooterPlayerComponent implements OnInit {
-    title: string;
-    duration: number = 0;
-    volume: number = 0;
-    position: number = 0;
-    playStates = PlayStates;
-    playState: PlayStates = PlayStates.none;
+export class FooterPlayerComponent implements OnInit, AfterViewInit {
+    @ViewChild('player', { static: true })
+    player: ElementRef;
 
-    constructor(private audioService: AudioService) {}
+    nowPlaying: NowPlaying = new NowPlaying(null, null);
+    pcm: string = '';
 
-    ngOnInit() {
-        this.audioService.positionChanged.subscribe(p => (this.position = p));
-        this.audioService.titleChanged.subscribe(t => (this.title = t));
-        this.audioService.durationChanged.subscribe(d => (this.duration = d));
-        this.audioService.volumeChanged.subscribe(v => (this.volume = v));
-        this.audioService.playStateChanged.subscribe(s => {
-            this.playState = s;
+    initialised: boolean = false;
+    constructor(
+        private audioService: AudioService,
+        private scriptService: ScriptService,
+        private waveformService: WaveformService,
+        private cdRef: ChangeDetectorRef
+    ) {}
+    ngOnInit() {}
+    ngAfterViewInit() {
+        this.audioService.nowPlaying$.subscribe(nowPlaying => {
+            if (nowPlaying.url) {
+                this.waveformService
+                    .getForItem(nowPlaying.entry.id)
+                    .subscribe(d => {
+                        this.waveformService.getRemotePeakData(d).subscribe(
+                            peaks => {
+                                this.pcm = peaks.toString();
+                                this._startPlayerSetupHook(nowPlaying);
+                            },
+                            error => {
+                                this.pcm = null;
+                                this._startPlayerSetupHook(nowPlaying);
+                            }
+                        );
+                    });
+            }
         });
-
-        this.audioService.requestUpdate();
     }
-    playPause() {
-        this.audioService.toggle();
+    _startPlayerSetupHook(nowPlaying: NowPlaying) {
+        this.nowPlaying = nowPlaying;
+        this.cdRef.detectChanges();
+        setTimeout(() => this._setupPlayer(), 1000);
     }
-    doSeek(event) {
-        const $bar = $(event.currentTarget);
-        const newPercentage = (event.pageX - $bar.offset().left) / $bar.width() * 100;
-
-        const pos = newPercentage / 100 * this.duration;
-        this.audioService.setPosition(pos);
-    }
-
-    setVolume(event) {
-        const $bar = $(event.currentTarget);
-        const volume = Math.round((event.pageX - $bar.offset().left) / $bar.width() * 100);
-        this.audioService.setVolume(volume);
-    }
-    closePlayer() {
-        this.audioService.closePlayer();
+    _setupPlayer() {
+        this.scriptService.load('pnplayer').then(() => {
+            console.log(
+                'footer-player.component',
+                'ngOnInit',
+                'Scripts loaded successfully'
+            );
+            const settings_ap = {
+                disable_volume: 'off',
+                autoplay: 'on',
+                cue: 'on',
+                disable_scrub: 'default',
+                design_skin: 'skin-wave',
+                skinwave_wave_mode: 'canvas',
+                skinwave_dynamicwaves: 'on',
+                skinwave_enableSpectrum: 'off',
+                settings_backup_type: 'full',
+                skinwave_spectrummultiplier: '4',
+                skinwave_comments_enable: 'off',
+                skinwave_enableReflect: 'on',
+                skinwave_mode: 'small',
+                action_audio_play: () => this.audioService.audioLoaded(),
+                action_audio_pause: () => this.audioService.pauseAudio(),
+                action_audio_end: () => this.audioService.stopAudio()
+            };
+            if (!this.initialised) {
+                const c = pnplayer_init(this.player.nativeElement, settings_ap);
+                this.initialised = true;
+            } else {
+                this.player.nativeElement.api_change_media(null, {
+                    type: 'audio',
+                    fakeplayer_is_feeder: 'off',
+                    artist: this.nowPlaying.entry.podcastTitle,
+                    source: `${this.nowPlaying.entry.audioUrl}?ngsw-bypass`,
+                    song_name: this.nowPlaying.entry.title,
+                    autoplay: 'on',
+                    thumb: this.nowPlaying.entry.thumbnailUrl,
+                    pcm: '[' + this.pcm + ']'
+                });
+            }
+        });
     }
 }
