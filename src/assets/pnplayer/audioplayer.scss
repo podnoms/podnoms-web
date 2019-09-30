@@ -1206,11 +1206,6 @@ $transition-timing: ease-out;
 
     @include apply_transition($transition-property, $transition-duration, $transition-timing);
 
-
-
-
-
-
     .scrub-bg{
       position: absolute;top:0%;left:0;
       width: 100%;
