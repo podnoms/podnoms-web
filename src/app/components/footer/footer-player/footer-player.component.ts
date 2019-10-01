@@ -43,65 +43,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
             if (nowPlaying.url) {
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
-                    .subscribe(d => {
-                        this.waveformService.getRemotePeakData(d).subscribe(
-                            peaks => {
-                                this.pcm = peaks.toString();
-                                this._startPlayerSetupHook(nowPlaying);
-                            },
-                            error => {
-                                this.pcm = null;
-                                this._startPlayerSetupHook(nowPlaying);
-                            }
-                        );
-                    });
-            }
-        });
-    }
-    _startPlayerSetupHook(nowPlaying: NowPlaying) {
-        this.nowPlaying = nowPlaying;
-        this.cdRef.detectChanges();
-        setTimeout(() => this._setupPlayer(), 1000);
-    }
-    _setupPlayer() {
-        this.scriptService.load('pnplayer').then(() => {
-            console.log(
-                'footer-player.component',
-                'ngOnInit',
-                'Scripts loaded successfully'
-            );
-            const settings_ap = {
-                disable_volume: 'off',
-                autoplay: 'on',
-                cue: 'on',
-                disable_scrub: 'default',
-                design_skin: 'skin-wave',
-                skinwave_wave_mode: 'canvas',
-                skinwave_dynamicwaves: 'on',
-                skinwave_enableSpectrum: 'off',
-                settings_backup_type: 'full',
-                skinwave_spectrummultiplier: '4',
-                skinwave_comments_enable: 'off',
-                skinwave_enableReflect: 'on',
-                skinwave_mode: 'small',
-                action_audio_play: () => this.audioService.audioLoaded(),
-                action_audio_pause: () => this.audioService.pauseAudio(),
-                action_audio_end: () => this.audioService.stopAudio()
-            };
-            if (!this.initialised) {
-                const c = pnplayer_init(this.player.nativeElement, settings_ap);
-                this.initialised = true;
-            } else {
-                this.player.nativeElement.api_change_media(null, {
-                    type: 'audio',
-                    fakeplayer_is_feeder: 'off',
-                    artist: this.nowPlaying.entry.podcastTitle,
-                    source: `${this.nowPlaying.entry.audioUrl}?ngsw-bypass`,
-                    song_name: this.nowPlaying.entry.title,
-                    autoplay: 'on',
-                    thumb: this.nowPlaying.entry.thumbnailUrl,
-                    pcm: '[' + this.pcm + ']'
-                });
+                    .subscribe(d => {});
             }
         });
     }
