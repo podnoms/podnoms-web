@@ -3,20 +3,11 @@ import {
     OnInit,
     AfterViewInit,
     ViewChild,
-    ElementRef,
-    ViewChildren,
-    QueryList,
-    ChangeDetectorRef
+    ElementRef
 } from '@angular/core';
-import {
-    AudioService,
-    PlayState as PlayStates
-} from '../../../core/audio.service';
-import { ScriptService } from 'app/core/scripts/script.service';
+import { AudioService } from '../../../core/audio.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { WaveformService } from 'app/shared/services/waveform.service';
-declare var pnplayer_init: any;
-declare var change_media: any;
 
 @Component({
     selector: 'app-footer-player',
@@ -33,9 +24,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
     initialised: boolean = false;
     constructor(
         private audioService: AudioService,
-        private scriptService: ScriptService,
-        private waveformService: WaveformService,
-        private cdRef: ChangeDetectorRef
+        private waveformService: WaveformService
     ) {}
     ngOnInit() {}
     ngAfterViewInit() {
@@ -43,7 +32,9 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
             if (nowPlaying.url) {
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
-                    .subscribe(d => {});
+                    .subscribe(() => {
+                        // do some stuff
+                    });
             }
         });
     }
