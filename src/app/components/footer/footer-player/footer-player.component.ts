@@ -19,7 +19,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
     player: ElementRef;
 
     nowPlaying: NowPlaying = new NowPlaying(null, null);
-    pcm: string = '';
+    pcmUrl: string = '';
 
     initialised: boolean = false;
     constructor(
@@ -30,10 +30,14 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.audioService.nowPlaying$.subscribe(nowPlaying => {
             if (nowPlaying.url) {
+                this.nowPlaying = nowPlaying;
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
-                    .subscribe(() => {
-                        // do some stuff
+                    .subscribe(pcmUrl => {
+                        this.initialised = true;
+                        this.pcmUrl = pcmUrl;
+                        this.audioService.playAudio(this.nowPlaying);
+                        this.audioService.audioLoaded();
                     });
             }
         });

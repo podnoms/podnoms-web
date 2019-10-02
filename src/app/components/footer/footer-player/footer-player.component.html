@@ -1,11 +1,14 @@
-<ngx-audioplayer [audioUrl]="'https://podnomscdn.blob.core.windows.net/audio/e9898d82-5fa3-4446-62aa-08d726e66022.mp3?ngsw-bypass'"
-    [pcmUrl]="'https://podnomscdn.blob.core.windows.net/waveforms/e9898d82-5fa3-4446-62aa-08d726e66022.json'"
-    [imageUrl]="'https://cdn-l.podnoms.com/images/entry/25a33fb1-428c-4ee4-667a-08d72c897f8b.jpg?width=725&height=748'"
-    [title]="'I See You'"
-    [subTitle]="'Farty McFartle'"
-    [backgroundColour]="'#ffffff'"
-    [titleColour]="'#8fac69'"
-    [subTitleColour]="'#828699'"
-    [waveColour]="'#9fb4c3'"
-    [waveColourProgress]="'#828699'">
-    ></ngx-audioplayer>
+<div *ngIf="initialised">
+    <ngx-audioplayer [audioUrl]="nowPlaying.url + '?ngsw-bypass'"
+        [pcmUrl]="pcmUrl"
+        [imageUrl]="nowPlaying.entry.imageUrl"
+        [title]="nowPlaying.entry.podcastTitle"
+        [subTitle]="nowPlaying.entry.title"
+        [autoPlay]="true"
+        [backgroundColour]="'#ffffff'"
+        [titleColour]="'#8fac69'"
+        [subTitleColour]="'#828699'"
+        [waveColour]="'#9fb4c3'"
+        [waveColourProgress]="'#828699'">
+    </ngx-audioplayer>
+</div>
