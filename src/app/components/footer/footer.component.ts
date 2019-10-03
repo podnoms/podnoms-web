@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AudioService, PlayState } from '../../core/audio.service';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-footer',
@@ -14,6 +13,13 @@ export class FooterComponent implements OnInit {
     ngOnInit() {
         this.audioService.playState$.subscribe(s => {
             this.showPlayer = s === PlayState.playing || s === PlayState.paused;
+            if (!this.showPlayer) {
+                console.log(
+                    'footer.component',
+                    'showPlayer',
+                    'NOTSHOWINGPLAYER'
+                );
+            }
         });
     }
 }

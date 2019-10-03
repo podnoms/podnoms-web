@@ -7,7 +7,6 @@ import { ScriptService } from 'app/core/scripts/script.service';
 import { AudioService } from 'app/core/audio.service';
 import { WaveformService } from 'app/shared/services/waveform.service';
 import { HttpClient } from '@angular/common/http';
-declare var pnplayer_init: any;
 @Component({
     selector: 'app-debug',
     templateUrl: './debug.component.html',
@@ -36,37 +35,7 @@ export class DebugComponent implements OnInit {
     ) {}
 
     ngOnInit() {}
-    showPlayer() {
-        this.scriptService.load('pnplayer').then(() => {
-            this.httpClient.get<string>(this.pcmUrl).subscribe(
-                r => {
-                    this.pcm = r['data'].toString();
-                    const settings_ap = {
-                        disable_volume: 'off',
-                        autoplay: 'off',
-                        cue: 'on',
-                        disable_scrub: 'default',
-                        design_skin: 'skin-wave',
-                        skinwave_wave_mode: 'canvas',
-                        skinwave_dynamicwaves: 'on',
-                        skinwave_enableSpectrum: 'off',
-                        settings_backup_type: 'full',
-                        skinwave_spectrummultiplier: '4',
-                        skinwave_comments_enable: 'off',
-                        skinwave_enableReflect: 'on',
-                        skinwave_mode: 'normal'
-                    };
-                    const c = pnplayer_init(
-                        this.player.nativeElement,
-                        settings_ap
-                    );
-                },
-                error => {
-                    this.pcm = null;
-                }
-            );
-        });
-    }
+    showPlayer() {}
     clickProcess($event: () => void) {
         setTimeout(() => $event(), 2000);
     }

@@ -8,13 +8,13 @@ nav.footer-open {
     margin-bottom: 56px;
 }
 
-nav{
+nav {
     overflow-x: hidden;
 }
 
 .nav-users {
     height: 95%;
-    width: 95%;
+    width: 100%;
     overflow: auto;
 }
 
@@ -24,5 +24,10 @@ nav{
     // top: 0;
     // bottom: 0;
 }
-
-.nav-podcast-item {}
+.button-wrapper {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+.content-side {
+    padding: 0px 0px 1px;
+}

@@ -110,9 +110,6 @@ export class EntryListItemComponent implements OnInit {
         }
     }
     playAudio() {
-        if (this.playStateSub$ !== null) {
-            this.audioService.stopAudio();
-        }
         this.audioService.playAudio(
             new NowPlaying(this.entry.audioUrl, this.entry)
         );

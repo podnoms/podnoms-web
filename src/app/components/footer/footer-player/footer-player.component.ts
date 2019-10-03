@@ -4,105 +4,51 @@ import {
     AfterViewInit,
     ViewChild,
     ElementRef,
-    ViewChildren,
-    QueryList,
-    ChangeDetectorRef
+    OnDestroy
 } from '@angular/core';
-import {
-    AudioService,
-    PlayState as PlayStates
-} from '../../../core/audio.service';
-import { ScriptService } from 'app/core/scripts/script.service';
+import { AudioService, PlayState } from '../../../core/audio.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { WaveformService } from 'app/shared/services/waveform.service';
-declare var pnplayer_init: any;
-declare var change_media: any;
+import { NgxAudioplayerComponent } from '@podnoms/ngx-audioplayer';
 
 @Component({
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
     styleUrls: ['./footer-player.component.scss']
 })
-export class FooterPlayerComponent implements OnInit, AfterViewInit {
-    @ViewChild('player', { static: true })
-    player: ElementRef;
+export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
+    @ViewChild('player', { static: false })
+    player: any;
 
     nowPlaying: NowPlaying = new NowPlaying(null, null);
-    pcm: string = '';
+    pcmUrl: string = '';
 
     initialised: boolean = false;
     constructor(
         private audioService: AudioService,
-        private scriptService: ScriptService,
-        private waveformService: WaveformService,
-        private cdRef: ChangeDetectorRef
+        private waveformService: WaveformService
     ) {}
     ngOnInit() {}
     ngAfterViewInit() {
         this.audioService.nowPlaying$.subscribe(nowPlaying => {
             if (nowPlaying.url) {
+                this.nowPlaying = nowPlaying;
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
-                    .subscribe(d => {
-                        this.waveformService.getRemotePeakData(d).subscribe(
-                            peaks => {
-                                this.pcm = peaks.toString();
-                                this._startPlayerSetupHook(nowPlaying);
-                            },
-                            error => {
-                                this.pcm = null;
-                                this._startPlayerSetupHook(nowPlaying);
-                            }
-                        );
+                    .subscribe(pcmUrl => {
+                        this.initialised = true;
+                        this.pcmUrl = pcmUrl;
+                        this.audioService.audioLoaded();
                     });
             }
         });
-    }
-    _startPlayerSetupHook(nowPlaying: NowPlaying) {
-        this.nowPlaying = nowPlaying;
-        this.cdRef.detectChanges();
-        setTimeout(() => this._setupPlayer(), 1000);
-    }
-    _setupPlayer() {
-        this.scriptService.load('pnplayer').then(() => {
-            console.log(
-                'footer-player.component',
-                'ngOnInit',
-                'Scripts loaded successfully'
-            );
-            const settings_ap = {
-                disable_volume: 'off',
-                autoplay: 'on',
-                cue: 'on',
-                disable_scrub: 'default',
-                design_skin: 'skin-wave',
-                skinwave_wave_mode: 'canvas',
-                skinwave_dynamicwaves: 'on',
-                skinwave_enableSpectrum: 'off',
-                settings_backup_type: 'full',
-                skinwave_spectrummultiplier: '4',
-                skinwave_comments_enable: 'off',
-                skinwave_enableReflect: 'on',
-                skinwave_mode: 'small',
-                action_audio_play: () => this.audioService.audioLoaded(),
-                action_audio_pause: () => this.audioService.pauseAudio(),
-                action_audio_end: () => this.audioService.stopAudio()
-            };
-            if (!this.initialised) {
-                const c = pnplayer_init(this.player.nativeElement, settings_ap);
-                this.initialised = true;
-            } else {
-                this.player.nativeElement.api_change_media(null, {
-                    type: 'audio',
-                    fakeplayer_is_feeder: 'off',
-                    artist: this.nowPlaying.entry.podcastTitle,
-                    source: `${this.nowPlaying.entry.audioUrl}?ngsw-bypass`,
-                    song_name: this.nowPlaying.entry.title,
-                    autoplay: 'on',
-                    thumb: this.nowPlaying.entry.thumbnailUrl,
-                    pcm: '[' + this.pcm + ']'
-                });
+        this.audioService.playState$.subscribe(s => {
+            if (s === PlayState.none) {
+                this.player.stop();
             }
         });
+    }
+    ngOnDestroy() {
+        console.log('footer-player.component', 'ngOnDestroy', 'Waaaaaasted');
     }
 }

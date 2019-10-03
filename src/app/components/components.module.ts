@@ -11,7 +11,11 @@ import { FooterPlayerComponent } from './footer/footer-player/footer-player.comp
 import { PasswordCheckerComponent } from './password-checker/password-checker.component';
 import { ChartsModule } from 'ng2-charts';
 import { SidebarPodcastItemComponent } from './sidebar/sidebar-podcast-item/sidebar-podcast-item.component';
-import { NgbTooltipModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbTooltipModule,
+    NgbProgressbarModule
+} from '@ng-bootstrap/ng-bootstrap';
+import { NgxAudioplayerModule } from '@podnoms/ngx-audioplayer';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -30,6 +34,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ChartsModule,
         MomentModule,
         PerfectScrollbarModule,
+        NgxAudioplayerModule,
         NgbTooltipModule,
         NgbProgressbarModule
     ],

@@ -25,11 +25,13 @@
         </div>
     </div>
     <div class="content-side content-side-full">
-        <button type="button"
-            class="btn btn-block btn-info push d-flex align-items-center justify-content-between"
-            (click)="doAddPodcast()">
-            <span>Add Podcast</span> <i class="fas fa fa-plus float-right"></i>
-        </button>
+        <div class="button-wrapper">
+            <button type="button"
+                class="btn btn-block btn-info push d-flex align-items-center justify-content-between"
+                (click)="doAddPodcast()">
+                <span>Add Podcast</span> <i class="fas fa fa-plus float-right"></i>
+            </button>
+        </div>
         <ul class="nav-users"
             [perfectScrollbar]="scrollConfig">
             <li class="nav-main-heading"

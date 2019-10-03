@@ -1,4 +1,3 @@
-import { AudioService, PlayState } from './../../core/audio.service';
 import { PodcastStoreService } from './../../podcasts/podcast-store.service';
 import { Component, OnInit } from '@angular/core';
 

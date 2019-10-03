@@ -1,20 +1,15 @@
- <div class="player-ui-wrapper">
-     <div #player
-         class="audioplayer-tobe pnplayer_footer button-aspect-noir button-aspect-noir--filled"
-         style="width:100%; "
-         [attr.data-pcm]="'[' + pcm + ']'"
-         [attr.data-thumb]="nowPlaying.entry && nowPlaying.entry.imageUrl"
-         [attr.data-thumb_link]="nowPlaying.entry && nowPlaying.entry.imageUrl"
-         [attr.data-source]="nowPlaying.url + '?ngsw-bypass'"
-         data-type="mediafile">
-         <div class="the-comments">
-         </div>
-         <div class="meta-artist"
-             *ngIf="nowPlaying.entry">
-             <span class="the-artist">{{nowPlaying.entry.podcastTitle}}</span>
-             <span class="the-name">
-                 <a [routerLink]="['/podcasts', nowPlaying.entry.podcastSlug]">{{ nowPlaying.entry.title }}</a>
-             </span>
-         </div>
-     </div>
- </div>
+<div *ngIf="initialised">
+    <ngx-audioplayer #player
+        [audioUrl]="nowPlaying.url + '?ngsw-bypass'"
+        [pcmUrl]="pcmUrl"
+        [imageUrl]="nowPlaying.entry.imageUrl"
+        [title]="nowPlaying.entry.podcastTitle"
+        [subTitle]="nowPlaying.entry.title"
+        [autoPlay]="true"
+        [backgroundColour]="'#f2f5f5'"
+        [titleColour]="'#8fac69'"
+        [subTitleColour]="'#828699'"
+        [waveColour]="'#222222'"
+        [waveColourProgress]="'#828699'">
+    </ngx-audioplayer>
+</div>
