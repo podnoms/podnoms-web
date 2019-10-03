@@ -17,8 +17,8 @@ import { NgxAudioplayerComponent } from '@podnoms/ngx-audioplayer';
     styleUrls: ['./footer-player.component.scss']
 })
 export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('player', { static: true })
-    player: NgxAudioplayerComponent;
+    @ViewChild('player', { static: false })
+    player: any;
 
     nowPlaying: NowPlaying = new NowPlaying(null, null);
     pcmUrl: string = '';
@@ -28,13 +28,7 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         private audioService: AudioService,
         private waveformService: WaveformService
     ) {}
-    ngOnInit() {
-        this.audioService.playState$.subscribe(s => {
-            if (s === PlayState.none) {
-                this.player.stop();
-            }
-        });
-    }
+    ngOnInit() {}
     ngAfterViewInit() {
         this.audioService.nowPlaying$.subscribe(nowPlaying => {
             if (nowPlaying.url) {
@@ -46,6 +40,11 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
                         this.pcmUrl = pcmUrl;
                         this.audioService.audioLoaded();
                     });
+            }
+        });
+        this.audioService.playState$.subscribe(s => {
+            if (s === PlayState.none) {
+                this.player.stop();
             }
         });
     }

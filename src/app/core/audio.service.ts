@@ -25,6 +25,14 @@ export class AudioService {
     playState$ = new BehaviorSubject<PlayState>(PlayState.none);
     nowPlaying$ = new BehaviorSubject<NowPlaying>(null);
     playAudio(nowPlaying: NowPlaying) {
+        if (this._playState !== PlayState.none) {
+            this.stopAudio();
+            setTimeout(() => this._playInternal(nowPlaying), 500);
+        } else {
+            this._playInternal(nowPlaying);
+        }
+    }
+    private _playInternal(nowPlaying: NowPlaying) {
         this.nowPlaying$.next(nowPlaying);
         this.playState$.next(PlayState.loading);
     }
