@@ -21,6 +21,7 @@ export enum PlayState {
 })
 export class AudioService {
     constructor(public uiStateService: UiStateService) {}
+    private _playState: PlayState = PlayState.none;
     playState$ = new BehaviorSubject<PlayState>(PlayState.none);
     nowPlaying$ = new BehaviorSubject<NowPlaying>(null);
     playAudio(nowPlaying: NowPlaying) {
@@ -29,17 +30,21 @@ export class AudioService {
     }
     pauseAudio() {
         console.log('audio.service', 'pauseAudio');
-        this.playState$.next(PlayState.paused);
+        this._playState = PlayState.paused;
+        this.playState$.next(this._playState);
     }
     stopAudio() {
-        console.log('audio.service', 'stopAudio');
-        this.nowPlaying$.next(new NowPlaying(null, null));
-        this.playState$.next(PlayState.none);
-        this.uiStateService.setFooterOpen(false);
+        if (this._playState !== PlayState.none) {
+            console.log('audio.service', 'stopAudio');
+            this._playState = PlayState.none;
+            this.playState$.next(this._playState);
+            this.uiStateService.setFooterOpen(false);
+        }
     }
     audioLoaded() {
         console.log('audio.service', 'audioLoaded');
-        this.playState$.next(PlayState.playing);
+        this._playState = PlayState.playing;
+        this.playState$.next(this._playState);
         this.uiStateService.setFooterOpen(true);
     }
 }

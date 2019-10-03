@@ -1,5 +1,6 @@
 <div *ngIf="initialised">
-    <ngx-audioplayer [audioUrl]="nowPlaying.url + '?ngsw-bypass'"
+    <ngx-audioplayer #player
+        [audioUrl]="nowPlaying.url + '?ngsw-bypass'"
         [pcmUrl]="pcmUrl"
         [imageUrl]="nowPlaying.entry.imageUrl"
         [title]="nowPlaying.entry.podcastTitle"
