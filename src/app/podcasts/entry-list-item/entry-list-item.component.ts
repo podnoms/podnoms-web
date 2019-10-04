@@ -157,16 +157,17 @@ export class EntryListItemComponent implements OnInit {
     }
     downloadAudio(entry: PodcastEntry) {
         this.preparingDownload = true;
-        this.downloader
-            .downloadAudio(this.entry.id)
-            .subscribe(
-                r => (this.preparingDownload = false),
-                err =>
-                    this.alertService.error(
-                        'Error',
-                        'Unable to download this episode'
-                    )
-            );
+        this.downloader.downloadAudio(this.entry.id).subscribe(
+            r => {
+                console.log('entry-list-item.component', 'downloadAudio', r);
+                this.preparingDownload = false;
+            },
+            err =>
+                this.alertService.error(
+                    'Error',
+                    'Unable to download this episode'
+                )
+        );
     }
     shareEpisode(entry: PodcastEntry) {
         this.modalService
