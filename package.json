@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.49",
+    "version": "1.2.50",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -50,6 +50,7 @@
         "dropzone": "5.5.1",
         "easy-pie-chart": "^2.1.7",
         "feather-icons": "^4.24.1",
+        "file-saver": "^2.0.2",
         "firebase": "^6.6.0",
         "flag-icon-css": "^3.3.0",
         "howler": "^2.1.2",
