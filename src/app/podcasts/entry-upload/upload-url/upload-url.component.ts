@@ -31,19 +31,6 @@ export class UploadUrlComponent implements AfterViewInit {
     remoteAudioList: any = null;
     title: string = '';
 
-    testTitle: string = 'Argle Bargle Sonnny Jim';
-    testData: Array<any> = [
-        {
-            key: 'Download',
-            value:
-                'https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/trumpinc/trumpinc050119_cms932417_pod.mp3'
-        },
-        {
-            key: 'Download',
-            value: 'https://traffic.megaphone.fm/ADV8534430497.mp3'
-        }
-    ];
-
     @ViewChild('input', { static: false })
     vc: any;
 
@@ -113,11 +100,6 @@ export class UploadUrlComponent implements AfterViewInit {
                             )
                         );
                     } else if ((r.type = 'proxied')) {
-                        console.log(
-                            'upload-url.component',
-                            'testData',
-                            this.testData
-                        );
                         console.log('upload-url.component', 'apiData', r.data);
                         this.isPosting = false;
                         this.title = r.title;
@@ -160,6 +142,7 @@ export class UploadUrlComponent implements AfterViewInit {
                 }
             },
             err => {
+                callback();
                 this.isPosting = false;
                 if (err.status === 402) {
                     this.errorText =

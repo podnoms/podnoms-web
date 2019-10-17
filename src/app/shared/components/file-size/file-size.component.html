@@ -1,3 +1,9 @@
 <span *ngIf="fileSize!==-1">
     {{fileSize | bytesToHuman}}
 </span>
+<span *ngIf="fileSize===-1">
+    <div class="spinner-border spinner-border-sm text-success"
+        role="status">
+    </div>
+    <span class="">Calculating...</span>
+</span>

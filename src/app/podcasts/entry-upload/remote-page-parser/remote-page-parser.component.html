@@ -16,8 +16,6 @@
                 <tr>
                     <th></th>
                     <th>Name</th>
-                    <th class="d-none d-sm-table-cell">File
-                        name</th>
                     <th class="text-center">File size</th>
                 </tr>
             </thead>
@@ -33,10 +31,8 @@
                                 value="{{i}}">
                         </div>
                     </td>
-                    <td>
-                        {{row.key}}
-                    </td>
-                    <td>{{row.value}}</td>
+                    <td data-toggle="tooltip"
+                        title="{{row.value}}">{{row.key}}</td>
                     <td class="text-right">
                         <app-file-size [remoteUrl]="row.value"></app-file-size>
                     </td>
