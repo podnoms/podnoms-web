@@ -7,6 +7,8 @@ import { ScriptService } from 'app/core/scripts/script.service';
 import { AudioService } from 'app/core/audio.service';
 import { WaveformService } from 'app/shared/services/waveform.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { UtilityService } from 'app/shared/services/utility.service';
 @Component({
     selector: 'app-debug',
     templateUrl: './debug.component.html',
@@ -29,7 +31,8 @@ export class DebugComponent implements OnInit {
     constructor(
         private alertService: AlertService,
         private audioService: AudioService,
-        private httpClient: HttpClient,
+        private http: HttpClient,
+        private utilityService: UtilityService,
         private waveformService: WaveformService,
         private scriptService: ScriptService
     ) {}
@@ -49,5 +52,16 @@ export class DebugComponent implements OnInit {
                 autoClose: false
             }
         );
+    }
+    debuggle() {
+        // this.http
+        //     .get<any>(
+        //         `${environment.apiHost}/urlprocess/validate?url=https://www.rte.ie/radio1/liveline/podcasts/`
+        //     )
+        //     .subscribe(r => console.log('debug.component', 'debuggle', r));
+
+        this.utilityService
+            .checkAudioUrl('https://www.rte.ie/radio1/liveline/podcasts/')
+            .subscribe(r => console.log('debug.component', 'debuggle', r));
     }
 }

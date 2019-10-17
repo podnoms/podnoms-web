@@ -1,11 +1,11 @@
 import {
     Component,
-    OnInit,
     Input,
     OnChanges,
     SimpleChanges,
     EventEmitter,
-    Output
+    Output,
+    AfterViewInit
 } from '@angular/core';
 
 @Component({
@@ -13,7 +13,7 @@ import {
     templateUrl: './remote-page-parser.component.html',
     styleUrls: ['./remote-page-parser.component.scss']
 })
-export class RemotePageParserComponent implements OnInit, OnChanges {
+export class RemotePageParserComponent implements AfterViewInit, OnChanges {
     @Input()
     remoteAudioList: any;
     @Output()
@@ -23,18 +23,24 @@ export class RemotePageParserComponent implements OnInit, OnChanges {
 
     constructor() {}
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+        console.log(
+            'remote-page-parser.component',
+            'ngOnInit',
+            this.remoteAudioList
+        );
+    }
     ngOnChanges(changes: SimpleChanges) {
         if (changes.remoteAudioList) {
             this._paintAudio();
         }
     }
-    createEntry($event) {
+    createEntry(callback) {
         const url = this.remoteAudioList[this.selectedItem].value;
         if (url) {
             this.pageEntryChosen.emit({
                 url: url,
-                callback: $event
+                callback: callback
             });
         } else {
             this.errorText = '^^ select something please?';

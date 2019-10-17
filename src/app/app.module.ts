@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WebStorageModule } from 'ngx-store';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,7 @@ import localeIE from '@angular/common/locales/en-IE';
 import { HomeComponent } from './home/home.component';
 import { InterstitialComponent } from './shared/components/interstitial/interstitial.component';
 import { AppDispatchers } from './store/app-config/dispatchers';
+import { TokenInterceptor } from './shared/auth/token.interceptor';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -57,6 +58,11 @@ registerLocaleData(localeIE, 'ie');
     providers: [
         MonitoringService,
         UpdateService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        },
         AppDispatchers,
         {
             provide: ErrorHandler,

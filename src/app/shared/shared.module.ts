@@ -29,6 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserSlugModalComponent } from './components/modal-updates/user-slug-modal.component';
 import { UserSlugChangeComponent } from './components/modal-updates/user-slug-change.component';
 import { AutofocusDirective } from './directives/auto-focus.directive';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/token.interceptor';
 
 @NgModule({
     imports: [
@@ -84,6 +86,11 @@ import { AutofocusDirective } from './directives/auto-focus.directive';
         ImageService,
         AudioDownloadService,
         PushRegistrationService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        },
         {
             provide: AuthServiceConfig,
             useFactory: authServiceConfig

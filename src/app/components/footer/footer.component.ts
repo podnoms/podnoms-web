@@ -13,13 +13,6 @@ export class FooterComponent implements OnInit {
     ngOnInit() {
         this.audioService.playState$.subscribe(s => {
             this.showPlayer = s === PlayState.playing || s === PlayState.paused;
-            if (!this.showPlayer) {
-                console.log(
-                    'footer.component',
-                    'showPlayer',
-                    'NOTSHOWINGPLAYER'
-                );
-            }
         });
     }
 }
