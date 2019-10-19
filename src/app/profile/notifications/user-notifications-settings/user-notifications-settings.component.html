@@ -1,56 +1,90 @@
 <div class="container m-20"
     *ngIf="user">
-    <div class="col-md-6">
-        <div class="block">
-            <div class="block-header">
-                <h3 class="block-title">Email Notifications</h3>
-            </div>
-            <div class="block-content">
-                <div class="row no-gutters items-push">
-                    <div class="col-6">
-                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
-                            <input type="checkbox"
-                                class="css-control-input"
-                                (change)="updateOption($event, notificationTypes.newPlaylistEpisode)"
-                                [checked]="isEnabled(notificationTypes.newPlaylistEpisode)">
-                            <span class="css-control-indicator"></span> New playlist episode
-                        </label>
-                    </div>
-                    <div class="col-6">
-                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
-                            <input type="checkbox"
-                                class="css-control-input"
-                                (change)="updateOption($event, notificationTypes.uploadCompleted)"
-                                [checked]="isEnabled(notificationTypes.uploadCompleted)">
-                            <span class="css-control-indicator"></span> Upload finished processing
-                        </label>
-                    </div>
-                    <div class="col-6">
-                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
-                            <input type="checkbox"
-                                class="css-control-input"
-                                (change)="updateOption($event, notificationTypes.recommendedPodcasts)"
-                                [checked]="isEnabled(notificationTypes.recommendedPodcasts)">
-                            <span class="css-control-indicator"></span> Podcasts you might like
-                        </label>
-                    </div>
-                    <div class="col-6">
-                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
-                            <input type="checkbox"
-                                class="css-control-input"
-                                (change)="updateOption($event, notificationTypes.storageExceeded)"
-                                [checked]="isEnabled(notificationTypes.storageExceeded)">
-                            <span class="css-control-indicator"></span> Storage space exceeded
-                        </label>
-                    </div>
-                    <div class="col-6">
-                        <label class="css-control css-control-sm css-control-secondary css-checkbox css-checkbox-rounded">
-                            <input type="checkbox"
-                                class="css-control-input"
-                                (change)="updateOption($event, notificationTypes.playlistEntryCountExceeded)"
-                                [checked]="isEnabled(notificationTypes.playlistEntryCountExceeded)">
-                            <span class="css-control-indicator"></span> Playlist entry count exceeded
-                        </label>
+
+    <div class="block">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">
+                <i class="fa fa-envelope fa-fw mr-5 text-muted"></i> Email notifications
+            </h3>
+        </div>
+        <div class="block-content">
+            <div class="row items-push">
+                <div class="col-lg-3">
+                    <p class="text-muted">
+                        Tick all the events that you would like to be emailed about.
+                    </p>
+                </div>
+                <div class="col-lg-7 offset-lg-1">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox"
+                                        class="custom-control-input"
+                                        id="new-playlist"
+                                        name="new-playlist"
+                                        (change)="updateOption($event, notificationTypes.newPlaylistEpisode)"
+                                        [checked]="isEnabled(notificationTypes.newPlaylistEpisode)">
+                                    <label class="custom-control-label"
+                                        for="new-playlist">New playlist episode</label>
+                                </div>
+                                <div class="text-muted">Email me when a playlist I'm monitoring has a new episode</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox"
+                                        class="custom-control-input"
+                                        id="upload-finished"
+                                        name="upload-finished"
+                                        (change)="updateOption($event, notificationTypes.uploadCompleted)"
+                                        [checked]="isEnabled(notificationTypes.uploadCompleted)">
+                                    <label class="custom-control-label"
+                                        for="upload-finished">Upload finished</label>
+                                </div>
+                                <div class="text-muted">Email me when an entry I added has finished uploading</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox"
+                                        class="custom-control-input"
+                                        id="recommended-podcasts"
+                                        name="recommended-podcasts"
+                                        (change)="updateOption($event, notificationTypes.recommendedPodcasts)"
+                                        [checked]="isEnabled(notificationTypes.recommendedPodcasts)">
+                                    <label class="custom-control-label"
+                                        for="recommended-podcasts">Recommended podcasts</label>
+                                </div>
+                                <div class="text-muted">Email me if our recommendation engine finds a podcast you might like</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox"
+                                        class="custom-control-input"
+                                        id="storage-exceeded"
+                                        name="storage-exceeded"
+                                        (change)="updateOption($event, notificationTypes.storageExceeded)"
+                                        [checked]="isEnabled(notificationTypes.storageExceeded)">
+                                    <label class="custom-control-label"
+                                        for="storage-exceeded">Storage exceeded</label>
+                                </div>
+                                <div class="text-muted">You can increase your storage by signing up for a premium account</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox"
+                                        class="custom-control-input"
+                                        id="playlist-entry-exceeded"
+                                        name="playlist-entry-exceeded"
+                                        (change)="updateOption($event, notificationTypes.playlistEntryCountExceeded)"
+                                        [checked]="isEnabled(notificationTypes.playlistEntryCountExceeded)">
+                                    <label class="custom-control-label"
+                                        for="playlist-entry-exceeded">Playlist entry count exceeded</label>
+                                </div>
+                                <div class="text-muted">You can increase your playlist entry count by signing up for a premium account</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
