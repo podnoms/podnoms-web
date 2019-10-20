@@ -4,7 +4,9 @@
     height: 35px;
     margin: 0 10px;
 }
-
+.btn-block-option {
+    opacity: 1;
+}
 ol {
     margin-bottom: 0;
 }
@@ -33,4 +35,14 @@ ol {
     right: 0;
     margin-left: -100px;
     /* More to the left */
+}
+
+.btn-separator:after {
+    content: ' ';
+    display: block;
+    float: left;
+    background: #adadad;
+    margin: 0 10px;
+    height: 100%;
+    width: 1px;
 }
