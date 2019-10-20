@@ -12,32 +12,32 @@
             <a href="https://facebook.com/podnoms"
                 target="_blank"
                 class="btn btn-circle btn-dual-secondary btn-facebook">
-                <i class="fab fa-facebook"></i>
+                <i class="text-primary fab fa-facebook"></i>
             </a>
             <a href="https://twitter.com/podnoms"
                 target="_blank"
                 class="btn btn-circle btn-dual-secondary btn-twitter">
-                <i class="fab fa-twitter"></i>
+                <i class="text-primary fab fa-twitter"></i>
             </a>
         </div>
         <div class="content-header-section">
             <a href="https://talk.podnoms.com/"
                 target="_blank"
                 class="btn btn-dual-secondary">
-                <i class="fa fa-life-ring"></i>&nbsp;
+                <i class="text-primary fa fa-life-ring"></i>&nbsp;
                 <span class="d-none d-md-inline-block">Help & Support</span>
             </a>
         </div>
         <div class="content-header-section">
             <a [routerLink]="['payments/pay', {type:'Free'}]"
                 class="btn btn-dual-secondary">
-                <i class="fa fa-beer"></i>&nbsp;
+                <i class="text-primary fa fa-beer"></i>&nbsp;
                 <span class="d-none d-md-inline-block">Buy me a beer</span>
             </a>
             <a [routerLink]="['payments/pricing']"
                 *ngIf="pricingEnabled"
                 class="btn btn-dual-secondary">
-                <i class="fa fa-credit-card"></i>&nbsp;
+                <i class="text-primary fa fa-credit-card"></i>&nbsp;
                 <span class="d-none d-md-inline-block">Pricing</span>
             </a>
         </div>
@@ -96,8 +96,8 @@
                     title="Payment Info"
                     aria-haspopup="true"
                     aria-expanded="false">
-                    <i class="fa fa-shopping-cart swing"
-                        [ngClass]="profile.subscriptionValid ? 'text-success' : 'text-danger'"></i>
+                    <i class="text-primary fa fa-shopping-cart swing"
+                        [ngClass]="profile.subscriptionValid ? 'text-primary' : 'text-primary'"></i>
                     <!-- <span class="badge badge-primary badge-pill">5</span> -->
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-300"
@@ -111,7 +111,7 @@
                             <a class="text-body-color-dark media mb-15"
                                 href="javascript:void(0)">
                                 <div class="ml-5 mr-15">
-                                    <i class="fa fa-fw fa-check text-success"></i>
+                                    <i class="text-primary fa fa-fw fa-check text-primary"></i>
                                 </div>
                                 <div class="media-body pr-10">
                                     <p class="mb-0">Payment for
@@ -130,7 +130,7 @@
                     <a class="dropdown-item text-center mb-0"
                         [routerLink]="['profile', {view: 'invoices'}]"
                         href="javascript:void(0)">
-                        <i class="fa fa-flag mr-5"></i> View All
+                        <i class="text-primary fa fa-flag mr-5"></i> View All
                         Invoices
                     </a>
                 </div>

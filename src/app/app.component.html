@@ -1,7 +1,7 @@
 <div class="bounding"
     *ngIf="profile$ | async as profile; else default">
     <div id="page-container"
-        class="page-header-fixed page-header-modern side-scroll side-trans-enabled"
+        class="page-header-fixed side-scroll side-trans-enabled"
         [class.sidebar-o]="(uiStateService.sidebarOpen$ | async)"
         [class.footer-open]="(uiStateService.footerOpen$ | async)"
         [class.sidebar-o-xs]="(uiStateService.sidebarOpenMobile$ | async)"

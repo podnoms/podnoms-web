@@ -1,7 +1,10 @@
-<div *ngIf="profile$ | async; let profile; else loading">
+<div *ngIf="profile$ | async; let profile; else loading"
+    class="block">
     <ngb-tabset #tabs>
-        <ngb-tab id="profile"
-            title="Details">
+        <ngb-tab id="profile">
+            <ng-template ngbTabTitle>
+                <i class="fa fa-info text-primary"></i>&nbsp;Details
+            </ng-template>
             <ng-template ngbTabContent>
                 <div class="block">
                     <div class="block-content">
@@ -104,8 +107,10 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab id="notifications"
-            title="Notifications">
+        <ngb-tab id="notifications">
+            <ng-template ngbTabTitle>
+                <i class="fa fa-bell text-primary"></i>&nbsp;Notifications
+            </ng-template>
             <ng-template ngbTabContent>
                 <div class="block">
                     <div class="block-content">
@@ -114,8 +119,10 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab id="payments"
-            title="Payments">
+        <ngb-tab id="payments">
+            <ng-template ngbTabTitle>
+                <i class="fa fa-coins text-primary"></i>&nbsp;Payments
+            </ng-template>
             <ng-template ngbTabContent>
                 <app-payment-list></app-payment-list>
             </ng-template>
