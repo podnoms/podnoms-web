@@ -1,23 +1,22 @@
 import { ConstantsService } from './../../shared/services/constants.service';
 import {
     Component,
-    OnInit,
     Input,
     ViewChild,
     Output,
-    EventEmitter
+    EventEmitter,
+    AfterViewInit
 } from '@angular/core';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
-import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-sharing',
     templateUrl: './sharing.component.html',
     styleUrls: ['./sharing.component.scss']
 })
-export class SharingComponent implements OnInit {
+export class SharingComponent implements AfterViewInit {
     @ViewChild('emailAddress', { static: false }) emailControl;
     @Input() entry: Shareable;
     @Output() shareComplete: EventEmitter<string> = new EventEmitter<string>();
@@ -32,7 +31,7 @@ export class SharingComponent implements OnInit {
         private constants: ConstantsService
     ) {}
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.emailControl.nativeElement.focus();
     }
     getSharingLink(__ts__event__) {
@@ -70,12 +69,12 @@ export class SharingComponent implements OnInit {
             case 'facebook':
                 this.sharingService
                     .shareToFacebook(this.entry.id)
-                    .subscribe(r => this.shareComplete.emit());
+                    .subscribe(() => this.shareComplete.emit());
                 break;
             case 'twitter':
                 this.sharingService
                     .shareToTwitter(this.entry.id)
-                    .subscribe(r => this.shareComplete.emit());
+                    .subscribe(() => this.shareComplete.emit());
                 break;
         }
     }
