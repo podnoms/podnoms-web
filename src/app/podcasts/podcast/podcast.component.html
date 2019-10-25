@@ -2,14 +2,15 @@
     *ngIf="(podcasts$ | async) as podcast">
     <div class="block block-themed block-rounded"
         *ngIf="(selectedPodcast$ | async) as selected">
-        <div class="block-header bg-pulse-dark">
-            <h3 class="block-title">
+        <div class="block-header">
+            <h3 class="block-title text-bold">
                 {{selected.title}}
             </h3>
             <div class="block-options">
                 <div class="btn-group"
                     role="group"
                     aria-label="Podcast actions">
+                    <span class="btn-separator"></span>
                     <a [routerLink]="['/podcasts', selected.slug, 'edit']"
                         title="Edit podcast"
                         class="btn-block-option">
@@ -24,6 +25,7 @@
                             aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Delete</span>
                     </button>
+                    <span class="btn-separator"></span>
                     <button class="btn-block-option"
                         title="Add podcast from URL"
                         (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
@@ -68,6 +70,7 @@
                 <div class="btn-group ml-10"
                     role="group"
                     aria-label="Podcast actions">
+                    <span class="btn-separator"></span>
                     <a class="btn-block-option "
                         [href]="selected.rssUrl"
                         title="Open RSS feed in new tab"
@@ -83,6 +86,7 @@
                         class="btn-block-option ">
                         <i class="fas fa fa-copy"></i>
                     </button>
+                    <span class="btn-separator"></span>
                 </div>
             </div>
         </div>

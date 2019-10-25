@@ -171,10 +171,13 @@ export class ProfileComponent extends BasePageComponent
                         'Success',
                         'Profile updated successfully'
                     );
-                    this.router.navigate(['/']);
+                    // this.router.navigate(['/']);
                 });
             } else {
-                this.router.navigate(['/']);
+                this.alertService.info(
+                    'Success',
+                    'Profile updated successfully'
+                );
             }
         });
     }
