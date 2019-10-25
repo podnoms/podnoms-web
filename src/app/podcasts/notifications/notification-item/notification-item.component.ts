@@ -24,7 +24,6 @@ export class NotificationItemComponent implements AfterViewInit {
     @Output()
     public notificationEdit = new EventEmitter();
     @Output()
-    
     public notificationDelete = new EventEmitter();
 
     lastRunTime: Date;
