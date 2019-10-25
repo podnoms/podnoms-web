@@ -15,7 +15,7 @@
         <div class="font-w600 mb-10">
             <inline-editor type="text"
                 [(ngModel)]="entry.title"
-                (onSave)="updateTitle($event)"
+                (onSave)="updateTitle(__html__event__)"
                 name="title"
                 size="32"
                 (click)="__fixTitleEdit()">
@@ -127,6 +127,6 @@
 <ng-template #shareDialog>
     <app-sharing [entry]="
         entry"
-        (shareComplete)="shareComplete($event)">
+        (shareComplete)="shareComplete(__html__event__)">
     </app-sharing>
 </ng-template>

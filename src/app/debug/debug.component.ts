@@ -39,9 +39,6 @@ export class DebugComponent implements OnInit {
 
     ngOnInit() {}
     showPlayer() {}
-    clickProcess($event: () => void) {
-        setTimeout(() => $event(), 2000);
-    }
 
     showToast() {
         this.alertService.success(

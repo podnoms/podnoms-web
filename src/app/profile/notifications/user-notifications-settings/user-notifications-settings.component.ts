@@ -17,8 +17,8 @@ export class UserNotificationsSettingsComponent implements OnInit {
     isEnabled(type: NotificationTypes): Boolean {
         return (this.user.emailNotificationOptions & type) !== 0;
     }
-    updateOption($event, type: NotificationTypes) {
-        if ($event.target.checked) {
+    updateOption(__ts__event__, type: NotificationTypes) {
+        if (__ts__event__.target.checked) {
             this.user.emailNotificationOptions =
                 this.user.emailNotificationOptions | type;
         } else {

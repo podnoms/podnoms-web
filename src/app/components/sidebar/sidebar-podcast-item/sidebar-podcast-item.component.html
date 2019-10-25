@@ -2,8 +2,8 @@
     [routerLinkActive]="['active']"
     placement="right"
     container="body"
-    (dragover)="dragover($event)"
-    (drop)="drop($event)"
+    (dragover)="dragover(__html__event__)"
+    (drop)="drop(__html__event__)"
     (click)="closeSidebar()"
     ngbTooltip="{{ podcast.title }}">
     <img class="img-avatar"

@@ -38,7 +38,7 @@ export class PodcastAddWizardComponent extends BasePageComponent
     constructor(private utilityService: UtilityService) {
         super();
     }
-    @HostListener('document:keypress', ['$event'])
+    @HostListener('document:keypress', ['__ts__event__'])
     handleKeyboardEvent(event: KeyboardEvent) {
         if (event.key === 'Enter') {
             this.next();
