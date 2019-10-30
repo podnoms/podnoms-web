@@ -16,7 +16,7 @@ export class ImageService {
         formData.append('image', image);
         console.log('image.service', 'upload', formData);
         return this.http.post<string>(
-            `${environment.apiHost}/${type}/${id}/imageupload`,
+            `${environment.apiHost}/${type}/${id}/imageupload?ngsw-bypass`,
             formData,
             { headers: headers }
         );
