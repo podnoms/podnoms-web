@@ -44,7 +44,6 @@ export class PodcastComponent implements OnDestroy {
         private alertService: AlertService,
         private changeDetectorRef: ChangeDetectorRef
     ) {
-        console.log('podcast.component', 'constructor');
         this.onComponentDestroy$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast); // reset and set based on new parameter this time

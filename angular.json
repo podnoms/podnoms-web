@@ -68,7 +68,7 @@
                         "sslKey": "certs/server.key",
                         "sslCert": "certs/server.crt",
                         "disableHostCheck": true,
-                        "host": "0.0.0.0",
+                        "host": "localhost",
                         "browserTarget": "app:build"
                     },
                     "configurations": {

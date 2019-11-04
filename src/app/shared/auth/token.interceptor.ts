@@ -24,6 +24,11 @@ export class TokenInterceptor implements HttpInterceptor {
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
+        // TODO: Bigtime revisit this
+        // 1. We don't want to be passing JWT tokens to random sites
+        // 2. We probably don't want to be calling random sites from our front end?
+        // --- all requests should go through our API.
+
         if (!this.authService || !req.url.startsWith(environment.apiHost)) {
             return next.handle(req);
         }

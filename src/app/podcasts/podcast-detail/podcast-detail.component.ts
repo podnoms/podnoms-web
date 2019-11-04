@@ -57,9 +57,6 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
         this.entries$ = this.entriesStore.getWithQuery({
             podcastSlug: this.podcast.slug
         });
-        this.entries$.subscribe(p =>
-            console.log('podcast-detail.component', 'entries', p)
-        );
     }
     ngOnChanges(changes: SimpleChanges) {
         if (changes.podcast) {
