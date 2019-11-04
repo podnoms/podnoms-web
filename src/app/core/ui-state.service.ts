@@ -37,7 +37,7 @@ export class UiStateService {
             this.sidebarOpenMobile$.next(this._sidebarOpen);
         }
     }
-    @HostListener('window:resize', ['$event'])
+    @HostListener('window:resize', ['__ts__event__'])
     onResize(event) {
         console.log('ui-state.service', 'onResize', event);
         this.viewportWidth = event.target.innerWidth;

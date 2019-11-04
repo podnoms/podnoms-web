@@ -78,7 +78,7 @@
                                                         autocomplete="off"
                                                         required=""
                                                         [(ngModel)]="profile.slug"
-                                                        (keyup)="searchTerm$.next($event.target.value)">
+                                                        (keyup)="searchTerm$.next(__html__event__.target.value)">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text input-group-lg">
                                                             <i class="fa fa-asterisk"

@@ -135,7 +135,7 @@ export class EntryListItemComponent implements OnInit {
         });
     }
     deleteEntry() {}
-    updateTitle($event: Event) {
+    updateTitle(__ts__event__: Event) {
         this.podcastEntryDataService
             .updateEntry(this.entry)
             .subscribe(e => this.entriesStore.updateOneInCache(e));

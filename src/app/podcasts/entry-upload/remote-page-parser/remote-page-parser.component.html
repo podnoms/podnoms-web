@@ -47,7 +47,7 @@
         <div class="row mt-5 mb-20">
             <app-spinner-button [iconClass]="'fas fa fa-thumbs-up'"
                 [buttonClass]="'btn-success'"
-                (clicked)="createEntry($event)">
+                (clicked)="createEntry(__html__event__)">
                 Add entry
             </app-spinner-button>
             <button class="btn btn-danger  mr-5 m5-5"

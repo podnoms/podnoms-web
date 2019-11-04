@@ -10,11 +10,8 @@ import { map } from 'rxjs/operators';
 export class WaveformService {
     constructor(private http: HttpClient) {}
     getForItem(id: string): Observable<string> {
-        return this.http
-            .get<any>(`${environment.apiHost}/waveform?entryId=${id}`)
-            .pipe(map(r => r.peakDataJsonUrl));
-    }
-    getRemotePeakData(url: string): Observable<string> {
-        return this.http.get<any>(url).pipe(map(r => r.data));
+        return this.http.get<any>(
+            `${environment.apiHost}/waveform?entryId=${id}`
+        ).pipe(map(r => r.peakDataJsonUrl));
     }
 }

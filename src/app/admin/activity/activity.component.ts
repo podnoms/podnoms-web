@@ -28,14 +28,14 @@ export class ActivityComponent implements OnInit {
     toggleExpandRow(row) {
         this.table.rowDetail.toggleExpandRow(row);
     }
-    setPage($event) {
-        this.page.currentPage = $event.offset + 1;
+    setPage(__ts__event__) {
+        this.page.currentPage = __ts__event__.offset + 1;
         this._loadActivityData();
     }
-    onSort($event) {
+    onSort(__ts__event__) {
         this.loading = true;
-        this.sortField = $event.sorts[0].prop;
-        this.sortIsAscending = $event.sorts[0].dir === 'asc';
+        this.sortField = __ts__event__.sorts[0].prop;
+        this.sortIsAscending = __ts__event__.sorts[0].dir === 'asc';
         this._loadActivityData();
     }
     _loadActivityData() {
