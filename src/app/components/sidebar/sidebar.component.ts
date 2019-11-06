@@ -16,8 +16,7 @@ export class SidebarComponent implements OnInit {
     selected: Podcast;
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
-
-    public config: PerfectScrollbarConfigInterface = {};
+    public scrollConfig: PerfectScrollbarConfigInterface = {};
     constructor(
         private router: Router,
         public uiStateService: UiStateService,
