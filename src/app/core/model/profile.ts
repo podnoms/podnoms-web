@@ -4,7 +4,8 @@ export class Profile {
     email: string;
     name: string;
     description?: string;
-    profileImage?: string;
+    profileImageUrl?: string;
+    thumbnailImageUrl?: string;
     apiKey: string;
     firstName: string;
     lastName: string;
