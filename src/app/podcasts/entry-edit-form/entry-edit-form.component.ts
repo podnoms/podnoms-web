@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastEntry } from '../../core';
-import { PodcastDataService } from '../podcast-data.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
 import { EntryDataService } from '../entry-data.service';
@@ -61,13 +60,12 @@ export class EntryEditFormComponent implements OnInit {
                     this.imageControl.commitImage(e.id, 'entry').subscribe(
                         result => {
                             if (result !== null) {
-                                e = result;
+                                e.imageUrl = result;
+                                // nasty dance to force refresh of thumbnails
+                                e.imageUrl = `${result}?v=${UUID.UUID()}`;
+                                e.thumbnailUrl = e.imageUrl;
                             }
-                            // nasty dance to force refresh of thumbnails
-                            e.imageUrl = `${e.imageUrl}?v=${UUID.UUID()}`;
-                            e.thumbnailUrl = `${
-                                e.thumbnailUrl
-                            }?v=${UUID.UUID()}`;
+
                             this.entriesStore.updateOneInCache(e);
                             this.formImageUrl = e.imageUrl;
 

@@ -164,15 +164,25 @@ export class ProfileComponent extends BasePageComponent
     doSave(profile: Profile) {
         this.profileDataService.updateProfile(profile).subscribe(p => {
             if (this.imageControl.imageChanged) {
-                this.imageControl.commitImage(p.id, 'profile').subscribe(r => {
-                    profile.profileImage = `${r}?v=${UUID.UUID()}`;
-                    this.profileStoreService.updateOneInCache(profile);
-                    this.alertService.info(
-                        'Success',
-                        'Profile updated successfully'
-                    );
-                    // this.router.navigate(['/']);
-                });
+                this.imageControl.commitImage(p.id, 'profile').subscribe(
+                    r => {
+                        profile.profileImageUrl = `${
+                            r.profileImageUrl
+                        }?v=${UUID.UUID()}`;
+                        profile.thumbnailImageUrl = `${
+                            r.thumbnailImageUrl
+                        }?v=${UUID.UUID()}`;
+                        this.profileStoreService.updateOneInCache(profile);
+                        this.alertService.info(
+                            'Success',
+                            'Profile updated successfully'
+                        );
+                        // this.router.navigate(['/']);
+                    },
+                    err => {
+                        console.log('profile.component', 'Error', err);
+                    }
+                );
             } else {
                 this.alertService.info(
                     'Success',

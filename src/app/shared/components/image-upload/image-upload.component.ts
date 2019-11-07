@@ -20,7 +20,7 @@ import { Observable, of } from 'rxjs';
 })
 export class ImageUploadComponent implements OnInit, OnChanges {
     private _imageFileBuffer: File;
-
+    defaultImage: string = 'assets/img/image-placeholder.png';
     image: any = new Image();
     public imageChanged: boolean = false;
 
@@ -34,6 +34,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     ) {}
     ngOnInit() {
         this.image.src = this.imageUrl;
+        this._initPasteHandler();
     }
     ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
         // console.log('image-upload.component', 'ngOnchanges', changes);
@@ -41,17 +42,20 @@ export class ImageUploadComponent implements OnInit, OnChanges {
         //     this.image.src = changes.imageUrl.currentValue;
         // }
     }
-    __PASTEdummyCodeHolderFunction() {
-        // this.renderer.listen('document', 'paste', e => {
-        //     console.log('Paste', e);
-        //     for (let i = 0; i < e.clipboardData.items.length; i++) {
-        //         const item = e.clipboardData.items[i];
-        //         if (item.kind === 'file') {
-        //             this._imageFileBuffer = item.getAsFile();
-        //             this._parseImageData(this._imageFileBuffer);
-        //         }
-        //     }
-        // });
+    _initPasteHandler() {
+        this.renderer.listen('document', 'paste', e => {
+            console.log('Paste', e);
+            for (let i = 0; i < e.clipboardData.items.length; i++) {
+                const item = e.clipboardData.items[i];
+                if (item.kind === 'file') {
+                    this._imageFileBuffer = item.getAsFile();
+                    this._parseImageData(this._imageFileBuffer);
+                }
+            }
+        });
+    }
+    handleBrokenUrl($event) {
+        this.image.src = this.defaultImage;
     }
     updateImage(image: string) {
         this.image.src = image;

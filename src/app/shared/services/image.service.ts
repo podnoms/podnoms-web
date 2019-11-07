@@ -10,7 +10,7 @@ import { Podcast } from '../../core';
 })
 export class ImageService {
     constructor(private http: HttpClient) {}
-    upload(type: string, id: string, image: File): Observable<string> {
+    upload(type: string, id: string, image: File): Observable<any> {
         const formData = new FormData();
         const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
         formData.append('image', image);
