@@ -143,13 +143,24 @@ export class PodcastEditFormComponent implements OnInit {
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(
                 p => {
-                    activeImageControl
-                        .commitImage(p.id, 'podcast')
-                        .subscribe(() => {
+                    activeImageControl.commitImage(p.id, 'podcast').subscribe(
+                        () => {
                             this.podcastStore.addOneToCache(p);
                             this.podcastStore.updateOneInCache(p);
                             this.router.navigate(['podcasts', p.slug]);
-                        });
+                        },
+                        error => {
+                            console.error(
+                                'podcast-edit-form.component',
+                                'commitImage',
+                                error
+                            );
+                            this.alertService.error(
+                                'Error',
+                                'Error updating podcast image'
+                            );
+                        }
+                    );
                 },
                 () => {
                     this.alertService.error(

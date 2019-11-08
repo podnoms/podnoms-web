@@ -25,6 +25,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     public imageChanged: boolean = false;
 
     @Input() imageUrl: string;
+    @Input() allowRandom: boolean = false;
 
     @ViewChild('fileInput', { static: false }) fileInputElement: ElementRef;
 
@@ -76,7 +77,37 @@ export class ImageUploadComponent implements OnInit, OnChanges {
         this._imageFileBuffer = nativeElement.files[0];
         this._parseImageData(this._imageFileBuffer);
     }
+    getRandomImage($event) {
+        this.imageService.getRandom().subscribe(
+            r => {
+                console.log('image-upload.component', 'getRandomImage', r);
+                this.image.src = r;
+                this.imageChanged = true;
+                this._imageFileBuffer = this._dataURLtoFile(
+                    r,
+                    'random-image.jpg'
+                );
+                $event();
+            },
+            e => {
+                console.error('image-upload.component', 'getRandomImage', e);
+                $event();
+            }
+        );
+    }
+    private _dataURLtoFile(dataurl, filename): File {
+        const arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
 
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, { type: mime });
+    }
     private _parseImageData(file: File) {
         const myReader: FileReader = new FileReader();
         myReader.onloadend = (loadEvent: any) => {
