@@ -21,4 +21,9 @@ export class ImageService {
             { headers: headers }
         );
     }
+    getRandom(): Observable<string> {
+        return this.http.get(`${environment.apiHost}/utility/randomimage`, {
+            responseType: 'text'
+        });
+    }
 }
