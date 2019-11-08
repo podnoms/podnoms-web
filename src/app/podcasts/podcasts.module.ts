@@ -39,6 +39,8 @@ import { ComponentsModule } from '../components/components.module';
 import { EntryDeleteItemModalComponent } from './entry-list-item/entry-delete-item-modal.component';
 import { NotificationItemDeleteComponent } from './notifications/notification-item/notification-item-delete.component';
 import { PodcastDeleteComponent } from './podcast-delete.component';
+import { EntryLogsComponent } from './entry-logs/entry-logs.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
     imports: [
         CommonModule,
@@ -52,6 +54,7 @@ import { PodcastDeleteComponent } from './podcast-delete.component';
         NgSelectModule,
         NgbProgressbarModule,
         NgbTabsetModule,
+        NgxDatatableModule,
         ComponentsModule
     ],
     exports: [PodcastComponent],
@@ -76,7 +79,8 @@ import { PodcastDeleteComponent } from './podcast-delete.component';
         EntryEditFormComponent,
         UploadDropboxComponent,
         UploadGdriveComponent,
-        RemotePageParserComponent
+        RemotePageParserComponent,
+        EntryLogsComponent
     ],
     entryComponents: [
         PodcastDeleteComponent,

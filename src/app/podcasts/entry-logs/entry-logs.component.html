@@ -1,0 +1,24 @@
+<div class="block block-themed block-transparent mb-0">
+    <div class="block-header bg-corporate-darker">
+        <h3 class="block-title">Entry Logs</h3>
+        <div class="block-options">
+            <button type="button"
+                class="btn-block-option"
+                data-toggle="tooltip"
+                title="Close"
+                (click)="closeModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+    </div>
+    <div class="block-content">
+      <ngx-datatable class="material striped"
+          [rows]="logs$ | async"
+          [columns]="columns"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="50">
+      </ngx-datatable>
+    </div>
+</div>

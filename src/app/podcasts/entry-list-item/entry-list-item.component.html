@@ -84,6 +84,15 @@
                     *ngIf="entry.processingStatus==='Processed'"
                     class="btn btn-secondary"
                     data-toggle="tooltip"
+                    title="Show episode logs"
+                    (click)="showLogs(entry)">
+                    <i class="fa fa-clipboard-list"></i>
+                    
+                </button>
+                <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    class="btn btn-secondary"
+                    data-toggle="tooltip"
                     title="Share episode"
                     (click)="shareEpisode(entry)">
                     <i class="fa fa-share-alt"></i>
@@ -129,4 +138,7 @@
         entry"
         (shareComplete)="shareComplete(__html__event__)">
     </app-sharing>
+</ng-template>
+<ng-template #logsDialog>
+    <app-entry-logs  [entry]="entry"></app-entry-logs>
 </ng-template>

@@ -41,6 +41,9 @@ export class EntryListItemComponent implements OnInit {
     @ViewChild('shareDialog', { static: false })
     shareDialog: ElementRef;
 
+    @ViewChild('logsDialog', { static: false })
+    logsDialog: ElementRef;
+
     preparingDownload: boolean = false;
     percentageProcessed = 0;
     currentSpeed: string = '';
@@ -168,6 +171,9 @@ export class EntryListItemComponent implements OnInit {
                     'Unable to download this episode'
                 )
         );
+    }
+    showLogs(entry: PodcastEntry) {
+        this.modalService.open(this.logsDialog, {size: 'xl'});
     }
     shareEpisode(entry: PodcastEntry) {
         this.modalService
