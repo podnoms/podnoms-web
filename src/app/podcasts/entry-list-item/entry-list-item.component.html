@@ -15,7 +15,7 @@
         <div class="font-w600 mb-10">
             <inline-editor type="text"
                 [(ngModel)]="entry.title"
-                (onSave)="updateTitle(__html__event__)"
+                (onSave)="updateTitle($event)"
                 name="title"
                 size="32"
                 (click)="__fixTitleEdit()">
@@ -62,7 +62,7 @@
     <div class="col-md-3 text-center"
         valign="middle">
         <div class="tools-wrapper">
-            <div class="btn-group">
+            <div class="btn-group mr-5">
                 <button type="button"
                     class="btn btn-success"
                     *ngIf="entry.processingStatus==='Processed'"
@@ -80,9 +80,22 @@
                         </i>
                     </div>
                 </button>
+            </div>
+            <div class="btn-group mr-5">
                 <button type="button"
                     *ngIf="entry.processingStatus==='Processed'"
-                    class="btn btn-secondary"
+                    class="btn btn-primary"
+                    data-toggle="tooltip"
+                    title="Show episode logs"
+                    (click)="showLogs(entry)">
+                    <i class="fa fa-terminal"></i>
+                </button>
+            </div>
+            <div class="btn-group mr-5">
+
+                <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    class="btn btn-info"
                     data-toggle="tooltip"
                     title="Share episode"
                     (click)="shareEpisode(entry)">
@@ -90,7 +103,7 @@
                 </button>
                 <button type="button"
                     *ngIf="entry.processingStatus==='Processed'"
-                    class="btn btn-secondary"
+                    class="btn btn-info"
                     (click)="downloadAudio(entry)"
                     data-toggle="tooltip"
                     title="Download episode">
@@ -99,20 +112,23 @@
                     <i *ngIf="preparingDownload"
                         class="fa fa-cog fa-spin text-success"></i>
                 </button>
-                <button type="button"
-                    *ngIf="entry.processingStatus === 'Failed'"
-                    class="btn btn-success"
-                    (click)="retry(entry)"
-                    data-toggle="tooltip"
-                    title="Retry"><i class="fas fa fa-redo"></i>&nbsp;Retry
-                </button>
-                <a class="btn btn-secondary"
+
+                <a class="btn btn-info"
                     *ngIf="entry.processingStatus==='Processed'"
                     [routerLink]="['../entry', entry?.id, 'edit']"
                     data-toggle="tooltip"
                     title="Edit episode">
                     <i class="icon icon-pencil"></i>
                 </a>
+            </div>
+            <div class="btn-group">
+                <button type="button"
+                    *ngIf="entry.processingStatus === 'Failed'"
+                    class="btn btn-warning"
+                    (click)="retry(entry)"
+                    data-toggle="tooltip"
+                    title="Retry"><i class="fas fa fa-redo"></i>&nbsp;Retry
+                </button>
                 <button type="button"
                     class="btn btn-danger"
                     (click)="showEntryDeleteDialog()"
@@ -124,9 +140,11 @@
         </div>
     </div>
 </div>
+<!-- TODO - make this look like the delete item modal -->
+<!-- Remove the template below and allow the class handle everything -->
 <ng-template #shareDialog>
     <app-sharing [entry]="
         entry"
-        (shareComplete)="shareComplete(__html__event__)">
+        (shareComplete)="shareComplete($event)">
     </app-sharing>
 </ng-template>

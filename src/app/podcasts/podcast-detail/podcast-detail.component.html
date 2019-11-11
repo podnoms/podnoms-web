@@ -4,7 +4,7 @@
         <app-entry-list-item *ngFor="let entry of entries"
             class="podcast-entry-table-row mt-20"
             draggable="true"
-            (dragstart)="dragStart(__html__event__, entry)"
+            (dragstart)="dragStart($event, entry)"
             (entryRemoved)='deleteEntry(entry)'
             [(entry)]="entry">
         </app-entry-list-item>

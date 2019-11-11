@@ -118,12 +118,12 @@ export class UploadUrlComponent implements AfterViewInit {
             this.resetUrl();
         }
     }
-    onPageEntryChosen(__ts__event__) {
-        if (__ts__event__) {
+    onPageEntryChosen($event) {
+        if ($event) {
             this.createEntry(
                 this.title,
-                __ts__event__.url,
-                __ts__event__.callback
+                $event.url,
+                $event.callback
             );
         } else {
             this.resetUrl();
