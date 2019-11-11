@@ -4,21 +4,39 @@
         <div class="block-options">
             <button type="button"
                 class="btn-block-option"
-                data-toggle="tooltip"
-                title="Close"
-                (click)="closeModal()">
-                <i class="fa fa-times-circle"></i>
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="modal.close('')">
+                <i class="icon icon-close"></i>
             </button>
         </div>
     </div>
     <div class="block-content">
-      <ngx-datatable class="material striped"
-          [rows]="logs$ | async"
-          [columns]="columns"
-          [columnMode]="ColumnMode.force"
-          [headerHeight]="50"
-          [footerHeight]="50"
-          [rowHeight]="50">
-      </ngx-datatable>
+        <table class="table table-striped table-inverse table-responsive">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Site</th>
+                    <th>Device</th>
+                    <th>Date</th>
+                    <th>Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of logs$ | async">
+                    <td>{{log.incomingUrl}}</td>
+                    <td>{{log.incomingHost}}</td>
+                    <td>{{log.dateAccessed | date:'dd/MM/yyyy hh:mm'}}</td>
+                    <td>{{log.clientAddress}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button"
+            class="btn btn-outline-success"
+            data-dismiss="modal"
+            (click)="modal.close('delete')">
+            <i class="fas fa fa-check"></i> Done
+        </button>
     </div>
 </div>

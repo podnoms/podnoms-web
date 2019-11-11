@@ -106,7 +106,7 @@ export class PodcastComponent implements OnDestroy {
                 // }
             });
     }
-    // @HostListener('dragover', ['__ts__event__']) onDragOver(evt) {
+    // @HostListener('dragover', ['$event']) onDragOver(evt) {
     //     // console.log('podcast.component', 'onDragOver', evt);
     //     // evt.preventDefault();
     //     // evt.stopPropagation();
@@ -116,7 +116,7 @@ export class PodcastComponent implements OnDestroy {
     //     //     // this.uploadMode = this.uploadModes.none;
     //     // }
     // }
-    // @HostListener('dragleave', ['__ts__event__']) public onDragLeave(evt) {
+    // @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
     //     // console.log('podcast.component', 'onDragLeave', evt);
     //     // if (this.uploadMode !== this.uploadModes.fromLocalFile) {
     //     //     evt.preventDefault();
@@ -124,7 +124,7 @@ export class PodcastComponent implements OnDestroy {
     //     //     this.uploadMode = this.uploadModes.none;
     //     // }
     // }
-    // @HostListener('drop', ['__ts__event__']) public onDrop(evt) {
+    // @HostListener('drop', ['$event']) public onDrop(evt) {
     //     // evt.preventDefault();
     //     // evt.stopPropagation();
     //     // this.uploadMode = this.uploadModes.none;

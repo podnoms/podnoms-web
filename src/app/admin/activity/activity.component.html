@@ -20,8 +20,8 @@
                 [count]="page.rowCount"
                 [offset]="page.currentPage-1"
                 [limit]="page.pageSize"
-                (sort)="onSort(__html__event__)"
-                (page)="setPage(__html__event__)">
+                (sort)="onSort($event)"
+                (page)="setPage($event)">
                 <ngx-datatable-row-detail [rowHeight]="
                 100">
                     <ng-template let-row="row"

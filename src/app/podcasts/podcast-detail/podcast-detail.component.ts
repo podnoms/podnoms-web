@@ -80,8 +80,8 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
                 )
         );
     }
-    dragStart(__ts__event__: DragEvent, entry: PodcastEntry) {
-        __ts__event__.dataTransfer.setData('text/plain', JSON.stringify(entry));
+    dragStart($event: DragEvent, entry: PodcastEntry) {
+        $event.dataTransfer.setData('text/plain', JSON.stringify(entry));
         this.dragDropService.dragEvents.emit('argle');
     }
 }

@@ -85,6 +85,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     entryComponents: [
         PodcastDeleteComponent,
         EntryDeleteItemModalComponent,
+        EntryLogsComponent,
         NotificationItemDeleteComponent
     ],
     providers: [
