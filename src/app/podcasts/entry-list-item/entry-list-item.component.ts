@@ -25,6 +25,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../shared/components/toast/toast.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { EntryLogsComponent } from '../entry-logs/entry-logs.component';
 declare var $: any;
 @Component({
     selector: 'app-entry-list-item',
@@ -135,7 +136,7 @@ export class EntryListItemComponent implements OnInit {
         });
     }
     deleteEntry() {}
-    updateTitle(__ts__event__: Event) {
+    updateTitle($event: Event) {
         this.podcastEntryDataService
             .updateEntry(this.entry)
             .subscribe(e => this.entriesStore.updateOneInCache(e));
@@ -168,6 +169,16 @@ export class EntryListItemComponent implements OnInit {
                     'Unable to download this episode'
                 )
         );
+    }
+    showLogs(entry: PodcastEntry) {
+        const modalRef = this.modalService.open(EntryLogsComponent, {
+            windowClass: 'full-modal',
+            size: 'xl'
+        });
+        modalRef.componentInstance.entry = this.entry;
+    }
+    closeLogs() {
+        this.modalService.dismissAll();
     }
     shareEpisode(entry: PodcastEntry) {
         this.modalService

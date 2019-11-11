@@ -27,7 +27,7 @@
 </form>
 <h5>{{title}}</h5>
 <app-remote-page-parser *ngIf="remoteAudioList"
-    (pageEntryChosen)="onPageEntryChosen(__html__event__)"
+    (pageEntryChosen)="onPageEntryChosen($event)"
     [remoteAudioList]="remoteAudioList">
 </app-remote-page-parser>
 <div class="block block-themed"

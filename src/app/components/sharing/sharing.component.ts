@@ -19,7 +19,9 @@ import { SharingService } from '../../shared/services/sharing.service';
 export class SharingComponent implements AfterViewInit {
     @ViewChild('emailAddress', { static: false }) emailControl;
     @Input() entry: Shareable;
-    @Output() shareComplete: EventEmitter<string> = new EventEmitter<string>();
+    @Output() shareComplete: EventEmitter<boolean> = new EventEmitter<
+        boolean
+    >();
     // tslint:disable-next-line: max-line-length
     error: string = '';
     email: string = '';
@@ -34,10 +36,10 @@ export class SharingComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.emailControl.nativeElement.focus();
     }
-    getSharingLink(__ts__event__) {
+    getSharingLink($event) {
         this.sharingService.getSharingLink(this.entry.id).subscribe(l => {
             this.linkUrl = l;
-            __ts__event__();
+            $event();
         });
     }
     shareToEmail() {
@@ -51,7 +53,7 @@ export class SharingComponent implements AfterViewInit {
                         'Link shared successfully',
                         `${this.email}'s got mail!!!`
                     );
-                    this.shareComplete.emit(r);
+                    this.shareComplete.emit(true);
                 });
         }
     }
@@ -69,16 +71,16 @@ export class SharingComponent implements AfterViewInit {
             case 'facebook':
                 this.sharingService
                     .shareToFacebook(this.entry.id)
-                    .subscribe(() => this.shareComplete.emit());
+                    .subscribe(() => this.shareComplete.emit(true));
                 break;
             case 'twitter':
                 this.sharingService
                     .shareToTwitter(this.entry.id)
-                    .subscribe(() => this.shareComplete.emit());
+                    .subscribe(() => this.shareComplete.emit(true));
                 break;
         }
     }
     closeModal() {
-        this.shareComplete.emit();
+        this.shareComplete.emit(false);
     }
 }

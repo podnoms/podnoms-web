@@ -23,13 +23,13 @@ export class SidebarPodcastItemComponent implements OnInit {
     ) {}
 
     ngOnInit() {}
-    dragover(__ts__event__: DragEvent) {
-        __ts__event__.preventDefault();
+    dragover($event: DragEvent) {
+        $event.preventDefault();
     }
-    drop(__ts__event__: DragEvent) {
-        console.log('sidebar.component.ts', 'drop', __ts__event__);
+    drop($event: DragEvent) {
+        console.log('sidebar.component.ts', 'drop', $event);
         const entry: PodcastEntry = JSON.parse(
-            __ts__event__.dataTransfer.getData('text/plain')
+            $event.dataTransfer.getData('text/plain')
         );
         console.log('sidebar.component.ts', 'data:entry:id', entry);
         this.podcastStoreService.getByKey(entry.podcastId).subscribe(p => {
