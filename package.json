@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.2.69",
+  "version": "1.2.70",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -36,7 +36,7 @@
     "@ngrx/entity": "^8.3.0",
     "@ngrx/store": "^8.3.0",
     "@ngrx/store-devtools": "^8.3.0",
-    "@podnoms/ngx-audioplayer": "0.0.42",
+    "@podnoms/ngx-audioplayer": "~0.0.42",
     "@qontu/ngx-inline-editor": "^0.2.0-alpha.12",
     "@swimlane/ngx-datatable": "^16.0.2",
     "angular-in-memory-web-api": "^0.9.0",
