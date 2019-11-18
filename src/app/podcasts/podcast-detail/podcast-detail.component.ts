@@ -22,6 +22,7 @@ import { EntriesStoreService } from '../entries-store.service';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -54,9 +55,11 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-        this.entries$ = this.entriesStore.getWithQuery({
-            podcastSlug: this.podcast.slug
-        });
+        this.entries$ = this.entriesStore
+            .getWithQuery({
+                podcastSlug: this.podcast.slug
+            })
+            .pipe(tap(e => console.log('podcast-detail.component', 'tap', e)));
     }
     ngOnChanges(changes: SimpleChanges) {
         if (changes.podcast) {
