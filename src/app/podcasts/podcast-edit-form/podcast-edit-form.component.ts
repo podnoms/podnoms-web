@@ -102,13 +102,13 @@ export class PodcastEditFormComponent implements OnInit {
         if (!this.useWizard) {
             if (!id) {
                 this.podcast$ = of(new Podcast());
-                this.podcast$.subscribe(podcast => {
+                this.podcast$.subscribe((podcast) => {
                     this.podcastForm = this._createForm(this.fb, podcast);
                 });
             } else {
                 this.podcastStore.entities$
-                    .pipe(map(r => r.filter(it => it.slug === id)))
-                    .subscribe(p => {
+                    .pipe(map((r) => r.filter((it) => it.slug === id)))
+                    .subscribe((p) => {
                         const podcast = p[0];
                         if (podcast) {
                             this.podcast$ = of(podcast);
@@ -121,7 +121,7 @@ export class PodcastEditFormComponent implements OnInit {
             }
         } else {
             this.podcast$ = of(new Podcast());
-            this.podcast$.subscribe(podcast => {
+            this.podcast$.subscribe((podcast) => {
                 this.podcastForm = this._createForm(this.fb, podcast);
             });
         }
@@ -142,14 +142,17 @@ export class PodcastEditFormComponent implements OnInit {
             this.imageControl || this.wizardControl.getImageControl();
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(
-                p => {
+                (p) => {
                     activeImageControl.commitImage(p.id, 'podcast').subscribe(
                         () => {
                             this.podcastStore.addOneToCache(p);
                             this.podcastStore.updateOneInCache(p);
-                            this.router.navigate(['podcasts', p.slug]);
+                            this.alertService.info(
+                                'Success',
+                                'Updated podcast details'
+                            );
                         },
-                        error => {
+                        (error) => {
                             console.error(
                                 'podcast-edit-form.component',
                                 'commitImage',
@@ -173,15 +176,18 @@ export class PodcastEditFormComponent implements OnInit {
             );
         } else {
             this.podcastDataService.updatePodcast(podcast).subscribe(
-                p => {
+                (p) => {
                     activeImageControl
                         .commitImage(p.id, 'podcast')
-                        .subscribe(r => {
+                        .subscribe((r) => {
                             // nasty dance to force refresh of thumbnails
                             p.thumbnailUrl = `${r ||
                                 p.imageUrl}?v=${UUID.UUID()}`;
                             this.podcastStore.updateOneInCache(p);
-                            this.router.navigate(['podcasts', p.slug]);
+                            this.alertService.info(
+                                'Success',
+                                'Updated podcast details'
+                            );
                         });
                 },
                 () => {
@@ -197,7 +203,7 @@ export class PodcastEditFormComponent implements OnInit {
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);
         modalRef.componentInstance.podcast = podcast;
-        modalRef.result.then(r => {
+        modalRef.result.then((r) => {
             if (r === 'delete') {
                 this.deletePodcast(podcast);
             }
@@ -206,7 +212,7 @@ export class PodcastEditFormComponent implements OnInit {
     deletePodcast(podcast: Podcast) {
         console.log('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
-            r => {
+            (r) => {
                 if (r) {
                     if (localStorage.getItem('__spslug') === podcast.slug) {
                         localStorage.removeItem('__spslug');
