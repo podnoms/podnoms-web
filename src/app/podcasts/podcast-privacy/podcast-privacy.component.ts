@@ -24,7 +24,7 @@ export class PodcastPrivacyComponent implements OnInit {
         this.podcastDataService
             .updatePodcast(this.podcast)
             .subscribe((r) =>
-                this.alertService.info('Success', 'Updated privacy settings')
+                this.alertService.info('Success', 'Updated podcast settings')
             );
         return false;
     }
