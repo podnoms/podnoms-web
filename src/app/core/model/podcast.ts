@@ -14,6 +14,10 @@ export class Podcast extends Shareable {
     subcategories?: Array<Category>;
     notifications?: Array<Notification>;
 
+    publicTitle?: string;
+    facebookUrl?: string;
+    twitterUrl?: string;
+
     private?: boolean;
     authUserName?: string;
     authPassword?: string;

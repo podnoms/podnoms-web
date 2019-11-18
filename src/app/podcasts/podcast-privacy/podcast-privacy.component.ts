@@ -19,15 +19,13 @@ export class PodcastPrivacyComponent implements OnInit {
 
     ngOnInit() {}
 
-    updatePrivacySettings() {
-        // me:  messy, should ngrx this stuff
-        // also me: Code like no one is watching!!!
-
-        // TODO: hack here as we (correctly) cannot send null category
+    saveSettings() {
         this.podcast.category = this.podcast.category || null;
         this.podcastDataService
             .updatePodcast(this.podcast)
-            .subscribe(r => this.alertService.info('Success', 'Updated privacy settings'));
+            .subscribe((r) =>
+                this.alertService.info('Success', 'Updated privacy settings')
+            );
         return false;
     }
 }
