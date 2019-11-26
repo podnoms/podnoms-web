@@ -9,21 +9,38 @@ import { environment } from '../../../environments/environment';
 export class JobService {
     constructor(private http: HttpClient) {}
     deleteOrphans(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/deleteorphans`);
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/deleteorphans`
+        );
     }
     processPlaylists(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/processplaylists`);
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/processplaylists`
+        );
     }
     processPlaylistItems(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/processplaylistitems`);
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/processplaylistitems`
+        );
     }
     processMissing(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/processmissing`);
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/processmissing`
+        );
     }
     updateImages(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/updateimages`);
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/updateimages`
+        );
     }
     updateYouTubeDl(): Observable<Response> {
-        return this.http.get<Response>(`${environment.apiHost}/job/updateyoutubedl`);
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/updateyoutubedl`
+        );
+    }
+    processPodcast(entryId: string): Observable<Response> {
+        return this.http.get<Response>(
+            `${environment.apiHost}/job/processpodcastjob?entryId=${entryId}`
+        );
     }
 }
