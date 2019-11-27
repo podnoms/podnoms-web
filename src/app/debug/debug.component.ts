@@ -9,6 +9,7 @@ import { WaveformService } from 'app/shared/services/waveform.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { UtilityService } from 'app/shared/services/utility.service';
+import { JobService } from 'app/shared/services/job.service';
 @Component({
     selector: 'app-debug',
     templateUrl: './debug.component.html',
@@ -18,6 +19,7 @@ export class DebugComponent implements OnInit {
     @ViewChild('player', { static: true })
     player: ElementRef;
 
+    podcastEntryToProcessId: string = '';
     audioUrl =
         'https://podnomscdn.blob.core.windows.net/audio/25a33fb1-428c-4ee4-667a-08d72c897f8b.mp3';
     pcmUrl =
@@ -33,6 +35,7 @@ export class DebugComponent implements OnInit {
         private audioService: AudioService,
         private http: HttpClient,
         private utilityService: UtilityService,
+        private jobService: JobService,
         private waveformService: WaveformService,
         private scriptService: ScriptService
     ) {}
@@ -51,14 +54,18 @@ export class DebugComponent implements OnInit {
         );
     }
     debuggle() {
-        // this.http
-        //     .get<any>(
-        //         `${environment.apiHost}/urlprocess/validate?url=https://www.rte.ie/radio1/liveline/podcasts/`
-        //     )
-        //     .subscribe(r => console.log('debug.component', 'debuggle', r));
-
         this.utilityService
             .checkAudioUrl('https://www.rte.ie/radio1/liveline/podcasts/')
             .subscribe(r => console.log('debug.component', 'debuggle', r));
+    }
+    submitProcessPodcastJob() {
+        console.log(
+            'debug.component',
+            'submitProcessPodcastJob',
+            this.podcastEntryToProcessId
+        );
+        this.jobService
+            .processPodcast(this.podcastEntryToProcessId)
+            .subscribe(r => console.log('debug.component', 'result', r));
     }
 }
