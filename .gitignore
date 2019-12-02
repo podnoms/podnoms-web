@@ -46,3 +46,4 @@ push.sh
 .tags
 tags
 .vscode
+yarn-error.log
