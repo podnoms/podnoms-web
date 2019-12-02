@@ -1,3 +1,5 @@
+@import '~styles/_variables';
+
 img.sidebar-icon {
     width: 28px;
     height: 28px;
@@ -5,7 +7,7 @@ img.sidebar-icon {
 }
 
 nav.footer-open {
-    margin-bottom: 60px;
+    margin-bottom: $footer-height;
 }
 
 nav {
