@@ -64,7 +64,7 @@ export class ProfileComponent extends BasePageComponent
         }
     };
     @ViewChild(BaseChartDirective, { static: false })
-    private _chart: BaseChartDirective<any>;
+    private _chart: BaseChartDirective;
 
     @ViewChild('imageControl', { static: false })
     imageControl: ImageUploadComponent;
