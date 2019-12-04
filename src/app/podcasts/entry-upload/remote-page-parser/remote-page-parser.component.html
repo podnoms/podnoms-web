@@ -9,7 +9,7 @@
             <button type="submit"
                 class="btn btn-sm btn-alt-primary"
                 (click)="itemChosen($event)">
-                <i class="fa fa-check"></i> Submit
+                <i class="fa fa-check"></i> Add entry
             </button>
             <button type="reset"
                 class="btn btn-sm btn-alt-danger ml-5"
@@ -24,14 +24,15 @@
             <tbody>
                 <tr *ngFor="let row of remoteAudioData.data; let i = index">
                     <td scope="row">
-                        <div class="form-check">
+                        <label class="css-control css-control-lg css-control-success css-radio">
                             <input type="radio"
-                                class="form-check-input"
+                                class="css-control-input"
                                 name="selected-audio"
                                 id="selected-audio-{{i}}"
                                 value="{{i}}"
                                 [(ngModel)]="selectedItem">
-                        </div>
+                            <span class="css-control-indicator"></span>
+                        </label>
                     </td>
                     <td data-toggle="tooltip"
                         title="{{row.value}}">{{row.key}}</td>

@@ -76,11 +76,6 @@ export class EntryListItemComponent implements OnInit {
                             this.entry.id
                         )
                         .subscribe((result: AudioProcessingMessage) => {
-                            console.log(
-                                'entry-list-item.component',
-                                'audioprocessing',
-                                result
-                            );
                             this.entry.processingStatus = AudioProcessingMessage.getProcessingStatus(
                                 result.processingStatus
                             );
@@ -160,7 +155,6 @@ export class EntryListItemComponent implements OnInit {
         this.preparingDownload = true;
         this.downloader.downloadAudio(this.entry.id).subscribe(
             r => {
-                console.log('entry-list-item.component', 'downloadAudio', r);
                 this.preparingDownload = false;
             },
             err =>

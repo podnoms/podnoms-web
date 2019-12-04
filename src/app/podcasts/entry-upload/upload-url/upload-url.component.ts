@@ -91,13 +91,7 @@ export class UploadUrlComponent implements AfterViewInit {
             this.utilityService.checkAudioUrl(url).subscribe(
                 r => {
                     if (r.type === 'native') {
-                        this.createEntry(r, url, () =>
-                            console.log(
-                                'upload-url.component',
-                                'native',
-                                'done'
-                            )
-                        );
+                        this.createEntry(r, url);
                     } else if ((r.type = 'proxied')) {
                         console.log('upload-url.component', 'apiData', r.data);
                         this.isPosting = false;
@@ -119,11 +113,12 @@ export class UploadUrlComponent implements AfterViewInit {
     onPageEntryChosen($event) {
         console.log('upload-url.component', 'YAY', $event);
         if ($event) {
+            this.createEntry(this.remoteAudioResult, $event);
         } else {
             this.resetUrl();
         }
     }
-    createEntry(parsedEntry: any, url: string, callback: any) {
+    createEntry(parsedEntry: any, url: string) {
         // TODO: API should tell us that this is a playlist without calling addEntry
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
@@ -132,7 +127,6 @@ export class UploadUrlComponent implements AfterViewInit {
         entry.imageUrl = parsedEntry.image;
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
-                callback();
                 if (e) {
                     if (e.processingStatus === 'Deferred') {
                         this.playlistProxy = e;
@@ -142,7 +136,6 @@ export class UploadUrlComponent implements AfterViewInit {
                 }
             },
             err => {
-                callback();
                 this.isPosting = false;
                 if (err.status === 402) {
                     this.errorText =
