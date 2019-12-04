@@ -8,14 +8,16 @@ import { UtilityService } from '../../services/utility.service';
 })
 export class FileSizeComponent implements OnInit {
     @Input()
-    remoteUrl: string;
+    src: string;
 
     fileSize: number = -1;
     constructor(private utilityService: UtilityService) {}
 
     ngOnInit() {
-        if (this.remoteUrl) {
-            this.utilityService.getRemoteFileSize(this.remoteUrl).subscribe(size => (this.fileSize = size));
+        if (this.src) {
+            this.utilityService
+                .getRemoteFileSize(this.src)
+                .subscribe(size => (this.fileSize = size));
         }
     }
 }

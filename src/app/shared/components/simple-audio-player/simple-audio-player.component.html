@@ -1,0 +1,88 @@
+<!-- <audio controls="controls"
+    *ngIf="src">
+    Your browser does not support the &lt;audio&gt; tag.
+    <source [src]="src" />
+</audio> -->
+
+<div tabindex="0"
+    class="plyr plyr--full-ui plyr--audio plyr--html5 plyr--paused plyr--stopped">
+    <div class="plyr__controls"><button class="plyr__controls__item plyr__control"
+            type="button"
+            data-plyr="restart"><svg role="presentation"
+                focusable="false">
+                <use xlink:href="#plyr-restart"></use>
+            </svg><span class="plyr__sr-only">Restart</span></button><button class="plyr__controls__item plyr__control"
+            type="button"
+            data-plyr="play"
+            aria-label="Play"><svg class="icon--pressed"
+                role="presentation"
+                focusable="false">
+                <use xlink:href="#plyr-pause"></use>
+            </svg><svg class="icon--not-pressed"
+                role="presentation"
+                focusable="false">
+                <use xlink:href="#plyr-play"></use>
+            </svg><span class="label--pressed plyr__sr-only">Pause</span><span class="label--not-pressed plyr__sr-only">Play</span></button>
+        <div class="plyr__controls__item plyr__progress__container">
+            <div class="plyr__progress"><input data-plyr="seek"
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    value="0"
+                    autocomplete="off"
+                    role="slider"
+                    aria-label="Seek"
+                    aria-valuemin="0"
+                    aria-valuemax="166.11265"
+                    aria-valuenow="0"
+                    id="plyr-seek-950"
+                    seek-value="25.544944229787856"
+                    class=""
+                    style="--value:0%;"><progress class="plyr__progress__buffer"
+                    min="0"
+                    max="100"
+                    value="0"
+                    role="progressbar"
+                    aria-hidden="true">% buffered</progress><span class="plyr__tooltip"
+                    style="left: 48.1738%;">01:20</span></div>
+        </div>
+        <div class="plyr__controls__item plyr__time--current plyr__time"
+            aria-label="Current time">00:00</div>
+        <div class="plyr__controls__item plyr__time--duration plyr__time"
+            aria-label="Duration">02:46</div>
+        <div class="plyr__controls__item plyr__volume"><button type="button"
+                class="plyr__control"
+                data-plyr="mute"><svg class="icon--pressed"
+                    role="presentation"
+                    focusable="false">
+                    <use xlink:href="#plyr-muted"></use>
+                </svg><svg class="icon--not-pressed"
+                    role="presentation"
+                    focusable="false">
+                    <use xlink:href="#plyr-volume"></use>
+                </svg><span class="label--pressed plyr__sr-only">Unmute</span><span class="label--not-pressed plyr__sr-only">Mute</span></button><input data-plyr="volume"
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value="1"
+                autocomplete="off"
+                role="slider"
+                aria-label="Volume"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="100"
+                id="plyr-volume-950"
+                aria-valuetext="100.0%"
+                style="--value:100%;"></div><a class="plyr__controls__item plyr__control"
+            href="https://archive.org/download/mythium/JLS_ATI.mp3"
+            target="_blank"
+            data-plyr="download"><svg role="presentation"
+                focusable="false">
+                <use xlink:href="#plyr-download"></use>
+            </svg><span class="plyr__sr-only">Download</span></a>
+    </div><audio id="audio1"
+        preload=""
+        [src]="src">Your browser does not support HTML5 Audio! 😢</audio>
+</div>
