@@ -31,6 +31,7 @@ import { UserSlugChangeComponent } from './components/modal-updates/user-slug-ch
 import { AutofocusDirective } from './directives/auto-focus.directive';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
+import { SimpleAudioPlayerComponent } from './components/simple-audio-player/simple-audio-player.component';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { TokenInterceptor } from './auth/token.interceptor';
         ToastComponent,
         FileSizeComponent,
         ModalUpdatesComponent,
-        CategorySelectorComponent
+        CategorySelectorComponent,
+        SimpleAudioPlayerComponent
     ],
     declarations: [
         OrderByPipe,
@@ -77,7 +79,8 @@ import { TokenInterceptor } from './auth/token.interceptor';
         FileSizeComponent,
         ModalUpdatesComponent,
         UserSlugModalComponent,
-        UserSlugChangeComponent
+        UserSlugChangeComponent,
+        SimpleAudioPlayerComponent
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [

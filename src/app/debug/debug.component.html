@@ -1,14 +1,10 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <app-signalr></app-signalr>
-        </div>
-        <div class="col-md-6">
-            <button type="button"
-                name=""
-                id=""
-                (click)="showToast()"
-                class="btn btn-primary btn-lg btn-block">Show Toast</button>
+    <div class="row"
+        *ngIf="debugParseData">
+        <div class="col-lg-12">
+            <app-remote-page-parser [remoteAudioData]="debugParseData"
+                (pageEntryChosen)="selectedUrl($event);">
+            </app-remote-page-parser>
         </div>
     </div>
     <div class="row">
@@ -34,7 +30,8 @@
                 <div class="input-group-append">
                     <button type="button"
                         (click)="submitProcessPodcastJob()"
-                        class="btn btn-secondary">Submit job</button>
+                        class="btn btn-secondary">Submit
+                        job</button>
                 </div>
             </div>
         </div>

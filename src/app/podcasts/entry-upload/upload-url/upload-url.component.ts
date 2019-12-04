@@ -28,8 +28,7 @@ export class UploadUrlComponent implements AfterViewInit {
     errorText: string;
     progressText: string = 'Checking URL...';
     isPosting: boolean = false;
-    remoteAudioList: any = null;
-    title: string = '';
+    remoteAudioResult: any = null;
 
     @ViewChild('input', { static: false })
     vc: any;
@@ -71,7 +70,7 @@ export class UploadUrlComponent implements AfterViewInit {
     resetUrl() {
         this.playlistProxy = null;
         this.isPosting = false;
-        this.remoteAudioList = '';
+        this.remoteAudioResult = null;
         this.newEntrySourceUrl = '';
     }
     addEntry() {
@@ -92,18 +91,11 @@ export class UploadUrlComponent implements AfterViewInit {
             this.utilityService.checkAudioUrl(url).subscribe(
                 r => {
                     if (r.type === 'native') {
-                        this.createEntry(this.title, url, () =>
-                            console.log(
-                                'upload-url.component',
-                                'native',
-                                'done'
-                            )
-                        );
+                        this.createEntry(r, url);
                     } else if ((r.type = 'proxied')) {
                         console.log('upload-url.component', 'apiData', r.data);
                         this.isPosting = false;
-                        this.title = r.title;
-                        this.remoteAudioList = r.data;
+                        this.remoteAudioResult = r;
                     }
                 },
                 err => {
@@ -119,24 +111,22 @@ export class UploadUrlComponent implements AfterViewInit {
         }
     }
     onPageEntryChosen($event) {
+        console.log('upload-url.component', 'YAY', $event);
         if ($event) {
-            this.createEntry(
-                this.title,
-                $event.url,
-                $event.callback
-            );
+            this.createEntry(this.remoteAudioResult, $event);
         } else {
             this.resetUrl();
         }
     }
-    private createEntry(title: string, url: string, callback: any) {
+    createEntry(parsedEntry: any, url: string) {
         // TODO: API should tell us that this is a playlist without calling addEntry
         this.progressText = 'Creating entry';
         const entry = new PodcastEntry(this.podcast.id, url);
-        entry.title = this.title;
+        entry.title = parsedEntry.title;
+        entry.description = parsedEntry.description;
+        entry.imageUrl = parsedEntry.image;
         this.podcastEntryDataService.addEntry(entry).subscribe(
             e => {
-                callback();
                 if (e) {
                     if (e.processingStatus === 'Deferred') {
                         this.playlistProxy = e;
@@ -146,7 +136,6 @@ export class UploadUrlComponent implements AfterViewInit {
                 }
             },
             err => {
-                callback();
                 this.isPosting = false;
                 if (err.status === 402) {
                     this.errorText =

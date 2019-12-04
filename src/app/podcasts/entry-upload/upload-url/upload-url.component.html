@@ -25,21 +25,18 @@
         </div>
     </div>
 </form>
-<h5>{{title}}</h5>
-<app-remote-page-parser *ngIf="remoteAudioList"
-    (pageEntryChosen)="onPageEntryChosen($event)"
-    [remoteAudioList]="remoteAudioList">
+
+<app-remote-page-parser *ngIf="remoteAudioResult"
+    [remoteAudioData]="remoteAudioResult"
+    (pageEntryChosen)="onPageEntryChosen($event)">
 </app-remote-page-parser>
+
 <div class="block block-themed"
     *ngIf="playlistProxy !== null">
     <div class="block-header bg-danger">
         <h3 class="block-title font-w600">
-            This looks like a playlist?
-            Shall we add all items
-            (please note, this may
-            result in a lot of episodes
-            being downloaded to
-            your device).</h3>
+            This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes being downloaded to your device).
+        </h3>
         <div class="block-options">
             <button type="button"
                 class="btn btn-sm btn-alt-primary mr-10"

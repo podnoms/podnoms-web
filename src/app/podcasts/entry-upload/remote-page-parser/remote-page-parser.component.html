@@ -1,57 +1,53 @@
-<div *ngIf="remoteAudioList"
-    class="block col-md-8 border border-danger">
-
+<div class="block block-fx-shadow">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">
+            <img [src]="remoteAudioData.image"
+                style="width: 24px; height: 24px;">
+            {{remoteAudioData.title}}
+        </h3>
+        <div class="block-options">
+            <button type="submit"
+                class="btn btn-sm btn-alt-primary"
+                (click)="itemChosen($event)">
+                <i class="fa fa-check"></i> Add entry
+            </button>
+            <button type="reset"
+                class="btn btn-sm btn-alt-danger ml-5"
+                (click)="itemChosen()">
+                <i class="fa fa-times"></i> Cancel
+            </button>
+        </div>
+    </div>
     <div class="block-content">
-        <p>
-            <a class="badge badge-success"
-                href="javascript:void(0)">
-                Multiple
-                audio sources
-                found,
-                please choose one</a>
-        </p>
-
-        <table class="table table-sm table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th class="text-center">File size</th>
-                </tr>
-            </thead>
+        <table *ngIf="remoteAudioData.data"
+            class="table table-borderless table-striped table-vcenter">
             <tbody>
-                <tr *ngFor="let row of remoteAudioList; let i = index">
+                <tr *ngFor="let row of remoteAudioData.data; let i = index">
                     <td scope="row">
-                        <div class="form-check">
+                        <label class="css-control css-control-lg css-control-success css-radio">
                             <input type="radio"
-                                [(ngModel)]="selectedItem"
-                                class="form-check-input"
+                                class="css-control-input"
                                 name="selected-audio"
                                 id="selected-audio-{{i}}"
-                                value="{{i}}">
-                        </div>
+                                value="{{i}}"
+                                [(ngModel)]="selectedItem">
+                            <span class="css-control-indicator"></span>
+                        </label>
                     </td>
                     <td data-toggle="tooltip"
                         title="{{row.value}}">{{row.key}}</td>
+                    <td>
+                        <app-simple-audio-player [src]="row.value"></app-simple-audio-player>
+                    </td>
                     <td class="text-right">
-                        <app-file-size [remoteUrl]="row.value"></app-file-size>
+                        <app-file-size [src]="row.value"></app-file-size>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="alert alert-danger"
-            role="alert"
-            *ngIf="errorText">
-            {{errorText}}
-        </div>
-        <div class="row mt-5 mb-20">
-            <app-spinner-button [iconClass]="'fas fa fa-thumbs-up'"
-                [buttonClass]="'btn-success'"
-                (clicked)="createEntry($event)">
-                Add entry
-            </app-spinner-button>
-            <button class="btn btn-danger  mr-5 m5-5"
-                (click)="cancelCreate()">Cancel</button>
-        </div>
+        <br />
+    </div>
+    <div class="block-content block-content-full bg-body-light text-muted text-center font-w600">
+        Multiple audio sources found, please choose one
     </div>
 </div>
