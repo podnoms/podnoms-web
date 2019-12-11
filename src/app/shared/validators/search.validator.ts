@@ -1,4 +1,8 @@
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import {
+    AbstractControl,
+    AsyncValidatorFn,
+    ValidationErrors
+} from '@angular/forms';
 import { UtilityService } from '../services/utility.service';
 import { Observable, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -11,7 +15,9 @@ export function validateSearch(
 ): AsyncValidatorFn {
     return (
         control: AbstractControl
-    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    ):
+        | Promise<ValidationErrors | null>
+        | Observable<ValidationErrors | null> => {
         return timer(500).pipe(
             switchMap((value, index) =>
                 utilityService.checkForDupes(table, field, control.value).pipe(

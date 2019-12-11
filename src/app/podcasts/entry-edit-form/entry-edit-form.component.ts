@@ -60,10 +60,12 @@ export class EntryEditFormComponent implements OnInit {
                     this.imageControl.commitImage(e.id, 'entry').subscribe(
                         result => {
                             if (result !== null) {
-                                e.imageUrl = result;
-                                // nasty dance to force refresh of thumbnails
-                                e.imageUrl = `${result}?v=${UUID.UUID()}`;
-                                e.thumbnailUrl = e.imageUrl;
+                                e.imageUrl = `${
+                                    result.imageUrl
+                                }&v=${UUID.UUID()}}`;
+                                e.thumbnailUrl = `${
+                                    result.thumbnailUrl
+                                }&v=${UUID.UUID()}}`;
                             }
 
                             this.entriesStore.updateOneInCache(e);
