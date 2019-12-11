@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Podcast } from 'app/core';
 import { UiStateService } from 'app/core/ui-state.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-sidebar',
@@ -22,7 +23,9 @@ export class SidebarComponent implements OnInit {
         public uiStateService: UiStateService,
         private podcastStore: PodcastStoreService
     ) {
-        this.podcasts$ = podcastStore.entities$;
+        this.podcasts$ = podcastStore.entities$.pipe(
+            tap(p => console.log('sidebar.component', 'piped', p))
+        );
         this.loading$ = podcastStore.loading$;
     }
     ngOnInit() {

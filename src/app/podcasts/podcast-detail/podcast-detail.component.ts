@@ -9,12 +9,10 @@ import {
 
 import { Podcast, PodcastEntry } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
-import { PodcastDataService } from '../podcast-data.service';
 import {
     trigger,
     transition,
     style,
-    sequence,
     animate
 } from '@angular/animations';
 import { Observable } from 'rxjs';
