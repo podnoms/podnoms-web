@@ -26,7 +26,20 @@ export class HomeComponent implements OnInit {
                 p => {
                     profileStoreService.entities$.subscribe(profileResult => {
                         if (profileResult && profileResult.length !== 0) {
-                            router.navigate(['/podcasts']);
+                            if (localStorage.getItem('__spslug')) {
+                                router.navigate(
+                                    [
+                                        `/podcasts/${localStorage.getItem(
+                                            '__spslug'
+                                        )}`
+                                    ],
+                                    {
+                                        replaceUrl: true,
+                                        preserveFragment: false,
+                                        skipLocationChange: true
+                                    }
+                                );
+                            }
                         } else if (
                             profileResult &&
                             profileResult.length === 0

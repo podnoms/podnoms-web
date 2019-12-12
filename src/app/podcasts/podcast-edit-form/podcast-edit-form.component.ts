@@ -25,185 +25,47 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
-    public categories$: Observable<Category[]>;
-    podcastForm: FormGroup;
-    @ViewChild('imageControl', { static: false })
-    imageControl: ImageUploadComponent;
     @ViewChild('wizardControl', { static: false })
     wizardControl: PodcastAddWizardComponent;
-
     useWizard: boolean = false;
-    sending = false;
-    descriptionOptions = {
-        toolbarButtons: [
-            'undo',
-            'redo',
-            '|',
-            'bold',
-            'italic',
-            'underline',
-            'strikeThrough',
-            'subscript',
-            'superscript',
-            'outdent',
-            'indent',
-            'clearFormatting',
-            'insertTable',
-            'html'
-        ],
-        height: 300
-    };
+
     constructor(
         private route: ActivatedRoute,
-        private utilityService: UtilityService,
-        private podcastStore: PodcastStoreService,
-        private podcastDataService: PodcastDataService,
-        categoryService: CategoryService,
         private router: Router,
-        private fb: FormBuilder,
+        private podcastDataService: PodcastDataService,
+        private podcastStore: PodcastStoreService,
         private modalService: NgbModal,
         private alertService: AlertService
-    ) {
-        this.categories$ = categoryService.getCategories();
-    }
-    _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
-        const form = fb.group({
-            id: [podcast.id],
-            title: [podcast.title, Validators.required],
-            slug: [
-                podcast.slug,
-                Validators.compose([
-                    // Validators.required,
-                    // Validators.minLength(5),
-                    Validators.maxLength(30)
-                ]),
-                Validators.composeAsync([
-                    validateSearch(
-                        this.utilityService,
-                        'Podcasts',
-                        'Slug',
-                        podcast.slug
-                    )
-                ])
-            ],
-            category: [podcast.category, Validators.required],
-            customDomain: [
-                podcast.customDomain,
-                Validators.compose([]),
-                Validators.composeAsync([validateDomain(this.utilityService)])
-            ],
-            description: [podcast.description]
-        });
-        return form;
-    }
+    ) {}
+
     ngOnInit() {
         const id = this.route.snapshot.params.podcast;
         this.useWizard = this.route.snapshot.params.useWizard || false;
         if (!this.useWizard) {
             if (!id) {
                 this.podcast$ = of(new Podcast());
-                this.podcast$.subscribe((podcast) => {
-                    this.podcastForm = this._createForm(this.fb, podcast);
-                });
             } else {
                 this.podcastStore.entities$
-                    .pipe(map((r) => r.filter((it) => it.slug === id)))
-                    .subscribe((p) => {
+                    .pipe(map(r => r.filter(it => it.slug === id)))
+                    .subscribe(p => {
                         const podcast = p[0];
                         if (podcast) {
                             this.podcast$ = of(podcast);
-                            this.podcastForm = this._createForm(
-                                this.fb,
-                                podcast
-                            );
                         }
                     });
             }
         } else {
             this.podcast$ = of(new Podcast());
-            this.podcast$.subscribe((podcast) => {
-                this.podcastForm = this._createForm(this.fb, podcast);
-            });
         }
     }
     wizardFinish(podcast: Podcast) {
-        this._updatePodcast(podcast);
-    }
-    submitForm() {
-        const podcast: Podcast = Object.assign({}, this.podcastForm.value);
-        this._updatePodcast(podcast);
-    }
-    private _updatePodcast(podcast: Podcast) {
-        // TODO: Fix this.
-        // podcast.subcategories = this.subcategories;
-
-        this.sending = true;
-        const activeImageControl =
-            this.imageControl || this.wizardControl.getImageControl();
-        if (!podcast.id) {
-            this.podcastDataService.addPodcast(podcast).subscribe(
-                (p) => {
-                    activeImageControl.commitImage(p.id, 'podcast').subscribe(
-                        () => {
-                            this.podcastStore.addOneToCache(p);
-                            this.podcastStore.updateOneInCache(p);
-                            this.alertService.info(
-                                'Success',
-                                'Updated podcast details'
-                            );
-                        },
-                        (error) => {
-                            console.error(
-                                'podcast-edit-form.component',
-                                'commitImage',
-                                error
-                            );
-                            this.alertService.error(
-                                'Error',
-                                'Error updating podcast image'
-                            );
-                        }
-                    );
-                },
-                () => {
-                    this.alertService.error(
-                        'Error',
-                        'There was an error adding this podcast, please check all your values and try again'
-                    );
-                    this.sending = false;
-                    //
-                }
-            );
-        } else {
-            this.podcastDataService.updatePodcast(podcast).subscribe(
-                (p) => {
-                    activeImageControl
-                        .commitImage(p.id, 'podcast')
-                        .subscribe((r) => {
-                            // nasty dance to force refresh of thumbnails
-                            p.thumbnailUrl = `${r ||
-                                p.imageUrl}?v=${UUID.UUID()}`;
-                            this.podcastStore.updateOneInCache(p);
-                            this.alertService.info(
-                                'Success',
-                                'Updated podcast details'
-                            );
-                        });
-                },
-                () => {
-                    this.alertService.error(
-                        'Error',
-                        'There was an error updating this podcast, please check all your values and try again'
-                    );
-                    this.sending = false;
-                }
-            );
-        }
+        alert('Fix this');
+        // this._updatePodcast(podcast);
     }
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);
         modalRef.componentInstance.podcast = podcast;
-        modalRef.result.then((r) => {
+        modalRef.result.then(r => {
             if (r === 'delete') {
                 this.deletePodcast(podcast);
             }
@@ -212,7 +74,7 @@ export class PodcastEditFormComponent implements OnInit {
     deletePodcast(podcast: Podcast) {
         console.log('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
-            (r) => {
+            r => {
                 if (r) {
                     if (localStorage.getItem('__spslug') === podcast.slug) {
                         localStorage.removeItem('__spslug');

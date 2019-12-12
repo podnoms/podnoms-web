@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Podcast } from 'app/core';
 import { UiStateService } from 'app/core/ui-state.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-sidebar',

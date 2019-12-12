@@ -1,24 +1,23 @@
-<div class="podcast-container-wrapper"
-    *ngIf="(podcasts$ | async) as podcast">
+<div class="podcast-container-wrapper">
     <div class="block block-themed block-rounded"
-        *ngIf="(selectedPodcast$ | async) as selected">
+        *ngIf="(podcast$ | async) as podcast">
         <div class="block-header">
             <h3 class="block-title text-bold">
-                {{selected.title}}
+                {{podcast.title}}
             </h3>
             <div class="block-options">
                 <div class="btn-group"
                     role="group"
                     aria-label="Podcast actions">
                     <span class="btn-separator"></span>
-                    <a [routerLink]="['/podcasts', selected.slug, 'edit']"
+                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
                         title="Edit podcast"
                         class="btn-block-option">
                         <i class="icon icon-pencil"
                             aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Edit</span>
                     </a>
-                    <button (click)="showPodcastDeleteDialog(selected)"
+                    <button (click)="showPodcastDeleteDialog(podcast)"
                         title="Delete this podcast"
                         class="btn-block-option">
                         <i class="icon icon-close"
@@ -72,7 +71,7 @@
                     aria-label="Podcast actions">
                     <span class="btn-separator"></span>
                     <a class="btn-block-option "
-                        [href]="selected.rssUrl"
+                        [href]="podcast.rssUrl"
                         title="Open RSS feed in new tab"
                         data-toggle="tooltip"
                         target="_blank">
@@ -80,7 +79,7 @@
                         <span class="d-none d-md-inline-block">&nbsp;Rss Url</span>
                     </a>
                     <button type="button"
-                        (click)="copyUrl(selected.rssUrl)"
+                        (click)="copyUrl(podcast.rssUrl)"
                         title="Copy url to clipboard"
                         data-toggle="tooltip"
                         class="btn-block-option ">
@@ -93,14 +92,14 @@
         <div class="block-content">
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
                 [(uploadMode)]="uploadMode"
-                [podcast]="selected"
+                [podcast]="podcast"
                 (podcastUpdated)="podcastUpdated(podcast)">
             </app-entry-upload>
-            <app-podcast-detail [podcast]="selected"></app-podcast-detail>
+            <app-podcast-detail #podcastDetail [podcast]="podcast"></app-podcast-detail>
         </div>
     </div>
 </div>
-<div *ngIf="loading">
+<div *ngIf="loading$ | async">
     <div class="content content-full text-center mt-50">
         <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
             data-toggle="appear"
@@ -110,28 +109,5 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </h1>
-    </div>
-</div>
-<div *ngIf="noPodcasts && !loading">
-    <div class="content content-full text-center mt-50">
-        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
-            data-toggle="appear"
-            data-class="animated fadeIn">
-            Welcome!
-        </h1>
-        <h2 class="font-w400 text-body mb-50 js-appear-enabled animated fadeIn"
-            data-toggle="appear"
-            data-class="animated fadeIn"
-            data-timeout="250">
-            Let's get you started.
-        </h2>
-        <a class="btn btn-hero btn-noborder btn-rounded btn-alt-primary js-appear-enabled animated fadeInUp"
-            data-toggle="appear"
-            data-class="animated fadeInUp"
-            data-timeout="300"
-            [routerLink]="['add', { useWizard: 'true' }]">
-            <i class="icon icon-energy mr-10"></i>
-            Create my first podcast
-        </a>
     </div>
 </div>

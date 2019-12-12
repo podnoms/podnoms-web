@@ -39,6 +39,9 @@ export class EntryListItemComponent implements OnInit {
     @Output()
     entryRemoved = new EventEmitter<PodcastEntry>();
 
+    @Output()
+    entryUpdated = new EventEmitter<PodcastEntry>();
+
     @ViewChild('shareDialog', { static: false })
     shareDialog: ElementRef;
 
@@ -93,6 +96,7 @@ export class EntryListItemComponent implements OnInit {
                             ) {
                                 this.entry = result.payload;
                             }
+                            this.entryUpdated.emit(this.entry);
                             this.cdr.detectChanges();
                         });
                 })

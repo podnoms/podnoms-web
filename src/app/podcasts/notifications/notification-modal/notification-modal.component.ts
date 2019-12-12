@@ -34,9 +34,7 @@ export class NotificationModalComponent implements OnInit {
         private alertService: AlertService
     ) {}
 
-    ngOnInit() {
-        console.log('notification-modal.component', 'ngOnInit', 'notification');
-    }
+    ngOnInit() {}
     openModal(type: string) {
         this.nds.getConfig(type).subscribe(r => {
             console.log('notifications.component', 'addNotification', r);

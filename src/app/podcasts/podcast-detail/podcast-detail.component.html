@@ -1,37 +1,38 @@
 <div class="podcast-list-wrapper"
-    *ngIf="(entries$ | async) as entries; else loading">
-    <div *ngIf="entries.length !== 0; else empty">
-        <app-entry-list-item *ngFor="let entry of entries"
+    *ngIf="podcast; else loading">
+    <div *ngIf="podcast.podcastEntries.length !== 0; else empty">
+        <app-entry-list-item *ngFor="let entry of podcast.podcastEntries"
             class="podcast-entry-table-row mt-20"
             draggable="true"
             (dragstart)="dragStart($event, entry)"
             (entryRemoved)='deleteEntry(entry)'
+            (entryUpdated)='updateEntry(entry)'
             [(entry)]="entry">
         </app-entry-list-item>
     </div>
-</div>
-<ng-template #empty>
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <div class="block-header bg-corporate mb-20 text-center">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2 class="text-white">Time to add some episodes!</h2>
+    <ng-template #empty>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="block-header bg-corporate mb-20 text-center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-white">Time to add some episodes!</h2>
+                        </div>
+                        <div class="col-md-6 text-white">Click
+                            <b>Add (from URL)</b> to add
+                            something from
+                            YouTube, MixCloud, SoundCloud and
+                            many more</div>
+                        <div class="col-md-6 text-white">Click
+                            <b>Upload (from computer)</b> to
+                            add mp3
+                            files from your PC</div>
                     </div>
-                    <div class="col-md-6 text-white">Click
-                        <b>Add (from URL)</b> to add
-                        something from
-                        YouTube, MixCloud, SoundCloud and
-                        many more</div>
-                    <div class="col-md-6 text-white">Click
-                        <b>Upload (from computer)</b> to
-                        add mp3
-                        files from your PC</div>
                 </div>
             </div>
         </div>
-    </div>
-</ng-template>
+    </ng-template>
+</div>
 <ng-template #loading>
     <app-loader [loadingText]="'Loading....'">
     </app-loader>

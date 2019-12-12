@@ -41,6 +41,8 @@ import { NotificationItemDeleteComponent } from './notifications/notification-it
 import { PodcastDeleteComponent } from './podcast-delete.component';
 import { EntryLogsComponent } from './entry-logs/entry-logs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PodcastEditFormDetailsComponent } from './podcast-edit-form/podcast-edit-form-details/podcast-edit-form-details.component';
+import { PodcastEditFormAdvancedComponent } from './podcast-edit-form/podcast-edit-form-advanced/podcast-edit-form-advanced.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -80,7 +82,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         UploadDropboxComponent,
         UploadGdriveComponent,
         RemotePageParserComponent,
-        EntryLogsComponent
+        EntryLogsComponent,
+        PodcastEditFormDetailsComponent,
+        PodcastEditFormAdvancedComponent
     ],
     entryComponents: [
         PodcastDeleteComponent,
