@@ -54,6 +54,7 @@ export class PodcastComponent implements OnDestroy {
         this.onComponentDestroy$.next();
     }
     _initialiseState(id: string) {
+        console.log('podcast.component', '_initialiseState', id);
         this.id = id;
         this.podcast$ = this.podcastStoreService.getByKey(id);
         this.loading$ = this.podcastStoreService.loading$;

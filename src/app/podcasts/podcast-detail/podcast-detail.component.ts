@@ -50,6 +50,8 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         console.log('podcast-detail.component', 'ngOnChanges', changes);
     }
+    // definitely a smell here - change detection
+    // seems to have become "not" automatic
     public detectChanges() {
         this.cdRef.detectChanges();
     }
