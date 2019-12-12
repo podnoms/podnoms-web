@@ -1,5 +1,13 @@
 import { UiStateService } from './../../core/ui-state.service';
-import { map, skip, takeUntil, first, tap } from 'rxjs/operators';
+import {
+    map,
+    skip,
+    takeUntil,
+    first,
+    tap,
+    filter,
+    pluck
+} from 'rxjs/operators';
 import {
     Component,
     ChangeDetectorRef,
@@ -10,7 +18,7 @@ import {
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
 import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { UploadModes } from '../upload-modes.enum';
 import { PodcastDataService } from '../podcast-data.service';
@@ -35,8 +43,7 @@ export class PodcastComponent implements OnDestroy {
     podcastDetailComponent: PodcastDetailComponent;
 
     mode: UploadModes = UploadModes.fromUrl;
-    id: any;
-    private onComponentDestroy$: Subject<void>;
+    private _destroyed$: Subject<any>;
 
     constructor(
         private podcastStoreService: PodcastStoreService,
@@ -44,18 +51,23 @@ export class PodcastComponent implements OnDestroy {
         private router: Router,
         private route: ActivatedRoute,
         private modalService: NgbModal,
-        private alertService: AlertService,
-        private changeDetectorRef: ChangeDetectorRef
+        private alertService: AlertService
     ) {
-        this.onComponentDestroy$ = new Subject();
+        this._destroyed$ = new Subject();
         this._initialiseState(this.route.snapshot.params.podcast);
+        route.params
+            .pipe(
+                takeUntil(this._destroyed$),
+                pluck('podcast')
+            )
+            .subscribe(id => this._initialiseState(id));
     }
     ngOnDestroy() {
-        this.onComponentDestroy$.next();
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
     _initialiseState(id: string) {
         console.log('podcast.component', '_initialiseState', id);
-        this.id = id;
         this.podcast$ = this.podcastStoreService.getByKey(id);
         this.loading$ = this.podcastStoreService.loading$;
     }
