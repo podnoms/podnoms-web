@@ -4,7 +4,8 @@ import {
     Component,
     ChangeDetectorRef,
     OnDestroy,
-    HostListener
+    HostListener,
+    ViewChild
 } from '@angular/core';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
@@ -16,6 +17,7 @@ import { PodcastDataService } from '../podcast-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PodcastDeleteComponent } from '../podcast-delete.component';
+import { PodcastDetailComponent } from '../podcast-detail/podcast-detail.component';
 
 @Component({
     selector: 'app-podcast',
@@ -28,9 +30,10 @@ export class PodcastComponent implements OnDestroy {
     loading$: Observable<boolean>;
     noPodcasts: boolean = true;
     podcast$: Observable<Podcast>;
-    selectedPodcast$: BehaviorSubject<Podcast> = new BehaviorSubject<Podcast>(
-        null
-    );
+
+    @ViewChild('podcastDetail', { static: false })
+    podcastDetailComponent: PodcastDetailComponent;
+
     mode: UploadModes = UploadModes.fromUrl;
     id: any;
     private onComponentDestroy$: Subject<void>;
@@ -52,9 +55,7 @@ export class PodcastComponent implements OnDestroy {
     }
     _initialiseState(id: string) {
         this.id = id;
-        this.podcast$ = this.podcastStoreService
-            .getByKey(id)
-            .pipe(tap(p => this.selectedPodcast$.next(p)));
+        this.podcast$ = this.podcastStoreService.getByKey(id);
         this.loading$ = this.podcastStoreService.loading$;
     }
     copyUrl(url: string) {
@@ -70,8 +71,8 @@ export class PodcastComponent implements OnDestroy {
         this.uploadMode = uploadMode;
     }
     podcastUpdated(podcast: Podcast) {
-        this.selectedPodcast$.next(podcast[0]);
-        this.changeDetectorRef.detectChanges();
+        // this is a little funky but it works..
+        this.podcastDetailComponent.detectChanges();
     }
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);

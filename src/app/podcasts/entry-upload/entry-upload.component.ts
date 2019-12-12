@@ -17,7 +17,7 @@ export class EntryUploadComponent {
     @Input() uploadMode: UploadModes;
     @Output() uploadModeChange = new EventEmitter();
     @Input() podcast: Podcast;
-
+    @Output() podcastUpdated = new EventEmitter<Podcast>();
     constructor(private podcastStore: PodcastStoreService) {}
 
     onEntryCreateComplete(entry: PodcastEntry) {
@@ -25,9 +25,10 @@ export class EntryUploadComponent {
         if (entry !== null) {
             // file was not passed correctly, probably an unsupported type
             this.podcast.podcastEntries.unshift(entry);
-            this.podcastStore.updateOneInCache(this.podcast);
         }
+        this.podcastStore.updateOneInCache(this.podcast);
         this.uploadModeChange.emit(this.uploadMode);
+        this.podcastUpdated.emit(this.podcast);
     }
     processPlaylist() {
         this.uploadMode = this.uploadModes.none;

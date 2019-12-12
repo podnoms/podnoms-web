@@ -23,9 +23,7 @@ export class SidebarComponent implements OnInit {
         public uiStateService: UiStateService,
         private podcastStore: PodcastStoreService
     ) {
-        this.podcasts$ = podcastStore.entities$.pipe(
-            tap(p => console.log('sidebar.component', 'piped', p))
-        );
+        this.podcasts$ = podcastStore.entities$;
         this.loading$ = podcastStore.loading$;
     }
     ngOnInit() {

@@ -2,25 +2,19 @@ import {
     Component,
     Input,
     ChangeDetectionStrategy,
-    OnInit,
+    AfterViewInit,
+    ChangeDetectorRef,
     OnChanges,
     SimpleChanges
 } from '@angular/core';
 
 import { Podcast, PodcastEntry } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
-import {
-    trigger,
-    transition,
-    style,
-    animate
-} from '@angular/animations';
-import { Observable } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { EntriesStoreService } from '../entries-store.service';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -40,31 +34,27 @@ import { tap } from 'rxjs/operators';
         ])
     ]
 })
-export class PodcastDetailComponent implements OnInit, OnChanges {
-    entries$: Observable<PodcastEntry[]>;
+export class PodcastDetailComponent implements AfterViewInit, OnChanges {
     @Input() podcast: Podcast;
 
     constructor(
         private podcastStore: PodcastStoreService,
         private podcastEntryDataService: EntryDataService,
-        private entriesStore: EntriesStoreService,
         private dragDropService: DragDropService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private cdRef: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
-        this.entries$ = this.entriesStore
-            .getWithQuery({
-                podcastSlug: this.podcast.slug
-            })
-            .pipe(tap(e => console.log('podcast-detail.component', 'tap', e)));
+    ngAfterViewInit() {}
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('podcast-detail.component', 'ngOnChanges', changes);
     }
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.podcast) {
-            this.entries$ = this.entriesStore.getWithQuery({
-                podcastSlug: changes.podcast.currentValue.slug
-            });
-        }
+    public detectChanges() {
+        this.cdRef.detectChanges();
+    }
+    updateEntry(entry: PodcastEntry) {
+        this.detectChanges();
     }
     deleteEntry(entry: PodcastEntry) {
         this.podcastEntryDataService.deleteEntry(entry.id).subscribe(
@@ -73,6 +63,7 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
                     obj => obj.id !== entry.id
                 );
                 this.podcastStore.updateOneInCache(this.podcast);
+                this.cdRef.detectChanges();
             },
             () =>
                 this.alertService.error(
