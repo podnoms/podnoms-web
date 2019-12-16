@@ -10,6 +10,7 @@ import { CategoryService } from 'app/shared/services/category.service';
 import { AlertService } from 'app/core/alerts/alert.service';
 import { UUID } from 'angular2-uuid';
 import { environment } from 'environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-podcast-edit-form-details',
@@ -46,6 +47,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
     public categories$: Observable<Category[]>;
     public environment = environment;
     constructor(
+        private router: Router,
         private fb: FormBuilder,
         private podcastDataService: PodcastDataService,
         private podcastStore: PodcastStoreService,
@@ -62,7 +64,10 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
         });
     }
     submitForm() {
-        const podcast: Podcast = Object.assign({}, this.podcastForm.value);
+        const podcast: Podcast = Object.assign(
+            this.podcast,
+            this.podcastForm.value
+        );
         this._updatePodcast(podcast);
     }
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
@@ -88,6 +93,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                                 'Success',
                                 'Updated podcast details'
                             );
+                            this.router.navigate(['podcasts', podcast.slug]);
                         },
                         error => {
                             console.error(
