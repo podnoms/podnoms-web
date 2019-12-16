@@ -70,6 +70,7 @@ export class PodcastComponent implements OnDestroy {
         console.log('podcast.component', '_initialiseState', id);
         this.podcast$ = this.podcastStoreService.getByKey(id);
         this.loading$ = this.podcastStoreService.loading$;
+        localStorage.setItem('__spslug', id);
     }
     copyUrl(url: string) {
         const el = document.createElement('textarea');
