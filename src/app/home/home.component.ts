@@ -5,7 +5,7 @@ import { Profile } from '../core';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AuthService } from '../auth/auth.service';
 import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
-import { takeUntil, skip } from 'rxjs/operators';
+import { takeUntil, skip, map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -34,29 +34,37 @@ export class HomeComponent implements OnDestroy {
                             if (localStorage.getItem('__spslug')) {
                                 router.navigate(
                                     [
-                                        `/podcasts/${localStorage.getItem(
-                                            '__spslug'
-                                        )}`
+                                        'podcasts',
+                                        localStorage.getItem('__spslug')
                                     ],
                                     {
-                                        replaceUrl: true,
-                                        preserveFragment: false,
-                                        skipLocationChange: true
+                                        replaceUrl: true
                                     }
                                 );
                             } else {
                                 podcastStoreService.entities$
                                     .pipe(
                                         skip(1),
+                                        map(c =>
+                                            c.sort(
+                                                (a, b) =>
+                                                    new Date(
+                                                        b.createDate
+                                                    ).getTime() -
+                                                    new Date(
+                                                        a.createDate
+                                                    ).getTime()
+                                            )
+                                        ),
                                         takeUntil(this._destroyed$)
                                     )
                                     .subscribe(tt => {
-                                        if (tt && tt.length !== 0) {
-                                            router.navigate([
-                                                'podcasts',
-                                                tt[0].slug
-                                            ]);
-                                        }
+                                        router.navigate(
+                                            ['podcasts', tt[0].slug],
+                                            {
+                                                replaceUrl: true
+                                            }
+                                        );
                                     });
                             }
                         } else if (
