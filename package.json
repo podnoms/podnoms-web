@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.83",
+    "version": "1.2.84",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -67,7 +67,7 @@
         "ngx-quill": "^7.3.1",
         "ngx-store": "^2.1.0",
         "node-sass": "^4.12.0",
-        "npm": "^6.11.3",
+        "npm": "^6.13.4",
         "popper.js": "^2.0.0-next.4",
         "quill": "^1.3.7",
         "rxjs": "~6.5.3",

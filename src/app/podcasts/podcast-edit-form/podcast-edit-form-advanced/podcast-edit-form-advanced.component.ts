@@ -6,6 +6,8 @@ import { validateDomain } from 'app/shared/validators/domain.validator';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { AlertService } from 'app/core/alerts/alert.service';
 import { PodcastDataService } from 'app/podcasts/podcast-data.service';
+import { Router } from '@angular/router';
+import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 
 @Component({
     selector: 'app-podcast-edit-form-advanced',
@@ -18,9 +20,11 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
     podcastForm: FormGroup;
 
     constructor(
+        private router: Router,
         private fb: FormBuilder,
         private utilityService: UtilityService,
         private alertService: AlertService,
+        private podcastStore: PodcastStoreService,
         private podcastDataService: PodcastDataService
     ) {}
 
@@ -30,12 +34,15 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
         });
     }
     submitForm() {
-        const podcast: Podcast = Object.assign({}, this.podcastForm.value);
-        this.podcastDataService
-            .updatePodcast(podcast)
-            .subscribe(() =>
-                this.alertService.info('Success', 'Updated podcast details')
-            );
+        const podcast: Podcast = Object.assign(
+            this.podcast,
+            this.podcastForm.value
+        );
+        this.podcastDataService.updatePodcast(podcast).subscribe(() => {
+            this.alertService.info('Success', 'Updated podcast details');
+            this.podcastStore.updateOneInCache(podcast);
+            this.router.navigate(['podcasts', podcast.slug]);
+        });
     }
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
         const form = fb.group({
