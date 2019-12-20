@@ -31,7 +31,10 @@ export class HomeComponent implements OnDestroy {
                 p => {
                     profileStoreService.entities$.subscribe(profileResult => {
                         if (profileResult && profileResult.length !== 0) {
-                            if (localStorage.getItem('__spslug')) {
+                            if (
+                                localStorage.getItem('__spslug') &&
+                                localStorage.getItem('__spslug') !== 'undefined'
+                            ) {
                                 router.navigate(
                                     [
                                         'podcasts',
@@ -42,6 +45,11 @@ export class HomeComponent implements OnDestroy {
                                     }
                                 );
                             } else {
+                                podcastStoreService.count$.subscribe(count => {
+                                    if (count === 0) {
+                                        router.navigate(['podcasts']);
+                                    }
+                                });
                                 podcastStoreService.entities$
                                     .pipe(
                                         skip(1),

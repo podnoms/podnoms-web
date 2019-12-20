@@ -36,7 +36,7 @@ export class PodcastComponent implements OnDestroy {
     uploadModes = UploadModes; // do this so it can be used in the template
     uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
     loading$: Observable<boolean>;
-    noPodcasts: boolean = true;
+    noPodcasts: boolean = false;
     podcast$: Observable<Podcast>;
 
     @ViewChild('podcastDetail', { static: false })
@@ -54,23 +54,30 @@ export class PodcastComponent implements OnDestroy {
         private alertService: AlertService
     ) {
         this._destroyed$ = new Subject();
-        this._initialiseState(this.route.snapshot.params.podcast);
-        route.params
-            .pipe(
-                takeUntil(this._destroyed$),
-                pluck('podcast')
-            )
-            .subscribe(id => this._initialiseState(id));
+        if (this.route.snapshot.params.podcast) {
+            this._initialiseState(this.route.snapshot.params.podcast);
+            route.params
+                .pipe(
+                    takeUntil(this._destroyed$),
+                    pluck('podcast')
+                )
+                .subscribe(id => this._initialiseState(id));
+        } else {
+            this.noPodcasts = true;
+        }
     }
     ngOnDestroy() {
         this._destroyed$.next();
         this._destroyed$.complete();
     }
     _initialiseState(id: string) {
-        console.log('podcast.component', '_initialiseState', id);
-        this.podcast$ = this.podcastStoreService.getByKey(id);
-        this.loading$ = this.podcastStoreService.loading$;
-        localStorage.setItem('__spslug', id);
+        //TODO: take this out, weird Chrome/Angular bug
+        if (id !== 'undefined') {
+            console.log('podcast.component', '_initialiseState', id);
+            this.podcast$ = this.podcastStoreService.getByKey(id);
+            this.loading$ = this.podcastStoreService.loading$;
+            localStorage.setItem('__spslug', id);
+        }
     }
     copyUrl(url: string) {
         const el = document.createElement('textarea');
