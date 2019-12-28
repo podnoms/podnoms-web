@@ -37,7 +37,7 @@
             <li class="nav-main-heading"
                 *ngIf="false"><span>My
                     Podcasts</span></li>
-            <li *ngFor="let podcast of (podcasts$ | async | orderByDate: '-createDate')"
+            <li *ngFor="let podcast of (podcasts$ | async | orderByDate: '-lastEntryDate')"
                 class="nav-podcast-item">
                 <app-sidebar-podcast-item [podcast]="podcast"></app-sidebar-podcast-item>
             </li>

@@ -15,6 +15,7 @@ export class PodcastEntry extends Shareable {
     podcastSlug?: string;
     podcastTitle?: string;
     podcastId?: string;
+    lastEntryDate?: Date;
     constructor(podcastId?: string, sourceUrl?: string) {
         super();
         this.podcastId = podcastId;
