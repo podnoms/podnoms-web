@@ -59,8 +59,19 @@ export class PodcastEditFormComponent implements OnInit {
         }
     }
     wizardFinish(podcast: Podcast) {
-        alert('Fix this');
-        // this._updatePodcast(podcast);
+        this.podcastDataService.addPodcast(podcast).subscribe(p => {
+            this.wizardControl.imageControl
+                .commitImage(p.id, 'podcast')
+                .subscribe(() => {
+                    this.podcastStore.addOneToCache(p);
+                    this.podcastStore.updateOneInCache(p);
+                    this.alertService.info(
+                        'Success',
+                        'Successfully added podcast'
+                    );
+                    this.router.navigate(['podcasts', p.slug]);
+                });
+        });
     }
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);
