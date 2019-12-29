@@ -46,7 +46,7 @@ export class UtilityService {
         );
     }
     checkForApiServer(): Observable<any> {
-        return this.http.get<any>(`${environment.apiHost}/hc`);
+        return this.http.get<any>(`${environment.apiHost}/hc-api`);
     }
     getRemoteFileSize(url: string): Observable<number> {
         return this.http.get<number>(

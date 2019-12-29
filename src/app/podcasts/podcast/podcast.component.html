@@ -1,69 +1,99 @@
 <div class="podcast-container-wrapper">
-    <div class="block block-themed block-rounded" *ngIf="(podcast$ | async) as podcast">
+    <div class="block block-themed block-rounded"
+        *ngIf="(podcast$ | async) as podcast">
         <div class="block-header">
             <h3 class="block-title text-bold">
                 {{podcast.title}}
             </h3>
             <div class="block-options">
-                <div class="btn-group" role="group" aria-label="Podcast actions">
+                <div class="btn-group"
+                    role="group"
+                    aria-label="Podcast actions">
                     <span class="btn-separator"></span>
-                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']" title="Edit podcast" class="btn-block-option">
-                        <i class="icon icon-pencil" aria-hidden="true"></i>
+                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
+                        title="Edit podcast"
+                        class="btn-block-option">
+                        <i class="icon icon-pencil"
+                            aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Edit</span>
                     </a>
-                    <button (click)="showPodcastDeleteDialog(podcast)" title="Delete this podcast"
+                    <button (click)="showPodcastDeleteDialog(podcast)"
+                        title="Delete this podcast"
                         class="btn-block-option">
-                        <i class="icon icon-close" aria-hidden="true"></i>
+                        <i class="icon icon-close"
+                            aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Delete</span>
                     </button>
                     <span class="btn-separator"></span>
-                    <button class="btn-block-option" title="Add podcast from URL"
+                    <button class="btn-block-option"
+                        title="Add podcast from URL"
                         (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
                         <i class="icon icon-plus"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Add (from URL)</span>
                     </button>
-                    <div class="btn-group dropdown-container" role="group">
-                        <button type="button" class="btn-block-option dropdown-toggle"
-                            title="Upload from local or remote audio file" id="file-upload-group" data-toggle="dropdown"
-                            data-flip="false" aria-haspopup="true" aria-expanded="false">
+                    <div class="btn-group dropdown-container"
+                        role="group">
+                        <button type="button"
+                            class="btn-block-option dropdown-toggle"
+                            title="Upload from local or remote audio file"
+                            id="file-upload-group"
+                            data-toggle="dropdown"
+                            data-flip="false"
+                            aria-haspopup="true"
+                            aria-expanded="false">
                             <i class="icon icon-cloud-upload"></i>
                             <span class="d-none d-md-inline-block">&nbsp;Upload from
                                 file</span>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="file-upload-group`">
-                            <a class="dropdown-item" (click)="startUpload(uploadModes.fromLocalFile)">
+                        <div class="dropdown-menu"
+                            aria-labelledby="file-upload-group`">
+                            <a class="dropdown-item"
+                                (click)="startUpload(uploadModes.fromLocalFile)">
                                 <i class="icon icon-cloud-upload mr-5"></i>
                                 Local
                                 PC</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)"
+                            <a class="dropdown-item"
+                                href="javascript:void(0)"
                                 (click)="startUpload(uploadModes.fromDropbox)">
                                 <i class="icon icon-social-dropbox  mr-5"></i>Dropbox
                             </a>
-                            <a class="dropdown-item" href="javascript:void(0)"
+                            <a class="dropdown-item"
+                                href="javascript:void(0)"
                                 (click)="startUpload(uploadModes.fromGoogleDrive)">
                                 <i class="icon icon-social-google  mr-5"></i>Google
                                 Drive</a>
                         </div>
                     </div>
                 </div>
-                <div class="btn-group ml-10" role="group" aria-label="Podcast actions">
+                <div class="btn-group ml-10"
+                    role="group"
+                    aria-label="Podcast actions">
                     <span class="btn-separator"></span>
-                    <a class="btn-block-option " [href]="podcast.pagesUrl" title="Open public podcast page"
-                        data-toggle="tooltip" target="_blank">
+                    <a class="btn-block-option "
+                        [href]="podcast.pagesUrl"
+                        title="Open public podcast page"
+                        data-toggle="tooltip"
+                        target="_blank">
                         <span class="d-none d-md-inline-block">
                             <i class="text-success fas fa fa-newspaper animated swing infinite"></i> Public Page
                             <span class="badge badge-danger">New</span>
                         </span>
                     </a>
                     <span class="btn-separator"></span>
-                    <a class="btn-block-option " [href]="podcast.rssUrl" title="Open RSS feed in new tab"
-                        data-toggle="tooltip" target="_blank">
+                    <a class="btn-block-option "
+                        [href]="podcast.rssUrl"
+                        title="Open RSS feed in new tab"
+                        data-toggle="tooltip"
+                        target="_blank">
                         <i class="text-warning fas fa fa-rss"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Rss Url</span>
                     </a>
-                    <button type="button" (click)="copyUrl(podcast.rssUrl)" title="Copy url to clipboard"
-                        data-toggle="tooltip" class="btn-block-option ">
+                    <button type="button"
+                        (click)="copyUrl(podcast.rssUrl)"
+                        title="Copy url to clipboard"
+                        data-toggle="tooltip"
+                        class="btn-block-option ">
                         <i class="fas fa fa-copy"></i>
                     </button>
                     <span class="btn-separator"></span>
@@ -71,18 +101,23 @@
             </div>
         </div>
         <div class="block-content">
-            <app-entry-upload *ngIf="uploadMode !== uploadModes.none" [(uploadMode)]="uploadMode" [podcast]="podcast"
+            <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
+                [(uploadMode)]="uploadMode"
+                [podcast]="podcast"
                 (podcastUpdated)="podcastUpdated(podcast)">
             </app-entry-upload>
-            <app-podcast-detail #podcastDetail [podcast]="podcast"></app-podcast-detail>
+            <app-podcast-detail #podcastDetail
+                [podcast]="podcast"></app-podcast-detail>
         </div>
     </div>
 </div>
 <div *ngIf="loading$ | async">
     <div class="content content-full text-center mt-50">
-        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn" data-toggle="appear"
+        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
+            data-toggle="appear"
             data-class="animated fadeIn">
-            <div class="spinner-border text-success" role="status">
+            <div class="spinner-border text-success"
+                role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </h1>
@@ -90,19 +125,24 @@
 </div>
 <div *ngIf="noPodcasts">
     <div class="content content-full text-center mt-50">
-        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn" data-toggle="appear"
+        <h1 class="display-4 font-w700 text-black-50 mb-10 js-appear-enabled animated fadeIn"
+            data-toggle="appear"
             data-class="animated fadeIn">
             Welcome!
         </h1>
-        <h2 class="font-w400 text-body mb-50 js-appear-enabled animated fadeIn" data-toggle="appear"
-            data-class="animated fadeIn" data-timeout="250">
+        <h2 class="font-w400 text-body mb-20 js-appear-enabled animated fadeIn"
+            data-toggle="appear"
+            data-class="animated fadeIn"
+            data-timeout="250">
             Let's get you started.
         </h2>
-        <a class="btn btn-hero btn-noborder btn-rounded btn-alt-primary js-appear-enabled animated fadeInUp"
-            data-toggle="appear" data-class="animated fadeInUp" data-timeout="300"
+        <a class="btn btn-info min-width-125 js-click-ripple-enabled"
+            data-toggle="appear"
+            data-class="animated fadeInUp"
+            data-timeout="300"
             [routerLink]="['add', { useWizard: 'true' }]">
-            <i class="icon icon-energy mr-10"></i>
-            Create my first podcast
+            <i class="fa fas fa-plus mr-10"></i>
+            Create new podcast
         </a>
     </div>
 </div>
