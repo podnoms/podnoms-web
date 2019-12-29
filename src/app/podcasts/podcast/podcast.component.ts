@@ -1,24 +1,10 @@
-import { UiStateService } from './../../core/ui-state.service';
-import {
-    map,
-    skip,
-    takeUntil,
-    first,
-    tap,
-    filter,
-    pluck
-} from 'rxjs/operators';
-import {
-    Component,
-    ChangeDetectorRef,
-    OnDestroy,
-    HostListener,
-    ViewChild
-} from '@angular/core';
+import { takeUntil, pluck } from 'rxjs/operators';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
-import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { UploadModes } from '../upload-modes.enum';
 import { PodcastDataService } from '../podcast-data.service';
@@ -49,6 +35,7 @@ export class PodcastComponent implements OnDestroy {
         private podcastStoreService: PodcastStoreService,
         private podcastDataService: PodcastDataService,
         private router: Router,
+        private location: Location,
         private route: ActivatedRoute,
         private modalService: NgbModal,
         private alertService: AlertService
@@ -63,7 +50,17 @@ export class PodcastComponent implements OnDestroy {
                 )
                 .subscribe(id => this._initialiseState(id));
         } else {
-            this.noPodcasts = true;
+            this.podcastDataService.getActivePodcast().subscribe(
+                p => {
+                    if (p) {
+                        this.location.replaceState(`/podcasts/${p}`);
+                        this._initialiseState(p);
+                    } else {
+                        this.noPodcasts = true;
+                    }
+                },
+                () => (this.noPodcasts = true)
+            );
         }
     }
     ngOnDestroy() {
@@ -71,7 +68,7 @@ export class PodcastComponent implements OnDestroy {
         this._destroyed$.complete();
     }
     _initialiseState(id: string) {
-        //TODO: take this out, weird Chrome/Angular bug
+        // TODO: take this out, weird Chrome/Angular bug
         if (id !== 'undefined') {
             console.log('podcast.component', '_initialiseState', id);
             this.podcast$ = this.podcastStoreService.getByKey(id);
@@ -91,7 +88,7 @@ export class PodcastComponent implements OnDestroy {
     startUpload(uploadMode: UploadModes) {
         this.uploadMode = uploadMode;
     }
-    podcastUpdated(podcast: Podcast) {
+    podcastUpdated() {
         // this is a little funky but it works..
         this.podcastDetailComponent.detectChanges();
     }
