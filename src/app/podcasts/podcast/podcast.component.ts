@@ -110,7 +110,7 @@ export class PodcastComponent implements OnDestroy {
                         localStorage.removeItem('__spslug');
                     }
                     this.podcastStoreService.removeOneFromCache(podcast);
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/podcasts']);
                 } else {
                     this.alertService.error(
                         'Error',
