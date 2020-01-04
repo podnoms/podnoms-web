@@ -91,9 +91,9 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                             this.podcastStore.updateOneInCache(p);
                             this.alertService.info(
                                 'Success',
-                                'Updated podcast details'
+                                'Successfully added new podcast'
                             );
-                            this.router.navigate(['podcasts', podcast.slug]);
+                            this.router.navigate(['podcasts', p.slug]);
                         },
                         error => {
                             console.error(

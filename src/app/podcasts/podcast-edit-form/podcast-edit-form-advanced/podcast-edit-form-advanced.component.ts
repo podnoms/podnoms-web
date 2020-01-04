@@ -18,7 +18,7 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
     @Input()
     podcast: Podcast;
     podcastForm: FormGroup;
-
+    sslRequestUri: string = '';
     constructor(
         private router: Router,
         private fb: FormBuilder,
@@ -31,6 +31,7 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
     ngAfterViewInit() {
         setTimeout(() => {
             this.podcastForm = this._createForm(this.fb, this.podcast);
+            this.sslRequestUri = `mailto:customdomain@podnoms.com?subject=Custom domain request&body=URL:${this.podcast.pagesUrl}%0D%0APlease leave the above line intact`;
         });
     }
     submitForm() {
