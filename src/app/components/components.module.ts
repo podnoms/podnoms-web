@@ -13,7 +13,9 @@ import { ChartsModule } from 'ng2-charts';
 import { SidebarPodcastItemComponent } from './sidebar/sidebar-podcast-item/sidebar-podcast-item.component';
 import {
     NgbTooltipModule,
-    NgbProgressbarModule
+    NgbProgressbarModule,
+    NgbTypeaheadModule,
+    NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgxAudioplayerModule } from '@podnoms/ngx-audioplayer';
 
@@ -23,6 +25,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { MomentModule } from 'ngx-moment';
 import { SharingComponent } from './sharing/sharing.component';
 import { ScriptService } from '../core/scripts/script.service';
+import { HeaderSearchComponent } from './header-search/header-search.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -35,6 +38,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         MomentModule,
         PerfectScrollbarModule,
         NgxAudioplayerModule,
+        NgbTypeaheadModule,
         NgbTooltipModule,
         NgbProgressbarModule
     ],
@@ -54,7 +58,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         PasswordCheckerComponent,
         NavbarComponent,
         SharingComponent,
-        SidebarPodcastItemComponent
+        SidebarPodcastItemComponent,
+        HeaderSearchComponent
     ],
     exports: [
         SidebarComponent,

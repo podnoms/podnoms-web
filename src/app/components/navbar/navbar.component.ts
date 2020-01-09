@@ -18,6 +18,7 @@ export class NavbarComponent {
     invoices$: Observable<Payment[]>;
     pricingEnabled: boolean = false;
     profileHasAdmin: boolean = false;
+    searchActive: boolean = false;
     constructor(
         paymentService: PaymentsService,
         private authService: AuthService,

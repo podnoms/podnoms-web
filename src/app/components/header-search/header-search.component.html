@@ -1,0 +1,45 @@
+<ng-template #rt
+    let-r="result"
+    let-t="term">
+    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']"
+        class="mr-1"
+        style="width: 16px">
+    <ngb-highlight [result]="r.name"
+        [term]="t"></ngb-highlight>
+</ng-template>
+
+<div id="page-header-search"
+    class="overlay-header show">
+    <div class="content-header content-header-fullrow">
+        <form action="be_pages_generic_search.html"
+            method="post">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="button"
+                        class="btn btn-secondary"
+                        (click)="handleCloseSearch()"
+                        data-toggle="layout"
+                        data-action="header_search_off">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <input #search
+                    (keydown.ESC)="handleCloseSearch()"
+                    name="search"
+                    type="text"
+                    class="form-control"
+                    placeholder="Search or hit ESC.."
+                    [(ngModel)]="model"
+                    [ngbTypeahead]="performSearch"
+                    [resultTemplate]="rt"
+                    [inputFormatter]="formatter">
+                <div class="input-group-append">
+                    <button type="submit"
+                        class="btn btn-secondary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
