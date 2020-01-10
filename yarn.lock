@@ -194,6 +194,15 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-9.0.0-rc.8.tgz#56262089f2a3820e56130e43b8001893d89484bf"
   integrity sha512-MClh07PnxUDEaNf7UocBNaw1Q2lyrFwA+LXtqdVTrTPoFU1T0n9Qb2jdDcoLOetisbuFRpUpPP3JJb6nV2WsHA==
 
+"@angular/localize@^9.0.0-rc.0":
+  version "9.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@angular/localize/-/localize-9.0.0-rc.0.tgz#4b0291cd378c1a46a779b43420d38d00ab81ab16"
+  integrity sha512-u9il64ZW55YJ4mAWF1wHdF4NLAFik9eNckKRVekIMK3b/jM+SD94u9vhgIfJxP9WhZNaYyr9G4o2HVZzCYiY9w==
+  dependencies:
+    "@babel/core" "^7.5.5"
+    glob "7.1.2"
+    yargs "13.1.0"
+
 "@angular/platform-browser-dynamic@~9.0.0-rc.8":
   version "9.0.0-rc.8"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-9.0.0-rc.8.tgz#fcdae0523049c3ff7926d7576ae59b567190ed23"
@@ -237,7 +246,7 @@
   dependencies:
     "@babel/highlight" "^7.0.0"
 
-"@babel/core@7.7.7":
+"@babel/core@7.7.7", "@babel/core@^7.5.5":
   version "7.7.7"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.7.7.tgz#ee155d2e12300bcc0cff6a8ad46f2af5063803e9"
   integrity sha512-jlSjuj/7z138NLZALxVgrx13AOtqip42ATZP7+kYl53GvDV6+4dCek1mVUo8z8c8Xnw/mx2q3d9HWh3griuesQ==
@@ -1224,11 +1233,6 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@qontu/ngx-inline-editor@^0.2.0-alpha.12":
-  version "0.2.0-alpha.12"
-  resolved "https://registry.yarnpkg.com/@qontu/ngx-inline-editor/-/ngx-inline-editor-0.2.0-alpha.12.tgz#4e9fddd2b6afd92d010a5f3420f7c24584658a84"
-  integrity sha1-Tp/d0rav2S0BCl80IPfCRYRlioQ=
-
 "@schematics/angular@9.0.0-rc.8":
   version "9.0.0-rc.8"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-9.0.0-rc.8.tgz#5fb7458d242efacf33a442b1b4fc156a5ec71999"
@@ -1252,10 +1256,10 @@
     semver "6.3.0"
     semver-intersect "1.4.0"
 
-"@swimlane/ngx-datatable@^16.0.2":
-  version "16.0.2"
-  resolved "https://registry.yarnpkg.com/@swimlane/ngx-datatable/-/ngx-datatable-16.0.2.tgz#4cbee063f1e992b4ba5b0ab6a5485ea7e93e4b25"
-  integrity sha512-+JxVumYGr4wON2YC0dXYt0vWmWNaWcVFWdAfrb6gXL/6iAJco70rX59lFvQ6ubFVgDKCsf+QycBXODvLnHaGUQ==
+"@swimlane/ngx-datatable@^16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-datatable/-/ngx-datatable-16.0.3.tgz#95816dbc944679762d102d4a31b3e17674c67af3"
+  integrity sha512-SuVd89CTFhy+21SF8W+qmGoXGFeB7KB5/VwkrgvDRs0GnBC5m9u1nAyN0ypSXMmqilcem6vPmh4yVhjPL1rseg==
   dependencies:
     tslib "^1.9.0"
 
@@ -4217,6 +4221,18 @@ glob-parent@~5.1.0:
   integrity sha512-qjtRgnIVmOfnKUE3NJAQEdk+lKrxfw8t5ke7SXtfMTHcjsBfOfWXCQfdb30zfDoZQ2IRSIiidmjtbHZPZ++Ihw==
   dependencies:
     is-glob "^4.0.1"
+
+glob@7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
+  integrity sha512-MJTUg1kjuLeQCJ+ccE4Vpa6kKVXkPYJ2mOCQyUuKLcLQsdrMCpBPUi8qVE6+YuaJkozeA9NusTAw3hLr8Xe5EQ==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
 
 glob@7.1.5:
   version "7.1.5"

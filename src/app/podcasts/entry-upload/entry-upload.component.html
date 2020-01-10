@@ -1,7 +1,7 @@
 <div class="container-fluid"
     *ngIf="uploadMode===uploadModes.fromUrl">
     <app-upload-url [podcast]="podcast"
-        (playlistAdded)="processPlaylist($event)"
+        (playlistAdded)="processPlaylist()"
         (entryCreateComplete)="onEntryCreateComplete($event)">
     </app-upload-url>
 </div>

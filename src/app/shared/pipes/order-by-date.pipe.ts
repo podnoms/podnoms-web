@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'orderByDate'
 })
 export class OrderByDatePipe implements PipeTransform {
-    transform(array: Array<string>, args: string): Array<string> {
+    transform(array: Array<string>, args: string): Array<any> {
         if (!array || array === undefined || array.length === 0) {
             return null;
         }
