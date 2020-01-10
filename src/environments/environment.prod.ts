@@ -2,6 +2,8 @@ export const environment = {
     production: true,
     apiHost: 'https://api.podnoms.com',
     signalRHost: 'https://rt.podnoms.com',
+    radioHost: 'http://home.bitchmints.com:8000',
+    radioMount: 'podnoms',
     vapidPublicKey:
         'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
     helpUrl: 'https://talk.podnoms.com/',

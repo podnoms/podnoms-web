@@ -5,7 +5,6 @@ import {
     BehaviorSubject
 } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
-import { Howl } from 'howler';
 import { NowPlaying } from './model/now-playing';
 import { UiStateService } from './ui-state.service';
 
@@ -20,10 +19,12 @@ export enum PlayState {
     providedIn: 'root'
 })
 export class AudioService {
-    constructor(public uiStateService: UiStateService) {}
     private _playState: PlayState = PlayState.none;
     playState$ = new BehaviorSubject<PlayState>(PlayState.none);
     nowPlaying$ = new BehaviorSubject<NowPlaying>(null);
+
+    constructor(public uiStateService: UiStateService) {}
+
     playAudio(nowPlaying: NowPlaying) {
         if (this._playState !== PlayState.none) {
             this.stopAudio();

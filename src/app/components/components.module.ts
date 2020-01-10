@@ -23,6 +23,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { MomentModule } from 'ngx-moment';
 import { SharingComponent } from './sharing/sharing.component';
 import { ScriptService } from '../core/scripts/script.service';
+import { HeaderPlayerComponent } from './header-player/header-player.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -54,7 +55,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         PasswordCheckerComponent,
         NavbarComponent,
         SharingComponent,
-        SidebarPodcastItemComponent
+        SidebarPodcastItemComponent,
+        HeaderPlayerComponent
     ],
     exports: [
         SidebarComponent,
