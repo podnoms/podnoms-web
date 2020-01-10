@@ -25,14 +25,14 @@ export class ActivityComponent implements OnInit {
     }
     ngOnInit() {}
 
-    toggleExpandRow(row) {
+    toggleExpandRow(row: any) {
         this.table.rowDetail.toggleExpandRow(row);
     }
-    setPage($event) {
+    setPage($event: any) {
         this.page.currentPage = $event.offset + 1;
         this._loadActivityData();
     }
-    onSort($event) {
+    onSort($event: any) {
         this.loading = true;
         this.sortField = $event.sorts[0].prop;
         this.sortIsAscending = $event.sorts[0].dir === 'asc';

@@ -42,7 +42,8 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         const type = this.route.snapshot.params.type || 'advanced';
         switch (type) {
             case 'Free':
-                this.headerText = 'Buy me a coffee, or a beer, or an Aston Martin';
+                this.headerText =
+                    'Buy me a coffee, or a beer, or an Aston Martin';
                 break;
             case 'Personal':
                 this.headerText = 'Purchase 1 month advanced subscription';
@@ -59,7 +60,8 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
             },
             err => {
                 console.log('make-payment.component', 'getPricingTier', err);
-                this.errorText = 'Unable to load pricing tier, please try again later';
+                this.errorText =
+                    'Unable to load pricing tier, please try again later';
             }
         );
     }
@@ -74,33 +76,47 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                     currency: 'EUR',
                     token: (token: { id: any }) => {
                         this.loadingText = 'Processing payment';
-                        this.paymentService.processPayment(token.id, this.chargingAmount, pricingTier.type).subscribe(
-                            r => {
-                                if (r) {
-                                    this.authService.reloadProfile().subscribe(() => {
-                                        this.alertService.success(
-                                            'Success',
-                                            pricingTier.type === 'Free'
-                                                ? 'THANK YOU SO MUCH!!!!'
-                                                : 'Payment successfully received.'
-                                        );
-                                        this.router.navigate(['']);
-                                    });
+                        this.paymentService
+                            .processPayment(
+                                token.id,
+                                this.chargingAmount,
+                                pricingTier.type
+                            )
+                            .subscribe(
+                                r => {
+                                    if (r) {
+                                        this.authService
+                                            .reloadProfile()
+                                            .subscribe(() => {
+                                                this.alertService.success(
+                                                    'Success',
+                                                    pricingTier.type === 'Free'
+                                                        ? 'THANK YOU SO MUCH!!!!'
+                                                        : 'Payment successfully received.'
+                                                );
+                                                this.router.navigate(['']);
+                                            });
+                                    }
+                                },
+                                error => {
+                                    this.loadingText = '';
+                                    this.errorText =
+                                        'There was an error processing your payment, ' +
+                                        'please open a ticket at ' +
+                                        '<a href="https://talk.podnoms.com/"> PodNoms Support</a> so we can track your payment';
                                 }
-                            },
-                            error => {
-                                this.loadingText = '';
-                                this.errorText =
-                                    'There was an error processing your payment, ' +
-                                    'please open a ticket at ' +
-                                    '<a href="https://talk.podnoms.com/"> PodNoms Support</a> so we can track your payment';
-                            }
-                        );
+                            );
                     }
                 });
                 this.loadingText = '';
             })
-            .catch(err => console.error('make-payment.component', 'Error loading stripe', err));
+            .catch(err =>
+                console.error(
+                    'make-payment.component',
+                    'Error loading stripe',
+                    err
+                )
+            );
     }
     handlePayment() {
         this.chargingAmount = this.tier.costPerMonth;
@@ -110,7 +126,7 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
             amount: this.chargingAmount
         });
     }
-    handleDonation(amount) {
+    handleDonation(amount: any) {
         this.chargingAmount = amount * 100;
         console.log('make-payment.component', 'handleDonation', amount);
         this.handler.open({

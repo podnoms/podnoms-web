@@ -55,7 +55,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
             }
         });
     }
-    handleBrokenUrl($event) {
+    handleBrokenUrl($event: any) {
         this.image.src = this.defaultImage;
     }
     updateImage(image: string) {

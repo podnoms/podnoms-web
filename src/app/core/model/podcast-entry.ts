@@ -4,7 +4,7 @@ export class PodcastEntry extends Shareable {
     uid?: string;
     author?: string;
     description?: string;
-    sourceUrl: string;
+    sourceUrl?: string;
     audioUrl?: string;
     imageUrl?: string;
     thumbnailUrl?: string;
