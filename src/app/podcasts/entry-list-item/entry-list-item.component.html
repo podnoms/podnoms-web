@@ -13,13 +13,14 @@
     </div>
     <div class="col-md-7">
         <div class="font-w600 mb-10">
-            <inline-editor type="text"
+            <span>{{entry.title}}</span>
+            <!-- <inline-editor type="text"
                 [(ngModel)]="entry.title"
                 (onSave)="updateTitle($event)"
                 name="title"
                 size="32"
                 (click)="__fixTitleEdit()">
-            </inline-editor>
+            </inline-editor> -->
         </div>
         <div class="font-w600 mb-0">
             <div *ngIf="entry.processingStatus==='Failed'"
