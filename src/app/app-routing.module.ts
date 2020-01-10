@@ -11,24 +11,24 @@ const routes: Routes = [
         component: HomeComponent
     },
     { path: 'error', pathMatch: 'full', component: ErrorComponent },
-    { path: 'auth', loadChildren: 'app/auth/auth.module#AuthModule' },
-    { path: 'public', loadChildren: 'app/public/public.module#PublicModule' },
-    { path: 'sharing', loadChildren: 'app/public/public.module#PublicModule' },
-    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
-    { path: 'debug', loadChildren: 'app/debug/debug.module#DebugModule' },
+    { path: 'auth', loadChildren: () => import('app/auth/auth.module').then(m => m.AuthModule) },
+    { path: 'public', loadChildren: () => import('app/public/public.module').then(m => m.PublicModule) },
+    { path: 'sharing', loadChildren: () => import('app/public/public.module').then(m => m.PublicModule) },
+    { path: 'admin', loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule) },
+    { path: 'debug', loadChildren: () => import('app/debug/debug.module').then(m => m.DebugModule) },
     {
         path: 'profile',
-        loadChildren: 'app/profile/profile.module#ProfileModule',
+        loadChildren: () => import('app/profile/profile.module').then(m => m.ProfileModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'podcasts',
-        loadChildren: 'app/podcasts/podcasts.module#PodcastsModule',
+        loadChildren: () => import('app/podcasts/podcasts.module').then(m => m.PodcastsModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'payments',
-        loadChildren: 'app/payments/payments.module#PaymentsModule',
+        loadChildren: () => import('app/payments/payments.module').then(m => m.PaymentsModule),
         canActivate: [AuthGuard]
     }
 ];

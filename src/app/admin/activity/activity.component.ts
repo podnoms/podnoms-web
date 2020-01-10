@@ -10,7 +10,7 @@ import { Profile } from 'app/core';
     styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit {
-    @ViewChild('userTable', { static: false }) table: any;
+    @ViewChild('userTable') table: any;
     loading: boolean = true;
     sortIsAscending: boolean = false;
     sortField: string = 'LastSeen';

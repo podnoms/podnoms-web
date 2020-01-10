@@ -14,7 +14,7 @@ import { AlertService } from '../../core/alerts/alert.service';
     styleUrls: ['./entry-edit-form.component.scss']
 })
 export class EntryEditFormComponent implements OnInit {
-    @ViewChild('imageControl', { static: false })
+    @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
 
     entryId: string;

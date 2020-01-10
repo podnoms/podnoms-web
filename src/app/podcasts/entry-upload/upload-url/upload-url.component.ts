@@ -30,7 +30,7 @@ export class UploadUrlComponent implements AfterViewInit {
     isPosting: boolean = false;
     remoteAudioResult: any = null;
 
-    @ViewChild('input', { static: false })
+    @ViewChild('input')
     vc: any;
 
     playlistProxy: PodcastEntry = null;

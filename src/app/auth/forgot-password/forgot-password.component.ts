@@ -49,8 +49,8 @@ export class ForgotPasswordComponent extends BasePageComponent
             Validators.compose([Validators.required, Validators.minLength(4)])
         ]
     });
-    @ViewChild('emailControl', { static: false }) emailField: ElementRef;
-    @ViewChild('passwordControl', { static: false }) passwordField: ElementRef;
+    @ViewChild('emailControl') emailField: ElementRef;
+    @ViewChild('passwordControl') passwordField: ElementRef;
 
     constructor(
         route: ActivatedRoute,
