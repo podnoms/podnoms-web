@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { WebStorageModule } from 'ngx-store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +39,6 @@ registerLocaleData(localeIE, 'ie');
         AppRoutingModule,
         AppStoreModule,
         SharedModule, // import here to make sure that AuthService is a singleton
-        WebStorageModule,
         AngularFireModule.initializeApp({
             apiKey: environment.firebase.apiKey,
             authDomain: environment.firebase.authDomain,
