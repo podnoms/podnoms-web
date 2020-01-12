@@ -1,8 +1,0 @@
-{
-    "rulesDirectory": ["node_modules/rxjs-tslint"],
-    "rules": {
-        "update-rxjs-imports": true,
-        "rxjs-pipeable-operators-onl": true,
-        "rxjs-collapse-imports": true
-    }
-}
