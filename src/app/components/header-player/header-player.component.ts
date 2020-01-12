@@ -6,6 +6,7 @@ import { Howl } from 'howler';
 import { environment } from 'environments/environment';
 import { Observable, interval, timer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-header-player',
@@ -14,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HeaderPlayerComponent implements OnInit {
     title: string = '';
+    available: boolean = false;
     isPlaying: boolean = false;
     isLoading: boolean = false;
     sound = new Howl({
@@ -30,7 +32,9 @@ export class HeaderPlayerComponent implements OnInit {
     getStreamDetails(): Observable<any> {
         const host = `${environment.radioHost}/status-json.xsl?mount=/${environment.radioMount}`;
         const statusUrl = `${environment.apiHost}/pub/radio/nowplaying?url=${host}`;
-        return this.http.get(statusUrl, { responseType: 'text' });
+        return this.http
+            .get(statusUrl, { responseType: 'text' })
+            .pipe(tap(r => (this.available = r)));
     }
 
     ngOnInit() {
