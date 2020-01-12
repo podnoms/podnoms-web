@@ -86,6 +86,9 @@ export class EntryEditFormComponent implements OnInit {
                             );
                         }
                     );
+                } else {
+                    this.alertService.info('Success', 'Entry updated');
+                    this.router.navigate(['podcasts', e.podcastSlug]);
                 }
             },
             error => {
