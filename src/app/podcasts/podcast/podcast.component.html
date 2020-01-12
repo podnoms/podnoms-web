@@ -104,7 +104,7 @@
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
                 [(uploadMode)]="uploadMode"
                 [podcast]="podcast"
-                (podcastUpdated)="podcastUpdated(podcast)">
+                (podcastUpdated)="podcastUpdated()">
             </app-entry-upload>
             <app-podcast-detail #podcastDetail
                 [podcast]="podcast"></app-podcast-detail>

@@ -27,7 +27,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     @Input() imageUrl: string;
     @Input() allowRandom: boolean = false;
 
-    @ViewChild('fileInput', { static: false }) fileInputElement: ElementRef;
+    @ViewChild('fileInput') fileInputElement: ElementRef;
 
     constructor(
         private imageService: ImageService,
@@ -55,7 +55,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
             }
         });
     }
-    handleBrokenUrl($event) {
+    handleBrokenUrl($event: any) {
         this.image.src = this.defaultImage;
     }
     updateImage(image: string) {

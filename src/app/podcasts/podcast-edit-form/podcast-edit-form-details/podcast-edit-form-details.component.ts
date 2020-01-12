@@ -41,7 +41,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
     };
     formLoaded: boolean = false;
     podcastForm: FormGroup;
-    @ViewChild('imageControl', { static: false })
+    @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
 
     public categories$: Observable<Category[]>;

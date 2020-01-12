@@ -27,7 +27,7 @@ export class UpdateService {
             '',
             { autoClose: false }
         );
-        toast.click.subscribe(e => {
+        toast.click.subscribe((e: any) => {
             this.updates
                 .activateUpdate()
                 .then(() => document.location.reload());

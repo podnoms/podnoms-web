@@ -25,7 +25,7 @@ export class PodcastComponent implements OnDestroy {
     noPodcasts: boolean = false;
     podcast$: Observable<Podcast>;
 
-    @ViewChild('podcastDetail', { static: false })
+    @ViewChild('podcastDetail')
     podcastDetailComponent: PodcastDetailComponent;
 
     mode: UploadModes = UploadModes.fromUrl;

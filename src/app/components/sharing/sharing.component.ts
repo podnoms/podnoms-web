@@ -17,7 +17,7 @@ import { SharingService } from '../../shared/services/sharing.service';
     styleUrls: ['./sharing.component.scss']
 })
 export class SharingComponent implements AfterViewInit {
-    @ViewChild('emailAddress', { static: false }) emailControl;
+    @ViewChild('emailAddress') emailControl;
     @Input() entry: Shareable;
     @Output() shareComplete: EventEmitter<boolean> = new EventEmitter<
         boolean

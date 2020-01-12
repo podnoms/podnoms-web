@@ -4,6 +4,7 @@ import { UiStateService } from '../../core/ui-state.service';
 import { EntriesStoreService } from '../../podcasts/entries-store.service';
 import { Observable } from 'rxjs';
 import { AudioService } from '../../core/audio.service';
+import { AlertService } from 'app/core/alerts/alert.service';
 
 @Component({
     selector: 'app-side-overlay',
@@ -18,6 +19,7 @@ export class SideOverlayComponent implements OnInit {
     constructor(
         public uiStateService: UiStateService,
         public audioService: AudioService,
+        public alertService: AlertService,
         private entryService: EntriesStoreService
     ) {
         this.entries$ = entryService.entities$;
@@ -26,5 +28,14 @@ export class SideOverlayComponent implements OnInit {
 
     ngOnInit() {
         this.entryService.getAll();
+    }
+    playAudio(entry: PodcastEntry) {
+        // this.audioService.playAudio(
+        //     entry.audioUrl,
+        //     entry.podcastTitle,
+        //     entry.title,
+        //     entry.imageUrl
+        // );
+        this.alertService.info('Sorry', 'Not currently implemented');
     }
 }

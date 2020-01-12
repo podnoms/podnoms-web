@@ -17,7 +17,7 @@ import { NgxAudioplayerComponent } from '@podnoms/ngx-audioplayer';
     styleUrls: ['./footer-player.component.scss']
 })
 export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('player', { static: false })
+    @ViewChild('player')
     player: any;
 
     nowPlaying: NowPlaying = new NowPlaying(null, null);

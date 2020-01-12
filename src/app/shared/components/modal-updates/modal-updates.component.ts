@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class ModalUpdatesComponent implements AfterViewInit {
     @Input() action$: Observable<string>;
-    @ViewChild('content', { static: false }) content: ElementRef;
+    @ViewChild('content') content: ElementRef;
 
     constructor(
         private router: Router,

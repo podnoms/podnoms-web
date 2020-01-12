@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { PodcastsRoutingModule } from './podcasts-routing.module';
 import { PodcastComponent } from './podcast/podcast.component';
 import { SharedModule } from '../shared/shared.module';
-import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
 import {
@@ -49,7 +48,6 @@ import { PodcastEditFormAdvancedComponent } from './podcast-edit-form/podcast-ed
         SharedModule,
         UtilsModule,
         PodcastsRoutingModule,
-        InlineEditorModule,
         MomentModule,
         QuillModule.forRoot(),
         DropzoneModule,

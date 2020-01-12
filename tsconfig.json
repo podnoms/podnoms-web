@@ -1,5 +1,6 @@
 {
     "compileOnSave": false,
+    "enableIvy": true,
     "compilerOptions": {
         "baseUrl": "./src",
         "outDir": "./dist/out-tsc",
@@ -12,7 +13,8 @@
         "importHelpers": true,
         "target": "es2015",
         "typeRoots": ["node_modules/@types"],
-        "lib": ["es2018", "dom"]
+        "lib": ["es2018", "dom"],
+        "noFallthroughCasesInSwitch": true
     },
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,

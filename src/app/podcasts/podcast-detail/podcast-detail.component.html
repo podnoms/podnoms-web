@@ -7,7 +7,7 @@
             (dragstart)="dragStart($event, entry)"
             (entryRemoved)='deleteEntry(entry)'
             (entryUpdated)='updateEntry(entry)'
-            [(entry)]="entry">
+            [entry]="entry">
         </app-entry-list-item>
     </div>
     <ng-template #empty>

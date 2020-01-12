@@ -40,7 +40,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
     sending = false;
     _isRequesting: boolean = false;
     errorMessage: string;
-    @ViewChild('captchaElem', { static: false })
+    @ViewChild('captchaElem')
     captchaElem: ReCaptcha2Component;
 
     constructor(
