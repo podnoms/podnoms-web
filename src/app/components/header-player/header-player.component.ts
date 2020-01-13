@@ -39,10 +39,12 @@ export class HeaderPlayerComponent implements OnInit {
 
     ngOnInit() {
         this.getStreamDetails().subscribe(r => (this.title = r));
-        setInterval(
-            () => this.getStreamDetails().subscribe(r => (this.title = r)),
-            10000
-        );
+        if (environment.production) {
+            setInterval(
+                () => this.getStreamDetails().subscribe(r => (this.title = r)),
+                60000
+            );
+        }
     }
 
     playAudio() {
