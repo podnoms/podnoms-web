@@ -1,0 +1,150 @@
+<div class="row pb-15">
+    <div class="col-md-1 text-center">
+        <div *ngIf="entry.processingStatus === 'Accepted'">
+            <i class="fas fa fa-cog fa-spin fa-3x fa-fw"></i>
+        </div>
+        <div class="avatar"
+            *ngIf="entry.processingStatus !== 'Accepted'">
+            <img [src]="entry.thumbnailUrl"
+                class="img-avatar img-avatar48"
+                alt="">
+            <span class="avatar-status badge-success"></span>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="font-w600 mb-10">
+            <span>{{entry.title}}</span>
+            <!-- <inline-editor type="text"
+                [(ngModel)]="entry.title"
+                (onSave)="updateTitle($event)"
+                name="title"
+                size="32"
+                (click)="__fixTitleEdit()">
+            </inline-editor> -->
+        </div>
+        <div class="font-w600 mb-0">
+            <div *ngIf="entry.processingStatus==='Failed'"
+                class="text-danger">
+                <span>Failed!</span>
+            </div>
+            <div *ngIf="entry.processingStatus==='Processed'"
+                class="text-muted">
+                {{entry.createDate | amTimeAgo}}
+            </div>
+            <div *ngIf="entry.processingStatus!=='Processed'">
+                <span *ngIf="entry.processingStatus!=='Processed' &&
+                             entry.processingStatus !== 'Failed'"
+                    style="width: 100%">
+                    <div *ngIf="entry.processingStatus==='Processing' ||
+                                entry.processingStatus==='Parsing' ||
+                                entry.processingStatus==='Converting'">
+                        <div class="spinner-border spinner-border-sm text-primary"
+                            role="status">
+                        </div>
+                        <span class="ml-5">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
+                    </div>
+                    <p *ngIf="entry.processingStatus==='Downloading' ||
+                              entry.processingStatus==='Uploading' ||
+                              entry.processingStatus==='Caching'">
+                        <ngb-progressbar type="warning"
+                            [value]="percentageProcessed">
+                            {{entry.processingStatus}}:{{currentSpeed}} - {{percentageProcessed}}%
+                        </ngb-progressbar>
+                    </p>
+                </span>
+                <span *ngIf="entry.processingStatus==='Processed'"
+                    style="width: 100%"
+                    class="mt-25">
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center"
+        valign="middle">
+        <div class="tools-wrapper">
+            <div class="btn-group mr-5">
+                <button type="button"
+                    class="btn btn-success"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    (click)="playAudio()">
+                    <div [ngSwitch]="(playState$ | async)">
+
+                        <i *ngSwitchCase="playStates.loading"
+                            class="fa fa-cog fa-spin">
+                        </i>
+                        <i *ngSwitchCase="playStates.playing"
+                            class="icon icon-control-pause">
+                        </i>
+                        <i *ngSwitchDefault
+                            class="icon icon-control-play">
+                        </i>
+                    </div>
+                </button>
+            </div>
+            <div class="btn-group d-lg-none d-xl-inline-flex">
+                <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    class="btn btn-primary"
+                    data-toggle="tooltip"
+                    title="Show episode logs"
+                    (click)="showLogs(entry)">
+                    <i class="fa fa-terminal"></i>
+                </button>
+            </div>
+            <div class="btn-group mr-5">
+
+                <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    class="btn btn-info"
+                    data-toggle="tooltip"
+                    title="Share episode"
+                    (click)="shareEpisode(entry)">
+                    <i class="fa fa-share-alt"></i>
+                </button>
+                <button type="button"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    class="btn btn-info"
+                    (click)="downloadAudio(entry)"
+                    data-toggle="tooltip"
+                    title="Download episode">
+                    <i *ngIf="!preparingDownload"
+                        class="icon icon-cloud-download"></i>
+                    <i *ngIf="preparingDownload"
+                        class="fa fa-cog fa-spin text-success"></i>
+                </button>
+
+                <a class="btn btn-info"
+                    *ngIf="entry.processingStatus==='Processed'"
+                    [routerLink]="['../entry', entry?.id, 'edit']"
+                    data-toggle="tooltip"
+                    title="Edit episode">
+                    <i class="icon icon-pencil"></i>
+                </a>
+            </div>
+            <div class="btn-group">
+                <button type="button"
+                    *ngIf="entry.processingStatus === 'Failed'"
+                    class="btn btn-warning"
+                    (click)="retry(entry)"
+                    data-toggle="tooltip"
+                    title="Retry"><i class="fas fa fa-redo"></i>&nbsp;Retry
+                </button>
+                <button type="button"
+                    class="btn btn-danger"
+                    (click)="showEntryDeleteDialog()"
+                    data-toggle="tooltip"
+                    title="Delete episode">
+                    <i class="icon icon-close"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TODO - make this look like the delete item modal -->
+<!-- Remove the template below and allow the class handle everything -->
+<ng-template #shareDialog>
+    <app-sharing [entry]="
+        entry"
+        (shareComplete)="shareComplete($event)">
+    </app-sharing>
+</ng-template>

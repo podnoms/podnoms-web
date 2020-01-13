@@ -1,0 +1,76 @@
+<div class="col-md-6"
+    *ngIf="podcastForm">
+    <form class="needs-validation"
+        [formGroup]="podcastForm"
+        (submit)="submitForm()"
+        novalidate>
+        <div class="form-group row">
+            <div class="col-12">
+                <label for="podcast-slug">Slug</label>
+                <div class="input-group">
+                    <input type="text"
+                        class="form-control"
+                        id="podcast-slug"
+                        placeholder="Podcast slug"
+                        [ngClass]="{'is-invalid': !podcastForm.valid && podcastForm.controls.slug.invalid}"
+                        formControlName="slug"
+                        autocomplete="off"
+                        required />
+                    <div class="input-group-prepend"
+                        *ngIf="false">
+                        <div class="input-group-text">@</div>
+                    </div>
+                </div>
+                <div class="form-text text-muted">This will be the unique URL for your podcast</div>
+                <div class="invalid-feedback d-block"
+                    *ngIf="podcastForm.invalid && podcastForm.controls.slug.invalid">
+                    {{ podcastForm.controls.slug.errors.message }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12">
+                <label for="podcast-domain">Custom Domain </label>
+                <div class="input-group">
+                    <input type="text"
+                        class="form-control"
+                        id="podcast-domain"
+                        placeholder="Custom domain name"
+                        [ngClass]="{'is-invalid': !podcastForm.valid && podcastForm.controls.customDomain.invalid }"
+                        formControlName="customDomain"
+                        autocomplete="off" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
+                    </div>
+                </div>
+                <div class="invalid-feedback d-block"
+                    *ngIf="podcastForm.controls.customDomain.invalid">
+                    {{ podcastForm.controls.customDomain.errors.message }}
+                </div>
+                <div class="form-text text-muted">
+                    You need to setup up a CNAME pointing to pages.podnoms.com
+                </div>
+                <div class="form-text text-muted">
+                    Send us a
+                    <a [href]="sslRequestUri"
+                        target="_blank">
+                        mail
+                    </a> if you want an SSL cert for your domain
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group row">
+            <div _ngcontent-wuk-c19=""
+                class="col-md-12">
+                <button type="submit"
+                    class="btn btn-alt-primary"
+                    data-toggle="block-option"
+                    [disabled]="!podcastForm.valid">
+                    <span class="d-none d-md-inline-block">Save</span>&nbsp;
+                    <i class="fa fa-save"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

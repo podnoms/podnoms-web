@@ -1,0 +1,46 @@
+<nav id="sidebar"
+    [class.footer-open]="(uiStateService.footerOpen$ | async)">
+    <div class="content-header content-header-fullrow px-15">
+        <div class="content-header-section sidebar-mini-visible-b">
+            <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
+                <span class="text-dual-primary-dark">c</span>
+                <span class="text-primary">b</span>
+            </span>
+        </div>
+        <div class="content-header-section text-center align-parent sidebar-mini-hidden">
+            <button type="button"
+                class="btn btn-circle btn-dual-secondary d-lg-none align-v-r"
+                (click)="closeSidebar()">
+                <i class="fas fa fa-times text-danger"></i>
+            </button>
+            <div class="content-headerx-item">
+                <a class="link-effect font-w700"
+                    [routerLink]="['']">
+                    <img src="/assets/img/logo-icon.png"
+                        style="width: 18px; height: 18px;" />
+                    <span class="font-size-xl text-dual-primary-dark ml-5">pod</span>
+                    <span class="font-size-xl text-primary">noms</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="content-side content-side-full mt-10">
+        <div class="button-wrapper">
+            <button type="button"
+                class="btn btn-block btn-primary push d-flex align-items-center justify-content-between"
+                (click)="doAddPodcast()">
+                <span>Add Podcast</span> <i class="fas fa fa-plus float-right"></i>
+            </button>
+        </div>
+        <ul class="nav-users"
+            [perfectScrollbar]="scrollConfig">
+            <li class="nav-main-heading"
+                *ngIf="false"><span>My
+                    Podcasts</span></li>
+            <li *ngFor="let podcast of (podcasts$ | async)"
+                class="nav-podcast-item">
+                <app-sidebar-podcast-item [podcast]="podcast"></app-sidebar-podcast-item>
+            </li>
+        </ul>
+    </div>
+</nav>

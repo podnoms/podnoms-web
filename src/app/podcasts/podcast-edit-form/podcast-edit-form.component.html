@@ -1,0 +1,82 @@
+<div *ngIf="(podcast$ | async); let podcast; else: loading">
+    <div *ngIf="!useWizard">
+
+        <div class="block">
+            <ul class="nav nav-tabs nav-tabs-alt"
+                data-toggle="tabs"
+                role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active"
+                        data-toggle="tab"
+                        href="#btabs-podcast-details"><i class="fa fa-info text-primary"
+                            aria-hidden="true"></i> Details </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        data-toggle="tab"
+                        href="#btabs-podcast-privacy"><i class="fa fa-user-secret text-primary"
+                            aria-hidden="true"></i> Public Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        data-toggle="tab"
+                        href="#btabs-podcast-notifications"><i class="fa fa-bell text-primary"
+                            aria-hidden="true"></i> Notifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        data-toggle="tab"
+                        href="#btabs-podcast-advanced"><i class="fa fa-glasses text-primary"
+                            aria-hidden="true"></i> Nerds
+                    </a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <div class="block-options mr-15 mt-5">
+                        <button type="button"
+                            class="btn btn-alt-danger"
+                            data-toggle="block-option"
+                            (click)="showPodcastDeleteDialog(podcast)">
+                            <span class="d-none d-md-inline-block">Delete</span>&nbsp;<i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            <div class="block-content tab-content">
+                <div class="tab-pane active"
+                    id="btabs-podcast-details"
+                    role="tabpanel">
+                    <app-podcast-edit-form-details [podcast]="podcast">
+
+                    </app-podcast-edit-form-details>
+                </div>
+                <div class="tab-pane mb-50"
+                    id="btabs-podcast-privacy"
+                    role="tabpanel">
+                    <app-podcast-privacy [podcast]="podcast"></app-podcast-privacy>
+                </div>
+                <div class="tab-pane mb-50"
+                    id="btabs-podcast-notifications"
+                    role="tabpanel">
+                    <app-notifications [podcast]="podcast"
+                        (updated)="podcastUpdated(podcast)"></app-notifications>
+                </div>
+                <div class="tab-pane mb-50"
+                    id="btabs-podcast-advanced"
+                    role="tabpanel">
+                    <app-podcast-edit-form-advanced [podcast]="podcast"></app-podcast-edit-form-advanced>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="useWizard"
+        class="mx-50">
+        <app-podcast-add-wizard [podcast]="podcast"
+            (finish)="wizardFinish(podcast)"
+            #wizardControl>
+        </app-podcast-add-wizard>
+    </div>
+</div>
+<ng-template #loading>
+    <app-loader [loadingText]="'Loading....'">
+    </app-loader>
+</ng-template>

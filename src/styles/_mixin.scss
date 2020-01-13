@@ -1,0 +1,24 @@
+$fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
+@import '~jasny-bootstrap/dist/css/jasny-bootstrap.css';
+
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-regular';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-solid';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-brands';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome';
+
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+@import '~quill/dist/quill.snow.css';
+@import '~quill/dist/quill.bubble.css';
+
+@import '~dropzone/dist/min/dropzone.min.css';
+
+$simple-line-font-path: '~simple-line-icons/fonts/';
+@import '~simple-line-icons/scss/simple-line-icons';
+
+@import '~dropzone/dist/dropzone.css';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import '~flag-icon-css/css/flag-icon.min.css';

@@ -1,0 +1,49 @@
+<div class="block block-rounded block-bordered pb-30">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">{{headerText}}</h3>
+    </div>
+    <div class="block-content"
+         *ngIf="!loadingText && !errorText">
+        <p>We use <a href="https://stripe.com/">Stripe</a>
+            for payment processing</p>
+        <p>At no point do we have
+            access to your credit card
+            number, and it is NEVER
+            stored in our system.</p>
+        <button class="btn btn-secondary"
+                (click)="handlePayment()"
+                *ngIf="tier.type !== 'Free'">
+            <i class="fa fa-th-large text-primary mr-5 "></i>
+            1 month
+            subscription @ {{tier.costPerMonth/100 | currency: 'EUR': true}}
+        </button>
+        <div class="col-md-3">
+            <div class="input-group"
+                 *ngIf="tier.type === 'Free'">
+                <input type="number"
+                       min="1"
+                       #amount
+                       value="10.00"
+                       class="form-control"
+                       placeholder="Enter amount">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary"
+                            (click)="handleDonation(amount.value)">
+                        <i class="fa fa-th-large text-primary mr-5 "></i>
+                        Donate
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-content"
+         *ngIf="loadingText">
+        <app-loader [loadingText]="loadingText"></app-loader>
+    </div>
+    <div class="block-content"
+         *ngIf="errorText">
+        <div class="alert alert-danger"
+             role="alert"
+             [innerHTML]="errorText"></div>
+    </div>
+</div>

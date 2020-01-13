@@ -1,0 +1,15 @@
+<div *ngIf="initialised">
+    <ngx-audioplayer #player
+        [audioUrl]="nowPlaying.url + '?ngsw-bypass'"
+        [pcmUrl]="pcmUrl"
+        [imageUrl]="nowPlaying.entry.imageUrl"
+        [title]="nowPlaying.entry.podcastTitle"
+        [subTitle]="nowPlaying.entry.title"
+        [autoPlay]="true"
+        [backgroundColour]="'#f2f5f5'"
+        [titleColour]="'#8fac69'"
+        [subTitleColour]="'#828699'"
+        [waveColour]="'#828699'"
+        [waveColourProgress]="'#8fac69'">
+    </ngx-audioplayer>
+</div>

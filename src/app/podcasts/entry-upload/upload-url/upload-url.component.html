@@ -1,0 +1,65 @@
+<div *ngIf="isPosting && !playlistProxy">
+    <app-loader [loadingText]="progressText">
+    </app-loader>
+</div>
+<form class="push"
+    *ngIf="!isPosting">
+    <div class="input-group input-group-lg">
+        <input type="text"
+            name="entry-url"
+            #input
+            [disabled]="isPosting"
+            [(ngModel)]="newEntrySourceUrl"
+            class="form-control"
+            placeholder="Paste (or type) URL and press enter or the button">
+        <div class="input-group-append">
+            <button type="submit"
+                class="btn btn-secondary"
+                [disabled]="isPosting"
+                (click)="addEntry()">
+                <i class="fa fa-plus"
+                    *ngIf="!isPosting"></i>
+                <i class="fa fa-cog fa-spin"
+                    *ngIf="isPosting"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<app-remote-page-parser *ngIf="remoteAudioResult"
+    [remoteAudioData]="remoteAudioResult"
+    (pageEntryChosen)="onPageEntryChosen($event)">
+</app-remote-page-parser>
+
+<div class="block block-themed"
+    *ngIf="playlistProxy !== null">
+    <div class="block-header bg-danger">
+        <h3 class="block-title font-w600">
+            This looks like a playlist? Shall we add all items (please note, this may result in a lot of episodes being downloaded to your device).
+        </h3>
+        <div class="block-options">
+            <button type="button"
+                class="btn btn-sm btn-alt-primary mr-10"
+                (click)="processPlaylist()">
+                <i class="fa fa-check"></i>&nbsp;Yes
+            </button>
+            <button type="button"
+                class="btn btn-sm btn-alt-danger"
+                (click)="resetUrl()">
+                <i class="fa fa-times"></i>&nbsp;No
+            </button>
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger alert-dismissible fade show animated fadeInDown"
+    role="alert"
+    *ngIf="errorText">
+    <strong>Error!</strong>
+    {{errorText}}
+    <button type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
