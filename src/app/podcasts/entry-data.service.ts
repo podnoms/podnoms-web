@@ -50,7 +50,7 @@ export class EntryDataService extends DefaultDataService<PodcastEntry> {
         );
     }
     getDownloadUrl(id: string): string {
-        return `${environment.apiHost}/download?entryId=${id}`;
+        return `${environment.apiHost}/download/${id}`;
     }
     addEntry(entry: PodcastEntry): Observable<PodcastEntry> {
         return this.http.post<PodcastEntry>(
