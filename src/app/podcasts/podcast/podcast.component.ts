@@ -12,6 +12,8 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PodcastDeleteComponent } from '../podcast-delete.component';
 import { PodcastDetailComponent } from '../podcast-detail/podcast-detail.component';
+import { environment } from 'environments/environment';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
     selector: 'app-podcast',
@@ -24,6 +26,7 @@ export class PodcastComponent implements OnDestroy {
     loading$: Observable<boolean>;
     noPodcasts: boolean = false;
     podcast$: Observable<Podcast>;
+    publicPageEnabled: boolean = !environment.production;
 
     @ViewChild('podcastDetail')
     podcastDetailComponent: PodcastDetailComponent;
@@ -37,9 +40,14 @@ export class PodcastComponent implements OnDestroy {
         private router: Router,
         private location: Location,
         private route: ActivatedRoute,
+        private authService: AuthService,
         private modalService: NgbModal,
         private alertService: AlertService
     ) {
+        this.publicPageEnabled = this.authService.checkHasRoles([
+            'client-admin123'
+        ]);
+
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
