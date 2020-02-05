@@ -26,7 +26,7 @@ export class PodcastComponent implements OnDestroy {
     loading$: Observable<boolean>;
     noPodcasts: boolean = false;
     podcast$: Observable<Podcast>;
-    publicPageEnabled: boolean = !environment.production;
+    publicPageEnabled: boolean = environment.publicPageEnabled;
 
     @ViewChild('podcastDetail')
     podcastDetailComponent: PodcastDetailComponent;
@@ -40,14 +40,9 @@ export class PodcastComponent implements OnDestroy {
         private router: Router,
         private location: Location,
         private route: ActivatedRoute,
-        private authService: AuthService,
         private modalService: NgbModal,
         private alertService: AlertService
     ) {
-        this.publicPageEnabled = this.authService.checkHasRoles([
-            'client-admin'
-        ]);
-
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
