@@ -1,5 +1,6 @@
 export const environment = {
     production: false,
+    publicPageEnabled: true,
     signalRHost: 'https://podnoms.local:5001',
     apiHost: 'https://podnoms.local:5001',
     radioHost: 'http://localhost:8000',
