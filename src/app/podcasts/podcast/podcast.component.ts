@@ -45,7 +45,7 @@ export class PodcastComponent implements OnDestroy {
         private alertService: AlertService
     ) {
         this.publicPageEnabled = this.authService.checkHasRoles([
-            'client-admin123'
+            'client-admin'
         ]);
 
         this._destroyed$ = new Subject();
