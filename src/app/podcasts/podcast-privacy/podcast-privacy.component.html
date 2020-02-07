@@ -33,6 +33,32 @@
                     type="text">
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-12">
+                <label for="podcast-domain">Custom Domain </label>
+                <div class="input-group">
+                    <input type="text"
+                        [(ngModel)]="podcast.customDomain"
+                        class="form-control"
+                        id="podcast-domain"
+                        placeholder="Custom domain name"
+                        autocomplete="off" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
+                    </div>
+                </div>
+                <div class="form-text text-muted">
+                    This should be a CNAME pointing to pages.podnoms.com
+                </div>
+                <div class="form-text text-muted">
+                    Send us a
+                    <a [href]="sslRequestUri"
+                        target="_blank">
+                        mail
+                    </a> if you want an SSL cert for your domain
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-5">
         <div class="block">
