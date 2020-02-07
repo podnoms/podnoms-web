@@ -1209,12 +1209,10 @@
     rxjs "6.5.3"
     webpack-sources "1.4.3"
 
-"@podnoms/ngx-audioplayer@0.0.53":
-  version "0.0.53"
-  resolved "https://registry.yarnpkg.com/@podnoms/ngx-audioplayer/-/ngx-audioplayer-0.0.53.tgz#1da5ced02d035fd143a3f6fece127eba388342a9"
-  integrity sha512-aejvAH2f/Yy5rEqk1MMMz+lB0Tj56L7JKYWiD6Maok7bQpEXZdyATBzxU2BfeToNpmKXxY8fd2rAfL2tlin8vg==
-  dependencies:
-    tslib "^1.9.0"
+"@podnoms/ngx-audioplayer@0.0.97":
+  version "0.0.97"
+  resolved "https://registry.yarnpkg.com/@podnoms/ngx-audioplayer/-/ngx-audioplayer-0.0.97.tgz#7d0bd7f388401f64932b30c786acff9745a6c93e"
+  integrity sha512-r1GyitxbJ9Kk5S99K2JZDSYXDI6oY6E+EfSMCmtF30saMVWpoBvOLEilLBvpTdsUaSOoJ9NEgvLerKMcgyv5vw==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"

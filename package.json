@@ -35,7 +35,7 @@
     "@ngrx/entity": "^8.3.0",
     "@ngrx/store": "^8.3.0",
     "@ngrx/store-devtools": "^8.3.0",
-    "@podnoms/ngx-audioplayer": "0.0.53",
+    "@podnoms/ngx-audioplayer": "0.0.97",
     "@swimlane/ngx-datatable": "^16.0.3",
     "angular-in-memory-web-api": "^0.9.0",
     "angular2-uuid": "^1.1.1",
