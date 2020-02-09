@@ -21,11 +21,12 @@ export class UtilityService {
                 `/utility/checkdupes?table=${table}&field=${field}&value=${value}`
         );
     }
-    checkDomain(domain: string): Observable<boolean> {
+    checkDomain(domain: string, requiredDomain: string): Observable<boolean> {
         return this.http.post<boolean>(
             environment.apiHost + '/utility/checkdomain',
             {
-                hostname: domain
+                hostname: domain,
+                requiredDomain: requiredDomain
             }
         );
     }
