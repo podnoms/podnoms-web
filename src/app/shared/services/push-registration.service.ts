@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/catch';
@@ -10,9 +10,11 @@ import 'rxjs/add/operator/catch';
 export class PushRegistrationService {
     constructor(private http: HttpClient) {}
 
-    urlBase64ToUint8Array(base64String) {
+    urlBase64ToUint8Array(base64String: string) {
         const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
         const rawData = window.atob(base64);
         const outputArray = new Uint8Array(rawData.length);
         for (let i = 0; i < rawData.length; ++i) {
@@ -21,29 +23,35 @@ export class PushRegistrationService {
         return outputArray;
     }
 
-    addSubscriber(registration): Observable<any> {
+    addSubscriber(registration: PushSubscriptionJSON): Observable<any> {
         return this.http
             .post<any>(`${environment.apiHost}/webpush/subscribe`, registration)
             .catch(this.handleError);
     }
 
-    deleteSubscriber(subscription) {
+    deleteSubscriber(subscription: PushSubscriptionJSON) {
         const url = `${environment.apiHost}/webpush`;
         const body = {
             action: 'unsubscribe',
             subscription: subscription
         };
-        return this.http.post(url, JSON.stringify(body)).catch(this.handleError);
+        return this.http
+            .post(url, JSON.stringify(body))
+            .catch(this.handleError);
     }
 
     private handleError(error: Response | any) {
-        console.error('push-registration.service', 'Error registering for push', error);
+        console.error(
+            'push-registration.service',
+            'Error registering for push',
+            error
+        );
         let errMsg: string;
         if (error instanceof Response) {
             errMsg = `${error.statusText || 'Network error'}`;
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 }

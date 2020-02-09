@@ -30,19 +30,18 @@ export class UploadUrlComponent implements AfterViewInit {
     isPosting: boolean = false;
     remoteAudioResult: any = null;
 
-    @ViewChild('input', { static: false })
+    @ViewChild('input')
     vc: any;
 
     playlistProxy: PodcastEntry = null;
     constructor(
         private podcastEntryDataService: EntryDataService,
-        private utilityService: UtilityService,
-        private alertService: AlertService
+        private utilityService: UtilityService
     ) {
         console.log('upload-url.component', 'ctor');
     }
     ngAfterViewInit() {
-        // this.vc.nativeElement.focus();
+        this.vc.nativeElement.focus();
     }
     isValidURL(str) {
         const a = document.createElement('a');

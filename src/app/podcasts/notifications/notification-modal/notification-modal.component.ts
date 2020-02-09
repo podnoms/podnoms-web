@@ -19,7 +19,7 @@ export class NotificationModalComponent implements OnInit {
     @Input()
     podcast: Podcast;
 
-    @ViewChild('content', { static: false })
+    @ViewChild('content')
     content: ElementRef;
 
     notification: Notification;

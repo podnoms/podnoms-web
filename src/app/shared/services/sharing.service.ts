@@ -8,7 +8,10 @@ declare var FB: any;
     providedIn: 'root'
 })
 export class SharingService {
-    constructor(private http: HttpClient, private scriptService: ScriptService) {}
+    constructor(
+        private http: HttpClient,
+        private scriptService: ScriptService
+    ) {}
     getSharingLink(id: string): Observable<string> {
         return this.http
             .post<any>(`${environment.apiHost}/sharing/generatelink`, {
@@ -17,7 +20,9 @@ export class SharingService {
             .map(r => r.url);
     }
     getSharingItem(sharingLink: string): Observable<any> {
-        return this.http.get<any>(`${environment.apiHost}/pub/sharing/details/${sharingLink}`);
+        return this.http.get<any>(
+            `${environment.apiHost}/pub/sharing/details/${sharingLink}`
+        );
     }
     shareToEmail(id: string, email: string, message: string): any {
         return this.http.post<any>(`${environment.apiHost}/sharing/`, {
@@ -56,7 +61,7 @@ export class SharingService {
                     version: environment.facebook.version
                 });
             };
-            FB.getLoginStatus(response => {
+            FB.getLoginStatus((response: any) => {
                 this.http
                     .post<any>(`${environment.apiHost}/sharing/generatelink`, {
                         id: id
@@ -70,11 +75,17 @@ export class SharingService {
                                     href: l
                                 },
                                 (r: any) => {
-                                    console.log('sharing.service', 'fb response', r);
+                                    console.log(
+                                        'sharing.service',
+                                        'fb response',
+                                        r
+                                    );
                                     if (r) {
                                         observer.next(true);
                                     } else {
-                                        observer.error('Unable to create sharing link');
+                                        observer.error(
+                                            'Unable to create sharing link'
+                                        );
                                     }
                                 }
                             );

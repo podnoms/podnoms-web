@@ -38,7 +38,7 @@ export class UiStateService {
         }
     }
     @HostListener('window:resize', ['$event'])
-    onResize(event) {
+    onResize(event: any) {
         console.log('ui-state.service', 'onResize', event);
         this.viewportWidth = event.target.innerWidth;
     }

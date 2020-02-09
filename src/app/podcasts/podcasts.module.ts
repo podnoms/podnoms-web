@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { PodcastsRoutingModule } from './podcasts-routing.module';
 import { PodcastComponent } from './podcast/podcast.component';
 import { SharedModule } from '../shared/shared.module';
-import { InlineEditorModule } from '@qontu/ngx-inline-editor';
 import { MomentModule } from 'ngx-moment';
 import { QuillModule } from 'ngx-quill';
 import {
@@ -27,7 +26,6 @@ import { NotificationControlService } from './notifications/services/notificatio
 import { NotificationModalComponent } from './notifications/notification-modal/notification-modal.component';
 import { NotificationStoreService } from './notifications/services/notification-store.service';
 import { UtilsModule } from '../utils/utils.module';
-import { PodcastPrivacyComponent } from './podcast-privacy/podcast-privacy.component';
 import { NotificationLogsComponent } from './notifications/notification-logs/notification-logs.component';
 import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.component';
 import { UploadDropboxComponent } from './entry-upload/upload-dropbox/upload-dropbox.component';
@@ -43,13 +41,13 @@ import { EntryLogsComponent } from './entry-logs/entry-logs.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PodcastEditFormDetailsComponent } from './podcast-edit-form/podcast-edit-form-details/podcast-edit-form-details.component';
 import { PodcastEditFormAdvancedComponent } from './podcast-edit-form/podcast-edit-form-advanced/podcast-edit-form-advanced.component';
+import { PodcastPublicSettingsComponent } from './podcast-public-settings/podcast-public-settings.component';
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
         UtilsModule,
         PodcastsRoutingModule,
-        InlineEditorModule,
         MomentModule,
         QuillModule.forRoot(),
         DropzoneModule,
@@ -76,7 +74,7 @@ import { PodcastEditFormAdvancedComponent } from './podcast-edit-form/podcast-ed
         NotificationItemComponent,
         NotificationModalComponent,
         NotificationItemDeleteComponent,
-        PodcastPrivacyComponent,
+        PodcastPublicSettingsComponent,
         NotificationLogsComponent,
         EntryEditFormComponent,
         UploadDropboxComponent,

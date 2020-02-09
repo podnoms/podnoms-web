@@ -12,7 +12,7 @@
                     <a class="img-link mr-5"
                         [routerLink]="['/profile']">
                         <img class="img-avatar img-avatar32"
-                            [src]="profile.profileImage"
+                            [src]="profile.profileImageUrl"
                             alt="">
                     </a>
                     <a class="align-middle link-effect text-primary-dark font-w600"
@@ -38,7 +38,7 @@
                 </div>
                 <div class="block-content">
                     <ul class="nav-users push">
-                        <li *ngFor="let entry of entries$ | async| orderByDate '-createDate'">
+                        <li *ngFor="let entry of entries$ | async">
                             <a [routerLink]="['/podcasts', entry?.podcastSlug]">
                                 <img class="img-avatar"
                                     [src]="entry.thumbnailUrl"
@@ -49,7 +49,7 @@
                                     style="margin-right: 15px;">{{entry.title}}</div>
                                 <button type="button"
                                     class="btn btn-circle btn-dual-secondary align-v-r"
-                                    (click)="audioService.playAudio(entry.audioUrl, entry.podcastTitle, entry.title, entry.imageUrl)">
+                                    (click)="playAudio(entry)">
                                     <i class="icon icon-control-play text-danger"></i>
                                 </button>
                             </a>

@@ -24,8 +24,9 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { MomentModule } from 'ngx-moment';
 import { SharingComponent } from './sharing/sharing.component';
-import { ScriptService } from '../core/scripts/script.service';
 import { HeaderSearchComponent } from './header-search/header-search.component';
+import { ScriptService } from '../core/scripts/script.service';
+import { HeaderPlayerComponent } from './header-player/header-player.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -59,7 +60,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         NavbarComponent,
         SharingComponent,
         SidebarPodcastItemComponent,
-        HeaderSearchComponent
+        HeaderSearchComponent,
+        HeaderPlayerComponent
     ],
     exports: [
         SidebarComponent,

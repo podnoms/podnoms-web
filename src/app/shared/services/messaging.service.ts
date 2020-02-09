@@ -18,7 +18,9 @@ export class MessagingService {
     ) {
         this.angularFireMessaging.messaging.subscribe(_messaging => {
             _messaging.onMessage = _messaging.onMessage.bind(_messaging);
-            _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
+            _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(
+                _messaging
+            );
         });
     }
 
@@ -28,10 +30,10 @@ export class MessagingService {
      * @param userId userId as a key
      * @param token token as a value
      */
-    updateToken(userId, token) {
+    updateToken(userId: string, token: string) {
         // we can change this function to request our backend service
         this.angularFireAuth.authState.pipe(take(1)).subscribe(() => {
-            const data = {};
+            const data: any = {};
             data[userId] = token;
             this.angularFireDB.object('fcmTokens/').update(data);
         });
@@ -42,7 +44,7 @@ export class MessagingService {
      *
      * @param userId userId
      */
-    requestPermission(userId) {
+    requestPermission(userId: string) {
         this.angularFireMessaging.requestToken.subscribe(
             token => {
                 console.log(token);

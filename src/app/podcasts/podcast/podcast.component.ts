@@ -12,6 +12,8 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PodcastDeleteComponent } from '../podcast-delete.component';
 import { PodcastDetailComponent } from '../podcast-detail/podcast-detail.component';
+import { environment } from 'environments/environment';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
     selector: 'app-podcast',
@@ -24,8 +26,9 @@ export class PodcastComponent implements OnDestroy {
     loading$: Observable<boolean>;
     noPodcasts: boolean = false;
     podcast$: Observable<Podcast>;
+    publicPageEnabled: boolean = environment.publicPageEnabled;
 
-    @ViewChild('podcastDetail', { static: false })
+    @ViewChild('podcastDetail')
     podcastDetailComponent: PodcastDetailComponent;
 
     mode: UploadModes = UploadModes.fromUrl;

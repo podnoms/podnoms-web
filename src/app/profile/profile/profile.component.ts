@@ -63,13 +63,13 @@ export class ProfileComponent extends BasePageComponent
             }
         }
     };
-    @ViewChild(BaseChartDirective, { static: false })
+    @ViewChild(BaseChartDirective)
     private _chart: BaseChartDirective;
 
-    @ViewChild('imageControl', { static: false })
+    @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
 
-    @ViewChild('tabs', { static: false })
+    @ViewChild('tabs')
     private tabs: NgbTabset;
 
     profile$: Observable<Profile>;
@@ -82,7 +82,7 @@ export class ProfileComponent extends BasePageComponent
 
     sending = false;
 
-    @ViewChild('fileInput', { static: false })
+    @ViewChild('fileInput')
     fileInput: ElementRef;
     limits$: Observable<ProfileLimits>;
 

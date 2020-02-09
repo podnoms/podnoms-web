@@ -10,7 +10,7 @@ import { PaymentsService } from '../../payments.service';
     styleUrls: ['./payment-list.component.scss']
 })
 export class PaymentListComponent implements OnInit {
-    @ViewChild('downloader', { static: false })
+    @ViewChild('downloader')
     downloader: ElementRef;
 
     constructor(

@@ -27,7 +27,6 @@ import { SpinnerButtonComponent } from './components/spinner-button/spinner-butt
 import { ModalUpdatesComponent } from './components/modal-updates/modal-updates.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserSlugModalComponent } from './components/modal-updates/user-slug-modal.component';
-import { UserSlugChangeComponent } from './components/modal-updates/user-slug-change.component';
 import { AutofocusDirective } from './directives/auto-focus.directive';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
@@ -79,7 +78,6 @@ import { SimpleAudioPlayerComponent } from './components/simple-audio-player/sim
         FileSizeComponent,
         ModalUpdatesComponent,
         UserSlugModalComponent,
-        UserSlugChangeComponent,
         SimpleAudioPlayerComponent
     ],
     entryComponents: [UserSlugModalComponent],

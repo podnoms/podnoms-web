@@ -1,0 +1,13 @@
+<div class="content-header-section nav-users"
+    *ngIf="available">
+    <a href="javascript:void(0)"
+        (click)="playAudio()">
+        <!-- <img class="img-avatar" src="assets/play.svg" alt=""> -->
+        <img class="img-avatar"
+            [src]="isPlaying ? 'assets/img/player/pause.svg' : 'assets/img/player/play.svg'"
+            alt="">
+        <i class="fa fa-headphones fa-pulse text-success"
+            *ngIf="isLoading"></i> PodNoms::Radio
+        <div class="font-w400 font-size-xs text-muted">{{title}}</div>
+    </a>
+</div>

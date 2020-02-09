@@ -3,7 +3,11 @@
  */
 import { Injectable } from '@angular/core';
 
-import { RequestInfo, RequestInfoUtilities, ParsedRequestUrl } from 'angular-in-memory-web-api';
+import {
+    RequestInfo,
+    RequestInfoUtilities,
+    ParsedRequestUrl
+} from 'angular-in-memory-web-api';
 
 import { Podcast } from './model';
 
@@ -46,7 +50,11 @@ export class InMemoryDataService {
      */
     genId(collection: { id: number }[], collectionName: string) {
         this.maxId =
-            1 + collection.reduce((prev, cur) => Math.max(prev, cur.id || 0), this.maxId);
+            1 +
+            collection.reduce(
+                (prev, cur) => Math.max(prev, cur.id || 0),
+                this.maxId
+            );
         return this.maxId;
     }
 
@@ -58,11 +66,16 @@ export class InMemoryDataService {
      * @param url from request URL
      * @param utils for manipulating parsed URL
      */
-    parseRequestUrl(url: string, utils: RequestInfoUtilities): ParsedRequestUrl {
+    parseRequestUrl(
+        url: string,
+        utils: RequestInfoUtilities
+    ): ParsedRequestUrl {
         const parsed = utils.parseRequestUrl(url);
         const isDefaultRoot = parsed.apiBase === 'api/';
         parsed.collectionName =
-            this.active && isDefaultRoot ? mapCollectionName(parsed.collectionName) : undefined;
+            this.active && isDefaultRoot
+                ? mapCollectionName(parsed.collectionName)
+                : '';
         return parsed;
     }
 }
@@ -95,35 +108,35 @@ function getDbData() {
         // },
         {
             title: 'Technology',
-            description: null,
+            description: '',
             thumbnailUrl: 'http://placebeard.it/128/128?3',
             slug: 'technology',
             id: 'technology'
         },
         {
             title: 'Comedy',
-            description: null,
+            description: '',
             thumbnailUrl: 'http://placebeard.it/128/128?4',
             slug: 'comedy',
             id: 'comedy'
         },
         {
             title: 'Music',
-            description: null,
+            description: '',
             thumbnailUrl: 'http://placebeard.it/128/128?5',
             slug: 'music',
             id: 'music'
         },
         {
             title: 'Science',
-            description: null,
+            description: '',
             thumbnailUrl: 'http://placebeard.it/128/128?6',
             slug: 'science',
             id: 'science'
         },
         {
             title: 'Test',
-            description: null,
+            description: '',
             thumbnailUrl: 'http://placebeard.it/128/128?7',
             slug: 'test-1',
             id: 'test-1'

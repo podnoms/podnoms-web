@@ -27,12 +27,12 @@ export class PodcastAddWizardComponent extends BasePageComponent
     podcast: Podcast;
     @Output()
     finish: EventEmitter<Podcast> = new EventEmitter<Podcast>();
-    @ViewChild('imageControl', { static: false })
+    @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
 
     category: string;
 
-    @ViewChild('podcastName', { static: false })
+    @ViewChild('podcastName')
     podcastName: ElementRef;
 
     constructor(private utilityService: UtilityService) {

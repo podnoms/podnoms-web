@@ -25,7 +25,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
-    @ViewChild('wizardControl', { static: false })
+    @ViewChild('wizardControl')
     wizardControl: PodcastAddWizardComponent;
     useWizard: boolean = false;
 

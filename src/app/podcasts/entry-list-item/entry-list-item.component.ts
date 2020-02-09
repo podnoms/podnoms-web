@@ -42,7 +42,7 @@ export class EntryListItemComponent implements OnInit {
     @Output()
     entryUpdated = new EventEmitter<PodcastEntry>();
 
-    @ViewChild('shareDialog', { static: false })
+    @ViewChild('shareDialog')
     shareDialog: ElementRef;
 
     preparingDownload: boolean = false;
