@@ -1,0 +1,63 @@
+<div id="page-header-search"
+    class="overlay-header show">
+    <div class="content-header content-header-fullrow">
+        <form action="be_pages_generic_search.html"
+            method="post">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="button"
+                        class="btn btn-secondary"
+                        (click)="handleCloseSearch()"
+                        data-toggle="layout"
+                        data-action="header_search_off">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <ng-template #rt
+                    let-r="result"
+                    let-t="term">
+
+                    <div class="block">
+                        <div class="block-content block-content-full d-flex align-items-center justify-content-between bg-primary"
+                            [ngClass]="{'bg-primary': r.type==='Podcast', 'bg-elegance': r.type==='Entry'}">
+                            <div class="">
+                                <img [src]="r.imageUrl"
+                                    class="mr-1"
+                                    style="width: 16px">
+                            </div>
+                            <div class="mr-5">
+                                <p class="font-size-lg font-w600 text-white mb-0">
+                                    <ngb-highlight [result]="r.title"
+                                        [term]="t">
+                                    </ngb-highlight>
+                                </p>
+                                <p class="font-size-sm text-uppercase font-w600 text-white-op mb-0">
+                                    <ngb-highlight [result]="r.description"
+                                        [term]="t">
+                                    </ngb-highlight>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+                <input #search
+                    (keydown.ESC)="handleCloseSearch()"
+                    name="search"
+                    type="text"
+                    class="form-control"
+                    placeholder="Search or hit ESC.."
+                    (selectItem)="selectSearchItem($event)"
+                    [(ngModel)]="model"
+                    [ngbTypeahead]="performSearch"
+                    [resultTemplate]="rt">
+                <div class="input-group-append">
+                    <button type="submit"
+                        class="btn btn-secondary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
