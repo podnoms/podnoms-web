@@ -4,11 +4,11 @@ import { PodcastDataService } from '../podcast-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 
 @Component({
-    selector: 'app-podcast-privacy',
-    templateUrl: './podcast-privacy.component.html',
-    styleUrls: ['./podcast-privacy.component.scss']
+    selector: 'app-podcast-public-settings',
+    templateUrl: './podcast-public-settings.component.html',
+    styleUrls: ['./podcast-public-settings.component.scss']
 })
-export class PodcastPrivacyComponent implements OnInit {
+export class PodcastPublicSettingsComponent implements OnInit {
     @Input()
     podcast: Podcast;
     sslRequestUri: string = '';
