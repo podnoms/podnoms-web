@@ -68,7 +68,9 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
             customDomain: [
                 podcast.customDomain,
                 Validators.compose([]),
-                Validators.composeAsync([validateDomain(this.utilityService)])
+                Validators.composeAsync([
+                    validateDomain(this.utilityService, 'rss.podnoms.com')
+                ])
             ]
         });
         return form;

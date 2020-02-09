@@ -14,7 +14,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                         data-toggle="tab"
-                        href="#btabs-podcast-privacy"><i class="fa fa-user-secret text-primary"
+                        href="#btabs-podcast-public-settings"><i class="fa fa-user-secret text-primary"
                             aria-hidden="true"></i> Public Settings</a>
                 </li>
                 <li class="nav-item">
@@ -50,9 +50,10 @@
                     </app-podcast-edit-form-details>
                 </div>
                 <div class="tab-pane mb-50"
-                    id="btabs-podcast-privacy"
+                    id="btabs-podcast-public-settings"
                     role="tabpanel">
-                    <app-podcast-privacy [podcast]="podcast"></app-podcast-privacy>
+                    <app-podcast-public-settings [podcast]="podcast">
+                    </app-podcast-public-settings>
                 </div>
                 <div class="tab-pane mb-50"
                     id="btabs-podcast-notifications"
