@@ -66,6 +66,10 @@ export class SharingComponent implements AfterViewInit {
         document.body.removeChild(el);
         this.alertService.success('Success', 'URL Copied to clipboard');
     }
+    openUrl(url: string) {
+        window.open(url, '_blank');
+    }
+    linkSettings(url: string) {}
     share(service: string) {
         switch (service) {
             case 'facebook':
