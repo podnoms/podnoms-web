@@ -34,7 +34,7 @@ export class SharingComponent implements AfterViewInit {
     ) {}
 
     ngAfterViewInit() {
-        this.emailControl.nativeElement.focus();
+        setTimeout(() => this.emailControl.nativeElement.focus(), 0);
     }
     getSharingLink($event) {
         this.sharingService.getSharingLink(this.entry.id).subscribe(l => {

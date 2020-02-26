@@ -72,8 +72,8 @@
                         "ssl": true,
                         "sslKey": "certs/server.key",
                         "sslCert": "certs/server.crt",
-                        "disableHostCheck": true,
-                        "host": "localhost",
+                        "disableHostCheck": false,
+                        "host": "podnoms.local",
                         "browserTarget": "app:build"
                     },
                     "configurations": {
@@ -102,7 +102,7 @@
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",
-            "styleext": "scss"
+            "style": "scss"
         },
         "@schematics/angular:directive": {
             "prefix": "app"
