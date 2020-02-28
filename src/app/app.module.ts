@@ -13,8 +13,6 @@ import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProfileStoreService } from './profile/profile-store.service';
 import { Observable } from 'rxjs';
-import { MonitoringService } from './shared/monitoring/monitoring.service';
-import { MonitoringErrorHandler } from './shared/monitoring/monitoring-error.handler';
 import { UpdateService } from './shared/services/update.service';
 
 import { AngularFireModule } from '@angular/fire';
@@ -54,17 +52,11 @@ registerLocaleData(localeIE, 'ie');
         })
     ],
     providers: [
-        MonitoringService,
         UpdateService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
             multi: true
-        },
-        AppDispatchers,
-        {
-            provide: ErrorHandler,
-            useClass: MonitoringErrorHandler
         },
         { provide: LOCALE_ID, useValue: 'en-IE' }
     ],
