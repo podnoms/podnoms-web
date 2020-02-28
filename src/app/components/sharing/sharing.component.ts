@@ -5,11 +5,18 @@ import {
     ViewChild,
     Output,
     EventEmitter,
-    AfterViewInit
+    AfterViewInit,
+    ElementRef
 } from '@angular/core';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
+import { ScriptService } from 'app/core/scripts/script.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'environments/environment';
+
+declare var gapi: any;
+declare var google: any;
 
 @Component({
     selector: 'app-sharing',
@@ -27,21 +34,32 @@ export class SharingComponent implements AfterViewInit {
     email: string = '';
     message: string = '';
     linkUrl: string = '';
+
+    auth2: any;
+
+    @ViewChild('googleLoginButton')
+    googleContactsButton: ElementRef;
+
     constructor(
         private sharingService: SharingService,
         private alertService: AlertService,
         private constants: ConstantsService
     ) {}
+    ngOnInit() {}
 
     ngAfterViewInit() {
-        setTimeout(() => this.emailControl.nativeElement.focus(), 0);
+        setTimeout(() => {
+            this.emailControl.nativeElement.focus();
+        }, 0);
     }
+
     getSharingLink($event) {
         this.sharingService.getSharingLink(this.entry.id).subscribe(l => {
             this.linkUrl = l;
             $event();
         });
     }
+
     shareToEmail() {
         if (!this.constants.emailRegex.test(this.email)) {
             this.error = 'This does not look like an email address?';
@@ -57,6 +75,7 @@ export class SharingComponent implements AfterViewInit {
                 });
         }
     }
+
     copyUrl(url: string) {
         const el = document.createElement('textarea');
         el.value = url;
@@ -66,10 +85,13 @@ export class SharingComponent implements AfterViewInit {
         document.body.removeChild(el);
         this.alertService.success('Success', 'URL Copied to clipboard');
     }
+
     openUrl(url: string) {
         window.open(url, '_blank');
     }
+
     linkSettings(url: string) {}
+
     share(service: string) {
         switch (service) {
             case 'facebook':
@@ -84,6 +106,7 @@ export class SharingComponent implements AfterViewInit {
                 break;
         }
     }
+
     closeModal() {
         this.shareComplete.emit(false);
     }
