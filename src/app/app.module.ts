@@ -58,7 +58,8 @@ registerLocaleData(localeIE, 'ie');
             useClass: TokenInterceptor,
             multi: true
         },
-        { provide: LOCALE_ID, useValue: 'en-IE' }
+        { provide: LOCALE_ID, useValue: 'en-IE' },
+        AppDispatchers
     ],
     declarations: [AppComponent, InterstitialComponent, HomeComponent],
     bootstrap: [AppComponent]

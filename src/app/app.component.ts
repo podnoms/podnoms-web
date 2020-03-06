@@ -110,16 +110,32 @@ export class AppComponent {
 
         profile$.subscribe(p => {
             this.action$.next('redirectslug');
-            if (p && environment.production) {
+            if (p) {
+                console.log('app.component', 'requesting subscription', p);
                 this.push
                     .requestSubscription({
                         serverPublicKey: environment.vapidPublicKey
                     })
                     .then(s => {
+                        console.log(
+                            'app.component',
+                            'requested subscription',
+                            s
+                        );
+                        console.log(
+                            'app.component',
+                            'subscribing on server',
+                            p
+                        );
                         this.registrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(
                                 r => {
+                                    console.log(
+                                        'app.component',
+                                        'push request succeeded',
+                                        r
+                                    );
                                     this.push.messages.subscribe(m => {
                                         console.log(
                                             'app.component',

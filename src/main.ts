@@ -8,6 +8,7 @@ import { AppModule } from './app/app.module';
 
 if (
     environment.production &&
+    false &&
     location.host.indexOf('localhost') !== 0 &&
     location.host.indexOf('podnoms.local') !== 0
 ) {
