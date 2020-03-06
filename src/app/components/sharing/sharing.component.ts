@@ -11,12 +11,7 @@ import {
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
-import { ScriptService } from 'app/core/scripts/script.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-
-declare var gapi: any;
-declare var google: any;
 
 @Component({
     selector: 'app-sharing',
@@ -39,6 +34,8 @@ export class SharingComponent implements AfterViewInit {
 
     @ViewChild('googleLoginButton')
     googleContactsButton: ElementRef;
+
+    public environment = environment;
 
     constructor(
         private sharingService: SharingService,
@@ -66,7 +63,7 @@ export class SharingComponent implements AfterViewInit {
         } else {
             this.sharingService
                 .shareToEmail(this.entry.id, this.email, this.message)
-                .subscribe(r => {
+                .subscribe(() => {
                     this.alertService.success(
                         'Link shared successfully',
                         `${this.email}'s got mail!!!`

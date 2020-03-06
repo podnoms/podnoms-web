@@ -28,5 +28,8 @@ export const environment = {
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com'
     },
     stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
-    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k'
+    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',,
+    features: {
+        googleContactSyncEnabled: true
+    }
 };

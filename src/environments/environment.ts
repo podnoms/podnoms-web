@@ -28,6 +28,9 @@ export const environment = {
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com'
     },
     stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
-    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k'
+    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
+    features: {
+        googleContactSyncEnabled: true
+    }
 };
 import 'zone.js/dist/zone-error';
