@@ -33,7 +33,7 @@ export class AppComponent {
         private alertService: AlertService,
         private updateService: UpdateService,
         private router: Router,
-        private push: SwPush,
+        private swPush: SwPush,
         private registrationService: PushRegistrationService,
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
@@ -112,7 +112,7 @@ export class AppComponent {
             this.action$.next('redirectslug');
             if (p) {
                 console.log('app.component', 'requesting subscription', p);
-                this.push
+                this.swPush
                     .requestSubscription({
                         serverPublicKey: environment.vapidPublicKey
                     })
@@ -136,7 +136,7 @@ export class AppComponent {
                                         'push request succeeded',
                                         r
                                     );
-                                    this.push.messages.subscribe(m => {
+                                    this.swPush.messages.subscribe(m => {
                                         console.log(
                                             'app.component',
                                             'Push message',
@@ -172,7 +172,7 @@ export class AppComponent {
         });
     }
     _unsubscribe() {
-        this.push.subscription.pipe(take(1)).subscribe(pushSubscription => {
+        this.swPush.subscription.pipe(take(1)).subscribe(pushSubscription => {
             pushSubscription.unsubscribe();
         });
     }
