@@ -23,7 +23,6 @@ export class EntryUploadComponent {
     onEntryCreateComplete(entry: PodcastEntry) {
         this.uploadMode = this.uploadModes.none;
         if (entry !== null) {
-            // file was not passed correctly, probably an unsupported type
             this.podcast.podcastEntries.unshift(entry);
         }
         this.podcastStore.updateOneInCache(this.podcast);
