@@ -2,7 +2,9 @@ FROM nginx:alpine
 
 COPY nginx/conf.d /etc/nginx/nginx.conf
 
-WORKDIR /usr/share/nginx/html
-COPY dist/app/ .
+COPY dist/app/ /usr/share/nginx/html/
+
+# Have to do this now for some reason???? otherwise all assets 403?
+RUN chown -R nginx /usr/share/nginx/html
 
 EXPOSE 80

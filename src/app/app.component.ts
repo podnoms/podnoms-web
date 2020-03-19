@@ -1,6 +1,6 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { Observable, Observer, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Profile } from './core';
 import { UiStateService } from './core/ui-state.service';
 import { SignalRService } from './shared/services/signal-r.service';
@@ -31,18 +31,18 @@ export class AppComponent {
         utilityService: UtilityService,
         public uiStateService: UiStateService,
         private alertService: AlertService,
-        private updateService: UpdateService,
-        private router: Router,
-        private push: SwPush,
-        private registrationService: PushRegistrationService,
+        updateService: UpdateService,
+        router: Router,
+        private swPush: SwPush,
+        private pushRegistrationService: PushRegistrationService,
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
         private signalr: SignalRService
     ) {
         updateService.checkForUpdates();
-        if (environment.production || true) {
+        if (environment.production || false) {
             utilityService.checkForApiServer().subscribe(
-                response => {
+                () => {
                     this.profile$ = authService.profile$;
                     this._bootstrapAuth().subscribe(r =>
                         this._bootstrapUpdates(r)
@@ -65,7 +65,7 @@ export class AppComponent {
 
     _bootstrapAuth(): Observable<boolean> {
         const observer = new BehaviorSubject<boolean>(false);
-        this.authService.bootstrap().subscribe(r => {});
+        this.authService.bootstrap().subscribe(() => {});
         this.authService.authNavStatus$.subscribe(r => {
             if (r) {
                 this.signalr
@@ -110,17 +110,33 @@ export class AppComponent {
 
         profile$.subscribe(p => {
             this.action$.next('redirectslug');
-            if (p && environment.production) {
-                this.push
+            if (p) {
+                console.log('app.component', 'requesting subscription', p);
+                this.swPush
                     .requestSubscription({
                         serverPublicKey: environment.vapidPublicKey
                     })
                     .then(s => {
-                        this.registrationService
+                        console.log(
+                            'app.component',
+                            'requested subscription',
+                            s
+                        );
+                        console.log(
+                            'app.component',
+                            'subscribing on server',
+                            p
+                        );
+                        this.pushRegistrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(
                                 r => {
-                                    this.push.messages.subscribe(m => {
+                                    console.log(
+                                        'app.component',
+                                        'push request succeeded',
+                                        r
+                                    );
+                                    this.swPush.messages.subscribe(m => {
                                         console.log(
                                             'app.component',
                                             'Push message',
@@ -156,7 +172,7 @@ export class AppComponent {
         });
     }
     _unsubscribe() {
-        this.push.subscription.pipe(take(1)).subscribe(pushSubscription => {
+        this.swPush.subscription.pipe(take(1)).subscribe(pushSubscription => {
             pushSubscription.unsubscribe();
         });
     }

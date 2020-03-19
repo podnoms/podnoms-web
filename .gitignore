@@ -47,3 +47,4 @@ push.sh
 tags
 .vscode
 yarn-error.log
+./scripts/push.sh

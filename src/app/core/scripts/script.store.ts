@@ -11,5 +11,13 @@ export const ScriptStore: Scripts[] = [
     {
         name: 'facebook',
         src: 'https://connect.facebook.net/en_US/sdk.js'
+    },
+    {
+        name: 'gapi',
+        src: 'https://apis.google.com/js/platform.js'
+    },
+    {
+        name: 'gclient',
+        src: 'https://apis.google.com/js/client.js'
     }
 ];

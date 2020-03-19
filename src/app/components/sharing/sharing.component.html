@@ -1,52 +1,56 @@
-<div class="block block-themed block-transparent mb-0">
-    <div class="block-header bg-corporate-darker">
+<div class="block block-rounded block-transparent mb-0 bg-pattern">
+    <div class="block-header justify-content-end">
         <h3 class="block-title">Sharing
             Options</h3>
         <div class="block-options">
             <button type="button"
-                    class="btn-block-option"
-                    data-toggle="tooltip"
-                    title="Share to facebook"
-                    (click)="share('facebook')">
+                class="btn-block-option"
+                data-toggle="tooltip"
+                title="Share to facebook"
+                (click)="share('facebook')">
                 <i class="fab fa-facebook"></i>
             </button>
             <button type="button"
-                    class="btn-block-option"
-                    data-toggle="tooltip"
-                    title="Share to twitter"
-                    (click)="share('twitter')">
+                class="btn-block-option"
+                data-toggle="tooltip"
+                title="Share to twitter"
+                (click)="share('twitter')">
                 <i class="fab fa-twitter"></i>
             </button>
             <button type="button"
-                    class="btn-block-option"
-                    data-toggle="tooltip"
-                    title="Close"
-                    (click)="closeModal()">
+                class="btn-block-option"
+                data-toggle="tooltip"
+                title="Close"
+                (click)="closeModal()">
                 <i class="fa fa-times-circle"></i>
             </button>
         </div>
     </div>
-    <div class="block-content">
+    <div class="block-content block-content-full">
         <form action="">
             <div class="form-group row">
                 <div class="col-12">
                     <div class="form-material floating">
                         <input type="email"
-                               #emailAddress
-                               [(ngModel)]="email"
-                               class="form-control"
-                               id="email"
-                               name="email">
+                            #emailAddress
+                            [(ngModel)]="email"
+                            class="form-control"
+                            id="email"
+                            name="email">
                         <label for="email">Email</label>
+
+                        <button #googleLoginButton
+                            *ngIf="environment.features.googleContactSyncEnabled"
+                            class="btn btn-primary">Google Contact Login</button>
                     </div>
                     <div class="form-group row">
                         <div class="col-12">
                             <div class="form-material floating">
                                 <textarea class="form-control"
-                                          [(ngModel)]="message"
-                                          id="message"
-                                          name="message"
-                                          rows="8"></textarea>
+                                    [(ngModel)]="message"
+                                    id="message"
+                                    name="message"
+                                    rows="8"></textarea>
                                 <label for="message">Message</label>
                             </div>
                         </div>
@@ -55,35 +59,49 @@
             </div>
             <div class="form-group row">
                 <div class="col-12"
-                     *ngIf="!email">
+                    *ngIf="!email">
                     <button type="button"
-                            *ngIf="linkUrl"
-                            data-toggle="tooltip"
-                            title="Copy link"
-                            (click)="copyUrl(linkUrl)"
-                            class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5">
+                        *ngIf="linkUrl && false"
+                        data-toggle="tooltip"
+                        title="Link settings"
+                        (click)="linkSettings(linkUrl)"
+                        class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5">
+                        <i class="fa fa-cog"></i>
+                    </button>
+                    <button type="button"
+                        *ngIf="linkUrl"
+                        data-toggle="tooltip"
+                        title="Open link"
+                        (click)="openUrl(linkUrl)"
+                        class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5">
+                        <i class="fa fa-external-link-alt"></i>
+                    </button>
+                    <button type="button"
+                        *ngIf="linkUrl"
+                        data-toggle="tooltip"
+                        title="Copy link"
+                        (click)="copyUrl(linkUrl)"
+                        class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5">
                         <i class="fa fa-copy"></i>
                     </button>
+
                     <span *ngIf="!linkUrl"
-                          class="mr-10">No link created</span>
+                        class="mr-10">No link created</span>
                     <span *ngIf="linkUrl"
-                          class="mr-10">{{linkUrl}}</span>
-                    <app-spinner-button
-                            [iconClass]="'fas fa fa-link'"
-                            [buttonClass]="'btn btn-alt-primary float-right'"
-                            (clicked)="getSharingLink($event)">
+                        class="mr-10">{{linkUrl}}</span>
+
+                    <app-spinner-button [iconClass]="'fas fa fa-link'"
+                        [buttonClass]="'btn btn-alt-primary float-right'"
+                        (clicked)="getSharingLink($event)">
                         Create link
                     </app-spinner-button>
-                    <!-- <button type="submit"
-                            (click)="getSharingLink()"
-                            class="btn btn-alt-primary float-right">Create
-                        link</button> -->
+
                 </div>
                 <div class="col-12"
-                     *ngIf="email">
+                    *ngIf="email">
                     <button type="submit"
-                            class="btn btn-alt-primary float-right"
-                            (click)="shareToEmail()">Share</button>
+                        class="btn btn-alt-primary float-right"
+                        (click)="shareToEmail()">Share</button>
                 </div>
             </div>
         </form>

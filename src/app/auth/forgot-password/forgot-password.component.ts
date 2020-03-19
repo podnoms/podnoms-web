@@ -133,9 +133,6 @@ export class ForgotPasswordComponent extends BasePageComponent
                         this.errorMessage = this.formatError(
                             'Unable to reset your password'
                         );
-                        // this.insightsService.logEvent('client_error', {
-                        //    message: err.message
-                        //});
                     }
                 );
             } else {

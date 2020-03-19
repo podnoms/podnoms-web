@@ -12,7 +12,16 @@ import { ExpiredInterceptor } from '../shared/auth/expired.interceptor';
 
 @NgModule({
     imports: [
-        StoreModule.forRoot({}),
+        StoreModule.forRoot(
+            {},
+            {
+                // TODO: should re-enable these
+                runtimeChecks: {
+                    strictStateImmutability: false,
+                    strictActionImmutability: false
+                }
+            }
+        ),
         EffectsModule.forRoot([]),
         environment.production ? [] : StoreDevtoolsModule.instrument(),
         EntityStoreModule

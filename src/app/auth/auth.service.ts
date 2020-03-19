@@ -19,8 +19,8 @@ import { AppDispatchers } from 'app/store/app-config/dispatchers';
     providedIn: 'root'
 })
 export class AuthService extends BaseService {
-    private _authNavStatusSource = new BehaviorSubject<boolean>(false);
-    authNavStatus$ = this._authNavStatusSource.asObservable();
+    private authNavStatusSource = new BehaviorSubject<boolean>(false);
+    authNavStatus$ = this.authNavStatusSource.asObservable();
 
     currentUser: Profile;
     profile$ = new BehaviorSubject<Profile>(null);
@@ -48,7 +48,7 @@ export class AuthService extends BaseService {
                 this.profileStoreService.entities$.subscribe(results => {
                     if (results.length !== 0) {
                         this.profile$.next(results[0]);
-                        this._authNavStatusSource.next(true);
+                        this.authNavStatusSource.next(true);
                         ret.next(true);
                     }
                 });
@@ -93,7 +93,7 @@ export class AuthService extends BaseService {
     logout() {
         localStorage.clear();
         this.profile$.next(null);
-        this._authNavStatusSource.next(false);
+        this.authNavStatusSource.next(false);
         this.appDispatchers.clearAllStorage();
 
         setTimeout(() => {

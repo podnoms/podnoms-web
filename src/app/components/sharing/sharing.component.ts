@@ -5,11 +5,13 @@ import {
     ViewChild,
     Output,
     EventEmitter,
-    AfterViewInit
+    AfterViewInit,
+    ElementRef
 } from '@angular/core';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'app-sharing',
@@ -27,28 +29,41 @@ export class SharingComponent implements AfterViewInit {
     email: string = '';
     message: string = '';
     linkUrl: string = '';
+
+    auth2: any;
+
+    @ViewChild('googleLoginButton')
+    googleContactsButton: ElementRef;
+
+    public environment = environment;
+
     constructor(
         private sharingService: SharingService,
         private alertService: AlertService,
         private constants: ConstantsService
     ) {}
+    ngOnInit() {}
 
     ngAfterViewInit() {
-        this.emailControl.nativeElement.focus();
+        setTimeout(() => {
+            this.emailControl.nativeElement.focus();
+        }, 0);
     }
+
     getSharingLink($event) {
         this.sharingService.getSharingLink(this.entry.id).subscribe(l => {
             this.linkUrl = l;
             $event();
         });
     }
+
     shareToEmail() {
         if (!this.constants.emailRegex.test(this.email)) {
             this.error = 'This does not look like an email address?';
         } else {
             this.sharingService
                 .shareToEmail(this.entry.id, this.email, this.message)
-                .subscribe(r => {
+                .subscribe(() => {
                     this.alertService.success(
                         'Link shared successfully',
                         `${this.email}'s got mail!!!`
@@ -57,6 +72,7 @@ export class SharingComponent implements AfterViewInit {
                 });
         }
     }
+
     copyUrl(url: string) {
         const el = document.createElement('textarea');
         el.value = url;
@@ -66,6 +82,13 @@ export class SharingComponent implements AfterViewInit {
         document.body.removeChild(el);
         this.alertService.success('Success', 'URL Copied to clipboard');
     }
+
+    openUrl(url: string) {
+        window.open(url, '_blank');
+    }
+
+    linkSettings(url: string) {}
+
     share(service: string) {
         switch (service) {
             case 'facebook':
@@ -80,6 +103,7 @@ export class SharingComponent implements AfterViewInit {
                 break;
         }
     }
+
     closeModal() {
         this.shareComplete.emit(false);
     }
