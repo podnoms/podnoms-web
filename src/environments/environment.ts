@@ -6,7 +6,7 @@ export const environment = {
     radioHost: 'http://localhost:8000',
     radioMount: 'podnoms',
     vapidPublicKey:
-        'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
+        'BBKWwHjjCCwZgd9R10Z6iLztljONO5l1ubx609we2t3DkDHyAnytG0CAr8MN5DZRaIbbOBl7JTgDSSqrYziLukU',
     helpUrl: 'https://talk.podnoms.com/',
     version: `${require('../../package.json').version}-debug`,
     dropboxAppKey: '1eovrmddgatke5a',

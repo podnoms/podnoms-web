@@ -6,7 +6,7 @@ export const environment = {
     radioHost: 'https://radio.podnoms.com',
     radioMount: 'podnoms',
     vapidPublicKey:
-        'BNfw7YvE15a7JdmladYN0Gx5U8y2x0kZyLswuXLemz8dzU36ssI-pRbTEfNct2TzQC5K4KU5raPcV1PkYeMjtz4',
+        'BBKWwHjjCCwZgd9R10Z6iLztljONO5l1ubx609we2t3DkDHyAnytG0CAr8MN5DZRaIbbOBl7JTgDSSqrYziLukU',
     helpUrl: 'https://talk.podnoms.com/',
     version: require('../../package.json').version,
     dropboxAppKey: '1eovrmddgatke5a',
@@ -28,7 +28,7 @@ export const environment = {
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com'
     },
     stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
-    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',,
+    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
     features: {
         googleContactSyncEnabled: true
     }

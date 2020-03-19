@@ -1,6 +1,6 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { Observable, Observer, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Profile } from './core';
 import { UiStateService } from './core/ui-state.service';
 import { SignalRService } from './shared/services/signal-r.service';
@@ -31,18 +31,18 @@ export class AppComponent {
         utilityService: UtilityService,
         public uiStateService: UiStateService,
         private alertService: AlertService,
-        private updateService: UpdateService,
-        private router: Router,
+        updateService: UpdateService,
+        router: Router,
         private swPush: SwPush,
-        private registrationService: PushRegistrationService,
+        private pushRegistrationService: PushRegistrationService,
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
         private signalr: SignalRService
     ) {
         updateService.checkForUpdates();
-        if (environment.production || true) {
+        if (environment.production || false) {
             utilityService.checkForApiServer().subscribe(
-                response => {
+                () => {
                     this.profile$ = authService.profile$;
                     this._bootstrapAuth().subscribe(r =>
                         this._bootstrapUpdates(r)
@@ -65,7 +65,7 @@ export class AppComponent {
 
     _bootstrapAuth(): Observable<boolean> {
         const observer = new BehaviorSubject<boolean>(false);
-        this.authService.bootstrap().subscribe(r => {});
+        this.authService.bootstrap().subscribe(() => {});
         this.authService.authNavStatus$.subscribe(r => {
             if (r) {
                 this.signalr
@@ -127,7 +127,7 @@ export class AppComponent {
                             'subscribing on server',
                             p
                         );
-                        this.registrationService
+                        this.pushRegistrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(
                                 r => {

@@ -15,6 +15,7 @@ import { ExpiredInterceptor } from '../shared/auth/expired.interceptor';
         StoreModule.forRoot(
             {},
             {
+                // TODO: should re-enable these
                 runtimeChecks: {
                     strictStateImmutability: false,
                     strictActionImmutability: false
