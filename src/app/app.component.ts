@@ -110,7 +110,7 @@ export class AppComponent {
 
         profile$.subscribe(p => {
             this.action$.next('redirectslug');
-            if (p) {
+            if (p && environment.production) {
                 console.log('app.component', 'requesting subscription', p);
                 this.swPush
                     .requestSubscription({
