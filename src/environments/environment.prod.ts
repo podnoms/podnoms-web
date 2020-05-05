@@ -30,6 +30,6 @@ export const environment = {
     stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
     recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
     features: {
-        googleContactSyncEnabled: true
+        googleContactSyncEnabled: false
     }
 };

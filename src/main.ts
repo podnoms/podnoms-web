@@ -8,7 +8,7 @@ import { AppModule } from './app/app.module';
 
 if (
     environment.production &&
-    false &&
+    // false &&
     location.host.indexOf('localhost') !== 0 &&
     location.host.indexOf('podnoms.local') !== 0
 ) {
@@ -44,7 +44,7 @@ if (environment.production) {
 platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .then(() => {
-        if ('serviceWorker' in navigator) {
+        if ('serviceWorker' in navigator && environment.production) {
             console.log('main', 'bootstrapping service worker');
             navigator.serviceWorker.register('/ngsw-worker.js');
         }

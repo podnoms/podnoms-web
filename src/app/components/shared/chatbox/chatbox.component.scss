@@ -1,0 +1,26 @@
+.chatbox-wrapper {
+    z-index: 9999999;
+}
+.chat-popup {
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+.chat-activator {
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    max-width: 380px;
+}
+.chat-form-container {
+    max-width: 380px;
+    padding: 10px;
+    background-color: white;
+}
+
+.chat-messages-wrapper {
+    max-height: 320px;
+    margin-bottom: 28px;
+}

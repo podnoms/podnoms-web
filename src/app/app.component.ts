@@ -110,7 +110,7 @@ export class AppComponent {
 
         profile$.subscribe(p => {
             this.action$.next('redirectslug');
-            if (p) {
+            if (p && environment.production) {
                 console.log('app.component', 'requesting subscription', p);
                 this.swPush
                     .requestSubscription({
@@ -136,11 +136,11 @@ export class AppComponent {
                                         'push request succeeded',
                                         r
                                     );
-                                    this.swPush.messages.subscribe(m => {
+                                    this.swPush.messages.subscribe(message => {
                                         console.log(
                                             'app.component',
                                             'Push message',
-                                            m
+                                            message
                                         );
                                     });
                                 },
