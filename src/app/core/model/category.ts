@@ -1,5 +1,4 @@
 export class Category {
-
     constructor(id: string) {
         this.id = id;
     }

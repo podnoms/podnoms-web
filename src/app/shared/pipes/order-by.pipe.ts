@@ -15,7 +15,11 @@ export class OrderByPipe implements PipeTransform {
             b = 0;
         }
 
-        if (isNaN(parseFloat(a)) || !isFinite(a) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+        if (
+            isNaN(parseFloat(a)) ||
+            !isFinite(a) ||
+            isNaN(parseFloat(b)) || !isFinite(b)
+        ) {
             // Isn't a number so lowercase the string to properly compare
             if (a.toLowerCase() < b.toLowerCase()) {
                 return -1;
@@ -51,16 +55,26 @@ export class OrderByPipe implements PipeTransform {
             return value;
         }
 
-        if (!Array.isArray(config) || (Array.isArray(config) && config.length == 1)) {
-            const propertyToCheck: string = !Array.isArray(config) ? config : config[0];
+        if (
+            !Array.isArray(config) ||
+            (Array.isArray(config) && config.length == 1)
+        ) {
+            const propertyToCheck: string = !Array.isArray(config)
+                ? config
+                : config[0];
             const desc = propertyToCheck.substr(0, 1) == '-';
 
             // Basic array
-            if (!propertyToCheck || propertyToCheck == '-' || propertyToCheck == '+') {
+            if (
+                !propertyToCheck ||
+                propertyToCheck == '-' ||
+                propertyToCheck == '+'
+            ) {
                 return !desc ? value.sort() : value.sort().reverse();
             } else {
                 const property: string =
-                    propertyToCheck.substr(0, 1) === '+' || propertyToCheck.substr(0, 1) === '-'
+                    propertyToCheck.substr(0, 1) === '+' ||
+                    propertyToCheck.substr(0, 1) === '-'
                         ? propertyToCheck.substr(1)
                         : propertyToCheck;
 
@@ -94,7 +108,8 @@ export class OrderByPipe implements PipeTransform {
                 for (let i = 0; i < config.length; i++) {
                     const desc = config[i].substr(0, 1) === '-';
                     const property =
-                        config[i].substr(0, 1) === '+' || config[i].substr(0, 1) === '-'
+                        config[i].substr(0, 1) === '+' ||
+                        config[i].substr(0, 1) === '-'
                             ? config[i].substr(1)
                             : config[i];
 

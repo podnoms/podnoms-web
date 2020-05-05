@@ -1,0 +1,110 @@
+<div class="chatbox-wrapper"
+    *ngIf=" profile">
+    <div class="chat-activator">
+        <button type="button"
+            (click)="toggleChat()"
+            class="btn btn-hero btn-rounded btn-noborder btn-info mr-5 mb-5 z-index: 999">
+            Need some help?
+            <i class="fa fa-comments mr-5"></i>
+        </button>
+    </div>
+    <div class="chat-popup"
+        [style.display]="showing ? 'block' : 'none'">
+        <div class="bg-white d-flex flex-column chat-form-container">
+            <div class="js-chat-active-user p-15 d-flex align-items-center justify-content-between bg-white">
+                <div class="d-flex align-items-center">
+                    <a class="img-link img-status"
+                        href="javascript:void(0)">
+                        <img class="img-avatar img-avatar32"
+                            src="/assets/img/logo-icon.png"
+                            alt="Avatar">
+                        <div class="img-status-indicator bg-success"></div>
+                    </a>
+                    <div class="ml-10">
+                        <a class="font-w600"
+                            href="javascript:void(0)">You are chatting</a>
+                        <div class="font-size-sm text-muted">with support</div>
+                    </div>
+                </div>
+                <div class="ml-10">
+                    <button type="button"
+                        (click)="toggleChat()"
+                        class="btn btn-sm btn-circle btn-alt-secondary"
+                        data-toggle="dropdown">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div #messageList="ngxPerfectScrollbar"
+                [perfectScrollbar]="scrollConfig"
+                class="chat-messages-wrapper">
+                <div *ngFor="let message of messages | keyvalue; last as lastItem">
+                    <!-- SENT MESSAGES -->
+                    <div class="d-flex mb-20"
+                        *ngIf="message.value.fromUserId === profile.id">
+                        <div>
+                            <div class="img-link img-status"
+                                href="javascript:void(0)">
+                                <img class="img-avatar img-avatar32"
+                                    [src]="profile.profileImageUrl"
+                                    alt="Avatar">
+                                <div class="img-status-indicator bg-success"></div>
+                            </div>
+                        </div>
+                        <div class="mx-10">
+                            <div>
+                                <p class="bg-body-dark text-dark rounded px-15 py-10 mb-5">
+                                    {{message.value.message}}
+                                </p>
+                            </div>
+                            <div *ngIf="lastItem"
+                                class="text-muted font-size-xs font-italic">{{message.value.messageDate | amTimeAgo}}</div>
+                        </div>
+                    </div>
+                    <!-- RECEIVED MESSAGES -->
+                    <div class="d-flex flex-row-reverse mb-20"
+                        *ngIf="message.value.fromUserId !== profile.id">
+                        <div>
+                            <div class="img-link img-status"
+                                data-toggle="tooltip"
+                                [title]="message.value.fromUserName"
+                                href="javascript:void(0)">
+                                <img class="img-avatar img-avatar32"
+                                    [src]="message.value.fromUserImage"
+                                    alt="Avatar">
+                                <div class="img-status-indicator bg-success"></div>
+                            </div>
+                        </div>
+                        <div class="mx-10 text-right">
+                            <div>
+                                <p class="bg-primary-lighter text-primary-darker rounded px-15 py-10 mb-5 d-inline-block">
+                                    {{message.value.message}}
+                                </p>
+                            </div>
+                            <div *ngIf="lastItem"
+                                class="text-right text-muted font-size-xs font-italic">
+                                {{message.value.messageDate | amTimeAgo}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="js-chat-message p-10 mt-auto">
+                <form (submit)="submitMessage()">
+                    <div class="d-flex align-items-center">
+                        <input type="text"
+                            name="message"
+                            [(ngModel)]="currentMessage"
+                            class="form-control flex-grow mr-5"
+                            placeholder="Type a message.."
+                            data-ms-editor="true">
+                        <button type="submit"
+                            class="btn btn-circle btn-alt-primary">
+                            <i class="fa fa-share-square"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

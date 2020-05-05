@@ -27,9 +27,8 @@ import { SharingComponent } from './sharing/sharing.component';
 import { HeaderSearchComponent } from './header-search/header-search.component';
 import { ScriptService } from '../core/scripts/script.service';
 import { HeaderPlayerComponent } from './header-player/header-player.component';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
+import { ChatboxComponent } from './shared/chatbox/chatbox.component';
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
         CommonModule,
@@ -61,7 +60,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SharingComponent,
         SidebarPodcastItemComponent,
         HeaderSearchComponent,
-        HeaderPlayerComponent
+        HeaderPlayerComponent,
+        ChatboxComponent
     ],
     exports: [
         SidebarComponent,
@@ -70,7 +70,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FooterComponent,
         FooterPlayerComponent,
         PasswordCheckerComponent,
-        SharingComponent
+        SharingComponent,
+        ChatboxComponent
     ]
 })
 export class ComponentsModule {}
