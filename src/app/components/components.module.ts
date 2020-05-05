@@ -28,9 +28,7 @@ import { HeaderSearchComponent } from './header-search/header-search.component';
 import { ScriptService } from '../core/scripts/script.service';
 import { HeaderPlayerComponent } from './header-player/header-player.component';
 import { ChatboxComponent } from './shared/chatbox/chatbox.component';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
         CommonModule,

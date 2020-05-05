@@ -136,11 +136,11 @@ export class AppComponent {
                                         'push request succeeded',
                                         r
                                     );
-                                    this.swPush.messages.subscribe(m => {
+                                    this.swPush.messages.subscribe(message => {
                                         console.log(
                                             'app.component',
                                             'Push message',
-                                            m
+                                            message
                                         );
                                     });
                                 },
