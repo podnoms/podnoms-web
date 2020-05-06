@@ -31,6 +31,8 @@ import { AutofocusDirective } from './directives/auto-focus.directive';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { SimpleAudioPlayerComponent } from './components/simple-audio-player/simple-audio-player.component';
+import { BaseComponent } from './components/base/base.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
     imports: [
@@ -50,6 +52,7 @@ import { SimpleAudioPlayerComponent } from './components/simple-audio-player/sim
         OrderByDatePipe,
         HumaniseTimePipe,
         BytesToHumanPipe,
+        SafeHtmlPipe,
         BasePageComponent,
         ImageUploadComponent,
         LoaderComponent,
@@ -78,7 +81,9 @@ import { SimpleAudioPlayerComponent } from './components/simple-audio-player/sim
         FileSizeComponent,
         ModalUpdatesComponent,
         UserSlugModalComponent,
-        SimpleAudioPlayerComponent
+        SimpleAudioPlayerComponent,
+        BaseComponent,
+        SafeHtmlPipe
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [

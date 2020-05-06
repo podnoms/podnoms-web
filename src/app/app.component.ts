@@ -11,16 +11,17 @@ import { ProfileStoreService } from './profile/profile-store.service';
 import { environment } from '../environments/environment';
 import { SwPush } from '@angular/service-worker';
 import { PushRegistrationService } from './shared/services/push-registration.service';
-import { skip, take } from 'rxjs/operators';
+import { skip, take, tap } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alerts/alert.service';
+import { BaseComponent } from './shared/components/base/base.component';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent extends BaseComponent {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     profile$: Observable<Profile>;
@@ -39,6 +40,10 @@ export class AppComponent {
         private authService: AuthService,
         private signalr: SignalRService
     ) {
+        super(uiStateService);
+        this.uiStateService.nakedPage$.pipe(
+            tap(r => console.log('app.component', 'nakedPage', r))
+        );
         updateService.checkForUpdates();
         if (environment.production || false) {
             utilityService.checkForApiServer().subscribe(

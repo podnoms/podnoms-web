@@ -25,6 +25,7 @@ import { AuthApiProxyService } from '../auth-api-proxy.service';
 import { timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { checkSlugUniqueValidator } from '../validators/check-slug-unique.validator';
+import { UiStateService } from 'app/core/ui-state.service';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -49,9 +50,10 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         private profileDataService: ProfileDataService,
         private router: Router,
         private fb: FormBuilder,
-        private constants: ConstantsService
+        private constants: ConstantsService,
+        uiStateService: UiStateService
     ) {
-        super();
+        super(uiStateService);
         this._buildForm();
     }
     ngOnInit() {}
@@ -122,13 +124,10 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
     //#endregion
 
     socialLogin(method: string) {
-        this.authService
-            .socialLogin(method)
-            .subscribe(
-                success => this.router.navigate(['']),
-                error =>
-                    console.log('login.component', 'Error logging in', error)
-            );
+        this.authService.socialLogin(method).subscribe(
+            success => this.router.navigate(['']),
+            error => console.log('login.component', 'Error logging in', error)
+        );
     }
 
     doRegister() {

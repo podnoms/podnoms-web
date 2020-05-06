@@ -23,6 +23,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     selector: 'app-profile',
@@ -94,9 +95,10 @@ export class ProfileComponent extends BasePageComponent
         private router: Router,
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        uiStateService: UiStateService
     ) {
-        super();
+        super(uiStateService);
         this.searchTerm$
             .pipe(
                 debounceTime(400),

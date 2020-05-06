@@ -13,6 +13,7 @@ import { Podcast, Category } from '../../core';
 import { UtilityService } from '../../shared/services/utility.service';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     selector: 'app-podcast-add-wizard',
@@ -35,8 +36,11 @@ export class PodcastAddWizardComponent extends BasePageComponent
     @ViewChild('podcastName')
     podcastName: ElementRef;
 
-    constructor(private utilityService: UtilityService) {
-        super();
+    constructor(
+        private utilityService: UtilityService,
+        uiStateService: UiStateService
+    ) {
+        super(uiStateService);
     }
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
