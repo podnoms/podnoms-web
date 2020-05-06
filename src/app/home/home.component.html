@@ -9,16 +9,16 @@
             <div class="hero-inner">
                 <div class="content content-full">
                     <div class="row justify-content-center bump-top">
-                        <div class="col-md-6 py-30 text-center">
+                        <div class="col-md-6 text-center">
                             <h1 class="display-4 font-w700 text-white mb-10">
                                 <span class="text-primary-dark">pod</span>
                                 <span class="ftext-white-op">:</span>
                                 <span class="text-primary-dark">:</span>
                                 <span class="ftext-white-op">noms</span>
                             </h1>
-                            <h2 class="h2 font-w400 text-body-bg-light pb-30 mb-20 border-white-op-b">
+                            <h2 class="shadowed h2 font-w400 text-body-bg-light pb-30 mb-20 border-white-op-b">
                                 Robot powered podcasts</h2>
-                            <div class="js-countdown mb-20">
+                            <div class="js-countdown mb-20 shadowed">
                                 <div class="row items-push text-center">
                                     <div class="col-6 col-sm-3">
                                         <div class="font-size-h1 font-w700 text-white">Create</div>
@@ -56,11 +56,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-large btn-hero btn-rounded btn-outline-warning mt-20"
-                                [routerLink]="['auth/login']">
-                                <i class="fas fa fa-rocket mr-10"></i>
-                                Let's Go!!!!
-                            </a>
+                            <div class="row items-push-2x text-center text-sm-left">
+                                <div class="col-sm-6 ">
+                                    <a class="btn btn-lg btn-block btn-info min-width-125 mb-10"
+                                        [routerLink]="['auth/login']">
+                                        <i class="fas fa fa-rocket mr-10"></i>
+                                        Let's Go!!!!
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <a class="btn btn-lg btn-block btn-warning min-width-125 mb-10"
+                                        [routerLink]="['_/about']">
+                                        <i class="fas fa fa-info-circle mr-10"></i>
+                                        Tell me more?????
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

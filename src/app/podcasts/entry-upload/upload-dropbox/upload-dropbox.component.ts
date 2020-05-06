@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
 import { EntryDataService } from '../../entry-data.service';
+import { UiStateService } from 'app/core/ui-state.service';
 declare var Dropbox: any;
 
 @Component({
@@ -11,8 +12,11 @@ declare var Dropbox: any;
 })
 export class UploadDropboxComponent extends BaseJsUploadComponent
     implements OnInit {
-    constructor(podcastEntryDataService: EntryDataService) {
-        super(podcastEntryDataService);
+    constructor(
+        podcastEntryDataService: EntryDataService,
+        uiStateService: UiStateService
+    ) {
+        super(podcastEntryDataService, uiStateService);
         this.loadScript(
             'https://www.dropbox.com/static/api/2/dropins.js',
             'dropboxjs',

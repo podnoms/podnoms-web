@@ -14,13 +14,15 @@ import { PodcastDeleteComponent } from '../podcast-delete.component';
 import { PodcastDetailComponent } from '../podcast-detail/podcast-detail.component';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/auth/auth.service';
+import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     selector: 'app-podcast',
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.scss']
 })
-export class PodcastComponent implements OnDestroy {
+export class PodcastComponent extends BasePageComponent implements OnDestroy {
     uploadModes = UploadModes; // do this so it can be used in the template
     uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
     loading$: Observable<boolean>;
@@ -41,16 +43,15 @@ export class PodcastComponent implements OnDestroy {
         private location: Location,
         private route: ActivatedRoute,
         private modalService: NgbModal,
-        private alertService: AlertService
+        private alertService: AlertService,
+        uiStateService: UiStateService
     ) {
+        super(uiStateService);
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
             route.params
-                .pipe(
-                    takeUntil(this._destroyed$),
-                    pluck('podcast')
-                )
+                .pipe(takeUntil(this._destroyed$), pluck('podcast'))
                 .subscribe(id => this._initialiseState(id));
         } else {
             this.podcastDataService.getActivePodcast().subscribe(

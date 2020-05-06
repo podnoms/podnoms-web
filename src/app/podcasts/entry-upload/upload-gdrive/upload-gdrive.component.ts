@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
 import { EntryDataService } from '../../entry-data.service';
 import { environment } from 'environments/environment';
+import { UiStateService } from 'app/core/ui-state.service';
 
 declare var gapi: any;
 declare var google: any;
@@ -22,8 +23,11 @@ export class UploadGdriveComponent extends BaseJsUploadComponent
 
     pickerApiLoaded = false;
 
-    constructor(podcastEntryDataService: EntryDataService) {
-        super(podcastEntryDataService);
+    constructor(
+        podcastEntryDataService: EntryDataService,
+        uiStateService: UiStateService
+    ) {
+        super(podcastEntryDataService, uiStateService);
     }
 
     ngOnInit() {

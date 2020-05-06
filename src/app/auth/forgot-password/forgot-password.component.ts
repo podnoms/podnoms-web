@@ -18,6 +18,7 @@ import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
 import { environment } from '../../../environments/environment';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     selector: 'app-forgot-password',
@@ -57,9 +58,10 @@ export class ForgotPasswordComponent extends BasePageComponent
         private authService: AuthService,
         private router: Router,
         private fb: FormBuilder,
-        private constants: ConstantsService
+        private constants: ConstantsService,
+        uiStateService: UiStateService
     ) {
-        super();
+        super(uiStateService);
         console.log('forgot-password.component', '');
         if (route.snapshot.queryParams['token']) {
             this.returnTrip = true;

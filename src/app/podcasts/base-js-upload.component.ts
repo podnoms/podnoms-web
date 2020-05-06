@@ -3,6 +3,7 @@ import { PodcastEntry, Podcast } from '../core';
 import { Observable } from 'rxjs';
 import { BasePageComponent } from '../shared/components/base-page/base-page.component';
 import { EntryDataService } from './entry-data.service';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     template: ''
@@ -31,8 +32,11 @@ export class BaseJsUploadComponent extends BasePageComponent {
         image: ['jpg', 'gif', 'bmp', 'png']
     };
 
-    constructor(private podcastEntryDataService: EntryDataService) {
-        super();
+    constructor(
+        private podcastEntryDataService: EntryDataService,
+        uiStateService: UiStateService
+    ) {
+        super(uiStateService);
     }
     protected getMimeTypes(type: string) {
         return this.mimeLists[type];
