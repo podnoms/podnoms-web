@@ -26,6 +26,8 @@ import {
     styleUrls: ['./chatbox.component.scss']
 })
 export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
+    anonName: string = '';
+    anonEmail: string = '';
     currentMessage: string = '';
     showing: boolean = false;
     profile: Profile;
@@ -52,7 +54,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
 
     ngOnInit(): void {
         this.profileService.getProfile().subscribe(p => {
-            this.profile = p[0];
+            this.profile = p && p[0];
         });
         this.signalr
             .init('chat')
@@ -79,14 +81,20 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
         if (this.showing) {
             this.cdRef.detectChanges();
             setTimeout(() => {
-                this.chatService
-                    .getAdminMessages()
-                    .map(r => r.map(message => this._addMessage(message)))
-                    .subscribe(r => {
-                        console.log('chatbox.component', this.messageList);
-                        this.messageList.scrollToBottom(0, 300);
-                        console.log('chatbox.component', 'getAdminMessages', r);
-                    });
+                if (this.profile) {
+                    this.chatService
+                        .getAdminMessages()
+                        .map(r => r.map(message => this._addMessage(message)))
+                        .subscribe(r => {
+                            console.log('chatbox.component', this.messageList);
+                            this.messageList.scrollToBottom(0, 300);
+                            console.log(
+                                'chatbox.component',
+                                'getAdminMessages',
+                                r
+                            );
+                        });
+                }
             });
         } else {
             this.messages = {};
@@ -95,8 +103,8 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
     submitMessage() {
         const chat = new Chat(
             this.toUserId ?? '',
-            this.profile.id,
-            this.profile.name,
+            this.profile?.id ?? this.anonName,
+            this.profile?.name ?? this.anonName,
             this.currentMessage
         );
         if (!this.toUserId) {
@@ -110,7 +118,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
             this.handshake = true;
             this.toUserId = result.toUserId;
             this.currentMessage = '';
-            this.messages[result.messageId] = result;
+            this._addMessage(result);
         });
     }
     private _postChat(chat: Chat) {
