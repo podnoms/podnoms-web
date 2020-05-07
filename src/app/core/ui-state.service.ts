@@ -10,7 +10,7 @@ export class UiStateService {
     sidebarOpen$ = new BehaviorSubject<boolean>(this._sidebarOpen);
     sidebarOpenMobile$ = new BehaviorSubject<boolean>(false);
     footerOpen$ = new BehaviorSubject<boolean>(false);
-    nakedPage$ = new BehaviorSubject<boolean>(false);
+    nakedPage$ = new BehaviorSubject<boolean>(true);
 
     overlayOpen: boolean = false;
     viewportWidth: number;

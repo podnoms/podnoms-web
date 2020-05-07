@@ -1,31 +1,29 @@
-    <ng-container *ngIf="!(uiStateService.nakedPage$ | async); else default">
-        <div class="bounding"
-            *ngIf="profile$ | async as profile; else default">
-            <div id="page-container"
-                class="page-header-fixed side-scroll side-trans-enabled"
-                [class.sidebar-o]="(uiStateService.sidebarOpen$ | async)"
-                [class.footer-open]="(uiStateService.footerOpen$ | async)"
-                [class.sidebar-o-xs]="(uiStateService.sidebarOpenMobile$ | async)"
-                [class.side-overlay-o]="uiStateService.overlayOpen">
-                <app-side-overlay [profile]="profile"></app-side-overlay>
-                <app-sidebar></app-sidebar>
-                <app-navbar></app-navbar>
-                <main id="main-container">
-                    <div class="content">
-                        <router-outlet></router-outlet>
-                    </div>
-                </main>
+<div *ngIf="displayMainContainer; else default"
+    class="bounding">
+    <div id="page-container"
+        class="page-header-fixed side-scroll side-trans-enabled"
+        [class.sidebar-o]="(uiStateService.sidebarOpen$ | async)"
+        [class.footer-open]="(uiStateService.footerOpen$ | async)"
+        [class.sidebar-o-xs]="(uiStateService.sidebarOpenMobile$ | async)"
+        [class.side-overlay-o]="uiStateService.overlayOpen">
+        <app-side-overlay [profile]="profile"></app-side-overlay>
+        <app-sidebar></app-sidebar>
+        <app-navbar></app-navbar>
+        <main id="main-container">
+            <div class="content">
+                <router-outlet></router-outlet>
             </div>
-            <app-footer></app-footer>
-        </div>
-    </ng-container>
-    <app-chatbox *ngIf="profile$|async"></app-chatbox>
-    <app-toast></app-toast>
-    <div *ngIf="profile$">
-        <app-modal-updates [(action$)]="action$">
-        </app-modal-updates>
+        </main>
     </div>
+    <app-footer></app-footer>
+</div>
+<app-chatbox *ngIf="profile"></app-chatbox>
+<app-toast></app-toast>
+<div *ngIf="profile">
+    <app-modal-updates [(action$)]="action$">
+    </app-modal-updates>
+</div>
 
-    <ng-template #default>
-        <router-outlet></router-outlet>
-    </ng-template>
+<ng-template #default>
+    <router-outlet></router-outlet>
+</ng-template>

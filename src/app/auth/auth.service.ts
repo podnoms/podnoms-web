@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { Injectable, OnInit } from '@angular/core';
 import { BaseService } from '../core/base.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
@@ -7,16 +7,17 @@ import {
     AuthService as SocialAuthService,
     FacebookLoginProvider,
     LoginOpt,
-    GoogleLoginProvider
+    GoogleLoginProvider,
 } from 'angularx-social-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
 import { AuthApiProxyService } from './auth-api-proxy.service';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AppDispatchers } from 'app/store/app-config/dispatchers';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AuthService extends BaseService {
     private authNavStatusSource = new BehaviorSubject<boolean>(false);
@@ -32,7 +33,8 @@ export class AuthService extends BaseService {
         private socialAuthService: SocialAuthService,
         private podnomsAuthService: AuthApiProxyService,
         private profileStoreService: ProfileStoreService,
-        private appDispatchers: AppDispatchers
+        private appDispatchers: AppDispatchers,
+        private logger: NGXLogger
     ) {
         super();
     }
@@ -40,12 +42,15 @@ export class AuthService extends BaseService {
         return this.bootstrap();
     }
     bootstrap(): Observable<boolean> {
-        this.profile$.subscribe(p => (this.currentUser = p));
+        this.profile$.pipe(filter((r) => r != null)).subscribe((p) => {
+            this.logger.debug('auth.service', 'profile$', p);
+            this.currentUser = p;
+        });
         const ret = new Subject<boolean>();
         try {
             if (this.isLoggedIn()) {
                 this.profileStoreService.getAll();
-                this.profileStoreService.entities$.subscribe(results => {
+                this.profileStoreService.entities$.subscribe((results) => {
                     if (results.length !== 0) {
                         this.profile$.next(results[0]);
                         this.authNavStatusSource.next(true);
@@ -65,7 +70,7 @@ export class AuthService extends BaseService {
     }
     checkHasRoles(roles: string[]) {
         if (this.currentUser && this.currentUser.roles) {
-            const matches = roles.filter(e =>
+            const matches = roles.filter((e) =>
                 this.currentUser.roles.includes(e)
             );
             return matches.length === roles.length;
@@ -84,7 +89,7 @@ export class AuthService extends BaseService {
     }
     login(userName: string, password: string): Observable<boolean> {
         return this.podnomsAuthService.login(userName, password).pipe(
-            map(res => {
+            map((res) => {
                 this._storeAuth(res);
                 return true;
             })
@@ -99,7 +104,7 @@ export class AuthService extends BaseService {
         setTimeout(() => {
             this.router.navigateByUrl('/?action=Reload', {
                 skipLocationChange: false,
-                replaceUrl: true
+                replaceUrl: true,
             });
         }, 500);
         // window.location.reload();
@@ -111,7 +116,7 @@ export class AuthService extends BaseService {
     ): Observable<boolean> {
         return this.podnomsAuthService
             .register(username, email, password)
-            .pipe(map(r => true));
+            .pipe(map((r) => true));
     }
     forgotPassword(userName: string): Observable<any> {
         return this.podnomsAuthService.forgotPassword(userName);
@@ -124,7 +129,7 @@ export class AuthService extends BaseService {
     ): Observable<boolean> {
         return this.podnomsAuthService
             .resetPassword(email, newPassword, newPasswordRepeat, code)
-            .pipe(map(res => true));
+            .pipe(map((res) => true));
     }
     private _storeAuth(response) {
         localStorage.setItem('auth_token', response.auth_token);
@@ -135,16 +140,16 @@ export class AuthService extends BaseService {
         const ret = new Subject<boolean>();
         this.socialAuthService
             .signIn(GoogleLoginProvider.PROVIDER_ID)
-            .then(user => {
+            .then((user) => {
                 if (user) {
                     const rpc = this.podnomsAuthService
                         .googleLogin(user.idToken)
                         .subscribe(
-                            res => {
+                            (res) => {
                                 this._storeAuth(res);
                                 ret.next(true);
                             },
-                            err => ret.next(false)
+                            (err) => ret.next(false)
                         );
                 }
             });
@@ -153,20 +158,20 @@ export class AuthService extends BaseService {
     private _loginFacebook(): Observable<boolean> {
         const ret = new Subject<boolean>();
         const options: LoginOpt = {
-            scope: 'email public_profile'
+            scope: 'email public_profile',
         };
         this.socialAuthService
             .signIn(FacebookLoginProvider.PROVIDER_ID, options)
-            .then(user => {
+            .then((user) => {
                 if (user) {
                     this.podnomsAuthService
                         .facebookLogin(user.authToken)
                         .subscribe(
-                            res => {
+                            (res) => {
                                 this._storeAuth(res);
                                 ret.next(true);
                             },
-                            err => ret.next(false)
+                            (err) => ret.next(false)
                         );
                 }
             });

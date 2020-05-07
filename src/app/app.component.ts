@@ -23,17 +23,18 @@ import { NGXLogger } from 'ngx-logger';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends BaseComponent {
+    displayMainContainer: boolean = false;
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
-    profile$: Observable<Profile>;
+    profile: Profile;
     action$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     viewportWidth: number;
     modalAction$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     constructor(
-        utilityService: UtilityService,
+        private utilityService: UtilityService,
         private alertService: AlertService,
         updateService: UpdateService,
-        router: Router,
+        private router: Router,
         private swPush: SwPush,
         private pushRegistrationService: PushRegistrationService,
         private profileStoreService: ProfileStoreService,
@@ -44,14 +45,16 @@ export class AppComponent extends BaseComponent {
     ) {
         super(logger, uiStateService);
         this.logger.info('app.component', 'constructor');
-        this.uiStateService.nakedPage$.pipe(
-            tap((r) => this.logger.info('app.component', 'nakedPage', r))
-        );
         updateService.checkForUpdates();
+    }
+    ngOnInit() {
         if (environment.production || false) {
-            utilityService.checkForApiServer().subscribe(
+            this.utilityService.checkForApiServer().subscribe(
                 () => {
-                    this.profile$ = authService.profile$;
+                    this.authService.profile$.subscribe((p) => {
+                        this.profile = p;
+                        this.displayMainContainer = true;
+                    });
                     this._bootstrapAuth().subscribe((r) =>
                         this._bootstrapUpdates(r)
                     );
@@ -62,13 +65,20 @@ export class AppComponent extends BaseComponent {
                         'checkForApiServer',
                         err
                     );
-                    router.navigateByUrl('/error');
+                    this.router.navigateByUrl('/error');
                 }
             );
         } else {
-            this.profile$ = authService.profile$;
+            this.authService.profile$.subscribe((p) => {
+                this.profile = p;
+                this.displayMainContainer = true;
+            });
             this._bootstrapAuth().subscribe((r) => this._bootstrapUpdates(r));
         }
+        this.uiStateService.nakedPage$.subscribe((b) => {
+            this.logger.debug('app.component', 'nakedPage', b);
+            this.displayMainContainer = !b;
+        });
     }
 
     loggedIn(): boolean {

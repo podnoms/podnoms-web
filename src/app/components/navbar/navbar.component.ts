@@ -8,6 +8,8 @@ import { Profile, Payment } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { UiStateService } from '../../core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
+import { skip, take, map } from 'rxjs/operators';
+import { ProfileStoreService } from '../../profile/profile-store.service';
 
 @Component({
     selector: 'app-navbar',
@@ -25,10 +27,14 @@ export class NavbarComponent {
         private authService: AuthService,
         private debugService: DebugService,
         private alertService: AlertService,
+        private profileStoreService: ProfileStoreService,
         protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
-        this.profile$ = authService.profile$;
+        this.profile$ = this.profileStoreService.entities$.pipe(
+            (skip(1), take(1)),
+            map((r) => r[0])
+        );
         this.profile$.subscribe(
             (p) =>
                 (this.profileHasAdmin = this.authService.checkHasRoles([
