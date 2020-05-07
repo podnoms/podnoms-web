@@ -88,11 +88,6 @@
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item"
-                        [routerLink]="['/_/about']">
-                        <i class="fa fa-info mr-5"></i>
-                        About
-                    </a>
-                    <a class="dropdown-item"
                         [routerLink]="['/_/privacy']">
                         <i class="fa fas fa-user-shield mr-5"></i>
                         Privacy</a>
@@ -100,6 +95,12 @@
                         [routerLink]="['/_/terms']">
                         <i class="fa fas fa-balance-scale mr-5"></i>
                         Terms</a>
+                    <a class="dropdown-item"
+                        [routerLink]="['/_/about']">
+                        <i class="fa fas fa-question-circle mr-5"></i>
+                        About
+                    </a>
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item"
                         (click)="logout()">
