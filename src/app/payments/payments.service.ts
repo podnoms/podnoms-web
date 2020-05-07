@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Payment } from '../core';
 import { NGXLogger } from 'ngx-logger';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -37,7 +38,7 @@ export class PaymentsService {
         });
         return this.http
             .post(environment.apiHost + '/payments', data)
-            .map(r => r !== undefined);
+            .pipe(map(r => r !== undefined));
     }
     downloadInvoice(id: string): Observable<any> {
         return this.http.get<any>(

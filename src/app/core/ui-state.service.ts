@@ -50,6 +50,9 @@ export class UiStateService {
     }
 
     setNakedPage(isNaked: boolean): void {
-        setTimeout(() => this.nakedPage$.next(isNaked));
+        this.logger.info(`Changing Naked UI: ${isNaked}`);
+        setTimeout(() => {
+            this.nakedPage$.next(isNaked);
+        });
     }
 }

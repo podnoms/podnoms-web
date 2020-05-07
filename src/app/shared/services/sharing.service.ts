@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ScriptService } from '../../core/scripts/script.service';
 import { NGXLogger } from 'ngx-logger';
+import { map } from 'rxjs/operators';
 declare var FB: any;
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,7 @@ export class SharingService {
             .post<any>(`${environment.apiHost}/sharing/generatelink`, {
                 id: id
             })
-            .map(r => r.url);
+            .pipe(map(r => r.url));
     }
     getSharingItem(sharingLink: string): Observable<any> {
         return this.http.get<any>(
@@ -39,7 +40,7 @@ export class SharingService {
             .post<any>(`${environment.apiHost}/sharing/generatelink`, {
                 id: id
             })
-            .map(r => r.url)
+            .pipe(map(r => r.url))
             .subscribe(l => {
                 const twitterWindow = window.open(
                     `https://twitter.com/share?url=${l}`,
@@ -68,7 +69,7 @@ export class SharingService {
                     .post<any>(`${environment.apiHost}/sharing/generatelink`, {
                         id: id
                     })
-                    .map(r => r.url)
+                    .pipe(map(r => r.url))
                     .subscribe(
                         l => {
                             FB.ui(

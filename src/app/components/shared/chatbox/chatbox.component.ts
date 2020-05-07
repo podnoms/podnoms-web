@@ -20,6 +20,7 @@ import {
     PerfectScrollbarDirective
 } from 'ngx-perfect-scrollbar';
 import { NGXLogger } from 'ngx-logger';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-chatbox',
@@ -86,7 +87,11 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
                 if (this.profile) {
                     this.chatService
                         .getAdminMessages()
-                        .map(r => r.map(message => this._addMessage(message)))
+                        .pipe(
+                            map(r =>
+                                r.map(message => this._addMessage(message))
+                            )
+                        )
                         .subscribe(r => {
                             this.logger.info(
                                 'chatbox.component',

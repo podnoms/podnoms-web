@@ -11,7 +11,7 @@ import { ProfileStoreService } from './profile/profile-store.service';
 import { environment } from '../environments/environment';
 import { SwPush } from '@angular/service-worker';
 import { PushRegistrationService } from './shared/services/push-registration.service';
-import { skip, take, tap } from 'rxjs/operators';
+import { skip, take, tap, map } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alerts/alert.service';
 import { BaseComponent } from './shared/components/base/base.component';
@@ -115,9 +115,10 @@ export class AppComponent extends BaseComponent {
             return;
         }
 
-        const profile$ = this.profileStoreService.entities$
-            .pipe((skip(1), take(1)))
-            .map(r => r[0]);
+        const profile$ = this.profileStoreService.entities$.pipe(
+            (skip(1), take(1)),
+            map(r => r[0])
+        );
 
         profile$.subscribe(p => {
             this.action$.next('redirectslug');

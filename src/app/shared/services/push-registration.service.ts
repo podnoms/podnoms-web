@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/catch';
 import { NGXLogger } from 'ngx-logger';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +32,7 @@ export class PushRegistrationService {
         );
         return this.http
             .post<any>(`${environment.apiHost}/webpush/subscribe`, registration)
-            .catch(this.handleError);
+            .pipe(catchError(this.handleError));
     }
 
     deleteSubscriber(subscription: PushSubscriptionJSON) {
@@ -43,7 +43,7 @@ export class PushRegistrationService {
         };
         return this.http
             .post(url, JSON.stringify(body))
-            .catch(this.handleError);
+            .pipe(catchError(this.handleError));
     }
 
     private handleError(error: Response | any) {
