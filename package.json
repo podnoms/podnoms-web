@@ -58,6 +58,7 @@
         "ng2-validation": "^4.2.0",
         "ngx-captcha": "^8.0.1",
         "ngx-dropzone-wrapper": "^9.0.0",
+        "ngx-fancy-logger": "^1.0.0",
         "ngx-logger": "^4.1.2",
         "ngx-moment": "^3.4.0",
         "ngx-perfect-scrollbar": "^9.0.0",

@@ -6,13 +6,16 @@ import { ProfileStoreService } from '../profile/profile-store.service';
 import { AuthService } from '../auth/auth.service';
 import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 import { takeUntil, skip, map } from 'rxjs/operators';
+import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
+import { UiStateService } from 'app/core/ui-state.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent extends BasePageComponent implements OnDestroy {
     private _destroyed$: Subject<any>;
     profile$: Observable<Profile[]>;
     loaded: boolean = false;
@@ -20,10 +23,15 @@ export class HomeComponent implements OnDestroy {
         router: Router,
         profileStoreService: ProfileStoreService,
         podcastStoreService: PodcastStoreService,
-        authService: AuthService
+        authService: AuthService,
+        protected logger: NgxFancyLoggerService,
+        uiStateService: UiStateService
     ) {
+        super(uiStateService);
+
         this._destroyed$ = new Subject();
-        console.log('home.component', 'ctor');
+        this.logger.debug('home.component', 'ctor');
+
         if (authService.getAuthToken()) {
             // no point doing any of this if we have no JWT
             this.profile$ = profileStoreService.entities$;
@@ -84,7 +92,7 @@ export class HomeComponent implements OnDestroy {
                     });
                 },
                 err => {
-                    console.error('home.component', 'err', err);
+                    this.logger.error('home.component', 'err', err);
                     authService.logout();
                 }
             );

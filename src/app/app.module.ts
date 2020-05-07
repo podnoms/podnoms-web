@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { NgxFancyLoggerModule, LogLevel } from 'ngx-fancy-logger';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule, Profile } from './core';
@@ -14,7 +16,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProfileStoreService } from './profile/profile-store.service';
 import { Observable } from 'rxjs';
 import { UpdateService } from './shared/services/update.service';
-
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -49,6 +50,13 @@ registerLocaleData(localeIE, 'ie');
         AngularFireMessagingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production
+        }),
+        NgxFancyLoggerModule.forRoot({
+            showTime: true,
+            logLevel: LogLevel.DEBUG,
+            levelColor: {
+                [LogLevel.ERROR]: 'brown'
+            }
         })
     ],
     providers: [

@@ -6781,6 +6781,11 @@ ngx-dropzone-wrapper@^9.0.0:
   dependencies:
     dropzone "^5.5.0"
 
+ngx-fancy-logger@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-fancy-logger/-/ngx-fancy-logger-1.0.0.tgz#0312cdd5cdd1d5d9ab7ce549431a7fd0fcea94ae"
+  integrity sha512-uckaqnW2GFJ82YU8AtLKWfoW/WGuZYGfs95FGUuNoWPTPvnUa/2wvHddQCn70+YDPa6R/f1l43m9x+JVlF4gQQ==
+
 ngx-logger@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/ngx-logger/-/ngx-logger-4.1.2.tgz#32cf433aa8803ee899e43e94713b669ef7b6a231"
