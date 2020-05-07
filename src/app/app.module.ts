@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { NgxFancyLoggerModule, LogLevel } from 'ngx-fancy-logger';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule, Profile } from './core';
@@ -26,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { InterstitialComponent } from './shared/components/interstitial/interstitial.component';
 import { AppDispatchers } from './store/app-config/dispatchers';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
+import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -51,16 +50,7 @@ registerLocaleData(localeIE, 'ie');
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production
         }),
-        NgxFancyLoggerModule.forRoot({
-            showTime: true,
-            logLevel: LogLevel.DEBUG,
-            levelColor: {
-                [LogLevel.INFO]: 'black',
-                [LogLevel.DEBUG]: 'darkgrey',
-                [LogLevel.WARNING]: 'orange',
-                [LogLevel.ERROR]: 'red'
-            }
-        })
+        LoggerModule.forRoot(environment.logConfig)
     ],
     providers: [
         UpdateService,
@@ -77,7 +67,10 @@ registerLocaleData(localeIE, 'ie');
 })
 export class AppModule {
     profile$: Observable<Profile[]>;
-    constructor(profileStoreService: ProfileStoreService) {
+    constructor(
+        profileStoreService: ProfileStoreService,
+        private logger: NGXLogger
+    ) {
         this.profile$ = profileStoreService.entities$;
     }
 }

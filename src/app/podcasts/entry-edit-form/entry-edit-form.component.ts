@@ -7,7 +7,7 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { UUID } from 'angular2-uuid';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-entry-edit-form',
@@ -30,7 +30,7 @@ export class EntryEditFormComponent implements OnInit {
         private entriesStore: EntriesStoreService,
         private entryDataService: EntryDataService,
         private alertService: AlertService,
-        private logger: NgxFancyLoggerService
+        private logger: NGXLogger
     ) {
         this.entryId = route.snapshot.params['entry'];
     }
@@ -45,7 +45,7 @@ export class EntryEditFormComponent implements OnInit {
 
     ngOnInit() {
         this.entriesStore.getByKey(this.entryId).subscribe(e => {
-            this.logger.debug('entry-edit-form.component', 'subscribe', e);
+            this.logger.info('entry-edit-form.component', 'subscribe', e);
             this.entry = e;
             this.entryEditForm = this._createForm(this.fb, e);
             this.formImageUrl = e.imageUrl;
@@ -77,7 +77,7 @@ export class EntryEditFormComponent implements OnInit {
                             this.router.navigate(['podcasts', e.podcastSlug]);
                         },
                         error => {
-                            console.error(
+                            this.logger.error(
                                 'entry-edit-form.component',
                                 'sendImage',
                                 error
@@ -94,7 +94,7 @@ export class EntryEditFormComponent implements OnInit {
                 }
             },
             error => {
-                this.logger.debug(
+                this.logger.info(
                     'entry-edit-form.component',
                     'updateEntry',
                     error

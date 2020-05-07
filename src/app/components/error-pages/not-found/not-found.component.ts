@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-not-found',
@@ -10,7 +10,7 @@ import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 })
 export class NotFoundComponent extends BasePageComponent {
     constructor(
-        protected logger: NgxFancyLoggerService,
+        protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
         super(logger, uiStateService);

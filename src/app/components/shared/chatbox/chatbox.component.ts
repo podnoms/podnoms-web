@@ -19,7 +19,7 @@ import {
     PerfectScrollbarComponent,
     PerfectScrollbarDirective
 } from 'ngx-perfect-scrollbar';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-chatbox',
@@ -46,7 +46,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
         private signalr: SignalRService,
         private alertService: AlertService,
         private profileService: ProfileDataService,
-        private logger: NgxFancyLoggerService
+        private logger: NGXLogger
     ) {}
     ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
         if (changes) {
@@ -70,7 +70,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
                     });
             })
             .catch(err => {
-                console.error(
+                this.logger.error(
                     'app.component',
                     'Unable to initialise site update hub',
                     err
@@ -88,12 +88,12 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
                         .getAdminMessages()
                         .map(r => r.map(message => this._addMessage(message)))
                         .subscribe(r => {
-                            this.logger.debug(
+                            this.logger.info(
                                 'chatbox.component',
                                 this.messageList
                             );
                             this.messageList.scrollToBottom(0, 300);
-                            this.logger.debug(
+                            this.logger.info(
                                 'chatbox.component',
                                 'getAdminMessages',
                                 r

@@ -26,7 +26,7 @@ import { timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { checkSlugUniqueValidator } from '../validators/check-slug-unique.validator';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -52,7 +52,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         private router: Router,
         private fb: FormBuilder,
         private constants: ConstantsService,
-        logger: NgxFancyLoggerService,
+        logger: NGXLogger,
         uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
@@ -131,7 +131,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         this.authService.socialLogin(method).subscribe(
             success => this.router.navigate(['']),
             error =>
-                this.logger.debug('login.component', 'Error logging in', error)
+                this.logger.info('login.component', 'Error logging in', error)
         );
     }
 

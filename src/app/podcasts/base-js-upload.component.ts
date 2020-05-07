@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { BasePageComponent } from '../shared/components/base-page/base-page.component';
 import { EntryDataService } from './entry-data.service';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     template: ''
@@ -35,7 +35,7 @@ export class BaseJsUploadComponent extends BasePageComponent {
 
     constructor(
         private podcastEntryDataService: EntryDataService,
-        protected logger: NgxFancyLoggerService,
+        protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
         super(logger, uiStateService);

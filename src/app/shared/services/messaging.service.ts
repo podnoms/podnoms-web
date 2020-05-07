@@ -47,11 +47,11 @@ export class MessagingService {
     requestPermission(userId: string) {
         this.angularFireMessaging.requestToken.subscribe(
             token => {
-                this.logger.debug(token);
+                this.logger.info(token);
                 this.updateToken(userId, token);
             },
             err => {
-                console.error('Unable to get permission to notify.', err);
+                this.logger.error('Unable to get permission to notify.', err);
             }
         );
     }
@@ -61,7 +61,7 @@ export class MessagingService {
      */
     receiveMessage() {
         this.angularFireMessaging.messages.subscribe(payload => {
-            this.logger.debug('new message received. ', payload);
+            this.logger.info('new message received. ', payload);
             this.currentMessage.next(payload);
         });
     }

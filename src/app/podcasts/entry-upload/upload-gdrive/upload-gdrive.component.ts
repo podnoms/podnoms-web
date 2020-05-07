@@ -3,7 +3,7 @@ import { BaseJsUploadComponent } from '../../base-js-upload.component';
 import { EntryDataService } from '../../entry-data.service';
 import { environment } from 'environments/environment';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 declare var gapi: any;
 declare var google: any;
@@ -27,7 +27,7 @@ export class UploadGdriveComponent extends BaseJsUploadComponent
     constructor(
         podcastEntryDataService: EntryDataService,
         uiStateService: UiStateService,
-        logger: NgxFancyLoggerService
+        logger: NGXLogger
     ) {
         super(podcastEntryDataService, logger, uiStateService);
     }

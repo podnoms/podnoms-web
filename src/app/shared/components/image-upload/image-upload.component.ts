@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { Observable, of } from 'rxjs';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-image-upload',
@@ -33,21 +33,21 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     constructor(
         private imageService: ImageService,
         private renderer: Renderer2,
-        protected logger: NgxFancyLoggerService
+        protected logger: NGXLogger
     ) {}
     ngOnInit() {
         this.image.src = this.imageUrl;
         this._initPasteHandler();
     }
     ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
-        // this.logger.debug('image-upload.component', 'ngOnchanges', changes);
+        // this.logger.info('image-upload.component', 'ngOnchanges', changes);
         // if (changes && changes.imageUrl && !this.image.src) {
         //     this.image.src = changes.imageUrl.currentValue;
         // }
     }
     _initPasteHandler() {
         this.renderer.listen('document', 'paste', e => {
-            this.logger.debug('Paste', e);
+            this.logger.info('Paste', e);
             for (let i = 0; i < e.clipboardData.items.length; i++) {
                 const item = e.clipboardData.items[i];
                 if (item.kind === 'file') {
@@ -82,11 +82,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     getRandomImage($event) {
         this.imageService.getRandom().subscribe(
             r => {
-                this.logger.debug(
-                    'image-upload.component',
-                    'getRandomImage',
-                    r
-                );
+                this.logger.info('image-upload.component', 'getRandomImage', r);
                 this.image.src = r;
                 this.imageChanged = true;
                 this._imageFileBuffer = this._dataURLtoFile(
@@ -96,7 +92,11 @@ export class ImageUploadComponent implements OnInit, OnChanges {
                 $event();
             },
             e => {
-                console.error('image-upload.component', 'getRandomImage', e);
+                this.logger.error(
+                    'image-upload.component',
+                    'getRandomImage',
+                    e
+                );
                 $event();
             }
         );

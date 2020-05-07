@@ -5,7 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,7 @@ export class ProfileDataService {
     constructor(
         private http: HttpClient,
         private authService: AuthService,
-        protected logger: NgxFancyLoggerService
+        protected logger: NGXLogger
     ) {}
 
     getProfile(): Observable<Profile> {
@@ -37,14 +37,14 @@ export class ProfileDataService {
         }
     }
     updateProfile(profile): Observable<Profile> {
-        this.logger.debug('ProfileService', 'updateProfile', profile);
+        this.logger.info('ProfileService', 'updateProfile', profile);
         return this.http.post<Profile>(
             environment.apiHost + '/profile',
             profile
         );
     }
     checkSlug(slug): Observable<boolean> {
-        this.logger.debug('profile.service.ts', 'checkSlug', slug);
+        this.logger.info('profile.service.ts', 'checkSlug', slug);
         return this.http.get<boolean>(
             environment.apiHost + '/profile/checkslug/' + slug
         );

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScriptService } from '../../../core/scripts/script.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 declare var BuyWithCrypto: any;
 
 @Component({
@@ -10,20 +10,20 @@ declare var BuyWithCrypto: any;
 })
 export class DonationComponent implements OnInit {
     constructor(
-        public logger: NgxFancyLoggerService,
+        public logger: NGXLogger,
         private scriptService: ScriptService
     ) {}
 
     ngOnInit() {
         this.scriptService.load('coinbase').then(() => {
             BuyWithCrypto.registerCallback('onSuccess', e => {
-                this.logger.debug('donation.component', 'onSuccess', e);
+                this.logger.info('donation.component', 'onSuccess', e);
             });
             BuyWithCrypto.registerCallback('onFailure', e => {
-                this.logger.debug('donation.component', 'onFailure', e);
+                this.logger.info('donation.component', 'onFailure', e);
             });
             BuyWithCrypto.registerCallback('onPaymentDetected', e => {
-                this.logger.debug('donation.component', 'onPaymentDetected', e);
+                this.logger.info('donation.component', 'onPaymentDetected', e);
             });
         });
     }

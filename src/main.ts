@@ -13,7 +13,7 @@ if (
     location.host.indexOf('podnoms.local') !== 0
 ) {
     enableProdMode();
-    //     this.logger.debug(
+    //     this.logger.info(
     //         `%c ________________________________________
     // < mooooooooooooooooooooooooooooooooooooo >
     // <   🦄🧙Looking under the hood🦄?        >
@@ -28,10 +28,10 @@ if (
     //     );
 
     // if (typeof window.console !== 'undefined') {
-    //     // window.this.logger.debug = function() {};
+    //     // window.this.logger.info = function() {};
     //     // window.console.debug = function() {};
     //     // window.console.warn = function() {};
-    //     // window.console.error = function() {};
+    //     // window.this.logger.error = function() {};
     // }
 }
 //#endregion
@@ -43,4 +43,4 @@ platformBrowserDynamic()
             navigator.serviceWorker.register('/ngsw-worker.js');
         }
     })
-    .catch(err => this.logger.debug(err));
+    .catch(err => this.logger.info(err));

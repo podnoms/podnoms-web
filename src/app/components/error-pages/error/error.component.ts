@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { timer, Observable } from 'rxjs';
 import { UiStateService } from 'app/core/ui-state.service';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-error',
@@ -16,7 +16,7 @@ export class ErrorComponent extends BasePageComponent {
     constructor(
         private utilityService: UtilityService,
         private router: Router,
-        logger: NgxFancyLoggerService,
+        logger: NGXLogger,
         uiStateService: UiStateService
     ) {
         super(logger, uiStateService);

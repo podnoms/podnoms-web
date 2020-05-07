@@ -4,7 +4,7 @@ import {
     EntityCollectionServiceBase,
     EntityCollectionServiceElementsFactory
 } from '@ngrx/data';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -12,11 +12,11 @@ import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 export class ProfileStoreService extends EntityCollectionServiceBase<Profile> {
     constructor(
         entityCollectionServiceFactory: EntityCollectionServiceElementsFactory,
-        private logger: NgxFancyLoggerService
+        private logger: NGXLogger
     ) {
         super('Profile', entityCollectionServiceFactory);
     }
     checkSlug(slug: any): any {
-        this.logger.debug('profile-store.service', 'checkSlug', slug);
+        this.logger.info('profile-store.service', 'checkSlug', slug);
     }
 }

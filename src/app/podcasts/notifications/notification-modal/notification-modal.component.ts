@@ -9,7 +9,7 @@ import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
 import { AlertService } from '../../../core/alerts/alert.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-notification-modal',
@@ -33,13 +33,13 @@ export class NotificationModalComponent implements OnInit {
         private nss: NotificationStoreService,
         private pss: PodcastStoreService,
         private alertService: AlertService,
-        private logger: NgxFancyLoggerService
+        private logger: NGXLogger
     ) {}
 
     ngOnInit() {}
     openModal(type: string) {
         this.nds.getConfig(type).subscribe(r => {
-            this.logger.debug('notifications.component', 'addNotification', r);
+            this.logger.info('notifications.component', 'addNotification', r);
             this.notification = r || null;
             if (this.notification) {
                 this._createForm(this.notification.options);
@@ -50,7 +50,7 @@ export class NotificationModalComponent implements OnInit {
         this.form = this.ncs.toFormGroup(config);
         this.modalService.open(this.content, { size: 'lg' }).result.then(
             result =>
-                this.logger.debug(
+                this.logger.info(
                     'notification-modal.component',
                     'result',
                     result
@@ -63,7 +63,7 @@ export class NotificationModalComponent implements OnInit {
         );
     }
     openEditModal(notification: Notification) {
-        this.logger.debug(
+        this.logger.info(
             'notification-modal.component',
             'openEditModal',
             notification

@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ScriptService } from '../../core/scripts/script.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 declare var FB: any;
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class SharingService {
     constructor(
         private http: HttpClient,
         private scriptService: ScriptService,
-        protected logger: NgxFancyLoggerService
+        protected logger: NGXLogger
     ) {}
     getSharingLink(id: string): Observable<string> {
         return this.http
@@ -77,7 +77,7 @@ export class SharingService {
                                     href: l
                                 },
                                 (r: any) => {
-                                    this.logger.debug(
+                                    this.logger.info(
                                         'sharing.service',
                                         'fb response',
                                         r

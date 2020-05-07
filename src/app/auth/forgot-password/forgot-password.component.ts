@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
 import { environment } from '../../../environments/environment';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-forgot-password',
@@ -60,11 +60,11 @@ export class ForgotPasswordComponent extends BasePageComponent
         private router: Router,
         private fb: FormBuilder,
         private constants: ConstantsService,
-        logger: NgxFancyLoggerService,
+        logger: NGXLogger,
         uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
-        this.logger.debug('forgot-password.component', '');
+        this.logger.info('forgot-password.component', '');
         if (route.snapshot.queryParams['token']) {
             this.returnTrip = true;
         }
@@ -124,7 +124,7 @@ export class ForgotPasswordComponent extends BasePageComponent
                 this.authService.forgotPassword(this.email).subscribe(
                     result => {
                         if (result['email']) {
-                            this.logger.debug(
+                            this.logger.info(
                                 'reset.component.ts',
                                 'method',
                                 result

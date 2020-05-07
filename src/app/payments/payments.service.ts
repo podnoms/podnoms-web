@@ -3,16 +3,13 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Payment } from '../core';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PaymentsService {
-    constructor(
-        private http: HttpClient,
-        protected logger: NgxFancyLoggerService
-    ) {}
+    constructor(private http: HttpClient, protected logger: NGXLogger) {}
 
     getPayments(): Observable<Payment[]> {
         return this.http.get<Payment[]>(environment.apiHost + '/payments');
@@ -32,7 +29,7 @@ export class PaymentsService {
         amount: number,
         type: string
     ): Observable<Boolean> {
-        this.logger.debug('payments.service', 'processPayment', token, amount);
+        this.logger.info('payments.service', 'processPayment', token, amount);
         const data = JSON.stringify({
             token: token,
             amount: amount,

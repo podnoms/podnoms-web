@@ -8,7 +8,7 @@ import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 import { takeUntil, skip, map } from 'rxjs/operators';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-home',
@@ -24,13 +24,13 @@ export class HomeComponent extends BasePageComponent implements OnDestroy {
         profileStoreService: ProfileStoreService,
         podcastStoreService: PodcastStoreService,
         authService: AuthService,
-        protected logger: NgxFancyLoggerService,
+        protected logger: NGXLogger,
         uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
 
         this._destroyed$ = new Subject();
-        this.logger.debug('home.component', 'ctor');
+        this.logger.info('home.component', 'ctor');
 
         if (authService.getAuthToken()) {
             // no point doing any of this if we have no JWT

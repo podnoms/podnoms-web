@@ -1,6 +1,6 @@
 import { Injectable, HostListener } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,7 @@ export class UiStateService {
     overlayOpen: boolean = false;
     viewportWidth: number;
 
-    constructor(private logger: NgxFancyLoggerService) {}
+    constructor(private logger: NGXLogger) {}
 
     toggleSidebar() {
         if (this.isMobile()) {
@@ -41,7 +41,7 @@ export class UiStateService {
     }
     @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-        this.logger.debug('ui-state.service', 'onResize', event);
+        this.logger.info('ui-state.service', 'onResize', event);
         this.viewportWidth = event.target.innerWidth;
     }
 

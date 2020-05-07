@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { AuthService } from 'app/auth/auth.service';
 import { ProfileDataService } from 'app/profile/profile-data.service';
 import { Profile } from 'app/core/model';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-signalr',
@@ -24,12 +24,12 @@ export class SignalRComponent implements OnInit {
     constructor(
         private _authService: AuthService,
         private _profileService: ProfileDataService,
-        private logger: NgxFancyLoggerService
+        private logger: NGXLogger
     ) {}
 
     ngOnInit() {
         this._profileService.getProfile().subscribe(p => {
-            this.logger.debug('signalr.component', 'getProfile', p[0]);
+            this.logger.info('signalr.component', 'getProfile', p[0]);
             this.nick = p[0].name || `${p[0].firstName} ${p[0].lastName}`;
         });
     }
@@ -48,7 +48,7 @@ export class SignalRComponent implements OnInit {
         this._hubConnection
             .start()
             .then(() => {
-                this.logger.debug(
+                this.logger.info(
                     'signalr.component',
                     'hubConnection',
                     'Connection started'
@@ -56,13 +56,13 @@ export class SignalRComponent implements OnInit {
                 this.hubAvailable = true;
             })
             .catch(err =>
-                this.logger.debug('Error while starting connection: ' + err)
+                this.logger.info('Error while starting connection: ' + err)
             );
         this._hubConnection.on(
             'send',
             (nick: string, receivedMessage: string) => {
                 const text = `${nick}: ${receivedMessage}`;
-                this.logger.debug('signalr.component', 'send_received', text);
+                this.logger.info('signalr.component', 'send_received', text);
                 this.messages.push(text);
             }
         );
@@ -71,7 +71,7 @@ export class SignalRComponent implements OnInit {
         this._hubConnection
             .invoke('send', this.nick, this.message)
             .then(() => (this.message = ''))
-            .catch(err => console.error(err));
+            .catch(err => this.logger.error(err));
     }
     disconnectSignalR() {}
 }

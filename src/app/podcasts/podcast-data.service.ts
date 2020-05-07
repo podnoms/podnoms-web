@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map, switchAll } from 'rxjs/operators';
 import { DefaultDataService, QueryParams, HttpUrlGenerator } from '@ngrx/data';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     }
     constructor(
         http: HttpClient,
-        public logger: NgxFancyLoggerService,
+        public logger: NGXLogger,
         httpUrlGenerator: HttpUrlGenerator
     ) {
         super('Podcast', http, httpUrlGenerator);
@@ -61,7 +61,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
         return this.http.get<string>(`${environment.apiHost}/podcast/active`);
     }
     addPodcast(podcast: Podcast): Observable<Podcast> {
-        this.logger.debug('PodcastService', 'addPodcast', podcast);
+        this.logger.info('PodcastService', 'addPodcast', podcast);
         // Remove this as the client is choosing the random image now
         // const data = JSON.stringify(podcast, PodcastDataService._replacer);
         return this.http.post<Podcast>(
@@ -85,7 +85,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
             .pipe(map(r => true));
     }
     checkSlug(slug): Observable<string> {
-        this.logger.debug('profile.service.ts', 'checkSlug', slug);
+        this.logger.info('profile.service.ts', 'checkSlug', slug);
         return this.http.get<string>(
             environment.apiHost + '/podcast/checkslug/' + slug
         );

@@ -10,7 +10,7 @@ import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
 import { AlertService } from '../../../core/alerts/alert.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-upload-url',
@@ -38,9 +38,9 @@ export class UploadUrlComponent implements AfterViewInit {
     constructor(
         private podcastEntryDataService: EntryDataService,
         private utilityService: UtilityService,
-        protected logger: NgxFancyLoggerService
+        protected logger: NGXLogger
     ) {
-        this.logger.debug('upload-url.component', 'ctor');
+        this.logger.info('upload-url.component', 'ctor');
     }
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
@@ -94,7 +94,7 @@ export class UploadUrlComponent implements AfterViewInit {
                     if (r.type === 'native') {
                         this.createEntry(r, url);
                     } else if ((r.type = 'proxied')) {
-                        this.logger.debug(
+                        this.logger.info(
                             'upload-url.component',
                             'apiData',
                             r.data
@@ -116,7 +116,7 @@ export class UploadUrlComponent implements AfterViewInit {
         }
     }
     onPageEntryChosen($event) {
-        this.logger.debug('upload-url.component', 'YAY', $event);
+        this.logger.info('upload-url.component', 'YAY', $event);
         if ($event) {
             this.createEntry(this.remoteAudioResult, $event);
         } else {

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-login',
@@ -25,7 +25,7 @@ export class LoginComponent extends BasePageComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private route: ActivatedRoute,
-        protected logger: NgxFancyLoggerService,
+        protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
@@ -45,7 +45,7 @@ export class LoginComponent extends BasePageComponent implements OnInit {
         this.authService.socialLogin(method).subscribe(
             success => this._routePostLogin(),
             error =>
-                this.logger.debug('login.component', 'Error logging in', error)
+                this.logger.info('login.component', 'Error logging in', error)
         );
     }
     login() {

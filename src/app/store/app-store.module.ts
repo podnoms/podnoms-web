@@ -9,6 +9,7 @@ import { TokenInterceptor } from '../shared/auth/token.interceptor';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
 import { EntryDataService } from '../podcasts/entry-data.service';
 import { ExpiredInterceptor } from '../shared/auth/expired.interceptor';
+import { LoggerModule } from 'ngx-logger';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { ExpiredInterceptor } from '../shared/auth/expired.interceptor';
         ),
         EffectsModule.forRoot([]),
         environment.production ? [] : StoreDevtoolsModule.instrument(),
-        EntityStoreModule
+        EntityStoreModule,
+        LoggerModule.forRoot(environment.logConfig)
     ],
     providers: [
         {

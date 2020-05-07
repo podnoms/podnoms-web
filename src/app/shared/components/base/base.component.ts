@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-base',
@@ -9,7 +9,7 @@ import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 })
 export class BaseComponent {
     constructor(
-        protected logger: NgxFancyLoggerService,
+        protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {}
 

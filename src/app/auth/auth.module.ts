@@ -7,6 +7,8 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from 'environments/environment';
 
 @NgModule({
     imports: [
@@ -14,7 +16,8 @@ import { ComponentsModule } from '../components/components.module';
         SharedModule,
         AuthRoutingModule,
         ComponentsModule,
-        NgxCaptchaModule
+        NgxCaptchaModule,
+        LoggerModule.forRoot(environment.logConfig)
     ],
     declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent]
 })

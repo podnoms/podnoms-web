@@ -3,16 +3,13 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/catch';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PushRegistrationService {
-    constructor(
-        private http: HttpClient,
-        protected logger: NgxFancyLoggerService
-    ) {}
+    constructor(private http: HttpClient, protected logger: NGXLogger) {}
 
     urlBase64ToUint8Array(base64String: string) {
         const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -28,7 +25,7 @@ export class PushRegistrationService {
     }
 
     addSubscriber(registration: PushSubscriptionJSON): Observable<any> {
-        this.logger.debug(
+        this.logger.info(
             'push-registration.service',
             'addSubscriber',
             registration
@@ -50,7 +47,7 @@ export class PushRegistrationService {
     }
 
     private handleError(error: Response | any) {
-        console.error(
+        this.logger.error(
             'push-registration.service',
             'Error registering for push',
             error

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { UiStateService } from 'app/core/ui-state.service';
 import { BaseComponent } from '../base/base.component';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-base-page',
@@ -10,7 +10,7 @@ import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 })
 export class BasePageComponent extends BaseComponent {
     constructor(
-        protected logger: NgxFancyLoggerService,
+        protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
         super(logger, uiStateService);

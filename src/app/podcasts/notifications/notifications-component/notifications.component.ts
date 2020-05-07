@@ -3,7 +3,7 @@ import { Notification } from '../../../core/model/notification';
 import { Podcast } from '../../../core';
 import { Observable } from 'rxjs';
 import { NotificationDataService } from '../services/notification-data.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-notifications',
@@ -21,14 +21,14 @@ export class NotificationsComponent implements OnInit {
 
     constructor(
         private nds: NotificationDataService,
-        protected logger: NgxFancyLoggerService
+        protected logger: NGXLogger
     ) {}
     ngOnInit() {
         this.types$ = this.nds.getTypes();
         this.notifications = this.podcast.notifications;
     }
     deleteNotification(notification: Notification) {
-        this.logger.debug(
+        this.logger.info(
             'notifications.component',
             'deleteNotification',
             notification

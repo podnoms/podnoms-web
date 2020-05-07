@@ -15,7 +15,7 @@ import {
     filter
 } from 'rxjs/operators';
 import { UtilityService } from '../../shared/services/utility.service';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-password-checker',
     templateUrl: './password-checker.component.html',
@@ -46,7 +46,7 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
 
     constructor(
         private utilityService: UtilityService,
-        protected logger: NgxFancyLoggerService
+        protected logger: NGXLogger
     ) {
         this._password = this.password;
         this._repeatPassword = this.repeatPassword;
@@ -69,7 +69,7 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
 
         this.strengthPercentage =
             ((this.strength + 1) / this.defaultMessages.length) * 100;
-        this.logger.debug(
+        this.logger.info(
             'Strength',
             this.strength,
             this.strengthMessage,

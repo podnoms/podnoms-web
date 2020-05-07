@@ -15,7 +15,7 @@ import {
 import { ToastMessage, ToastType } from './toast-models';
 import { ToastService } from './toast.service';
 import { Observable } from 'rxjs';
-import { NgxFancyLoggerService } from 'ngx-fancy-logger';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     animations: [
@@ -150,7 +150,7 @@ export class ToastItemComponent implements OnInit {
         private toastService: ToastService,
         private zone: NgZone,
         private cdr: ChangeDetectorRef,
-        private logger: NgxFancyLoggerService
+        private logger: NGXLogger
     ) {}
 
     ngOnInit() {
@@ -183,12 +183,12 @@ export class ToastItemComponent implements OnInit {
                         this.timeOut,
                     100
                 );
-                this.logger.debug(
+                this.logger.info(
                     'toast-item.component',
                     'percentage',
                     this.timerPercentageRemaining
                 );
-                this.logger.debug(
+                this.logger.info(
                     'toast-item.component',
                     'timeout',
                     this.timeOut
