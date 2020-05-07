@@ -29,6 +29,8 @@ import { ScriptService } from '../core/scripts/script.service';
 import { HeaderPlayerComponent } from './header-player/header-player.component';
 import { ChatboxComponent } from './shared/chatbox/chatbox.component';
 import { BoilerplateComponent } from './boilerplate/boilerplate.component';
+import { ErrorComponent } from './error-pages/error/error.component';
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
@@ -63,7 +65,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         HeaderSearchComponent,
         HeaderPlayerComponent,
         ChatboxComponent,
-        BoilerplateComponent
+        BoilerplateComponent,
+        ErrorComponent,
+        NotFoundComponent
     ],
     exports: [
         SidebarComponent,

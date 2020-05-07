@@ -8,4 +8,6 @@ import { UiStateService } from 'app/core/ui-state.service';
 })
 export class BaseComponent {
     constructor(protected uiStateService: UiStateService) {}
+
+    protected swallowClick() {}
 }

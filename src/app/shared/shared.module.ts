@@ -17,7 +17,6 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { PushRegistrationService } from './services/push-registration.service';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
 import { CamelCaseToSentencePipe } from './pipes/camel-case-to-sentence.pipe';
-import { ErrorComponent } from './components/error/error.component';
 import { AudioDownloadService } from './services/audio-download.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ToastComponent } from './components/toast/toast.component';
@@ -75,7 +74,6 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
         LoaderComponent,
         CategorySelectorComponent,
         CamelCaseToSentencePipe,
-        ErrorComponent,
         SpinnerButtonComponent,
         ToastItemComponent,
         FileSizeComponent,

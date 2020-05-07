@@ -1,1 +1,32 @@
-<span [innerHTML]="(boilerplate$ | async) | safeHtml"></span>
+<div class="bg-image">
+    <div class="bg-black-op-75">
+        <div class="content content-top text-center"
+            style="padding-top: 42px!important;">
+            <div class="">
+                <h1 class="font-w700 text-white mb-10">PodNoms</h1>
+                <h2 class="h4 font-w400 text-white-op">Robot powered podcasts.</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content content-full">
+    <div class="row justify-content-center py-5">
+        <div class="col-lg-8">
+            <div class="block">
+                <div class="block-content border-b clearfix">
+                    <div class="btn-group float-right">
+                        <a href="/"
+                            class=" btn btn-rounded btn-info float-left">
+                            <i class="fas fa fa-rocket mr-5 "></i>
+                            Take me back
+                        </a>
+                    </div>
+                    <h2 class="font-w700 text-black mb-10">{{title}}</h2>
+                </div>
+                <div class="block-content block-content-full nice-copy-story">
+                    <span [innerHTML]="content | safeHtml"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

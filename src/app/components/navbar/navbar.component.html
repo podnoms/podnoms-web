@@ -71,10 +71,6 @@
                         <i class="fa fa-user mr-5"></i>
                         Profile</a>
                     <a class="dropdown-item"
-                        (click)="about()">
-                        <i class="fa fa-info mr-5"></i>
-                        About</a>
-                    <a class="dropdown-item"
                         *ngIf="profileHasAdmin"
                         [routerLink]="['/admin']">
                         <i class="fa fa-flag mr-5"></i>
@@ -88,7 +84,23 @@
                         *ngIf="profileHasAdmin"
                         [routerLink]="['/debug/signalr']">
                         <i class="fa fa-chalkboard-teacher mr-5"></i>
-                        SignalR</a>
+                        SignalR
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item"
+                        [routerLink]="['/_/about']">
+                        <i class="fa fa-info mr-5"></i>
+                        About
+                    </a>
+                    <a class="dropdown-item"
+                        [routerLink]="['/_/privacy']">
+                        <i class="fa fas fa-user-shield mr-5"></i>
+                        Privacy</a>
+                    <a class="dropdown-item"
+                        [routerLink]="['/_/terms']">
+                        <i class="fa fas fa-balance-scale mr-5"></i>
+                        Terms</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item"
                         (click)="logout()">
                         <i class="fa fa-sign-out-alt mr-5"></i>

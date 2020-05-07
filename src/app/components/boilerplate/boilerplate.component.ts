@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BoilerplateService } from 'app/shared/services/boilerplate.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UiStateService } from 'app/core/ui-state.service';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-boilerplate',
@@ -11,7 +12,11 @@ import { tap } from 'rxjs/operators';
 })
 export class BoilerplateComponent implements OnInit {
     boilerplate$: Observable<string>;
+    title: string = '';
+    content: string = '';
     constructor(
+        private route: ActivatedRoute,
+        private router: Router,
         private boilerplateService: BoilerplateService,
         private uiStateService: UiStateService
     ) {
@@ -19,12 +24,17 @@ export class BoilerplateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.boilerplate$ = this.boilerplateService
-            .getBoilerplate('about')
-            .pipe(
-                tap(r => {
-                    console.log('boilerplate.component', 'tap', r);
-                })
+        const key = this.route.snapshot.paramMap.get('key');
+        if (key) {
+            this.boilerplateService.getBoilerplate(key).subscribe(
+                r => {
+                    this.title = r.title;
+                    this.content = r.content;
+                },
+                err => this.router.navigateByUrl('/404')
             );
+        } else {
+            this.router.navigateByUrl('/404');
+        }
     }
 }

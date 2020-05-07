@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
-import { ErrorComponent } from './shared/components/error/error.component';
 import { HomeComponent } from './home/home.component';
 import { BoilerplateComponent } from './components/boilerplate/boilerplate.component';
+import { NotFoundComponent } from './components/error-pages/not-found/not-found.component';
+import { ErrorComponent } from './components/error-pages/error/error.component';
 
 const routes: Routes = [
     {
@@ -12,6 +13,7 @@ const routes: Routes = [
         component: HomeComponent
     },
     { path: 'error', pathMatch: 'full', component: ErrorComponent },
+    { path: '404', pathMatch: 'full', component: NotFoundComponent },
     {
         path: '_/:key',
         component: BoilerplateComponent
@@ -62,7 +64,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [
+        RouterModule.forRoot(routes, {
+            anchorScrolling: 'enabled'
+        })
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

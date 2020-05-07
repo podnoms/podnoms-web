@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { Boilerplate } from 'app/core/model/boilerplate';
 
 @Injectable({
     providedIn: 'root'
@@ -9,10 +10,9 @@ import { environment } from 'environments/environment';
 export class BoilerplateService {
     constructor(private httpClient: HttpClient) {}
 
-    getBoilerplate(key: string): Observable<string> {
-        return this.httpClient.get(
-            `${environment.apiHost}/boilerplate?key=${key}`,
-            { responseType: 'text' }
+    getBoilerplate(key: string): Observable<Boilerplate> {
+        return this.httpClient.get<Boilerplate>(
+            `${environment.apiHost}/boilerplate?key=${key}`
         );
     }
 }
