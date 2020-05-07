@@ -7,12 +7,15 @@ import { throwIfAlreadyLoaded } from './module-import-check';
 import { AudioService } from './audio.service';
 import { AuthService } from '../auth/auth.service';
 import { AlertService } from './alerts/alert.service';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from 'environments/environment';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
-        RouterModule // because we use <router-outlet> and routerLink
+        RouterModule, // because we use <router-outlet> and routerLink
+        LoggerModule.forRoot(environment.logConfig)
     ],
     providers: [AudioService, AuthService, AlertService]
 })

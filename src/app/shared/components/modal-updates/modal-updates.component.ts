@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserSlugModalComponent } from './user-slug-modal.component';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-modal-updates',
@@ -24,7 +25,8 @@ export class ModalUpdatesComponent implements AfterViewInit {
     constructor(
         private router: Router,
         private profileService: ProfileDataService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private logger: NGXLogger
     ) {}
 
     ngAfterViewInit() {
@@ -56,7 +58,7 @@ export class ModalUpdatesComponent implements AfterViewInit {
                             });
                         },
                         () =>
-                            console.log(
+                            this.logger.info(
                                 'modal-updates.component',
                                 'No redirect necessary'
                             )

@@ -42,6 +42,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PodcastEditFormDetailsComponent } from './podcast-edit-form/podcast-edit-form-details/podcast-edit-form-details.component';
 import { PodcastEditFormAdvancedComponent } from './podcast-edit-form/podcast-edit-form-advanced/podcast-edit-form-advanced.component';
 import { PodcastPublicSettingsComponent } from './podcast-public-settings/podcast-public-settings.component';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { environment } from 'environments/environment';
 @NgModule({
     imports: [
         CommonModule,
@@ -55,7 +57,8 @@ import { PodcastPublicSettingsComponent } from './podcast-public-settings/podcas
         NgbProgressbarModule,
         NgbTabsetModule,
         NgxDatatableModule,
-        ComponentsModule
+        ComponentsModule,
+        LoggerModule.forRoot(environment.logConfig)
     ],
     exports: [PodcastComponent],
     declarations: [

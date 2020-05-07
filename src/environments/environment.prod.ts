@@ -1,3 +1,12 @@
+import { NgxLoggerLevel, LoggerConfig } from 'ngx-logger';
+
+const _logConfig: LoggerConfig = {
+    // serverLoggingUrl: '/api/logs',
+    level: NgxLoggerLevel.OFF,
+    serverLogLevel: NgxLoggerLevel.OFF,
+    colorScheme: ['purple', 'teal', 'gray', 'gray', 'red', 'red', 'red']
+};
+
 export const environment = {
     production: true,
     publicPageEnabled: true,
@@ -31,5 +40,6 @@ export const environment = {
     recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
     features: {
         googleContactSyncEnabled: false
-    }
+    },
+    logConfig: _logConfig
 };

@@ -15,6 +15,7 @@ import { EntriesStoreService } from '../entries-store.service';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -42,13 +43,14 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
         private podcastEntryDataService: EntryDataService,
         private dragDropService: DragDropService,
         private alertService: AlertService,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private logger: NGXLogger
     ) {}
 
     ngAfterViewInit() {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('podcast-detail.component', 'ngOnChanges', changes);
+        this.logger.info('podcast-detail.component', 'ngOnChanges', changes);
     }
     // definitely a smell here - change detection
     // seems to have become "not" automatic

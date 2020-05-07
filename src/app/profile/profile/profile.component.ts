@@ -24,6 +24,7 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-profile',
@@ -96,9 +97,10 @@ export class ProfileComponent extends BasePageComponent
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
         private alertService: AlertService,
+        logger: NGXLogger,
         uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
         this.searchTerm$
             .pipe(
                 debounceTime(400),
@@ -182,7 +184,7 @@ export class ProfileComponent extends BasePageComponent
                         // this.router.navigate(['/']);
                     },
                     err => {
-                        console.log('profile.component', 'Error', err);
+                        this.logger.info('profile.component', 'Error', err);
                     }
                 );
             } else {

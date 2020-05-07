@@ -36,7 +36,7 @@ export class PaymentListComponent implements OnInit {
         anchor.click();
         // this.downloader.nativeElement.src = url;
         // this.paymentService.downloadInvoice(payment.id).subscribe(p => {
-        //     console.log('payment-list.component', 'downloadInovice', p);
+        //     this.logger.info('payment-list.component', 'downloadInovice', p);
         //     const downloadUrl = window.URL.createObjectURL(
         //         new Blob([this['response']], {
         //             type: 'text/html'

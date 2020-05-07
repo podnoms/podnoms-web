@@ -32,6 +32,8 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { SimpleAudioPlayerComponent } from './components/simple-audio-player/simple-audio-player.component';
 import { BaseComponent } from './components/base/base.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from 'environments/environment';
 
 @NgModule({
     imports: [
@@ -41,7 +43,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
         RouterModule,
         SocialLoginModule,
         NgbModule,
-        NgSelectModule
+        NgSelectModule,
+        LoggerModule.forRoot(environment.logConfig)
     ],
     exports: [
         FormsModule,

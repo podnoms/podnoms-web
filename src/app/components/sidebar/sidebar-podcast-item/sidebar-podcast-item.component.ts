@@ -4,6 +4,7 @@ import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../../podcasts/entry-data.service';
 import { PodcastStoreService } from '../../../podcasts/podcast-store.service';
 import { AlertService } from '../../../core/alerts/alert.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-sidebar-podcast-item',
@@ -19,7 +20,8 @@ export class SidebarPodcastItemComponent implements OnInit {
         private alertService: AlertService,
         private uiStateService: UiStateService,
         private entryDataService: EntryDataService,
-        private podcastStoreService: PodcastStoreService
+        private podcastStoreService: PodcastStoreService,
+        protected logger: NGXLogger
     ) {}
 
     ngOnInit() {}
@@ -27,11 +29,11 @@ export class SidebarPodcastItemComponent implements OnInit {
         $event.preventDefault();
     }
     drop($event: DragEvent) {
-        console.log('sidebar.component.ts', 'drop', $event);
+        this.logger.info('sidebar.component.ts', 'drop', $event);
         const entry: PodcastEntry = JSON.parse(
             $event.dataTransfer.getData('text/plain')
         );
-        console.log('sidebar.component.ts', 'data:entry:id', entry);
+        this.logger.info('sidebar.component.ts', 'data:entry:id', entry);
         this.podcastStoreService.getByKey(entry.podcastId).subscribe(p => {
             p.podcastEntries = p.podcastEntries.filter(
                 obj => obj.id !== entry.id

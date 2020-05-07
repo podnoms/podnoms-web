@@ -14,7 +14,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProfileStoreService } from './profile/profile-store.service';
 import { Observable } from 'rxjs';
 import { UpdateService } from './shared/services/update.service';
-
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -25,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { InterstitialComponent } from './shared/components/interstitial/interstitial.component';
 import { AppDispatchers } from './store/app-config/dispatchers';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
+import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -49,7 +49,8 @@ registerLocaleData(localeIE, 'ie');
         AngularFireMessagingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production
-        })
+        }),
+        LoggerModule.forRoot(environment.logConfig)
     ],
     providers: [
         UpdateService,
@@ -66,7 +67,10 @@ registerLocaleData(localeIE, 'ie');
 })
 export class AppModule {
     profile$: Observable<Profile[]>;
-    constructor(profileStoreService: ProfileStoreService) {
+    constructor(
+        profileStoreService: ProfileStoreService,
+        private logger: NGXLogger
+    ) {
         this.profile$ = profileStoreService.entities$;
     }
 }

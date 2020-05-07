@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-not-found',
@@ -8,8 +9,11 @@ import { UiStateService } from 'app/core/ui-state.service';
     styleUrls: ['./not-found.component.scss']
 })
 export class NotFoundComponent extends BasePageComponent {
-    constructor(protected uiStateService: UiStateService) {
-        super(uiStateService);
+    constructor(
+        protected logger: NGXLogger,
+        protected uiStateService: UiStateService
+    ) {
+        super(logger, uiStateService);
     }
 
     ngOnInit(): void {

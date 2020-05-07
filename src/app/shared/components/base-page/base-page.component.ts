@@ -2,14 +2,18 @@ import { Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { UiStateService } from 'app/core/ui-state.service';
 import { BaseComponent } from '../base/base.component';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-base-page',
     template: ''
 })
 export class BasePageComponent extends BaseComponent {
-    constructor(protected uiStateService: UiStateService) {
-        super(uiStateService);
+    constructor(
+        protected logger: NGXLogger,
+        protected uiStateService: UiStateService
+    ) {
+        super(logger, uiStateService);
         uiStateService.setNakedPage(false);
     }
 

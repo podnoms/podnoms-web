@@ -18,6 +18,7 @@ import {
 } from 'rxjs/operators';
 import { SearchService } from 'app/shared/services/search.service';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-header-search',
@@ -32,7 +33,11 @@ export class HeaderSearchComponent implements AfterViewInit {
     searching: boolean = false;
     searchFailed: boolean = false;
     public model: any;
-    constructor(private searchService: SearchService, private router: Router) {}
+    constructor(
+        private searchService: SearchService,
+        private router: Router,
+        private logger: NGXLogger
+    ) {}
 
     ngAfterViewInit() {
         setTimeout(() => this.searchElement.nativeElement.focus());
@@ -47,7 +52,7 @@ export class HeaderSearchComponent implements AfterViewInit {
                 this.searchService.doSearch(term).pipe(
                     tap(() => (this.searchFailed = false)),
                     catchError(e => {
-                        console.log(
+                        this.logger.info(
                             'header-search.component',
                             'searchError',
                             e
@@ -62,7 +67,7 @@ export class HeaderSearchComponent implements AfterViewInit {
 
     formatter = (x: { name: string }) => x.name;
     selectSearchItem($event) {
-        console.log('header-search.component', 'selectSearchItem', $event);
+        this.logger.info('header-search.component', 'selectSearchItem', $event);
         this.closeSearch.emit();
         this.router.navigate(['podcasts', $event.item.url]);
     }

@@ -19,6 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
 import { environment } from '../../../environments/environment';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-forgot-password',
@@ -59,10 +60,11 @@ export class ForgotPasswordComponent extends BasePageComponent
         private router: Router,
         private fb: FormBuilder,
         private constants: ConstantsService,
+        logger: NGXLogger,
         uiStateService: UiStateService
     ) {
-        super(uiStateService);
-        console.log('forgot-password.component', '');
+        super(logger, uiStateService);
+        this.logger.info('forgot-password.component', '');
         if (route.snapshot.queryParams['token']) {
             this.returnTrip = true;
         }
@@ -122,7 +124,11 @@ export class ForgotPasswordComponent extends BasePageComponent
                 this.authService.forgotPassword(this.email).subscribe(
                     result => {
                         if (result['email']) {
-                            console.log('reset.component.ts', 'method', result);
+                            this.logger.info(
+                                'reset.component.ts',
+                                'method',
+                                result
+                            );
                             this.errorMessage = '';
                             this.successMessage = `If we found a user with the email ${result['email']} then a reset link should be in your inbox`;
                         } else {

@@ -17,6 +17,7 @@ import { validateDomain } from '../../shared/validators/domain.validator';
 import { CategoryService } from '../../shared/services/category.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-podcast-edit-form',
@@ -35,7 +36,8 @@ export class PodcastEditFormComponent implements OnInit {
         private podcastDataService: PodcastDataService,
         private podcastStore: PodcastStoreService,
         private modalService: NgbModal,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private logger: NGXLogger
     ) {}
 
     ngOnInit() {
@@ -83,7 +85,7 @@ export class PodcastEditFormComponent implements OnInit {
         });
     }
     deletePodcast(podcast: Podcast) {
-        console.log('PodcastComponent', 'deletePodcast');
+        this.logger.info('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {

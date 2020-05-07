@@ -2,12 +2,17 @@ import { Injectable, NgZone } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
 import { AlertService } from '../../core/alerts/alert.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UpdateService {
-    constructor(public updates: SwUpdate, public alertService: AlertService) {
+    constructor(
+        public updates: SwUpdate,
+        public alertService: AlertService,
+        protected logger: NGXLogger
+    ) {
         if (updates.isEnabled) {
             interval(6 * 60 * 60).subscribe(() => {
                 updates.checkForUpdate().then(() => {});
@@ -20,7 +25,7 @@ export class UpdateService {
     }
 
     private promptUser(): void {
-        console.log('update.service', 'Updating to latest version');
+        this.logger.info('update.service', 'Updating to latest version');
         const toast = this.alertService.success(
             'A new version of PodNoms is available!',
             'Click here to reload...',

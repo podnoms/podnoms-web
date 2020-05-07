@@ -31,6 +31,8 @@ import { ChatboxComponent } from './shared/chatbox/chatbox.component';
 import { BoilerplateComponent } from './boilerplate/boilerplate.component';
 import { ErrorComponent } from './error-pages/error/error.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from 'environments/environment';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
@@ -43,7 +45,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         NgxAudioplayerModule,
         NgbTypeaheadModule,
         NgbTooltipModule,
-        NgbProgressbarModule
+        NgbProgressbarModule,
+        LoggerModule.forRoot(environment.logConfig)
     ],
     providers: [
         PodcastStoreService,
