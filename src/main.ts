@@ -15,7 +15,7 @@ if (
     enableProdMode();
 
     // if (typeof window.console !== 'undefined') {
-    //     // window.this.logger.info = function() {};
+    //     // window.this.logger.debug = function() {};
     //     // window.console.debug = function() {};
     //     // window.console.warn = function() {};
     //     // window.this.logger.error = function() {};
@@ -30,4 +30,4 @@ platformBrowserDynamic()
             navigator.serviceWorker.register('/ngsw-worker.js');
         }
     })
-    .catch(err => this.logger.info(err));
+    .catch((err) => this.logger.debug(err));

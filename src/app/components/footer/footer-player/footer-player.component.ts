@@ -4,7 +4,7 @@ import {
     AfterViewInit,
     ViewChild,
     ElementRef,
-    OnDestroy
+    OnDestroy,
 } from '@angular/core';
 import { AudioService, PlayState } from '../../../core/audio.service';
 import { NowPlaying } from 'app/core/model/now-playing';
@@ -15,7 +15,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
-    styleUrls: ['./footer-player.component.scss']
+    styleUrls: ['./footer-player.component.scss'],
 })
 export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('player')
@@ -32,26 +32,26 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
     ngOnInit() {}
     ngAfterViewInit() {
-        this.audioService.nowPlaying$.subscribe(nowPlaying => {
+        this.audioService.nowPlaying$.subscribe((nowPlaying) => {
             if (nowPlaying.url) {
                 this.nowPlaying = nowPlaying;
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
-                    .subscribe(pcmUrl => {
+                    .subscribe((pcmUrl) => {
                         this.initialised = true;
                         this.pcmUrl = pcmUrl;
                         this.audioService.audioLoaded();
                     });
             }
         });
-        this.audioService.playState$.subscribe(s => {
+        this.audioService.playState$.subscribe((s) => {
             if (s === PlayState.none) {
                 this.player.stop();
             }
         });
     }
     ngOnDestroy() {
-        this.logger.info(
+        this.logger.debug(
             'footer-player.component',
             'ngOnDestroy',
             'Waaaaaasted'

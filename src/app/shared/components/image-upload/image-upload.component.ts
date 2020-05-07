@@ -8,7 +8,7 @@ import {
     Output,
     EventEmitter,
     SimpleChange,
-    OnChanges
+    OnChanges,
 } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { Observable, of } from 'rxjs';
@@ -17,7 +17,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-image-upload',
     templateUrl: './image-upload.component.html',
-    styleUrls: ['./image-upload.component.scss']
+    styleUrls: ['./image-upload.component.scss'],
 })
 export class ImageUploadComponent implements OnInit, OnChanges {
     private _imageFileBuffer: File;
@@ -40,14 +40,14 @@ export class ImageUploadComponent implements OnInit, OnChanges {
         this._initPasteHandler();
     }
     ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
-        // this.logger.info('image-upload.component', 'ngOnchanges', changes);
+        // this.logger.debug('image-upload.component', 'ngOnchanges', changes);
         // if (changes && changes.imageUrl && !this.image.src) {
         //     this.image.src = changes.imageUrl.currentValue;
         // }
     }
     _initPasteHandler() {
-        this.renderer.listen('document', 'paste', e => {
-            this.logger.info('Paste', e);
+        this.renderer.listen('document', 'paste', (e) => {
+            this.logger.debug('Paste', e);
             for (let i = 0; i < e.clipboardData.items.length; i++) {
                 const item = e.clipboardData.items[i];
                 if (item.kind === 'file') {
@@ -81,8 +81,12 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     }
     getRandomImage($event) {
         this.imageService.getRandom().subscribe(
-            r => {
-                this.logger.info('image-upload.component', 'getRandomImage', r);
+            (r) => {
+                this.logger.debug(
+                    'image-upload.component',
+                    'getRandomImage',
+                    r
+                );
                 this.image.src = r;
                 this.imageChanged = true;
                 this._imageFileBuffer = this._dataURLtoFile(
@@ -91,7 +95,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
                 );
                 $event();
             },
-            e => {
+            (e) => {
                 this.logger.error(
                     'image-upload.component',
                     'getRandomImage',

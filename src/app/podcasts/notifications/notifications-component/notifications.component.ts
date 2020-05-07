@@ -8,7 +8,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.scss']
+    styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
     @Input()
@@ -28,14 +28,14 @@ export class NotificationsComponent implements OnInit {
         this.notifications = this.podcast.notifications;
     }
     deleteNotification(notification: Notification) {
-        this.logger.info(
+        this.logger.debug(
             'notifications.component',
             'deleteNotification',
             notification
         );
-        this.nds.deleteNotification(notification).subscribe(result => {
+        this.nds.deleteNotification(notification).subscribe((result) => {
             this.podcast.notifications = this.podcast.notifications.filter(
-                r => r.id !== notification.id
+                (r) => r.id !== notification.id
             );
             this.notifications = this.podcast.notifications;
             this.updated.emit(this.podcast);

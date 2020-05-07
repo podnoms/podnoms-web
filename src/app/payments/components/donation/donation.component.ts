@@ -6,7 +6,7 @@ declare var BuyWithCrypto: any;
 @Component({
     selector: 'app-donation',
     templateUrl: './donation.component.html',
-    styleUrls: ['./donation.component.scss']
+    styleUrls: ['./donation.component.scss'],
 })
 export class DonationComponent implements OnInit {
     constructor(
@@ -16,14 +16,14 @@ export class DonationComponent implements OnInit {
 
     ngOnInit() {
         this.scriptService.load('coinbase').then(() => {
-            BuyWithCrypto.registerCallback('onSuccess', e => {
-                this.logger.info('donation.component', 'onSuccess', e);
+            BuyWithCrypto.registerCallback('onSuccess', (e) => {
+                this.logger.debug('donation.component', 'onSuccess', e);
             });
-            BuyWithCrypto.registerCallback('onFailure', e => {
-                this.logger.info('donation.component', 'onFailure', e);
+            BuyWithCrypto.registerCallback('onFailure', (e) => {
+                this.logger.debug('donation.component', 'onFailure', e);
             });
-            BuyWithCrypto.registerCallback('onPaymentDetected', e => {
-                this.logger.info('donation.component', 'onPaymentDetected', e);
+            BuyWithCrypto.registerCallback('onPaymentDetected', (e) => {
+                this.logger.debug('donation.component', 'onPaymentDetected', e);
             });
         });
     }

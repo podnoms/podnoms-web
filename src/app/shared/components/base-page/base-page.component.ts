@@ -6,7 +6,7 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-base-page',
-    template: ''
+    template: '',
 })
 export class BasePageComponent extends BaseComponent {
     constructor(

@@ -12,7 +12,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-entry-edit-form',
     templateUrl: './entry-edit-form.component.html',
-    styleUrls: ['./entry-edit-form.component.scss']
+    styleUrls: ['./entry-edit-form.component.scss'],
 })
 export class EntryEditFormComponent implements OnInit {
     @ViewChild('imageControl')
@@ -38,14 +38,14 @@ export class EntryEditFormComponent implements OnInit {
         const form = fb.group({
             id: [entry.id],
             title: [entry.title],
-            description: [entry.description]
+            description: [entry.description],
         });
         return form;
     }
 
     ngOnInit() {
-        this.entriesStore.getByKey(this.entryId).subscribe(e => {
-            this.logger.info('entry-edit-form.component', 'subscribe', e);
+        this.entriesStore.getByKey(this.entryId).subscribe((e) => {
+            this.logger.debug('entry-edit-form.component', 'subscribe', e);
             this.entry = e;
             this.entryEditForm = this._createForm(this.fb, e);
             this.formImageUrl = e.imageUrl;
@@ -57,10 +57,10 @@ export class EntryEditFormComponent implements OnInit {
             this.entryEditForm.value
         );
         this.entryDataService.updateEntry(entry).subscribe(
-            e => {
+            (e) => {
                 if (this.imageControl.imageChanged) {
                     this.imageControl.commitImage(e.id, 'entry').subscribe(
-                        result => {
+                        (result) => {
                             if (result !== null) {
                                 e.imageUrl = `${
                                     result.imageUrl
@@ -76,7 +76,7 @@ export class EntryEditFormComponent implements OnInit {
                             this.alertService.info('Success', 'Entry updated');
                             this.router.navigate(['podcasts', e.podcastSlug]);
                         },
-                        error => {
+                        (error) => {
                             this.logger.error(
                                 'entry-edit-form.component',
                                 'sendImage',
@@ -93,8 +93,8 @@ export class EntryEditFormComponent implements OnInit {
                     this.router.navigate(['podcasts', e.podcastSlug]);
                 }
             },
-            error => {
-                this.logger.info(
+            (error) => {
+                this.logger.debug(
                     'entry-edit-form.component',
                     'updateEntry',
                     error

@@ -7,7 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
     errorMessage: string = '';
@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
     socialLogin(method: string) {
         this.authService.socialLogin(method).subscribe(
             () => this._routePostLogin(),
-            error =>
-                this.logger.info('login.component', 'Error logging in', error)
+            (error) =>
+                this.logger.debug('login.component', 'Error logging in', error)
         );
     }
     login() {

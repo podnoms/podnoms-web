@@ -5,7 +5,7 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UpdateService {
     constructor(
@@ -21,11 +21,11 @@ export class UpdateService {
     }
 
     public checkForUpdates(): void {
-        this.updates.available.subscribe(event => this.promptUser());
+        this.updates.available.subscribe((event) => this.promptUser());
     }
 
     private promptUser(): void {
-        this.logger.info('update.service', 'Updating to latest version');
+        this.logger.debug('update.service', 'Updating to latest version');
         const toast = this.alertService.success(
             'A new version of PodNoms is available!',
             'Click here to reload...',

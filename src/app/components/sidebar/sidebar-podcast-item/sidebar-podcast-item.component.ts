@@ -9,7 +9,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-sidebar-podcast-item',
     templateUrl: './sidebar-podcast-item.component.html',
-    styleUrls: ['./sidebar-podcast-item.component.scss']
+    styleUrls: ['./sidebar-podcast-item.component.scss'],
 })
 export class SidebarPodcastItemComponent implements OnInit {
     @Input()
@@ -29,14 +29,14 @@ export class SidebarPodcastItemComponent implements OnInit {
         $event.preventDefault();
     }
     drop($event: DragEvent) {
-        this.logger.info('sidebar.component.ts', 'drop', $event);
+        this.logger.debug('sidebar.component.ts', 'drop', $event);
         const entry: PodcastEntry = JSON.parse(
             $event.dataTransfer.getData('text/plain')
         );
-        this.logger.info('sidebar.component.ts', 'data:entry:id', entry);
-        this.podcastStoreService.getByKey(entry.podcastId).subscribe(p => {
+        this.logger.debug('sidebar.component.ts', 'data:entry:id', entry);
+        this.podcastStoreService.getByKey(entry.podcastId).subscribe((p) => {
             p.podcastEntries = p.podcastEntries.filter(
-                obj => obj.id !== entry.id
+                (obj) => obj.id !== entry.id
             );
             this.podcast.podcastEntries.push(entry);
             this.podcastStoreService.updateOneInCache(p);

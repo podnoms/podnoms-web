@@ -7,7 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PaymentsService {
     constructor(private http: HttpClient, protected logger: NGXLogger) {}
@@ -30,15 +30,15 @@ export class PaymentsService {
         amount: number,
         type: string
     ): Observable<Boolean> {
-        this.logger.info('payments.service', 'processPayment', token, amount);
+        this.logger.debug('payments.service', 'processPayment', token, amount);
         const data = JSON.stringify({
             token: token,
             amount: amount,
-            type: type
+            type: type,
         });
         return this.http
             .post(environment.apiHost + '/payments', data)
-            .pipe(map(r => r !== undefined));
+            .pipe(map((r) => r !== undefined));
     }
     downloadInvoice(id: string): Observable<any> {
         return this.http.get<any>(

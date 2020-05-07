@@ -22,7 +22,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-podcast-edit-form',
     templateUrl: './podcast-edit-form.component.html',
-    styleUrls: ['./podcast-edit-form.component.scss']
+    styleUrls: ['./podcast-edit-form.component.scss'],
 })
 export class PodcastEditFormComponent implements OnInit {
     podcast$: Observable<Podcast>;
@@ -48,8 +48,8 @@ export class PodcastEditFormComponent implements OnInit {
                 this.podcast$ = of(new Podcast());
             } else {
                 this.podcastStore.entities$
-                    .pipe(map(r => r.filter(it => it.slug === id)))
-                    .subscribe(p => {
+                    .pipe(map((r) => r.filter((it) => it.slug === id)))
+                    .subscribe((p) => {
                         const podcast = p[0];
                         if (podcast) {
                             this.podcast$ = of(podcast);
@@ -61,7 +61,7 @@ export class PodcastEditFormComponent implements OnInit {
         }
     }
     wizardFinish(podcast: Podcast) {
-        this.podcastDataService.addPodcast(podcast).subscribe(p => {
+        this.podcastDataService.addPodcast(podcast).subscribe((p) => {
             this.wizardControl.imageControl
                 .commitImage(p.id, 'podcast')
                 .subscribe(() => {
@@ -78,16 +78,16 @@ export class PodcastEditFormComponent implements OnInit {
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);
         modalRef.componentInstance.podcast = podcast;
-        modalRef.result.then(r => {
+        modalRef.result.then((r) => {
             if (r === 'delete') {
                 this.deletePodcast(podcast);
             }
         });
     }
     deletePodcast(podcast: Podcast) {
-        this.logger.info('PodcastComponent', 'deletePodcast');
+        this.logger.debug('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
-            r => {
+            (r) => {
                 if (r) {
                     if (localStorage.getItem('__spslug') === podcast.slug) {
                         localStorage.removeItem('__spslug');

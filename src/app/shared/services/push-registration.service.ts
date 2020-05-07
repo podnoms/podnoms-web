@@ -6,7 +6,7 @@ import { NGXLogger } from 'ngx-logger';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PushRegistrationService {
     constructor(private http: HttpClient, protected logger: NGXLogger) {}
@@ -25,7 +25,7 @@ export class PushRegistrationService {
     }
 
     addSubscriber(registration: PushSubscriptionJSON): Observable<any> {
-        this.logger.info(
+        this.logger.debug(
             'push-registration.service',
             'addSubscriber',
             registration
@@ -39,7 +39,7 @@ export class PushRegistrationService {
         const url = `${environment.apiHost}/webpush`;
         const body = {
             action: 'unsubscribe',
-            subscription: subscription
+            subscription: subscription,
         };
         return this.http
             .post(url, JSON.stringify(body))

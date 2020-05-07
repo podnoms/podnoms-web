@@ -5,7 +5,7 @@ import {
     Input,
     AfterViewInit,
     ViewChild,
-    ElementRef
+    ElementRef,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-modal-updates',
     template: '',
-    styleUrls: ['./modal-updates.component.scss']
+    styleUrls: ['./modal-updates.component.scss'],
 })
 export class ModalUpdatesComponent implements AfterViewInit {
     @Input() action$: Observable<string>;
@@ -30,7 +30,7 @@ export class ModalUpdatesComponent implements AfterViewInit {
     ) {}
 
     ngAfterViewInit() {
-        this.action$.subscribe(a => {
+        this.action$.subscribe((a) => {
             if (a === 'redirectslug') {
                 this._doSlugRedirect();
             }
@@ -42,17 +42,17 @@ export class ModalUpdatesComponent implements AfterViewInit {
             value = 0;
         }
         if (value % 10 === 0) {
-            this.profileService.getProfile().subscribe(p => {
+            this.profileService.getProfile().subscribe((p) => {
                 if (p) {
                     this.profileService.checkUserNeedsRedirect().subscribe(
-                        response => {
+                        (response) => {
                             if (response.ok && response.status === 200) {
                                 const modalRef = this.modalService.open(
                                     UserSlugModalComponent,
                                     { size: 'lg' }
                                 );
                                 modalRef.componentInstance.profile = p[0];
-                                modalRef.result.then(r => {
+                                modalRef.result.then((r) => {
                                     if (r === 'gotoprofile') {
                                         this.router.navigate(['/profile']);
                                     }
@@ -60,7 +60,7 @@ export class ModalUpdatesComponent implements AfterViewInit {
                             }
                         },
                         () =>
-                            this.logger.info(
+                            this.logger.debug(
                                 'modal-updates.component',
                                 'No redirect necessary'
                             )

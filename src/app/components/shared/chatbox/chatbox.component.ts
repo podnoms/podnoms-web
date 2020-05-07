@@ -5,7 +5,7 @@ import {
     AfterViewInit,
     ElementRef,
     ChangeDetectorRef,
-    OnChanges
+    OnChanges,
 } from '@angular/core';
 import { SupportChatService } from 'app/shared/services/support-chat.service';
 import { Chat } from 'app/core/model/chat';
@@ -17,7 +17,7 @@ import { AlertService } from 'app/core/alerts/alert.service';
 import {
     PerfectScrollbarConfigInterface,
     PerfectScrollbarComponent,
-    PerfectScrollbarDirective
+    PerfectScrollbarDirective,
 } from 'ngx-perfect-scrollbar';
 import { NGXLogger } from 'ngx-logger';
 import { map } from 'rxjs/operators';
@@ -25,7 +25,7 @@ import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-chatbox',
     templateUrl: './chatbox.component.html',
-    styleUrls: ['./chatbox.component.scss']
+    styleUrls: ['./chatbox.component.scss'],
 })
 export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
     anonName: string = '';
@@ -56,21 +56,21 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.profileService.getProfile().subscribe(p => {
+        this.profileService.getProfile().subscribe((p) => {
             this.profile = p && p[0];
         });
         this.signalr
             .init('chat')
-            .then(listener => {
+            .then((listener) => {
                 listener
                     .on<Chat>('chat', 'support-message')
-                    .subscribe(result => {
+                    .subscribe((result) => {
                         this.toUserId = result.fromUserId;
                         this._addMessage(result);
                         this.showing = true;
                     });
             })
-            .catch(err => {
+            .catch((err) => {
                 this.logger.error(
                     'app.component',
                     'Unable to initialise site update hub',
@@ -88,17 +88,17 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
                     this.chatService
                         .getAdminMessages()
                         .pipe(
-                            map(r =>
-                                r.map(message => this._addMessage(message))
+                            map((r) =>
+                                r.map((message) => this._addMessage(message))
                             )
                         )
-                        .subscribe(r => {
-                            this.logger.info(
+                        .subscribe((r) => {
+                            this.logger.debug(
                                 'chatbox.component',
                                 this.messageList
                             );
                             this.messageList.scrollToBottom(0, 300);
-                            this.logger.info(
+                            this.logger.debug(
                                 'chatbox.component',
                                 'getAdminMessages',
                                 r
@@ -124,7 +124,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
         }
     }
     private _initiateSupportRequest(chat: Chat) {
-        this.chatService.initiateSupportRequest(chat).subscribe(result => {
+        this.chatService.initiateSupportRequest(chat).subscribe((result) => {
             this.handshake = true;
             this.toUserId = result.toUserId;
             this.currentMessage = '';
@@ -132,7 +132,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
         });
     }
     private _postChat(chat: Chat) {
-        this.chatService.submitMessage(chat).subscribe(result => {
+        this.chatService.submitMessage(chat).subscribe((result) => {
             this.currentMessage = '';
             this._addMessage(result);
         });

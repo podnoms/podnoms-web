@@ -13,94 +13,100 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent extends BasePageComponent implements OnDestroy {
+export class HomeComponent implements OnDestroy {
     private _destroyed$: Subject<any>;
     profile$: Observable<Profile[]>;
     loaded: boolean = false;
     constructor(
-        router: Router,
-        profileStoreService: ProfileStoreService,
-        podcastStoreService: PodcastStoreService,
-        authService: AuthService,
-        protected logger: NGXLogger,
-        uiStateService: UiStateService
+        private router: Router,
+        private profileStoreService: ProfileStoreService,
+        private podcastStoreService: PodcastStoreService,
+        private authService: AuthService,
+        private logger: NGXLogger,
+        private uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
-
         this._destroyed$ = new Subject();
-        this.logger.info('home.component', 'ctor');
-
-        if (authService.getAuthToken()) {
+        this.logger.debug('home.component', 'ctor');
+    }
+    ngOnInit() {
+        if (this.authService.getAuthToken()) {
             // no point doing any of this if we have no JWT
-            this.profile$ = profileStoreService.entities$;
+            this.profile$ = this.profileStoreService.entities$;
             this.profile$.subscribe(
-                p => {
-                    profileStoreService.entities$.subscribe(profileResult => {
-                        if (profileResult && profileResult.length !== 0) {
-                            if (
-                                localStorage.getItem('__spslug') &&
-                                localStorage.getItem('__spslug') !== 'undefined'
-                            ) {
-                                router.navigate(
-                                    [
-                                        'podcasts',
-                                        localStorage.getItem('__spslug')
-                                    ],
-                                    {
-                                        replaceUrl: true
-                                    }
-                                );
-                            } else {
-                                podcastStoreService.count$.subscribe(count => {
-                                    if (count === 0) {
-                                        router.navigate(['podcasts']);
-                                    }
-                                });
-                                podcastStoreService.entities$
-                                    .pipe(
-                                        skip(1),
-                                        map(c =>
-                                            c.sort(
-                                                (a, b) =>
-                                                    new Date(
-                                                        b.createDate
-                                                    ).getTime() -
-                                                    new Date(
-                                                        a.createDate
-                                                    ).getTime()
-                                            )
-                                        ),
-                                        takeUntil(this._destroyed$)
-                                    )
-                                    .subscribe(tt => {
-                                        router.navigate(
-                                            ['podcasts', tt[0].slug],
-                                            {
-                                                replaceUrl: true
+                (p) => {
+                    this.profileStoreService.entities$.subscribe(
+                        (profileResult) => {
+                            if (profileResult && profileResult.length !== 0) {
+                                this.uiStateService.setNakedPage(false);
+                                if (
+                                    localStorage.getItem('__spslug') &&
+                                    localStorage.getItem('__spslug') !==
+                                        'undefined'
+                                ) {
+                                    this.router.navigate(
+                                        [
+                                            'podcasts',
+                                            localStorage.getItem('__spslug'),
+                                        ],
+                                        {
+                                            replaceUrl: true,
+                                        }
+                                    );
+                                } else {
+                                    this.podcastStoreService.count$.subscribe(
+                                        (count) => {
+                                            if (count === 0) {
+                                                this.router.navigate([
+                                                    'podcasts',
+                                                ]);
                                             }
-                                        );
-                                    });
+                                        }
+                                    );
+                                    this.podcastStoreService.entities$
+                                        .pipe(
+                                            skip(1),
+                                            map((c) =>
+                                                c.sort(
+                                                    (a, b) =>
+                                                        new Date(
+                                                            b.createDate
+                                                        ).getTime() -
+                                                        new Date(
+                                                            a.createDate
+                                                        ).getTime()
+                                                )
+                                            ),
+                                            takeUntil(this._destroyed$)
+                                        )
+                                        .subscribe((tt) => {
+                                            this.router.navigate(
+                                                ['podcasts', tt[0].slug],
+                                                {
+                                                    replaceUrl: true,
+                                                }
+                                            );
+                                        });
+                                }
+                            } else if (
+                                profileResult &&
+                                profileResult.length === 0
+                            ) {
+                                // this.loaded = true;
                             }
-                        } else if (
-                            profileResult &&
-                            profileResult.length === 0
-                        ) {
-                            // this.loaded = true;
                         }
-                    });
+                    );
                 },
-                err => {
+                (err) => {
                     this.logger.error('home.component', 'err', err);
-                    authService.logout();
+                    this.authService.logout();
                 }
             );
         } else {
             this.loaded = true;
         }
     }
-    ngOnInit() {}
     ngOnDestroy() {
         this._destroyed$.next();
         this._destroyed$.complete();

@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ProfileDataService {
     profile: Profile;
@@ -24,7 +24,7 @@ export class ProfileDataService {
                 return this.http
                     .get<Profile>(environment.apiHost + '/profile')
                     .pipe(
-                        map(res => {
+                        map((res) => {
                             this.profile = res;
                             return this.profile;
                         })
@@ -37,14 +37,14 @@ export class ProfileDataService {
         }
     }
     updateProfile(profile): Observable<Profile> {
-        this.logger.info('ProfileService', 'updateProfile', profile);
+        this.logger.debug('ProfileService', 'updateProfile', profile);
         return this.http.post<Profile>(
             environment.apiHost + '/profile',
             profile
         );
     }
     checkSlug(slug): Observable<boolean> {
-        this.logger.info('profile.service.ts', 'checkSlug', slug);
+        this.logger.debug('profile.service.ts', 'checkSlug', slug);
         return this.http.get<boolean>(
             environment.apiHost + '/profile/checkslug/' + slug
         );

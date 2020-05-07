@@ -20,7 +20,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends BaseComponent {
     sidebarOpen: boolean = true;
@@ -43,19 +43,20 @@ export class AppComponent extends BaseComponent {
         public uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
+        this.logger.info('app.component', 'constructor');
         this.uiStateService.nakedPage$.pipe(
-            tap(r => this.logger.info('app.component', 'nakedPage', r))
+            tap((r) => this.logger.info('app.component', 'nakedPage', r))
         );
         updateService.checkForUpdates();
         if (environment.production || false) {
             utilityService.checkForApiServer().subscribe(
                 () => {
                     this.profile$ = authService.profile$;
-                    this._bootstrapAuth().subscribe(r =>
+                    this._bootstrapAuth().subscribe((r) =>
                         this._bootstrapUpdates(r)
                     );
                 },
-                err => {
+                (err) => {
                     this.logger.error(
                         'home.component',
                         'checkForApiServer',
@@ -66,7 +67,7 @@ export class AppComponent extends BaseComponent {
             );
         } else {
             this.profile$ = authService.profile$;
-            this._bootstrapAuth().subscribe(r => this._bootstrapUpdates(r));
+            this._bootstrapAuth().subscribe((r) => this._bootstrapUpdates(r));
         }
     }
 
@@ -77,17 +78,17 @@ export class AppComponent extends BaseComponent {
     _bootstrapAuth(): Observable<boolean> {
         const observer = new BehaviorSubject<boolean>(false);
         this.authService.bootstrap().subscribe(() => {});
-        this.authService.authNavStatus$.subscribe(r => {
+        this.authService.authNavStatus$.subscribe((r) => {
             if (r) {
                 this.signalr
                     .init('userupdates')
-                    .then(listener => {
+                    .then((listener) => {
                         listener
                             .on<SiteUpdateMessage>(
                                 'userupdates',
                                 'site-notices'
                             )
-                            .subscribe(result => {
+                            .subscribe((result) => {
                                 this.alertService.info(
                                     result.title,
                                     result.message,
@@ -96,7 +97,7 @@ export class AppComponent extends BaseComponent {
                             });
                         observer.next(true);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         this.logger.error(
                             'app.component',
                             'Unable to initialise site update hub',
@@ -117,24 +118,32 @@ export class AppComponent extends BaseComponent {
 
         const profile$ = this.profileStoreService.entities$.pipe(
             (skip(1), take(1)),
-            map(r => r[0])
+            map((r) => r[0])
         );
 
-        profile$.subscribe(p => {
+        profile$.subscribe((p) => {
             this.action$.next('redirectslug');
             if (p && environment.production) {
-                this.logger.info('app.component', 'requesting subscription', p);
+                this.logger.info(
+                    'Resetting page layout and registering for push notifications'
+                );
+                this.uiStateService.setNakedPage(false);
+                this.logger.debug(
+                    'app.component',
+                    'requesting subscription',
+                    p
+                );
                 this.swPush
                     .requestSubscription({
-                        serverPublicKey: environment.vapidPublicKey
+                        serverPublicKey: environment.vapidPublicKey,
                     })
-                    .then(s => {
-                        this.logger.info(
+                    .then((s) => {
+                        this.logger.debug(
                             'app.component',
                             'requested subscription',
                             s
                         );
-                        this.logger.info(
+                        this.logger.debug(
                             'app.component',
                             'subscribing on server',
                             p
@@ -142,21 +151,23 @@ export class AppComponent extends BaseComponent {
                         this.pushRegistrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(
-                                r => {
-                                    this.logger.info(
+                                (r) => {
+                                    this.logger.debug(
                                         'app.component',
                                         'push request succeeded',
                                         r
                                     );
-                                    this.swPush.messages.subscribe(message => {
-                                        this.logger.info(
-                                            'app.component',
-                                            'Push message',
-                                            message
-                                        );
-                                    });
+                                    this.swPush.messages.subscribe(
+                                        (message) => {
+                                            this.logger.debug(
+                                                'app.component',
+                                                'Push message',
+                                                message
+                                            );
+                                        }
+                                    );
                                 },
-                                err =>
+                                (err) =>
                                     this.logger.error(
                                         'app.module',
                                         'Error calling registration service',
@@ -164,7 +175,7 @@ export class AppComponent extends BaseComponent {
                                     )
                             );
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         this._unsubscribe();
                         this.logger.error(
                             'app.module',
@@ -175,8 +186,8 @@ export class AppComponent extends BaseComponent {
                             err.name
                         );
                     });
-            } else {
-                this.logger.info(
+            } else if (environment.production) {
+                this.logger.debug(
                     'app.component',
                     'Unable to load profile from store'
                 );
@@ -184,7 +195,7 @@ export class AppComponent extends BaseComponent {
         });
     }
     _unsubscribe() {
-        this.swPush.subscription.pipe(take(1)).subscribe(pushSubscription => {
+        this.swPush.subscription.pipe(take(1)).subscribe((pushSubscription) => {
             pushSubscription.unsubscribe();
         });
     }

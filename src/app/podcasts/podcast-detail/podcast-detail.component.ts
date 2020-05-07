@@ -5,7 +5,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     OnChanges,
-    SimpleChanges
+    SimpleChanges,
 } from '@angular/core';
 
 import { Podcast, PodcastEntry } from '../../core';
@@ -26,14 +26,14 @@ import { NGXLogger } from 'ngx-logger';
         trigger('fade', [
             transition('void => *', [
                 style({ opacity: '0' }),
-                animate('1s ease-out', style({ opacity: '1' }))
+                animate('1s ease-out', style({ opacity: '1' })),
             ]),
             transition('* => void', [
                 style({ opacity: '1' }),
-                animate('.2s ease-in', style({ opacity: '0' }))
-            ])
-        ])
-    ]
+                animate('.2s ease-in', style({ opacity: '0' })),
+            ]),
+        ]),
+    ],
 })
 export class PodcastDetailComponent implements AfterViewInit, OnChanges {
     @Input() podcast: Podcast;
@@ -50,7 +50,7 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
     ngAfterViewInit() {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.logger.info('podcast-detail.component', 'ngOnChanges', changes);
+        this.logger.debug('podcast-detail.component', 'ngOnChanges', changes);
     }
     // definitely a smell here - change detection
     // seems to have become "not" automatic
@@ -64,7 +64,7 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
         this.podcastEntryDataService.deleteEntry(entry.id).subscribe(
             () => {
                 this.podcast.podcastEntries = this.podcast.podcastEntries.filter(
-                    obj => obj.id !== entry.id
+                    (obj) => obj.id !== entry.id
                 );
                 this.podcastStore.updateOneInCache(this.podcast);
                 this.cdRef.detectChanges();

@@ -4,7 +4,7 @@ import {
     ViewChild,
     SimpleChanges,
     OnInit,
-    AfterViewInit
+    AfterViewInit,
 } from '@angular/core';
 import { Profile, ProfileLimits, Payment } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
@@ -12,7 +12,7 @@ import {
     debounceTime,
     distinctUntilChanged,
     map,
-    switchMap
+    switchMap,
 } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { ProfileDataService } from '../profile-data.service';
@@ -29,7 +29,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+    styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent extends BasePageComponent
     implements OnInit, AfterViewInit {
@@ -40,7 +40,7 @@ export class ProfileComponent extends BasePageComponent
     public chartOptions: any = {
         legend: {
             display: true,
-            position: 'bottom'
+            position: 'bottom',
         },
         tooltips: {
             callbacks: {
@@ -59,11 +59,11 @@ export class ProfileComponent extends BasePageComponent
                         '%)'
                     );
                 },
-                title: function(tooltipItem, data) {
+                title: function (tooltipItem, data) {
                     return data.labels[tooltipItem[0].index];
-                }
-            }
-        }
+                },
+            },
+        },
     };
     @ViewChild(BaseChartDirective)
     private _chart: BaseChartDirective;
@@ -105,9 +105,9 @@ export class ProfileComponent extends BasePageComponent
             .pipe(
                 debounceTime(400),
                 distinctUntilChanged(),
-                switchMap(term => this.profileDataService.checkSlug(term))
+                switchMap((term) => this.profileDataService.checkSlug(term))
             )
-            .subscribe(r => {
+            .subscribe((r) => {
                 if (r) {
                     this.slugError = '';
                 } else {
@@ -116,7 +116,7 @@ export class ProfileComponent extends BasePageComponent
                 this.slugging = false;
             });
         this.profile$ = this.profileStoreService.entities$.pipe(
-            map(r => r.filter(it => it.slug !== null)[0])
+            map((r) => r.filter((it) => it.slug !== null)[0])
         );
     }
 
@@ -146,7 +146,7 @@ export class ProfileComponent extends BasePageComponent
     }
 
     refreshLimits() {
-        this.profileDataService.getLimits().subscribe(l => {
+        this.profileDataService.getLimits().subscribe((l) => {
             this.storageAvailable = l.storageQuota;
             this.chartData = [l.storageUsed, l.storageQuota - l.storageUsed];
 
@@ -166,10 +166,10 @@ export class ProfileComponent extends BasePageComponent
         // this._service.regenerateApiKey().subscribe(a => (profile.apiKey = a));
     }
     doSave(profile: Profile) {
-        this.profileDataService.updateProfile(profile).subscribe(p => {
+        this.profileDataService.updateProfile(profile).subscribe((p) => {
             if (this.imageControl.imageChanged) {
                 this.imageControl.commitImage(p.id, 'profile').subscribe(
-                    r => {
+                    (r) => {
                         profile.profileImageUrl = `${
                             r.profileImageUrl
                         }?v=${UUID.UUID()}`;
@@ -183,8 +183,8 @@ export class ProfileComponent extends BasePageComponent
                         );
                         // this.router.navigate(['/']);
                     },
-                    err => {
-                        this.logger.info('profile.component', 'Error', err);
+                    (err) => {
+                        this.logger.debug('profile.component', 'Error', err);
                     }
                 );
             } else {

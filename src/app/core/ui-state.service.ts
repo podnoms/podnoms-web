@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UiStateService {
     private _sidebarOpen: boolean = true;
@@ -41,7 +41,7 @@ export class UiStateService {
     }
     @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-        this.logger.info('ui-state.service', 'onResize', event);
+        this.logger.debug('ui-state.service', 'onResize', event);
         this.viewportWidth = event.target.innerWidth;
     }
 
@@ -50,7 +50,7 @@ export class UiStateService {
     }
 
     setNakedPage(isNaked: boolean): void {
-        this.logger.info(`Changing Naked UI: ${isNaked}`);
+        this.logger.debug(`Changing Naked UI: ${isNaked}`);
         setTimeout(() => {
             this.nakedPage$.next(isNaked);
         });

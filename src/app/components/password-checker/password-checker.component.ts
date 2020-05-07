@@ -5,21 +5,21 @@ import {
     Input,
     Output,
     EventEmitter,
-    OnInit
+    OnInit,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
     debounceTime,
     distinctUntilChanged,
     switchMap,
-    filter
+    filter,
 } from 'rxjs/operators';
 import { UtilityService } from '../../shared/services/utility.service';
 import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-password-checker',
     templateUrl: './password-checker.component.html',
-    styleUrls: ['./password-checker.component.scss']
+    styleUrls: ['./password-checker.component.scss'],
 })
 export class PasswordCheckerComponent implements OnInit, OnChanges {
     private _repeatPassword: string;
@@ -41,7 +41,7 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
         'Ok, I guess',
         // tslint:disable-next-line:quotemark
         'Excellent',
-        'Perfection!!!'
+        'Perfection!!!',
     ];
 
     constructor(
@@ -56,10 +56,10 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
             .pipe(
                 debounceTime(400),
                 distinctUntilChanged(),
-                filter(term => term.length > 3),
-                switchMap(term => this.utilityService.checkPassword(term))
+                filter((term) => term.length > 3),
+                switchMap((term) => this.utilityService.checkPassword(term))
             )
-            .subscribe(r => {
+            .subscribe((r) => {
                 this._processStrength(r);
             });
     }
@@ -69,7 +69,7 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
 
         this.strengthPercentage =
             ((this.strength + 1) / this.defaultMessages.length) * 100;
-        this.logger.info(
+        this.logger.debug(
             'Strength',
             this.strength,
             this.strengthMessage,

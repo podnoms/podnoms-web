@@ -2,7 +2,7 @@ import {
     timer as observableTimer,
     Subscription,
     Observable,
-    BehaviorSubject
+    BehaviorSubject,
 } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { NowPlaying } from './model/now-playing';
@@ -13,11 +13,11 @@ export enum PlayState {
     none = -1,
     loading = 0,
     playing = 1,
-    paused = 0
+    paused = 0,
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AudioService {
     private _playState: PlayState = PlayState.none;
@@ -42,20 +42,20 @@ export class AudioService {
         this.playState$.next(PlayState.loading);
     }
     pauseAudio() {
-        this.logger.info('audio.service', 'pauseAudio');
+        this.logger.debug('audio.service', 'pauseAudio');
         this._playState = PlayState.paused;
         this.playState$.next(this._playState);
     }
     stopAudio() {
         if (this._playState !== PlayState.none) {
-            this.logger.info('audio.service', 'stopAudio');
+            this.logger.debug('audio.service', 'stopAudio');
             this._playState = PlayState.none;
             this.playState$.next(this._playState);
             this.uiStateService.setFooterOpen(false);
         }
     }
     audioLoaded() {
-        this.logger.info('audio.service', 'audioLoaded');
+        this.logger.debug('audio.service', 'audioLoaded');
         this._playState = PlayState.playing;
         this.playState$.next(this._playState);
         this.uiStateService.setFooterOpen(true);

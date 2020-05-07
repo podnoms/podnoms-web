@@ -2,9 +2,9 @@ import { NgxLoggerLevel, LoggerConfig } from 'ngx-logger';
 
 const _logConfig: LoggerConfig = {
     // serverLoggingUrl: '/api/logs',
-    level: NgxLoggerLevel.OFF,
+    level: NgxLoggerLevel.INFO,
     serverLogLevel: NgxLoggerLevel.OFF,
-    colorScheme: ['purple', 'teal', 'gray', 'gray', 'red', 'red', 'red']
+    colorScheme: ['purple', 'teal', 'gray', 'gray', 'red', 'red', 'red'],
 };
 
 export const environment = {
@@ -25,21 +25,21 @@ export const environment = {
         databaseURL: 'https://podnoms-api.firebaseio.com',
         projectId: 'podnoms-api',
         storageBucket: 'podnoms-api.appspot.com',
-        messagingSenderId: '357461672895'
+        messagingSenderId: '357461672895',
     },
     facebook: {
         appId: '1887182031397435',
-        version: 'v3.2'
+        version: 'v3.2',
     },
     google: {
         apiKey: 'AIzaSyAw5b_4i7wRqiYGq0bTIjn9VMREFfGqMFA',
         clientId:
-            '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com'
+            '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com',
     },
     stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
     recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
     features: {
-        googleContactSyncEnabled: false
+        googleContactSyncEnabled: false,
     },
-    logConfig: _logConfig
+    logConfig: _logConfig,
 };

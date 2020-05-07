@@ -4,7 +4,7 @@ import {
     Input,
     Output,
     ViewChild,
-    AfterViewInit
+    AfterViewInit,
 } from '@angular/core';
 import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
@@ -15,7 +15,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-upload-url',
     templateUrl: './upload-url.component.html',
-    styleUrls: ['./upload-url.component.scss']
+    styleUrls: ['./upload-url.component.scss'],
 })
 export class UploadUrlComponent implements AfterViewInit {
     @Input()
@@ -40,7 +40,7 @@ export class UploadUrlComponent implements AfterViewInit {
         private utilityService: UtilityService,
         protected logger: NGXLogger
     ) {
-        this.logger.info('upload-url.component', 'ctor');
+        this.logger.debug('upload-url.component', 'ctor');
     }
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
@@ -56,11 +56,11 @@ export class UploadUrlComponent implements AfterViewInit {
             this.playlistProxy.sourceUrl
         );
         this.podcastEntryDataService.addPlaylist(entry).subscribe(
-            e => {
+            (e) => {
                 this.resetUrl();
                 this.playlistAdded.emit(e);
             },
-            error => {
+            (error) => {
                 this.playlistProxy = null;
                 this.isPosting = false;
                 this.errorText = error.error;
@@ -90,11 +90,11 @@ export class UploadUrlComponent implements AfterViewInit {
         if (this.isValidURL(url)) {
             this.isPosting = true;
             this.utilityService.checkAudioUrl(url).subscribe(
-                r => {
+                (r) => {
                     if (r.type === 'native') {
                         this.createEntry(r, url);
                     } else if ((r.type = 'proxied')) {
-                        this.logger.info(
+                        this.logger.debug(
                             'upload-url.component',
                             'apiData',
                             r.data
@@ -103,7 +103,7 @@ export class UploadUrlComponent implements AfterViewInit {
                         this.remoteAudioResult = r;
                     }
                 },
-                err => {
+                (err) => {
                     this.isPosting = false;
                     this.errorText =
                         'Could not find any supported audio at that URL';
@@ -116,7 +116,7 @@ export class UploadUrlComponent implements AfterViewInit {
         }
     }
     onPageEntryChosen($event) {
-        this.logger.info('upload-url.component', 'YAY', $event);
+        this.logger.debug('upload-url.component', 'YAY', $event);
         if ($event) {
             this.createEntry(this.remoteAudioResult, $event);
         } else {
@@ -131,7 +131,7 @@ export class UploadUrlComponent implements AfterViewInit {
         entry.description = parsedEntry.description;
         entry.imageUrl = parsedEntry.image;
         this.podcastEntryDataService.addEntry(entry).subscribe(
-            e => {
+            (e) => {
                 if (e) {
                     if (e.processingStatus === 'Deferred') {
                         this.playlistProxy = e;
@@ -140,7 +140,7 @@ export class UploadUrlComponent implements AfterViewInit {
                     }
                 }
             },
-            err => {
+            (err) => {
                 this.isPosting = false;
                 if (err.status === 402) {
                     this.errorText =

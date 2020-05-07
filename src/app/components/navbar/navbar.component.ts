@@ -12,7 +12,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+    styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
     profile$: Observable<Profile>;
@@ -30,9 +30,9 @@ export class NavbarComponent {
     ) {
         this.profile$ = authService.profile$;
         this.profile$.subscribe(
-            p =>
+            (p) =>
                 (this.profileHasAdmin = this.authService.checkHasRoles([
-                    'client-admin'
+                    'client-admin',
                 ]))
         );
         this.invoices$ = paymentService.getPayments();
@@ -47,8 +47,8 @@ export class NavbarComponent {
         this.authService.logout();
     }
     about() {
-        this.debugService.getDebugInfo().subscribe(r => {
-            this.logger.info('navbar.component', 'about', r);
+        this.debugService.getDebugInfo().subscribe((r) => {
+            this.logger.debug('navbar.component', 'about', r);
             this.alertService.info(
                 'About',
                 `Client Version: ${environment.version}<br />` +
@@ -56,7 +56,7 @@ export class NavbarComponent {
                     `Host: ${r['osVersion']['versionString']}`,
                 'assets/img/logo-icon.png',
                 {
-                    autoClose: false
+                    autoClose: false,
                 }
             );
         });

@@ -4,7 +4,7 @@ import {
     OnInit,
     ViewChild,
     ElementRef,
-    AfterContentInit
+    AfterContentInit,
 } from '@angular/core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import {
@@ -13,7 +13,7 @@ import {
     FormControl,
     FormBuilder,
     Validators,
-    AbstractControl
+    AbstractControl,
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -30,7 +30,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
-    styleUrls: ['./register.component.scss']
+    styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent extends BasePageComponent implements OnInit {
     environment = environment;
@@ -71,20 +71,20 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                     {
                         validators: [
                             Validators.required,
-                            Validators.pattern(/^[a-zA-Z 0-9\_\-]*$/)
+                            Validators.pattern(/^[a-zA-Z 0-9\_\-]*$/),
                         ],
                         asyncValidators: [
-                            checkSlugUniqueValidator(this.profileDataService)
-                        ]
-                    }
+                            checkSlugUniqueValidator(this.profileDataService),
+                        ],
+                    },
                 ],
                 email: [
                     '',
                     [
                         // this.profileDataService.checkSlug(term)
                         Validators.required,
-                        Validators.pattern(this.constants.emailRegex)
-                    ]
+                        Validators.pattern(this.constants.emailRegex),
+                    ],
                 ],
                 passwordGroup: this.fb.group(
                     {
@@ -92,20 +92,20 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                             '',
                             Validators.compose([
                                 Validators.required,
-                                Validators.minLength(4)
-                            ])
+                                Validators.minLength(4),
+                            ]),
                         ],
                         confirmPassword: [
                             '',
                             Validators.compose([
                                 Validators.required,
-                                Validators.minLength(4)
-                            ])
-                        ]
+                                Validators.minLength(4),
+                            ]),
+                        ],
                     },
                     { validator: PasswordValidation.matchPassword }
                 ),
-                recaptcha: ['', Validators.required]
+                recaptcha: ['', Validators.required],
             },
             { updateOn: 'change' }
         );
@@ -129,9 +129,9 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
 
     socialLogin(method: string) {
         this.authService.socialLogin(method).subscribe(
-            success => this.router.navigate(['']),
-            error =>
-                this.logger.info('login.component', 'Error logging in', error)
+            (success) => this.router.navigate(['']),
+            (error) =>
+                this.logger.debug('login.component', 'Error logging in', error)
         );
     }
 
@@ -143,7 +143,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
             alert("Don't do this");
         }
         this.podnomsAuthService.validateCaptchaToken(currentResponse).subscribe(
-            r => {
+            (r) => {
                 if (r && r.isValid === true) {
                     this.authService
                         .register(
@@ -152,20 +152,20 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                             this.password.value
                         )
                         .subscribe(
-                            result => {
+                            (result) => {
                                 if (result) {
                                     this.router.navigate(['/auth/login'], {
                                         queryParams: {
                                             brandNew: true,
-                                            email: this.email.value
-                                        }
+                                            email: this.email.value,
+                                        },
                                     });
                                 } else {
                                     this.errorMessage =
                                         'Error signing up, please try again later';
                                 }
                             },
-                            errors => {
+                            (errors) => {
                                 // TODO - remote logging of this error
                                 this.errorMessage =
                                     'Error signing up, have you already signed up with this email?';
@@ -176,7 +176,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                         'Captcha did not validate, please refresh page and try again.';
                 }
             },
-            error => {
+            (error) => {
                 this.errorMessage =
                     'Captcha did not validate, please refresh page and try again.';
             }

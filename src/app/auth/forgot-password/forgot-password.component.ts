@@ -4,7 +4,7 @@ import {
     OnInit,
     ViewChild,
     ElementRef,
-    AfterViewInit
+    AfterViewInit,
 } from '@angular/core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import {
@@ -12,7 +12,7 @@ import {
     FormsModule,
     FormControl,
     FormBuilder,
-    Validators
+    Validators,
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,7 +24,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss']
+    styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent extends BasePageComponent
     implements OnInit, AfterViewInit {
@@ -37,19 +37,22 @@ export class ForgotPasswordComponent extends BasePageComponent
     requestForm: FormGroup = this.fb.group({
         email: [
             '',
-            [Validators.required, Validators.pattern(this.constants.emailRegex)]
+            [
+                Validators.required,
+                Validators.pattern(this.constants.emailRegex),
+            ],
         ],
-        recaptcha: ['', Validators.required]
+        recaptcha: ['', Validators.required],
     });
     resetForm: FormGroup = this.fb.group({
         password: [
             '',
-            Validators.compose([Validators.required, Validators.minLength(4)])
+            Validators.compose([Validators.required, Validators.minLength(4)]),
         ],
         confirmPassword: [
             '',
-            Validators.compose([Validators.required, Validators.minLength(4)])
-        ]
+            Validators.compose([Validators.required, Validators.minLength(4)]),
+        ],
     });
     @ViewChild('emailControl') emailField: ElementRef;
     @ViewChild('passwordControl') passwordField: ElementRef;
@@ -64,11 +67,11 @@ export class ForgotPasswordComponent extends BasePageComponent
         uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
-        this.logger.info('forgot-password.component', '');
+        this.logger.debug('forgot-password.component', '');
         if (route.snapshot.queryParams['token']) {
             this.returnTrip = true;
         }
-        route.queryParams.subscribe(params => {
+        route.queryParams.subscribe((params) => {
             this.token = params.token;
             this.username = params.email;
         });
@@ -96,13 +99,13 @@ export class ForgotPasswordComponent extends BasePageComponent
                         this.token
                     )
                     .subscribe(
-                        result => {
+                        (result) => {
                             if (result) {
                                 this.router.navigate(['/auth/login'], {
                                     queryParams: {
                                         justReset: true,
-                                        email: this.username
-                                    }
+                                        email: this.username,
+                                    },
                                 });
                             } else {
                                 this.errorMessage = this.formatError(
@@ -110,7 +113,7 @@ export class ForgotPasswordComponent extends BasePageComponent
                                 );
                             }
                         },
-                        err => {
+                        (err) => {
                             this.errorMessage = this.formatError(
                                 'Unable to reset your password, has the link expired?'
                             );
@@ -122,9 +125,9 @@ export class ForgotPasswordComponent extends BasePageComponent
         } else {
             if (this.email) {
                 this.authService.forgotPassword(this.email).subscribe(
-                    result => {
+                    (result) => {
                         if (result['email']) {
-                            this.logger.info(
+                            this.logger.debug(
                                 'reset.component.ts',
                                 'method',
                                 result
@@ -137,7 +140,7 @@ export class ForgotPasswordComponent extends BasePageComponent
                             );
                         }
                     },
-                    err => {
+                    (err) => {
                         this.errorMessage = this.formatError(
                             'Unable to reset your password'
                         );

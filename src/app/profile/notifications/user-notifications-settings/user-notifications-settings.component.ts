@@ -7,7 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-user-notifications-settings',
     templateUrl: './user-notifications-settings.component.html',
-    styleUrls: ['./user-notifications-settings.component.scss']
+    styleUrls: ['./user-notifications-settings.component.scss'],
 })
 export class UserNotificationsSettingsComponent implements OnInit {
     notificationTypes = NotificationTypes;
@@ -29,15 +29,15 @@ export class UserNotificationsSettingsComponent implements OnInit {
             this.user.emailNotificationOptions =
                 this.user.emailNotificationOptions & ~type;
         }
-        this.logger.info(
+        this.logger.debug(
             'user-notifications-settings.component',
             'updateOption',
             this.user.emailNotificationOptions
         );
         this.profileService
             .updateProfile(this.user)
-            .subscribe(r =>
-                this.logger.info(
+            .subscribe((r) =>
+                this.logger.debug(
                     'user-notifications-settings.component',
                     'updateProfile',
                     r

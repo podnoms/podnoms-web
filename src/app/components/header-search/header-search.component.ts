@@ -5,7 +5,7 @@ import {
     EventEmitter,
     ViewChild,
     ElementRef,
-    AfterViewInit
+    AfterViewInit,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {
@@ -14,7 +14,7 @@ import {
     tap,
     distinctUntilChanged,
     switchMap,
-    catchError
+    catchError,
 } from 'rxjs/operators';
 import { SearchService } from 'app/shared/services/search.service';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-header-search',
     templateUrl: './header-search.component.html',
-    styleUrls: ['./header-search.component.scss']
+    styleUrls: ['./header-search.component.scss'],
 })
 export class HeaderSearchComponent implements AfterViewInit {
     @ViewChild('search', { static: false }) searchElement: ElementRef;
@@ -48,11 +48,11 @@ export class HeaderSearchComponent implements AfterViewInit {
             debounceTime(300),
             distinctUntilChanged(),
             tap(() => (this.searching = true)),
-            switchMap(term =>
+            switchMap((term) =>
                 this.searchService.doSearch(term).pipe(
                     tap(() => (this.searchFailed = false)),
-                    catchError(e => {
-                        this.logger.info(
+                    catchError((e) => {
+                        this.logger.debug(
                             'header-search.component',
                             'searchError',
                             e
@@ -67,7 +67,11 @@ export class HeaderSearchComponent implements AfterViewInit {
 
     formatter = (x: { name: string }) => x.name;
     selectSearchItem($event) {
-        this.logger.info('header-search.component', 'selectSearchItem', $event);
+        this.logger.debug(
+            'header-search.component',
+            'selectSearchItem',
+            $event
+        );
         this.closeSearch.emit();
         this.router.navigate(['podcasts', $event.item.url]);
     }

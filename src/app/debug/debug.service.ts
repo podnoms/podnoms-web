@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class DebugService {
     constructor(private http: HttpClient, private logger: NGXLogger) {}
@@ -17,7 +17,7 @@ export class DebugService {
         return this.http.get<string>(`${environment.apiHost}/ping`);
     }
     sendPushPessage(message: string): Observable<string> {
-        this.logger.info('debug.service', 'sendPushMessage', message);
+        this.logger.debug('debug.service', 'sendPushMessage', message);
         return this.http.get<string>(
             `${environment.apiHost}/debug/serverpush?message=${message}`
         );
