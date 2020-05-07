@@ -138,6 +138,7 @@ export class AuthService extends BaseService {
     }
     private _loginGoogle(): Observable<boolean> {
         const ret = new Subject<boolean>();
+        debugger;
         this.socialAuthService
             .signIn(GoogleLoginProvider.PROVIDER_ID)
             .then((user) => {
@@ -160,6 +161,7 @@ export class AuthService extends BaseService {
         const options: LoginOpt = {
             scope: 'email public_profile',
         };
+        debugger;
         this.socialAuthService
             .signIn(FacebookLoginProvider.PROVIDER_ID, options)
             .then((user) => {
