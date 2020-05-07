@@ -4,15 +4,11 @@ import { Podcast } from '../core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map, switchAll } from 'rxjs/operators';
-import {
-    DefaultDataService,
-    QueryParams,
-    HttpUrlGenerator,
-    Logger
-} from '@ngrx/data';
+import { DefaultDataService, QueryParams, HttpUrlGenerator } from '@ngrx/data';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 @Injectable()
 export class PodcastDataService extends DefaultDataService<Podcast> {
@@ -24,8 +20,8 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     }
     constructor(
         http: HttpClient,
-        httpUrlGenerator: HttpUrlGenerator,
-        logger: Logger
+        public logger: NGXLogger,
+        httpUrlGenerator: HttpUrlGenerator
     ) {
         super('Podcast', http, httpUrlGenerator);
     }
@@ -36,8 +32,8 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
         return super
             .getAll()
             .pipe(
-                map(podcasts =>
-                    podcasts.map(podcast => this.__mapPodcast(podcast))
+                map((podcasts) =>
+                    podcasts.map((podcast) => this.__mapPodcast(podcast))
                 )
             );
     }
@@ -57,7 +53,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
                 (a, b) =>
                     new Date(b.createDate).getTime() -
                     new Date(a.createDate).getTime()
-            )
+            ),
         };
     }
     // END TODO (but a lot of the below is now unecessary)
@@ -65,7 +61,7 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
         return this.http.get<string>(`${environment.apiHost}/podcast/active`);
     }
     addPodcast(podcast: Podcast): Observable<Podcast> {
-        console.log('PodcastService', 'addPodcast', podcast);
+        this.logger.debug('PodcastService', 'addPodcast', podcast);
         // Remove this as the client is choosing the random image now
         // const data = JSON.stringify(podcast, PodcastDataService._replacer);
         return this.http.post<Podcast>(
@@ -86,10 +82,10 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     deletePodcast(id: string): Observable<boolean> {
         return this.http
             .delete<Response>(environment.apiHost + '/podcast/' + id)
-            .pipe(map(r => true));
+            .pipe(map((r) => true));
     }
     checkSlug(slug): Observable<string> {
-        console.log('profile.service.ts', 'checkSlug', slug);
+        this.logger.debug('profile.service.ts', 'checkSlug', slug);
         return this.http.get<string>(
             environment.apiHost + '/podcast/checkslug/' + slug
         );

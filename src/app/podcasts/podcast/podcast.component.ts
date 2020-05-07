@@ -16,11 +16,12 @@ import { environment } from 'environments/environment';
 import { AuthService } from 'app/auth/auth.service';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-podcast',
     templateUrl: './podcast.component.html',
-    styleUrls: ['./podcast.component.scss']
+    styleUrls: ['./podcast.component.scss'],
 })
 export class PodcastComponent extends BasePageComponent implements OnDestroy {
     uploadModes = UploadModes; // do this so it can be used in the template
@@ -44,18 +45,19 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
         private route: ActivatedRoute,
         private modalService: NgbModal,
         private alertService: AlertService,
+        logger: NGXLogger,
         uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
             route.params
                 .pipe(takeUntil(this._destroyed$), pluck('podcast'))
-                .subscribe(id => this._initialiseState(id));
+                .subscribe((id) => this._initialiseState(id));
         } else {
             this.podcastDataService.getActivePodcast().subscribe(
-                p => {
+                (p) => {
                     if (p) {
                         this.location.replaceState(`/podcasts/${p}`);
                         this._initialiseState(p);
@@ -74,7 +76,9 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
     _initialiseState(id: string) {
         // TODO: take this out, weird Chrome/Angular bug
         if (id !== 'undefined') {
-            console.log('podcast.component', '_initialiseState', id);
+            const config = this.logger.getConfigSnapshot();
+
+            this.logger.debug('podcast.component', '_initialiseState', id);
             this.podcast$ = this.podcastStoreService.getByKey(id);
             this.loading$ = this.podcastStoreService.loading$;
             localStorage.setItem('__spslug', id);
@@ -99,16 +103,16 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);
         modalRef.componentInstance.podcast = podcast;
-        modalRef.result.then(r => {
+        modalRef.result.then((r) => {
             if (r === 'delete') {
                 this.deletePodcast(podcast);
             }
         });
     }
     deletePodcast(podcast: Podcast) {
-        console.log('PodcastComponent', 'deletePodcast');
+        this.logger.debug('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
-            r => {
+            (r) => {
                 if (r) {
                     if (localStorage.getItem('__spslug') === podcast.slug) {
                         localStorage.removeItem('__spslug');

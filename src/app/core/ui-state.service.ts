@@ -1,20 +1,21 @@
 import { Injectable, HostListener } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UiStateService {
     private _sidebarOpen: boolean = true;
     sidebarOpen$ = new BehaviorSubject<boolean>(this._sidebarOpen);
     sidebarOpenMobile$ = new BehaviorSubject<boolean>(false);
     footerOpen$ = new BehaviorSubject<boolean>(false);
-    nakedPage$ = new BehaviorSubject<boolean>(false);
+    nakedPage$ = new BehaviorSubject<boolean>(true);
 
     overlayOpen: boolean = false;
     viewportWidth: number;
 
-    constructor() {}
+    constructor(private logger: NGXLogger) {}
 
     toggleSidebar() {
         if (this.isMobile()) {
@@ -40,7 +41,7 @@ export class UiStateService {
     }
     @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-        console.log('ui-state.service', 'onResize', event);
+        this.logger.debug('ui-state.service', 'onResize', event);
         this.viewportWidth = event.target.innerWidth;
     }
 
@@ -49,6 +50,9 @@ export class UiStateService {
     }
 
     setNakedPage(isNaked: boolean): void {
-        this.nakedPage$.next(isNaked);
+        this.logger.debug(`Changing Naked UI: ${isNaked}`);
+        setTimeout(() => {
+            this.nakedPage$.next(isNaked);
+        });
     }
 }

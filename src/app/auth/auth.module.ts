@@ -5,8 +5,13 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from 'environments/environment';
+import { authServiceConfig } from './auth-config';
+import { AuthService } from './auth.service';
 
 @NgModule({
     imports: [
@@ -14,8 +19,10 @@ import { ComponentsModule } from '../components/components.module';
         SharedModule,
         AuthRoutingModule,
         ComponentsModule,
-        NgxCaptchaModule
+        NgxCaptchaModule,
+        LoggerModule.forRoot(environment.logConfig)
     ],
-    declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent]
+    declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent],
+    providers: [AuthService]
 })
 export class AuthModule {}

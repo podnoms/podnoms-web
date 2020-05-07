@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/catch';
+import { NGXLogger } from 'ngx-logger';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PushRegistrationService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, protected logger: NGXLogger) {}
 
     urlBase64ToUint8Array(base64String: string) {
         const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -24,25 +25,29 @@ export class PushRegistrationService {
     }
 
     addSubscriber(registration: PushSubscriptionJSON): Observable<any> {
-        console.log('push-registration.service', 'addSubscriber', registration);
+        this.logger.debug(
+            'push-registration.service',
+            'addSubscriber',
+            registration
+        );
         return this.http
             .post<any>(`${environment.apiHost}/webpush/subscribe`, registration)
-            .catch(this.handleError);
+            .pipe(catchError(this.handleError));
     }
 
     deleteSubscriber(subscription: PushSubscriptionJSON) {
         const url = `${environment.apiHost}/webpush`;
         const body = {
             action: 'unsubscribe',
-            subscription: subscription
+            subscription: subscription,
         };
         return this.http
             .post(url, JSON.stringify(body))
-            .catch(this.handleError);
+            .pipe(catchError(this.handleError));
     }
 
     private handleError(error: Response | any) {
-        console.error(
+        this.logger.error(
             'push-registration.service',
             'Error registering for push',
             error

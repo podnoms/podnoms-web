@@ -3,18 +3,19 @@ import {
     OnInit,
     Input,
     NgZone,
-    ChangeDetectorRef
+    ChangeDetectorRef,
 } from '@angular/core';
 import {
     animate,
     state,
     style,
     transition,
-    trigger
+    trigger,
 } from '@angular/animations';
 import { ToastMessage, ToastType } from './toast-models';
 import { ToastService } from './toast.service';
 import { Observable } from 'rxjs';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     animations: [
@@ -23,19 +24,19 @@ import { Observable } from 'rxjs';
             state('fade', style({ opacity: 1 })),
             transition('* => fade', [
                 style({ opacity: 0 }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state('fadeOut', style({ opacity: 0 })),
             transition('fade => fadeOut', [
                 style({ opacity: 1 }),
-                animate('300ms ease-in-out')
+                animate('300ms ease-in-out'),
             ]),
 
             // Enter from top
             state('fromTop', style({ opacity: 1, transform: 'translateY(0)' })),
             transition('* => fromTop', [
                 style({ opacity: 0, transform: 'translateY(-5%)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state(
                 'fromTopOut',
@@ -43,7 +44,7 @@ import { Observable } from 'rxjs';
             ),
             transition('fromTop => fromTopOut', [
                 style({ opacity: 1, transform: 'translateY(0)' }),
-                animate('300ms ease-in-out')
+                animate('300ms ease-in-out'),
             ]),
 
             // Enter from right
@@ -53,7 +54,7 @@ import { Observable } from 'rxjs';
             ),
             transition('* => fromRight', [
                 style({ opacity: 0, transform: 'translateX(5%)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state(
                 'fromRightOut',
@@ -61,7 +62,7 @@ import { Observable } from 'rxjs';
             ),
             transition('fromRight => fromRightOut', [
                 style({ opacity: 1, transform: 'translateX(0)' }),
-                animate('300ms ease-in-out')
+                animate('300ms ease-in-out'),
             ]),
 
             // Enter from bottom
@@ -71,7 +72,7 @@ import { Observable } from 'rxjs';
             ),
             transition('* => fromBottom', [
                 style({ opacity: 0, transform: 'translateY(5%)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state(
                 'fromBottomOut',
@@ -79,7 +80,7 @@ import { Observable } from 'rxjs';
             ),
             transition('fromBottom => fromBottomOut', [
                 style({ opacity: 1, transform: 'translateY(0)' }),
-                animate('300ms ease-in-out')
+                animate('300ms ease-in-out'),
             ]),
 
             // Enter from left
@@ -89,7 +90,7 @@ import { Observable } from 'rxjs';
             ),
             transition('* => fromLeft', [
                 style({ opacity: 0, transform: 'translateX(-5%)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state(
                 'fromLeftOut',
@@ -97,26 +98,26 @@ import { Observable } from 'rxjs';
             ),
             transition('fromLeft => fromLeftOut', [
                 style({ opacity: 1, transform: 'translateX(0)' }),
-                animate('300ms ease-in-out')
+                animate('300ms ease-in-out'),
             ]),
 
             // Rotate
             state('scale', style({ opacity: 1, transform: 'scale(1)' })),
             transition('* => scale', [
                 style({ opacity: 0, transform: 'scale(0)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state('scaleOut', style({ opacity: 0, transform: 'scale(0)' })),
             transition('scale => scaleOut', [
                 style({ opacity: 1, transform: 'scale(1)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
 
             // Scale
             state('rotate', style({ opacity: 1, transform: 'rotate(0deg)' })),
             transition('* => rotate', [
                 style({ opacity: 0, transform: 'rotate(5deg)' }),
-                animate('400ms ease-in-out')
+                animate('400ms ease-in-out'),
             ]),
             state(
                 'rotateOut',
@@ -124,13 +125,13 @@ import { Observable } from 'rxjs';
             ),
             transition('rotate => rotateOut', [
                 style({ opacity: 1, transform: 'rotate(0deg)' }),
-                animate('400ms ease-in-out')
-            ])
-        ])
+                animate('400ms ease-in-out'),
+            ]),
+        ]),
     ],
     selector: 'app-toast-item',
     templateUrl: './toast-item.component.html',
-    styleUrls: ['./toast-item.component.scss']
+    styleUrls: ['./toast-item.component.scss'],
 })
 export class ToastItemComponent implements OnInit {
     @Input() toast: ToastMessage;
@@ -148,7 +149,8 @@ export class ToastItemComponent implements OnInit {
     constructor(
         private toastService: ToastService,
         private zone: NgZone,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private logger: NGXLogger
     ) {}
 
     ngOnInit() {
@@ -181,12 +183,16 @@ export class ToastItemComponent implements OnInit {
                         this.timeOut,
                     100
                 );
-                console.log(
+                this.logger.debug(
                     'toast-item.component',
                     'percentage',
                     this.timerPercentageRemaining
                 );
-                console.log('toast-item.component', 'timeout', this.timeOut);
+                this.logger.debug(
+                    'toast-item.component',
+                    'timeout',
+                    this.timeOut
+                );
 
                 if (this.timerPercentageRemaining >= 100) {
                     this.remove();

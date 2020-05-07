@@ -7,11 +7,12 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { UUID } from 'angular2-uuid';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-entry-edit-form',
     templateUrl: './entry-edit-form.component.html',
-    styleUrls: ['./entry-edit-form.component.scss']
+    styleUrls: ['./entry-edit-form.component.scss'],
 })
 export class EntryEditFormComponent implements OnInit {
     @ViewChild('imageControl')
@@ -28,7 +29,8 @@ export class EntryEditFormComponent implements OnInit {
         private fb: FormBuilder,
         private entriesStore: EntriesStoreService,
         private entryDataService: EntryDataService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private logger: NGXLogger
     ) {
         this.entryId = route.snapshot.params['entry'];
     }
@@ -36,14 +38,14 @@ export class EntryEditFormComponent implements OnInit {
         const form = fb.group({
             id: [entry.id],
             title: [entry.title],
-            description: [entry.description]
+            description: [entry.description],
         });
         return form;
     }
 
     ngOnInit() {
-        this.entriesStore.getByKey(this.entryId).subscribe(e => {
-            console.log('entry-edit-form.component', 'subscribe', e);
+        this.entriesStore.getByKey(this.entryId).subscribe((e) => {
+            this.logger.debug('entry-edit-form.component', 'subscribe', e);
             this.entry = e;
             this.entryEditForm = this._createForm(this.fb, e);
             this.formImageUrl = e.imageUrl;
@@ -55,10 +57,10 @@ export class EntryEditFormComponent implements OnInit {
             this.entryEditForm.value
         );
         this.entryDataService.updateEntry(entry).subscribe(
-            e => {
+            (e) => {
                 if (this.imageControl.imageChanged) {
                     this.imageControl.commitImage(e.id, 'entry').subscribe(
-                        result => {
+                        (result) => {
                             if (result !== null) {
                                 e.imageUrl = `${
                                     result.imageUrl
@@ -74,8 +76,8 @@ export class EntryEditFormComponent implements OnInit {
                             this.alertService.info('Success', 'Entry updated');
                             this.router.navigate(['podcasts', e.podcastSlug]);
                         },
-                        error => {
-                            console.error(
+                        (error) => {
+                            this.logger.error(
                                 'entry-edit-form.component',
                                 'sendImage',
                                 error
@@ -91,8 +93,12 @@ export class EntryEditFormComponent implements OnInit {
                     this.router.navigate(['podcasts', e.podcastSlug]);
                 }
             },
-            error => {
-                console.log('entry-edit-form.component', 'updateEntry', error);
+            (error) => {
+                this.logger.debug(
+                    'entry-edit-form.component',
+                    'updateEntry',
+                    error
+                );
                 this.alertService.error(
                     'Error',
                     'There was an error updating the entry, please refresh and try again'

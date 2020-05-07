@@ -9,11 +9,12 @@ import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
 import { AlertService } from '../../../core/alerts/alert.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-notification-modal',
     templateUrl: './notification-modal.component.html',
-    styleUrls: ['./notification-modal.component.scss']
+    styleUrls: ['./notification-modal.component.scss'],
 })
 export class NotificationModalComponent implements OnInit {
     @Input()
@@ -31,13 +32,14 @@ export class NotificationModalComponent implements OnInit {
         private nds: NotificationDataService,
         private nss: NotificationStoreService,
         private pss: PodcastStoreService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private logger: NGXLogger
     ) {}
 
     ngOnInit() {}
     openModal(type: string) {
-        this.nds.getConfig(type).subscribe(r => {
-            console.log('notifications.component', 'addNotification', r);
+        this.nds.getConfig(type).subscribe((r) => {
+            this.logger.debug('notifications.component', 'addNotification', r);
             this.notification = r || null;
             if (this.notification) {
                 this._createForm(this.notification.options);
@@ -47,9 +49,13 @@ export class NotificationModalComponent implements OnInit {
     _createForm(config: NotificationOptionBase<string>[]) {
         this.form = this.ncs.toFormGroup(config);
         this.modalService.open(this.content, { size: 'lg' }).result.then(
-            result =>
-                console.log('notification-modal.component', 'result', result),
-            reason => {
+            (result) =>
+                this.logger.debug(
+                    'notification-modal.component',
+                    'result',
+                    result
+                ),
+            (reason) => {
                 if (reason === 'save') {
                     this.saveChanges();
                 }
@@ -57,7 +63,7 @@ export class NotificationModalComponent implements OnInit {
         );
     }
     openEditModal(notification: Notification) {
-        console.log(
+        this.logger.debug(
             'notification-modal.component',
             'openEditModal',
             notification
@@ -75,14 +81,14 @@ export class NotificationModalComponent implements OnInit {
         notification.type = this.notification.type;
         notification.options = [];
 
-        Object.keys(this.form.value).forEach(e => {
+        Object.keys(this.form.value).forEach((e) => {
             const option = new NotificationOptionBase<string>({
                 key: e,
-                value: model.value[e]
+                value: model.value[e],
             });
             notification.options.push(option);
         });
-        this.nds.saveChanges(notification).subscribe(n => {
+        this.nds.saveChanges(notification).subscribe((n) => {
             // this.nss.upsertOneInCache(n);
             // this is shite - ngrx/data doesn't handle master-detail well though
             if (isNew) {
@@ -90,7 +96,7 @@ export class NotificationModalComponent implements OnInit {
             } else {
                 // find and update existing
                 const index = this.podcast.notifications.findIndex(
-                    r => r.id === n.id
+                    (r) => r.id === n.id
                 );
                 if (index !== -1) {
                     this.podcast.notifications[index] = n;

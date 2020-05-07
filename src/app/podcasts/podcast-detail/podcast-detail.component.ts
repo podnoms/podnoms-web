@@ -5,7 +5,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     OnChanges,
-    SimpleChanges
+    SimpleChanges,
 } from '@angular/core';
 
 import { Podcast, PodcastEntry } from '../../core';
@@ -15,6 +15,7 @@ import { EntriesStoreService } from '../entries-store.service';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -25,14 +26,14 @@ import { DragDropService } from '../../shared/services/drag-drop.service';
         trigger('fade', [
             transition('void => *', [
                 style({ opacity: '0' }),
-                animate('1s ease-out', style({ opacity: '1' }))
+                animate('1s ease-out', style({ opacity: '1' })),
             ]),
             transition('* => void', [
                 style({ opacity: '1' }),
-                animate('.2s ease-in', style({ opacity: '0' }))
-            ])
-        ])
-    ]
+                animate('.2s ease-in', style({ opacity: '0' })),
+            ]),
+        ]),
+    ],
 })
 export class PodcastDetailComponent implements AfterViewInit, OnChanges {
     @Input() podcast: Podcast;
@@ -42,13 +43,14 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
         private podcastEntryDataService: EntryDataService,
         private dragDropService: DragDropService,
         private alertService: AlertService,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private logger: NGXLogger
     ) {}
 
     ngAfterViewInit() {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('podcast-detail.component', 'ngOnChanges', changes);
+        this.logger.debug('podcast-detail.component', 'ngOnChanges', changes);
     }
     // definitely a smell here - change detection
     // seems to have become "not" automatic
@@ -62,7 +64,7 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
         this.podcastEntryDataService.deleteEntry(entry.id).subscribe(
             () => {
                 this.podcast.podcastEntries = this.podcast.podcastEntries.filter(
-                    obj => obj.id !== entry.id
+                    (obj) => obj.id !== entry.id
                 );
                 this.podcastStore.updateOneInCache(this.podcast);
                 this.cdRef.detectChanges();

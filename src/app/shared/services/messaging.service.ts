@@ -6,7 +6,7 @@ import { AngularFireMessaging } from '@angular/fire/messaging';
 import { take } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class MessagingService {
     currentMessage = new BehaviorSubject(null);
@@ -16,7 +16,7 @@ export class MessagingService {
         private angularFireAuth: AngularFireAuth,
         private angularFireMessaging: AngularFireMessaging
     ) {
-        this.angularFireMessaging.messaging.subscribe(_messaging => {
+        this.angularFireMessaging.messaging.subscribe((_messaging) => {
             _messaging.onMessage = _messaging.onMessage.bind(_messaging);
             _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(
                 _messaging
@@ -46,12 +46,12 @@ export class MessagingService {
      */
     requestPermission(userId: string) {
         this.angularFireMessaging.requestToken.subscribe(
-            token => {
-                console.log(token);
+            (token) => {
+                this.logger.debug(token);
                 this.updateToken(userId, token);
             },
-            err => {
-                console.error('Unable to get permission to notify.', err);
+            (err) => {
+                this.logger.error('Unable to get permission to notify.', err);
             }
         );
     }
@@ -60,8 +60,8 @@ export class MessagingService {
      * hook method when new notification received in foreground
      */
     receiveMessage() {
-        this.angularFireMessaging.messages.subscribe(payload => {
-            console.log('new message received. ', payload);
+        this.angularFireMessaging.messages.subscribe((payload) => {
+            this.logger.debug('new message received. ', payload);
             this.currentMessage.next(payload);
         });
     }

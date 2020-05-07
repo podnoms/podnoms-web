@@ -7,11 +7,14 @@ import { PaymentsService } from '../../payments/payments.service';
 import { Profile, Payment } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { UiStateService } from '../../core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
+import { skip, take, map, filter } from 'rxjs/operators';
+import { ProfileStoreService } from '../../profile/profile-store.service';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+    styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
     profile$: Observable<Profile>;
@@ -24,15 +27,21 @@ export class NavbarComponent {
         private authService: AuthService,
         private debugService: DebugService,
         private alertService: AlertService,
-        private uiStateService: UiStateService
+        private profileStoreService: ProfileStoreService,
+        protected logger: NGXLogger,
+        protected uiStateService: UiStateService
     ) {
-        this.profile$ = authService.profile$;
-        this.profile$.subscribe(
-            p =>
-                (this.profileHasAdmin = this.authService.checkHasRoles([
-                    'client-admin'
-                ]))
+        this.logger.info('navbar.component', 'ctor');
+        this.profile$ = this.profileStoreService.entities$.pipe(
+            filter((r) => r !== null && r !== []),
+            map((r) => r[0])
         );
+        this.profile$.subscribe((p) => {
+            this.logger.info('navbar.component', 'profile$', p);
+            this.profileHasAdmin = this.authService.checkHasRoles([
+                'client-admin',
+            ]);
+        });
         this.invoices$ = paymentService.getPayments();
     }
     toggleSidebar() {
@@ -45,8 +54,8 @@ export class NavbarComponent {
         this.authService.logout();
     }
     about() {
-        this.debugService.getDebugInfo().subscribe(r => {
-            console.log('navbar.component', 'about', r);
+        this.debugService.getDebugInfo().subscribe((r) => {
+            this.logger.debug('navbar.component', 'about', r);
             this.alertService.info(
                 'About',
                 `Client Version: ${environment.version}<br />` +
@@ -54,7 +63,7 @@ export class NavbarComponent {
                     `Host: ${r['osVersion']['versionString']}`,
                 'assets/img/logo-icon.png',
                 {
-                    autoClose: false
+                    autoClose: false,
                 }
             );
         });

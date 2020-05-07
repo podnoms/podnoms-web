@@ -9,7 +9,7 @@ import {
     OnChanges,
     ChangeDetectorRef,
     ElementRef,
-    ViewChild
+    ViewChild,
 } from '@angular/core';
 import { PodcastEntry } from '../../core';
 import { AudioService, PlayState } from '../../core/audio.service';
@@ -26,11 +26,12 @@ import { ToastService } from '../../shared/components/toast/toast.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EntryLogsComponent } from '../entry-logs/entry-logs.component';
+import { NGXLogger } from 'ngx-logger';
 declare var $: any;
 @Component({
     selector: 'app-entry-list-item',
     templateUrl: './entry-list-item.component.html',
-    styleUrls: ['./entry-list-item.component.scss']
+    styleUrls: ['./entry-list-item.component.scss'],
 })
 export class EntryListItemComponent implements OnInit {
     @Input()
@@ -62,7 +63,8 @@ export class EntryListItemComponent implements OnInit {
         private podcastEntryDataService: EntryDataService,
         private downloader: AudioDownloadService,
         private alertService: AlertService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private logger: NGXLogger
     ) {}
     ngOnInit() {
         if (
@@ -72,7 +74,7 @@ export class EntryListItemComponent implements OnInit {
         ) {
             this.signalr
                 .init('audioprocessing')
-                .then(listener => {
+                .then((listener) => {
                     listener
                         .on<AudioProcessingMessage>(
                             'audioprocessing',
@@ -100,8 +102,8 @@ export class EntryListItemComponent implements OnInit {
                             this.cdr.detectChanges();
                         });
                 })
-                .catch(err =>
-                    console.error(
+                .catch((err) =>
+                    this.logger.error(
                         'entry-list-item.component.ts',
                         '_signalrService.init',
                         err
@@ -113,7 +115,7 @@ export class EntryListItemComponent implements OnInit {
         this.audioService.playAudio(
             new NowPlaying(this.entry.audioUrl, this.entry)
         );
-        this.playStateSub$ = this.audioService.playState$.subscribe(r => {
+        this.playStateSub$ = this.audioService.playState$.subscribe((r) => {
             this.playState$.next(r);
             if (r === PlayState.none && this.playStateSub$ !== null) {
                 this.playStateSub$.unsubscribe();
@@ -121,14 +123,12 @@ export class EntryListItemComponent implements OnInit {
         });
     }
     __fixTitleEdit() {
-        $('.fa-remove')
-            .removeClass('fa-remove')
-            .addClass('fa-times');
+        $('.fa-remove').removeClass('fa-remove').addClass('fa-times');
     }
     showEntryDeleteDialog() {
         const modalRef = this.modalService.open(EntryDeleteItemModalComponent);
         modalRef.componentInstance.entry = this.entry;
-        modalRef.result.then(r => {
+        modalRef.result.then((r) => {
             if (r === 'delete') {
                 this.entryRemoved.emit(this.entry);
             }
@@ -138,13 +138,13 @@ export class EntryListItemComponent implements OnInit {
     updateTitle($event: Event) {
         this.podcastEntryDataService
             .updateEntry(this.entry)
-            .subscribe(e => this.entriesStore.updateOneInCache(e));
+            .subscribe((e) => this.entriesStore.updateOneInCache(e));
     }
     goto(entry: PodcastEntry) {
         window.open(entry.sourceUrl);
     }
     retry(entry: PodcastEntry) {
-        this.podcastEntryDataService.reSubmitEntry(entry).subscribe(r => {
+        this.podcastEntryDataService.reSubmitEntry(entry).subscribe((r) => {
             this.entry = r;
             this.alertService.info(
                 'Success',
@@ -158,10 +158,10 @@ export class EntryListItemComponent implements OnInit {
     downloadAudio(entry: PodcastEntry) {
         this.preparingDownload = true;
         this.downloader.downloadAudio(this.entry.id).subscribe(
-            r => {
+            (r) => {
                 this.preparingDownload = false;
             },
-            err =>
+            (err) =>
                 this.alertService.error(
                     'Error',
                     'Unable to download this episode'
@@ -171,7 +171,7 @@ export class EntryListItemComponent implements OnInit {
     showLogs(entry: PodcastEntry) {
         const modalRef = this.modalService.open(EntryLogsComponent, {
             windowClass: 'full-modal',
-            size: 'xl'
+            size: 'xl',
         });
         modalRef.componentInstance.entry = this.entry;
     }
@@ -179,22 +179,20 @@ export class EntryListItemComponent implements OnInit {
         this.modalService.dismissAll();
     }
     shareEpisode(entry: PodcastEntry) {
-        this.modalService
-            .open(this.shareDialog, { size: 'lg' })
-            .result.then(
-                result =>
-                    console.log(
-                        'entry-list-item.component',
-                        'shareEpisode-result',
-                        result
-                    ),
-                reason =>
-                    console.log(
-                        'entry-list-item.component',
-                        'shareEpisode-reason',
-                        reason
-                    )
-            );
+        this.modalService.open(this.shareDialog, { size: 'lg' }).result.then(
+            (result) =>
+                this.logger.debug(
+                    'entry-list-item.component',
+                    'shareEpisode-result',
+                    result
+                ),
+            (reason) =>
+                this.logger.debug(
+                    'entry-list-item.component',
+                    'shareEpisode-reason',
+                    reason
+                )
+        );
     }
     shareComplete(result) {
         this.modalService.dismissAll();

@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent extends BasePageComponent implements OnInit {
-    private metadata: Subscription;
+export class LoginComponent implements OnInit {
     errorMessage: string = '';
     brandNew: boolean = false;
     justReset: boolean = false;
@@ -24,33 +22,27 @@ export class LoginComponent extends BasePageComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private route: ActivatedRoute,
+        protected logger: NGXLogger,
         protected uiStateService: UiStateService
-    ) {
-        super(uiStateService);
-    }
+    ) {}
 
     ngOnInit() {
         this.returnUrl = this.route.snapshot.params['returnUrl'] || '';
-        this.metadata = this.route.queryParams.subscribe((param: any) => {
-            this.brandNew = param['brandNew'];
-            this.justReset = param['justReset'];
-            this.username = param['email'];
-            this.returnUrl = param['returnUrl'];
-        });
         this.uiStateService.setNakedPage(true);
     }
     socialLogin(method: string) {
         this.authService.socialLogin(method).subscribe(
-            success => this._routePostLogin(),
-            error => console.log('login.component', 'Error logging in', error)
+            () => this._routePostLogin(),
+            (error) =>
+                this.logger.debug('login.component', 'Error logging in', error)
         );
     }
     login() {
         this.authService.login(this.username, this.password).subscribe(
-            success => {
+            () => {
                 this._routePostLogin();
             },
-            error => {
+            () => {
                 this.errorMessage =
                     'Unable to log you in - have you registered?';
             }

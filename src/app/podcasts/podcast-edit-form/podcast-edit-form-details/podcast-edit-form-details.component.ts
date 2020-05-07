@@ -11,6 +11,7 @@ import { AlertService } from 'app/core/alerts/alert.service';
 import { UUID } from 'angular2-uuid';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-podcast-edit-form-details',
@@ -52,6 +53,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
         private podcastDataService: PodcastDataService,
         private podcastStore: PodcastStoreService,
         private alertService: AlertService,
+        private logger: NGXLogger,
         categoryService: CategoryService
     ) {
         this.categories$ = categoryService.getCategories();
@@ -96,7 +98,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                             this.router.navigate(['podcasts', p.slug]);
                         },
                         error => {
-                            console.error(
+                            this.logger.error(
                                 'podcast-edit-form.component',
                                 'commitImage',
                                 error

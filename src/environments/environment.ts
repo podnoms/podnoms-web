@@ -1,3 +1,11 @@
+import { NgxLoggerLevel, LoggerConfig } from 'ngx-logger';
+
+const _logConfig: LoggerConfig = {
+    // serverLoggingUrl: '/api/logs',
+    level: NgxLoggerLevel.DEBUG,
+    serverLogLevel: NgxLoggerLevel.DEBUG,
+    colorScheme: ['purple', 'teal', 'gray', 'gray', 'red', 'red', 'red']
+};
 export const environment = {
     production: false,
     publicPageEnabled: true,
@@ -31,6 +39,7 @@ export const environment = {
     recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
     features: {
         googleContactSyncEnabled: true
-    }
+    },
+    logConfig: _logConfig
 };
 import 'zone.js/dist/zone-error';

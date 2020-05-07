@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
 import { EntryDataService } from '../../entry-data.service';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 declare var Dropbox: any;
 
 @Component({
@@ -14,9 +15,10 @@ export class UploadDropboxComponent extends BaseJsUploadComponent
     implements OnInit {
     constructor(
         podcastEntryDataService: EntryDataService,
-        uiStateService: UiStateService
+        uiStateService: UiStateService,
+        logger: NGXLogger
     ) {
-        super(podcastEntryDataService, uiStateService);
+        super(podcastEntryDataService, logger, uiStateService);
         this.loadScript(
             'https://www.dropbox.com/static/api/2/dropins.js',
             'dropboxjs',

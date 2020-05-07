@@ -4,17 +4,18 @@ import {
     AfterViewInit,
     ViewChild,
     ElementRef,
-    OnDestroy
+    OnDestroy,
 } from '@angular/core';
 import { AudioService, PlayState } from '../../../core/audio.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { WaveformService } from 'app/shared/services/waveform.service';
 import { NgxAudioplayerComponent } from '@podnoms/ngx-audioplayer';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
-    styleUrls: ['./footer-player.component.scss']
+    styleUrls: ['./footer-player.component.scss'],
 })
 export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('player')
@@ -26,29 +27,34 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     initialised: boolean = false;
     constructor(
         private audioService: AudioService,
-        private waveformService: WaveformService
+        private waveformService: WaveformService,
+        protected logger: NGXLogger
     ) {}
     ngOnInit() {}
     ngAfterViewInit() {
-        this.audioService.nowPlaying$.subscribe(nowPlaying => {
+        this.audioService.nowPlaying$.subscribe((nowPlaying) => {
             if (nowPlaying.url) {
                 this.nowPlaying = nowPlaying;
                 this.waveformService
                     .getForItem(nowPlaying.entry.id)
-                    .subscribe(pcmUrl => {
+                    .subscribe((pcmUrl) => {
                         this.initialised = true;
                         this.pcmUrl = pcmUrl;
                         this.audioService.audioLoaded();
                     });
             }
         });
-        this.audioService.playState$.subscribe(s => {
+        this.audioService.playState$.subscribe((s) => {
             if (s === PlayState.none) {
                 this.player.stop();
             }
         });
     }
     ngOnDestroy() {
-        console.log('footer-player.component', 'ngOnDestroy', 'Waaaaaasted');
+        this.logger.debug(
+            'footer-player.component',
+            'ngOnDestroy',
+            'Waaaaaasted'
+        );
     }
 }

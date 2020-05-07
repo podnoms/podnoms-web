@@ -6,7 +6,7 @@ import {
     ElementRef,
     ChangeDetectorRef,
     OnInit,
-    HostListener
+    HostListener,
 } from '@angular/core';
 import { PaymentsService } from '../payments.service';
 import { environment } from '../../../environments/environment';
@@ -14,12 +14,13 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ScriptService } from '../../core/scripts/script.service';
 import { AuthService } from '../../auth/auth.service';
+import { NGXLogger } from 'ngx-logger';
 declare var StripeCheckout: any;
 
 @Component({
     selector: 'app-make-payment',
     templateUrl: './make-payment.component.html',
-    styleUrls: ['./make-payment.component.scss']
+    styleUrls: ['./make-payment.component.scss'],
 })
 export class MakePaymentComponent implements AfterViewInit, OnInit {
     loadingText: string = 'Loading payment methods';
@@ -36,7 +37,8 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         private authService: AuthService,
         private scriptService: ScriptService,
         private paymentService: PaymentsService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        protected logger: NGXLogger
     ) {}
     ngOnInit() {
         const type = this.route.snapshot.params.type || 'advanced';
@@ -54,12 +56,16 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         }
 
         this.paymentService.getPricingTier(type).subscribe(
-            p => {
+            (p) => {
                 this.tier = p;
                 this._spinUpMerchant(p);
             },
-            err => {
-                console.log('make-payment.component', 'getPricingTier', err);
+            (err) => {
+                this.logger.debug(
+                    'make-payment.component',
+                    'getPricingTier',
+                    err
+                );
                 this.errorText =
                     'Unable to load pricing tier, please try again later';
             }
@@ -83,7 +89,7 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                                 pricingTier.type
                             )
                             .subscribe(
-                                r => {
+                                (r) => {
                                     if (r) {
                                         this.authService
                                             .reloadProfile()
@@ -98,7 +104,7 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                                             });
                                     }
                                 },
-                                error => {
+                                (error) => {
                                     this.loadingText = '';
                                     this.errorText =
                                         'There was an error processing your payment, ' +
@@ -106,12 +112,12 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                                         '<a href="https://talk.podnoms.com/"> PodNoms Support</a> so we can track your payment';
                                 }
                             );
-                    }
+                    },
                 });
                 this.loadingText = '';
             })
-            .catch(err =>
-                console.error(
+            .catch((err) =>
+                this.logger.error(
                     'make-payment.component',
                     'Error loading stripe',
                     err
@@ -123,16 +129,16 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         this.handler.open({
             name: 'PodNoms',
             description: this.tier.title,
-            amount: this.chargingAmount
+            amount: this.chargingAmount,
         });
     }
     handleDonation(amount: any) {
         this.chargingAmount = amount * 100;
-        console.log('make-payment.component', 'handleDonation', amount);
+        this.logger.debug('make-payment.component', 'handleDonation', amount);
         this.handler.open({
             name: 'PodNoms',
             description: this.tier.title,
-            amount: this.chargingAmount
+            amount: this.chargingAmount,
         });
     }
     ngAfterViewInit() {}

@@ -11,57 +11,74 @@ import { ProfileStoreService } from './profile/profile-store.service';
 import { environment } from '../environments/environment';
 import { SwPush } from '@angular/service-worker';
 import { PushRegistrationService } from './shared/services/push-registration.service';
-import { skip, take, tap } from 'rxjs/operators';
+import { skip, take, tap, map } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alerts/alert.service';
 import { BaseComponent } from './shared/components/base/base.component';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends BaseComponent {
+    displayMainContainer: boolean = false;
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
-    profile$: Observable<Profile>;
+    profile: Profile;
     action$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     viewportWidth: number;
     modalAction$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     constructor(
-        utilityService: UtilityService,
-        public uiStateService: UiStateService,
+        private utilityService: UtilityService,
         private alertService: AlertService,
         updateService: UpdateService,
-        router: Router,
+        private router: Router,
         private swPush: SwPush,
         private pushRegistrationService: PushRegistrationService,
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
-        private signalr: SignalRService
+        private signalr: SignalRService,
+        protected logger: NGXLogger,
+        public uiStateService: UiStateService
     ) {
-        super(uiStateService);
-        this.uiStateService.nakedPage$.pipe(
-            tap(r => console.log('app.component', 'nakedPage', r))
-        );
+        super(logger, uiStateService);
+        this.logger.info('app.component', 'constructor');
         updateService.checkForUpdates();
+    }
+    ngOnInit() {
         if (environment.production || false) {
-            utilityService.checkForApiServer().subscribe(
+            this.utilityService.checkForApiServer().subscribe(
                 () => {
-                    this.profile$ = authService.profile$;
-                    this._bootstrapAuth().subscribe(r =>
+                    this.authService.profile$.subscribe((p) => {
+                        this.profile = p;
+                        this.displayMainContainer = true;
+                    });
+                    this._bootstrapAuth().subscribe((r) =>
                         this._bootstrapUpdates(r)
                     );
                 },
-                err => {
-                    console.error('home.component', 'checkForApiServer', err);
-                    router.navigateByUrl('/error');
+                (err) => {
+                    this.logger.error(
+                        'home.component',
+                        'checkForApiServer',
+                        err
+                    );
+                    this.router.navigateByUrl('/error');
                 }
             );
         } else {
-            this.profile$ = authService.profile$;
-            this._bootstrapAuth().subscribe(r => this._bootstrapUpdates(r));
+            this.authService.profile$.subscribe((p) => {
+                this.profile = p;
+                this.displayMainContainer = true;
+            });
+            this._bootstrapAuth().subscribe((r) => this._bootstrapUpdates(r));
         }
+        this.uiStateService.nakedPage$.subscribe((b) => {
+            this.logger.debug('app.component', 'nakedPage', b);
+            this.displayMainContainer = !b;
+        });
     }
 
     loggedIn(): boolean {
@@ -71,17 +88,17 @@ export class AppComponent extends BaseComponent {
     _bootstrapAuth(): Observable<boolean> {
         const observer = new BehaviorSubject<boolean>(false);
         this.authService.bootstrap().subscribe(() => {});
-        this.authService.authNavStatus$.subscribe(r => {
+        this.authService.authNavStatus$.subscribe((r) => {
             if (r) {
                 this.signalr
                     .init('userupdates')
-                    .then(listener => {
+                    .then((listener) => {
                         listener
                             .on<SiteUpdateMessage>(
                                 'userupdates',
                                 'site-notices'
                             )
-                            .subscribe(result => {
+                            .subscribe((result) => {
                                 this.alertService.info(
                                     result.title,
                                     result.message,
@@ -90,8 +107,8 @@ export class AppComponent extends BaseComponent {
                             });
                         observer.next(true);
                     })
-                    .catch(err => {
-                        console.error(
+                    .catch((err) => {
+                        this.logger.error(
                             'app.component',
                             'Unable to initialise site update hub',
                             err
@@ -109,25 +126,34 @@ export class AppComponent extends BaseComponent {
             return;
         }
 
-        const profile$ = this.profileStoreService.entities$
-            .pipe((skip(1), take(1)))
-            .map(r => r[0]);
+        const profile$ = this.profileStoreService.entities$.pipe(
+            (skip(1), take(1)),
+            map((r) => r[0])
+        );
 
-        profile$.subscribe(p => {
+        profile$.subscribe((p) => {
             this.action$.next('redirectslug');
             if (p && environment.production) {
-                console.log('app.component', 'requesting subscription', p);
+                this.logger.info(
+                    'Resetting page layout and registering for push notifications'
+                );
+                this.uiStateService.setNakedPage(false);
+                this.logger.debug(
+                    'app.component',
+                    'requesting subscription',
+                    p
+                );
                 this.swPush
                     .requestSubscription({
-                        serverPublicKey: environment.vapidPublicKey
+                        serverPublicKey: environment.vapidPublicKey,
                     })
-                    .then(s => {
-                        console.log(
+                    .then((s) => {
+                        this.logger.debug(
                             'app.component',
                             'requested subscription',
                             s
                         );
-                        console.log(
+                        this.logger.debug(
                             'app.component',
                             'subscribing on server',
                             p
@@ -135,31 +161,33 @@ export class AppComponent extends BaseComponent {
                         this.pushRegistrationService
                             .addSubscriber(s.toJSON())
                             .subscribe(
-                                r => {
-                                    console.log(
+                                (r) => {
+                                    this.logger.debug(
                                         'app.component',
                                         'push request succeeded',
                                         r
                                     );
-                                    this.swPush.messages.subscribe(message => {
-                                        console.log(
-                                            'app.component',
-                                            'Push message',
-                                            message
-                                        );
-                                    });
+                                    this.swPush.messages.subscribe(
+                                        (message) => {
+                                            this.logger.debug(
+                                                'app.component',
+                                                'Push message',
+                                                message
+                                            );
+                                        }
+                                    );
                                 },
-                                err =>
-                                    console.error(
+                                (err) =>
+                                    this.logger.error(
                                         'app.module',
                                         'Error calling registration service',
                                         err
                                     )
                             );
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         this._unsubscribe();
-                        console.error(
+                        this.logger.error(
                             'app.module',
                             'Error requesting push subscription',
                             err,
@@ -168,8 +196,8 @@ export class AppComponent extends BaseComponent {
                             err.name
                         );
                     });
-            } else {
-                console.log(
+            } else if (environment.production) {
+                this.logger.debug(
                     'app.component',
                     'Unable to load profile from store'
                 );
@@ -177,7 +205,7 @@ export class AppComponent extends BaseComponent {
         });
     }
     _unsubscribe() {
-        this.swPush.subscription.pipe(take(1)).subscribe(pushSubscription => {
+        this.swPush.subscription.pipe(take(1)).subscribe((pushSubscription) => {
             pushSubscription.unsubscribe();
         });
     }
