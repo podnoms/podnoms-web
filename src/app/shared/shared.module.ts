@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { OrderByDatePipe } from './pipes/order-by-date.pipe';
 import { HumaniseTimePipe } from './pipes/humanise-time.pipe';
-import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { authServiceConfig } from '../auth/auth-config';
 import { BasePageComponent } from './components/base-page/base-page.component';
 import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
@@ -41,7 +40,6 @@ import { environment } from 'environments/environment';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        SocialLoginModule,
         NgbModule,
         NgSelectModule,
         LoggerModule.forRoot(environment.logConfig)
@@ -97,10 +95,6 @@ import { environment } from 'environments/environment';
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
             multi: true
-        },
-        {
-            provide: AuthServiceConfig,
-            useFactory: authServiceConfig
         }
     ]
 })

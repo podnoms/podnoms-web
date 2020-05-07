@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Profile, ProfileLimits, Payment } from '../core';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
@@ -49,9 +49,10 @@ export class ProfileDataService {
             environment.apiHost + '/profile/checkslug/' + slug
         );
     }
-    checkUserNeedsRedirect(): Observable<any> {
+    checkUserNeedsRedirect(): Observable<HttpResponse<any>> {
         return this.http.get<any>(
-            environment.apiHost + '/profile/needsredirect'
+            environment.apiHost + '/profile/needsredirect',
+            { observe: 'response' }
         );
     }
     regenerateApiKey(): Observable<string> {

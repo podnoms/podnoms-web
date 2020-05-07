@@ -1866,12 +1866,10 @@ angular2-uuid@^1.1.1:
   resolved "https://registry.yarnpkg.com/angular2-uuid/-/angular2-uuid-1.1.1.tgz#72f03cd532b7f40032eb1ecfb9f8457384be956e"
   integrity sha1-cvA81TK39AAy6x7PufhFc4S+lW4=
 
-angularx-social-login@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/angularx-social-login/-/angularx-social-login-2.2.1.tgz#5a259faca2ce386a460361c499405c70d693bc01"
-  integrity sha512-uYHuSIVK+rr3ZVAJHA6Y4OufJrFjmaMn9Gkrs+KPVEue48qepHwxztfr55oVFNasjfFly05R08xBb1sGlA+fqA==
-  dependencies:
-    typescript "^3.5.3"
+angularx-social-login@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/angularx-social-login/-/angularx-social-login-2.3.1.tgz#81099fe20b398ef4c4a0710930358bacc635d016"
+  integrity sha512-U0bf7ZdtB2oQicSMTzx9VEMEcW5gxo/Bb2dKWNTt5Tf0GANj89tf1rTF2YsSOHZbLPOdvtHXim+nARF7UCAjVg==
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -10250,7 +10248,7 @@ typescript@3.6.5:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.5.tgz#dae20114a7b4ff4bd642db9c8c699f2953e8bbdb"
   integrity sha512-BEjlc0Z06ORZKbtcxGrIvvwYs5hAnuo6TKdNFL55frVDlB+na3z5bsLhFaIxmT+dPWgBIjMo6aNnTOgHHmHgiQ==
 
-typescript@^3.5.3, typescript@~3.7.5:
+typescript@~3.7.5:
   version "3.7.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
   integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==

@@ -45,17 +45,19 @@ export class ModalUpdatesComponent implements AfterViewInit {
             this.profileService.getProfile().subscribe(p => {
                 if (p) {
                     this.profileService.checkUserNeedsRedirect().subscribe(
-                        () => {
-                            const modalRef = this.modalService.open(
-                                UserSlugModalComponent,
-                                { size: 'lg' }
-                            );
-                            modalRef.componentInstance.profile = p[0];
-                            modalRef.result.then(r => {
-                                if (r === 'gotoprofile') {
-                                    this.router.navigate(['/profile']);
-                                }
-                            });
+                        response => {
+                            if (response.ok && response.status === 200) {
+                                const modalRef = this.modalService.open(
+                                    UserSlugModalComponent,
+                                    { size: 'lg' }
+                                );
+                                modalRef.componentInstance.profile = p[0];
+                                modalRef.result.then(r => {
+                                    if (r === 'gotoprofile') {
+                                        this.router.navigate(['/profile']);
+                                    }
+                                });
+                            }
                         },
                         () =>
                             this.logger.info(

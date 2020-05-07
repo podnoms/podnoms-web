@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,8 @@ import { InterstitialComponent } from './shared/components/interstitial/intersti
 import { AppDispatchers } from './store/app-config/dispatchers';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
 import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
+import { AuthModule } from './auth/auth.module';
+import { authServiceConfig } from './auth/auth-config';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -36,6 +39,7 @@ registerLocaleData(localeIE, 'ie');
         HttpClientModule,
         AppRoutingModule,
         AppStoreModule,
+        AuthModule,
         SharedModule, // import here to make sure that AuthService is a singleton
         AngularFireModule.initializeApp({
             apiKey: environment.firebase.apiKey,
@@ -50,7 +54,8 @@ registerLocaleData(localeIE, 'ie');
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production
         }),
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
+        SocialLoginModule
     ],
     providers: [
         UpdateService,
@@ -60,6 +65,10 @@ registerLocaleData(localeIE, 'ie');
             multi: true
         },
         { provide: LOCALE_ID, useValue: 'en-IE' },
+        {
+            provide: AuthServiceConfig,
+            useFactory: authServiceConfig
+        },
         AppDispatchers
     ],
     declarations: [AppComponent, InterstitialComponent, HomeComponent],
@@ -72,5 +81,20 @@ export class AppModule {
         private logger: NGXLogger
     ) {
         this.profile$ = profileStoreService.entities$;
+        if (environment.production) {
+            console.log(
+                `%c ________________________________________
+< mooooooooooooooooooooooooooooooooooooo >
+<   🦄🧙Looking under the hood🦄?        >
+<  Join us: http://github.com/podnoms    >
+----------------------------------------
+        \\   ^__^
+        \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||`,
+                'font-family:monospace; color: fuchsia; font-size: x-large'
+            );
+        }
     }
 }

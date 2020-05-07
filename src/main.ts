@@ -13,19 +13,6 @@ if (
     location.host.indexOf('podnoms.local') !== 0
 ) {
     enableProdMode();
-    //     this.logger.info(
-    //         `%c ________________________________________
-    // < mooooooooooooooooooooooooooooooooooooo >
-    // <   🦄🧙Looking under the hood🦄?        >
-    // <  Join us: http://github.com/podnoms    >
-    //  ----------------------------------------
-    //         \\   ^__^
-    //          \\  (oo)\\_______
-    //             (__)\\       )\\/\\
-    //                 ||----w |
-    //                 ||     ||`,
-    //         'font-family:monospace; color: brown; font-size: x-large'
-    //     );
 
     // if (typeof window.console !== 'undefined') {
     //     // window.this.logger.info = function() {};

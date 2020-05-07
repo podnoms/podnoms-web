@@ -50,6 +50,6 @@ export class UiStateService {
     }
 
     setNakedPage(isNaked: boolean): void {
-        this.nakedPage$.next(isNaked);
+        setTimeout(() => this.nakedPage$.next(isNaked));
     }
 }

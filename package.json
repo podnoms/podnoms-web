@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.153",
+    "version": "1.2.156",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -39,7 +39,7 @@
         "@swimlane/ngx-datatable": "^16.0.3",
         "angular-in-memory-web-api": "^0.9.0",
         "angular2-uuid": "^1.1.1",
-        "angularx-social-login": "^2.2.1",
+        "angularx-social-login": "^2.3.1",
         "body-parser": "^1.19.0",
         "bootstrap": "^4.4.1",
         "chart.js": "^2.8.0",
