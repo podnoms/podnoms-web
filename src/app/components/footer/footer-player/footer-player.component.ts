@@ -10,6 +10,7 @@ import { AudioService, PlayState } from '../../../core/audio.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { WaveformService } from 'app/shared/services/waveform.service';
 import { NgxAudioplayerComponent } from '@podnoms/ngx-audioplayer';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-footer-player',
@@ -26,7 +27,8 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
     initialised: boolean = false;
     constructor(
         private audioService: AudioService,
-        private waveformService: WaveformService
+        private waveformService: WaveformService,
+        protected logger: NgxFancyLoggerService
     ) {}
     ngOnInit() {}
     ngAfterViewInit() {
@@ -49,6 +51,10 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
     ngOnDestroy() {
-        console.log('footer-player.component', 'ngOnDestroy', 'Waaaaaasted');
+        this.logger.debug(
+            'footer-player.component',
+            'ngOnDestroy',
+            'Waaaaaasted'
+        );
     }
 }

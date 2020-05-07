@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { Observable, of } from 'rxjs';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-image-upload',
@@ -31,21 +32,22 @@ export class ImageUploadComponent implements OnInit, OnChanges {
 
     constructor(
         private imageService: ImageService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        protected logger: NgxFancyLoggerService
     ) {}
     ngOnInit() {
         this.image.src = this.imageUrl;
         this._initPasteHandler();
     }
     ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
-        // console.log('image-upload.component', 'ngOnchanges', changes);
+        // this.logger.debug('image-upload.component', 'ngOnchanges', changes);
         // if (changes && changes.imageUrl && !this.image.src) {
         //     this.image.src = changes.imageUrl.currentValue;
         // }
     }
     _initPasteHandler() {
         this.renderer.listen('document', 'paste', e => {
-            console.log('Paste', e);
+            this.logger.debug('Paste', e);
             for (let i = 0; i < e.clipboardData.items.length; i++) {
                 const item = e.clipboardData.items[i];
                 if (item.kind === 'file') {
@@ -80,7 +82,11 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     getRandomImage($event) {
         this.imageService.getRandom().subscribe(
             r => {
-                console.log('image-upload.component', 'getRandomImage', r);
+                this.logger.debug(
+                    'image-upload.component',
+                    'getRandomImage',
+                    r
+                );
                 this.image.src = r;
                 this.imageChanged = true;
                 this._imageFileBuffer = this._dataURLtoFile(

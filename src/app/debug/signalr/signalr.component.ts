@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { AuthService } from 'app/auth/auth.service';
 import { ProfileDataService } from 'app/profile/profile-data.service';
 import { Profile } from 'app/core/model';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-signalr',
@@ -22,12 +23,13 @@ export class SignalRComponent implements OnInit {
 
     constructor(
         private _authService: AuthService,
-        private _profileService: ProfileDataService
+        private _profileService: ProfileDataService,
+        private logger: NgxFancyLoggerService
     ) {}
 
     ngOnInit() {
         this._profileService.getProfile().subscribe(p => {
-            console.log('signalr.component', 'getProfile', p[0]);
+            this.logger.debug('signalr.component', 'getProfile', p[0]);
             this.nick = p[0].name || `${p[0].firstName} ${p[0].lastName}`;
         });
     }
@@ -46,7 +48,7 @@ export class SignalRComponent implements OnInit {
         this._hubConnection
             .start()
             .then(() => {
-                console.log(
+                this.logger.debug(
                     'signalr.component',
                     'hubConnection',
                     'Connection started'
@@ -54,13 +56,13 @@ export class SignalRComponent implements OnInit {
                 this.hubAvailable = true;
             })
             .catch(err =>
-                console.log('Error while starting connection: ' + err)
+                this.logger.debug('Error while starting connection: ' + err)
             );
         this._hubConnection.on(
             'send',
             (nick: string, receivedMessage: string) => {
                 const text = `${nick}: ${receivedMessage}`;
-                console.log('signalr.component', 'send_received', text);
+                this.logger.debug('signalr.component', 'send_received', text);
                 this.messages.push(text);
             }
         );

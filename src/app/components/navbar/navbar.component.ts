@@ -7,6 +7,7 @@ import { PaymentsService } from '../../payments/payments.service';
 import { Profile, Payment } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { UiStateService } from '../../core/ui-state.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-navbar',
@@ -24,7 +25,8 @@ export class NavbarComponent {
         private authService: AuthService,
         private debugService: DebugService,
         private alertService: AlertService,
-        private uiStateService: UiStateService
+        protected logger: NgxFancyLoggerService,
+        protected uiStateService: UiStateService
     ) {
         this.profile$ = authService.profile$;
         this.profile$.subscribe(
@@ -46,7 +48,7 @@ export class NavbarComponent {
     }
     about() {
         this.debugService.getDebugInfo().subscribe(r => {
-            console.log('navbar.component', 'about', r);
+            this.logger.debug('navbar.component', 'about', r);
             this.alertService.info(
                 'About',
                 `Client Version: ${environment.version}<br />` +

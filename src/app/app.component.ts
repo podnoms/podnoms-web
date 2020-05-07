@@ -15,6 +15,7 @@ import { skip, take, tap } from 'rxjs/operators';
 import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alerts/alert.service';
 import { BaseComponent } from './shared/components/base/base.component';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-root',
@@ -30,7 +31,6 @@ export class AppComponent extends BaseComponent {
     modalAction$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     constructor(
         utilityService: UtilityService,
-        public uiStateService: UiStateService,
         private alertService: AlertService,
         updateService: UpdateService,
         router: Router,
@@ -38,11 +38,13 @@ export class AppComponent extends BaseComponent {
         private pushRegistrationService: PushRegistrationService,
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
-        private signalr: SignalRService
+        private signalr: SignalRService,
+        protected logger: NgxFancyLoggerService,
+        public uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
         this.uiStateService.nakedPage$.pipe(
-            tap(r => console.log('app.component', 'nakedPage', r))
+            tap(r => this.logger.debug('app.component', 'nakedPage', r))
         );
         updateService.checkForUpdates();
         if (environment.production || false) {
@@ -116,18 +118,22 @@ export class AppComponent extends BaseComponent {
         profile$.subscribe(p => {
             this.action$.next('redirectslug');
             if (p && environment.production) {
-                console.log('app.component', 'requesting subscription', p);
+                this.logger.debug(
+                    'app.component',
+                    'requesting subscription',
+                    p
+                );
                 this.swPush
                     .requestSubscription({
                         serverPublicKey: environment.vapidPublicKey
                     })
                     .then(s => {
-                        console.log(
+                        this.logger.debug(
                             'app.component',
                             'requested subscription',
                             s
                         );
-                        console.log(
+                        this.logger.debug(
                             'app.component',
                             'subscribing on server',
                             p
@@ -136,13 +142,13 @@ export class AppComponent extends BaseComponent {
                             .addSubscriber(s.toJSON())
                             .subscribe(
                                 r => {
-                                    console.log(
+                                    this.logger.debug(
                                         'app.component',
                                         'push request succeeded',
                                         r
                                     );
                                     this.swPush.messages.subscribe(message => {
-                                        console.log(
+                                        this.logger.debug(
                                             'app.component',
                                             'Push message',
                                             message
@@ -169,7 +175,7 @@ export class AppComponent extends BaseComponent {
                         );
                     });
             } else {
-                console.log(
+                this.logger.debug(
                     'app.component',
                     'Unable to load profile from store'
                 );

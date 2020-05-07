@@ -2,6 +2,7 @@ import { ProfileDataService } from './../../profile-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from 'app/core';
 import { NotificationTypes } from './notification-types.enum';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-user-notifications-settings',
@@ -11,7 +12,10 @@ import { NotificationTypes } from './notification-types.enum';
 export class UserNotificationsSettingsComponent implements OnInit {
     notificationTypes = NotificationTypes;
     @Input() user: Profile;
-    constructor(public profileService: ProfileDataService) {}
+    constructor(
+        public logger: NgxFancyLoggerService,
+        public profileService: ProfileDataService
+    ) {}
 
     ngOnInit() {}
     isEnabled(type: NotificationTypes): Boolean {
@@ -25,7 +29,7 @@ export class UserNotificationsSettingsComponent implements OnInit {
             this.user.emailNotificationOptions =
                 this.user.emailNotificationOptions & ~type;
         }
-        console.log(
+        this.logger.debug(
             'user-notifications-settings.component',
             'updateOption',
             this.user.emailNotificationOptions
@@ -33,7 +37,7 @@ export class UserNotificationsSettingsComponent implements OnInit {
         this.profileService
             .updateProfile(this.user)
             .subscribe(r =>
-                console.log(
+                this.logger.debug(
                     'user-notifications-settings.component',
                     'updateProfile',
                     r

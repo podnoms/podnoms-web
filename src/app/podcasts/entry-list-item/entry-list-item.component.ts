@@ -26,6 +26,7 @@ import { ToastService } from '../../shared/components/toast/toast.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EntryLogsComponent } from '../entry-logs/entry-logs.component';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 declare var $: any;
 @Component({
     selector: 'app-entry-list-item',
@@ -62,7 +63,8 @@ export class EntryListItemComponent implements OnInit {
         private podcastEntryDataService: EntryDataService,
         private downloader: AudioDownloadService,
         private alertService: AlertService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private logger: NgxFancyLoggerService
     ) {}
     ngOnInit() {
         if (
@@ -179,22 +181,20 @@ export class EntryListItemComponent implements OnInit {
         this.modalService.dismissAll();
     }
     shareEpisode(entry: PodcastEntry) {
-        this.modalService
-            .open(this.shareDialog, { size: 'lg' })
-            .result.then(
-                result =>
-                    console.log(
-                        'entry-list-item.component',
-                        'shareEpisode-result',
-                        result
-                    ),
-                reason =>
-                    console.log(
-                        'entry-list-item.component',
-                        'shareEpisode-reason',
-                        reason
-                    )
-            );
+        this.modalService.open(this.shareDialog, { size: 'lg' }).result.then(
+            result =>
+                this.logger.debug(
+                    'entry-list-item.component',
+                    'shareEpisode-result',
+                    result
+                ),
+            reason =>
+                this.logger.debug(
+                    'entry-list-item.component',
+                    'shareEpisode-reason',
+                    reason
+                )
+        );
     }
     shareComplete(result) {
         this.modalService.dismissAll();

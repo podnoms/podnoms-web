@@ -9,6 +9,7 @@ import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
 import { AlertService } from '../../../core/alerts/alert.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-notification-modal',
@@ -31,13 +32,14 @@ export class NotificationModalComponent implements OnInit {
         private nds: NotificationDataService,
         private nss: NotificationStoreService,
         private pss: PodcastStoreService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private logger: NgxFancyLoggerService
     ) {}
 
     ngOnInit() {}
     openModal(type: string) {
         this.nds.getConfig(type).subscribe(r => {
-            console.log('notifications.component', 'addNotification', r);
+            this.logger.debug('notifications.component', 'addNotification', r);
             this.notification = r || null;
             if (this.notification) {
                 this._createForm(this.notification.options);
@@ -48,7 +50,11 @@ export class NotificationModalComponent implements OnInit {
         this.form = this.ncs.toFormGroup(config);
         this.modalService.open(this.content, { size: 'lg' }).result.then(
             result =>
-                console.log('notification-modal.component', 'result', result),
+                this.logger.debug(
+                    'notification-modal.component',
+                    'result',
+                    result
+                ),
             reason => {
                 if (reason === 'save') {
                     this.saveChanges();
@@ -57,7 +63,7 @@ export class NotificationModalComponent implements OnInit {
         );
     }
     openEditModal(notification: Notification) {
-        console.log(
+        this.logger.debug(
             'notification-modal.component',
             'openEditModal',
             notification

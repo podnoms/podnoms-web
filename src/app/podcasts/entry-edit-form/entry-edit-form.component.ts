@@ -7,6 +7,7 @@ import { ImageUploadComponent } from '../../shared/components/image-upload/image
 import { UUID } from 'angular2-uuid';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-entry-edit-form',
@@ -28,7 +29,8 @@ export class EntryEditFormComponent implements OnInit {
         private fb: FormBuilder,
         private entriesStore: EntriesStoreService,
         private entryDataService: EntryDataService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private logger: NgxFancyLoggerService
     ) {
         this.entryId = route.snapshot.params['entry'];
     }
@@ -43,7 +45,7 @@ export class EntryEditFormComponent implements OnInit {
 
     ngOnInit() {
         this.entriesStore.getByKey(this.entryId).subscribe(e => {
-            console.log('entry-edit-form.component', 'subscribe', e);
+            this.logger.debug('entry-edit-form.component', 'subscribe', e);
             this.entry = e;
             this.entryEditForm = this._createForm(this.fb, e);
             this.formImageUrl = e.imageUrl;
@@ -92,7 +94,11 @@ export class EntryEditFormComponent implements OnInit {
                 }
             },
             error => {
-                console.log('entry-edit-form.component', 'updateEntry', error);
+                this.logger.debug(
+                    'entry-edit-form.component',
+                    'updateEntry',
+                    error
+                );
                 this.alertService.error(
                     'Error',
                     'There was an error updating the entry, please refresh and try again'

@@ -14,6 +14,7 @@ import { UtilityService } from '../../shared/services/utility.service';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-podcast-add-wizard',
@@ -38,9 +39,10 @@ export class PodcastAddWizardComponent extends BasePageComponent
 
     constructor(
         private utilityService: UtilityService,
+        protected logger: NgxFancyLoggerService,
         uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
     }
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {

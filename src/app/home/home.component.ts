@@ -27,7 +27,7 @@ export class HomeComponent extends BasePageComponent implements OnDestroy {
         protected logger: NgxFancyLoggerService,
         uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
 
         this._destroyed$ = new Subject();
         this.logger.debug('home.component', 'ctor');

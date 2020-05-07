@@ -55,7 +55,10 @@ registerLocaleData(localeIE, 'ie');
             showTime: true,
             logLevel: LogLevel.DEBUG,
             levelColor: {
-                [LogLevel.ERROR]: 'brown'
+                [LogLevel.INFO]: 'black',
+                [LogLevel.DEBUG]: 'darkgrey',
+                [LogLevel.WARNING]: 'orange',
+                [LogLevel.ERROR]: 'red'
             }
         })
     ],

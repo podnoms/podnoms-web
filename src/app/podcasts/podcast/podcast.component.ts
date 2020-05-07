@@ -16,6 +16,7 @@ import { environment } from 'environments/environment';
 import { AuthService } from 'app/auth/auth.service';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     selector: 'app-podcast',
@@ -44,9 +45,10 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
         private route: ActivatedRoute,
         private modalService: NgbModal,
         private alertService: AlertService,
+        logger: NgxFancyLoggerService,
         uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
@@ -74,7 +76,7 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
     _initialiseState(id: string) {
         // TODO: take this out, weird Chrome/Angular bug
         if (id !== 'undefined') {
-            console.log('podcast.component', '_initialiseState', id);
+            this.logger.debug('podcast.component', '_initialiseState', id);
             this.podcast$ = this.podcastStoreService.getByKey(id);
             this.loading$ = this.podcastStoreService.loading$;
             localStorage.setItem('__spslug', id);
@@ -106,7 +108,7 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
         });
     }
     deletePodcast(podcast: Podcast) {
-        console.log('PodcastComponent', 'deletePodcast');
+        this.logger.debug('PodcastComponent', 'deletePodcast');
         this.podcastDataService.deletePodcast(podcast.id).subscribe(
             r => {
                 if (r) {

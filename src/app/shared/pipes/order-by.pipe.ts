@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Pipe({
     name: 'orderBy',
@@ -42,7 +43,6 @@ export class OrderByPipe implements PipeTransform {
     }
 
     transform(input: any, config: string = '+'): any {
-        console.log('order-by.pipe', 'transform', input);
         // invalid input given
         if (!input) {
             return input;

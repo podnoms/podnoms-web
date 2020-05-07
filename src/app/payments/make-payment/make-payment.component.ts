@@ -14,6 +14,7 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ScriptService } from '../../core/scripts/script.service';
 import { AuthService } from '../../auth/auth.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 declare var StripeCheckout: any;
 
 @Component({
@@ -36,7 +37,8 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
         private authService: AuthService,
         private scriptService: ScriptService,
         private paymentService: PaymentsService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        protected logger: NgxFancyLoggerService
     ) {}
     ngOnInit() {
         const type = this.route.snapshot.params.type || 'advanced';
@@ -59,7 +61,11 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
                 this._spinUpMerchant(p);
             },
             err => {
-                console.log('make-payment.component', 'getPricingTier', err);
+                this.logger.debug(
+                    'make-payment.component',
+                    'getPricingTier',
+                    err
+                );
                 this.errorText =
                     'Unable to load pricing tier, please try again later';
             }
@@ -128,7 +134,7 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
     }
     handleDonation(amount: any) {
         this.chargingAmount = amount * 100;
-        console.log('make-payment.component', 'handleDonation', amount);
+        this.logger.debug('make-payment.component', 'handleDonation', amount);
         this.handler.open({
             name: 'PodNoms',
             description: this.tier.title,

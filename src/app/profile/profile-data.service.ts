@@ -5,13 +5,18 @@ import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileDataService {
     profile: Profile;
-    constructor(private http: HttpClient, private authService: AuthService) {}
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService,
+        protected logger: NgxFancyLoggerService
+    ) {}
 
     getProfile(): Observable<Profile> {
         if (this.authService.isLoggedIn()) {
@@ -32,14 +37,14 @@ export class ProfileDataService {
         }
     }
     updateProfile(profile): Observable<Profile> {
-        console.log('ProfileService', 'updateProfile', profile);
+        this.logger.debug('ProfileService', 'updateProfile', profile);
         return this.http.post<Profile>(
             environment.apiHost + '/profile',
             profile
         );
     }
     checkSlug(slug): Observable<boolean> {
-        console.log('profile.service.ts', 'checkSlug', slug);
+        this.logger.debug('profile.service.ts', 'checkSlug', slug);
         return this.http.get<boolean>(
             environment.apiHost + '/profile/checkslug/' + slug
         );

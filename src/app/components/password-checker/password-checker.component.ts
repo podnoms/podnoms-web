@@ -8,8 +8,14 @@ import {
     OnInit
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    switchMap,
+    filter
+} from 'rxjs/operators';
 import { UtilityService } from '../../shared/services/utility.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 @Component({
     selector: 'app-password-checker',
     templateUrl: './password-checker.component.html',
@@ -38,7 +44,10 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
         'Perfection!!!'
     ];
 
-    constructor(private utilityService: UtilityService) {
+    constructor(
+        private utilityService: UtilityService,
+        protected logger: NgxFancyLoggerService
+    ) {
         this._password = this.password;
         this._repeatPassword = this.repeatPassword;
     }
@@ -58,8 +67,9 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
         this.strength = strength;
         this.strengthMessage = this.defaultMessages[this.strength];
 
-        this.strengthPercentage = (this.strength + 1) / this.defaultMessages.length * 100;
-        console.log(
+        this.strengthPercentage =
+            ((this.strength + 1) / this.defaultMessages.length) * 100;
+        this.logger.debug(
             'Strength',
             this.strength,
             this.strengthMessage,
@@ -78,7 +88,11 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
         if (changes.repeatPassword) {
             this._repeatPassword = changes.repeatPassword.currentValue;
         }
-        if (this._password && this._repeatPassword && this._password !== this._repeatPassword) {
+        if (
+            this._password &&
+            this._repeatPassword &&
+            this._password !== this._repeatPassword
+        ) {
             this.error = 'Passwords do not match';
             if (this.errors) {
                 this.errors.emit(this.error);

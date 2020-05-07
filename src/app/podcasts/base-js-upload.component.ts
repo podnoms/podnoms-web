@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BasePageComponent } from '../shared/components/base-page/base-page.component';
 import { EntryDataService } from './entry-data.service';
 import { UiStateService } from 'app/core/ui-state.service';
+import { NgxFancyLoggerService } from 'ngx-fancy-logger';
 
 @Component({
     template: ''
@@ -34,9 +35,10 @@ export class BaseJsUploadComponent extends BasePageComponent {
 
     constructor(
         private podcastEntryDataService: EntryDataService,
-        uiStateService: UiStateService
+        protected logger: NgxFancyLoggerService,
+        protected uiStateService: UiStateService
     ) {
-        super(uiStateService);
+        super(logger, uiStateService);
     }
     protected getMimeTypes(type: string) {
         return this.mimeLists[type];
