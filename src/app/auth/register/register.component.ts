@@ -1,20 +1,6 @@
 import { ProfileDataService } from './../../profile/profile-data.service';
-import {
-    Component,
-    OnInit,
-    ViewChild,
-    ElementRef,
-    AfterContentInit,
-} from '@angular/core';
-import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
-import {
-    FormGroup,
-    FormsModule,
-    FormControl,
-    FormBuilder,
-    Validators,
-    AbstractControl,
-} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { PasswordValidation } from '../validators/check-password.validator';
@@ -22,8 +8,6 @@ import { environment } from '../../../environments/environment';
 import { ConstantsService } from '../../shared/services/constants.service';
 import { ReCaptcha2Component } from 'ngx-captcha';
 import { AuthApiProxyService } from '../auth-api-proxy.service';
-import { timer } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
 import { checkSlugUniqueValidator } from '../validators/check-slug-unique.validator';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
@@ -32,7 +16,7 @@ import { NGXLogger } from 'ngx-logger';
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent extends BasePageComponent implements OnInit {
+export class RegisterComponent implements OnInit {
     environment = environment;
     // tslint:disable-next-line: max-line-length
     form: FormGroup;
@@ -52,10 +36,9 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         private router: Router,
         private fb: FormBuilder,
         private constants: ConstantsService,
-        logger: NGXLogger,
-        uiStateService: UiStateService
+        private logger: NGXLogger,
+        private uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
         this._buildForm();
     }
     ngOnInit() {
@@ -129,7 +112,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
 
     socialLogin(method: string) {
         this.authService.socialLogin(method).subscribe(
-            (success) => this.router.navigate(['']),
+            () => this.router.navigate(['']),
             (error) =>
                 this.logger.debug('login.component', 'Error logging in', error)
         );
@@ -165,7 +148,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                                         'Error signing up, please try again later';
                                 }
                             },
-                            (errors) => {
+                            () => {
                                 // TODO - remote logging of this error
                                 this.errorMessage =
                                     'Error signing up, have you already signed up with this email?';
@@ -176,7 +159,7 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
                         'Captcha did not validate, please refresh page and try again.';
                 }
             },
-            (error) => {
+            () => {
                 this.errorMessage =
                     'Captcha did not validate, please refresh page and try again.';
             }
