@@ -56,7 +56,9 @@ export class RegisterComponent extends BasePageComponent implements OnInit {
         super(uiStateService);
         this._buildForm();
     }
-    ngOnInit() {}
+    ngOnInit() {
+        this.uiStateService.setNakedPage(true);
+    }
     //#region Form Control Getters
 
     private _buildForm() {
