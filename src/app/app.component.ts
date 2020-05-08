@@ -44,7 +44,7 @@ export class AppComponent extends BaseComponent {
         public uiStateService: UiStateService
     ) {
         super(logger, uiStateService);
-        this.logger.info('app.component', 'constructor');
+        this.logger.debug('app.component', 'constructor');
         updateService.checkForUpdates();
     }
     ngOnInit() {
@@ -134,7 +134,7 @@ export class AppComponent extends BaseComponent {
         profile$.subscribe((p) => {
             this.action$.next('redirectslug');
             if (p && environment.production) {
-                this.logger.info(
+                this.logger.debug(
                     'Resetting page layout and registering for push notifications'
                 );
                 this.uiStateService.setNakedPage(false);

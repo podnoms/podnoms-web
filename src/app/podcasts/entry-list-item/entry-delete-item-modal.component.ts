@@ -10,7 +10,7 @@ import { PodcastEntry } from 'app/core';
                 width: 64px;
                 height: 64px;
             }
-        `
+        `,
     ],
     template: `
         <div class="block block-themed block-transparent mb-0">
@@ -26,7 +26,7 @@ import { PodcastEntry } from 'app/core';
                         aria-label="Close"
                         (click)="modal.close('')"
                     >
-                        <i class="icon icon-close"></i>
+                        <i class="fa fas fa-times"></i>
                     </button>
                 </div>
             </div>
@@ -77,7 +77,7 @@ import { PodcastEntry } from 'app/core';
                 </button>
             </div>
         </div>
-    `
+    `,
 })
 export class EntryDeleteItemModalComponent {
     @Input() public entry: PodcastEntry;

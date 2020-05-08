@@ -73,10 +73,10 @@
                             class="fa fa-cog fa-spin">
                         </i>
                         <i *ngSwitchCase="playStates.playing"
-                            class="icon icon-control-pause">
+                            class="fa fas fa-pause">
                         </i>
                         <i *ngSwitchDefault
-                            class="icon icon-control-play">
+                            class="fa fas fa-play">
                         </i>
                     </div>
                 </button>
@@ -108,7 +108,7 @@
                     data-toggle="tooltip"
                     title="Download episode">
                     <i *ngIf="!preparingDownload"
-                        class="icon icon-cloud-download"></i>
+                        class="fa fas fa-cloud-download-alt"></i>
                     <i *ngIf="preparingDownload"
                         class="fa fa-cog fa-spin text-success"></i>
                 </button>
@@ -118,7 +118,7 @@
                     [routerLink]="['../entry', entry?.id, 'edit']"
                     data-toggle="tooltip"
                     title="Edit episode">
-                    <i class="icon icon-pencil"></i>
+                    <i class="fa fas fa-pencil-alt"></i>
                 </a>
             </div>
             <div class="btn-group">
@@ -134,7 +134,7 @@
                     (click)="showEntryDeleteDialog()"
                     data-toggle="tooltip"
                     title="Delete episode">
-                    <i class="icon icon-close"></i>
+                    <i class="fa fa-close"></i>
                 </button>
             </div>
         </div>

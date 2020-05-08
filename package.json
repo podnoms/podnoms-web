@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.166",
+    "version": "1.2.168",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -69,7 +69,6 @@
         "popper.js": "^1.16.1",
         "quill": "^1.3.7",
         "rxjs": "~6.5.5",
-        "simple-line-icons": "^2.4.1",
         "streamsaver": "^2.0.4",
         "tslib": "^1.11.2",
         "wavesurfer.js": "^3.3.3",
