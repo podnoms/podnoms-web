@@ -66,7 +66,8 @@
                 <button type="button"
                     class="btn btn-success"
                     *ngIf="entry.processingStatus==='Processed'"
-                    (click)="playAudio()">
+                    (click)="playAudio()"
+                    aria-label="Play">
                     <div [ngSwitch]="(playState$ | async)">
 
                         <i *ngSwitchCase="playStates.loading"

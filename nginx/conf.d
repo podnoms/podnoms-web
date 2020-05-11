@@ -13,15 +13,16 @@ http {
     server {
         listen 80;
         server_name  www.podnoms.com;
+        server_tokens off;
 
         root   /usr/share/nginx/html;
-        index  index.html index.htm;
         include /etc/nginx/mime.types;
 
         add_header X-Frame-Options SAMEORIGIN;
         add_header X-Content-Type-Options nosniff;
         add_header X-XSS-Protection "1; mode=block";
         add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+        add_header Cache-Control 'max-age=86400'; # one day
 
         gzip on;
         gzip_min_length 1000;
@@ -31,6 +32,8 @@ http {
         location / {
             try_files $uri $uri/ /index.html;
         }
+        location ~ .*\.css$|.*\.js$ {
+            add_header Cache-Control 'max-age=31449600'; # one year
+        }
     }
 }
-
