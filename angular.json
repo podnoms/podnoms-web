@@ -36,6 +36,7 @@
                             "node_modules/howler/dist/howler.js",
                             "node_modules/quill/dist/quill.js",
                             "node_modules/zxcvbn/dist/zxcvbn.js",
+                            "node_modules/default-passive-events/dist/index.js",
                             "node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.js",
                             "node_modules/streamsaver/StreamSaver.js"
                         ]
