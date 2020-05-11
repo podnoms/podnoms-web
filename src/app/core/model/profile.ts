@@ -14,6 +14,7 @@ export class Profile {
     subscriptionType: string;
     subscriptionValidUntil: Date;
     roles: string[];
+    isFluent: boolean;
 }
 export class ProfileLimits {
     user: Profile;

@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.168",
+    "version": "1.2.172",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -27,7 +27,7 @@
         "@angular/service-worker": "~9.1.4",
         "@aspnet/signalr": "^1.1.4",
         "@auth0/angular-jwt": "^4.0.0",
-        "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
+        "@fortawesome/fontawesome-free": "^5.13.0",
         "@ng-bootstrap/ng-bootstrap": "^6.1.0",
         "@ng-select/ng-select": "^4.0.0",
         "@ngrx/data": "^9.1.2",

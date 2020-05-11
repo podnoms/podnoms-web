@@ -20,14 +20,16 @@
                                 <div class="col-sm-6 mb-5">
                                     <button type="button"
                                         class="btn btn-block btn-social btn-facebook"
-                                        (click)="socialLogin('facebook')">
+                                        (click)="socialLogin('facebook')"
+                                        aria-label="Login facebook">
                                         <span class="fab fa-facebook"></span> Register with Facebook
                                     </button>
                                 </div>
                                 <div class="col-sm-6 mb-5">
                                     <button type="button"
                                         class="btn btn-block btn-social btn-google"
-                                        (click)="socialLogin('google-oauth2')">
+                                        (click)="socialLogin('google-oauth2')"
+                                        aria-label="Login google">
                                         <span class="fab fa-google"></span> Register with Google
                                     </button>
                                 </div>
@@ -159,7 +161,8 @@
                                 <div class="col-12 mb-10">
                                     <button [disabled]="!signupForm.valid"
                                         type="submit"
-                                        class="btn btn-block btn-info">
+                                        class="btn btn-block btn-info"
+                                        aria-label="Submit">
                                         <i class="si si-user-follow mr-10"></i> Sign Up
                                     </button>
                                 </div>

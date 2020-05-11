@@ -28,13 +28,15 @@
                                         <button type="button"
                                             class="btn btn-block btn-social btn-facebook"
                                             (click)="socialLogin('facebook')">
-                                            <span class="fab fa-facebook"></span> Sign in with Facebook
+                                            <span class="fab fa-facebook"
+                                                aria-label="Sign in with Facebook"></span> Sign in with Facebook
                                         </button>
                                     </div>
                                     <div class="col-sm-6 mb-5">
                                         <button type="button"
                                             class="btn btn-block btn-social btn-google"
-                                            (click)="socialLogin('google-oauth2')">
+                                            (click)="socialLogin('google-oauth2')"
+                                            aria-label="Sign in with Google">
                                             <span class="fab fa-google"></span> Sign in with Google
                                         </button>
                                     </div>
@@ -87,7 +89,8 @@
                                 <div class="form-group row gutters-tiny">
                                     <div class="col-12 mb-20">
                                         <button type="submit"
-                                            class="btn btn-block btn-info">
+                                            class="btn btn-block btn-info"
+                                            aria-label="Submit">
                                             <i class="fa fa-sign-in-alt mr-10"></i> Sign In
                                         </button>
                                     </div>

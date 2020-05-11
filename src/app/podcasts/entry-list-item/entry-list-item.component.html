@@ -7,7 +7,7 @@
             *ngIf="entry.processingStatus !== 'Accepted'">
             <img [src]="entry.thumbnailUrl"
                 class="img-avatar img-avatar48"
-                alt="">
+                alt="entry.title + '-image'">
             <span class="avatar-status badge-success"></span>
         </div>
     </div>
@@ -134,7 +134,7 @@
                     (click)="showEntryDeleteDialog()"
                     data-toggle="tooltip"
                     title="Delete episode">
-                    <i class="fa fa-close"></i>
+                    <i class="fa fa-times"></i>
                 </button>
             </div>
         </div>

@@ -4,7 +4,8 @@
             <div class="content-header-section align-parent">
                 <button type="button"
                     class="btn btn-circle btn-dual-secondary align-v-r"
-                    (click)="uiStateService.toggleOverlay()">
+                    (click)="uiStateService.toggleOverlay()"
+                    aria-label="Toggle visibility">
                     <i class="fa fa-times text-danger"></i>
                 </button>
                 <div class="content-header-item"
@@ -28,7 +29,8 @@
                     </h3>
                     <div class="block-options">
                         <button type="button"
-                            class="btn-block-option">
+                            class="btn-block-option"
+                            aria-label="Refresh">
                             <i class="fa fa-sync"></i>
                         </button>
                         <!-- <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle">
@@ -49,7 +51,8 @@
                                     style="margin-right: 15px;">{{entry.title}}</div>
                                 <button type="button"
                                     class="btn btn-circle btn-dual-secondary align-v-r"
-                                    (click)="playAudio(entry)">
+                                    (click)="playAudio(entry)"
+                                    aria-label="Play audio">
                                     <i class="fa fa-play text-danger"></i>
                                 </button>
                             </a>

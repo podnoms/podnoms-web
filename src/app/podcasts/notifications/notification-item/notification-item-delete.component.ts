@@ -15,7 +15,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
                         aria-label="Close"
                         (click)="modal.close()"
                     >
-                        <i class="fa fa-close"></i>
+                        <i class="fa fa-times"></i>
                     </button>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <div class="podcast-container-wrapper">
     <div class="block block-themed block-rounded"
         *ngIf="(podcast$ | async) as podcast">
-        <div class="block-header">
+        <div class="block-header bg-muted">
             <h3 class="block-title text-bold">
                 {{podcast.title}}
             </h3>
@@ -75,7 +75,8 @@
                         [href]="podcast.pagesUrl"
                         title="Open public podcast page"
                         data-toggle="tooltip"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
                         <span class="d-none d-md-inline-block">
                             <i class="text-success fas fa fa-newspaper animated swing infinite"></i> Public Page
                             <span class="badge badge-danger">New</span>
@@ -86,7 +87,8 @@
                         [href]="podcast.rssUrl"
                         title="Open RSS feed in new tab"
                         data-toggle="tooltip"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
                         <i class="text-warning fas fa fa-rss"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Rss Url</span>
                     </a>

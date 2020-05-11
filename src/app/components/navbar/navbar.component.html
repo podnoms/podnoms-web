@@ -4,25 +4,32 @@
         <div class="content-header-section">
             <button type="button"
                 (click)="toggleSidebar()"
-                class="btn btn-circle btn-dual-secondary">
-                <i class="fas fa fa-bars"></i>
+                class="btn btn-circle btn-dual-secondary"
+                aria-label="Toggle sidebar">
+                <i class="fas fa fa-bars"
+                    aria-label="Toggle sidebar"></i>
             </button>
             <button type="button"
                 class="btn btn-circle btn-dual-secondary"
                 data-toggle="layout"
                 data-action="header_search_on"
-                (click)="searchActive = true">
+                (click)="searchActive = true"
+                aria-label="Toggle search">
                 <i class="fa fa-search"></i>
             </button>
         </div>
         <div class="content-header-section">
             <a href="https://facebook.com/podnoms"
+                rel="noopener"
                 target="_blank"
+                rel="noopener"
                 class="btn btn-circle btn-dual-secondary btn-facebook">
                 <i class="text-primary fab fa-facebook"></i>
             </a>
             <a href="https://twitter.com/podnoms"
+                rel="noopener"
                 target="_blank"
+                rel="noopener"
                 class="btn btn-circle btn-dual-secondary btn-twitter">
                 <i class="text-primary fab fa-twitter"></i>
             </a>
@@ -30,6 +37,7 @@
         <div class="content-header-section">
             <a href="https://talk.podnoms.com/"
                 target="_blank"
+                rel="noopener"
                 class="btn btn-dual-secondary">
                 <i class="text-primary fa fa-life-ring"></i>&nbsp;
                 <span class="d-none d-md-inline-block">Help & Support</span>
@@ -52,13 +60,15 @@
 
         <div class="content-header-section">
             <img [src]="profile.thumbnailImageUrl"
-                class="rounded-circle profile-img">
+                class="rounded-circle profile-img"
+                alt="profile-image">
             <div class="btn-group"
                 role="group">
                 <button type="button"
                     class="btn btn-rounded btn-dual-secondary"
                     id="page-header-user-dropdown"
-                    data-toggle="dropdown">
+                    data-toggle="dropdown"
+                    aria-label="Open menue">
                     <span class="d-none d-md-inline-block">
                         {{profile.firstName}}
                         {{profile.lastName}}
@@ -117,7 +127,8 @@
                     data-toggle="dropdown"
                     title="Payment Info"
                     aria-haspopup="true"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                    aria-label="Subscriptions">
                     <i class="text-primary fa fa-shopping-cart swing"
                         [ngClass]="profile.subscriptionValid ? 'text-primary' : 'text-primary'"></i>
                     <!-- <span class="badge badge-primary badge-pill">5</span> -->
@@ -159,7 +170,10 @@
             </div>
             <button type="button"
                 class="btn btn-circle btn-dual-secondary"
-                (click)="toggleOverlay()">
+                title="Activity stream"
+                data-toggle="tooltip"
+                (click)="toggleOverlay()"
+                aria-label="Open activity stream">
                 <i class="fa fa-ellipsis-v"></i>
             </button>
         </div>

@@ -17,7 +17,7 @@
     </div>
     <app-footer></app-footer>
 </div>
-<app-chatbox *ngIf="profile"></app-chatbox>
+<app-chatbox *ngIf="profile && !profile.isFluent"></app-chatbox>
 <app-toast></app-toast>
 <div *ngIf="profile">
     <app-modal-updates [(action$)]="action$">
