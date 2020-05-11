@@ -65,7 +65,7 @@
     display: inline-block;
     transition: transform .25s ease-out, opacity .25s ease-out;
 
-    @include hover {
+    @include hover() {
         transform: scale(1.04);
         opacity: .75;
     }

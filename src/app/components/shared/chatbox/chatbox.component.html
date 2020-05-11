@@ -2,7 +2,8 @@
     <div class="chat-activator">
         <button type="button"
             (click)="toggleChat()"
-            class="btn btn-hero btn-rounded btn-noborder btn-info mr-5 mb-5 z-index: 999">
+            class="btn btn-hero btn-rounded btn-noborder btn-success mr-5 mb-5 z-index: 999"
+            aria-label="Toggle chat">
             Need some help?
             <i class="fa fa-comments mr-5"></i>
         </button>
@@ -12,16 +13,17 @@
         <div class="bg-white d-flex flex-column chat-form-container">
             <div class="js-chat-active-user p-15 d-flex align-items-center justify-content-between bg-white">
                 <div class="d-flex align-items-center">
-                    <a class="img-link img-status"
+                    <div class="img-link img-status"
+                        aria-label="Twitter"
                         href="javascript:void(0)">
                         <img class="img-avatar img-avatar32"
                             src="/assets/img/logo-icon.png"
                             alt="Avatar">
                         <div class="img-status-indicator bg-success"></div>
-                    </a>
+                    </div>
                     <div class="ml-10">
-                        <a class="font-w600"
-                            href="javascript:void(0)">You are chatting</a>
+                        <span class="font-w600">You are chatting
+                        </span>
                         <div class="font-size-sm text-muted">with support</div>
                     </div>
                 </div>
@@ -29,7 +31,8 @@
                     <button type="button"
                         (click)="toggleChat()"
                         class="btn btn-sm btn-circle btn-alt-secondary"
-                        data-toggle="dropdown">
+                        data-toggle="dropdown"
+                        aria-label="Toggle chat">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
@@ -117,7 +120,8 @@
                             placeholder="Type a message.."
                             data-ms-editor="true">
                         <button type="submit"
-                            class="btn btn-circle btn-alt-primary">
+                            class="btn btn-circle btn-alt-primary"
+                            aria-label="Send">
                             <i class="fa fa-share-square"></i>
                         </button>
                     </div>

@@ -42,7 +42,7 @@ a {
         }
     }
 
-    @include hover {
+    @include hover() {
         &.link-effect::before {
             visibility: visible;
             transform: translateY(0);

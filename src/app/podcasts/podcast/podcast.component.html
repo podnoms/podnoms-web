@@ -1,7 +1,7 @@
 <div class="podcast-container-wrapper">
     <div class="block block-themed block-rounded"
         *ngIf="(podcast$ | async) as podcast">
-        <div class="block-header">
+        <div class="block-header bg-muted">
             <h3 class="block-title text-bold">
                 {{podcast.title}}
             </h3>
@@ -13,14 +13,14 @@
                     <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
                         title="Edit podcast"
                         class="btn-block-option">
-                        <i class="icon icon-pencil"
+                        <i class="fa fas fa-pencil-alt"
                             aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Edit</span>
                     </a>
                     <button (click)="showPodcastDeleteDialog(podcast)"
                         title="Delete this podcast"
                         class="btn-block-option">
-                        <i class="icon icon-close"
+                        <i class="fa fa-times"
                             aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Delete</span>
                     </button>
@@ -28,7 +28,7 @@
                     <button class="btn-block-option"
                         title="Add podcast from URL"
                         (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
-                        <i class="icon icon-plus"></i>
+                        <i class="fa fa-plus"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Add (from URL)</span>
                     </button>
                     <div class="btn-group dropdown-container"
@@ -41,7 +41,7 @@
                             data-flip="false"
                             aria-haspopup="true"
                             aria-expanded="false">
-                            <i class="icon icon-cloud-upload"></i>
+                            <i class="fa fas fa-cloud-upload-alt"></i>
                             <span class="d-none d-md-inline-block">&nbsp;Upload from
                                 file</span>
                         </button>
@@ -49,19 +49,19 @@
                             aria-labelledby="file-upload-group`">
                             <a class="dropdown-item"
                                 (click)="startUpload(uploadModes.fromLocalFile)">
-                                <i class="icon icon-cloud-upload mr-5"></i>
+                                <i class="fa fas fa-cloud-upload-alt mr-5"></i>
                                 Local
                                 PC</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
                                 href="javascript:void(0)"
                                 (click)="startUpload(uploadModes.fromDropbox)">
-                                <i class="icon icon-social-dropbox  mr-5"></i>Dropbox
+                                <i class="fa fas fadropbox mr-5"></i>Dropbox
                             </a>
                             <a class="dropdown-item"
                                 href="javascript:void(0)"
                                 (click)="startUpload(uploadModes.fromGoogleDrive)">
-                                <i class="icon icon-social-google  mr-5"></i>Google
+                                <i class="fa fas fa-google-drive mr-5"></i>Google
                                 Drive</a>
                         </div>
                     </div>
@@ -75,10 +75,10 @@
                         [href]="podcast.pagesUrl"
                         title="Open public podcast page"
                         data-toggle="tooltip"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
                         <span class="d-none d-md-inline-block">
                             <i class="text-success fas fa fa-newspaper animated swing infinite"></i> Public Page
-                            <span class="badge badge-danger">New</span>
                         </span>
                     </a>
                     <span class="btn-separator"></span>
@@ -86,7 +86,8 @@
                         [href]="podcast.rssUrl"
                         title="Open RSS feed in new tab"
                         data-toggle="tooltip"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
                         <i class="text-warning fas fa fa-rss"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Rss Url</span>
                     </a>

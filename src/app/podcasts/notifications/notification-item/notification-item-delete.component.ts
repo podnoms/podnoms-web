@@ -15,7 +15,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
                         aria-label="Close"
                         (click)="modal.close()"
                     >
-                        <i class="icon icon-close"></i>
+                        <i class="fa fa-times"></i>
                     </button>
                 </div>
             </div>
@@ -42,7 +42,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
             </div>
         </div>
     `,
-    styles: [``]
+    styles: [``],
 })
 export class NotificationItemDeleteComponent implements OnInit {
     constructor(public modal: NgbActiveModal) {}

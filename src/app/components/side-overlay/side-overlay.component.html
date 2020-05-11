@@ -4,13 +4,15 @@
             <div class="content-header-section align-parent">
                 <button type="button"
                     class="btn btn-circle btn-dual-secondary align-v-r"
-                    (click)="uiStateService.toggleOverlay()">
+                    (click)="uiStateService.toggleOverlay()"
+                    aria-label="Toggle visibility">
                     <i class="fa fa-times text-danger"></i>
                 </button>
                 <div class="content-header-item"
                     *ngIf="profile">
                     <a class="img-link mr-5"
-                        [routerLink]="['/profile']">
+                        [routerLink]="['/profile']"
+                        aria-label="View profile">
                         <img class="img-avatar img-avatar32"
                             [src]="profile.profileImageUrl"
                             alt="">
@@ -28,11 +30,12 @@
                     </h3>
                     <div class="block-options">
                         <button type="button"
-                            class="btn-block-option">
-                            <i class="icon icon-refresh"></i>
+                            class="btn-block-option"
+                            aria-label="Refresh">
+                            <i class="fa fa-sync"></i>
                         </button>
                         <!-- <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle">
-                            <i class="icon icon-arrow-up"></i>
+                            <i class="fa fa-level-up-alt"></i>
                         </button> -->
                     </div>
                 </div>
@@ -49,8 +52,9 @@
                                     style="margin-right: 15px;">{{entry.title}}</div>
                                 <button type="button"
                                     class="btn btn-circle btn-dual-secondary align-v-r"
-                                    (click)="playAudio(entry)">
-                                    <i class="icon icon-control-play text-danger"></i>
+                                    (click)="playAudio(entry)"
+                                    aria-label="Play audio">
+                                    <i class="fa fa-play text-danger"></i>
                                 </button>
                             </a>
                         </li>

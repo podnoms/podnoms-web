@@ -16,7 +16,7 @@ import { Podcast } from 'app/core';
                         aria-label="Close"
                         (click)="modal.close()"
                     >
-                        <i class="icon icon-close"></i>
+                        <i class="fa fas fa-times"></i>
                     </button>
                 </div>
             </div>
@@ -73,8 +73,8 @@ import { Podcast } from 'app/core';
                 width: 64px;
                 height: 64px;
             }
-        `
-    ]
+        `,
+    ],
 })
 export class PodcastDeleteComponent implements OnInit {
     @Input() public podcast: Podcast;

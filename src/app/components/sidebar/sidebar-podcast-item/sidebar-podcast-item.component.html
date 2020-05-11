@@ -10,7 +10,12 @@
         [src]="podcast.thumbnailUrl"
         alt="" />
     <i class="fa fa-circle text-success"
-        *ngIf="newEpisodes"></i> {{ podcast.title }}
-    <div class="font-w400 font-size-xs text-muted">{{
-        podcast.podcastEntries.length }} episodes</div>
+        *ngIf="newEpisodes">
+    </i>
+    <span class="text-primary-dark">
+        {{podcast.title}}
+    </span>
+    <div class="font-w400 font-size-xs text-primary-dark text-muted">
+        {{podcast.podcastEntries.length}} episodes
+    </div>
 </a>

@@ -158,7 +158,7 @@
         content: '\f073';
     }
 
-    @include hover {
+    @include hover() {
         cursor: move;
         border-left-color: rgba(0,0,0,.3);
         transform: translateX(-5px);

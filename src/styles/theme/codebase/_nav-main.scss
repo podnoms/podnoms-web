@@ -11,7 +11,7 @@
     // Headings
     .nav-main-heading {
         padding: 30px $space-side 6px $space-side;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -36,7 +36,7 @@
             color: rgba($brand-dark, .75);
 
             @at-root .sidebar-inverse #sidebar & {
-                color: $body-color-light;
+                color: rgba($white, .3);
             }
         }
 
@@ -110,9 +110,9 @@
         }
 
         a {
-            padding: 7px 8px 7px 0;
-            font-size: 13px;
-            color: rgba($body-color, .6);
+            padding: 6px 8px 6px 0;
+            font-weight: 400;
+            color: lighten($body-color, 25%);
 
             @include hover-focus {
                 background-color: transparent;

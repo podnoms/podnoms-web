@@ -23,22 +23,23 @@
                     true}}</td>
                 <td>
                     <span *ngIf="payment.type==='Personal'"
-                          class="badge badge-secondary">Personal</span>
+                        class="badge badge-secondary">Personal</span>
                     <span *ngIf="payment.type==='Professional'"
-                          class="badge badge-warning">Professional</span>
+                        class="badge badge-warning">Professional</span>
                 </td>
                 <td class="text-center">
                     <!-- <a [href]="payment.receiptURL"
                        target="_blank"
-                       download="PodNoms Invoice - {{payment.startDate}}.pdf"
+                rel="noopener"
+                download="PodNoms Invoice - {{payment.startDate}}.pdf"
                        class="btn btn-alt-danger">
                         <i class="fa fa-download"></i>
                     </a> -->
                     <button class="btn btn-outline"
-                            data-toggle="tooltip"
-                            title="Download invoice"
-                            (click)="downloadInvoice(payment)"
-                            class="btn btn-alt-danger">
+                        data-toggle="tooltip"
+                        title="Download invoice"
+                        (click)="downloadInvoice(payment)"
+                        class="btn btn-alt-danger">
                         <i class="fa fa-download"></i>
                     </button>
                 </td>
@@ -47,5 +48,5 @@
     </table>
 </div>
 <iframe id="downloader"
-        #downloader
-        style="display:none"></iframe>
+    #downloader
+    style="display:none"></iframe>
