@@ -42,7 +42,7 @@
             background-color: $link-color;
         }
 
-        @include hover {
+        @include hover() {
             color: $link-hover-color;
         }
     }
@@ -596,8 +596,8 @@
     }
 
     // Form feedback
-    @include form-validation-state("valid", $brand-success, false);
-    @include form-validation-state("invalid", $brand-danger, false);
+    @include form-validation-state("valid", $brand-success, $form-feedback-icon-valid);
+    @include form-validation-state("invalid", $brand-danger, $form-feedback-icon-invalid);
 
     // Material Forms
     .form-material {
@@ -868,7 +868,7 @@
                 color: rgba($brand-dark, .75);
 
                 @at-root .sidebar-inverse #sidebar & {
-                    color: $body-color-light;
+                    color: rgba($white, .3);
                 }
             }
 
@@ -888,7 +888,7 @@
         // Sub menus
         ul {
             a {
-                color: rgba($body-color, .6);
+                color: lighten($body-color, 25%);
             }
         }
 
@@ -981,7 +981,7 @@
         a {
             border-color: $body-bg;
 
-            @include hover {
+            @include hover() {
                 background-color: $body-bg-light;
             }
         }
@@ -1075,7 +1075,7 @@
             color: $body-color;
         }
 
-        @include hover {
+        @include hover() {
             border-color: $brand-primary;
 
             .dz-message {
@@ -1088,7 +1088,7 @@
     .fc-event {
         color: $body-color-dark;
 
-        @include hover {
+        @include hover() {
             color: $body-color;
         }
     }
@@ -1169,24 +1169,24 @@
         }
     }
 
-    .irs.irs--round {    
+    .irs.irs--round {
         .irs-min,
         .irs-max,
         .irs-line,
         .irs-grid-pol {
             background: $body-bg;
         }
-    
+
         .irs-handle {
             border-color: $brand-primary;
         }
-    
+
         .irs-from::before,
         .irs-to::before,
         .irs-single::before {
             border-top-color: $brand-primary;
         }
-    
+
         .irs-bar,
         .irs-from,
         .irs-to,
@@ -1320,5 +1320,33 @@
     .dd-placeholder {
         border-color: $brand-darker;
         background: $brand-lighter;
+    }
+
+    // Flatpickr
+    .flatpickr-day.selected,
+    .flatpickr-day.startRange,
+    .flatpickr-day.endRange,
+    .flatpickr-day.selected.inRange,
+    .flatpickr-day.startRange.inRange,
+    .flatpickr-day.endRange.inRange,
+    .flatpickr-day.selected:focus,
+    .flatpickr-day.startRange:focus,
+    .flatpickr-day.endRange:focus,
+    .flatpickr-day.selected:hover,
+    .flatpickr-day.startRange:hover,
+    .flatpickr-day.endRange:hover,
+    .flatpickr-day.selected.prevMonthDay,
+    .flatpickr-day.startRange.prevMonthDay,
+    .flatpickr-day.endRange.prevMonthDay,
+    .flatpickr-day.selected.nextMonthDay,
+    .flatpickr-day.startRange.nextMonthDay,
+    .flatpickr-day.endRange.nextMonthDay {
+        border-color: $brand-primary;
+        background: $brand-primary;
+    }
+
+    .flatpickr-months .flatpickr-prev-month:hover svg,
+    .flatpickr-months .flatpickr-next-month:hover svg {
+        fill: $brand-primary;
     }
 }

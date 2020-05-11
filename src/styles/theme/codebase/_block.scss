@@ -290,7 +290,7 @@ a.block {
     font-weight: normal;
     transition: all .12s ease-out;
 
-    @include hover {
+    @include hover() {
         color: $body-color;
         opacity: .65;
     }
@@ -409,7 +409,7 @@ a.block {
         top: 1px;
     }
 
-    @include hover {
+    @include hover() {
         text-decoration: none;
         color: $gray-darker;
     }
@@ -443,7 +443,7 @@ a.block {
         color: $white;
         opacity: .7;
 
-        @include hover {
+        @include hover() {
             color: $white;
             opacity: 1;
         }

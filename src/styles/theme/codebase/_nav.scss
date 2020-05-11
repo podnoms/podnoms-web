@@ -113,7 +113,7 @@
             border-radius: 50%;
         }
 
-        @include hover {
+        @include hover() {
             background-color: $body-bg-light;
         }
     }

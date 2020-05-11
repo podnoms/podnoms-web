@@ -30,6 +30,7 @@
     left: 0;
     z-index: $zindex-sidebar;
     width: 100%;
+    height: 100%;
     background-color: $sidebar-bg;
     overflow-y: auto;
     transform: translateX(-100%) translateY(0) translateZ(0);
@@ -70,17 +71,20 @@
             transform: translateX($sidebar-width - $sidebar-mini-width) translateY(0) translateZ(0);
         }
 
-        .sidebar-o.sidebar-mini & .sidebar-content {
+        .sidebar-mini.sidebar-o & .content-side,
+        .sidebar-mini.sidebar-o & .content-header {
             width: $sidebar-width;
             transform: translateX(($sidebar-width - $sidebar-mini-width)) translateY(0) translateZ(0);
             transition: transform $side-transition;
             will-change: transform;
         }
 
-        .sidebar-o.sidebar-mini &:hover,
-        .sidebar-o.sidebar-mini &:hover .sidebar-content,
-        .sidebar-r.sidebar-o.sidebar-mini & .sidebar-content {
-            transform: translateX(0) translateY(0) translateZ(0);
+        .sidebar-mini.sidebar-o &:hover,
+        .sidebar-mini.sidebar-o &:hover .content-side,
+        .sidebar-mini.sidebar-o.sidebar-r & .content-side,
+        .sidebar-mini.sidebar-o &:hover .content-header,
+        .sidebar-mini.sidebar-o.sidebar-r & .content-header {
+            transform: translateX(0);
         }
 
         .sidebar-o.sidebar-mini & {
