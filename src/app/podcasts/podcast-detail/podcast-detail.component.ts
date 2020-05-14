@@ -2,20 +2,21 @@ import {
     Component,
     Input,
     ChangeDetectionStrategy,
-    AfterViewInit,
     ChangeDetectorRef,
     OnChanges,
     SimpleChanges,
+    OnInit,
 } from '@angular/core';
 
 import { Podcast, PodcastEntry } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { EntriesStoreService } from '../entries-store.service';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { DragDropService } from '../../shared/services/drag-drop.service';
 import { NGXLogger } from 'ngx-logger';
+import { SignalRService } from 'app/shared/services/signal-r.service';
+import { RealtimeUpdate } from '../../core/model/realtime-update';
 
 @Component({
     selector: 'app-podcast-detail',
@@ -35,7 +36,7 @@ import { NGXLogger } from 'ngx-logger';
         ]),
     ],
 })
-export class PodcastDetailComponent implements AfterViewInit, OnChanges {
+export class PodcastDetailComponent implements OnInit, OnChanges {
     @Input() podcast: Podcast;
 
     constructor(
@@ -44,10 +45,60 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
         private dragDropService: DragDropService,
         private alertService: AlertService,
         private cdRef: ChangeDetectorRef,
+        private signalr: SignalRService,
         private logger: NGXLogger
     ) {}
 
-    ngAfterViewInit() {}
+    ngOnInit() {
+        this.signalr
+            .init('rtd')
+            .then((listener) => {
+                listener
+                    .on<RealtimeUpdate>('rtd', 'podcast-entry-added')
+                    .subscribe((message) => {
+                        this.logger.debug(
+                            'podcast-detail.component',
+                            'hub-Sync',
+                            message
+                        );
+                        this.podcastEntryDataService
+                            .getById(message.id)
+                            .subscribe((entry) => {
+                                this.logger.debug(
+                                    'podcast-detail.component',
+                                    'pushing entry',
+                                    entry
+                                );
+                                setTimeout(() => {
+                                    this.logger.debug(
+                                        'podcast-detail.component',
+                                        'before',
+                                        this.podcast.podcastEntries
+                                    );
+                                    const e = this.podcast.podcastEntries.find(
+                                        (r) => r.id === entry.id
+                                    );
+                                    if (!e) {
+                                        this.podcast.podcastEntries.push(entry);
+                                        this.cdRef.detectChanges();
+                                    }
+                                    this.logger.debug(
+                                        'podcast-detail.component',
+                                        'after',
+                                        this.podcast.podcastEntries
+                                    );
+                                });
+                            });
+                    });
+            })
+            .catch((err) => {
+                this.logger.error(
+                    'app.component',
+                    'Unable to initialise site update hub',
+                    err
+                );
+            });
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.logger.debug('podcast-detail.component', 'ngOnChanges', changes);
@@ -57,7 +108,8 @@ export class PodcastDetailComponent implements AfterViewInit, OnChanges {
     public detectChanges() {
         this.cdRef.detectChanges();
     }
-    updateEntry(entry: PodcastEntry) {
+    updateEntry(entry) {
+        this.logger.debug('podcast-detail.component', 'updateEntry', entry);
         this.detectChanges();
     }
     deleteEntry(entry: PodcastEntry) {
