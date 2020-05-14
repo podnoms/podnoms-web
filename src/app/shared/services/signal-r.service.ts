@@ -19,14 +19,14 @@ interface HubCollection {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class SignalRService {
     private connectionPool: HubCollection = {};
 
     constructor(private authService: AuthService) {}
     public init(hubName: string): Promise<SignalRService> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             const url = `${environment.signalRHost}/hubs/${hubName}`;
             const token = this.authService.getAuthToken();
             const hub = this.connectionPool[hubName];
@@ -44,7 +44,7 @@ export class SignalRService {
     public on<T>(hub: string, channel: string): Observable<T> {
         const listener = new Observable<T>((subscriber: Subscriber<T>) => {
             const h = this.connectionPool[hub];
-            h.connection.on(channel, message => {
+            h.connection.on(channel, (message) => {
                 const result: T = message as T;
                 subscriber.next(result);
             });
