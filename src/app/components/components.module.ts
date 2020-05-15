@@ -33,6 +33,7 @@ import { ErrorComponent } from './error-pages/error/error.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
+import { RedirollComponent } from './shared/rediroll/rediroll.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
@@ -70,7 +71,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         ChatboxComponent,
         BoilerplateComponent,
         ErrorComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        RedirollComponent
     ],
     exports: [
         SidebarComponent,
