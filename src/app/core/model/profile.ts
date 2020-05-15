@@ -4,6 +4,7 @@ export class Profile {
     email: string;
     name: string;
     description?: string;
+    twitterHandle?: string;
     profileImageUrl?: string;
     thumbnailImageUrl?: string;
     apiKey: string;
