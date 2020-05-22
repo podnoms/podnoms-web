@@ -9,6 +9,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PaymentsModule } from '../payments/payments.module';
 import { UserNotificationsSettingsComponent } from './notifications/user-notifications-settings/user-notifications-settings.component';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { ApiKeysComponent } from './api-keys/api-keys.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,7 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
         NgbTabsetModule
     ],
     exports: [],
-    declarations: [ProfileComponent, UserNotificationsSettingsComponent],
+    declarations: [ProfileComponent, UserNotificationsSettingsComponent, ApiKeysComponent],
     providers: [AuthService]
 })
 export class ProfileModule {}

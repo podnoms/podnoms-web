@@ -1,5 +1,6 @@
 
 export * from './shareable';
+export * from './api-key-request';
 export * from './podcast';
 export * from './shareable';
 export * from './podcast-entry';
