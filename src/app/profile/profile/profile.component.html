@@ -96,6 +96,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <label for="twitter-handle">Twitter Handle</label>
+                                        <input type="text"
+                                            class="form-control form-control-lg-disabled"
+                                            name="twitter-handle"
+                                            [(ngModel)]="profile.twitterHandle">
+                                        <div class="form-text text-muted text-danger">
+                                            You will need to fill this if you want to create an episode by replying to a tweet
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <div class="col-md-12">
                                         <label for="mega-bio">Profile
                                             Image</label>
