@@ -15,16 +15,24 @@
     right: 0;
     bottom: 0;
     left: 0;
-    content: "";
-    background: rgba(darken($brand-primary, 45%), .4);
-    background: linear-gradient(to right, rgba(darken($brand-primary, 45%),0), rgba(darken($brand-primary, 45%),.6));
+    content: '';
+    background: rgba(darken($brand-primary, 45%), 0.4);
+    background: linear-gradient(
+        to right,
+        rgba(darken($brand-primary, 45%), 0),
+        rgba(darken($brand-primary, 45%), 0.6)
+    );
     z-index: $zindex-page-overlay;
     opacity: 0;
     transition: opacity $side-transition, transform $side-transition;
     transform: translateX(100%);
 
     .sidebar-r & {
-        background: linear-gradient(to right, rgba(darken($brand-primary, 45%),.6), rgba(darken($brand-primary, 45%),0));
+        background: linear-gradient(
+            to right,
+            rgba(darken($brand-primary, 45%), 0.6),
+            rgba(darken($brand-primary, 45%), 0)
+        );
         transform: translateX(-100%);
     }
 
@@ -50,10 +58,14 @@
     }
 
     @include media-breakpoint-up(xl) {
-        &.content-narrow { width: $space-narrow; }
+        &.content-narrow {
+            width: $space-narrow;
+        }
     }
 
-    &.content-boxed { max-width: $space-boxed; }
+    &.content-boxed {
+        max-width: $space-boxed;
+    }
 }
 
 .content-side {

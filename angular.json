@@ -72,8 +72,8 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "ssl": true,
-                        "sslKey": "certs/podnoms.local.key",
-                        "sslCert": "certs/podnoms.local.crt",
+                        "sslKey": "certs/podnoms.local-key.pem",
+                        "sslCert": "certs/podnoms.local.pem",
                         "disableHostCheck": false,
                         "host": "podnoms.local",
                         "browserTarget": "app:build"
