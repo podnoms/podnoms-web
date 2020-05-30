@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
+import { ApiKeyRequestModel } from '../core/model/api-key-request';
 
 @Injectable({
     providedIn: 'root',
@@ -55,15 +56,27 @@ export class ProfileDataService {
             { observe: 'response' }
         );
     }
-    regenerateApiKey(): Observable<string> {
-        return this.http.post<string>(
-            environment.apiHost + '/profile/updateapikey',
-            null
+    requestNewKey(model: ApiKeyRequestModel): Observable<ApiKeyRequestModel> {
+        return this.http.post<ApiKeyRequestModel>(
+            environment.apiHost + '/profile/requestkey',
+            model
         );
     }
     getLimits(): Observable<ProfileLimits> {
         return this.http.get<ProfileLimits>(
             environment.apiHost + '/profile/limits'
         );
+    }
+    getOpml(): Observable<string> {
+        return this.http.get(environment.apiHost + '/podcast/opml', {
+            observe: 'body',
+            responseType: 'text',
+        });
+    }
+    getPublicOpmlUrl(): Observable<string> {
+        return this.http.get(environment.apiHost + '/profile/opml-url', {
+            observe: 'body',
+            responseType: 'text',
+        });
     }
 }

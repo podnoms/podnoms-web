@@ -9,6 +9,8 @@ import { ChartsModule } from 'ng2-charts';
 import { PaymentsModule } from '../payments/payments.module';
 import { UserNotificationsSettingsComponent } from './notifications/user-notifications-settings/user-notifications-settings.component';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { ApiKeysComponent } from './api-keys/api-keys.component';
+import { OpmlPageComponent } from './opml-page/opml-page.component';
 
 @NgModule({
     imports: [
@@ -18,10 +20,15 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
         ProfileRoutingModule,
         ChartsModule,
         PaymentsModule,
-        NgbTabsetModule
+        NgbTabsetModule,
     ],
     exports: [],
-    declarations: [ProfileComponent, UserNotificationsSettingsComponent],
-    providers: [AuthService]
+    declarations: [
+        ProfileComponent,
+        UserNotificationsSettingsComponent,
+        ApiKeysComponent,
+        OpmlPageComponent,
+    ],
+    providers: [AuthService],
 })
 export class ProfileModule {}

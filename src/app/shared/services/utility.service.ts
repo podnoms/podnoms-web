@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { CheckResult } from '../../core/model/check-result';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UtilityService {
     constructor(private http: HttpClient) {}
@@ -25,7 +25,7 @@ export class UtilityService {
             environment.apiHost + '/utility/checkdomain',
             {
                 hostname: domain,
-                requiredDomain: requiredDomain
+                requiredDomain: requiredDomain,
             }
         );
     }
