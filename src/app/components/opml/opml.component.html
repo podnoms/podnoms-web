@@ -1,0 +1,43 @@
+<div class="block">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">Your OPML Feed</h3>
+        <div class="block-options">
+            <button type="button"
+                (click)="saveOpml()"
+                class="btn-block-option">
+                <i class="fas fa fa-save"></i>
+            </button>
+            <button type="button"
+                (click)="copyOpml()"
+                class="btn-block-option">
+                <i class="fas fa fa-copy"></i>
+            </button>
+        </div>
+    </div>
+    <div class="block-content">
+        <div *ngIf="publicOpmlUrl$ | async as linkUrl">
+            Public URL for OPML: {{linkUrl}}
+            <button type="button"
+                data-toggle="tooltip"
+                title="Open link"
+                (click)="openUrl(linkUrl)"
+                class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5"
+                aria-label="Open URL">
+                <i class="fa fa-external-link-alt"></i>
+            </button>
+            <button type="button"
+                data-toggle="tooltip"
+                title="Copy link"
+                (click)="copyUrl(linkUrl)"
+                class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5"
+                aria-label="Copy link">
+                <i class="fa fa-copy"></i>
+            </button>
+        </div>
+        <pre class="pre-sh">
+            <code class="xml"
+            [highlight]="opml$ | async"
+            [languages]="['xml']"></code>
+        </pre>
+    </div>
+</div>

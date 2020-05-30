@@ -27,6 +27,13 @@
         <li class="nav-item">
             <a class="nav-link"
                 data-toggle="tab"
+                href="#btabs-podcast-opml">
+                <i class="fas fa-rss text-primary"></i>&nbsp;OPML Feed
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+                data-toggle="tab"
                 href="#btabs-podcast-payments">
                 <i class="fa fa-coins text-primary"></i>&nbsp;Payments
             </a>
@@ -159,6 +166,11 @@
             id="btabs-podcast-apikeys"
             role="tabpanel">
             <app-api-keys [user]="profile"></app-api-keys>
+        </div>
+        <div class="tab-pane"
+            id="btabs-podcast-opml"
+            role="tabpanel">
+            <app-opml></app-opml>
         </div>
         <div class="tab-pane"
             id="btabs-podcast-payments"

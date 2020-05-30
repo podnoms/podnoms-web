@@ -6,7 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
-import {ApiKeyRequestModel} from '../core/model/api-key-request';
+import { ApiKeyRequestModel } from '../core/model/api-key-request';
 
 @Injectable({
     providedIn: 'root',
@@ -66,5 +66,17 @@ export class ProfileDataService {
         return this.http.get<ProfileLimits>(
             environment.apiHost + '/profile/limits'
         );
+    }
+    getOpml(): Observable<string> {
+        return this.http.get(environment.apiHost + '/podcast/opml', {
+            observe: 'body',
+            responseType: 'text',
+        });
+    }
+    getPublicOpmlUrl(): Observable<string> {
+        return this.http.get(environment.apiHost + '/profile/opml-url', {
+            observe: 'body',
+            responseType: 'text',
+        });
     }
 }

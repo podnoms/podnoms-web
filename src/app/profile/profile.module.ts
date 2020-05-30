@@ -10,6 +10,7 @@ import { PaymentsModule } from '../payments/payments.module';
 import { UserNotificationsSettingsComponent } from './notifications/user-notifications-settings/user-notifications-settings.component';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiKeysComponent } from './api-keys/api-keys.component';
+import { OpmlPageComponent } from './opml-page/opml-page.component';
 
 @NgModule({
     imports: [
@@ -19,10 +20,15 @@ import { ApiKeysComponent } from './api-keys/api-keys.component';
         ProfileRoutingModule,
         ChartsModule,
         PaymentsModule,
-        NgbTabsetModule
+        NgbTabsetModule,
     ],
     exports: [],
-    declarations: [ProfileComponent, UserNotificationsSettingsComponent, ApiKeysComponent],
-    providers: [AuthService]
+    declarations: [
+        ProfileComponent,
+        UserNotificationsSettingsComponent,
+        ApiKeysComponent,
+        OpmlPageComponent,
+    ],
+    providers: [AuthService],
 })
 export class ProfileModule {}

@@ -91,7 +91,7 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        this.alertService.success('Success', 'URL Copied to clipboard');
+        this.alertService.success('Success', 'URL copied to clipboard');
     }
     startUpload(uploadMode: UploadModes) {
         this.uploadMode = uploadMode;
