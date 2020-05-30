@@ -15,7 +15,7 @@ import {
     NgbTooltipModule,
     NgbProgressbarModule,
     NgbTypeaheadModule,
-    NgbModule
+    NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgxAudioplayerModule } from '@podnoms/ngx-audioplayer';
 
@@ -34,6 +34,7 @@ import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { RedirollComponent } from './shared/rediroll/rediroll.component';
+import { OpmlComponent } from './opml/opml.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
@@ -47,15 +48,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         NgbTypeaheadModule,
         NgbTooltipModule,
         NgbProgressbarModule,
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
     ],
     providers: [
         PodcastStoreService,
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
-            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
         },
-        ScriptService
+        ScriptService,
     ],
     declarations: [
         SidebarComponent,
@@ -72,7 +73,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         BoilerplateComponent,
         ErrorComponent,
         NotFoundComponent,
-        RedirollComponent
+        RedirollComponent,
+        OpmlComponent,
     ],
     exports: [
         SidebarComponent,
@@ -82,7 +84,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         FooterPlayerComponent,
         PasswordCheckerComponent,
         SharingComponent,
-        ChatboxComponent
-    ]
+        ChatboxComponent,
+    ],
 })
 export class ComponentsModule {}
