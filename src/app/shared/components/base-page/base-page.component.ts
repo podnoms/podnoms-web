@@ -29,14 +29,20 @@ export class BasePageComponent extends BaseComponent {
     }
 
     private logNavigation() {
-        this.logger.debug('base-page.component', '');
-        try {
-            this.__loggingService.logPageView(
-                this.constructor.name,
-                this.__router.url
-            );
-        } catch (e) {
-            this.logger.error('base-page.component', 'logNavigation', e);
+        this.logger.debug(
+            'base-page.component',
+            this.constructor.name,
+            this.__router.url
+        );
+        if (environment.production) {
+            try {
+                this.__loggingService.logPageView(
+                    this.constructor.name,
+                    this.__router.url
+                );
+            } catch (e) {
+                this.logger.error('base-page.component', 'logNavigation', e);
+            }
         }
     }
     protected formatError(error: string): string {
