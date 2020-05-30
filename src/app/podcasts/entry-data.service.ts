@@ -3,7 +3,7 @@ import {
     DefaultDataService,
     HttpUrlGenerator,
     Logger,
-    QueryParams
+    QueryParams,
 } from '@ngrx/data';
 import { PodcastEntry } from '../core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { throwError as observableThrowError, Observable } from 'rxjs';
 import { AudioDownloadResult } from 'app/core/model/audio-download-result';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class EntryDataService extends DefaultDataService<PodcastEntry> {
     constructor(
@@ -55,27 +55,27 @@ export class EntryDataService extends DefaultDataService<PodcastEntry> {
     addEntry(entry: PodcastEntry): Observable<PodcastEntry> {
         return this.http.post<PodcastEntry>(
             environment.apiHost + '/entry',
-            JSON.stringify(entry)
+            entry
         );
     }
     updateEntry(entry: PodcastEntry) {
         return this.http.post<PodcastEntry>(
             environment.apiHost + '/entry',
-            JSON.stringify(entry)
+            entry
         );
     }
     deleteEntry(id: string): Observable<boolean> {
         return this.http
             .delete<Response>(environment.apiHost + '/entry/' + id, {
-                observe: 'response'
+                observe: 'response',
             })
-            .pipe(map(r => r && r.status === 200));
+            .pipe(map((r) => r && r.status === 200));
     }
     checkEntry(url: string): Observable<boolean> {
         return this.http
             .post<Response>(environment.apiHost + '/entry/isvalid/', `"${url}"`)
             .pipe(
-                map(r => r.status === 200),
+                map((r) => r.status === 200),
                 catchError((error: any) => {
                     return observableThrowError(new Error(error.status));
                 })
@@ -93,7 +93,7 @@ export class EntryDataService extends DefaultDataService<PodcastEntry> {
     addPlaylist(entry: PodcastEntry) {
         return this.http.post<PodcastEntry>(
             environment.apiHost + '/playlist',
-            JSON.stringify(entry)
+            entry
         );
     }
 }

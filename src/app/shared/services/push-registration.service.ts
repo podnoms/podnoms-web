@@ -41,9 +41,7 @@ export class PushRegistrationService {
             action: 'unsubscribe',
             subscription: subscription,
         };
-        return this.http
-            .post(url, JSON.stringify(body))
-            .pipe(catchError(this.handleError));
+        return this.http.post(url, body).pipe(catchError(this.handleError));
     }
 
     private handleError(error: Response | any) {
