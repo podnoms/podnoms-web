@@ -8,13 +8,15 @@ import { UUID } from 'angular2-uuid';
 import { EntryDataService } from '../entry-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { NGXLogger } from 'ngx-logger';
+import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 
 @Component({
     selector: 'app-entry-edit-form',
     templateUrl: './entry-edit-form.component.html',
     styleUrls: ['./entry-edit-form.component.scss'],
 })
-export class EntryEditFormComponent implements OnInit {
+export class EntryEditFormComponent extends BasePageComponent
+    implements OnInit {
     @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
 
@@ -29,9 +31,9 @@ export class EntryEditFormComponent implements OnInit {
         private fb: FormBuilder,
         private entriesStore: EntriesStoreService,
         private entryDataService: EntryDataService,
-        private alertService: AlertService,
-        private logger: NGXLogger
+        private alertService: AlertService
     ) {
+        super();
         this.entryId = route.snapshot.params['entry'];
     }
     _createForm(fb: FormBuilder, entry: PodcastEntry): FormGroup {

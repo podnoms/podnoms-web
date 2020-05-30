@@ -7,7 +7,7 @@ import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
-    template: ''
+    template: '',
 })
 export class BaseJsUploadComponent extends BasePageComponent {
     @Input() podcast: Podcast;
@@ -18,7 +18,7 @@ export class BaseJsUploadComponent extends BasePageComponent {
     extensionLists = {
         video: ['m4v', 'avi', 'mpg', 'mp4', 'webm'],
         audio: ['mp3', 'ogg', 'flac', 'aiff', 'm4a', 'wav'],
-        image: ['jpg', 'gif', 'bmp', 'png']
+        image: ['jpg', 'gif', 'bmp', 'png'],
     };
     mimeLists = {
         video: ['m4v', 'avi', 'mpg', 'mp4', 'webm'],
@@ -28,9 +28,9 @@ export class BaseJsUploadComponent extends BasePageComponent {
             'audio/x-aiff',
             'audio/ogg',
             'audio/vorbis',
-            'audio/vnd.wav'
+            'audio/vnd.wav',
         ],
-        image: ['jpg', 'gif', 'bmp', 'png']
+        image: ['jpg', 'gif', 'bmp', 'png'],
     };
 
     constructor(
@@ -38,7 +38,7 @@ export class BaseJsUploadComponent extends BasePageComponent {
         protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
+        super();
     }
     protected getMimeTypes(type: string) {
         return this.mimeLists[type];
@@ -81,9 +81,9 @@ export class BaseJsUploadComponent extends BasePageComponent {
     protected parseFileList(files: Array<any>) {
         this.isPosting = true;
         const that = this;
-        files.forEach(file => {
+        files.forEach((file) => {
             if (file && file.name && file.link) {
-                that.processPodcast(file.name, file.link).subscribe(e =>
+                that.processPodcast(file.name, file.link).subscribe((e) =>
                     this.entryCreateComplete.emit(e)
                 );
             }
@@ -92,14 +92,14 @@ export class BaseJsUploadComponent extends BasePageComponent {
     public processPodcast(name: string, url: string): Observable<string> {
         const entry = new PodcastEntry(this.podcast.id, url);
         entry.title = name;
-        return Observable.create(observer => {
+        return Observable.create((observer) => {
             this.podcastEntryDataService.addEntry(entry).subscribe(
-                e => {
+                (e) => {
                     if (e) {
                         observer.next(e);
                     }
                 },
-                err => {
+                (err) => {
                     this.isPosting = false;
                     if (err.status === 402) {
                         this.errorText =

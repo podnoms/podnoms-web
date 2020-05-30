@@ -28,6 +28,8 @@ import { TokenInterceptor } from './shared/auth/token.interceptor';
 import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
 import { AuthModule } from './auth/auth.module';
 import { authServiceConfig } from './auth/auth-config';
+import { ErrorHandlerService } from './services/error-handler.service';
+import { AppInjector } from './services/app-injector.service';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -46,33 +48,34 @@ registerLocaleData(localeIE, 'ie');
             authDomain: environment.firebase.authDomain,
             databaseURL: environment.firebase.databaseURL,
             storageBucket: environment.firebase.storageBucket,
-            messagingSenderId: environment.firebase.messagingSenderId
+            messagingSenderId: environment.firebase.messagingSenderId,
         }),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         AngularFireMessagingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production
+            enabled: environment.production,
         }),
         LoggerModule.forRoot(environment.logConfig),
-        SocialLoginModule
+        SocialLoginModule,
     ],
     providers: [
         UpdateService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
+            multi: true,
         },
         { provide: LOCALE_ID, useValue: 'en-IE' },
         {
             provide: AuthServiceConfig,
-            useFactory: authServiceConfig
+            useFactory: authServiceConfig,
         },
-        AppDispatchers
+        { provide: ErrorHandler, useClass: ErrorHandlerService },
+        AppDispatchers,
     ],
     declarations: [AppComponent, InterstitialComponent, HomeComponent],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule {
     profile$: Observable<Profile[]>;

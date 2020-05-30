@@ -6,14 +6,11 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-not-found',
     templateUrl: './not-found.component.html',
-    styleUrls: ['./not-found.component.scss']
+    styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent extends BasePageComponent {
-    constructor(
-        protected logger: NGXLogger,
-        protected uiStateService: UiStateService
-    ) {
-        super(logger, uiStateService);
+    constructor() {
+        super();
     }
 
     ngOnInit(): void {

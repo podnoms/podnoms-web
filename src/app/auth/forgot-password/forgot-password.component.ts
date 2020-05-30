@@ -66,7 +66,7 @@ export class ForgotPasswordComponent extends BasePageComponent
         logger: NGXLogger,
         uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
+        super();
         this.logger.debug('forgot-password.component', '');
         if (route.snapshot.queryParams['token']) {
             this.returnTrip = true;
