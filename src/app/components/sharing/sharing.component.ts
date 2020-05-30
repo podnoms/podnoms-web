@@ -6,7 +6,7 @@ import {
     Output,
     EventEmitter,
     AfterViewInit,
-    ElementRef
+    ElementRef,
 } from '@angular/core';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
@@ -16,7 +16,7 @@ import { environment } from 'environments/environment';
 @Component({
     selector: 'app-sharing',
     templateUrl: './sharing.component.html',
-    styleUrls: ['./sharing.component.scss']
+    styleUrls: ['./sharing.component.scss'],
 })
 export class SharingComponent implements AfterViewInit {
     @ViewChild('emailAddress') emailControl;
@@ -51,7 +51,7 @@ export class SharingComponent implements AfterViewInit {
     }
 
     getSharingLink($event) {
-        this.sharingService.getSharingLink(this.entry.id).subscribe(l => {
+        this.sharingService.getSharingLink(this.entry.id).subscribe((l) => {
             this.linkUrl = l;
             $event();
         });

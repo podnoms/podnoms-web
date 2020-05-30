@@ -35,6 +35,16 @@ import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+
+export function getHighlightLanguages() {
+    return {
+        typescript: () => import('highlight.js/lib/languages/typescript'),
+        css: () => import('highlight.js/lib/languages/css'),
+        xml: () => import('highlight.js/lib/languages/xml'),
+    };
+}
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
     imports: [
@@ -49,12 +59,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         NgbTooltipModule,
         NgbProgressbarModule,
         LoggerModule.forRoot(environment.logConfig),
+        HighlightModule,
     ],
     providers: [
         PodcastStoreService,
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+        },
+        {
+            provide: HIGHLIGHT_OPTIONS,
+            useValue: {
+                languages: getHighlightLanguages(),
+            },
         },
         ScriptService,
     ],
@@ -85,6 +102,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         PasswordCheckerComponent,
         SharingComponent,
         ChatboxComponent,
+        OpmlComponent,
     ],
 })
 export class ComponentsModule {}

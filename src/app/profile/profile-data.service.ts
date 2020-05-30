@@ -73,4 +73,10 @@ export class ProfileDataService {
             responseType: 'text',
         });
     }
+    getPublicOpmlUrl(): Observable<string> {
+        return this.http.get(environment.apiHost + '/profile/opml-url', {
+            observe: 'body',
+            responseType: 'text',
+        });
+    }
 }

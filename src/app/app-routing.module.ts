@@ -6,7 +6,6 @@ import { BoilerplateComponent } from './components/boilerplate/boilerplate.compo
 import { NotFoundComponent } from './components/error-pages/not-found/not-found.component';
 import { ErrorComponent } from './components/error-pages/error/error.component';
 import { RedirollComponent } from './components/shared/rediroll/rediroll.component';
-import { OpmlComponent } from './components/opml/opml.component';
 
 const routes: Routes = [
     {
@@ -22,10 +21,6 @@ const routes: Routes = [
     {
         path: '_/:key',
         component: BoilerplateComponent,
-    },
-    {
-        path: 'opml',
-        component: OpmlComponent,
     },
     {
         path: 'auth',
