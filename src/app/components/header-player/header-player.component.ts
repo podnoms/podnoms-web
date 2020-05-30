@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 @Component({
     selector: 'app-header-player',
     templateUrl: './header-player.component.html',
-    styleUrls: ['./header-player.component.scss']
+    styleUrls: ['./header-player.component.scss'],
 })
 export class HeaderPlayerComponent implements OnInit {
     title: string = '';
@@ -25,7 +25,7 @@ export class HeaderPlayerComponent implements OnInit {
             this.isPlaying = true;
             this.isLoading = false;
         },
-        onloaderror: () => (this.isLoading = false)
+        onloaderror: () => (this.isLoading = false),
     });
     constructor(private audioService: AudioService, private http: HttpClient) {}
 
@@ -34,14 +34,15 @@ export class HeaderPlayerComponent implements OnInit {
         const statusUrl = `${environment.apiHost}/pub/radio/nowplaying?url=${host}`;
         return this.http
             .get(statusUrl, { responseType: 'text' })
-            .pipe(tap(r => (this.available = r)));
+            .pipe(tap((r) => (this.available = r)));
     }
 
     ngOnInit() {
-        this.getStreamDetails().subscribe(r => (this.title = r));
+        this.getStreamDetails().subscribe((r) => (this.title = r));
         if (environment.production) {
             setInterval(
-                () => this.getStreamDetails().subscribe(r => (this.title = r)),
+                () =>
+                    this.getStreamDetails().subscribe((r) => (this.title = r)),
                 60000
             );
         }

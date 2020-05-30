@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
     EntityCollectionServiceBase,
-    EntityCollectionServiceElementsFactory
+    EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 import { Podcast } from '../core';
 
 @Injectable()
 export class PodcastStoreService extends EntityCollectionServiceBase<Podcast> {
-    constructor(entityCollectionServiceFactory: EntityCollectionServiceElementsFactory) {
+    constructor(
+        entityCollectionServiceFactory: EntityCollectionServiceElementsFactory
+    ) {
         super('Podcast', entityCollectionServiceFactory);
     }
 }

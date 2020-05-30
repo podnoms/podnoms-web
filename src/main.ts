@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { environment } from './environments/environment';
 import { AppModule } from './app/app.module';
+import { AppInjector } from 'app/services/app-injector.service';
 
 //#region console overwrite
 
@@ -25,9 +26,10 @@ if (
 
 platformBrowserDynamic()
     .bootstrapModule(AppModule)
-    .then(() => {
+    .then((moduleRef) => {
+        AppInjector.getInstance().setInjector(moduleRef.injector);
         if ('serviceWorker' in navigator && environment.production) {
             navigator.serviceWorker.register('/ngsw-worker.js');
         }
     })
-    .catch((err) => this.logger.debug(err));
+    .catch((err) => console.error(err));

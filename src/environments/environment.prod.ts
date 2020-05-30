@@ -27,6 +27,9 @@ export const environment = {
         storageBucket: 'podnoms-api.appspot.com',
         messagingSenderId: '357461672895',
     },
+    appInsights: {
+        instrumentationKey: 'b7bea20e-6bb4-4cc8-a837-3ddd6e953604',
+    },
     facebook: {
         appId: '1887182031397435',
         version: 'v3.2',

@@ -7,7 +7,7 @@ import {
     ViewChild,
     ElementRef,
     AfterViewInit,
-    HostListener
+    HostListener,
 } from '@angular/core';
 import { Podcast, Category } from '../../core';
 import { UtilityService } from '../../shared/services/utility.service';
@@ -19,7 +19,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-podcast-add-wizard',
     templateUrl: './podcast-add-wizard.component.html',
-    styleUrls: ['./podcast-add-wizard.component.scss']
+    styleUrls: ['./podcast-add-wizard.component.scss'],
 })
 export class PodcastAddWizardComponent extends BasePageComponent
     implements OnInit, AfterViewInit {
@@ -37,12 +37,8 @@ export class PodcastAddWizardComponent extends BasePageComponent
     @ViewChild('podcastName')
     podcastName: ElementRef;
 
-    constructor(
-        private utilityService: UtilityService,
-        protected logger: NGXLogger,
-        uiStateService: UiStateService
-    ) {
-        super(logger, uiStateService);
+    constructor(private utilityService: UtilityService) {
+        super();
     }
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {

@@ -44,11 +44,9 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
         private location: Location,
         private route: ActivatedRoute,
         private modalService: NgbModal,
-        private alertService: AlertService,
-        logger: NGXLogger,
-        uiStateService: UiStateService
+        private alertService: AlertService
     ) {
-        super(logger, uiStateService);
+        super();
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);

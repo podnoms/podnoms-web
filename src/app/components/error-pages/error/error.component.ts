@@ -9,7 +9,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-error',
     templateUrl: './error.component.html',
-    styleUrls: ['./error.component.scss']
+    styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent extends BasePageComponent {
     errorText: string;
@@ -19,7 +19,7 @@ export class ErrorComponent extends BasePageComponent {
         logger: NGXLogger,
         uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
+        super();
     }
 
     ngOnInit() {}

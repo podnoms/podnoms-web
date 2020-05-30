@@ -62,8 +62,6 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
     }
     addPodcast(podcast: Podcast): Observable<Podcast> {
         this.logger.debug('PodcastService', 'addPodcast', podcast);
-        // Remove this as the client is choosing the random image now
-        // const data = JSON.stringify(podcast, PodcastDataService._replacer);
         return this.http.post<Podcast>(
             environment.apiHost + '/podcast',
             podcast

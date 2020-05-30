@@ -16,6 +16,7 @@ import { SiteUpdateMessage } from './core/model/site-update-message';
 import { AlertService } from './core/alerts/alert.service';
 import { BaseComponent } from './shared/components/base/base.component';
 import { NGXLogger } from 'ngx-logger';
+import { LoggingService } from './services/logging.service';
 
 @Component({
     selector: 'app-root',
@@ -41,13 +42,17 @@ export class AppComponent extends BaseComponent {
         private authService: AuthService,
         private signalr: SignalRService,
         protected logger: NGXLogger,
+        private loggingService: LoggingService,
         public uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
+        super();
         this.logger.debug('app.component', 'constructor');
         updateService.checkForUpdates();
     }
     ngOnInit() {
+        if (!this.authService.getAuthToken()) {
+            this.router.navigate(['/auth/login']);
+        }
         if (environment.production || false) {
             this.utilityService.checkForApiServer().subscribe(
                 () => {

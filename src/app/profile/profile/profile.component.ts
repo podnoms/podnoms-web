@@ -100,7 +100,7 @@ export class ProfileComponent extends BasePageComponent
         logger: NGXLogger,
         uiStateService: UiStateService
     ) {
-        super(logger, uiStateService);
+        super();
         this.searchTerm$
             .pipe(
                 debounceTime(400),
