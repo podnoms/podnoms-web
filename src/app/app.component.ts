@@ -48,6 +48,9 @@ export class AppComponent extends BaseComponent {
         updateService.checkForUpdates();
     }
     ngOnInit() {
+        if (!this.authService.getAuthToken()) {
+            this.router.navigate(['/auth/login']);
+        }
         if (environment.production || false) {
             this.utilityService.checkForApiServer().subscribe(
                 () => {

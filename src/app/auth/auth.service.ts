@@ -1,4 +1,4 @@
-import { map, filter } from 'rxjs/operators';
+import { map, filter, tap } from 'rxjs/operators';
 import { Injectable, OnInit } from '@angular/core';
 import { BaseService } from '../core/base.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
@@ -15,6 +15,8 @@ import { AuthApiProxyService } from './auth-api-proxy.service';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AppDispatchers } from 'app/store/app-config/dispatchers';
 import { NGXLogger } from 'ngx-logger';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment.prod';
 
 @Injectable({
     providedIn: 'root',
@@ -64,9 +66,10 @@ export class AuthService extends BaseService {
         }
     }
     isLoggedIn(): boolean {
-        const helper = new JwtHelperService();
         const token = this.getAuthToken();
-        return token && !helper.isTokenExpired(token);
+        return token !== '';
+        // const helper = new JwtHelperService();
+        // return token && !helper.isTokenExpired(token);
     }
     checkHasRoles(roles: string[]) {
         if (this.currentUser && this.currentUser.roles) {
@@ -80,6 +83,21 @@ export class AuthService extends BaseService {
     getAuthToken(): string {
         return localStorage.getItem('auth_token');
     }
+
+    refreshToken(): Observable<string> {
+        return this.podnomsAuthService
+            .refreshToken(
+                localStorage.getItem('auth_token'),
+                localStorage.getItem('refresh_token')
+            )
+            .pipe(
+                map((res) => {
+                    this._storeAuth(res);
+                    return this.getAuthToken();
+                })
+            );
+    }
+
     socialLogin(provider: string): Observable<boolean> {
         if (provider === 'facebook') {
             return this._loginFacebook();
@@ -132,7 +150,8 @@ export class AuthService extends BaseService {
             .pipe(map((res) => true));
     }
     private _storeAuth(response) {
-        localStorage.setItem('auth_token', response.auth_token);
+        localStorage.setItem('auth_token', response.jwt.token);
+        localStorage.setItem('refresh_token', response.refresh);
         const jwtHelper = new JwtHelperService();
         this.bootstrap();
     }

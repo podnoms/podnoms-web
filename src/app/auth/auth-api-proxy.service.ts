@@ -3,9 +3,10 @@ import { AuthResponseModel } from './models/auth-response.model';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AuthApiProxyService {
     /**
@@ -14,8 +15,8 @@ export class AuthApiProxyService {
      */
     private httpOptions = {
         headers: new HttpHeaders({
-            'Content-Type': 'application/json'
-        })
+            'Content-Type': 'application/json',
+        }),
     };
 
     constructor(private http: HttpClient) {}
@@ -56,7 +57,7 @@ export class AuthApiProxyService {
         const body = JSON.stringify({
             username,
             email,
-            password
+            password,
         });
         return this.http.post<AuthResponseModel>(
             environment.apiHost + '/accounts',
@@ -74,7 +75,7 @@ export class AuthApiProxyService {
             email: email,
             password: newPassword,
             confirmPassword: newPasswordRepeat,
-            code: code
+            code: code,
         });
         return this.http.post<Response>(
             environment.apiHost + '/auth/reset',
@@ -84,12 +85,21 @@ export class AuthApiProxyService {
     }
     public forgotPassword(userName: string): Observable<Response> {
         const body = JSON.stringify({
-            email: userName
+            email: userName,
         });
         return this.http.post<Response>(
             environment.apiHost + '/auth/forgot',
             body,
             this.httpOptions
         );
+    }
+    public refreshToken(
+        accessToken: string,
+        refreshToken: string
+    ): Observable<any> {
+        return this.http.post<any>(`${environment.apiHost}/auth/refreshtoken`, {
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+        });
     }
 }

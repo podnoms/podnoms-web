@@ -8,7 +8,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../shared/auth/token.interceptor';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
 import { EntryDataService } from '../podcasts/entry-data.service';
-import { ExpiredInterceptor } from '../shared/auth/expired.interceptor';
 import { LoggerModule } from 'ngx-logger';
 
 @NgModule({
@@ -19,28 +18,23 @@ import { LoggerModule } from 'ngx-logger';
                 // TODO: should re-enable these
                 runtimeChecks: {
                     strictStateImmutability: false,
-                    strictActionImmutability: false
-                }
+                    strictActionImmutability: false,
+                },
             }
         ),
         EffectsModule.forRoot([]),
         environment.production ? [] : StoreDevtoolsModule.instrument(),
         EntityStoreModule,
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
     ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ExpiredInterceptor,
-            multi: true
+            multi: true,
         },
         PodcastDataService,
-        EntryDataService
-    ]
+        EntryDataService,
+    ],
 })
 export class AppStoreModule {}
