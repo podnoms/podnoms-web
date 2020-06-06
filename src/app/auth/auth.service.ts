@@ -1,4 +1,4 @@
-import { map, filter, tap } from 'rxjs/operators';
+import { map, filter, tap, catchError } from 'rxjs/operators';
 import { Injectable, OnInit } from '@angular/core';
 import { BaseService } from '../core/base.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
@@ -15,7 +15,7 @@ import { AuthApiProxyService } from './auth-api-proxy.service';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AppDispatchers } from 'app/store/app-config/dispatchers';
 import { NGXLogger } from 'ngx-logger';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'environments/environment.prod';
 
 @Injectable({
@@ -40,6 +40,7 @@ export class AuthService extends BaseService {
     ) {
         super();
     }
+
     reloadProfile(): Observable<boolean> {
         return this.bootstrap();
     }
@@ -94,6 +95,19 @@ export class AuthService extends BaseService {
                 map((res) => {
                     this._storeAuth(res);
                     return this.getAuthToken();
+                }),
+                catchError((response: HttpErrorResponse) => {
+                    if (response.status === 400) {
+                        this.logger.debug(
+                            'auth.service',
+                            'refreshToken',
+                            'Failed to refresh token',
+                            response.error
+                        );
+                        this.logout();
+                    } else {
+                        return this.handleError(response);
+                    }
                 })
             );
     }

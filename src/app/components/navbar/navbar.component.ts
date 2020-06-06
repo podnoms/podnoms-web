@@ -31,13 +31,11 @@ export class NavbarComponent {
         protected logger: NGXLogger,
         protected uiStateService: UiStateService
     ) {
-        this.logger.info('navbar.component', 'ctor');
         this.profile$ = this.profileStoreService.entities$.pipe(
             filter((r) => r !== null && r !== []),
             map((r) => r[0])
         );
         this.profile$.subscribe((p) => {
-            this.logger.info('navbar.component', 'profile$', p);
             this.profileHasAdmin = this.authService.checkHasRoles([
                 'client-admin',
             ]);
