@@ -21,7 +21,7 @@ export class DebugComponent implements OnInit {
             undefined,
             {
                 showProgressBar: true,
-                timeOut: 5000,
+                timeOut: 50000,
                 autoClose: true,
                 showCloseButton: false,
             }

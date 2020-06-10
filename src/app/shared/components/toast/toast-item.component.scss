@@ -10,10 +10,14 @@ $color-header: #565154;
 $color-body: #141514;
 $color-close-button: #717075;
 $color-close-click: #f1f1f2;
+$color-border: #d4d4d4;
 
 .ngx_notification-msg {
     min-width: 35em;
     background-color: #e8e8e8;
+    border-top: 1px solid $color-border !important;
+    border-left: 1px solid $color-border !important;
+    border-right: 1px solid $color-border !important;
 
     z-index: 10000;
     position: absolute;
