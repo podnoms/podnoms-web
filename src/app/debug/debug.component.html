@@ -1,3 +1,20 @@
-<div class="container">
-    <h5>Debuggle</h5>
+<div class="col-md-4">
+    <div class="row items-push-2x text-center text-sm-left">
+        <div class="col-sm-6 col-xl-4">
+            <button (click)="doSuccess()"
+                class="btn btn-success">Success</button>
+        </div>
+        <div class="col-sm-6 col-xl-4">
+            <button (click)="doError()"
+                class="btn btn-danger">Error</button>
+        </div>
+        <div class="col-sm-6 col-xl-4">
+            <button (click)="doInfo()"
+                class="btn btn-info">Info</button>
+        </div>
+        <div class="col-sm-6 col-xl-4">
+            <button (click)="doCallback()"
+                class="btn btn-warning">Callback</button>
+        </div>
+    </div>
 </div>

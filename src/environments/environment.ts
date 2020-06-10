@@ -5,6 +5,7 @@ const _logConfig: LoggerConfig = {
     level: NgxLoggerLevel.DEBUG,
     serverLogLevel: NgxLoggerLevel.DEBUG,
     colorScheme: ['purple', 'teal', 'gray', 'gray', 'red', 'red', 'red'],
+    enableSourceMaps: true,
 };
 export const environment = {
     production: false,

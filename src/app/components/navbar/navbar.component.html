@@ -118,6 +118,12 @@
                         <i class="fa fa-chalkboard-teacher mr-5"></i>
                         SignalR
                     </a>
+                    <a class="dropdown-item"
+                        *ngIf="profileHasAdmin"
+                        (click)="about()">
+                        <i class="fas fa-info-circle mr-5"></i>
+                        Software Versions
+                    </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item"
                         [routerLink]="['/_/privacy']">

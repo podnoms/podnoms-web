@@ -4,6 +4,7 @@ import {
     Input,
     NgZone,
     ChangeDetectorRef,
+    ElementRef,
 } from '@angular/core';
 import {
     animate,
@@ -12,7 +13,12 @@ import {
     transition,
     trigger,
 } from '@angular/animations';
-import { ToastMessage, ToastType } from './toast-models';
+import {
+    ToastMessage,
+    IToastPosition,
+    ToastType,
+    ToastPosition,
+} from './toast-models';
 import { ToastService } from './toast.service';
 import { Observable } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
@@ -135,8 +141,12 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class ToastItemComponent implements OnInit {
     @Input() toast: ToastMessage;
+    @Input() index: number;
+
     timerPercentageRemaining: number = 0;
     counter$: Observable<number>;
+
+    state: string = 'open';
 
     private stopTime = false;
     private timer: any;
@@ -146,8 +156,17 @@ export class ToastItemComponent implements OnInit {
     private endTime: number;
     private timeOut: number;
 
+    statusToClass = {
+        [ToastType.Bare]: '',
+        [ToastType.Info]: '#0067FF',
+        [ToastType.Error]: '#FE355A',
+        [ToastType.Alert]: '#FE355A',
+        [ToastType.Success]: '#00CC69',
+    };
+
     constructor(
         private toastService: ToastService,
+        private element: ElementRef,
         private zone: NgZone,
         private cdr: ChangeDetectorRef,
         private logger: NGXLogger
@@ -158,6 +177,32 @@ export class ToastItemComponent implements OnInit {
         if (this.toast.timeOut !== 0 && this.toast.autoClose === true) {
             this.startTimeout();
         }
+
+        const className = this.statusToClass[this.toast.type];
+        this.logger.debug(
+            'toast-item.component',
+            'ngOnInit',
+            'Class is',
+            className
+        );
+        if (!this.toast.position) {
+            this.logger.debug(
+                'toast-item.component',
+                'ngOnInit',
+                'setting default type',
+                ToastPosition.Top
+            );
+            this.toast.position = ToastPosition.Top;
+        }
+
+        this.element.nativeElement.style.setProperty(
+            '--ngx-notification-msg-color',
+            this.statusToClass[this.toast.type]
+        );
+        this.element.nativeElement.style.setProperty(
+            '--ngx-notification-msg-delay',
+            `${this.toast.timeOut}ms`
+        );
     }
     startTimeout() {
         this.sleepTime = 1000 / this.framesPerSecond /* ms */;
@@ -183,17 +228,6 @@ export class ToastItemComponent implements OnInit {
                         this.timeOut,
                     100
                 );
-                this.logger.debug(
-                    'toast-item.component',
-                    'percentage',
-                    this.timerPercentageRemaining
-                );
-                this.logger.debug(
-                    'toast-item.component',
-                    'timeout',
-                    this.timeOut
-                );
-
                 if (this.timerPercentageRemaining >= 100) {
                     this.remove();
                     return;
@@ -207,7 +241,78 @@ export class ToastItemComponent implements OnInit {
             }
         });
     };
+    getPosition(): IToastPosition {
+        const pos = {
+            ...this.getDefaultPosition(),
+            ...this.getDynamicPosition(),
+        };
+        return pos;
+    }
+    private getDefaultPosition(): IToastPosition {
+        switch (this.toast.position) {
+            case ToastPosition.Top:
+                return {
+                    top: '0',
+                    right: '50%',
+                    transform: `translate(50%, -100%)`,
+                };
+            case ToastPosition.TopRight:
+                return {
+                    top: '0',
+                    right: '20px',
+                    transform: `translateY(-100%)`,
+                };
+            case ToastPosition.TopLeft:
+                return {
+                    top: '0',
+                    left: '20px',
+                    transform: `translateY(-100%)`,
+                };
+            case ToastPosition.Bottom:
+                return {
+                    bottom: '0',
+                    right: '50%',
+                    transform: `translateX(50%)`,
+                };
+            case ToastPosition.BottomRight:
+                return {
+                    bottom: '0',
+                    right: '20px',
+                    transform: `translateY(100%)`,
+                };
+            case ToastPosition.BottomLeft:
+                return {
+                    bottom: '0',
+                    left: '20px',
+                    transform: `translateY(100%)`,
+                };
+        }
+    }
 
+    private getDynamicPosition(): IToastPosition {
+        const top = `calc(${100 * this.index}% + ${20 * (this.index + 1)}px)`;
+        const bottom = `calc(${-100 * this.index}% + ${
+            -20 * (this.index + 1)
+        }px)`;
+
+        switch (this.toast.position) {
+            case ToastPosition.Top:
+                return { transform: `translate(50%, ${top})` };
+            case ToastPosition.TopRight:
+                return { transform: `translateY(${top})` };
+            case ToastPosition.TopLeft:
+                return { transform: `translateY(${top})` };
+            case ToastPosition.Bottom:
+                return { transform: `translate(50%, ${bottom})` };
+            case ToastPosition.BottomRight:
+                return { transform: `translateY(${bottom})` };
+            case ToastPosition.BottomLeft:
+                return { transform: `translateY(${bottom})` };
+        }
+    }
+    close() {
+        this.remove();
+    }
     clickItem() {
         this.remove();
         if (this.toast.click) {

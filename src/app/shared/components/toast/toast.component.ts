@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-toast',
     templateUrl: './toast.component.html',
-    styleUrls: ['./toast.component.scss']
+    styleUrls: ['./toast.component.scss'],
 })
 export class ToastComponent implements OnInit {
     toasts: ToastMessage[] = [];
@@ -23,7 +23,7 @@ export class ToastComponent implements OnInit {
             this.toasts.push(toast);
         });
 
-        this.listener = this.toastService.emitter.subscribe(r => {
+        this.listener = this.toastService.emitter.subscribe((r) => {
             switch (r.action) {
                 case 'remove':
                     this.removeToast(r.id);
@@ -31,7 +31,7 @@ export class ToastComponent implements OnInit {
         });
     }
     removeAlert(alert: ToastMessage) {
-        this.toasts = this.toasts.filter(x => x !== alert);
+        this.toasts = this.toasts.filter((x) => x !== alert);
     }
 
     removeToast(id: string): void {

@@ -30,7 +30,7 @@ export class UpdateService {
             'A new version of PodNoms is available!',
             'Click here to reload...',
             '',
-            { autoClose: false }
+            { showProgressBar: false, showCloseButton: true, autoClose: false }
         );
         toast.click.subscribe((e: any) => {
             this.updates

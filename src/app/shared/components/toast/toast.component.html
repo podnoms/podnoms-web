@@ -1,3 +1,5 @@
 <div *ngFor="let toast of toasts; let i = index">
-    <app-toast-item [toast]="toast"></app-toast-item>
+    <app-toast-item [toast]="toast"
+        [index]="i">
+    </app-toast-item>
 </div>

@@ -27,6 +27,10 @@ export class AuthApiProxyService {
             this.httpOptions
         );
     }
+    addUserToRole(email: string, role: string): Observable<any> {
+        const url = `${environment.apiHost}/auth/addusertorole/${role}/${email}`;
+        return this.http.get<any>(url);
+    }
     facebookLogin(accessToken: string): Observable<AuthResponseModel> {
         const body = JSON.stringify({ accessToken });
         return this.http.post<AuthResponseModel>(
