@@ -18,13 +18,7 @@ export class DebugComponent implements OnInit {
         this.alertService.success(
             'Hello Sailor',
             'I am a HUGE success',
-            undefined,
-            {
-                showProgressBar: true,
-                timeOut: 50000,
-                autoClose: true,
-                showCloseButton: false,
-            }
+            undefined
         );
     }
     doError() {

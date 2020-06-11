@@ -22,7 +22,6 @@ import { UUID } from 'angular2-uuid';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -31,11 +30,10 @@ import { NGXLogger } from 'ngx-logger';
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent extends BasePageComponent
-    implements OnInit, AfterViewInit {
+export class ProfileComponent extends BasePageComponent implements OnInit {
     public chartLabels: string[] = ['Used', 'Available'];
     public chartData: number[] = [85, 15];
-
+    public activeTab: string = 'details';
     public storageAvailable: number = 0;
     public chartOptions: any = {
         legend: {
@@ -71,9 +69,6 @@ export class ProfileComponent extends BasePageComponent
     @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
 
-    @ViewChild('tabs')
-    private tabs: NgbTabset;
-
     profile$: Observable<Profile>;
     destroy$ = new Subject();
 
@@ -101,6 +96,24 @@ export class ProfileComponent extends BasePageComponent
         uiStateService: UiStateService
     ) {
         super();
+
+        this.activeTab = this.route.snapshot.fragment ?? this.activeTab;
+        this.route.fragment.subscribe((fragment) => {
+            if (fragment) {
+                this.logger.debug(
+                    'profile.component',
+                    'fragmentChanged',
+                    fragment
+                );
+                this.activeTab = fragment;
+            }
+        });
+        this.logger.debug(
+            'profile.component',
+            'ctor',
+            'activeTab',
+            this.activeTab
+        );
         this.searchTerm$
             .pipe(
                 debounceTime(400),
@@ -123,15 +136,7 @@ export class ProfileComponent extends BasePageComponent
     ngOnInit() {
         this.refreshLimits();
     }
-    ngAfterViewInit() {
-        setTimeout(() => {
-            const routeAction =
-                this.route.snapshot.queryParamMap.get('do') || '';
-            if (routeAction) {
-                this.tabs.select(routeAction);
-            }
-        }, 1000);
-    }
+
     private _bytesToHuman(bytes: number) {
         if (bytes === 0) {
             return '0 Bytes';

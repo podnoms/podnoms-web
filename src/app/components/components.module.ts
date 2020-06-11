@@ -37,13 +37,13 @@ import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
-export function getHighlightLanguages() {
-    return {
-        typescript: () => import('highlight.js/lib/languages/typescript'),
-        css: () => import('highlight.js/lib/languages/css'),
-        xml: () => import('highlight.js/lib/languages/xml'),
-    };
-}
+// export function getHighlightLanguages() {
+//     return {
+//         typescript: () => import('highlight.js/lib/languages/typescript'),
+//         css: () => import('highlight.js/lib/languages/css'),
+//         xml: () => import('highlight.js/lib/languages/xml'),
+//     };
+// }
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
@@ -67,12 +67,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
         },
-        {
-            provide: HIGHLIGHT_OPTIONS,
-            useValue: {
-                languages: getHighlightLanguages(),
-            },
-        },
+        // {
+        //     provide: HIGHLIGHT_OPTIONS,
+        //     useValue: {
+        //         languages: getHighlightLanguages(),
+        //     },
+        // },
         ScriptService,
     ],
     declarations: [

@@ -15,9 +15,9 @@ import { environment } from 'environments/environment';
         CommonModule,
         SharedModule,
         RouterModule, // because we use <router-outlet> and routerLink
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
     ],
-    providers: [AudioService, AuthService, AlertService]
+    providers: [AudioService, AuthService, AlertService],
 })
 export class CoreModule {
     constructor(

@@ -33,6 +33,7 @@ import { BaseComponent } from './components/base/base.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
+import { SecretHiderComponent } from './components/secret-hider/secret-hider.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,7 @@ import { environment } from 'environments/environment';
         RouterModule,
         NgbModule,
         NgSelectModule,
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
     ],
     exports: [
         FormsModule,
@@ -57,11 +58,12 @@ import { environment } from 'environments/environment';
         ImageUploadComponent,
         LoaderComponent,
         SpinnerButtonComponent,
+        SecretHiderComponent,
         ToastComponent,
         FileSizeComponent,
         ModalUpdatesComponent,
         CategorySelectorComponent,
-        SimpleAudioPlayerComponent
+        SimpleAudioPlayerComponent,
     ],
     declarations: [
         OrderByPipe,
@@ -76,13 +78,14 @@ import { environment } from 'environments/environment';
         CategorySelectorComponent,
         CamelCaseToSentencePipe,
         SpinnerButtonComponent,
+        SecretHiderComponent,
         ToastItemComponent,
         FileSizeComponent,
         ModalUpdatesComponent,
         UserSlugModalComponent,
         SimpleAudioPlayerComponent,
         BaseComponent,
-        SafeHtmlPipe
+        SafeHtmlPipe,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [
@@ -94,8 +97,8 @@ import { environment } from 'environments/environment';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
-        }
-    ]
+            multi: true,
+        },
+    ],
 })
 export class SharedModule {}

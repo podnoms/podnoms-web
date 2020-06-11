@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 @Component({
     selector: 'app-spinner-button',
     templateUrl: './spinner-button.component.html',
-    styleUrls: ['./spinner-button.component.scss']
+    styleUrls: ['./spinner-button.component.scss'],
 })
 export class SpinnerButtonComponent implements OnInit {
     @Input() buttonClass: string = '';

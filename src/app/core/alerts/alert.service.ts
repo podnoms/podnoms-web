@@ -19,7 +19,7 @@ export class AlertService {
         return this.toaster.showToast(title, message, {
             image: image || 'assets/img/feedback/information.png',
             type: ToastType.Info,
-            ...options,
+            ...(options || new AlertOptions()),
         });
     }
     success(
@@ -31,7 +31,7 @@ export class AlertService {
         return this.toaster.showToast(title, message, {
             image: image || 'assets/img/feedback/success.png',
             type: ToastType.Success,
-            ...options,
+            ...(options || new AlertOptions()),
         });
     }
     error(
@@ -43,7 +43,7 @@ export class AlertService {
         return this.toaster.showToast(title, message, {
             image: image || 'assets/img/feedback/warning.png',
             type: ToastType.Error,
-            ...options,
+            ...(options || new AlertOptions()),
         });
     }
 }
