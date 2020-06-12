@@ -138,6 +138,16 @@
                 <app-payment-list></app-payment-list>
             </ng-template>
         </li>
+        <li class="nav-item ml-auto">
+            <div class="block-options mr-15 mt-5">
+                <button type="submit"
+                    class="btn btn-outline-secondary"
+                    (click)="doSave(profile)"
+                    [disabled]="slugError">
+                    <i class="fa fa-save mr-5"></i>Update Profile
+                </button>
+            </div>
+        </li>
     </ul>
     <div [ngbNavOutlet]="nav"
         class="mt-2"></div>

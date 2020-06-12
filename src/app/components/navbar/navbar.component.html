@@ -56,6 +56,14 @@
             </a>
         </div>
         <div class="content-header-section">
+            <a [routerLink]="['/_/extension']"
+                class="btn btn-dual-secondary">
+                <i class="fab fa-chrome"></i>&nbsp;
+                <span class="d-none d-md-inline-block">Extension</span>
+                <sup><span class="badge badge-success">New</span></sup>
+            </a>
+        </div>
+        <div class="content-header-section">
             <a href="https://patreon.com/podnoms"
                 target="_blank"
                 rel="noopener"
@@ -189,7 +197,7 @@
                                         to {{invoice.endDate
                                         |date:'dd/MM/yyyy'}}</p>
                                     <div class="text-muted font-size-sm font-italic">{{invoice.createDate
-                                        | amTimeAgo}}</div>
+                                        | amFromUtc | amLocal | amTimeAgo}}</div>
                                 </div>
                             </a>
                         </li>
