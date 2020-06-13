@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { OrderByDatePipe } from './pipes/order-by-date.pipe';
 import { HumaniseTimePipe } from './pipes/humanise-time.pipe';
-import { authServiceConfig } from '../auth/auth-config';
 import { BasePageComponent } from './components/base-page/base-page.component';
 import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
 import { UtilityService } from './services/utility.service';
@@ -34,6 +33,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { SecretHiderComponent } from './components/secret-hider/secret-hider.component';
+import { ServerShowcaseModalComponent } from './components/modal-updates/server-showcase-modal/server-showcase-modal.component';
 
 @NgModule({
     imports: [
@@ -86,6 +86,7 @@ import { SecretHiderComponent } from './components/secret-hider/secret-hider.com
         SimpleAudioPlayerComponent,
         BaseComponent,
         SafeHtmlPipe,
+        ServerShowcaseModalComponent,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [
