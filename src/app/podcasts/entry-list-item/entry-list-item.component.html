@@ -29,7 +29,7 @@
             </div>
             <div *ngIf="entry.processingStatus==='Processed'"
                 class="text-muted">
-                {{entry.createDate | amTimeAgo}}
+                {{entry.createDate | amFromUtc | amLocal | amTimeAgo}}
             </div>
             <div *ngIf="entry.processingStatus!=='Processed'">
                 <span *ngIf="entry.processingStatus!=='Processed' &&

@@ -1,25 +1,165 @@
-@import '~styles/theme/codebase/_variables.scss';
-
-.toast-container {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 320px;
-    z-index: 99999;
+:root {
+    --ngx-notification-msg-delay: 0;
+    --ngx-notification-msg-color: none;
 }
 
-.toast-item {
-    position: relative;
-    margin: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-}
+$border-radius: 4px;
 
-.toast-image {
-    width: 48px;
-    height: 48px;
-}
+$color-icon-delimiter: #f1f1f2;
+$color-header: #565154;
+$color-body: #141514;
+$color-close-button: #717075;
+$color-close-click: #f1f1f2;
+$color-border: #d4d4d4;
 
-.nav-users {
-    background-color: $body-bg-light;
+.ngx_notification-msg {
+    min-width: 35em;
+    background-color: #e8e8e8;
+    border-top: 1px solid $color-border !important;
+    border-left: 1px solid $color-border !important;
+    border-right: 1px solid $color-border !important;
+
+    z-index: 10000;
+    position: absolute;
+    display: flex;
+    opacity: 0;
+    box-shadow: 0 10px 19px 10px rgba(0, 0, 0, 0.04);
+    border-radius: $border-radius;
+    background-color: white;
+    font-family: 'Raleway', 'Arial', sans-serif;
+    transition: 200ms cubic-bezier(0.75, 0, 0.75, 0.9);
+
+    &:hover {
+        &::after {
+            animation-play-state: paused;
+        }
+    }
+
+    &-opened {
+        opacity: 1;
+        transition: 250ms cubic-bezier(0.2, 0, 0.25, 1);
+    }
+
+    &-progress-bar {
+        &::before {
+            content: '';
+            height: 4px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            opacity: 0.3;
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+            background-color: var(--ngx-notification-msg-color);
+        }
+
+        &::after {
+            content: '';
+            height: 4px;
+            position: absolute;
+            bottom: 0;
+            border-bottom-left-radius: $border-radius;
+            background-color: var(--ngx-notification-msg-color);
+            animation: change-width var(--ngx-notification-msg-delay);
+        }
+    }
+
+    &-icon-wrapper {
+        width: 81px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+        position: relative;
+
+        svg {
+            height: 24px;
+            width: 24px;
+            color: var(--ngx-notification-msg-color);
+            fill: currentColor;
+            transform: scale(1.167);
+        }
+
+        &::after {
+            content: '';
+            height: calc(100% - 40px);
+            width: 1px;
+            position: absolute;
+            right: 0;
+            border-bottom-left-radius: $border-radius;
+            border-top-left-radius: $border-radius;
+            background-color: $color-icon-delimiter;
+        }
+    }
+
+    &-content {
+        padding: 20px 30px;
+    }
+
+    &-header {
+        line-height: 1.5;
+        font-size: 15px;
+        font-weight: 700;
+        color: $color-header;
+    }
+
+    &-body {
+        line-height: 1.5;
+        font-size: 13px;
+        color: $color-body;
+    }
+
+    &-close-button {
+        height: 100%;
+
+        button {
+            height: 16px;
+            width: 16px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            outline: 0;
+            padding: 0;
+            font-size: 11px;
+            font-weight: 600;
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: content-box;
+            border-radius: 50%;
+            border: 0;
+
+            svg {
+                color: $color-close-button;
+                fill: currentColor;
+                height: inherit;
+                width: inherit;
+            }
+
+            &:active {
+                animation: 'close-click' 100ms ease 0s normal;
+            }
+        }
+    }
+
+    @keyframes change-width {
+        0% {
+            width: 100%;
+            border-bottom-right-radius: $border-radius;
+        }
+        100% {
+            width: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    @keyframes close-click {
+        0% {
+            border: 0 solid $color-close-click;
+        }
+        100% {
+            border: 10px solid $color-close-click;
+            margin-top: -10px;
+            margin-right: -10px;
+        }
+    }
 }

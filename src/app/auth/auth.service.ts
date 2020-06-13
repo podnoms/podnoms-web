@@ -1,5 +1,5 @@
-import { map, filter, tap, catchError } from 'rxjs/operators';
-import { Injectable, OnInit } from '@angular/core';
+import { map, filter, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { BaseService } from '../core/base.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -15,8 +15,7 @@ import { AuthApiProxyService } from './auth-api-proxy.service';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AppDispatchers } from 'app/store/app-config/dispatchers';
 import { NGXLogger } from 'ngx-logger';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from 'environments/environment.prod';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -28,7 +27,6 @@ export class AuthService extends BaseService {
     currentUser: Profile;
     profile$ = new BehaviorSubject<Profile>(null);
 
-    private profileSubject = new BehaviorSubject<Profile>(null);
     guid: string;
     constructor(
         private router: Router,
@@ -148,7 +146,7 @@ export class AuthService extends BaseService {
     ): Observable<boolean> {
         return this.podnomsAuthService
             .register(username, email, password)
-            .pipe(map((r) => true));
+            .pipe(map(() => true));
     }
     forgotPassword(userName: string): Observable<any> {
         return this.podnomsAuthService.forgotPassword(userName);
@@ -161,12 +159,11 @@ export class AuthService extends BaseService {
     ): Observable<boolean> {
         return this.podnomsAuthService
             .resetPassword(email, newPassword, newPasswordRepeat, code)
-            .pipe(map((res) => true));
+            .pipe(map(() => true));
     }
     private _storeAuth(response) {
         localStorage.setItem('auth_token', response.jwt.token);
         localStorage.setItem('refresh_token', response.refresh);
-        const jwtHelper = new JwtHelperService();
         this.bootstrap();
     }
     private _loginGoogle(): Observable<boolean> {
@@ -175,15 +172,6 @@ export class AuthService extends BaseService {
             .signIn(GoogleLoginProvider.PROVIDER_ID)
             .then((user) => {
                 if (user) {
-                    const rpc = this.podnomsAuthService
-                        .googleLogin(user.idToken)
-                        .subscribe(
-                            (res) => {
-                                this._storeAuth(res);
-                                ret.next(true);
-                            },
-                            (err) => ret.next(false)
-                        );
                 }
             });
         return ret;
@@ -204,7 +192,7 @@ export class AuthService extends BaseService {
                                 this._storeAuth(res);
                                 ret.next(true);
                             },
-                            (err) => ret.next(false)
+                            () => ret.next(false)
                         );
                 }
             });

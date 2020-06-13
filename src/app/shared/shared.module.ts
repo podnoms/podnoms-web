@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { OrderByDatePipe } from './pipes/order-by-date.pipe';
 import { HumaniseTimePipe } from './pipes/humanise-time.pipe';
-import { authServiceConfig } from '../auth/auth-config';
 import { BasePageComponent } from './components/base-page/base-page.component';
 import { BytesToHumanPipe } from './pipes/bytes-to-human.pipe';
 import { UtilityService } from './services/utility.service';
@@ -33,6 +32,8 @@ import { BaseComponent } from './components/base/base.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
+import { SecretHiderComponent } from './components/secret-hider/secret-hider.component';
+import { ServerShowcaseModalComponent } from './components/modal-updates/server-showcase-modal/server-showcase-modal.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,7 @@ import { environment } from 'environments/environment';
         RouterModule,
         NgbModule,
         NgSelectModule,
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
     ],
     exports: [
         FormsModule,
@@ -57,11 +58,12 @@ import { environment } from 'environments/environment';
         ImageUploadComponent,
         LoaderComponent,
         SpinnerButtonComponent,
+        SecretHiderComponent,
         ToastComponent,
         FileSizeComponent,
         ModalUpdatesComponent,
         CategorySelectorComponent,
-        SimpleAudioPlayerComponent
+        SimpleAudioPlayerComponent,
     ],
     declarations: [
         OrderByPipe,
@@ -76,13 +78,15 @@ import { environment } from 'environments/environment';
         CategorySelectorComponent,
         CamelCaseToSentencePipe,
         SpinnerButtonComponent,
+        SecretHiderComponent,
         ToastItemComponent,
         FileSizeComponent,
         ModalUpdatesComponent,
         UserSlugModalComponent,
         SimpleAudioPlayerComponent,
         BaseComponent,
-        SafeHtmlPipe
+        SafeHtmlPipe,
+        ServerShowcaseModalComponent,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [
@@ -94,8 +98,8 @@ import { environment } from 'environments/environment';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
-        }
-    ]
+            multi: true,
+        },
+    ],
 })
 export class SharedModule {}

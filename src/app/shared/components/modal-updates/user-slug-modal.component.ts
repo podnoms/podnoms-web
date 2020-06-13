@@ -56,7 +56,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
                 </button>
             </div>
         </div>
-    `
+    `,
 })
 export class UserSlugModalComponent {
     @Input() public profile: Profile;

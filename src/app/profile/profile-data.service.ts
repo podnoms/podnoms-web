@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Profile, ProfileLimits, Payment } from '../core';
+import { Profile, ProfileLimits, Payment, ApiKeyRequestModel } from '../core';
+
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
-import { ApiKeyRequestModel } from '../core/model/api-key-request';
 
 @Injectable({
     providedIn: 'root',
@@ -44,6 +44,11 @@ export class ProfileDataService {
             profile
         );
     }
+    getKeys(): Observable<ApiKeyRequestModel[]> {
+        return this.http.get<ApiKeyRequestModel[]>(
+            `${environment.apiHost}/profile/getkeys`
+        );
+    }
     checkSlug(slug): Observable<boolean> {
         this.logger.debug('profile.service.ts', 'checkSlug', slug);
         return this.http.get<boolean>(
@@ -54,6 +59,12 @@ export class ProfileDataService {
         return this.http.get<any>(
             environment.apiHost + '/profile/needsredirect',
             { observe: 'response' }
+        );
+    }
+    regenerateKey(model: ApiKeyRequestModel): Observable<ApiKeyRequestModel> {
+        return this.http.post<ApiKeyRequestModel>(
+            environment.apiHost + '/profile/regeneratekey',
+            model
         );
     }
     requestNewKey(model: ApiKeyRequestModel): Observable<ApiKeyRequestModel> {

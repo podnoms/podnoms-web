@@ -1,22 +1,57 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { PodcastDataService } from '../podcasts/podcast-data.service';
+import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'app/core/alerts/alert.service';
-import { HubConnection } from '@aspnet/signalr';
-import { NowPlaying } from 'app/core/model/now-playing';
-import { ScriptService } from 'app/core/scripts/script.service';
-import { AudioService } from 'app/core/audio.service';
-import { WaveformService } from 'app/shared/services/waveform.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
-import { UtilityService } from 'app/shared/services/utility.service';
-import { JobService } from 'app/shared/services/job.service';
+import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-debug',
     templateUrl: './debug.component.html',
-    styleUrls: ['./debug.component.scss']
+    styleUrls: ['./debug.component.scss'],
 })
 export class DebugComponent implements OnInit {
-    constructor() {}
+    constructor(
+        private alertService: AlertService,
+        private logger: NGXLogger
+    ) {}
 
     ngOnInit() {}
+
+    doSuccess() {
+        this.alertService.success(
+            'Hello Sailor',
+            'I am a HUGE success',
+            undefined
+        );
+    }
+    doError() {
+        this.alertService.error(
+            'Hello Sailor',
+            'I am a HUGE failure',
+            undefined,
+            {
+                autoClose: false,
+                showCloseButton: true,
+            }
+        );
+    }
+    doInfo() {
+        this.alertService.info('Hello Sailor', 'I am a HUGE nerd', undefined, {
+            showProgressBar: true,
+            timeOut: 5000,
+            autoClose: true,
+        });
+    }
+    doCallback() {
+        const toast = this.alertService.info(
+            'Hello Sailor',
+            'I can be clicked',
+            undefined,
+            {
+                showProgressBar: true,
+                timeOut: 5000,
+                autoClose: true,
+            }
+        );
+        toast.click.subscribe((e: any) => {
+            this.logger.debug('debug.component', 'clicked', e);
+        });
+    }
 }

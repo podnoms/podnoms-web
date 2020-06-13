@@ -114,7 +114,7 @@
                     [flexGrow]="2">
                     <ng-template let-value="value"
                         ngx-datatable-cell-template>
-                        <strong>{{ value | amTimeAgo}}</strong>
+                        <strong>{{ value | amFromUtc | amLocal | amTimeAgo}}</strong>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="IsAdmin"

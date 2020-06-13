@@ -16,7 +16,7 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
     selector: 'app-podcast-edit-form-details',
     templateUrl: './podcast-edit-form-details.component.html',
-    styleUrls: ['./podcast-edit-form-details.component.scss']
+    styleUrls: ['./podcast-edit-form-details.component.scss'],
 })
 export class PodcastEditFormDetailsComponent implements AfterViewInit {
     @Input()
@@ -36,9 +36,9 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             'indent',
             'clearFormatting',
             'insertTable',
-            'html'
+            'html',
         ],
-        height: 300
+        height: 300,
     };
     formLoaded: boolean = false;
     podcastForm: FormGroup;
@@ -77,7 +77,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             id: [podcast.id],
             title: [podcast.title, Validators.required],
             category: [podcast.category, Validators.required],
-            description: [podcast.description]
+            description: [podcast.description],
         });
         return form;
     }
@@ -86,7 +86,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
         // podcast.subcategories = this.subcategories;
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(
-                p => {
+                (p) => {
                     this.imageControl.commitImage(p.id, 'podcast').subscribe(
                         () => {
                             this.podcastStore.addOneToCache(p);
@@ -97,7 +97,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                             );
                             this.router.navigate(['podcasts', p.slug]);
                         },
-                        error => {
+                        (error) => {
                             this.logger.error(
                                 'podcast-edit-form.component',
                                 'commitImage',
@@ -119,13 +119,14 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             );
         } else {
             this.podcastDataService.updatePodcast(podcast).subscribe(
-                p => {
+                (p) => {
                     this.imageControl
                         .commitImage(p.id, 'podcast')
-                        .subscribe(r => {
+                        .subscribe((r) => {
                             // nasty dance to force refresh of thumbnails
-                            p.thumbnailUrl = `${r ||
-                                p.imageUrl}?v=${UUID.UUID()}`;
+                            p.thumbnailUrl = `${
+                                r || p.imageUrl
+                            }?v=${UUID.UUID()}`;
                             this.podcastStore.updateOneInCache(p);
                             this.alertService.info(
                                 'Success',

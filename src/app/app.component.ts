@@ -17,6 +17,7 @@ import { AlertService } from './core/alerts/alert.service';
 import { BaseComponent } from './shared/components/base/base.component';
 import { NGXLogger } from 'ngx-logger';
 import { LoggingService } from './services/logging.service';
+import { ServerShowcaseService } from './shared/services/server-showcase.service';
 
 @Component({
     selector: 'app-root',
@@ -28,7 +29,7 @@ export class AppComponent extends BaseComponent {
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     profile: Profile;
-    action$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    modalUpdatesAction$: BehaviorSubject<any> = new BehaviorSubject<any>('');
     viewportWidth: number;
     modalAction$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     constructor(
@@ -41,6 +42,7 @@ export class AppComponent extends BaseComponent {
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
         private signalr: SignalRService,
+        private serverShowcaseService: ServerShowcaseService,
         protected logger: NGXLogger,
         private loggingService: LoggingService,
         public uiStateService: UiStateService
@@ -137,7 +139,12 @@ export class AppComponent extends BaseComponent {
         );
 
         profile$.subscribe((p) => {
-            this.action$.next('redirectslug');
+            this.modalUpdatesAction$.next('redirectslug');
+            this.serverShowcaseService.getShowcase().subscribe((s) => {
+                if (s) {
+                    this.modalUpdatesAction$.next(s);
+                }
+            });
             if (p && environment.production) {
                 this.logger.debug(
                     'Resetting page layout and registering for push notifications'

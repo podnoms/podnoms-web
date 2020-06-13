@@ -17,10 +17,10 @@
     </div>
     <app-footer></app-footer>
 </div>
-<app-chatbox *ngIf="profile && !profile.isFluent && !(uiStateService.footerOpen$ | async)"></app-chatbox>
+<app-chatbox *ngIf="false && profile && !profile.isFluent && !(uiStateService.footerOpen$ | async)"></app-chatbox>
 <app-toast></app-toast>
 <div *ngIf="profile">
-    <app-modal-updates [(action$)]="action$">
+    <app-modal-updates [(action$)]="modalUpdatesAction$">
     </app-modal-updates>
 </div>
 

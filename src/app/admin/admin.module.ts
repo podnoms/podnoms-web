@@ -6,15 +6,18 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MomentModule } from 'ngx-moment';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
+import { RolesComponent } from './roles/roles.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [ActivityComponent],
+    declarations: [ActivityComponent, RolesComponent],
     imports: [
         CommonModule,
         AdminRoutingModule,
         MomentModule,
         NgxDatatableModule,
-        LoggerModule.forRoot(environment.logConfig)
-    ]
+        FormsModule,
+        LoggerModule.forRoot(environment.logConfig),
+    ],
 })
 export class AdminModule {}

@@ -1,0 +1,37 @@
+<div class="block block-themed block-transparent mb-0">
+    <div class="block-header bg-primary-dark">
+        <h3 class="block-title">Hey there!!!</h3>
+    </div>
+    <div class="block-content nice-copy-story">
+
+        <div class="py-20 text-center">
+            <div class="mb-20">
+                <i class="fa fa-envelope-open fa-4x text-primary"></i>
+            </div>
+            <div class="font-size-h4 font-w600">{{showcase.title}}</div>
+            <div class="text-muted"
+                [innerHtml]="showcase.description"></div>
+            <div class="pt-20">
+                <a class="btn btn-rounded btn-alt-primary"
+                    (click)="doLearnMore()">
+                    <i class="fa fa-cog mr-5"></i> Click here to learn more
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button"
+            *ngIf="false"
+            class="btn btn-alt-success"
+            data-dismiss="modal"
+            (click)="closeShowcase('gotoprofile')">
+            <i class="fa fa-check"></i> Go for it
+        </button>
+        <button type="button"
+            class="btn btn-alt-secondary"
+            data-dismiss="modal"
+            (click)="closeShowcase('done')">
+            <i class="fa fa-times"></i> Not now!
+        </button>
+    </div>
+</div>

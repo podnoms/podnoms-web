@@ -1,5 +1,4 @@
 import { ProfileDataService } from './../../../profile/profile-data.service';
-import { Profile } from './../../../core/model/profile';
 import {
     Component,
     Input,
@@ -8,10 +7,11 @@ import {
     ElementRef,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserSlugModalComponent } from './user-slug-modal.component';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+import { ServerShowcaseModalComponent } from './server-showcase-modal/server-showcase-modal.component';
 
 @Component({
     selector: 'app-modal-updates',
@@ -19,7 +19,7 @@ import { NGXLogger } from 'ngx-logger';
     styleUrls: ['./modal-updates.component.scss'],
 })
 export class ModalUpdatesComponent implements AfterViewInit {
-    @Input() action$: Observable<string>;
+    @Input() action$: Observable<any>;
     @ViewChild('content') content: ElementRef;
 
     constructor(
@@ -31,10 +31,41 @@ export class ModalUpdatesComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.action$.subscribe((a) => {
-            if (a === 'redirectslug') {
-                this._doSlugRedirect();
+            if (typeof a === 'string') {
+                if (a === 'redirectslug') {
+                    this._doSlugRedirect();
+                }
+            } else {
+                this._doServerShowcase(a);
             }
+            // } else if (a instanceof ServerShowcase) {
+            //     this._doServerShowcase(a as ServerShowcase);
+            // }
         });
+    }
+    _doServerShowcase(showcase) {
+        const storageKey = `ssc--${showcase.id}`;
+        const previous = JSON.parse(localStorage.getItem(storageKey));
+
+        if (!previous) {
+            const modalRef = this.modalService.open(
+                ServerShowcaseModalComponent,
+                {
+                    size: 'lg',
+                }
+            );
+            modalRef.componentInstance.showcase = showcase;
+            modalRef.result.then((r) => {
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify({
+                        id: showcase.id,
+                        shown: new Date(),
+                        count: previous?.count ?? 1,
+                    })
+                );
+            });
+        }
     }
     _doSlugRedirect() {
         let value = parseInt(localStorage.getItem('profile_slug_nag'), 10);

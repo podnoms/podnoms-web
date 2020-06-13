@@ -60,7 +60,9 @@
                                 </p>
                             </div>
                             <div *ngIf="lastItem"
-                                class="text-muted font-size-xs font-italic">{{message.value.messageDate | amTimeAgo}}</div>
+                                class="text-muted font-size-xs font-italic">
+                                {{message.value.messageDate | amFromUtc | amLocal | amTimeAgo}}
+                            </div>
                         </div>
                     </div>
                     <!-- RECEIVED MESSAGES -->
@@ -85,7 +87,7 @@
                             </div>
                             <div *ngIf="lastItem"
                                 class="text-right text-muted font-size-xs font-italic">
-                                {{message.value.messageDate | amTimeAgo}}
+                                {{message.value.messageDate | amFromUtc | amLocal | amTimeAgo}}
                             </div>
                         </div>
                     </div>
