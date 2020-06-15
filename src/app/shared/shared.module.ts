@@ -34,6 +34,7 @@ import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { SecretHiderComponent } from './components/secret-hider/secret-hider.component';
 import { ServerShowcaseModalComponent } from './components/modal-updates/server-showcase-modal/server-showcase-modal.component';
+import { UniqueIdPipe } from './pipes/unique-id.pipe';
 
 @NgModule({
     imports: [
@@ -54,6 +55,7 @@ import { ServerShowcaseModalComponent } from './components/modal-updates/server-
         HumaniseTimePipe,
         BytesToHumanPipe,
         SafeHtmlPipe,
+        UniqueIdPipe,
         BasePageComponent,
         ImageUploadComponent,
         LoaderComponent,
@@ -87,6 +89,7 @@ import { ServerShowcaseModalComponent } from './components/modal-updates/server-
         BaseComponent,
         SafeHtmlPipe,
         ServerShowcaseModalComponent,
+        UniqueIdPipe,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [

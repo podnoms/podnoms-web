@@ -1,7 +1,7 @@
 <div class="podcast-list-wrapper"
     *ngIf="podcast; else loading">
     <div *ngIf="podcast.podcastEntries.length !== 0; else empty">
-        <app-entry-list-item *ngFor="let entry of podcast.podcastEntries"
+        <app-entry-list-item *ngFor="let entry of podcast.podcastEntries | uniqueId"
             class="podcast-entry-table-row mt-20"
             draggable="true"
             (dragstart)="dragStart($event, entry)"
