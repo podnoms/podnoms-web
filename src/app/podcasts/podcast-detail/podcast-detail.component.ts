@@ -70,23 +70,8 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
                                     entry
                                 );
                                 setTimeout(() => {
-                                    this.logger.debug(
-                                        'podcast-detail.component',
-                                        'before',
-                                        this.podcast.podcastEntries
-                                    );
-                                    const e = this.podcast.podcastEntries.find(
-                                        (r) => r.id === entry.id
-                                    );
-                                    if (!e) {
-                                        this.podcast.podcastEntries.push(entry);
-                                        this.cdRef.detectChanges();
-                                    }
-                                    this.logger.debug(
-                                        'podcast-detail.component',
-                                        'after',
-                                        this.podcast.podcastEntries
-                                    );
+                                    this.podcast.podcastEntries.unshift(entry);
+                                    this.cdRef.detectChanges();
                                 });
                             });
                     });
