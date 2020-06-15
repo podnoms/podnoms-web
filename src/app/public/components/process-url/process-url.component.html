@@ -1,0 +1,45 @@
+<div id="page-container"
+    class="main-content-boxed">
+    <main id="main-container">
+        <div class="bg-image">
+            <div class="row no-gutters justify-content-center">
+                <div class="hero-static col-lg-9">
+                    <div class="content content-full overflow-hidden">
+                        <div class="block block-rounded block-shadow">
+                            <div class="block-content block-content-full">
+                                <h2 class="content-heading text-black pt-20"> Pssst? Fancy a quick mp3?</h2>
+                                <div class="row items-push">
+                                    <div class="col-lg-12">
+                                        <form (submit)="processUrl()"
+                                            [formGroup]="form">
+                                            <div class="input-group input-group-lg">
+                                                <input type="text"
+                                                    class="form-control form-control-lg"
+                                                    formControlName="url"
+                                                    placeholder="Enter url here and we'll see what we can do!">
+                                                <div class="input-group-append">
+                                                    <button type="submit"
+                                                        [disabled]="!form.valid"
+                                                        class="btn btn-secondary">
+                                                        <i class="fa fas fa-arrow-up mr-5"></i>Go!
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-12"
+                                        *ngIf="status==='checking'">
+                                        <div class="spinner-border text-primary"
+                                            role="status">
+                                        </div>
+                                        <span class="progress-text ml-10">Checking...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
