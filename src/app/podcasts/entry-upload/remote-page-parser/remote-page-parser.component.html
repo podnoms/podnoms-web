@@ -19,10 +19,10 @@
         </div>
     </div>
     <div class="block-content">
-        <table *ngIf="remoteAudioData.data"
+        <table *ngIf="remoteAudioData.links"
             class="table table-borderless table-striped table-vcenter">
             <tbody>
-                <tr *ngFor="let row of remoteAudioData.data; let i = index">
+                <tr *ngFor="let row of remoteAudioData.links; let i = index">
                     <td scope="row">
                         <label class="css-control css-control-lg css-control-success css-radio">
                             <input type="radio"
