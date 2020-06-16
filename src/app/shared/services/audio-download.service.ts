@@ -3,7 +3,7 @@ import { EntryDataService } from '../../podcasts/entry-data.service';
 import { saveAs } from 'file-saver';
 import { Observable, of } from 'rxjs';
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AudioDownloadService {
     constructor(private entryService: EntryDataService) {}

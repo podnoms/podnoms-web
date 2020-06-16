@@ -28,11 +28,51 @@
                                         </form>
                                     </div>
                                     <div class="col-lg-12"
-                                        *ngIf="status==='checking'">
+                                        *ngIf="status && !processingStatus">
                                         <div class="spinner-border text-primary"
                                             role="status">
                                         </div>
-                                        <span class="progress-text ml-10">Checking...</span>
+                                        <span class="progress-text ml-10">{{status}}...</span>
+                                    </div>
+                                    <div class="col-lg-12"
+                                        *ngIf="processingStatus && processingStatus.progress !== 'Processed'">
+                                        <div class="spinner-border text-primary"
+                                            role="status">
+                                        </div>
+                                        <span class="progress-text ml-10">{{processingStatus.progress}}...</span>
+                                        <div class="progress-bar"
+                                            *ngIf="processingStatus.payload"
+                                            role="progressbar"
+                                            [style.width]="processingStatus.payload.percentage + '%'"
+                                            [attr.aria-valuenow]="processingStatus.payload.percentage"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100">
+                                            <span class="progress-bar-label">{{processingStatus.payload.percentage}}%</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12"
+                                        *ngIf="processingStatus && processingStatus.progress === 'Processed'">
+                                        <h3>Success - this download will last for 30 minutes!</h3>
+                                        <p>
+                                            <button class="btn btn-hero btn-rounded btn-outline-warning btn-lg"
+                                                (click)="downloadLink(processingStatus.payload)"
+                                                href="#">
+                                                <i class="fas fa-download mr-2"></i>
+                                                Download
+                                            </button>
+                                        </p>
+                                        <p>
+                                            <button type="button"
+                                                data-toggle="tooltip"
+                                                title="Copy link"
+                                                (click)="copyUrl(processingStatus.payload)"
+                                                class="btn btn-sm btn-circle btn-alt-secondary mr-5 mb-5"
+                                                aria-label="Copy link">
+                                                <i class="fa fa-copy"></i>
+                                            </button>
+                                            <span class="mr-10">{{processingStatus.payload}}</span>
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>
