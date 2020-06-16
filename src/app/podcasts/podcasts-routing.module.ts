@@ -11,32 +11,32 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         component: PodcastComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
     },
     {
         path: 'entry/:entry/edit',
         component: EntryEditFormComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
     },
     {
         path: 'add',
         component: PodcastEditFormComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
     },
     {
         path: ':podcast',
         component: PodcastComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
     },
     {
         path: ':podcast/edit',
         component: PodcastEditFormComponent,
-        canActivate: [AuthGuard]
-    }
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class PodcastsRoutingModule {}
