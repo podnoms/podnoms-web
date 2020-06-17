@@ -161,10 +161,12 @@ export class AuthService extends BaseService {
             .resetPassword(email, newPassword, newPasswordRepeat, code)
             .pipe(map(() => true));
     }
-    private _storeAuth(response) {
+    private _storeAuth(response: any, bootstrap: boolean = true) {
         localStorage.setItem('auth_token', response.jwt.token);
         localStorage.setItem('refresh_token', response.refresh);
-        this.bootstrap();
+        if (bootstrap) {
+            this.bootstrap();
+        }
     }
     private _loginGoogle(): Observable<boolean> {
         const ret = new Subject<boolean>();
@@ -172,6 +174,13 @@ export class AuthService extends BaseService {
             .signIn(GoogleLoginProvider.PROVIDER_ID)
             .then((user) => {
                 if (user) {
+                    this.podnomsAuthService.googleLogin(user.idToken).subscribe(
+                        (res) => {
+                            this._storeAuth(res, false);
+                            ret.next(true);
+                        },
+                        (err) => ret.next(false)
+                    );
                 }
             });
         return ret;
