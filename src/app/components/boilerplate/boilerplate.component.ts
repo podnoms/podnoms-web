@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-boilerplate',
     templateUrl: './boilerplate.component.html',
-    styleUrls: ['./boilerplate.component.scss']
+    styleUrls: ['./boilerplate.component.scss'],
 })
 export class BoilerplateComponent implements OnInit {
     boilerplate$: Observable<string>;
@@ -27,11 +27,11 @@ export class BoilerplateComponent implements OnInit {
         const key = this.route.snapshot.paramMap.get('key');
         if (key) {
             this.boilerplateService.getBoilerplate(key).subscribe(
-                r => {
+                (r) => {
                     this.title = r.title;
                     this.content = r.content;
                 },
-                err => this.router.navigateByUrl('/404')
+                (err) => this.router.navigateByUrl('/404')
             );
         } else {
             this.router.navigateByUrl('/404');

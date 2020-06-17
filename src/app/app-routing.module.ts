@@ -23,6 +23,11 @@ const routes: Routes = [
         component: BoilerplateComponent,
     },
     {
+        path: 'convert',
+        loadChildren: () =>
+            import('app/public/public.module').then((m) => m.PublicModule),
+    },
+    {
         path: 'auth',
         loadChildren: () =>
             import('app/auth/auth.module').then((m) => m.AuthModule),
