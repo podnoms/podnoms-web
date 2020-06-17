@@ -7,6 +7,7 @@ export class Podcast extends Shareable {
     imageUrl?: string;
     thumbnailUrl?: string;
     customDomain?: string;
+    customRssDomain?: string;
     rssUrl?: string;
     pagesUrl?: string;
     createDate?: Date;

@@ -4,7 +4,7 @@ import {
     Input,
     ChangeDetectorRef,
     AfterViewInit,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import { Podcast, Category } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
@@ -19,7 +19,7 @@ import { urlIsValidValidator } from 'app/shared/validators/valid-url.validator';
     selector: 'app-podcast-public-settings',
     changeDetection: ChangeDetectionStrategy.Default,
     templateUrl: './podcast-public-settings.component.html',
-    styleUrls: ['./podcast-public-settings.component.scss']
+    styleUrls: ['./podcast-public-settings.component.scss'],
 })
 export class PodcastPublicSettingsComponent implements AfterViewInit {
     @Input()
@@ -50,22 +50,29 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
                 podcast.customDomain,
                 Validators.compose([]),
                 Validators.composeAsync([
-                    validateDomain(this.utilityService, 'pages.podnoms.com')
-                ])
+                    validateDomain(this.utilityService, 'pages.podnoms.com'),
+                ]),
+            ],
+            customRssDomain: [
+                podcast.customRssDomain,
+                Validators.compose([]),
+                Validators.composeAsync([
+                    validateDomain(this.utilityService, 'rss.podnoms.com'),
+                ]),
             ],
             private: [podcast.private, Validators.required],
             authUserName: [
                 podcast.authUserName,
                 requiredIfValidator(
                     () => this.publicSettingsForm.get('private').value
-                )
+                ),
             ],
             authPassword: [
                 podcast.authPassword,
                 requiredIfValidator(
                     () => this.publicSettingsForm.get('private').value
-                )
-            ]
+                ),
+            ],
         });
         this.cd.detectChanges();
     }
@@ -85,7 +92,7 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
         this.podcast.category = this.podcast.category || null;
         this.podcastDataService
             .updatePodcast(this.podcast)
-            .subscribe(r =>
+            .subscribe((r) =>
                 this.alertService.info('Success', 'Updated podcast settings')
             );
         return false;
