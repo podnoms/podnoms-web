@@ -4,7 +4,7 @@
         (submit)="submitForm()"
         novalidate>
         <div class="row">
-            <div class="col-md-7 pr-50">
+            <div class="col-md-6 pr-50">
                 <div class="form-group row">
                     <div class="col-12">
                         <label for="public-title">Public title</label>
@@ -70,7 +70,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-12">
+                        <label for="podcast-domain">Custom RSS Feed Domain </label>
+                        <div class="input-group">
+                            <input type="text"
+                                [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.customRssDomain.invalid}"
+                                formControlName="customRssDomain"
+                                class="form-control"
+                                id="podcast-rss-domain"
+                                placeholder="Custom RSS Feed domain name"
+                                autocomplete="off" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
+                            </div>
+                        </div>
+                        <div class="form-text text-muted">
+                            This should be a CNAME pointing to rss.podnoms.com
+                        </div>
+                    </div>
+                </div>
                 <div class="block">
                     <div class="block-header">
                         <div class="custom-control custom-checkbox">
