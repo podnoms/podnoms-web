@@ -36,7 +36,7 @@ import { environment } from 'environments/environment';
 import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-
+import { OrderModule } from 'ngx-order-pipe';
 // export function getHighlightLanguages() {
 //     return {
 //         typescript: () => import('highlight.js/lib/languages/typescript'),
@@ -60,6 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         NgbProgressbarModule,
         LoggerModule.forRoot(environment.logConfig),
         HighlightModule,
+        OrderModule,
     ],
     providers: [
         PodcastStoreService,
