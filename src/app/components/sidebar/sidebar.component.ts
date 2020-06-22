@@ -6,19 +6,18 @@ import { Router } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Podcast } from 'app/core';
 import { UiStateService } from 'app/core/ui-state.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss']
+    styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
     selected: Podcast;
     podcasts$: Observable<Podcast[]>;
     loading$: Observable<boolean>;
     public scrollConfig: PerfectScrollbarConfigInterface = {
-        suppressScrollX: true
+        suppressScrollX: true,
     };
     constructor(
         private router: Router,
