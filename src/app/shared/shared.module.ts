@@ -35,6 +35,8 @@ import { environment } from 'environments/environment';
 import { SecretHiderComponent } from './components/secret-hider/secret-hider.component';
 import { ServerShowcaseModalComponent } from './components/modal-updates/server-showcase-modal/server-showcase-modal.component';
 import { UniqueIdPipe } from './pipes/unique-id.pipe';
+import { SortByPipe } from './pipes/sort-by.pipe';
+import { FilterIfPipe } from './pipes/filter-if.pipe';
 
 @NgModule({
     imports: [
@@ -66,6 +68,7 @@ import { UniqueIdPipe } from './pipes/unique-id.pipe';
         ModalUpdatesComponent,
         CategorySelectorComponent,
         SimpleAudioPlayerComponent,
+        FilterIfPipe,
     ],
     declarations: [
         OrderByPipe,
@@ -90,6 +93,8 @@ import { UniqueIdPipe } from './pipes/unique-id.pipe';
         SafeHtmlPipe,
         ServerShowcaseModalComponent,
         UniqueIdPipe,
+        SortByPipe,
+        FilterIfPipe,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [

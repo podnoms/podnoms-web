@@ -25,6 +25,7 @@
             </div>
         </div>
     </div>
+
     <div class="content-side content-side-full mt-10">
         <div class="button-wrapper">
             <button type="button"
@@ -33,12 +34,67 @@
                 <span>Add Podcast</span> <i class="fas fa fa-plus float-right"></i>
             </button>
         </div>
+        <ul class="list-inline pl-10 pr-10">
+            <li class="list-inline-item"
+                [style.width.%]="71">
+                <div class="form-material input-group">
+                    <input type="text"
+                        class="form-control"
+                        #filter
+                        placeholder="Search..">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fa fa-fw fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="list-inline-item">
+                <a class="link-effect text-dual-primary-dark"
+                    data-toggle="tooltip"
+                    title="Sort by title"
+                    data-action="sidebar_style_inverse_toggle"
+                    (click)="sort('title')"
+                    href="javascript:void(0)">
+                    <i class="fa fas"
+                        [ngClass]="[orderByField === 'title' ? 'text-danger' : '',
+                        orderByAscending && orderByField === 'title' ? 'fa-sort-alpha-up' : 'fa-sort-alpha-down']">
+                    </i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a class="link-effect text-dual-primary-dark"
+                    data-toggle="tooltip"
+                    title="Sort by number of entries"
+                    data-action="sidebar_style_inverse_toggle"
+                    (click)="sort('entryCount')"
+                    href="javascript:void(0)">
+                    <i class="fa fas"
+                        [ngClass]="[orderByField === 'entryCount' ? 'text-danger' : '',
+                        orderByAscending && orderByField === 'entryCount' ? 'fa-sort-numeric-up' : 'fa-sort-numeric-down']">
+                    </i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a class="link-effect text-dual-primary-dark"
+                    data-toggle="tooltip"
+                    title="Sort by last entry date"
+                    data-action="sidebar_style_inverse_toggle"
+                    (click)="sort('lastEntryDate')"
+                    href="javascript:void(0)">
+                    <i class="fa fas"
+                        [ngClass]="[orderByField === 'lastEntryDate' ? 'text-danger' : '',
+                        orderByAscending && orderByField === 'lastEntryDate' ? 'fa-sort-amount-up' : 'fa-sort-amount-down']">
+                    </i>
+                </a>
+            </li>
+        </ul>
         <ul class="nav-users"
             [perfectScrollbar]="scrollConfig">
             <li class="nav-main-heading"
                 *ngIf="false"><span>My
                     Podcasts</span></li>
-            <li *ngFor="let podcast of (podcasts$ | async)"
+            <li *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField:orderByAscending | filterIf: 'title': filterValue)"
                 class="nav-podcast-item">
                 <app-sidebar-podcast-item [podcast]="podcast"></app-sidebar-podcast-item>
             </li>

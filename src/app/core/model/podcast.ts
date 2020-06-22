@@ -7,6 +7,7 @@ export class Podcast extends Shareable {
     imageUrl?: string;
     thumbnailUrl?: string;
     customDomain?: string;
+    customRssDomain?: string;
     rssUrl?: string;
     pagesUrl?: string;
     createDate?: Date;
@@ -22,4 +23,7 @@ export class Podcast extends Shareable {
     private?: boolean;
     authUserName?: string;
     authPassword?: string;
+
+    lastEntryDate?: Date;
+    entryCount?: number;
 }

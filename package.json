@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.2.230",
+  "version": "1.2.240",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -64,6 +64,7 @@
     "ngx-highlightjs": "^4.0.2",
     "ngx-logger": "^4.1.9",
     "ngx-moment": "^3.5.0",
+    "ngx-order-pipe": "^2.0.4",
     "ngx-perfect-scrollbar": "^9.0.0",
     "ngx-quill": "^9.2.0",
     "ngx-store": "^2.1.0",
@@ -81,7 +82,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.8",
-    "@angular/cli": "~9.1.8",
+    "@angular/cli": "^9.1.9",
     "@angular/compiler-cli": "~9.1.11",
     "@angular/language-service": "~9.1.11",
     "@types/datatables.net": "^1.10.19",
