@@ -23,4 +23,7 @@ export class Podcast extends Shareable {
     private?: boolean;
     authUserName?: string;
     authPassword?: string;
+
+    lastEntryDate?: Date;
+    entryCount?: number;
 }
