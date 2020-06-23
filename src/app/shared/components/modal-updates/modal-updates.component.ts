@@ -38,9 +38,6 @@ export class ModalUpdatesComponent implements AfterViewInit {
             } else {
                 this._doServerShowcase(a);
             }
-            // } else if (a instanceof ServerShowcase) {
-            //     this._doServerShowcase(a as ServerShowcase);
-            // }
         });
     }
     _doServerShowcase(showcase) {
