@@ -34,15 +34,11 @@ export class SignalRComponent implements OnInit {
         });
     }
     connectSignalR() {
+        const qry = this._authService.getRealtimeQuery();
         this._hubConnection = new HubConnectionBuilder()
-            .withUrl(
-                `${
-                    environment.signalRHost
-                }/hubs/debug?token=${this._authService.getAuthToken()}`,
-                {
-                    accessTokenFactory: () => this._authService.getAuthToken(),
-                }
-            )
+            .withUrl(`${environment.signalRHost}/hubs/debug?token=${qry}`, {
+                accessTokenFactory: () => qry,
+            })
             .build();
 
         this._hubConnection

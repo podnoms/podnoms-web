@@ -11,6 +11,8 @@ import { ComponentsModule } from '../components/components.module';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { authServiceConfig } from './auth-config';
+import { CookieService } from 'ngx-cookie-service';
+
 import { AuthService } from './auth.service';
 
 @NgModule({
@@ -20,9 +22,9 @@ import { AuthService } from './auth.service';
         AuthRoutingModule,
         ComponentsModule,
         NgxCaptchaModule,
-        LoggerModule.forRoot(environment.logConfig)
+        LoggerModule.forRoot(environment.logConfig),
     ],
     declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent],
-    providers: [AuthService]
+    providers: [AuthService, CookieService],
 })
 export class AuthModule {}

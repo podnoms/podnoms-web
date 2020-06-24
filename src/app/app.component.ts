@@ -52,7 +52,7 @@ export class AppComponent extends BaseComponent {
         updateService.checkForUpdates();
     }
     ngOnInit() {
-        if (!this.authService.getAuthToken()) {
+        if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/auth/login']);
         }
         if (environment.production || false) {
