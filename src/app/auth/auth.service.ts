@@ -16,6 +16,8 @@ import { ProfileStoreService } from '../profile/profile-store.service';
 import { AppDispatchers } from 'app/store/app-config/dispatchers';
 import { NGXLogger } from 'ngx-logger';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'environments/environment.prod';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
     providedIn: 'root',
@@ -34,6 +36,7 @@ export class AuthService extends BaseService {
         private podnomsAuthService: AuthApiProxyService,
         private profileStoreService: ProfileStoreService,
         private appDispatchers: AppDispatchers,
+        private cookieService: CookieService,
         private logger: NGXLogger
     ) {
         super();
@@ -65,10 +68,7 @@ export class AuthService extends BaseService {
         }
     }
     isLoggedIn(): boolean {
-        const token = this.getAuthToken();
-        return token !== '';
-        // const helper = new JwtHelperService();
-        // return token && !helper.isTokenExpired(token);
+        return localStorage.getItem('refresh_token') ? true : false;
     }
     checkHasRoles(roles: string[]) {
         if (this.currentUser && this.currentUser.roles) {
@@ -79,33 +79,31 @@ export class AuthService extends BaseService {
         }
         return false;
     }
-    getAuthToken(): string {
-        return localStorage.getItem('auth_token');
+    setRealtimeQuery(qry: string) {
+        localStorage.setItem(environment.rtQueryKey, qry);
     }
-
-    refreshToken(): Observable<string> {
+    getRealtimeQuery(): string {
+        return localStorage.getItem(environment.rtQueryKey);
+    }
+    refreshToken(): Observable<boolean> {
         return this.podnomsAuthService
-            .refreshToken(
-                localStorage.getItem('auth_token'),
-                localStorage.getItem('refresh_token')
-            )
+            .refreshToken(localStorage.getItem('refresh_token'))
             .pipe(
                 map((res) => {
                     this._storeAuth(res);
-                    return this.getAuthToken();
+                    return true;
                 }),
-                catchError((response: HttpErrorResponse) => {
-                    if (response.status === 400) {
+                catchError((err: HttpErrorResponse) => {
+                    if (err.status === 400) {
                         this.logger.debug(
                             'auth.service',
                             'refreshToken',
                             'Failed to refresh token',
-                            response.error
+                            err.error
                         );
                         this.logout();
-                    } else {
-                        return this.handleError(response);
                     }
+                    return this.handleError(err);
                 })
             );
     }
@@ -122,11 +120,17 @@ export class AuthService extends BaseService {
             map((res) => {
                 this._storeAuth(res);
                 return true;
+            }),
+            catchError((err) => {
+                this.logger.debug('auth.service', 'catchError', err);
+                throw err;
             })
         );
     }
     logout() {
         localStorage.clear();
+        this.cookieService.deleteAll();
+
         this.profile$.next(null);
         this.authNavStatusSource.next(false);
         this.appDispatchers.clearAllStorage();
@@ -162,7 +166,7 @@ export class AuthService extends BaseService {
             .pipe(map(() => true));
     }
     private _storeAuth(response: any, bootstrap: boolean = true) {
-        localStorage.setItem('auth_token', response.jwt.token);
+        this.setRealtimeQuery(response.jwt.token);
         localStorage.setItem('refresh_token', response.refresh);
         if (bootstrap) {
             this.bootstrap();

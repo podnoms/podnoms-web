@@ -17,6 +17,7 @@ export class AuthApiProxyService {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
         }),
+        withCredentials: true,
     };
 
     constructor(private http: HttpClient) {}
@@ -97,12 +98,8 @@ export class AuthApiProxyService {
             this.httpOptions
         );
     }
-    public refreshToken(
-        accessToken: string,
-        refreshToken: string
-    ): Observable<any> {
+    public refreshToken(refreshToken: string): Observable<any> {
         return this.http.post<any>(`${environment.apiHost}/auth/refreshtoken`, {
-            accessToken: accessToken,
             refreshToken: refreshToken,
         });
     }

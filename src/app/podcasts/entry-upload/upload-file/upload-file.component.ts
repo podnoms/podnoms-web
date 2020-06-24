@@ -8,7 +8,7 @@ import { AlertService } from '../../../core/alerts/alert.service';
 @Component({
     selector: 'app-upload-file',
     templateUrl: './upload-file.component.html',
-    styleUrls: ['./upload-file.component.scss']
+    styleUrls: ['./upload-file.component.scss'],
 })
 export class UploadFileComponent implements OnInit {
     @Input() podcast: Podcast;
@@ -18,9 +18,6 @@ export class UploadFileComponent implements OnInit {
         acceptedFiles: 'audio/*',
         maxFilesize: 4000, // 4Gb
         timeout: 1000 * (60 * 120), /// 2 hours
-        headers: {
-            Authorization: 'Bearer ' + this.authService.getAuthToken()
-        },
         maxFiles: 1,
         parallelUploads: 1,
         autoProcessQueue: true,
@@ -34,7 +31,7 @@ export class UploadFileComponent implements OnInit {
             <div class="dz-error-message">
                 <span data-dz-errormessage></span>
             </div>
-        </div>`
+        </div>`,
     };
     constructor(
         private alertService: AlertService,

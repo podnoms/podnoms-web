@@ -1129,10 +1129,10 @@
   resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-1.11.0.tgz#ccb734fd424b8b6c3aff3ad1921a89ee31be229b"
   integrity sha512-hD7+cmMUvT5OJeWVrcRkE87PPuj/0/Wic6bntCopJE1WIX/Dm117AUkHgKd3S7Ici6DLp4bdlx1MjjwWL5942w==
 
-"@firebase/firestore@1.15.3":
-  version "1.15.3"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-1.15.3.tgz#34446efceb9a10b0974342337bc7aa2e273ecc78"
-  integrity sha512-4OE4JsXP/7LF+6m8q6sQ8/7UuF4qdGVW/hxQGvDVZItBVUjGSFlxjmR3eQ4/JMOLCLFNeeqtwGJpbBw3ZPjPxw==
+"@firebase/firestore@1.15.4":
+  version "1.15.4"
+  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-1.15.4.tgz#686d547068832925dfc6e43f69837c32f1fb79a5"
+  integrity sha512-Q8YSHSO8D7MEoykHOdPWbgr2EN5AKTrEpHAmvFfDD5HMVTU6m8WfWqos8VawfZCfMkk65NJ5x+Pi+mzHj58ZcA==
   dependencies:
     "@firebase/component" "0.1.14"
     "@firebase/firestore-types" "1.11.0"
@@ -2709,9 +2709,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001020, caniuse-lite@^1.0.30001032, caniuse-lite@^1.0.30001043:
-  version "1.0.30001085"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001085.tgz#bed28bd51ff7425d33ee23e730c7f3b703711db6"
-  integrity sha512-x0YRFRE0pmOD90z+9Xk7jwO58p4feVNXP+U8kWV+Uo/HADyrgESlepzIkUqPgaXkpyceZU6siM1gsK7sHgplqA==
+  version "1.0.30001088"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001088.tgz#23a6b9e192106107458528858f2c0e0dba0d9073"
+  integrity sha512-6eYUrlShRYveyqKG58HcyOfPgh3zb2xqs7NvT2VVtP3hEUeeWvc3lqhpeMTxYWBBeeaT9A4bKsrtjATm66BTHg==
 
 canonical-path@1.0.0:
   version "1.0.0"
@@ -3906,9 +3906,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.413:
-  version "1.3.480"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.480.tgz#190ae45074578349a4c4f336fba29e76b20e9ef5"
-  integrity sha512-wnuUfQCBMAdzu5Xe+F4FjaRK+6ToG6WvwG72s8k/3E6b+hoGVYGiQE7JD1NhiCMcqF3+wV+c2vAnaLGRSSWVqA==
+  version "1.3.481"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.481.tgz#0d59e72a0aaeb876b43fb1d6e84bf0dfc99617e8"
+  integrity sha512-q2PeCP2PQXSYadDo9uNY+uHXjdB9PcsUpCVoGlY8TZOPHGlXdevlqW9PkKeqCxn2QBkGB8b6AcMO++gh8X82bA==
 
 elliptic@^6.0.0, elliptic@^6.5.2:
   version "6.5.3"
@@ -4432,16 +4432,16 @@ find-up@^4.0.0, find-up@^4.1.0:
     path-exists "^4.0.0"
 
 firebase@^7.14.2:
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-7.15.3.tgz#ba098ef90f105ad3aedd4171adc1902dd258711e"
-  integrity sha512-Ek7gyp7hxAhtp9DGK0TGyhTjJJdzupowp2FQb9WMovCgKr+tdMtfXnMwRsH0zB09K8Ca/ecwx8+Znq13NGA57Q==
+  version "7.15.4"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-7.15.4.tgz#13ea46857af3546bf827de10e7830d543811edef"
+  integrity sha512-pj9xa9WY4sinH6ebb4yqSgaz+DIg19VqGUV+gTj0MTkN877ePZti0k1GIzaqrbnEUow2Sf56Xz8LyZg+HCBCmA==
   dependencies:
     "@firebase/analytics" "0.3.7"
     "@firebase/app" "0.6.6"
     "@firebase/app-types" "0.6.1"
     "@firebase/auth" "0.14.7"
     "@firebase/database" "0.6.5"
-    "@firebase/firestore" "1.15.3"
+    "@firebase/firestore" "1.15.4"
     "@firebase/functions" "0.4.46"
     "@firebase/installations" "0.4.12"
     "@firebase/messaging" "0.6.18"
@@ -5720,9 +5720,9 @@ jest-worker@25.1.0:
     supports-color "^7.0.0"
 
 jest-worker@^26.0.0:
-  version "26.0.0"
-  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-26.0.0.tgz#4920c7714f0a96c6412464718d0c58a3df3fb066"
-  integrity sha512-pPaYa2+JnwmiZjK9x7p9BoZht+47ecFCDFA/CJxspHzeDvQcfVBLWzCiWyo+EGrSiQMWZtCFo9iSvMZnAAo8vw==
+  version "26.1.0"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-26.1.0.tgz#65d5641af74e08ccd561c240e7db61284f82f33d"
+  integrity sha512-Z9P5pZ6UC+kakMbNJn+tA2RdVdNX5WH1x+5UCBZ9MxIK24pjYtFt96fK+UwBTrjLYm232g1xz0L3eTh51OW+yQ==
   dependencies:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
@@ -6784,6 +6784,11 @@ ngx-captcha@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/ngx-captcha/-/ngx-captcha-8.0.1.tgz#54118cfccfb9e078b55ea78a44bede9167d43d11"
   integrity sha512-YPRaHOwegkCU0+F/g9kI/xR6B6IEoqSZVUdgd84xNEEFEhM5PfdWY+xHc0dj75epriGAlquWA+NtpIRynxIFRg==
+
+ngx-cookie-service@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-3.0.4.tgz#603600bf575322aa0bd3f83cab42494e9aebb00a"
+  integrity sha512-g4KHpCWL2EtKatWqn8lz/DdyMQO8sDS7BNwCSvxF1ETTW5DPJnbdEwCjSdm84MmfqBh6JdgvoQd//rOxH5EbgQ==
 
 ngx-dropzone-wrapper@^9.0.0:
   version "9.0.0"

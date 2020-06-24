@@ -45,6 +45,7 @@ export const environment = {
     features: {
         googleContactSyncEnabled: true,
     },
+    rtQueryKey: '___rt___tk|d9a7164a-1130-44bf-b4ed-374b4a97ae15',
     logConfig: _logConfig,
 };
 import 'zone.js/dist/zone-error';

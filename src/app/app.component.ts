@@ -52,7 +52,7 @@ export class AppComponent extends BaseComponent {
         updateService.checkForUpdates();
     }
     ngOnInit() {
-        if (!this.authService.getAuthToken()) {
+        if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/auth/login']);
         }
         if (environment.production || false) {
@@ -97,6 +97,11 @@ export class AppComponent extends BaseComponent {
         this.authService.bootstrap().subscribe(() => {});
         this.authService.authNavStatus$.subscribe((r) => {
             if (r) {
+                this.serverShowcaseService.getShowcase().subscribe((s) => {
+                    if (s) {
+                        this.modalUpdatesAction$.next(s);
+                    }
+                });
                 this.signalr
                     .init('userupdates')
                     .then((listener) => {
@@ -132,7 +137,6 @@ export class AppComponent extends BaseComponent {
         if (!isReady) {
             return;
         }
-
         const profile$ = this.profileStoreService.entities$.pipe(
             (skip(1), take(1)),
             map((r) => r[0])
@@ -140,11 +144,6 @@ export class AppComponent extends BaseComponent {
 
         profile$.subscribe((p) => {
             this.modalUpdatesAction$.next('redirectslug');
-            this.serverShowcaseService.getShowcase().subscribe((s) => {
-                if (s) {
-                    this.modalUpdatesAction$.next(s);
-                }
-            });
             if (p && environment.production) {
                 this.logger.debug(
                     'Resetting page layout and registering for push notifications'

@@ -32,7 +32,7 @@ export class HomeComponent implements OnDestroy {
         this.logger.debug('home.component', 'ctor');
     }
     ngOnInit() {
-        if (this.authService.getAuthToken()) {
+        if (this.authService.isLoggedIn()) {
             // no point doing any of this if we have no JWT
             this.profileDataService.getProfile().subscribe(
                 (profile) => {

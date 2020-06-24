@@ -37,12 +37,11 @@ export class TokenInterceptor implements HttpInterceptor {
         // 1. We don't want to be passing JWT tokens to random sites
         // 2. We probably don't want to be calling random sites from our front end?
         // --- all requests should go through our API.
-        const authToken = this.authService.getAuthToken();
 
         if (
             !this.authService ||
-            !request.url.startsWith(environment.apiHost) ||
-            !authToken
+            request.url.indexOf('/hubs/') !== -1 ||
+            !request.url.startsWith(environment.apiHost)
         ) {
             return next.handle(request);
         }
@@ -51,7 +50,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 ? new HttpHeaders()
                 : this.commonHeaders();
 
-        request = this.addToken(request, authToken);
+        request = this.addCredentials(request);
 
         return next.handle(request).pipe(
             catchError((error) => {
@@ -67,12 +66,8 @@ export class TokenInterceptor implements HttpInterceptor {
         );
     }
 
-    private addToken(request: HttpRequest<any>, token: string) {
-        return request.clone({
-            setHeaders: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+    private addCredentials(request: HttpRequest<any>) {
+        return request.clone({ withCredentials: true });
     }
 
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
@@ -84,7 +79,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 switchMap((token: any) => {
                     this.isRefreshing = false;
                     this.refreshTokenSubject.next(token);
-                    return next.handle(this.addToken(request, token));
+                    return next.handle(this.addCredentials(request));
                 })
             );
         } else {
@@ -93,7 +88,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 take(1),
                 switchMap((jwt) => {
                     this.isRefreshing = false;
-                    return next.handle(this.addToken(request, jwt));
+                    return next.handle(this.addCredentials(request));
                 })
             );
         }

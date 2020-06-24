@@ -28,12 +28,12 @@ export class SignalRService {
     public init(hubName: string): Promise<SignalRService> {
         return new Promise((resolve) => {
             const url = `${environment.signalRHost}/hubs/${hubName}`;
-            const token = this.authService.getAuthToken();
+            const token = this.authService.getRealtimeQuery();
             const hub = this.connectionPool[hubName];
             if (!hub) {
                 const connection = new HubConnectionBuilder()
                     .configureLogging(LogLevel.Error)
-                    .withUrl(url + '?token=' + token)
+                    .withUrl(`${url}?token=${token}`)
                     .build();
                 this.connectionPool[hubName] = new HubListener(connection);
             }
