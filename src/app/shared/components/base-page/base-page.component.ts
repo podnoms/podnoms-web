@@ -7,6 +7,9 @@ import { LoggingService } from 'app/services/logging.service';
 import { AppInjector } from 'app/services/app-injector.service';
 import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntil, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { RouteStateService } from '../../../services/route-state.service';
 
 @Component({
     selector: 'app-base-page',
@@ -15,17 +18,30 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class BasePageComponent extends BaseComponent {
     private __loggingService: LoggingService;
     private __router: Router;
-
+    private __activatedRoute: ActivatedRoute;
+    private __routeStateService: RouteStateService;
+    private destroy = new Subject<void>();
     constructor() {
         super();
         const injector = AppInjector.getInstance().getInjector();
         this.__loggingService = injector.get(LoggingService);
         this.__router = injector.get(Router);
+        this.__activatedRoute = injector.get(ActivatedRoute);
 
         this.logNavigation();
 
         this.uiStateService.setNakedPage(false);
         this.logNavigation();
+
+        this.__activatedRoute.paramMap.pipe(
+            map((paramMap) => paramMap.get('routePathParam')),
+            takeUntil(this.destroy)
+        );
+    }
+    ngOnDestroy() {
+        this.destroy.next();
+        this.destroy.complete();
+        this.__routeStateService.updatePathParamState(null);
     }
 
     private logNavigation() {
