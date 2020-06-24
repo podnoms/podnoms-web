@@ -1,5 +1,5 @@
 trigger:
-  - master
+  - trunk
 
 steps:
   - task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@3
