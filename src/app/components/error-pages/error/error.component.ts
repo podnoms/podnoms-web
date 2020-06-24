@@ -20,6 +20,7 @@ export class ErrorComponent extends BasePageComponent {
         uiStateService: UiStateService
     ) {
         super();
+        this.uiStateService.setNakedPage(true);
     }
 
     ngOnInit() {}
