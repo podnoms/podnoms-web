@@ -1,0 +1,33 @@
+trigger:
+  - trunk
+
+steps:
+  - task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@3
+    displayName: 'Use Yarn 1.x'
+
+  - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
+    displayName: 'yarn install'
+    inputs:
+      arguments: install
+
+  - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
+    displayName: 'yarn build'
+    inputs:
+      arguments: 'run build'
+
+  - task: Docker@0
+    displayName: 'Build an image'
+    inputs:
+      azureSubscription: 'PodNoms Utils Connection'
+      azureContainerRegistry: '{"loginServer":"podnoms.azurecr.io", "id" : "/subscriptions/58282b44-35e8-48a4-bc16-49700332985c/resourceGroups/rg-podnoms-utils/providers/Microsoft.ContainerRegistry/registries/podnoms"}'
+      imageName: podnoms.azurecr.io/podnoms.web
+      qualifyImageName: false
+
+  - task: Docker@0
+    displayName: Push
+    inputs:
+      azureSubscription: 'PodNoms Utils Connection'
+      azureContainerRegistry: '{"loginServer":"podnoms.azurecr.io", "id" : "/subscriptions/58282b44-35e8-48a4-bc16-49700332985c/resourceGroups/rg-podnoms-utils/providers/Microsoft.ContainerRegistry/registries/podnoms"}'
+      action: 'Push an image'
+      imageName: podnoms.azurecr.io/podnoms.web
+      qualifyImageName: false
