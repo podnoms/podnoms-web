@@ -41,6 +41,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
         if (
             !this.authService ||
+            request.url.indexOf('/hubs/') !== -1 ||
             !request.url.startsWith(environment.apiHost) ||
             !authToken
         ) {
