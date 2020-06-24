@@ -9,7 +9,6 @@ import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { RouteStateService } from '../../../services/route-state.service';
 
 @Component({
     selector: 'app-base-page',
@@ -19,7 +18,6 @@ export class BasePageComponent extends BaseComponent {
     private __loggingService: LoggingService;
     private __router: Router;
     private __activatedRoute: ActivatedRoute;
-    private __routeStateService: RouteStateService;
     private destroy = new Subject<void>();
     constructor() {
         super();
@@ -41,7 +39,6 @@ export class BasePageComponent extends BaseComponent {
     ngOnDestroy() {
         this.destroy.next();
         this.destroy.complete();
-        this.__routeStateService.updatePathParamState(null);
     }
 
     private logNavigation() {
