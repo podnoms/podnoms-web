@@ -23,6 +23,12 @@ const routes: Routes = [
         component: BoilerplateComponent,
     },
     {
+        path: 'podcasts',
+        loadChildren: () =>
+            import('./podcasts/podcasts.module').then((m) => m.PodcastsModule),
+        canActivate: [AuthGuard],
+    },
+    {
         path: 'convert',
         loadChildren: () =>
             import('app/public/public.module').then((m) => m.PublicModule),
@@ -59,14 +65,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
     },
     {
-        path: 'podcasts',
-        loadChildren: () =>
-            import('app/podcasts/podcasts.module').then(
-                (m) => m.PodcastsModule
-            ),
-        canActivate: [AuthGuard],
-    },
-    {
         path: 'payments',
         loadChildren: () =>
             import('app/payments/payments.module').then(
@@ -80,6 +78,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
             anchorScrolling: 'enabled',
+            enableTracing: true,
         }),
     ],
     exports: [RouterModule],

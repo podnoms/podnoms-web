@@ -10,11 +10,24 @@ import { UiStateService } from '../../core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
 import { skip, take, map, filter } from 'rxjs/operators';
 import { ProfileStoreService } from '../../profile/profile-store.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
+    animations: [
+        trigger('inOutAnimation', [
+            transition(':enter', [
+                style({ height: 0, opacity: 0 }),
+                animate('1s ease-out', style({ height: 300, opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ height: 300, opacity: 1 }),
+                animate('1s ease-in', style({ height: 0, opacity: 0 })),
+            ]),
+        ]),
+    ],
 })
 export class NavbarComponent {
     profile$: Observable<Profile>;
