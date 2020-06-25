@@ -37,6 +37,7 @@ export class TokenInterceptor implements HttpInterceptor {
         // 1. We don't want to be passing JWT tokens to random sites
         // 2. We probably don't want to be calling random sites from our front end?
         // --- all requests should go through our API.
+        const authToken = this.authService.getAuthToken();
 
         if (
             !this.authService ||
@@ -45,12 +46,11 @@ export class TokenInterceptor implements HttpInterceptor {
         ) {
             return next.handle(request);
         }
-        const headers =
-            request.url.indexOf('imageupload') > -1
-                ? new HttpHeaders()
-                : this.commonHeaders();
 
         request = this.addCredentials(request);
+        if (authToken) {
+            request = this.addToken(request, authToken);
+        }
 
         return next.handle(request).pipe(
             catchError((error) => {
@@ -64,6 +64,14 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
             })
         );
+    }
+
+    private addToken(request: HttpRequest<any>, token: string) {
+        return request.clone({
+            setHeaders: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
     }
 
     private addCredentials(request: HttpRequest<any>) {
