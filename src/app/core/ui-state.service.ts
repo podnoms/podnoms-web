@@ -1,7 +1,8 @@
-import { Injectable, HostListener } from '@angular/core';
+import { Injectable, HostListener, Directive } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
 
+@Directive()
 @Injectable({
     providedIn: 'root',
 })
