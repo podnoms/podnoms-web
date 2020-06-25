@@ -1,5 +1,4 @@
-<div id="page-header-search"
-    class="overlay-header show">
+<div class="page-header-search overlay-header show">
     <div class="content-header content-header-fullrow">
         <form action="be_pages_generic_search.html"
             method="post">
@@ -19,7 +18,7 @@
                     let-t="term">
 
                     <div class="block">
-                        <div class="block-content block-content-full d-flex align-items-center justify-content-between bg-primary"
+                        <div class="block-content block-content-full d-flex justify-content-between bg-primary"
                             [ngClass]="{'bg-primary': r.type==='Podcast', 'bg-elegance': r.type==='Entry'}">
                             <div class="">
                                 <img [src]="r.imageUrl"
@@ -49,9 +48,7 @@
                     class="form-control"
                     placeholder="Search or hit ESC.."
                     (selectItem)="selectSearchItem($event)"
-                    [(ngModel)]="model"
-                    [ngbTypeahead]="performSearch"
-                    [resultTemplate]="rt">
+                    [(ngModel)]="model">
                 <div class="input-group-append">
                     <button type="submit"
                         class="btn btn-secondary">
@@ -61,5 +58,42 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="search-results-container"
+        *ngIf="results$ | async as results">
+
+        <table class="search-results-container-wrapper js-table-checkable table table-hover table-vcenter js-table-checkable-enabled"
+            *ngIf="results.length !== 0">
+            <tbody>
+                <tr *ngFor="let r of (results$ | async)"
+                    (click)="selectSearchItem(r.url)">
+                    <td class="text-center"
+                        style="width: 40px;">
+                        <img class="img-avatar"
+                            [src]="r.imageUrl"
+                            alt="">
+                    </td>
+                    <td class="d-none d-sm-table-cell font-w600"
+                        style="width: 80px;">{{r.type}}</td>
+                    <td>
+                        <a class="font-w600"
+                            data-toggle="modal"
+                            data-target="#modal-message"
+                            href="#">
+                            <ngb-highlight [result]="r.title"
+                                [term]="t">
+                            </ngb-highlight>
+                        </a>
+                        <div class="text-muted mt-5">
+                            <ngb-highlight [result]="r.description"
+                                [term]="t">
+                            </ngb-highlight>
+                        </div>
+                    </td>
+                    <td class="d-none d-xl-table-cell font-w600 font-size-sm text-muted"
+                        style="width: 120px;">{{r.dateCreated | amTimeAgo}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

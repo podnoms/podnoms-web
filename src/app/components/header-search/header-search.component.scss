@@ -1,7 +1,16 @@
-.mr-1 {
-    min-width: 64px;
-    height: 64px;
+.page-header-search {
+    width: 800px;
 }
-.dropdown-menu {
-    width: 94% !important;
+.search-results-container {
+    z-index: 99999;
+    position: absolute;
+    width: 800px;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #888888;
+    z-index: 9;
+    background: #fff;
+}
+.search-results-container-wrapper {
+    width: 800px;
 }
