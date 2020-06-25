@@ -54,6 +54,7 @@ export class AppComponent extends BaseComponent {
     ngOnInit() {
         if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/auth/login']);
+            return;
         }
         if (environment.production || false) {
             this.utilityService.checkForApiServer().subscribe(

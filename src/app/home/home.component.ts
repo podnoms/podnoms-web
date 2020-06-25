@@ -5,7 +5,7 @@ import { Profile } from '../core';
 import { ProfileStoreService } from '../profile/profile-store.service';
 import { AuthService } from '../auth/auth.service';
 import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
-import { takeUntil, skip, map, first, filter } from 'rxjs/operators';
+import { takeUntil, skip, map, first, filter, tap, take } from 'rxjs/operators';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
@@ -34,63 +34,34 @@ export class HomeComponent implements OnDestroy {
     ngOnInit() {
         if (this.authService.isLoggedIn()) {
             // no point doing any of this if we have no JWT
-            this.profileDataService.getProfile().subscribe(
-                (profile) => {
-                    if (profile) {
-                        this.profileStoreService.getWithQuery({
-                            id: profile.id,
-                        });
+            this.profileDataService
+                .getProfile()
+                .pipe(filter((r) => r !== null))
+                .subscribe(
+                    (profile) => {
                         this.uiStateService.setNakedPage(false);
-                        if (
-                            localStorage.getItem('__spslug') &&
-                            localStorage.getItem('__spslug') !== 'undefined'
-                        ) {
-                            this.router.navigate(
-                                ['podcasts', localStorage.getItem('__spslug')],
-                                {
-                                    replaceUrl: true,
-                                }
-                            );
+                        const podcastSlug = localStorage.getItem('__spslug');
+                        if (podcastSlug) {
+                            this.router.navigate(['podcasts', podcastSlug], {
+                                replaceUrl: true,
+                            });
                         } else {
-                            this.podcastStoreService.count$.subscribe(
-                                (count) => {
-                                    if (count === 0) {
-                                        this.router.navigate(['podcasts']);
-                                    }
+                            const storeSubscriber = this.podcastStoreService.getAll();
+                            storeSubscriber.pipe().subscribe((p) => {
+                                if (p) {
+                                    this.router.navigate([
+                                        'podcasts',
+                                        p[0].slug,
+                                    ]);
                                 }
-                            );
-                            this.podcastStoreService.entities$
-                                .pipe(
-                                    skip(1),
-                                    map((c) =>
-                                        c.sort(
-                                            (a, b) =>
-                                                new Date(
-                                                    b.createDate
-                                                ).getTime() -
-                                                new Date(a.createDate).getTime()
-                                        )
-                                    ),
-                                    takeUntil(this._destroyed$)
-                                )
-                                .subscribe((tt) => {
-                                    this.router.navigate(
-                                        ['podcasts', tt[0].slug],
-                                        {
-                                            replaceUrl: true,
-                                        }
-                                    );
-                                });
+                            });
                         }
-                    } else {
-                        // this.loaded = true;
+                    },
+                    (err) => {
+                        this.logger.error('home.component', 'err', err);
+                        this.authService.logout();
                     }
-                },
-                (err) => {
-                    this.logger.error('home.component', 'err', err);
-                    this.authService.logout();
-                }
-            );
+                );
         } else {
             this.uiStateService.setNakedPage(true);
             this.loaded = true;

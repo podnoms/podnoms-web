@@ -3,7 +3,7 @@ import {
     EntityMetadataMap,
     DefaultDataServiceConfig,
     EntityDataService,
-    EntityDataModule
+    EntityDataModule,
 } from '@ngrx/data';
 import { environment } from '../../environments/environment';
 import { PodcastDataService } from '../podcasts/podcast-data.service';
@@ -22,7 +22,7 @@ export const entityMetadata: EntityMetadataMap = {
         // }
     },
     Profile: {},
-    Notification: {}
+    Notification: {},
 };
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
     root: environment.apiHost,
@@ -30,22 +30,22 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
         Podcast: {
             // You must specify the root as part of the resource URL.
             entityResourceUrl: environment.apiHost + '/podcast/',
-            collectionResourceUrl: environment.apiHost + '/podcast/'
+            collectionResourceUrl: environment.apiHost + '/podcast/',
         },
         Entry: {
             // You must specify the root as part of the resource URL.
             entityResourceUrl: environment.apiHost + '/entry/',
-            collectionResourceUrl: environment.apiHost + '/entry/'
+            collectionResourceUrl: environment.apiHost + '/entry/',
         },
         Profile: {
             entityResourceUrl: environment.apiHost + '/profile/',
-            collectionResourceUrl: environment.apiHost + '/profile/'
+            collectionResourceUrl: environment.apiHost + '/profile/',
         },
         Notification: {
             entityResourceUrl: environment.apiHost + '/notification/',
-            collectionResourceUrl: environment.apiHost + '/notification/'
-        }
-    }
+            collectionResourceUrl: environment.apiHost + '/notification/',
+        },
+    },
 };
 export const pluralNames = {};
 
@@ -53,15 +53,15 @@ export const pluralNames = {};
     imports: [
         EntityDataModule.forRoot({
             entityMetadata: entityMetadata,
-            pluralNames: pluralNames
-        })
+            pluralNames: pluralNames,
+        }),
     ],
     providers: [
         {
             provide: DefaultDataServiceConfig,
-            useValue: defaultDataServiceConfig
-        }
-    ]
+            useValue: defaultDataServiceConfig,
+        },
+    ],
 })
 export class EntityStoreModule {
     constructor(

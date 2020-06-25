@@ -1,0 +1,14 @@
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+[dn]
+C=IE
+ST=Cork
+L=Like
+O=PodNomsSoftware
+OU=local_RootCA
+emailAddress=fergalm@gmail.com
+CN = localhost

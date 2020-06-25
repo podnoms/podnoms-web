@@ -1,5 +1,5 @@
-import { takeUntil, pluck } from 'rxjs/operators';
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { takeUntil, pluck, take } from 'rxjs/operators';
+import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
@@ -23,7 +23,8 @@ import { NGXLogger } from 'ngx-logger';
     templateUrl: './podcast.component.html',
     styleUrls: ['./podcast.component.scss'],
 })
-export class PodcastComponent extends BasePageComponent implements OnDestroy {
+export class PodcastComponent extends BasePageComponent
+    implements OnDestroy, OnInit {
     uploadModes = UploadModes; // do this so it can be used in the template
     uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
     loading$: Observable<boolean>;
@@ -47,24 +48,31 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
         private alertService: AlertService
     ) {
         super();
+    }
+
+    ngOnInit() {
         this._destroyed$ = new Subject();
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
-            route.params
-                .pipe(takeUntil(this._destroyed$), pluck('podcast'))
+            this.route.params
+                .pipe(take(1), pluck('podcast'))
+                // .pipe(takeUntil(this._destroyed$), pluck('podcast'))
                 .subscribe((id) => this._initialiseState(id));
         } else {
-            this.podcastDataService.getActivePodcast().subscribe(
-                (p) => {
-                    if (p) {
-                        this.location.replaceState(`/podcasts/${p}`);
-                        this._initialiseState(p);
-                    } else {
-                        this.noPodcasts = true;
-                    }
-                },
-                () => (this.noPodcasts = true)
-            );
+            this.podcastDataService
+                .getActivePodcast()
+                .pipe(take(1))
+                .subscribe(
+                    (p) => {
+                        if (p) {
+                            this.location.replaceState(`/podcasts/${p}`);
+                            this._initialiseState(p);
+                        } else {
+                            this.noPodcasts = true;
+                        }
+                    },
+                    () => (this.noPodcasts = true)
+                );
         }
     }
     ngOnDestroy() {
@@ -109,26 +117,29 @@ export class PodcastComponent extends BasePageComponent implements OnDestroy {
     }
     deletePodcast(podcast: Podcast) {
         this.logger.debug('PodcastComponent', 'deletePodcast');
-        this.podcastDataService.deletePodcast(podcast.id).subscribe(
-            (r) => {
-                if (r) {
-                    if (localStorage.getItem('__spslug') === podcast.slug) {
-                        localStorage.removeItem('__spslug');
+        this.podcastDataService
+            .deletePodcast(podcast.id)
+            .pipe(take(1))
+            .subscribe(
+                (r) => {
+                    if (r) {
+                        if (localStorage.getItem('__spslug') === podcast.slug) {
+                            localStorage.removeItem('__spslug');
+                        }
+                        this.podcastStoreService.removeOneFromCache(podcast);
+                        this.router.navigate(['/podcasts']);
+                    } else {
+                        this.alertService.error(
+                            'Error',
+                            'There was an error deleting podcast.'
+                        );
                     }
-                    this.podcastStoreService.removeOneFromCache(podcast);
-                    this.router.navigate(['/podcasts']);
-                } else {
+                },
+                () =>
                     this.alertService.error(
                         'Error',
                         'There was an error deleting podcast.'
-                    );
-                }
-            },
-            () =>
-                this.alertService.error(
-                    'Error',
-                    'There was an error deleting podcast.'
-                )
-        );
+                    )
+            );
     }
 }

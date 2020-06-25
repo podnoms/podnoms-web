@@ -9,7 +9,6 @@ import { EntryEditFormComponent } from './entry-edit-form/entry-edit-form.compon
 const routes: Routes = [
     {
         path: '',
-        pathMatch: 'full',
         component: PodcastComponent,
         canActivate: [AuthGuard],
     },
