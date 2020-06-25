@@ -79,11 +79,11 @@ export class AuthService extends BaseService {
         }
         return false;
     }
-    setRealtimeQuery(qry: string) {
-        localStorage.setItem(environment.rtQueryKey, qry);
+    setAuthToken(qry: string) {
+        localStorage.setItem(environment.rtTokenKey, qry);
     }
-    getRealtimeQuery(): string {
-        return localStorage.getItem(environment.rtQueryKey);
+    getAuthToken(): string {
+        return localStorage.getItem(environment.rtTokenKey);
     }
     refreshToken(): Observable<boolean> {
         return this.podnomsAuthService
@@ -166,7 +166,7 @@ export class AuthService extends BaseService {
             .pipe(map(() => true));
     }
     private _storeAuth(response: any, bootstrap: boolean = true) {
-        this.setRealtimeQuery(response.jwt.token);
+        this.setAuthToken(response.jwt.token);
         localStorage.setItem('refresh_token', response.refresh);
         if (bootstrap) {
             this.bootstrap();

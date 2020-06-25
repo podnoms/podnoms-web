@@ -34,7 +34,7 @@ export class SignalRComponent implements OnInit {
         });
     }
     connectSignalR() {
-        const qry = this._authService.getRealtimeQuery();
+        const qry = this._authService.getAuthToken();
         this._hubConnection = new HubConnectionBuilder()
             .withUrl(`${environment.signalRHost}/hubs/debug?token=${qry}`, {
                 accessTokenFactory: () => qry,
