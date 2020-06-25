@@ -2,7 +2,7 @@ import { NgxLoggerLevel, LoggerConfig } from 'ngx-logger';
 
 const _logConfig: LoggerConfig = {
     // serverLoggingUrl: '/api/logs',
-    level: NgxLoggerLevel.INFO,
+    level: NgxLoggerLevel.DEBUG,
     serverLogLevel: NgxLoggerLevel.OFF,
     colorScheme: ['purple', 'teal', 'gray', 'gray', 'red', 'red', 'red'],
 };
