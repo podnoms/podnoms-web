@@ -7,7 +7,7 @@ import {
     ElementRef,
     AfterViewInit,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, pipe, fromEvent } from 'rxjs';
 import {
     debounceTime,
     map,
@@ -15,6 +15,7 @@ import {
     distinctUntilChanged,
     switchMap,
     catchError,
+    filter,
 } from 'rxjs/operators';
 import { SearchService } from 'app/shared/services/search.service';
 import { Router } from '@angular/router';
@@ -32,6 +33,12 @@ export class HeaderSearchComponent implements AfterViewInit {
     closeSearch: EventEmitter<any> = new EventEmitter<any>();
     searching: boolean = false;
     searchFailed: boolean = false;
+    results$: Observable<any[]>;
+    t: string = '';
+
+    @Output() searchChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+    searcning: false;
     public model: any;
     constructor(
         private searchService: SearchService,
@@ -39,41 +46,32 @@ export class HeaderSearchComponent implements AfterViewInit {
         private logger: NGXLogger
     ) {}
 
+    // optional hook for outer components to
     ngAfterViewInit() {
-        setTimeout(() => this.searchElement.nativeElement.focus());
+        this.searchElement.nativeElement.focus();
+
+        this.logger.debug('header-search.component', 'search-changed');
+        fromEvent(this.searchElement.nativeElement, 'keyup')
+            .pipe(filter(Boolean), debounceTime(500), distinctUntilChanged())
+            .subscribe((text) => {
+                this.logger.debug('header-search.component', 'searching', text);
+                this.results$ = this.searchService
+                    .doSearch(this.searchElement.nativeElement.value)
+                    .pipe(
+                        tap((r) => {
+                            this.logger.debug(
+                                'header-search.component',
+                                'doSearch',
+                                r
+                            );
+                        })
+                    );
+            });
     }
-
-    performSearch = (text$: Observable<string>) =>
-        text$.pipe(
-            debounceTime(300),
-            distinctUntilChanged(),
-            tap(() => (this.searching = true)),
-            switchMap((term) =>
-                this.searchService.doSearch(term).pipe(
-                    tap(() => (this.searchFailed = false)),
-                    catchError((e) => {
-                        this.logger.debug(
-                            'header-search.component',
-                            'searchError',
-                            e
-                        );
-                        this.searchFailed = true;
-                        return of([]);
-                    })
-                )
-            ),
-            tap(() => (this.searching = false))
-        );
-
-    formatter = (x: { name: string }) => x.name;
-    selectSearchItem($event) {
-        this.logger.debug(
-            'header-search.component',
-            'selectSearchItem',
-            $event
-        );
+    selectSearchItem(url: string) {
+        this.logger.debug('header-search.component', 'selectSearchItem', url);
         this.closeSearch.emit();
-        this.router.navigate(['podcasts', $event.item.url]);
+        this.router.navigate(['podcasts', url]);
     }
     handleCloseSearch() {
         this.closeSearch.emit();
