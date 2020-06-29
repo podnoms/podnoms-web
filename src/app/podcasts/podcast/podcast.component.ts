@@ -56,8 +56,8 @@ export class PodcastComponent extends BasePageComponent
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
             this.route.params
-                .pipe(take(1), pluck('podcast'))
-                // .pipe(takeUntil(this._destroyed$), pluck('podcast'))
+                // .pipe(take(1), pluck('podcast'))
+                .pipe(takeUntil(this._destroyed$), pluck('podcast'))
                 .subscribe((id) => this._initialiseState(id));
         } else {
             this.podcastDataService

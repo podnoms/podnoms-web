@@ -49,11 +49,13 @@ export class HomeComponent implements OnDestroy {
                         } else {
                             const storeSubscriber = this.podcastStoreService.getAll();
                             storeSubscriber.pipe().subscribe((p) => {
-                                if (p) {
+                                if (p && p.length !== 0) {
                                     this.router.navigate([
                                         'podcasts',
                                         p[0].slug,
                                     ]);
+                                } else {
+                                    this.router.navigate(['podcasts']);
                                 }
                             });
                         }
