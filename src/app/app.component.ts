@@ -56,6 +56,7 @@ export class AppComponent extends BaseComponent {
             this.router.navigate(['/auth/login']);
             return;
         }
+        this.displayMainContainer = true;
         if (environment.production || false) {
             this.utilityService.checkForApiServer().subscribe(
                 () => {
@@ -77,10 +78,6 @@ export class AppComponent extends BaseComponent {
                 }
             );
         } else {
-            this.authService.profile$.subscribe((p) => {
-                this.profile = p;
-                this.displayMainContainer = true;
-            });
             this._bootstrapAuth().subscribe((r) => this._bootstrapUpdates(r));
         }
         this.uiStateService.nakedPage$.subscribe((b) => {

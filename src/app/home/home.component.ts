@@ -33,6 +33,7 @@ export class HomeComponent implements OnDestroy {
     }
     ngOnInit() {
         if (this.authService.isLoggedIn()) {
+            this.uiStateService.setNakedPage(false);
             // no point doing any of this if we have no JWT
             this.profileDataService
                 .getProfile()
