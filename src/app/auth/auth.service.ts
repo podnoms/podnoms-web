@@ -80,6 +80,12 @@ export class AuthService extends BaseService {
         return false;
     }
     setAuthToken(qry: string) {
+        this.logger.info('auth.service', 'setAuthToken', qry);
+        this.logger.info(
+            'auth.service',
+            'setAuthToken',
+            environment.rtTokenKey
+        );
         localStorage.setItem(environment.rtTokenKey, qry);
     }
     getAuthToken(): string {
@@ -116,13 +122,17 @@ export class AuthService extends BaseService {
         }
     }
     login(userName: string, password: string): Observable<boolean> {
+        this.logger.info('auth.service', 'login', userName, password);
+
         return this.podnomsAuthService.login(userName, password).pipe(
             map((res) => {
+                this.logger.info('auth.service', 'login', 'SUCCEEDED', res);
                 this._storeAuth(res);
                 return true;
             }),
             catchError((err) => {
-                this.logger.debug('auth.service', 'catchError', err);
+                this.logger.error('auth.service', 'Error logging in');
+                this.logger.error('auth.service', 'catchError', err);
                 throw err;
             })
         );

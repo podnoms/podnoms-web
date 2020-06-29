@@ -47,7 +47,7 @@ export class TokenInterceptor implements HttpInterceptor {
             return next.handle(request);
         }
 
-        request = this.addCredentials(request);
+        // request = this.addCredentials(request);
         if (authToken) {
             request = this.addToken(request, authToken);
         }

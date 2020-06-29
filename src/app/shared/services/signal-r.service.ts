@@ -28,7 +28,7 @@ export class SignalRService {
     public init(hubName: string): Promise<SignalRService> {
         return new Promise((resolve) => {
             const url = `${environment.signalRHost}/hubs/${hubName}`;
-            const token = this.authService.getRealtimeQuery();
+            const token = this.authService.getAuthToken();
             const hub = this.connectionPool[hubName];
             if (!hub) {
                 const connection = new HubConnectionBuilder()
