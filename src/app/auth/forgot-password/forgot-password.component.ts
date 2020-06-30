@@ -75,6 +75,7 @@ export class ForgotPasswordComponent extends BasePageComponent
             this.token = params.token;
             this.username = params.email;
         });
+        uiStateService.setNakedPage(true);
     }
 
     ngOnInit() {}
