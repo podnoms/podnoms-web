@@ -75,16 +75,16 @@ export class ForgotPasswordComponent extends BasePageComponent
             this.token = params.token;
             this.username = params.email;
         });
-        uiStateService.setNakedPage(true);
     }
 
     ngOnInit() {}
     ngAfterViewInit() {
-        setTimeout(() =>
+        setTimeout(() => {
             this.returnTrip
                 ? this.passwordField.nativeElement.focus()
-                : this.emailField.nativeElement.focus()
-        );
+                : this.emailField.nativeElement.focus();
+            this.uiStateService.setNakedPage(true);
+        });
     }
 
     resetPassword() {
