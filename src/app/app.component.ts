@@ -25,7 +25,7 @@ import { ServerShowcaseService } from './shared/services/server-showcase.service
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends BaseComponent {
-    displayMainContainer: boolean = false;
+    displayMainContainer: boolean = true;
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     profile: Profile;
@@ -53,9 +53,11 @@ export class AppComponent extends BaseComponent {
     }
     ngOnInit() {
         if (!this.authService.isLoggedIn()) {
-            this.router.navigate(['/auth/login']);
+            this.displayMainContainer = false;
+            // this.router.navigate(['/auth/login']);
             return;
         }
+        this.uiStateService.setNakedPage(false);
         this.displayMainContainer = true;
         if (environment.production || false) {
             this.utilityService.checkForApiServer().subscribe(
