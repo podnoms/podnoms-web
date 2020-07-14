@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { SocialLoginModule } from 'angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,9 +27,8 @@ import { AppDispatchers } from './store/app-config/dispatchers';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
 import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
 import { AuthModule } from './auth/auth.module';
-import { authServiceConfig } from './auth/auth-config';
+import authServiceConfig from './auth/auth-config';
 import { ErrorHandlerService } from './services/error-handler.service';
-import { AppInjector } from './services/app-injector.service';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -68,8 +67,8 @@ registerLocaleData(localeIE, 'ie');
         },
         { provide: LOCALE_ID, useValue: 'en-IE' },
         {
-            provide: AuthServiceConfig,
-            useFactory: authServiceConfig,
+            provide: 'SocialAuthServiceConfig',
+            useValue: authServiceConfig,
         },
         { provide: ErrorHandler, useClass: ErrorHandlerService },
         AppDispatchers,

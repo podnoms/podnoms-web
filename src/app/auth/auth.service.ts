@@ -4,10 +4,9 @@ import { BaseService } from '../core/base.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {
-    AuthService as SocialAuthService,
     FacebookLoginProvider,
-    LoginOpt,
     GoogleLoginProvider,
+    SocialAuthService,
 } from 'angularx-social-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
@@ -201,7 +200,7 @@ export class AuthService extends BaseService {
     }
     private _loginFacebook(): Observable<boolean> {
         const ret = new Subject<boolean>();
-        const options: LoginOpt = {
+        const options = {
             scope: 'email public_profile',
         };
         this.socialAuthService

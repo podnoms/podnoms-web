@@ -21,6 +21,9 @@ export class UploadFileComponent implements OnInit {
         maxFiles: 1,
         parallelUploads: 1,
         autoProcessQueue: true,
+        headers: {
+            Authorization: `Bearer ${this.authService.getAuthToken()}`,
+        },
         previewTemplate: `<div class="dz-preview dz-file-preview">
             <div class="dz-progress">
                 <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
