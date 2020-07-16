@@ -1,3 +1,11 @@
 {
-  "supportFile": "cypress/support/index.ts"
+    "supportFile": "cypress/support/index.ts",
+    "baseUrl": "https://dev.pdnm.be:4200",
+    "env": {
+        "API_SERVER": "https://dev.pdnm.be:5001",
+        "TEST_HARNESS_USER": "fergal.moran+testharness@gmail.com",
+        "TEST_HARNESS_PASSWORD": "secret",
+        "TEST_HARNESS_DISPLAY_NAME": "Test Harness",
+        "TOKEN_KEY_NAME": "auth_token"
+    }
 }
