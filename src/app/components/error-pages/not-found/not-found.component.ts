@@ -13,7 +13,5 @@ export class NotFoundComponent extends BasePageComponent {
         super();
     }
 
-    ngOnInit(): void {
-        this.uiStateService.setNakedPage(true);
-    }
+    ngOnInit(): void {}
 }

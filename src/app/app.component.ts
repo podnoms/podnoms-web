@@ -25,7 +25,6 @@ import { ServerShowcaseService } from './shared/services/server-showcase.service
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends BaseComponent {
-    displayMainContainer: boolean = true;
     sidebarOpen: boolean = true;
     overlayOpen: boolean = false;
     profile: Profile;
@@ -53,18 +52,14 @@ export class AppComponent extends BaseComponent {
     }
     ngOnInit() {
         if (!this.authService.isLoggedIn()) {
-            this.displayMainContainer = false;
             // this.router.navigate(['/auth/login']);
             return;
         }
-        this.uiStateService.setNakedPage(false);
-        this.displayMainContainer = true;
         if (environment.production || false) {
             this.utilityService.checkForApiServer().subscribe(
                 () => {
                     this.authService.profile$.subscribe((p) => {
                         this.profile = p;
-                        this.displayMainContainer = true;
                     });
                     this._bootstrapAuth().subscribe((r) =>
                         this._bootstrapUpdates(r)
@@ -82,10 +77,6 @@ export class AppComponent extends BaseComponent {
         } else {
             this._bootstrapAuth().subscribe((r) => this._bootstrapUpdates(r));
         }
-        this.uiStateService.nakedPage$.subscribe((b) => {
-            this.logger.debug('app.component', 'nakedPage', b);
-            this.displayMainContainer = !b;
-        });
     }
 
     loggedIn(): boolean {
@@ -148,7 +139,6 @@ export class AppComponent extends BaseComponent {
                 this.logger.debug(
                     'Resetting page layout and registering for push notifications'
                 );
-                this.uiStateService.setNakedPage(false);
                 this.logger.debug(
                     'app.component',
                     'requesting subscription',

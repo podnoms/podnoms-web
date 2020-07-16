@@ -27,7 +27,6 @@ export class ProcessUrlComponent implements OnInit {
         private fb: FormBuilder,
         private logger: NGXLogger
     ) {
-        this.uiStateService.setNakedPage(true);
         this.form = this.fb.group({
             url: [
                 environment.production

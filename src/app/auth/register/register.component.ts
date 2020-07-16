@@ -41,9 +41,7 @@ export class RegisterComponent implements OnInit {
     ) {
         this._buildForm();
     }
-    ngOnInit() {
-        this.uiStateService.setNakedPage(true);
-    }
+    ngOnInit() {}
     //#region Form Control Getters
 
     private _buildForm() {
