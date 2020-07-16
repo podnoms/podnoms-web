@@ -11,7 +11,7 @@ if (
     environment.production &&
     // false &&
     location.host.indexOf('localhost') !== 0 &&
-    location.host.indexOf('podnoms.local') !== 0
+    location.host.indexOf('dev.pdnm.be') !== 0
 ) {
     enableProdMode();
 

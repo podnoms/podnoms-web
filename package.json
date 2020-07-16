@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.270",
+    "version": "1.2.271",
     "license": "MIT",
     "scripts": {
         "ng": "ng",
@@ -8,6 +8,7 @@
         "build": "ng build --prod",
         "start-ng": "ng serve",
         "test": "ng test",
+        "e2e": "ng e2e",
         "lint": "ng lint",
         "pretty-quick": "pretty-quick",
         "precommit": "pretty-quick --staged"
@@ -88,10 +89,20 @@
         "@angular/language-service": "~10.0.3",
         "@types/datatables.net": "^1.10.19",
         "@types/node": "^13.13.5",
+        "@types/jasmine": "~3.5.0",
+        "@types/jasminewd2": "~2.0.3",
         "codelyzer": "^5.2.2",
         "prettier": "~2.0.5",
         "pretty-quick": "^2.0.1",
-        "ts-node": "~8.10.1",
+        "jasmine-core": "~3.5.0",
+        "jasmine-spec-reporter": "~5.0.0",
+        "karma": "~5.0.0",
+        "karma-chrome-launcher": "~3.1.0",
+        "karma-coverage-istanbul-reporter": "~3.0.2",
+        "karma-jasmine": "~3.3.0",
+        "karma-jasmine-html-reporter": "^1.5.0",
+        "protractor": "~7.0.0",
+        "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
         "typescript": "~3.9.5",
         "webpack-bundle-analyzer": "^3.7.0"

@@ -10,9 +10,9 @@ const _logConfig: LoggerConfig = {
 export const environment = {
     production: false,
     publicPageEnabled: true,
-    signalRHost: 'https://podnoms.local:5001',
+    signalRHost: 'https://dev.pdnm.be:5001',
     //    apiHost: 'https://api.podnoms.com',
-    apiHost: 'https://podnoms.local:5001',
+    apiHost: 'https://dev.pdnm.be:5001',
     radioHost: 'http://localhost:8000',
     radioMount: 'podnoms',
     vapidPublicKey:
@@ -41,7 +41,7 @@ export const environment = {
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com',
     },
     stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
-    recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
+    recaptchaKey: '6Ldn-LEZAAAAAKFg1rrLMK4LBUx8hLnCk9GQu5cn',
     features: {
         googleContactSyncEnabled: true,
     },
