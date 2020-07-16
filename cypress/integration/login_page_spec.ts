@@ -23,7 +23,7 @@ describe('The Login Page', () => {
         cy.getCookie('SESSIONID')
             .should('exist')
             .should(() => {
-                expect(localStorage.getItem('refresh_token')).to.not.be.null;
+                expect(localStorage.getItem('auth_token')).to.exist();
             });
 
         cy.get('.profile-dropdown-button').should(

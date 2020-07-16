@@ -1,6 +1,8 @@
 {
     "supportFile": "cypress/support/index.ts",
     "baseUrl": "https://dev.pdnm.be:4200",
+    "viewportWidth": 1690,
+    "viewportHeight": 660,
     "env": {
         "API_SERVER": "https://dev.pdnm.be:5001",
         "TEST_HARNESS_USER": "fergal.moran+testharness@gmail.com",
