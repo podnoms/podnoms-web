@@ -28,7 +28,6 @@ export class BasePageComponent extends BaseComponent {
 
         this.logNavigation();
 
-        this.uiStateService.setNakedPage(false);
         this.logNavigation();
 
         this.__activatedRoute.paramMap.pipe(

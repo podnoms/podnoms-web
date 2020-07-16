@@ -33,14 +33,12 @@ export class HomeComponent implements OnDestroy {
     }
     ngOnInit() {
         if (this.authService.isLoggedIn()) {
-            this.uiStateService.setNakedPage(false);
             // no point doing any of this if we have no JWT
             this.profileDataService
                 .getProfile()
                 .pipe(filter((r) => r !== null))
                 .subscribe(
                     (profile) => {
-                        this.uiStateService.setNakedPage(false);
                         const podcastSlug = localStorage.getItem('__spslug');
                         if (podcastSlug) {
                             this.router.navigate(['podcasts', podcastSlug], {
@@ -66,7 +64,6 @@ export class HomeComponent implements OnDestroy {
                     }
                 );
         } else {
-            this.uiStateService.setNakedPage(true);
             this.loaded = true;
         }
     }

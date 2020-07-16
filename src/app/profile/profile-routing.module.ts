@@ -3,12 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './profile/profile.component';
 import { OpmlPageComponent } from './opml-page/opml-page.component';
+import { AppLayoutComponentComponent } from 'app/components/app-layout-component/app-layout-component.component';
 
 const routes: Routes = [
-    { path: '', pathMatch: 'full', component: ProfileComponent },
     {
-        path: 'opml',
-        component: OpmlPageComponent,
+        path: '',
+        component: AppLayoutComponentComponent,
+        children: [
+            { path: '', pathMatch: 'full', component: ProfileComponent },
+            {
+                path: 'opml',
+                component: OpmlPageComponent,
+            },
+        ],
     },
 ];
 

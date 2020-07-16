@@ -37,6 +37,7 @@ import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { OrderModule } from 'ngx-order-pipe';
+import { AppLayoutComponentComponent } from './app-layout-component/app-layout-component.component';
 // export function getHighlightLanguages() {
 //     return {
 //         typescript: () => import('highlight.js/lib/languages/typescript'),
@@ -93,6 +94,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         NotFoundComponent,
         RedirollComponent,
         OpmlComponent,
+        AppLayoutComponentComponent,
     ],
     exports: [
         SidebarComponent,

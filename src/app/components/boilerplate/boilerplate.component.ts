@@ -19,9 +19,7 @@ export class BoilerplateComponent implements OnInit {
         private router: Router,
         private boilerplateService: BoilerplateService,
         private uiStateService: UiStateService
-    ) {
-        this.uiStateService.setNakedPage(true);
-    }
+    ) {}
 
     ngOnInit(): void {
         const key = this.route.snapshot.paramMap.get('key');

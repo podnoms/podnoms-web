@@ -83,7 +83,6 @@ export class ForgotPasswordComponent extends BasePageComponent
             this.returnTrip
                 ? this.passwordField.nativeElement.focus()
                 : this.emailField.nativeElement.focus();
-            this.uiStateService.setNakedPage(true);
         });
     }
 

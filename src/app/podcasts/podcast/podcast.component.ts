@@ -52,7 +52,6 @@ export class PodcastComponent extends BasePageComponent
 
     ngOnInit() {
         this._destroyed$ = new Subject();
-        this.uiStateService.setNakedPage(false);
         if (this.route.snapshot.params.podcast) {
             this._initialiseState(this.route.snapshot.params.podcast);
             this.route.params

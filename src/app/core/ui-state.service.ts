@@ -11,7 +11,6 @@ export class UiStateService {
     sidebarOpen$ = new BehaviorSubject<boolean>(this._sidebarOpen);
     sidebarOpenMobile$ = new BehaviorSubject<boolean>(false);
     footerOpen$ = new BehaviorSubject<boolean>(false);
-    nakedPage$ = new BehaviorSubject<boolean>(true);
 
     overlayOpen: boolean = false;
     viewportWidth: number;
@@ -48,12 +47,5 @@ export class UiStateService {
 
     isMobile(): boolean {
         return window.innerWidth < 961;
-    }
-
-    setNakedPage(isNaked: boolean): void {
-        this.logger.debug(`Changing Naked UI: ${isNaked}`);
-        setTimeout(() => {
-            this.nakedPage$.next(isNaked);
-        });
     }
 }

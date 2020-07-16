@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.returnUrl = this.route.snapshot.params['returnUrl'] || '';
-        this.uiStateService.setNakedPage(true);
     }
     socialLogin(method: string) {
         this.authService.socialLogin(method).subscribe(
