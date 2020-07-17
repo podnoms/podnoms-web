@@ -10,7 +10,7 @@ const routes: Routes = [
         pathMatch: 'full',
         component: ActivityComponent,
         canActivate: [AuthGuard],
-        data: { roles: ['client-admin'] },
+        data: { roles: ['website-admin'] },
     },
     {
         path: 'roles',

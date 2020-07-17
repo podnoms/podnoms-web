@@ -50,7 +50,7 @@ export class NavbarComponent {
         );
         this.profile$.subscribe((p) => {
             this.profileHasAdmin = this.authService.checkHasRoles([
-                'client-admin',
+                'website-admin',
             ]);
         });
         this.invoices$ = paymentService.getPayments();
