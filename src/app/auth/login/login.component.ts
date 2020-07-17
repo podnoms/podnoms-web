@@ -31,9 +31,17 @@ export class LoginComponent implements OnInit {
     }
     socialLogin(method: string) {
         this.authService.socialLogin(method).subscribe(
-            () => this._routePostLogin(),
-            (error) =>
-                this.logger.debug('login.component', 'Error logging in', error)
+            (r) => {
+                if (r) {
+                    this._routePostLogin();
+                } else {
+                    this.errorMessage = 'Unable to login just now';
+                }
+            },
+            (error) => {
+                this.logger.error('login.component', 'Error logging in', error);
+                this.errorMessage = `Unable to login just now + ${error}`;
+            }
         );
     }
     login() {

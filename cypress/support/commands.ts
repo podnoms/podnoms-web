@@ -1,3 +1,5 @@
+import 'cypress-file-upload';
+
 Cypress.Commands.add('login', () => {
     cy.clearLocalStorage();
     return cy
@@ -6,38 +8,53 @@ Cypress.Commands.add('login', () => {
             password: Cypress.env('TEST_HARNESS_PASSWORD'),
         })
         .then((res) => {
-            localStorage.setItem(Cypress.env('TOKEN_KEY_NAME'), auth.jwt.token);
-            localStorage.setItem('refresh_token', auth.refresh);
+            localStorage.setItem('auth_token', res.body.jwt.token);
+            localStorage.setItem('refresh_token', res.body.refresh);
         });
 });
 
+Cypress.Commands.add('resetJobScheduler', () => {
+    return cy
+        .request({
+            method: 'GET',
+            url: `${Cypress.env('API_SERVER')}/utility/clearhangfire`,
+            auth: {
+                bearer: localStorage.getItem('auth_token'),
+            },
+        })
+        .then((d) => {
+            console.log('commands', 'clearhangfire', d);
+        });
+});
 Cypress.Commands.add('deletePodcasts', () => {
     return cy
         .request({
             method: 'DELETE',
             url: `${Cypress.env('API_SERVER')}/podcast`,
             auth: {
-                bearer: auth.jwt.token,
+                bearer: localStorage.getItem('auth_token'),
             },
         })
-        .its('body')
         .then((d) => {
             console.log('podcast_add_spec', 'clear_podcasts', d);
         });
 });
 Cypress.Commands.add('createPodcast', () => {
-    cy.visit('podcasts');
-
-    cy.get('#sidebar-add-podcast-button').click();
-    cy.get('#title').click();
-    cy.get('#title').type('Test Podcast Harness');
-    cy.get('#category-selector').click();
-    cy.get(
-        '#category-selector-wrapper > ng-dropdown-panel > div > div:nth-child(2) > div:nth-child(2)'
-    ).click();
-    cy.get('.ql-editor').click();
-    cy.get('.ql-editor').type('This is the description of my podcast');
-    cy.get('#image-upload-random-button').click();
-    cy.wait(5000);
-    return cy.get('#podcast-editform-submit-button').click();
+    return cy.request({
+        method: 'POST',
+        url: `${Cypress.env('API_SERVER')}/podcast`,
+        auth: {
+            bearer: localStorage.getItem('auth_token'),
+        },
+        body: {
+            id: null,
+            title: 'REST Podcast One',
+            category: {
+                id: '29c0716a-94bc-4b79-bb7a-1acb2d872101',
+                description: 'Comedy',
+                children: [],
+            },
+            description: '<p>Created via direct API call</p>',
+        },
+    });
 });

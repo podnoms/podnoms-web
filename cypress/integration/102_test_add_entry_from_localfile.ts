@@ -1,10 +1,11 @@
 /// <reference path="../support/index.d.ts" />
 
-describe('Add Entry From YouTube', () => {
+describe('Add entry from Local File', () => {
     before(() => {
         // reset and seed the database prior to every test
         console.log('podcast_add_spec', 'before');
         cy.login();
+        cy.resetJobScheduler();
     });
 
     beforeEach(() => {
@@ -12,13 +13,15 @@ describe('Add Entry From YouTube', () => {
         cy.deletePodcasts();
         cy.createPodcast();
     });
-    it('creates a new entry from a youtube url', function () {
+    it('Creates a new entry from a Local mp3 file', function () {
         cy.visit('podcasts');
-        cy.get('#add-podcast-from-url').click();
-        cy.get('#upload-url-entry-url').type(
-            'https://www.youtube.com/watch?v=M2dhD9zR6hk'
-        );
-        cy.get('.btn-secondary').click();
+
+        cy.get('#file-upload-group').click();
+        cy.get('#upload-local-file').click();
+
+        cy.get(`.dz-wrapper`).attachFile('sine_Secs-60_Freq-440_Amp_08.mp3', {
+            subjectType: 'drag-n-drop',
+        });
 
         cy.get('.entry-list-wrapper.processing', { timeout: 60000 }).should(
             'be.visible'

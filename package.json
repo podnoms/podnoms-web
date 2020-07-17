@@ -49,6 +49,7 @@
         "bootstrap": "^4.4.1",
         "chart.js": "^2.9.3",
         "core-js": "^3.6.5",
+        "cypress-file-upload": "^4.0.7",
         "default-passive-events": "^1.0.10",
         "dropzone": "5.7.0",
         "file-saver": "^2.0.2",

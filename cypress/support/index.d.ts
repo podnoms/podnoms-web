@@ -5,6 +5,7 @@
 declare namespace Cypress {
     interface Chainable {
         login(): Chainable<Element>;
+        resetJobScheduler(): Chainable<Element>;
         deletePodcasts(): Chainable<Element>;
         createPodcast(): Chainable<Element>;
     }

@@ -192,6 +192,10 @@ export class AuthService extends BaseService {
                         (err) => ret.next(false)
                     );
                 }
+            })
+            .catch((err) => {
+                console.error('auth.service', '_loginGoogle', err);
+                return false;
             });
         return ret;
     }
