@@ -14,19 +14,25 @@ export class LoggingService {
                 enableAutoRouteTracking: true, // option to log all route changes
             },
         });
-        this.appInsights.loadAppInsights();
+        if (environment.production) {
+            this.appInsights.loadAppInsights();
+        }
     }
 
     logPageView(name?: string, url?: string) {
         // option to call manually
-        this.appInsights.trackPageView({
-            name: name,
-            uri: url,
-        });
+        if (environment.production) {
+            this.appInsights.trackPageView({
+                name: name,
+                uri: url,
+            });
+        }
     }
 
     logEvent(name: string, properties?: { [key: string]: any }) {
-        this.appInsights.trackEvent({ name: name }, properties);
+        if (environment.production) {
+            this.appInsights.trackEvent({ name: name }, properties);
+        }
     }
 
     logMetric(
@@ -34,20 +40,26 @@ export class LoggingService {
         average: number,
         properties?: { [key: string]: any }
     ) {
-        this.appInsights.trackMetric(
-            { name: name, average: average },
-            properties
-        );
+        if (environment.production) {
+            this.appInsights.trackMetric(
+                { name: name, average: average },
+                properties
+            );
+        }
     }
 
     logException(exception: Error, severityLevel?: number) {
-        this.appInsights.trackException({
-            exception: exception,
-            severityLevel: severityLevel,
-        });
+        if (environment.production) {
+            this.appInsights.trackException({
+                exception: exception,
+                severityLevel: severityLevel,
+            });
+        }
     }
 
     logTrace(message: string, properties?: { [key: string]: any }) {
-        this.appInsights.trackTrace({ message: message }, properties);
+        if (environment.production) {
+            this.appInsights.trackTrace({ message: message }, properties);
+        }
     }
 }

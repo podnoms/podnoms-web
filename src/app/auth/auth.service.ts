@@ -80,15 +80,12 @@ export class AuthService extends BaseService {
     }
     setAuthToken(qry: string) {
         this.logger.info('auth.service', 'setAuthToken', qry);
-        this.logger.info(
-            'auth.service',
-            'setAuthToken',
-            environment.rtTokenKey
-        );
-        localStorage.setItem(environment.rtTokenKey, qry);
+        this.logger.info('auth.service', 'setAuthToken');
+        localStorage.setItem('auth_token', qry);
     }
     getAuthToken(): string {
-        return localStorage.getItem(environment.rtTokenKey);
+        const token = localStorage.getItem('auth_token');
+        return token;
     }
     refreshToken(): Observable<boolean> {
         return this.podnomsAuthService
@@ -195,6 +192,10 @@ export class AuthService extends BaseService {
                         (err) => ret.next(false)
                     );
                 }
+            })
+            .catch((err) => {
+                console.error('auth.service', '_loginGoogle', err);
+                return false;
             });
         return ret;
     }

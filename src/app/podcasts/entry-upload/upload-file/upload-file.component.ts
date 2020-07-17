@@ -24,7 +24,7 @@ export class UploadFileComponent implements OnInit {
         headers: {
             Authorization: `Bearer ${this.authService.getAuthToken()}`,
         },
-        previewTemplate: `<div class="dz-preview dz-file-preview">
+        previewTemplate: `<div class="dz-preview dz-file-preview" data-cy="dropzone">
             <div class="dz-progress">
                 <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
                      aria-valuemax="100" aria-valuenow="0">

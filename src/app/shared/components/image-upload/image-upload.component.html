@@ -23,7 +23,8 @@
                 <a href="#"
                     class="btn btn-outline-secondary fileinput-exists"
                     data-dismiss="fileinput">Remove</a>
-                <app-spinner-button [iconClass]="'fas fa fa-random'"
+                <app-spinner-button [buttonId]="'image-upload-random-button'"
+                    [iconClass]="'fas fa fa-random'"
                     [buttonClass]="'btn btn-primary float-right'"
                     (clicked)="getRandomImage($event)">
                     Random

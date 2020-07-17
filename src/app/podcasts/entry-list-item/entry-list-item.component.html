@@ -1,4 +1,10 @@
-<div class="row pb-15">
+<div class="row pb-15 entry-list-wrapper"
+    [ngClass]="{
+        'accepted': entry.processingStatus === 'Accepted',
+        'failed': entry.processingStatus === 'Failed',
+        'processing': entry.processingStatus === 'Processing' || entry.processingStatus === 'Parsing'|| entry.processingStatus === 'Converting',
+        'caching': entry.processingStatus === 'Downloading' || entry.processingStatus === 'Uploading'|| entry.processingStatus === 'Caching',
+        'processed': entry.processingStatus === 'Processed'}">
     <div class="col-md-1 text-center">
         <div *ngIf="entry.processingStatus === 'Accepted'">
             <i class="fas fa fa-cog fa-spin fa-3x fa-fw"></i>

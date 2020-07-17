@@ -44,6 +44,5 @@ export const environment = {
     features: {
         googleContactSyncEnabled: false,
     },
-    rtTokenKey: '___rt___tk|ef5d0814-7d8c-4957-b000-2a1a6c8251ce',
     logConfig: _logConfig,
 };
