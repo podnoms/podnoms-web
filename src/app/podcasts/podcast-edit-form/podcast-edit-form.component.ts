@@ -1,28 +1,19 @@
 import { PodcastDeleteComponent } from '../podcast-delete.component';
 import { map } from 'rxjs/operators';
-import {
-    OnInit,
-    Component,
-    ViewChild,
-    AfterViewInit,
-    AfterViewChecked,
-} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Podcast, Category } from '../../core';
+import { OnInit, Component, ViewChild, AfterViewChecked } from '@angular/core';
+import { Podcast } from '../../core';
 import { Observable, of } from 'rxjs';
 import { PodcastStoreService } from '../podcast-store.service';
 import { PodcastDataService } from '../podcast-data.service';
-import { UtilityService } from '../../shared/services/utility.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UUID } from 'angular2-uuid';
-import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { PodcastAddWizardComponent } from '../podcast-add-wizard/podcast-add-wizard.component';
-import { validateSearch } from '../../shared/validators/search.validator';
-import { validateDomain } from '../../shared/validators/domain.validator';
 // import { ConditionalValidator } from '../../shared/validators/conditional.validator';
-import { CategoryService } from '../../shared/services/category.service';
 import { AlertService } from '../../core/alerts/alert.service';
-import { NgbModal, NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbModal,
+    NgbNav,
+    NgbNavChangeEvent,
+} from '@ng-bootstrap/ng-bootstrap';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -98,10 +89,41 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
                 });
         });
     }
+    onNavChange(changeEvent: NgbNavChangeEvent) {
+        const currentTab = this.tabControls[this.activeTab];
+        if (currentTab && typeof currentTab.formStatus === 'function') {
+            const status = currentTab.formStatus();
+            if (!status.isValid) {
+                changeEvent.preventDefault();
+                this.alertService.warn(
+                    'Warning',
+                    'There are errors on this page, please correct before moving tabs'
+                );
+            } else if (status.hasChanges) {
+                changeEvent.preventDefault();
+                this.alertService.warn(
+                    'Warning',
+                    'The current tab has unsaved changes, please press the Save Changes button before moving tabs'
+                );
+            }
+        }
+    }
     sendSaveEvent() {
-        const control = this.tabControls[this.activeTab];
-        if (control && typeof control.parentSaveHandler === 'function') {
-            control.parentSaveHandler();
+        const currentTab = this.tabControls[this.activeTab];
+        if (currentTab && typeof currentTab.parentSaveHandler === 'function') {
+            currentTab.parentSaveHandler().subscribe((r) => {
+                if (r) {
+                    this.alertService.info(
+                        'Success',
+                        'Podcast updated successfully'
+                    );
+                } else {
+                    this.alertService.error(
+                        'Error',
+                        'Something went wrong saving the form, please check all your values'
+                    );
+                }
+            });
         }
     }
     showPodcastDeleteDialog(podcast: Podcast) {
