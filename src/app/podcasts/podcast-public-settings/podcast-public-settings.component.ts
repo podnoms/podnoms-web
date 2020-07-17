@@ -84,6 +84,9 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
             'authPassword'
         ].updateValueAndValidity();
     }
+    parentSaveHandler() {
+        this.submitForm();
+    }
     submitForm() {
         this.podcast = Object.assign(
             this.podcast,

@@ -1,6 +1,12 @@
 import { PodcastDeleteComponent } from '../podcast-delete.component';
 import { map } from 'rxjs/operators';
-import { OnInit, Component, ViewChild } from '@angular/core';
+import {
+    OnInit,
+    Component,
+    ViewChild,
+    AfterViewInit,
+    AfterViewChecked,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Podcast, Category } from '../../core';
 import { Observable, of } from 'rxjs';
@@ -16,7 +22,7 @@ import { validateDomain } from '../../shared/validators/domain.validator';
 // import { ConditionalValidator } from '../../shared/validators/conditional.validator';
 import { CategoryService } from '../../shared/services/category.service';
 import { AlertService } from '../../core/alerts/alert.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -24,11 +30,20 @@ import { NGXLogger } from 'ngx-logger';
     templateUrl: './podcast-edit-form.component.html',
     styleUrls: ['./podcast-edit-form.component.scss'],
 })
-export class PodcastEditFormComponent implements OnInit {
+export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
     podcast$: Observable<Podcast>;
     @ViewChild('wizardControl')
     wizardControl: PodcastAddWizardComponent;
     useWizard: boolean = false;
+    public activeTab: string = 'details';
+
+    @ViewChild('details') details: any;
+    @ViewChild('public') public: any;
+    @ViewChild('notifications') notifications: any;
+    @ViewChild('nerds') nerds: any;
+    public tabControls = {};
+
+    @ViewChild('nav') nav: NgbNav;
 
     constructor(
         private route: ActivatedRoute,
@@ -60,6 +75,14 @@ export class PodcastEditFormComponent implements OnInit {
             this.podcast$ = of(new Podcast());
         }
     }
+    ngAfterViewChecked() {
+        this.tabControls = {
+            details: this.details,
+            public: this.public,
+            notifications: this.notifications,
+            nerds: this.nerds,
+        };
+    }
     wizardFinish(podcast: Podcast) {
         this.podcastDataService.addPodcast(podcast).subscribe((p) => {
             this.wizardControl.imageControl
@@ -74,6 +97,12 @@ export class PodcastEditFormComponent implements OnInit {
                     this.router.navigate(['podcasts', p.slug]);
                 });
         });
+    }
+    sendSaveEvent() {
+        const control = this.tabControls[this.activeTab];
+        if (control && typeof control.parentSaveHandler === 'function') {
+            control.parentSaveHandler();
+        }
     }
     showPodcastDeleteDialog(podcast: Podcast) {
         const modalRef = this.modalService.open(PodcastDeleteComponent);
