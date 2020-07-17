@@ -65,7 +65,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             this.formLoaded = true;
         });
     }
-    parentSaveHandler(): Observable<boolean> {
+    parentSaveHandler(): Observable<Podcast> {
         return this.submitForm();
     }
     formStatus(): any {
@@ -74,7 +74,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             hasChanges: this.podcastForm.dirty,
         };
     }
-    submitForm(): Observable<boolean> {
+    submitForm(): Observable<Podcast> {
         const podcast: Podcast = Object.assign(
             this.podcast,
             this.podcastForm.value
@@ -90,10 +90,10 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
         });
         return form;
     }
-    private _updatePodcast(podcast: Podcast): Observable<boolean> {
+    private _updatePodcast(podcast: Podcast): Observable<Podcast> {
         // TODO: Fix this.
         // podcast.subcategories = this.subcategories;
-        const subject = new Subject<boolean>();
+        const subject = new Subject<Podcast>();
 
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(
@@ -102,11 +102,9 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                         () => {
                             this.podcastStore.addOneToCache(p);
                             this.podcastStore.updateOneInCache(p);
-                            this.alertService.info(
-                                'Success',
-                                'Successfully added new podcast'
-                            );
-                            this.router.navigate(['podcasts', p.slug]);
+                            this.podcastForm.markAsPristine();
+                            subject.next(p);
+                            subject.complete();
                         },
                         (error) => {
                             this.logger.error(
@@ -139,11 +137,8 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                                 r || p.imageUrl
                             }?v=${UUID.UUID()}`;
                             this.podcastStore.updateOneInCache(p);
-                            this.alertService.info(
-                                'Success',
-                                'Updated podcast details'
-                            );
-                            subject.next(true);
+                            this.podcastForm.markAsPristine();
+                            subject.next(p);
                             subject.complete();
                         });
                 },

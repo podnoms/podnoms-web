@@ -106,7 +106,9 @@ export class AppLayoutComponentComponent extends BaseComponent
                                 this.alertService.info(
                                     result.title,
                                     result.message,
-                                    result.imageUrl
+                                    {
+                                        image: result.imageUrl,
+                                    }
                                 );
                             });
                         observer.next(true);

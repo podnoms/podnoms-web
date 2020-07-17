@@ -27,6 +27,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
     wizardControl: PodcastAddWizardComponent;
     useWizard: boolean = false;
     public activeTab: string = 'details';
+    private redirectOnSave: boolean = false;
 
     @ViewChild('details') details: any;
     @ViewChild('public') public: any;
@@ -52,6 +53,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
         if (!this.useWizard) {
             if (!id) {
                 this.podcast$ = of(new Podcast());
+                this.redirectOnSave = true;
             } else {
                 this.podcastStore.entities$
                     .pipe(map((r) => r.filter((it) => it.slug === id)))
@@ -64,6 +66,7 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
             }
         } else {
             this.podcast$ = of(new Podcast());
+            this.redirectOnSave = true;
         }
     }
     ngAfterViewChecked() {
@@ -111,12 +114,20 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
     sendSaveEvent() {
         const currentTab = this.tabControls[this.activeTab];
         if (currentTab && typeof currentTab.parentSaveHandler === 'function') {
-            currentTab.parentSaveHandler().subscribe((r) => {
-                if (r) {
-                    this.alertService.info(
-                        'Success',
-                        'Podcast updated successfully'
-                    );
+            currentTab.parentSaveHandler().subscribe((podcast: Podcast) => {
+                if (podcast && podcast.slug) {
+                    if (this.redirectOnSave) {
+                        this.alertService.info(
+                            'Success',
+                            'Podcast created successfully'
+                        );
+                        this.router.navigate(['podcasts', podcast.slug]);
+                    } else {
+                        this.alertService.info(
+                            'Success',
+                            'Podcast updated successfully'
+                        );
+                    }
                 } else {
                     this.alertService.error(
                         'Error',
