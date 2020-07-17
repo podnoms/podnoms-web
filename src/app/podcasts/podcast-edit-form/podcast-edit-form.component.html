@@ -4,6 +4,7 @@
             <ul ngbNav
                 #nav="ngbNav"
                 [(activeId)]="activeTab"
+                (navChange)="onNavChange($event)"
                 class="nav nav-tabs nav-tabs-alt">
                 <li [ngbNavItem]="'details'">
                     <a ngbNavLink><i class="fa fa-info text-primary"></i>&nbsp;Details</a>
@@ -53,7 +54,7 @@
                             class="btn btn-outline-secondary"
                             (click)="sendSaveEvent()">
                             <i class="fa fa-save mr-5"></i>
-                            Update Podcast
+                            Save Podcast
                         </button>
                     </div>
                 </li>

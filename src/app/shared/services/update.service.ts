@@ -29,7 +29,6 @@ export class UpdateService {
         const toast = this.alertService.success(
             'A new version of PodNoms is available!',
             'Click here to reload...',
-            '',
             { showProgressBar: false, showCloseButton: true, autoClose: false }
         );
         toast.click.subscribe((e: any) => {

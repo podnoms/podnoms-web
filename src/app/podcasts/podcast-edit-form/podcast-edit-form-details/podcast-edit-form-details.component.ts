@@ -3,7 +3,7 @@ import { Podcast, Category } from 'app/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ImageUploadComponent } from 'app/shared/components/image-upload/image-upload.component';
 import { UtilityService } from 'app/shared/services/utility.service';
-import { Observable } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 import { PodcastDataService } from 'app/podcasts/podcast-data.service';
 import { CategoryService } from 'app/shared/services/category.service';
@@ -65,15 +65,21 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             this.formLoaded = true;
         });
     }
-    parentSaveHandler() {
-        this.submitForm();
+    parentSaveHandler(): Observable<Podcast> {
+        return this.submitForm();
     }
-    submitForm() {
+    formStatus(): any {
+        return {
+            isValid: this.podcastForm.valid,
+            hasChanges: this.podcastForm.dirty,
+        };
+    }
+    submitForm(): Observable<Podcast> {
         const podcast: Podcast = Object.assign(
             this.podcast,
             this.podcastForm.value
         );
-        this._updatePodcast(podcast);
+        return this._updatePodcast(podcast);
     }
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
         const form = fb.group({
@@ -84,9 +90,11 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
         });
         return form;
     }
-    private _updatePodcast(podcast: Podcast) {
+    private _updatePodcast(podcast: Podcast): Observable<Podcast> {
         // TODO: Fix this.
         // podcast.subcategories = this.subcategories;
+        const subject = new Subject<Podcast>();
+
         if (!podcast.id) {
             this.podcastDataService.addPodcast(podcast).subscribe(
                 (p) => {
@@ -94,11 +102,9 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                         () => {
                             this.podcastStore.addOneToCache(p);
                             this.podcastStore.updateOneInCache(p);
-                            this.alertService.info(
-                                'Success',
-                                'Successfully added new podcast'
-                            );
-                            this.router.navigate(['podcasts', p.slug]);
+                            this.podcastForm.markAsPristine();
+                            subject.next(p);
+                            subject.complete();
                         },
                         (error) => {
                             this.logger.error(
@@ -131,19 +137,26 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
                                 r || p.imageUrl
                             }?v=${UUID.UUID()}`;
                             this.podcastStore.updateOneInCache(p);
-                            this.alertService.info(
-                                'Success',
-                                'Updated podcast details'
-                            );
+                            this.podcastForm.markAsPristine();
+                            subject.next(p);
+                            subject.complete();
                         });
                 },
-                () => {
+                (err) => {
+                    this.logger.error(
+                        'podcast-edit-form-details.component',
+                        '_updatePodcast',
+                        err
+                    );
                     this.alertService.error(
                         'Error',
                         'There was an error updating this podcast, please check all your values and try again'
                     );
+                    subject.error(err);
                 }
             );
         }
+
+        return subject;
     }
 }

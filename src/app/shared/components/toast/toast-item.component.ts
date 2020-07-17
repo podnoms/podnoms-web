@@ -161,6 +161,7 @@ export class ToastItemComponent implements OnInit {
         [ToastType.Info]: '#0067FF',
         [ToastType.Error]: '#FE355A',
         [ToastType.Alert]: '#FE355A',
+        [ToastType.Warn]: '#FF4500',
         [ToastType.Success]: '#00CC69',
     };
 

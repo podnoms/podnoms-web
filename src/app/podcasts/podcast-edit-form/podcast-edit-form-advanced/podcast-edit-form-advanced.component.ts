@@ -8,6 +8,7 @@ import { AlertService } from 'app/core/alerts/alert.service';
 import { PodcastDataService } from 'app/podcasts/podcast-data.service';
 import { Router } from '@angular/router';
 import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
     selector: 'app-podcast-edit-form-advanced',
@@ -34,18 +35,29 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
             this.sslRequestUri = `mailto:customdomain@podnoms.com?subject=Custom domain request&body=URL:${this.podcast.pagesUrl}%0D%0APlease leave the above line intact`;
         });
     }
-    parentSaveHandler() {
-        this.submitForm();
+    parentSaveHandler(): Observable<boolean> {
+        return this.submitForm();
     }
-    submitForm() {
-        const podcast: Podcast = Object.assign(
-            this.podcast,
-            this.podcastForm.value
-        );
-        this.podcastDataService.updatePodcast(podcast).subscribe(() => {
-            this.alertService.info('Success', 'Updated podcast details');
-            this.podcastStore.updateOneInCache(podcast);
-            this.router.navigate(['podcasts', podcast.slug]);
+    submitForm(): Observable<boolean> {
+        return new Observable((observer: Observer<boolean>) => {
+            const podcast: Podcast = Object.assign(
+                this.podcast,
+                this.podcastForm.value
+            );
+            this.podcastDataService.updatePodcast(podcast).subscribe(
+                () => {
+                    this.podcastStore.updateOneInCache(podcast);
+                    return true;
+                },
+                (err) => {
+                    console.log(
+                        'podcast-edit-form-advanced.component',
+                        'submitForm',
+                        err
+                    );
+                    return false;
+                }
+            );
         });
     }
     _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {

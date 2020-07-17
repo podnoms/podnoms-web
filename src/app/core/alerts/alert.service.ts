@@ -5,45 +5,43 @@ import {
     ToastMessage,
     ToastType,
 } from 'app/shared/components/toast/toast-models';
+import { merge } from 'jquery';
 
 @Injectable()
 export class AlertService {
     constructor(private toaster: ToastService) {}
 
-    info(
-        title: string,
-        message: string,
-        image?: string,
-        options?: any
-    ): ToastMessage {
+    info(title: string, message: string, options?: AlertOptions): ToastMessage {
         return this.toaster.showToast(title, message, {
-            image: image || 'assets/img/feedback/information.png',
-            type: ToastType.Info,
             ...(options || new AlertOptions()),
+            ...{
+                type: ToastType.Info,
+            },
         });
     }
-    success(
-        title: string,
-        message: string,
-        image?: string,
-        options?: AlertOptions
-    ) {
+    success(title: string, message: string, options?: AlertOptions) {
         return this.toaster.showToast(title, message, {
-            image: image || 'assets/img/feedback/success.png',
-            type: ToastType.Success,
             ...(options || new AlertOptions()),
+            ...{
+                type: ToastType.Success,
+            },
         });
     }
-    error(
-        title: string,
-        message: string,
-        image?: string,
-        options?: AlertOptions
-    ) {
+    warn(title: string, message: string, options?: AlertOptions) {
         return this.toaster.showToast(title, message, {
-            image: image || 'assets/img/feedback/warning.png',
-            type: ToastType.Error,
             ...(options || new AlertOptions()),
+            ...{
+                type: ToastType.Warn,
+                timeOut: 5000000,
+            },
+        });
+    }
+    error(title: string, message: string, options?: AlertOptions) {
+        return this.toaster.showToast(title, message, {
+            ...(options || new AlertOptions()),
+            ...{
+                type: ToastType.Error,
+            },
         });
     }
 }

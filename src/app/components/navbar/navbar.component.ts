@@ -72,7 +72,6 @@ export class NavbarComponent {
                 `Client Version: ${environment.version}<br />` +
                     `API Version: ${r['version']}<br />` +
                     `Host: ${r['osVersion']['versionString']}`,
-                'assets/img/logo-icon.png',
                 {
                     autoClose: false,
                 }

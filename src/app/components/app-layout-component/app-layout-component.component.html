@@ -14,3 +14,8 @@
     </main>
 </div>
 <app-footer></app-footer>
+<app-toast></app-toast>
+<div *ngIf="profile">
+    <app-modal-updates [(action$)]="modalUpdatesAction$">
+    </app-modal-updates>
+</div>

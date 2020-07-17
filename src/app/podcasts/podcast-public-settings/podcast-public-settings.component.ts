@@ -14,6 +14,9 @@ import { validateDomain } from 'app/shared/validators/domain.validator';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { requiredIfValidator } from 'app/shared/validators/required.validator';
 import { urlIsValidValidator } from 'app/shared/validators/valid-url.validator';
+import { Observable, Subject } from 'rxjs';
+import { Logger } from '@ngrx/data';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-podcast-public-settings',
@@ -32,7 +35,8 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
         private alertService: AlertService,
         private utilityService: UtilityService,
         private cd: ChangeDetectorRef,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private logger: NGXLogger
     ) {}
 
     ngAfterViewInit() {
@@ -84,20 +88,37 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
             'authPassword'
         ].updateValueAndValidity();
     }
-    parentSaveHandler() {
-        this.submitForm();
+    parentSaveHandler(): Observable<Podcast> {
+        return this.submitForm();
     }
-    submitForm() {
+    formStatus(): any {
+        return {
+            isValid: this.publicSettingsForm.valid,
+            hasChanges: this.publicSettingsForm.dirty,
+        };
+    }
+    submitForm(): Observable<Podcast> {
+        const subject = new Subject<Podcast>();
         this.podcast = Object.assign(
             this.podcast,
             this.publicSettingsForm.value
         );
         this.podcast.category = this.podcast.category || null;
-        this.podcastDataService
-            .updatePodcast(this.podcast)
-            .subscribe((r) =>
-                this.alertService.info('Success', 'Updated podcast settings')
-            );
-        return false;
+        this.podcastDataService.updatePodcast(this.podcast).subscribe(
+            (podcast) => {
+                this.publicSettingsForm.markAsPristine();
+                subject.next(podcast);
+                subject.complete();
+            },
+            (err) => {
+                this.logger.error(
+                    'podcast-public-settings.component',
+                    'submitForm',
+                    err
+                );
+                return false;
+            }
+        );
+        return subject;
     }
 }

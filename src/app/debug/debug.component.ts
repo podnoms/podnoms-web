@@ -22,18 +22,13 @@ export class DebugComponent implements OnInit {
         );
     }
     doError() {
-        this.alertService.error(
-            'Hello Sailor',
-            'I am a HUGE failure',
-            undefined,
-            {
-                autoClose: false,
-                showCloseButton: true,
-            }
-        );
+        this.alertService.error('Hello Sailor', 'I am a HUGE failure', {
+            autoClose: false,
+            showCloseButton: true,
+        });
     }
     doInfo() {
-        this.alertService.info('Hello Sailor', 'I am a HUGE nerd', undefined, {
+        this.alertService.info('Hello Sailor', 'I am a HUGE nerd', {
             showProgressBar: true,
             timeOut: 5000,
             autoClose: true,
@@ -43,7 +38,6 @@ export class DebugComponent implements OnInit {
         const toast = this.alertService.info(
             'Hello Sailor',
             'I can be clicked',
-            undefined,
             {
                 showProgressBar: true,
                 timeOut: 5000,

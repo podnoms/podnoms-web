@@ -5,8 +5,8 @@ export class AlertOptions {
     image?: string;
     type?: ToastType = ToastType.Info;
     showProgressBar?: boolean = true;
-    autoClose: boolean = true;
+    autoClose?: boolean = true;
     showCloseButton?: boolean = true;
-    timeOut?: number = 5000;
+    timeOut?: number = 3000;
     click?: EventEmitter<{}>;
 }
