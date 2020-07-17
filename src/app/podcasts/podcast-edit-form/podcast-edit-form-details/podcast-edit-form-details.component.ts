@@ -65,6 +65,9 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
             this.formLoaded = true;
         });
     }
+    parentSaveHandler() {
+        this.submitForm();
+    }
     submitForm() {
         const podcast: Podcast = Object.assign(
             this.podcast,

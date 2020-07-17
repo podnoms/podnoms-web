@@ -8,7 +8,8 @@ import { QuillModule } from 'ngx-quill';
 import {
     NgbModalRef,
     NgbProgressbarModule,
-    NgbTabsetModule
+    NgbTabsetModule,
+    NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
@@ -58,7 +59,8 @@ import { environment } from 'environments/environment';
         NgbTabsetModule,
         NgxDatatableModule,
         ComponentsModule,
-        LoggerModule.forRoot(environment.logConfig)
+        NgbModule,
+        LoggerModule.forRoot(environment.logConfig),
     ],
     exports: [PodcastComponent],
     declarations: [
@@ -85,25 +87,25 @@ import { environment } from 'environments/environment';
         RemotePageParserComponent,
         EntryLogsComponent,
         PodcastEditFormDetailsComponent,
-        PodcastEditFormAdvancedComponent
+        PodcastEditFormAdvancedComponent,
     ],
     entryComponents: [
         PodcastDeleteComponent,
         EntryDeleteItemModalComponent,
         EntryLogsComponent,
-        NotificationItemDeleteComponent
+        NotificationItemDeleteComponent,
     ],
     providers: [
         PodcastStoreService,
         NotificationStoreService,
-        NotificationControlService
-    ]
+        NotificationControlService,
+    ],
 })
 export class PodcastsModule {
     constructor() {
         //bring in animations to ng-bootstrap modal
         NgbModalRef.prototype['c'] = NgbModalRef.prototype.close;
-        NgbModalRef.prototype.close = function(reason: string) {
+        NgbModalRef.prototype.close = function (reason: string) {
             document.querySelector('.modal-backdrop').classList.remove('show');
             document.querySelector('.modal').classList.remove('show');
             setTimeout(() => {
@@ -111,7 +113,7 @@ export class PodcastsModule {
             }, 500);
         };
         NgbModalRef.prototype['d'] = NgbModalRef.prototype.dismiss;
-        NgbModalRef.prototype.dismiss = function(reason: string) {
+        NgbModalRef.prototype.dismiss = function (reason: string) {
             document.querySelector('.modal-backdrop').classList.remove('show');
             document.querySelector('.modal').classList.remove('show');
             setTimeout(() => {

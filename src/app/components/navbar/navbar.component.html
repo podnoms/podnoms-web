@@ -101,13 +101,16 @@
                     id="page-header-user-dropdown"
                     data-toggle="dropdown"
                     aria-label="Open menue">
-                    <span class="d-none d-md-inline-block">
+                    <span class="d-none d-md-inline-block profile-dropdown-button">
                         {{profile.firstName}}
                         {{profile.lastName}}
                     </span>
                     <i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-150">
+                    <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase profile-dropdown-title">
+                        {{profile.firstName + ' ' + profile.lastName}}
+                    </h5>
                     <a class="dropdown-item"
                         [routerLink]="['/profile']">
                         <i class="fa fa-user mr-5"></i>

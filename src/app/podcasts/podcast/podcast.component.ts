@@ -1,9 +1,9 @@
-import { takeUntil, pluck, take } from 'rxjs/operators';
+import { takeUntil, pluck, take, catchError } from 'rxjs/operators';
 import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Podcast } from '../../core';
 import { PodcastStoreService } from '../podcast-store.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError, EMPTY } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UploadModes } from '../upload-modes.enum';
@@ -17,6 +17,7 @@ import { AuthService } from 'app/auth/auth.service';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
+import { DataServiceError } from '@ngrx/data';
 
 @Component({
     selector: 'app-podcast',
@@ -59,21 +60,24 @@ export class PodcastComponent extends BasePageComponent
                 .pipe(takeUntil(this._destroyed$), pluck('podcast'))
                 .subscribe((id) => this._initialiseState(id));
         } else {
-            this.podcastDataService
-                .getActivePodcast()
-                .pipe(take(1))
-                .subscribe(
-                    (p) => {
-                        if (p) {
-                            this.location.replaceState(`/podcasts/${p}`);
-                            this._initialiseState(p);
-                        } else {
-                            this.noPodcasts = true;
-                        }
-                    },
-                    () => (this.noPodcasts = true)
-                );
+            this._loadPodcastFromServer();
         }
+    }
+    _loadPodcastFromServer() {
+        this.podcastDataService
+            .getActivePodcast()
+            .pipe(take(1))
+            .subscribe(
+                (p) => {
+                    if (p) {
+                        this.location.replaceState(`/podcasts/${p}`);
+                        this._initialiseState(p);
+                    } else {
+                        this.noPodcasts = true;
+                    }
+                },
+                () => (this.noPodcasts = true)
+            );
     }
     ngOnDestroy() {
         this._destroyed$.next();
@@ -82,10 +86,25 @@ export class PodcastComponent extends BasePageComponent
     _initialiseState(id: string) {
         // TODO: take this out, weird Chrome/Angular bug
         if (id !== 'undefined') {
-            const config = this.logger.getConfigSnapshot();
-
             this.logger.debug('podcast.component', '_initialiseState', id);
-            this.podcast$ = this.podcastStoreService.getByKey(id);
+            this.podcast$ = this.podcastStoreService.getByKey(id).pipe(
+                catchError((err: DataServiceError) => {
+                    console.log(
+                        'podcast.component',
+                        'podcastStoreService_error',
+                        err
+                    );
+                    if (err.error.status === 404) {
+                        // we're looking for a podcast that doesn't exist.
+                        if (id === localStorage.getItem('__spslug')) {
+                            // we've stored a podcast slug that no longer exists
+                            localStorage.removeItem('__spslug');
+                        }
+                    }
+                    this._loadPodcastFromServer();
+                    return EMPTY;
+                })
+            );
             this.loading$ = this.podcastStoreService.loading$;
             localStorage.setItem('__spslug', id);
         }

@@ -46,15 +46,13 @@ export class BasePageComponent extends BaseComponent {
             this.constructor.name,
             this.__router.url
         );
-        if (environment.production) {
-            try {
-                this.__loggingService.logPageView(
-                    this.constructor.name,
-                    this.__router.url
-                );
-            } catch (e) {
-                this.logger.error('base-page.component', 'logNavigation', e);
-            }
+        try {
+            this.__loggingService.logPageView(
+                this.constructor.name,
+                this.__router.url
+            );
+        } catch (e) {
+            this.logger.error('base-page.component', 'logNavigation', e);
         }
     }
     protected formatError(error: string): string {

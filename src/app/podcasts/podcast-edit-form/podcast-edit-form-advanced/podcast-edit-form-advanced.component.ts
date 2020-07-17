@@ -12,7 +12,7 @@ import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 @Component({
     selector: 'app-podcast-edit-form-advanced',
     templateUrl: './podcast-edit-form-advanced.component.html',
-    styleUrls: ['./podcast-edit-form-advanced.component.scss']
+    styleUrls: ['./podcast-edit-form-advanced.component.scss'],
 })
 export class PodcastEditFormAdvancedComponent implements AfterViewInit {
     @Input()
@@ -34,6 +34,9 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
             this.sslRequestUri = `mailto:customdomain@podnoms.com?subject=Custom domain request&body=URL:${this.podcast.pagesUrl}%0D%0APlease leave the above line intact`;
         });
     }
+    parentSaveHandler() {
+        this.submitForm();
+    }
     submitForm() {
         const podcast: Podcast = Object.assign(
             this.podcast,
@@ -54,7 +57,7 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
                 Validators.compose([
                     // Validators.required,
                     // Validators.minLength(5),
-                    Validators.maxLength(30)
+                    Validators.maxLength(30),
                 ]),
                 Validators.composeAsync([
                     validateSearch(
@@ -62,16 +65,16 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
                         'Podcasts',
                         'Slug',
                         podcast.slug
-                    )
-                ])
+                    ),
+                ]),
             ],
             customDomain: [
                 podcast.customDomain,
                 Validators.compose([]),
                 Validators.composeAsync([
-                    validateDomain(this.utilityService, 'rss.podnoms.com')
-                ])
-            ]
+                    validateDomain(this.utilityService, 'rss.podnoms.com'),
+                ]),
+            ],
         });
         return form;
     }
