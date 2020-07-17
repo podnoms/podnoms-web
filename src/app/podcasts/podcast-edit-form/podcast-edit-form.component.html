@@ -1,6 +1,6 @@
 <div *ngIf="(podcast$ | async); let podcast; else: loading">
     <div *ngIf="!useWizard">
-        <div class="block">
+        <div class="block block-themed block-rounded">
             <ul ngbNav
                 #nav="ngbNav"
                 [(activeId)]="activeTab"
@@ -77,8 +77,10 @@
                     </div>
                 </li>
             </ul>
-            <div [ngbNavOutlet]="nav"
-                class="p-20">
+            <div class="block-content">
+                <div [ngbNavOutlet]="nav"
+                    class="p-20">
+                </div>
             </div>
         </div>
     </div>

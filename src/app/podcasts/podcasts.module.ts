@@ -4,13 +4,12 @@ import { PodcastsRoutingModule } from './podcasts-routing.module';
 import { PodcastComponent } from './podcast/podcast.component';
 import { SharedModule } from '../shared/shared.module';
 import { MomentModule } from 'ngx-moment';
-import { QuillModule } from 'ngx-quill';
 import {
     NgbModalRef,
     NgbProgressbarModule,
-    NgbTabsetModule,
     NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { QuillModule } from 'ngx-quill';
 
 import { PodcastDetailComponent } from './podcast-detail/podcast-detail.component';
 import { PodcastStoreService } from './podcast-store.service';
@@ -56,7 +55,6 @@ import { environment } from 'environments/environment';
         DropzoneModule,
         NgSelectModule,
         NgbProgressbarModule,
-        NgbTabsetModule,
         NgxDatatableModule,
         ComponentsModule,
         NgbModule,

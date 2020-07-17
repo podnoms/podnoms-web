@@ -24,11 +24,13 @@ export class ImageUploadComponent implements OnInit, OnChanges {
     defaultImage: string = 'assets/img/image-placeholder.png';
     image: any = new Image();
     public imageChanged: boolean = false;
+    computedHeight: number = 500;
 
     @Input() imageUrl: string;
     @Input() allowRandom: boolean = false;
 
     @ViewChild('fileInput') fileInputElement: ElementRef;
+    @ViewChild('container') containerElement: ElementRef;
 
     constructor(
         private imageService: ImageService,
@@ -57,12 +59,21 @@ export class ImageUploadComponent implements OnInit, OnChanges {
             }
         });
     }
+    onResized($event) {
+        this.logger.debug('image-upload.component', 'onResized', $event);
+        this.computedHeight = this.containerElement.nativeElement.style.width;
+    }
     handleBrokenUrl($event: any) {
         this.image.src = this.defaultImage;
     }
     updateImage(image: string) {
         this.image.src = image;
         this.imageUrl = image;
+    }
+    showFileChooser() {
+        this.fileInputElement.nativeElement.dispatchEvent(
+            new MouseEvent('click', { bubbles: true })
+        );
     }
     commitImage(slug: string, type: string): Observable<any> {
         if (this.imageChanged) {
