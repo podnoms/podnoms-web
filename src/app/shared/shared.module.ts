@@ -37,6 +37,7 @@ import { ServerShowcaseModalComponent } from './components/modal-updates/server-
 import { UniqueIdPipe } from './pipes/unique-id.pipe';
 import { SortByPipe } from './pipes/sort-by.pipe';
 import { FilterIfPipe } from './pipes/filter-if.pipe';
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import { FilterIfPipe } from './pipes/filter-if.pipe';
         RouterModule,
         NgbModule,
         NgSelectModule,
+        AngularResizedEventModule,
         LoggerModule.forRoot(environment.logConfig),
     ],
     exports: [

@@ -45,18 +45,17 @@ export class AuthService extends BaseService {
         return this.bootstrap();
     }
     bootstrap(): Observable<boolean> {
-        this.profile$.pipe(filter((r) => r != null)).subscribe((p) => {
-            this.logger.debug('auth.service', 'profile$', p);
-            this.currentUser = p;
-        });
         const ret = new Subject<boolean>();
         try {
             if (this.isLoggedIn()) {
                 this.profileStoreService.getAll();
                 this.profileStoreService.entities$.subscribe((results) => {
                     if (results.length !== 0) {
-                        this.profile$.next(results[0]);
-                        this.authNavStatusSource.next(true);
+                        this.currentUser = results[0];
+                        setTimeout(() => {
+                            this.profile$.next(results[0]);
+                            this.authNavStatusSource.next(true);
+                        });
                         ret.next(true);
                     }
                 });

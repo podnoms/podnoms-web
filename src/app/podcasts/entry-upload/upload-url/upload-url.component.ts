@@ -91,8 +91,9 @@ export class UploadUrlComponent implements AfterViewInit {
             this.isPosting = true;
             this.utilityService.checkAudioUrl(url).subscribe(
                 (r) => {
-                    if (r.type === 'native') {
+                    if (r.type === 'SingleFile') {
                         this.createEntry(r, url);
+                    } else if (r.type === 'Channel') {
                     } else if ((r.type = 'proxied')) {
                         this.logger.debug(
                             'upload-url.component',

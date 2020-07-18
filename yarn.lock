@@ -2080,6 +2080,14 @@ angular-in-memory-web-api@^0.10.0:
   resolved "https://registry.yarnpkg.com/angular-in-memory-web-api/-/angular-in-memory-web-api-0.10.0.tgz#6b56a9b355ce073bca0daf2e097742647bd9e2bb"
   integrity sha512-GzY4lHPR8suREYfgiYiJSBrgq0bdCiFw/LuqW5IsOQfRx98AvS69A5Ehz12oMLy9ABzoGpqmNC5fcFtClDAPqQ==
 
+angular-resize-event@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/angular-resize-event/-/angular-resize-event-1.2.2.tgz#8404da06183b208472f5a8b0eb66589baa89be9f"
+  integrity sha512-fILJkLvPViNt8HVQ8nZzpaZWKFcTGFuNhjTSVzukthA8bJuX5irMgSWzO3Y7z5JSRPOEvgROU9YfDimMoZPa0Q==
+  dependencies:
+    css-element-queries "1.2.3"
+    tslib "^1.9.0"
+
 angular2-uuid@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/angular2-uuid/-/angular2-uuid-1.1.1.tgz#72f03cd532b7f40032eb1ecfb9f8457384be956e"
@@ -3731,6 +3739,11 @@ css-declaration-sorter@^4.0.1:
   dependencies:
     postcss "^7.0.1"
     timsort "^0.3.0"
+
+css-element-queries@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/css-element-queries/-/css-element-queries-1.2.3.tgz#e14940b1fcd4bf0da60ea4145d05742d7172e516"
+  integrity sha512-QK9uovYmKTsV2GXWQiMOByVNrLn2qz6m3P7vWpOR4IdD6I3iXoDw5qtgJEN3Xq7gIbdHVKvzHjdAtcl+4Arc4Q==
 
 css-loader@3.5.3:
   version "3.5.3"
@@ -7768,10 +7781,12 @@ ngx-perfect-scrollbar@^9.0.0:
     perfect-scrollbar "1.5.0"
     resize-observer-polyfill "^1.5.0"
 
-ngx-quill@^9.2.0:
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-9.2.0.tgz#9f108514b9abcefe1c8411a443a4142c9f803458"
-  integrity sha512-G0L3l9Ny3bRrnJn8MnXmZHiNTRkXhzLVNb8DbGyWLpnlm3Stix8y6uZGsS6zaNY0b6X/nhVHZfzp0KiuOf8naw==
+ngx-quill@^12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-12.0.1.tgz#a35cc65519d3626f593f4f94888fdb1f697cd940"
+  integrity sha512-XSyj1ABpfdoIsRguV4vCemOUU0VnDeISBtF6O6XU11AUYSSP1Eh58x0ct2SEJuNIW/qruEGexQvLAYHkuA6+Xw==
+  dependencies:
+    tslib "^2.0.0"
 
 ngx-store@^2.1.0:
   version "2.1.0"
