@@ -11,6 +11,10 @@ import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
 import { AlertService } from '../../../core/alerts/alert.service';
 import { NGXLogger } from 'ngx-logger';
+import { ProfileDataService } from 'app/profile/profile-data.service';
+import { EntryDeleteItemModalComponent } from '../../entry-list-item/entry-delete-item-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpgradeAccountDialogComponent } from 'app/shared/dialogs/upgrade-account-dialog/upgrade-account-dialog.component';
 
 @Component({
     selector: 'app-upload-url',
@@ -33,11 +37,12 @@ export class UploadUrlComponent implements AfterViewInit {
 
     @ViewChild('input')
     vc: any;
-
-    playlistProxy: PodcastEntry = null;
+    remoteFileType: string = '';
     constructor(
         private podcastEntryDataService: EntryDataService,
+        private profileDataService: ProfileDataService,
         private utilityService: UtilityService,
+        private modalService: NgbModal,
         protected logger: NGXLogger
     ) {
         this.logger.debug('upload-url.component', 'ctor');
@@ -51,25 +56,31 @@ export class UploadUrlComponent implements AfterViewInit {
         return a.host && a.host !== window.location.host;
     }
     processPlaylist() {
-        const entry = new PodcastEntry(
-            this.podcast.id,
-            this.playlistProxy.sourceUrl
-        );
-        this.podcastEntryDataService.addPlaylist(entry).subscribe(
-            (e) => {
-                this.resetUrl();
-                this.playlistAdded.emit(e);
-            },
-            (error) => {
-                this.playlistProxy = null;
-                this.isPosting = false;
-                this.errorText = error.error;
-                // this.alertService.error('Error creating playlist', error.error);
+        this.profileDataService.getSubscriptionLevel().subscribe((r) => {
+            if (!r.subscriptionValid) {
+                const modalRef = this.modalService.open(
+                    UpgradeAccountDialogComponent
+                );
+                modalRef.componentInstance.extraText = 'playlist parsing';
+            } else {
+                const entry = new PodcastEntry(this.podcast.id);
+                entry.sourceUrl = this.newEntrySourceUrl;
+
+                this.podcastEntryDataService.addPlaylist(entry).subscribe(
+                    (e) => {
+                        this.resetUrl();
+                        this.playlistAdded.emit(e);
+                    },
+                    (error) => {
+                        this.isPosting = false;
+                        this.errorText = error.error;
+                        // this.alertService.error('Error creating playlist', error.error);
+                    }
+                );
             }
-        );
+        });
     }
     resetUrl() {
-        this.playlistProxy = null;
         this.isPosting = false;
         this.remoteAudioResult = null;
         this.newEntrySourceUrl = '';
@@ -91,10 +102,11 @@ export class UploadUrlComponent implements AfterViewInit {
             this.isPosting = true;
             this.utilityService.checkAudioUrl(url).subscribe(
                 (r) => {
-                    if (r.type === 'SingleFile') {
+                    this.remoteFileType = r.type;
+                    if (r.type === 'SingleItem') {
                         this.createEntry(r, url);
-                    } else if (r.type === 'Channel') {
-                    } else if ((r.type = 'proxied')) {
+                    } else if ((r.type = 'ParsedLinks')) {
+                        this.newEntrySourceUrl = url;
                         this.logger.debug(
                             'upload-url.component',
                             'apiData',
@@ -134,9 +146,7 @@ export class UploadUrlComponent implements AfterViewInit {
         this.podcastEntryDataService.addEntry(entry).subscribe(
             (e) => {
                 if (e) {
-                    if (e.processingStatus === 'Deferred') {
-                        this.playlistProxy = e;
-                    } else {
+                    if (e.processingStatus !== 'Deferred') {
                         this.entryCreateComplete.emit(e);
                     }
                 }

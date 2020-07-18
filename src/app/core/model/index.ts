@@ -10,3 +10,4 @@ export * from './notification-option-base';
 export * from './notification-option-text';
 export * from './server-showcase';
 export * from './shareable';
+export * from './subscription';

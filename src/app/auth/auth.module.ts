@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AuthService } from './auth.service';
+import { PatreonComponent } from './redirects/patreon/patreon.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,7 @@ import { AuthService } from './auth.service';
         NgxCaptchaModule,
         LoggerModule.forRoot(environment.logConfig),
     ],
-    declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent, PatreonComponent],
     providers: [AuthService, CookieService],
 })
 export class AuthModule {}

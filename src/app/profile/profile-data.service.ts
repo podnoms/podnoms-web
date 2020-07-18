@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Profile, ProfileLimits, Payment, ApiKeyRequestModel } from '../core';
+import {
+    Profile,
+    ProfileLimits,
+    Payment,
+    ApiKeyRequestModel,
+    Subscription,
+} from '../core';
 
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -42,6 +48,11 @@ export class ProfileDataService {
         return this.http.post<Profile>(
             environment.apiHost + '/profile',
             profile
+        );
+    }
+    getSubscriptionLevel(): Observable<Subscription> {
+        return this.http.get<Subscription>(
+            `${environment.apiHost}/profile/subscription`
         );
     }
     getKeys(): Observable<ApiKeyRequestModel[]> {
