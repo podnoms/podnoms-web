@@ -38,6 +38,7 @@ import { UniqueIdPipe } from './pipes/unique-id.pipe';
 import { SortByPipe } from './pipes/sort-by.pipe';
 import { FilterIfPipe } from './pipes/filter-if.pipe';
 import { AngularResizedEventModule } from 'angular-resize-event';
+import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/upgrade-account-dialog.component';
 
 @NgModule({
     imports: [
@@ -97,6 +98,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
         UniqueIdPipe,
         SortByPipe,
         FilterIfPipe,
+        UpgradeAccountDialogComponent,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [

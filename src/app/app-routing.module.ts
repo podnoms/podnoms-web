@@ -13,6 +13,11 @@ const routes: Routes = [
         pathMatch: 'full',
         component: HomeComponent,
     },
+    {
+        path: '.auth/redir/patreon',
+        pathMatch: 'full',
+        component: RedirollComponent,
+    },
     { path: '.env', pathMatch: 'full', component: RedirollComponent },
     { path: 'wp-login.php', pathMatch: 'full', component: RedirollComponent },
     { path: 'wp-admin', pathMatch: 'full', component: RedirollComponent },

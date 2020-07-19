@@ -40,6 +40,12 @@ export const environment = {
         clientId:
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com',
     },
+    patreon: {
+        // apiKey: 'AIzaSyAw5b_4i7wRqiYGq0bTIjn9VMREFfGqMFA',
+        clientId:
+            'GNxonPDxsZZHsnbtOy5AnpgUXt5tf84nL8D4Spn9tgyoxhZHjsNpnnNvAuvClueU',
+        redirectUri: 'https://dev.pdnm.be:4200/auth/redir/patreon',
+    },
     stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
     recaptchaKey: '6Ldn-LEZAAAAAKFg1rrLMK4LBUx8hLnCk9GQu5cn',
     features: {

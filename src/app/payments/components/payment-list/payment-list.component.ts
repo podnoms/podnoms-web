@@ -3,6 +3,9 @@ import { Payment } from '../../../core';
 import { Observable } from 'rxjs';
 import { ProfileDataService } from '../../../profile/profile-data.service';
 import { PaymentsService } from '../../payments.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-payment-list',
@@ -14,8 +17,10 @@ export class PaymentListComponent implements OnInit {
     downloader: ElementRef;
 
     constructor(
+        private httpClient: HttpClient,
         private profileDataService: ProfileDataService,
-        private paymentService: PaymentsService
+        private paymentService: PaymentsService,
+        private logger: NGXLogger
     ) {}
     payments$: Observable<Payment[]>;
 

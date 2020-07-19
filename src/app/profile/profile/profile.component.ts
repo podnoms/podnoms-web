@@ -14,6 +14,7 @@ import {
     map,
     switchMap,
 } from 'rxjs/operators';
+import { Location } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { ProfileDataService } from '../profile-data.service';
 import { ProfileStoreService } from '../profile-store.service';
@@ -24,13 +25,16 @@ import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
+import { environment } from 'environments/environment';
+import { isUndefined } from 'util';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent extends BasePageComponent implements OnInit {
+export class ProfileComponent extends BasePageComponent
+    implements OnInit, AfterViewInit {
     public chartLabels: string[] = ['Used', 'Available'];
     public chartData: number[] = [85, 15];
     public activeTab: string = 'details';
@@ -89,6 +93,7 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private location: Location,
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
         private alertService: AlertService,
@@ -136,7 +141,23 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
     ngOnInit() {
         this.refreshLimits();
     }
-
+    ngAfterViewInit() {
+        this.route.queryParams.subscribe((params) => {
+            this.logger.debug('profile.component', 'connect-return', params);
+            if (params.connectResult && params.connectResult === 'fail') {
+                this.alertService.error(
+                    'Failure',
+                    'Unable to connect accounts at this time'
+                );
+            } else if (
+                params.connectResult &&
+                params.connectResult === 'success'
+            ) {
+                this.alertService.success('Connected', params.reason);
+            }
+            this.location.replaceState('profile');
+        });
+    }
     private _bytesToHuman(bytes: number) {
         if (bytes === 0) {
             return '0 Bytes';
@@ -199,5 +220,9 @@ export class ProfileComponent extends BasePageComponent implements OnInit {
                 );
             }
         });
+    }
+
+    connectToPatreon() {
+        window.location.href = `https://www.patreon.com/oauth2/authorize?response_type=code&client_id=${environment.patreon.clientId}&redirect_uri=${environment.patreon.redirectUri}`;
     }
 }
