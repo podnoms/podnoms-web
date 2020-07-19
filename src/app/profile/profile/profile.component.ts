@@ -14,6 +14,7 @@ import {
     map,
     switchMap,
 } from 'rxjs/operators';
+import { Location } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { ProfileDataService } from '../profile-data.service';
 import { ProfileStoreService } from '../profile-store.service';
@@ -92,6 +93,7 @@ export class ProfileComponent extends BasePageComponent
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private location: Location,
         private profileStoreService: ProfileStoreService,
         private profileDataService: ProfileDataService,
         private alertService: AlertService,
@@ -153,6 +155,7 @@ export class ProfileComponent extends BasePageComponent
             ) {
                 this.alertService.success('Connected', params.reason);
             }
+            this.location.replaceState('profile');
         });
     }
     private _bytesToHuman(bytes: number) {

@@ -26,7 +26,10 @@ export class PatreonComponent implements OnInit {
             if (code) {
                 this.httpClient
                     .get(
-                        `${environment.apiHost}/subscriptions/patreon?accessKey=${code}`
+                        `${environment.apiHost}/subscriptions/patreon?accessKey=${code}`,
+                        {
+                            responseType: 'text',
+                        }
                     )
                     .subscribe(
                         (r) => {
@@ -35,6 +38,12 @@ export class PatreonComponent implements OnInit {
                                 'token-result',
                                 r
                             );
+                            this.router.navigate(['/profile'], {
+                                queryParams: {
+                                    connectResult: 'success',
+                                    reason: r,
+                                },
+                            });
                         },
                         (err) => {
                             this.logger.error(
