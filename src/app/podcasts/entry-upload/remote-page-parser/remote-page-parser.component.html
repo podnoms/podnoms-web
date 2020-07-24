@@ -35,12 +35,12 @@
                         </label>
                     </td>
                     <td data-toggle="tooltip"
-                        title="{{row.value}}">{{row.key}}</td>
+                        title="{{row.key}}">{{row.value}}</td>
                     <td>
-                        <app-simple-audio-player [src]="row.value"></app-simple-audio-player>
+                        <app-simple-audio-player [src]="row.key"></app-simple-audio-player>
                     </td>
                     <td class="text-right">
-                        <app-file-size [src]="row.value"></app-file-size>
+                        <app-file-size [src]="row.key"></app-file-size>
                     </td>
                 </tr>
             </tbody>

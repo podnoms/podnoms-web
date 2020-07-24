@@ -39,6 +39,11 @@ export const environment = {
         clientId:
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com',
     },
+    patreon: {
+        clientId:
+            'GNxonPDxsZZHsnbtOy5AnpgUXt5tf84nL8D4Spn9tgyoxhZHjsNpnnNvAuvClueU',
+        redirectUri: 'https://podnoms.com/auth/redir/patreon',
+    },
     stripeKey: 'pk_live_OuzgnXHEMRQ4NueI4YVvcLYa',
     recaptchaKey: '6Ldu4acUAAAAAPNihpgZTPxECB9f9HvYEVwKXz2k',
     features: {

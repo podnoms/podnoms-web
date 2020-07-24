@@ -41,7 +41,6 @@ export const environment = {
             '357461672895-2gtfpasdoguj46vvjv0ohmuii2669ubv.apps.googleusercontent.com',
     },
     patreon: {
-        // apiKey: 'AIzaSyAw5b_4i7wRqiYGq0bTIjn9VMREFfGqMFA',
         clientId:
             'GNxonPDxsZZHsnbtOy5AnpgUXt5tf84nL8D4Spn9tgyoxhZHjsNpnnNvAuvClueU',
         redirectUri: 'https://dev.pdnm.be:4200/auth/redir/patreon',
