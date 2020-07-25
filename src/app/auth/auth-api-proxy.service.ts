@@ -98,8 +98,12 @@ export class AuthApiProxyService {
             this.httpOptions
         );
     }
-    public refreshToken(refreshToken: string): Observable<any> {
+    public refreshToken(
+        accessToken: string,
+        refreshToken: string
+    ): Observable<any> {
         return this.http.post<any>(`${environment.apiHost}/auth/refreshtoken`, {
+            accessToken: accessToken,
             refreshToken: refreshToken,
         });
     }

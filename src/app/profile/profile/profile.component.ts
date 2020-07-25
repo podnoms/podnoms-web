@@ -223,6 +223,11 @@ export class ProfileComponent extends BasePageComponent
     }
 
     connectToPatreon() {
-        window.location.href = `https://www.patreon.com/oauth2/authorize?response_type=code&client_id=${environment.patreon.clientId}&redirect_uri=${environment.patreon.redirectUri}`;
+        const url =
+            `https://www.patreon.com/oauth2/authorize?response_type=code` +
+            `&client_id=${environment.patreon.clientId}` +
+            `&redirect_uri=${environment.patreon.redirectUri}` +
+            `&scope=identity campaigns campaigns.members identity.memberships`;
+        window.location.href = url;
     }
 }
