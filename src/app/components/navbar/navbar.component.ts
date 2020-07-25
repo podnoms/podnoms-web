@@ -46,7 +46,10 @@ export class NavbarComponent {
     ) {
         this.profile$ = this.profileStoreService.entities$.pipe(
             filter((r) => r !== null && r !== []),
-            map((r) => r[0])
+            map((r) => {
+                this.logger.debug('navbar.component', 'profilePipe', r);
+                return r[0];
+            })
         );
         this.profile$.subscribe((p) => {
             this.profileHasAdmin = this.authService.checkHasRoles([

@@ -88,7 +88,10 @@ export class AuthService extends BaseService {
     }
     refreshToken(): Observable<boolean> {
         return this.podnomsAuthService
-            .refreshToken(localStorage.getItem('refresh_token'))
+            .refreshToken(
+                localStorage.getItem('auth_token'),
+                localStorage.getItem('refresh_token')
+            )
             .pipe(
                 map((res) => {
                     this._storeAuth(res);
