@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ServerShowcase } from 'app/core';
+import { SiteMessage } from 'app/core';
 
 @Component({
     selector: 'app-server-showcase-modal',
@@ -8,7 +8,7 @@ import { ServerShowcase } from 'app/core';
     styleUrls: ['./server-showcase-modal.component.scss'],
 })
 export class ServerShowcaseModalComponent implements OnInit {
-    @Input() showcase: ServerShowcase;
+    @Input() showcase: SiteMessage;
     constructor(public modal: NgbActiveModal) {}
 
     ngOnInit(): void {}

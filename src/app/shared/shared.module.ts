@@ -39,6 +39,7 @@ import { SortByPipe } from './pipes/sort-by.pipe';
 import { FilterIfPipe } from './pipes/filter-if.pipe';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/upgrade-account-dialog.component';
+import { BannerComponent } from './components/banner/banner.component';
 
 @NgModule({
     imports: [
@@ -67,6 +68,7 @@ import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/
         SpinnerButtonComponent,
         SecretHiderComponent,
         ToastComponent,
+        BannerComponent,
         FileSizeComponent,
         ModalUpdatesComponent,
         CategorySelectorComponent,
@@ -81,6 +83,7 @@ import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/
         BasePageComponent,
         BytesToHumanPipe,
         ToastComponent,
+        BannerComponent,
         ImageUploadComponent,
         LoaderComponent,
         CategorySelectorComponent,
@@ -99,6 +102,7 @@ import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/
         SortByPipe,
         FilterIfPipe,
         UpgradeAccountDialogComponent,
+        BannerComponent,
     ],
     entryComponents: [UserSlugModalComponent],
     providers: [

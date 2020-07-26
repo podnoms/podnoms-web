@@ -17,7 +17,7 @@ import { AlertService } from './core/alerts/alert.service';
 import { BaseComponent } from './shared/components/base/base.component';
 import { NGXLogger } from 'ngx-logger';
 import { LoggingService } from './services/logging.service';
-import { ServerShowcaseService } from './shared/services/server-showcase.service';
+import { SiteMessagesService } from './shared/services/site-messages.service';
 
 @Component({
     selector: 'app-root',

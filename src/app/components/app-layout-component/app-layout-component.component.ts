@@ -15,7 +15,7 @@ import { SiteUpdateMessage } from '../../core/model/site-update-message';
 import { AlertService } from '../../core/alerts/alert.service';
 import { NGXLogger } from 'ngx-logger';
 import { LoggingService } from '../../services/logging.service';
-import { ServerShowcaseService } from '../../shared/services/server-showcase.service';
+import { SiteMessagesService } from '../../shared/services/site-messages.service';
 import { Profile } from '../../core';
 import { BaseComponent } from '../../shared/components/base/base.component';
 
@@ -42,7 +42,7 @@ export class AppLayoutComponentComponent extends BaseComponent
         private profileStoreService: ProfileStoreService,
         private authService: AuthService,
         private signalr: SignalRService,
-        private serverShowcaseService: ServerShowcaseService,
+        private serverShowcaseService: SiteMessagesService,
         protected logger: NGXLogger,
         private loggingService: LoggingService,
         public uiStateService: UiStateService
