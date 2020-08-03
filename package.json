@@ -1,6 +1,6 @@
 {
     "name": "podnoms-web",
-    "version": "1.2.283",
+    "version": "1.2.284",
     "license": "MIT",
     "scripts": {
         "cy:open": "cypress open",
@@ -55,6 +55,7 @@
         "file-saver": "^2.0.2",
         "firebase": "^7.16.1",
         "flag-icon-css": "^3.4.6",
+        "global": "^4.4.0",
         "highlight.js": "~10.1.1",
         "howler": "^2.1.3",
         "install": "^0.13.0",

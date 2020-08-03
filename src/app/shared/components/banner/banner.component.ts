@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { SiteMessage } from 'app/core';
 import { tap } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
+import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
     selector: 'app-banner',
@@ -15,11 +16,18 @@ export class BannerComponent implements OnInit {
     banner$: Observable<SiteMessage>;
 
     constructor(
+        private uiStateService: UiStateService,
         private siteMessagesService: SiteMessagesService,
         private logger: NGXLogger
     ) {}
 
     ngOnInit(): void {
+        this.uiStateService.footerOpen$.subscribe((r) => {
+            if (r) {
+                this.banner$ = of(null);
+            }
+        });
+
         this.banner$ = this.siteMessagesService.getBanner().pipe(
             tap((r) => {
                 // this.isOpen = r !== null;
