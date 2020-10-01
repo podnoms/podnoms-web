@@ -174,8 +174,8 @@ export class AuthService extends BaseService {
             .pipe(map(() => true));
     }
     private _storeAuth(response: any, bootstrap: boolean = true) {
-        this.setAuthToken(response.jwt.token);
-        localStorage.setItem('refresh_token', response.refresh);
+        this.setAuthToken(response.auth.jwt.token);
+        localStorage.setItem('refresh_token', response.auth.refresh);
         if (bootstrap) {
             this.bootstrap();
         }
