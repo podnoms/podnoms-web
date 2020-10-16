@@ -5,6 +5,7 @@ import {
     Payment,
     ApiKeyRequestModel,
     Subscription,
+    Podcast,
 } from '../core';
 
 import { Observable, of } from 'rxjs';
@@ -13,18 +14,49 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
+import { DefaultDataService, HttpMethods, HttpUrlGenerator } from '@ngrx/data';
 
 @Injectable({
     providedIn: 'root',
 })
-export class ProfileDataService {
+export class ProfileDataService extends DefaultDataService<Profile> {
     profile: Profile;
     constructor(
-        private http: HttpClient,
+        http: HttpClient,
         private authService: AuthService,
-        protected logger: NGXLogger
-    ) {}
-
+        protected logger: NGXLogger,
+        httpUrlGenerator: HttpUrlGenerator
+    ) {
+        super('Profile', http, httpUrlGenerator);
+    }
+    execute(
+        method: HttpMethods,
+        url: string,
+        data?: any,
+        options?: any
+    ): Observable<any> {
+        // TODO: Big badda bug!!!
+        // this is a hack to convert API singleton to ngrx collection
+        // plz fix at earliest convenience
+        const call = super.execute(method, url, data, options);
+        if (method === 'GET') {
+            return call.pipe(
+                map((r) => {
+                    this.logger.debug('profile-data.service', 'execute', r);
+                    return Array.of(r);
+                })
+            );
+        }
+        return call;
+    }
+    // getAll(): Observable<Profile[]> {
+    //     return super.getAll().pipe(
+    //         map((r) => {
+    //             const arrayIfied = Array.of(r);
+    //             return arrayIfied;
+    //         })
+    //     );
+    // }
     getProfile(): Observable<Profile> {
         if (this.authService.isLoggedIn()) {
             if (!this.profile) {

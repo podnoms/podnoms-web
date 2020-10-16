@@ -29,6 +29,7 @@
                 ]
             }
         ],
+        "no-any": false,
         "no-arg": true,
         "no-bitwise": false,
         "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
@@ -36,6 +37,7 @@
         "no-debugger": true,
         "no-duplicate-super": true,
         "no-empty": false,
+        "no-implicit-any": false,
         "no-empty-interface": true,
         "no-eval": true,
         "no-inferrable-types": [false, "ignore-params"],

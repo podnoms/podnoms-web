@@ -8,6 +8,6 @@ export * from './profile';
 export * from './notification';
 export * from './notification-option-base';
 export * from './notification-option-text';
-export * from './server-showcase';
+export * from './site-message';
 export * from './shareable';
 export * from './subscription';

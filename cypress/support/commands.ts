@@ -8,8 +8,8 @@ Cypress.Commands.add('login', () => {
             password: Cypress.env('TEST_HARNESS_PASSWORD'),
         })
         .then((res) => {
-            localStorage.setItem('auth_token', res.body.jwt.token);
-            localStorage.setItem('refresh_token', res.body.refresh);
+            localStorage.setItem('auth_token', res.body.token.jwt);
+            localStorage.setItem('refresh_token', res.body.token.refresh);
         });
 });
 

@@ -48,3 +48,5 @@ tags
 .vscode
 yarn-error.log
 ./scripts/push.sh
+cypress/videos
+cypress/screenshots
