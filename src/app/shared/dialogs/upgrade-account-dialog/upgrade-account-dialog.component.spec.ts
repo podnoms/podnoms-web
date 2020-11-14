@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UpgradeAccountDialogComponent } from './upgrade-account-dialog.component';
 
@@ -6,7 +6,7 @@ describe('UpgradeAccountDialogComponent', () => {
   let component: UpgradeAccountDialogComponent;
   let fixture: ComponentFixture<UpgradeAccountDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UpgradeAccountDialogComponent ]
     })

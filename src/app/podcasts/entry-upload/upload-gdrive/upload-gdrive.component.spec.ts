@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UploadGdriveComponent } from './upload-gdrive.component';
 
@@ -6,7 +6,7 @@ describe('UploadGdriveComponent', () => {
   let component: UploadGdriveComponent;
   let fixture: ComponentFixture<UploadGdriveComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UploadGdriveComponent ]
     })

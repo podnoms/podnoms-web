@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OpmlPageComponent } from './opml-page.component';
 
@@ -6,7 +6,7 @@ describe('OpmlPageComponent', () => {
   let component: OpmlPageComponent;
   let fixture: ComponentFixture<OpmlPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ OpmlPageComponent ]
     })

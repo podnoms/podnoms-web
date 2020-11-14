@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApiKeysComponent } from './api-keys.component';
 
@@ -6,7 +6,7 @@ describe('ApiKeysComponent', () => {
   let component: ApiKeysComponent;
   let fixture: ComponentFixture<ApiKeysComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ApiKeysComponent ]
     })
