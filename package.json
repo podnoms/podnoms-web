@@ -57,7 +57,7 @@
         "dropzone": "5.7.1",
         "ee-first": "^1.1.1",
         "file-saver": "^2.0.2",
-        "firebase": "^7.16.1",
+        "firebase": "^8.1.2",
         "flag-icon-css": "^3.4.6",
         "global": "^4.4.0",
         "highlight.js": "~10.4.1",
