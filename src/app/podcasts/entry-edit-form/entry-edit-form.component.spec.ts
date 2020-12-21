@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EntryEditFormComponent } from './entry-edit-form.component';
 
@@ -6,7 +6,7 @@ describe('EntryEditFormComponent', () => {
   let component: EntryEditFormComponent;
   let fixture: ComponentFixture<EntryEditFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EntryEditFormComponent ]
     })

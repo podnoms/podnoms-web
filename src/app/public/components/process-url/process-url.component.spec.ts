@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ProcessUrlComponent } from './process-url.component';
 
@@ -6,7 +6,7 @@ describe('ProcessUrlComponent', () => {
   let component: ProcessUrlComponent;
   let fixture: ComponentFixture<ProcessUrlComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ProcessUrlComponent ]
     })

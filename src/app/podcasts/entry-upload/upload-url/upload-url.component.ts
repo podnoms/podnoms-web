@@ -9,10 +9,8 @@ import {
 import { Podcast, PodcastEntry } from '../../../core';
 import { EntryDataService } from '../../entry-data.service';
 import { UtilityService } from '../../../shared/services/utility.service';
-import { AlertService } from '../../../core/alerts/alert.service';
 import { NGXLogger } from 'ngx-logger';
 import { ProfileDataService } from 'app/profile/profile-data.service';
-import { EntryDeleteItemModalComponent } from '../../entry-list-item/entry-delete-item-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpgradeAccountDialogComponent } from 'app/shared/dialogs/upgrade-account-dialog/upgrade-account-dialog.component';
 
@@ -31,6 +29,7 @@ export class UploadUrlComponent implements AfterViewInit {
 
     newEntrySourceUrl: string;
     errorText: string;
+    expiredKey: boolean = false;
     progressText: string = 'Checking URL...';
     isPosting: boolean = false;
     remoteAudioResult: any = null;
@@ -38,6 +37,7 @@ export class UploadUrlComponent implements AfterViewInit {
     @ViewChild('input')
     vc: any;
     remoteFileType: string = '';
+
     constructor(
         private podcastEntryDataService: EntryDataService,
         private profileDataService: ProfileDataService,
@@ -47,14 +47,17 @@ export class UploadUrlComponent implements AfterViewInit {
     ) {
         this.logger.debug('upload-url.component', 'ctor');
     }
+
     ngAfterViewInit() {
         this.vc.nativeElement.focus();
     }
+
     isValidURL(str) {
         const a = document.createElement('a');
         a.href = str;
         return a.host && a.host !== window.location.host;
     }
+
     processPlaylist() {
         this.profileDataService.getSubscriptionLevel().subscribe((r) => {
             if (!r.subscriptionValid) {
@@ -80,15 +83,18 @@ export class UploadUrlComponent implements AfterViewInit {
             }
         });
     }
+
     resetUrl() {
         this.isPosting = false;
         this.remoteAudioResult = null;
         this.newEntrySourceUrl = '';
     }
+
     addEntry() {
         const url = this.newEntrySourceUrl;
         this.progressText = 'Checking URL...';
         this.errorText = '';
+        this.expiredKey = false;
 
         // TODO: Send URL to the server and let it figure out it's authenticity
         // get rid of the creating a PodcastEntry and seeing if it saves as validation, that's icky!
@@ -105,7 +111,7 @@ export class UploadUrlComponent implements AfterViewInit {
                     this.remoteFileType = r.type;
                     if (r.type === 'SingleItem') {
                         this.createEntry(r, url);
-                    } else if ((r.type = 'ParsedLinks')) {
+                    } else if (r.type === 'ParsedLinks') {
                         this.newEntrySourceUrl = url;
                         this.logger.debug(
                             'upload-url.component',
@@ -118,9 +124,13 @@ export class UploadUrlComponent implements AfterViewInit {
                 },
                 (err) => {
                     this.isPosting = false;
-                    this.errorText =
-                        'Could not find any supported audio at that URL';
-                    this.resetUrl();
+                    if (err.status === 417) {
+                        this.expiredKey = true;
+                    } else {
+                        this.errorText =
+                            'Could not find any supported audio at that URL';
+                        this.resetUrl();
+                    }
                 }
             );
         } else {
@@ -128,6 +138,7 @@ export class UploadUrlComponent implements AfterViewInit {
             this.resetUrl();
         }
     }
+
     onPageEntryChosen($event) {
         this.logger.debug('upload-url.component', 'YAY', $event);
         if ($event) {
@@ -136,6 +147,7 @@ export class UploadUrlComponent implements AfterViewInit {
             this.resetUrl();
         }
     }
+
     createEntry(parsedEntry: any, url: string) {
         // TODO: API should tell us that this is a playlist without calling addEntry
         this.progressText = 'Creating entry';

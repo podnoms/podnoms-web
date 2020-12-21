@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FileSizeComponent } from './file-size.component';
 
@@ -6,7 +6,7 @@ describe('FileSizeComponent', () => {
   let component: FileSizeComponent;
   let fixture: ComponentFixture<FileSizeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FileSizeComponent ]
     })

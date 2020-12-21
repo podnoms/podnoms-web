@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RedirollComponent } from './rediroll.component';
 
@@ -6,7 +6,7 @@ describe('RedirollComponent', () => {
   let component: RedirollComponent;
   let fixture: ComponentFixture<RedirollComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RedirollComponent ]
     })

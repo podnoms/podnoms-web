@@ -26,14 +26,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
 import { environment } from 'environments/environment';
-import { isUndefined } from 'util';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent extends BasePageComponent
+export class ProfileComponent
+    extends BasePageComponent
     implements OnInit, AfterViewInit {
     public chartLabels: string[] = ['Used', 'Available'];
     public chartData: number[] = [85, 15];
@@ -103,14 +103,14 @@ export class ProfileComponent extends BasePageComponent
         super();
 
         this.activeTab = this.route.snapshot.fragment ?? this.activeTab;
-        this.route.fragment.subscribe((fragment) => {
-            if (fragment) {
+        this.route.params.subscribe((param) => {
+            if (param && param['view']) {
                 this.logger.debug(
                     'profile.component',
                     'fragmentChanged',
-                    fragment
+                    param
                 );
-                this.activeTab = fragment;
+                this.activeTab = param['view'];
             }
         });
         this.logger.debug(
@@ -141,6 +141,7 @@ export class ProfileComponent extends BasePageComponent
     ngOnInit() {
         this.refreshLimits();
     }
+
     ngAfterViewInit() {
         this.route.queryParams.subscribe((params) => {
             this.logger.debug('profile.component', 'connect-return', params);
@@ -158,6 +159,7 @@ export class ProfileComponent extends BasePageComponent
             this.location.replaceState('profile');
         });
     }
+
     private _bytesToHuman(bytes: number) {
         if (bytes === 0) {
             return '0 Bytes';
@@ -188,9 +190,11 @@ export class ProfileComponent extends BasePageComponent
             }
         });
     }
+
     regenerateApiKey() {
         // this._service.regenerateApiKey().subscribe(a => (profile.apiKey = a));
     }
+
     doSave(profile: Profile) {
         this.profileDataService.updateProfile(profile).subscribe((p) => {
             if (this.imageControl.imageChanged) {

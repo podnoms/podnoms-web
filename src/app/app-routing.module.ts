@@ -82,9 +82,10 @@ const routes: Routes = [
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, {
-            anchorScrolling: 'enabled',
-            enableTracing: false,
-        }),
+    anchorScrolling: 'enabled',
+    enableTracing: false,
+    relativeLinkResolution: 'legacy'
+}),
     ],
     exports: [RouterModule],
 })
