@@ -1,6 +1,9 @@
 <div class="podcast-container-wrapper">
     <div class="block block-themed block-rounded"
         *ngIf="(podcast$ | async) as podcast">
+
+        <a class="alert-link" [routerLink]="['/profile', {view: 'apikeys'}]"> Click Me</a>
+
         <div class="block-header bg-muted">
             <h3 class="block-title text-bold">
                 {{podcast.title}}

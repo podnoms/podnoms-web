@@ -12,7 +12,7 @@ import { AuthService } from '../../auth/auth.service';
 import { environment } from 'environments/environment';
 import { switchMap, filter, take, catchError } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
-import { auth } from 'firebase';
+
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
     private isRefreshing = false;

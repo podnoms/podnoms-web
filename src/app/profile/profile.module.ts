@@ -11,6 +11,7 @@ import { UserNotificationsSettingsComponent } from './notifications/user-notific
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiKeysComponent } from './api-keys/api-keys.component';
 import { OpmlPageComponent } from './opml-page/opml-page.component';
+import { YoutubeApiKeyComponent } from './api-keys/youtube-api-key/youtube-api-key.component';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { OpmlPageComponent } from './opml-page/opml-page.component';
         UserNotificationsSettingsComponent,
         ApiKeysComponent,
         OpmlPageComponent,
+        YoutubeApiKeyComponent,
     ],
     providers: [AuthService],
 })

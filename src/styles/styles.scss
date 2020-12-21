@@ -1,3 +1,7 @@
+.bg-youtube {
+    background-color: #CC0000!important;
+}
+
 @import 'theme';
 @import 'mixin';
 @import 'include/forms';
@@ -14,10 +18,13 @@ a:hover {
 
 .bg-image {
     background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
-        url('https://cdn.podnoms.com/static/images/pn-back.jpg');
+    url('https://cdn.podnoms.com/static/images/pn-back.jpg');
     background-size: 100% 100%;
 }
+
 ::ng-deep .full-modal .modal-dialog {
     max-width: 80%;
     width: 80%;
 }
+
+
