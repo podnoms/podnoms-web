@@ -120,6 +120,11 @@ export class UploadUrlComponent implements AfterViewInit {
                         );
                         this.isPosting = false;
                         this.remoteAudioResult = r;
+                    } else if (r.type === 'Invalid') {
+                        this.isPosting = false;
+                        this.errorText =
+                            'Could not find any supported audio at that URL';
+                        this.resetUrl();
                     }
                 },
                 (err) => {
