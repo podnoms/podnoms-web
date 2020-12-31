@@ -14,6 +14,6 @@ RUN ng build --prod
 FROM nginx:1.17.5
 # COPY ./nginx/default.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder  /app/dist/ /usr/share/nginx/html
+COPY --from=builder  /app/dist/app/ /usr/share/nginx/html
 # CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
 CMD nginx -g 'daemon off;'
