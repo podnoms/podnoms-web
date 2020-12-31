@@ -17,4 +17,4 @@ jobs:
         password: ${{ secrets.AKR_PASSWORD }}
     - run: |
         docker build . -t podnoms.azurecr.io/podnoms-web:${{ github.sha }}
-        docker push mycontainer.azurecr.io/podnoms-web:${{ github.sha }}
+        docker push podnoms.azurecr.io/podnoms-web:${{ github.sha }}
