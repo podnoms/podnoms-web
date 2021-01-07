@@ -3,6 +3,7 @@ import { Shareable } from './shareable';
 
 export class Podcast extends Shareable {
     description?: string;
+    strippedDescription?: string;
     slug?: string;
     imageUrl?: string;
     thumbnailUrl?: string;
