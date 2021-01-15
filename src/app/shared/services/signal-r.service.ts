@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import {
+    HttpTransportType,
+    HubConnection,
+    HubConnectionBuilder,
+    LogLevel,
+} from '@aspnet/signalr';
 import { Observable, Subscriber } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';
@@ -32,8 +37,14 @@ export class SignalRService {
             const hub = this.connectionPool[hubName];
             if (!hub) {
                 const connection = new HubConnectionBuilder()
-                    .configureLogging(LogLevel.Error)
-                    .withUrl(`${url}?token=${token}`)
+                    .withUrl(url, {
+                        skipNegotiation: true,
+                        transport: HttpTransportType.WebSockets,
+                        accessTokenFactory: () => token,
+                    })
+                    .configureLogging(
+                        environment.production ? LogLevel.Error : LogLevel.Debug
+                    )
                     .build();
                 this.connectionPool[hubName] = new HubListener(connection);
             }
