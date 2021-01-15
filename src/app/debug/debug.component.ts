@@ -55,7 +55,7 @@ export class DebugComponent implements OnInit {
     startSignalRHubs() {
         console.log('debug.component', 'startSignalRHubs');
         this.debugHub.init('audioprocessing').then((listener) => {
-            listener.on<any>('debug', id).subscribe((result: any) => {
+            listener.on<any>('debug', 'debug-updates').subscribe((result: any) => {
                 console.log('debug.component', 'realtime message', result);
             });
         });
