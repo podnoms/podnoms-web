@@ -108,6 +108,7 @@ export class UploadUrlComponent implements AfterViewInit {
             this.isPosting = true;
             this.utilityService.checkAudioUrl(url).subscribe(
                 (r) => {
+                    debugger;
                     this.remoteFileType = r.type;
                     if (r.type === 'SingleItem') {
                         this.createEntry(r, url);

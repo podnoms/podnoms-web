@@ -1691,10 +1691,10 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@podnoms/ngx-audioplayer@^1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@podnoms/ngx-audioplayer/-/ngx-audioplayer-1.4.6.tgz#fedebd6ec0962ef91b836fd16d5bc2757ae3513f"
-  integrity sha512-v1qkl7odU36QxNQiMedSBHkYMnX5fruA7BsWjliiRJsjL1EVDPneM5AFieplPr+ZLQpHPHm+VDnndNToAmlpVA==
+"@podnoms/ngx-audioplayer@^1.4.21":
+  version "1.4.21"
+  resolved "https://registry.yarnpkg.com/@podnoms/ngx-audioplayer/-/ngx-audioplayer-1.4.21.tgz#a4afac121b121681aeac4b293e0028ad841f9e1b"
+  integrity sha512-2Fnrpw7eUUSkwXaIbGhf3iHX2Wo65v+1C2+5z1qkwKE7+fMlYgmqrZohZ4m3vqxATTqhItZVnjfTfYUYTeHVIQ==
   dependencies:
     tslib "^2.0.0"
 
