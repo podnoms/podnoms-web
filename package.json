@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.2.299",
+  "version": "1.2.300",
   "license": "MIT",
   "scripts": {
     "cy:open": "cypress open",
