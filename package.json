@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.2.301",
+  "version": "1.2.305",
   "license": "MIT",
   "scripts": {
     "cy:open": "cypress open",
@@ -41,7 +41,7 @@
     "@ngrx/store": "^10.1.2",
     "@ngrx/store-devtools": "^10.1.2",
     "@podnoms/ngx-audioplayer": "^1.4.21",
-    "@swimlane/ngx-datatable": "^18.0.0",
+    "@swimlane/ngx-datatable": "^19.0.0",
     "angular-resize-event": "^2.0.0",
     "angular2-uuid": "^1.1.1",
     "angularx-social-login": "^3.2.0",
@@ -49,7 +49,7 @@
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
-    "cypress-file-upload": "^4.0.7",
+    "cypress-file-upload": "^5.0.2",
     "default-passive-events": "^2.0.0",
     "dropzone": "^5.7.5",
     "ee-first": "^1.1.1",
@@ -84,7 +84,7 @@
     "streamsaver": "^2.0.4",
     "tslib": "^2.0.0",
     "wavesurfer.js": "^4.4.0",
-    "zone.js": "~0.10.2",
+    "zone.js": "~0.11.3",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
@@ -98,7 +98,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
-    "cypress": "4.10.0",
+    "cypress": "~6.4.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~6.0.0",
     "karma": "~5.2.3",

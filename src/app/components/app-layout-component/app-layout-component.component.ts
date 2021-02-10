@@ -102,7 +102,12 @@ export class AppLayoutComponentComponent extends BaseComponent
                                 'userupdates',
                                 'site-notices'
                             )
-                            .subscribe((result) => {
+                            .subscribe((result: SiteUpdateMessage) => {
+                                console.log(
+                                    'app-layout-component.component',
+                                    'userUpdate',
+                                    result
+                                );
                                 this.alertService.info(
                                     result.title,
                                     result.message,
