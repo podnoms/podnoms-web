@@ -1,4 +1,4 @@
-FROM node:15.5.0-buster as builder
+FROM node:14.15.4-buster as builder
 # RUN npm install -g yarn --force
 
 WORKDIR /app
@@ -9,7 +9,6 @@ COPY . .
 
 RUN yarn global add @angular/cli
 RUN ng build --prod
-
 
 FROM nginx:1.17.5
 
