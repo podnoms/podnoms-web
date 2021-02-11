@@ -1,5 +1,5 @@
 export class AudioProcessingMessage {
-    processingStatus: number;
+    processingStatus: string;
     progress: string;
     payload: any;
     /*

@@ -81,9 +81,8 @@ export class EntryListItemComponent implements OnInit {
                             this.entry.id
                         )
                         .subscribe((result: AudioProcessingMessage) => {
-                            this.entry.processingStatus = AudioProcessingMessage.getProcessingStatus(
-                                result.processingStatus
-                            );
+                            this.entry.processingStatus = result.processingStatus;
+
                             this.narrative = result.progress;
                             if (
                                 this.entry.processingStatus === 'Downloading' ||

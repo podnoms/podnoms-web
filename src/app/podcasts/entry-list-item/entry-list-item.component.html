@@ -6,14 +6,10 @@
         'caching': entry.processingStatus === 'Downloading' || entry.processingStatus === 'Uploading'|| entry.processingStatus === 'Caching',
         'processed': entry.processingStatus === 'Processed'}">
     <div class="col-md-1 text-center">
-        <div *ngIf="entry.processingStatus === 'Accepted'">
-            <i class="fas fa fa-cog fa-spin fa-3x fa-fw"></i>
-        </div>
-        <div class="avatar"
-            *ngIf="entry.processingStatus !== 'Accepted'">
+        <div class="avatar">
             <img [src]="entry.thumbnailUrl"
                 class="img-avatar img-avatar48"
-                alt="entry.title + '-image'">
+                [alt]="entry.title + '-image'">
             <span class="avatar-status badge-success"></span>
         </div>
     </div>
@@ -41,7 +37,8 @@
                 <span *ngIf="entry.processingStatus!=='Processed' &&
                              entry.processingStatus !== 'Failed'"
                     style="width: 100%">
-                    <div *ngIf="entry.processingStatus==='Processing' ||
+                    <div *ngIf="entry.processingStatus==='Accepted' ||
+                                entry.processingStatus==='Processing' ||
                                 entry.processingStatus==='Parsing' ||
                                 entry.processingStatus==='Converting'">
                         <div class="spinner-border spinner-border-sm text-primary"
@@ -49,6 +46,7 @@
                         </div>
                         <span class="ml-5">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
                     </div>
+
                     <p *ngIf="entry.processingStatus==='Downloading' ||
                               entry.processingStatus==='Uploading' ||
                               entry.processingStatus==='Caching'">
