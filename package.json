@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.2.307",
+  "version": "1.2.310",
   "license": "MIT",
   "scripts": {
     "cy:open": "cypress open",
@@ -28,11 +28,11 @@
     "@angular/platform-browser-dynamic": "~11.1.2",
     "@angular/router": "~11.1.2",
     "@angular/service-worker": "~11.1.2",
-    "@aspnet/signalr": "^1.1.4",
     "@auth0/angular-jwt": "^5.0.1",
     "@briebug/cypress-schematic": "^4.4.0",
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@microsoft/applicationinsights-web": "^2.5.11",
+    "@microsoft/signalr": "^5.0.6",
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
     "@ng-select/ng-select": "^6.1.0",
     "@ngrx/data": "^10.1.2",

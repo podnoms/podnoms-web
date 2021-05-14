@@ -4,7 +4,7 @@ import {
     HubConnection,
     HubConnectionBuilder,
     LogLevel,
-} from '@aspnet/signalr';
+} from '@microsoft/signalr';
 import { Observable, Subscriber } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';

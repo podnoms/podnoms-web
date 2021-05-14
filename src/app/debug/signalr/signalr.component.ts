@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from 'environments/environment';
 import { AuthService } from 'app/auth/auth.service';
 import { ProfileDataService } from 'app/profile/profile-data.service';
