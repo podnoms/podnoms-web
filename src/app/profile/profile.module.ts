@@ -5,7 +5,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../components/components.module';
-import { ChartsModule } from 'ng2-charts';
 import { PaymentsModule } from '../payments/payments.module';
 import { UserNotificationsSettingsComponent } from './notifications/user-notifications-settings/user-notifications-settings.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +18,6 @@ import { YoutubeApiKeyComponent } from './api-keys/youtube-api-key/youtube-api-k
         SharedModule,
         ComponentsModule,
         ProfileRoutingModule,
-        ChartsModule,
         PaymentsModule,
         NgbModule,
     ],

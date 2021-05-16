@@ -9,7 +9,6 @@ import { SideOverlayComponent } from './side-overlay/side-overlay.component';
 import { FooterComponent } from './footer/footer.component';
 import { FooterPlayerComponent } from './footer/footer-player/footer-player.component';
 import { PasswordCheckerComponent } from './password-checker/password-checker.component';
-import { ChartsModule } from 'ng2-charts';
 import { SidebarPodcastItemComponent } from './sidebar/sidebar-podcast-item/sidebar-podcast-item.component';
 import {
     NgbTooltipModule,
@@ -52,7 +51,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
         CommonModule,
         RouterModule,
         SharedModule,
-        ChartsModule,
         MomentModule,
         PerfectScrollbarModule,
         NgxAudioplayerModule,

@@ -1,5 +1,5 @@
 <div *ngIf="profile$ | async; let profile; else loading"
-     class="block p-20">
+    class="block p-20">
 
     <ul ngbNav
         #nav="ngbNav"
@@ -16,26 +16,26 @@
                         <div class="row">
                             <div class="col-md-7 pr-20">
                                 <form action=""
-                                      method="post"
-                                      onsubmit="return false;">
+                                    method="post"
+                                    onsubmit="return false;">
                                     <div class="row">
                                         <div class="col-md-7">
                                             <div class="form-group row">
                                                 <div class="col-6">
                                                     <label for="first-name">Firstname</label>
                                                     <input type="text"
-                                                           class="form-control form-control-lg-disabled"
-                                                           id="first-name"
-                                                           name="first-name"
-                                                           [(ngModel)]="profile.firstName">
+                                                        class="form-control form-control-lg-disabled"
+                                                        id="first-name"
+                                                        name="first-name"
+                                                        [(ngModel)]="profile.firstName">
                                                 </div>
                                                 <div class="col-6">
                                                     <label for="last-name">Lastname</label>
                                                     <input type="text"
-                                                           class="form-control form-control-lg-disabled"
-                                                           id="last-name"
-                                                           name="last-name"
-                                                           [(ngModel)]="profile.lastName">
+                                                        class="form-control form-control-lg-disabled"
+                                                        id="last-name"
+                                                        name="last-name"
+                                                        [(ngModel)]="profile.lastName">
                                                 </div>
                                             </div>
                                         </div>
@@ -44,26 +44,26 @@
                                                 <div class="col-12">
                                                     <label for="slug-box">Username</label>
                                                     <div class="input-group"
-                                                         [ngClass]="slugError ? 'is-invalid' : ''">
+                                                        [ngClass]="slugError ? 'is-invalid' : ''">
                                                         <input type="text"
-                                                               class="form-control form-control-lg-disabled"
-                                                               id="slug-box"
-                                                               name="slug-box"
-                                                               autocomplete="off"
-                                                               required=""
-                                                               [(ngModel)]="profile.slug"
-                                                               (keyup)="searchTerm$.next($event.target.value)">
+                                                            class="form-control form-control-lg-disabled"
+                                                            id="slug-box"
+                                                            name="slug-box"
+                                                            autocomplete="off"
+                                                            required=""
+                                                            [(ngModel)]="profile.slug"
+                                                            (keyup)="searchTerm$.next($event.target.value)">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text input-group-lg">
                                                                 <i class="fa fa-asterisk"
-                                                                   [ngClass]="slugging ? 'fa-spin' : ''"></i>
+                                                                    [ngClass]="slugging ? 'fa-spin' : ''"></i>
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="invalid-feedback"
-                                                 *ngIf="slugError">{{slugError}}</div>
+                                                *ngIf="slugError">{{slugError}}</div>
                                             <div class="form-text text-muted text-danger">
                                                 Changing this will change all your RSS URLs but we will redirect the old
                                                 one to the new one.
@@ -74,10 +74,10 @@
                                         <div class="col-md-3">
                                             <label for="twitter-handle">Twitter Handle</label>
                                             <input type="text"
-                                                   class="form-control form-control-lg-disabled"
-                                                   id="twitter-handle"
-                                                   name="twitter-handle"
-                                                   [(ngModel)]="profile.twitterHandle">
+                                                class="form-control form-control-lg-disabled"
+                                                id="twitter-handle"
+                                                name="twitter-handle"
+                                                [(ngModel)]="profile.twitterHandle">
                                             <div class="form-text text-muted text-danger">
                                                 You will need to fill this if you want to create an episode by replying
                                                 to a tweet
@@ -88,8 +88,8 @@
                                         <div class="col-md-12">
                                             <label>Profile Image</label>
                                             <app-image-upload [imageUrl]="profile.profileImageUrl"
-                                                              [allowRandom]="true"
-                                                              #imageControl></app-image-upload>
+                                                [allowRandom]="true"
+                                                #imageControl></app-image-upload>
                                         </div>
                                     </div>
                                 </form>
@@ -103,7 +103,7 @@
                                             </div>
                                             <div class="block-content">
                                                 <button class="btn btn-outline-info mr-5 mb-5"
-                                                        (click)="connectToPatreon()">
+                                                    (click)="connectToPatreon()">
                                                     <i class="fab fa-patreon"></i>
                                                     Connect to Patreon
                                                 </button>
@@ -122,14 +122,14 @@
                                             </div>
                                             <div class="block-content">
                                                 <div class="js-pie-chart pie-chart js-pie-chart-enabled">
-                                                    <canvas baseChart
+                                                    <!-- <canvas baseChart
                                                             #usageChart
                                                             class="chart"
                                                             [data]="chartData"
                                                             [labels]="chartLabels"
                                                             [chartType]="'doughnut'"
                                                             [options]="chartOptions">
-                                                    </canvas>
+                                                    </canvas> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -168,16 +168,16 @@
         <li class="nav-item ml-auto">
             <div class="block-options mr-15 mt-5">
                 <button type="submit"
-                        class="btn btn-outline-secondary"
-                        (click)="doSave(profile)"
-                        [disabled]="slugError">
+                    class="btn btn-outline-secondary"
+                    (click)="doSave(profile)"
+                    [disabled]="slugError">
                     <i class="fa fa-save mr-5"></i>Update Profile
                 </button>
             </div>
         </li>
     </ul>
     <div [ngbNavOutlet]="nav"
-         class="mt-2"></div>
+        class="mt-2"></div>
 </div>
 
 <ng-template #loading>
