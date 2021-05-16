@@ -52,4 +52,4 @@ export const environment = {
     },
     logConfig: _logConfig,
 };
-import 'zone.js/dist/zone-error';
+import 'zone.js/plugins/zone-error';
