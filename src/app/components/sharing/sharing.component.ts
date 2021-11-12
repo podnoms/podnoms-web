@@ -1,17 +1,11 @@
-import { ConstantsService } from './../../shared/services/constants.service';
 import {
-    Component,
-    Input,
-    ViewChild,
-    Output,
-    EventEmitter,
-    AfterViewInit,
-    ElementRef,
+    AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild
 } from '@angular/core';
+import { environment } from 'environments/environment';
 import { Shareable } from '../../core';
 import { AlertService } from '../../core/alerts/alert.service';
 import { SharingService } from '../../shared/services/sharing.service';
-import { environment } from 'environments/environment';
+import { ConstantsService } from './../../shared/services/constants.service';
 
 @Component({
     selector: 'app-sharing',
@@ -24,7 +18,7 @@ export class SharingComponent implements AfterViewInit {
     @Output() shareComplete: EventEmitter<boolean> = new EventEmitter<
         boolean
     >();
-    // tslint:disable-next-line: max-line-length
+    // eslint-disable-next-line max-len
     error: string = '';
     email: string = '';
     message: string = '';
@@ -42,7 +36,6 @@ export class SharingComponent implements AfterViewInit {
         private alertService: AlertService,
         private constants: ConstantsService
     ) {}
-    ngOnInit() {}
 
     ngAfterViewInit() {
         setTimeout(() => {

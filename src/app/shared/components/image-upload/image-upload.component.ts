@@ -1,25 +1,16 @@
 import {
-    Component,
-    Input,
-    ViewChild,
-    ElementRef,
-    Renderer2,
-    OnInit,
-    Output,
-    EventEmitter,
-    SimpleChange,
-    OnChanges,
+    Component, ElementRef, Input, OnInit, Renderer2, ViewChild
 } from '@angular/core';
-import { ImageService } from '../../services/image.service';
-import { Observable, of } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
+import { Observable, of } from 'rxjs';
+import { ImageService } from '../../services/image.service';
 
 @Component({
     selector: 'app-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
 })
-export class ImageUploadComponent implements OnInit, OnChanges {
+export class ImageUploadComponent implements OnInit {
     private _imageFileBuffer: File;
     defaultImage: string = 'assets/img/image-placeholder.png';
     image: any = new Image();
@@ -41,12 +32,7 @@ export class ImageUploadComponent implements OnInit, OnChanges {
         this.image.src = this.imageUrl;
         this._initPasteHandler();
     }
-    ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
-        // this.logger.debug('image-upload.component', 'ngOnchanges', changes);
-        // if (changes && changes.imageUrl && !this.image.src) {
-        //     this.image.src = changes.imageUrl.currentValue;
-        // }
-    }
+
     _initPasteHandler() {
         this.renderer.listen('document', 'paste', (e) => {
             this.logger.debug('Paste', e);

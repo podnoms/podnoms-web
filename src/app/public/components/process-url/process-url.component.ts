@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'app/core/alerts/alert.service';
 import { UiStateService } from 'app/core/ui-state.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NGXLogger } from 'ngx-logger';
 import { UrlProcessorService } from 'app/public/services/url-processor.service';
 import { SignalRService } from 'app/shared/services/signal-r.service';
-import { AudioProcessingMessage } from '../../../core/model/audio';
-import { saveAs } from 'file-saver';
-import { AlertService } from 'app/core/alerts/alert.service';
 import { environment } from 'environments/environment';
+import { NGXLogger } from 'ngx-logger';
+import { AudioProcessingMessage } from '../../../core/model/audio';
 
 @Component({
     selector: 'app-process-url',
     templateUrl: './process-url.component.html',
     styleUrls: ['./process-url.component.scss'],
 })
-export class ProcessUrlComponent implements OnInit {
+export class ProcessUrlComponent {
     urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
     form: FormGroup;
     status = '';
@@ -36,8 +35,6 @@ export class ProcessUrlComponent implements OnInit {
             ],
         });
     }
-
-    ngOnInit(): void {}
 
     downloadLink(url: string) {
         const anchor = document.createElement('a');

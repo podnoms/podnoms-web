@@ -1,22 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { Profile } from '../core';
-import { ProfileStoreService } from '../profile/profile-store.service';
-import { AuthService } from '../auth/auth.service';
-import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
-import { takeUntil, skip, map, first, filter, tap, take } from 'rxjs/operators';
-import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
 import { UiStateService } from 'app/core/ui-state.service';
-import { NGXLogger } from 'ngx-logger';
+import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 import { ProfileDataService } from 'app/profile/profile-data.service';
+import { NGXLogger } from 'ngx-logger';
+import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
+import { ProfileStoreService } from '../profile/profile-store.service';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
     private _destroyed$: Subject<any>;
     loaded: boolean = false;
     constructor(
@@ -61,6 +59,7 @@ export class HomeComponent implements OnDestroy {
                     (err) => {
                         this.logger.error('home.component', 'err', err);
                         this.authService.logout();
+                        window.location.reload();
                     }
                 );
         } else {

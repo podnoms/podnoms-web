@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthApiProxyService } from '../../auth/auth-api-proxy.service';
 import { AlertService } from '../../core/alerts/alert.service';
 
@@ -7,15 +7,13 @@ import { AlertService } from '../../core/alerts/alert.service';
     templateUrl: './roles.component.html',
     styleUrls: ['./roles.component.scss'],
 })
-export class RolesComponent implements OnInit {
+export class RolesComponent {
     user: string = '';
     role: string = '';
     constructor(
         private podnomsAuthService: AuthApiProxyService,
         private alertService: AlertService
     ) {}
-
-    ngOnInit(): void {}
 
     addToRole() {
         if (this.user && this.role) {

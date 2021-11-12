@@ -1,22 +1,22 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { NotificationControlService } from '../services/notification-control.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NotificationDataService } from '../services/notification-data.service';
-import { NotificationStoreService } from '../services/notification-store.service';
+import { NGXLogger } from 'ngx-logger';
 import { Podcast } from '../../../core';
+import { AlertService } from '../../../core/alerts/alert.service';
 import { Notification } from '../../../core/model/notification';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
 import { PodcastStoreService } from '../../podcast-store.service';
-import { AlertService } from '../../../core/alerts/alert.service';
-import { NGXLogger } from 'ngx-logger';
+import { NotificationControlService } from '../services/notification-control.service';
+import { NotificationDataService } from '../services/notification-data.service';
+import { NotificationStoreService } from '../services/notification-store.service';
 
 @Component({
     selector: 'app-notification-modal',
     templateUrl: './notification-modal.component.html',
     styleUrls: ['./notification-modal.component.scss'],
 })
-export class NotificationModalComponent implements OnInit {
+export class NotificationModalComponent {
     @Input()
     podcast: Podcast;
 
@@ -36,7 +36,6 @@ export class NotificationModalComponent implements OnInit {
         private logger: NGXLogger
     ) {}
 
-    ngOnInit() {}
     openModal(type: string) {
         this.nds.getConfig(type).subscribe((r) => {
             this.logger.debug('notifications.component', 'addNotification', r);

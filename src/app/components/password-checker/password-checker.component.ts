@@ -39,7 +39,7 @@ export class PasswordCheckerComponent implements OnInit, OnChanges {
         'Not even nearly secure.',
         'You can do better',
         'Ok, I guess',
-        // tslint:disable-next-line:quotemark
+        // eslint-disable-next-line quotes, @typescript-eslint/quotes
         'Excellent',
         'Perfection!!!',
     ];

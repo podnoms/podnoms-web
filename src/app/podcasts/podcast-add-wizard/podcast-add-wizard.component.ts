@@ -1,28 +1,25 @@
 import {
-    Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    ViewChild,
-    ElementRef,
     AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
     HostListener,
+    Input, Output,
+    ViewChild
 } from '@angular/core';
-import { Podcast, Category } from '../../core';
-import { UtilityService } from '../../shared/services/utility.service';
+import { Category, Podcast } from '../../core';
 import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
-import { UiStateService } from 'app/core/ui-state.service';
-import { NGXLogger } from 'ngx-logger';
+import { UtilityService } from '../../shared/services/utility.service';
 
 @Component({
     selector: 'app-podcast-add-wizard',
     templateUrl: './podcast-add-wizard.component.html',
     styleUrls: ['./podcast-add-wizard.component.scss'],
 })
-export class PodcastAddWizardComponent extends BasePageComponent
-    implements OnInit, AfterViewInit {
+export class PodcastAddWizardComponent
+    extends BasePageComponent
+    implements AfterViewInit {
     currentStep: number = 0;
     errorMessage: string;
     @Input()
@@ -46,14 +43,7 @@ export class PodcastAddWizardComponent extends BasePageComponent
             this.next();
         }
     }
-    ngOnInit() {
-        // if (!this.podcast.imageUrl) {
-        //     this.utilityService.getTemporaryPodcastImageUrl().subscribe(u => {
-        //         this.podcast.imageUrl = u;
-        //         this.imageControl.updateImage(u);
-        //     });
-        // }
-    }
+
     ngAfterViewInit() {
         this.podcastName.nativeElement.focus();
     }

@@ -1,23 +1,19 @@
 import {
-    Component,
-    OnInit,
     AfterViewInit,
-    ViewChild,
-    ElementRef,
-    OnDestroy,
+    Component,
+    OnDestroy, ViewChild
 } from '@angular/core';
-import { AudioService, PlayState } from '../../../core/audio.service';
 import { NowPlaying } from 'app/core/model/now-playing';
 import { WaveformService } from 'app/shared/services/waveform.service';
-import { NgxAudioplayerComponent } from '@podnoms/ngx-audioplayer';
 import { NGXLogger } from 'ngx-logger';
+import { AudioService, PlayState } from '../../../core/audio.service';
 
 @Component({
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
     styleUrls: ['./footer-player.component.scss'],
 })
-export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FooterPlayerComponent implements AfterViewInit, OnDestroy {
     @ViewChild('player')
     player: any;
 
@@ -30,7 +26,6 @@ export class FooterPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         private waveformService: WaveformService,
         protected logger: NGXLogger
     ) {}
-    ngOnInit() {}
     ngAfterViewInit() {
         this.audioService.nowPlaying$.subscribe((nowPlaying) => {
             if (nowPlaying.url) {

@@ -1,20 +1,17 @@
-import { Component } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { UiStateService } from 'app/core/ui-state.service';
-import { BaseComponent } from '../base/base.component';
-import { NGXLogger } from 'ngx-logger';
-import { LoggingService } from 'app/services/logging.service';
-import { AppInjector } from 'app/services/app-injector.service';
-import { Route } from '@angular/compiler/src/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntil, map } from 'rxjs/operators';
+import { AppInjector } from 'app/services/app-injector.service';
+import { LoggingService } from 'app/services/logging.service';
 import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     selector: 'app-base-page',
     template: '',
 })
-export class BasePageComponent extends BaseComponent {
+export class BasePageComponent extends BaseComponent implements OnDestroy {
     private __loggingService: LoggingService;
     private __router: Router;
     private __activatedRoute: ActivatedRoute;

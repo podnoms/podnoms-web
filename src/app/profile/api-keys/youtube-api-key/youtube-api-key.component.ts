@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiKeyService } from '../../../services/api-key.service';
+import { Component } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
     FormGroup,
-    Validators,
+    Validators
 } from '@angular/forms';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { NGXLogger } from 'ngx-logger';
+import { ApiKeyService } from '../../../services/api-key.service';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 
 @Component({
     selector: 'app-youtube-api-key',
     templateUrl: './youtube-api-key.component.html',
     styleUrls: ['./youtube-api-key.component.scss'],
 })
-export class YoutubeApiKeyComponent
-    extends BasePageComponent
-    implements OnInit {
+export class YoutubeApiKeyComponent extends BasePageComponent {
     public keyForm: FormGroup;
     reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
@@ -39,8 +37,6 @@ export class YoutubeApiKeyComponent
             url: new FormControl(this.keyText, [Validators.pattern(this.reg)]),
         });
     }
-
-    ngOnInit(): void {}
 
     get key() {
         return this.keyForm.get('key');

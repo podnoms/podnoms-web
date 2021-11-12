@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-interstitial',
     templateUrl: './interstitial.component.html',
-    styleUrls: ['./interstitial.component.scss']
+    styleUrls: ['./interstitial.component.scss'],
 })
-export class InterstitialComponent implements OnInit {
+export class InterstitialComponent {
     constructor() {}
-
-    ngOnInit() {}
 }

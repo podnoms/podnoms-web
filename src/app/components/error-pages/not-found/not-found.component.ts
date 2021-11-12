@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BasePageComponent } from 'app/shared/components/base-page/base-page.component';
-import { UiStateService } from 'app/core/ui-state.service';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'app-not-found',
@@ -12,6 +10,4 @@ export class NotFoundComponent extends BasePageComponent {
     constructor() {
         super();
     }
-
-    ngOnInit(): void {}
 }

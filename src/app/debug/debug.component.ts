@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertService } from 'app/core/alerts/alert.service';
 import { SignalRService } from 'app/shared/services/signal-r.service';
 import { NGXLogger } from 'ngx-logger';
-import { AudioProcessingMessage } from '../core/model/audio';
 @Component({
     selector: 'app-debug',
     templateUrl: './debug.component.html',
     styleUrls: ['./debug.component.scss'],
 })
-export class DebugComponent implements OnInit {
+export class DebugComponent {
     constructor(
         private debugHub: SignalRService,
         private alertService: AlertService,
         private logger: NGXLogger
     ) {}
-
-    ngOnInit() {}
-
     doSuccess() {
         this.alertService.success(
             'Hello Sailor',
@@ -55,9 +51,11 @@ export class DebugComponent implements OnInit {
     startSignalRHubs() {
         console.log('debug.component', 'startSignalRHubs');
         this.debugHub.init('audioprocessing').then((listener) => {
-            listener.on<any>('debug', 'debug-updates').subscribe((result: any) => {
-                console.log('debug.component', 'realtime message', result);
-            });
+            listener
+                .on<any>('debug', 'debug-updates')
+                .subscribe((result: any) => {
+                    console.log('debug.component', 'realtime message', result);
+                });
         });
     }
 }

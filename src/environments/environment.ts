@@ -1,4 +1,5 @@
-import { NgxLoggerLevel, LoggerConfig } from 'ngx-logger';
+import { LoggerConfig, NgxLoggerLevel } from 'ngx-logger';
+import 'zone.js/plugins/zone-error';
 
 const _logConfig: LoggerConfig = {
     // serverLoggingUrl: '/api/logs',
@@ -11,8 +12,8 @@ export const environment = {
     production: false,
     publicPageEnabled: true,
     signalRHost: 'https://dev.pdnm.be:5001',
-    //    apiHost: 'https://api.podnoms.com',
-    apiHost: 'https://dev.pdnm.be:5001',
+    apiHost: 'https://api.podnoms.com',
+    // apiHost: 'https://dev.pdnm.be:5001',
     radioHost: 'http://localhost:8000',
     radioMount: 'podnoms',
     vapidPublicKey:
@@ -52,4 +53,3 @@ export const environment = {
     },
     logConfig: _logConfig,
 };
-import 'zone.js/plugins/zone-error';

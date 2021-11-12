@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ScriptService } from '../../core/scripts/script.service';
-import { NGXLogger } from 'ngx-logger';
-import { map } from 'rxjs/operators';
 declare var FB: any;
 @Injectable({
     providedIn: 'root',
