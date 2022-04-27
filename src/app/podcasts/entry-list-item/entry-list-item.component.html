@@ -78,10 +78,10 @@
                             class="fa fa-cog fa-spin">
                         </i>
                         <i *ngSwitchCase="playStates.playing"
-                            class="fa fas fa-pause">
+                            class= "fa-solid fa-pause">
                         </i>
                         <i *ngSwitchDefault
-                            class="fa fas fa-play">
+                            class= "fa-solid fa-play">
                         </i>
                     </div>
                 </button>
@@ -113,7 +113,7 @@
                     data-toggle="tooltip"
                     title="Download episode">
                     <i *ngIf="!preparingDownload"
-                        class="fa fas fa-cloud-download-alt"></i>
+                        class= "fa-solid fa-cloud-download-alt"></i>
                     <i *ngIf="preparingDownload"
                         class="fa fa-cog fa-spin text-success"></i>
                 </button>
@@ -123,7 +123,7 @@
                     [routerLink]="['../entry', entry?.id, 'edit']"
                     data-toggle="tooltip"
                     title="Edit episode">
-                    <i class="fa fas fa-pencil-alt"></i>
+                    <i class= "fa-solid fa-pencil-alt"></i>
                 </a>
             </div>
             <div class="btn-group">

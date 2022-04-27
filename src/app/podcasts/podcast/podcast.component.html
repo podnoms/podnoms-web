@@ -13,7 +13,7 @@
                     <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
                         title="Edit podcast"
                         class="btn-block-option">
-                        <i class="fa fas fa-pencil-alt"
+                        <i class= "fa-solid fa-pencil-alt"
                             aria-hidden="true"></i>
                         <span class="d-none d-md-inline-block">&nbsp;Edit</span>
                     </a>
@@ -42,7 +42,7 @@
                             data-flip="false"
                             aria-haspopup="true"
                             aria-expanded="false">
-                            <i class="fa fas fa-cloud-upload-alt"></i>
+                            <i class= "fa-solid fa-cloud-upload-alt"></i>
                             <span class="d-none d-lg-inline-block">&nbsp;Upload from
                                 file</span>
                         </button>
@@ -51,7 +51,7 @@
                             <a class="dropdown-item"
                                 id="upload-local-file"
                                 (click)="startUpload(uploadModes.fromLocalFile)">
-                                <i class="fa fas fa-cloud-upload-alt mr-5"></i>
+                                <i class= "fa-solid fa-cloud-upload-alt mr-5"></i>
                                 Local
                                 PC</a>
                             <div class="dropdown-divider"></div>
@@ -59,13 +59,13 @@
                                 id="upload-from-dropbox"
                                 href="javascript:void(0)"
                                 (click)="startUpload(uploadModes.fromDropbox)">
-                                <i class="fa fab fa-dropbox mr-5"></i>Dropbox
+                                <i class="fa-brands fa-dropbox mr-5"></i>Dropbox
                             </a>
                             <a class="dropdown-item"
                                 id="upload-from-google"
                                 href="javascript:void(0)"
                                 (click)="startUpload(uploadModes.fromGoogleDrive)">
-                                <i class="fa fab fa-google-drive mr-5"></i>Google
+                                <i class="fa-brands fa-google-drive mr-5"></i>Google
                                 Drive</a>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
             data-class="animated fadeInUp"
             data-timeout="300"
             [routerLink]="['add', { useWizard: 'true' }]">
-            <i class="fa fas fa-plus mr-10"></i>
+            <i class= "fa-solid fa-plus mr-10"></i>
             Create new podcast
         </a>
     </div>

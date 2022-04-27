@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SocialLoginModule } from 'angularx-social-login';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule, Profile } from './core';
@@ -32,62 +31,64 @@ import { ErrorHandlerService } from './services/error-handler.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeIE, 'ie');
+
 @NgModule({
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        CoreModule,
-        ComponentsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        AppStoreModule,
-        AuthModule,
-        SharedModule, // import here to make sure that AuthService is a singleton
-        AngularFireModule.initializeApp({
-            apiKey: environment.firebase.apiKey,
-            authDomain: environment.firebase.authDomain,
-            databaseURL: environment.firebase.databaseURL,
-            storageBucket: environment.firebase.storageBucket,
-            messagingSenderId: environment.firebase.messagingSenderId,
-        }),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule,
-        AngularFireMessagingModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production,
-        }),
-        LoggerModule.forRoot(environment.logConfig),
-        SocialLoginModule,
-        NgbModule,
-    ],
-    providers: [
-        UpdateService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true,
-        },
-        { provide: LOCALE_ID, useValue: 'en-IE' },
-        {
-            provide: 'SocialAuthServiceConfig',
-            useValue: authServiceConfig,
-        },
-        { provide: ErrorHandler, useClass: ErrorHandlerService },
-        AppDispatchers,
-    ],
-    declarations: [AppComponent, InterstitialComponent, HomeComponent],
-    bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    CoreModule,
+    ComponentsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    AppStoreModule,
+    AuthModule,
+    SharedModule, // import here to make sure that AuthService is a singleton
+    AngularFireModule.initializeApp({
+      apiKey: environment.firebase.apiKey,
+      authDomain: environment.firebase.authDomain,
+      databaseURL: environment.firebase.databaseURL,
+      storageBucket: environment.firebase.storageBucket,
+      messagingSenderId: environment.firebase.messagingSenderId,
+    }),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
+    LoggerModule.forRoot(environment.logConfig),
+    SocialLoginModule,
+    NgbModule,
+  ],
+  providers: [
+    UpdateService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+    { provide: LOCALE_ID, useValue: 'en-IE' },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: authServiceConfig,
+    },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    AppDispatchers,
+  ],
+  declarations: [AppComponent, InterstitialComponent, HomeComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
-    profile$: Observable<Profile[]>;
-    constructor(
-        profileStoreService: ProfileStoreService,
-        private logger: NGXLogger
-    ) {
-        this.profile$ = profileStoreService.entities$;
-        if (environment.production) {
-            console.log(
-                `%c ________________________________________
+  profile$: Observable<Profile[]>;
+
+  constructor(
+    profileStoreService: ProfileStoreService,
+    private logger: NGXLogger
+  ) {
+    this.profile$ = profileStoreService.entities$;
+    if (environment.production) {
+      console.log(
+        `%c ________________________________________
 < mooooooooooooooooooooooooooooooooooooo >
 <   🦄🧙Looking under the hood🦄?        >
 <  Join us: http://github.com/podnoms    >
@@ -97,8 +98,8 @@ export class AppModule {
             (__)\\       )\\/\\
                 ||----w |
                 ||     ||`,
-                'font-family:monospace; color: fuchsia; font-size: x-large'
-            );
-        }
+        'font-family:monospace; color: fuchsia; font-size: x-large'
+      );
     }
+  }
 }
