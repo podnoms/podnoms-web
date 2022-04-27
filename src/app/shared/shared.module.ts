@@ -104,7 +104,6 @@ import { BannerComponent } from './components/banner/banner.component';
         UpgradeAccountDialogComponent,
         BannerComponent,
     ],
-    entryComponents: [UserSlugModalComponent],
     providers: [
         UtilityService,
         SignalRService,
@@ -116,6 +115,6 @@ import { BannerComponent } from './components/banner/banner.component';
             useClass: TokenInterceptor,
             multi: true,
         },
-    ],
+    ]
 })
 export class SharedModule {}

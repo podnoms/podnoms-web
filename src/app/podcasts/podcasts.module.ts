@@ -87,17 +87,11 @@ import { environment } from 'environments/environment';
         PodcastEditFormDetailsComponent,
         PodcastEditFormAdvancedComponent,
     ],
-    entryComponents: [
-        PodcastDeleteComponent,
-        EntryDeleteItemModalComponent,
-        EntryLogsComponent,
-        NotificationItemDeleteComponent,
-    ],
     providers: [
         PodcastStoreService,
         NotificationStoreService,
         NotificationControlService,
-    ],
+    ]
 })
 export class PodcastsModule {
     constructor() {
