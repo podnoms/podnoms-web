@@ -12,8 +12,8 @@ export const environment = {
     production: false,
     publicPageEnabled: true,
     signalRHost: 'https://dev.pdnm.be:5001',
-    apiHost: 'https://api.podnoms.com',
-    // apiHost: 'https://dev.pdnm.be:5001',
+    // apiHost: 'https://api.podnoms.com',
+    apiHost: 'https://dev.pdnm.be:5001',
     radioHost: 'http://localhost:8000',
     radioMount: 'podnoms',
     vapidPublicKey:

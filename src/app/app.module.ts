@@ -29,6 +29,7 @@ import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
 import { AuthModule } from './auth/auth.module';
 import authServiceConfig from './auth/auth-config';
 import { ErrorHandlerService } from './services/error-handler.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeIE, 'ie');
 @NgModule({
@@ -57,6 +58,7 @@ registerLocaleData(localeIE, 'ie');
         }),
         LoggerModule.forRoot(environment.logConfig),
         SocialLoginModule,
+        NgbModule,
     ],
     providers: [
         UpdateService,
