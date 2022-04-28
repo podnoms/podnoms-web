@@ -11,7 +11,7 @@
             </button>
             <button type="button"
                 class="btn btn-circle btn-dual-secondary"
-                data-toggle="layout"
+                data-bs-toggle="layout"
                 data-action="header_search_on"
                 (click)="searchActive = true"
                 aria-label="Toggle search">
@@ -89,71 +89,80 @@
                 <button type="button"
                     class="btn btn-rounded btn-dual-secondary"
                     id="page-header-user-dropdown"
-                    data-toggle="dropdown"
-                    aria-label="Open menue">
+                    data-bs-toggle="dropdown"
+                    aria-label="Open menu">
                     <span class="d-none d-md-inline-block profile-dropdown-button">
                         {{profile.firstName}}
                         {{profile.lastName}}
                     </span>
                     <i class="fa fa-angle-down ml-5"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right min-width-150">
-                    <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase profile-dropdown-title">
-                        {{profile.firstName + ' ' + profile.lastName}}
-                    </h5>
-                    <a class="dropdown-item"
+                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0">
+                    <div class="px-2 py-3 bg-body-light rounded-top">
+                        <h5 class="h6 text-center mb-0">
+                            User Admin
+                        </h5>
+                    </div>
+
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         [routerLink]="['/profile']">
-                        <i class="fa fa-user mr-5"></i>
-                        Profile</a>
-                    <a class="dropdown-item"
+                        <span>Edit Profile</span>
+                        <i class="fa fa-fw fa-user opacity-25"></i>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         *ngIf="profileHasAdmin"
                         [routerLink]="['/admin']">
-                        <i class="fa fa-flag mr-5"></i>
-                        Admin</a>
-                    <a class="dropdown-item"
+                        <span>Admin</span>
+                        <i class="fa fa-flag mr-5 opacity-50"></i>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         *ngIf="profileHasAdmin"
                         [routerLink]="['/debug']">
-                        <i class="fa fa-bug mr-5"></i>
-                        Debug</a>
-                    <a class="dropdown-item"
+                        <i class="fa fa-bug mr-5 opacity-50"></i>
+                        Debug
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         *ngIf="profileHasAdmin"
                         [routerLink]="['/debug/signalr']">
-                        <i class="fa fa-chalkboard-teacher mr-5"></i>
-                        SignalR
+                        <span>SignalR</span>
+                        <i class="fa fa-chalkboard-teacher mr-5 opacity-50"></i>
                     </a>
-                    <a class="dropdown-item"
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         *ngIf="profileHasAdmin"
                         (click)="about()">
-                        <i class="fas fa-info-circle mr-5"></i>
-                        Software Versions
+                        <span>Software Versions</span>
+                        <i class="fas fa-info-circle mr-5 opacity-50"></i>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item"
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         [routerLink]="['/_/privacy']">
-                        <i class= "fa-solid fa-user-shield mr-5"></i>
-                        Privacy</a>
-                    <a class="dropdown-item"
+                        <span>Privacy</span>
+                        <i class="fa-solid fa-user-shield mr-5 opacity-50"></i>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         [routerLink]="['/_/terms']">
-                        <i class= "fa-solid fa-balance-scale mr-5"></i>
-                        Terms</a>
-                    <a class="dropdown-item"
+                        <span>Terms</span>
+                        <i class="fa-solid fa-balance-scale mr-5 opacity-50"></i>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         [routerLink]="['/_/about']">
-                        <i class= "fa-solid fa-question-circle mr-5"></i>
-                        About
+                        <span>About</span>
+                        <i class="fa-solid fa-question-circle mr-5 opacity-50"></i>
                     </a>
 
                     <div class="dropdown-divider"></div>
 
-                    <a class="dropdown-item"
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         [routerLink]="['/profile/opml']">
-                        <i class= "fa-solid fa-rss mr-5"></i>
-                        OPML
+                        <span>OPML</span>
+                        <i class="fa-solid fa-rss mr-5 opacity-50"></i>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item"
+                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
                         (click)="logout()">
-                        <i class="fa fa-sign-out-alt mr-5"></i>
-                        Logout</a>
+                        <span>Logout</span>
+                        <i class="fa fa-sign-out-alt mr-5 opacity-50"></i>
+                    </a>
                 </div>
             </div>
             <div class="btn-group"

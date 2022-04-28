@@ -1,21 +1,15 @@
 <a [routerLink]="['/podcasts', podcast.slug]"
     [routerLinkActive]="['active']"
-    placement="right"
-    container="body"
     (dragover)="dragover($event)"
     (drop)="drop($event)"
-    (click)="closeSidebar()"
     ngbTooltip="{{ podcast.title }}">
     <img class="img-avatar"
         [src]="podcast.thumbnailUrl"
-        alt="" />
+        [alt]="podcast.title">
     <i class="fa fa-circle text-success"
-        *ngIf="newEpisodes">
-    </i>
-    <span class="text-primary-dark">
-        {{podcast.title}}
-    </span>
-    <div class="font-w400 font-size-xs text-primary-dark text-muted">
-        {{podcast.entryCount}} episodes
+        *ngIf="newEpisodes"></i>
+    <div class="text-truncate">{{podcast.title}}</div>
+    <div class="fw-normal fs-xs text-muted">
+        <i class="fa fa-location-arrow"></i> {{podcast.entryCount}} episodes
     </div>
 </a>

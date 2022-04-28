@@ -2,109 +2,77 @@
     <div class="block block-themed block-rounded"
         *ngIf="(podcast$ | async) as podcast">
         <div class="block-header bg-muted">
-            <h3 class="block-title text-bold">
+            <h3 class="block-title">
                 {{podcast.title}}
             </h3>
             <div class="block-options">
-                <div class="btn-group"
-                    role="group"
-                    aria-label="Podcast actions">
-                    <span class="btn-separator"></span>
-                    <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
-                        title="Edit podcast"
-                        class="btn-block-option">
-                        <i class= "fa-solid fa-pencil-alt"
-                            aria-hidden="true"></i>
-                        <span class="d-none d-md-inline-block">&nbsp;Edit</span>
-                    </a>
-                    <button (click)="showPodcastDeleteDialog(podcast)"
-                        title="Delete this podcast"
-                        class="btn-block-option">
-                        <i class="fa fa-times"
-                            aria-hidden="true"></i>
-                        <span class="d-none d-md-inline-block">&nbsp;Delete</span>
-                    </button>
-                    <span class="btn-separator"></span>
-                    <button class="btn-block-option"
-                        id="add-podcast-from-url"
-                        title="Add podcast from URL"
-                        (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none">
-                        <i class="fa fa-plus"></i>
-                        <span class="d-none d-md-inline-block">&nbsp;Add (from URL)</span>
-                    </button>
-                    <div class="btn-group dropdown-container"
-                        role="group">
-                        <button type="button"
-                            class="btn-block-option dropdown-toggle"
-                            title="Upload from local or remote audio file"
-                            id="file-upload-group"
-                            data-toggle="dropdown"
-                            data-flip="false"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class= "fa-solid fa-cloud-upload-alt"></i>
-                            <span class="d-none d-lg-inline-block">&nbsp;Upload from
-                                file</span>
-                        </button>
-                        <div class="dropdown-menu"
-                            aria-labelledby="file-upload-group`">
-                            <a class="dropdown-item"
-                                id="upload-local-file"
-                                (click)="startUpload(uploadModes.fromLocalFile)">
-                                <i class= "fa-solid fa-cloud-upload-alt mr-5"></i>
-                                Local
-                                PC</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"
-                                id="upload-from-dropbox"
-                                href="javascript:void(0)"
-                                (click)="startUpload(uploadModes.fromDropbox)">
-                                <i class="fa-brands fa-dropbox mr-5"></i>Dropbox
-                            </a>
-                            <a class="dropdown-item"
-                                id="upload-from-google"
-                                href="javascript:void(0)"
-                                (click)="startUpload(uploadModes.fromGoogleDrive)">
-                                <i class="fa-brands fa-google-drive mr-5"></i>Google
-                                Drive</a>
-                        </div>
+                <button type="button"
+                    class="btn-block-option me-2"
+                    (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none"
+                    aria-expanded="false">
+                    <i class="fa fa-plus"></i>
+                    Add Entry
+                </button>
+
+                <div class="dropdown">
+                    <button type="button"
+                        class="btn-block-option dropdown-toggle me-2"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"><i class="fa fa-plus"></i> Upload Entry</button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item"
+                            (click)="startUpload(uploadModes.fromLocalFile)">
+                            <i class="fa-solid fa-floppy-disk opacity-50 me-1"></i>
+                            Local File
+                        </a>
+                        <a class="dropdown-item"
+                            (click)="startUpload(uploadModes.fromGoogleDrive)">
+                            <i class="fa-solid fa-google-drive opacity-50 me-1"></i>
+                            Google Drive
+                        </a>
+                        <a class="dropdown-item"
+                            (click)="startUpload(uploadModes.fromDropbox)">
+                            <i class="fa-brands fa-dropbox opacity-50 me-1"></i>
+                            Dropbox
+                        </a>
+
                     </div>
                 </div>
-                <div class="btn-group ml-10"
-                    role="group"
-                    aria-label="Podcast actions">
-                    <span class="btn-separator"></span>
-                    <a *ngIf="publicPageEnabled"
-                        class="btn-block-option"
-                        [href]="podcast.pagesUrl"
-                        title="Open public podcast page"
-                        data-toggle="tooltip"
-                        target="_blank"
-                        rel="noopener">
-                        <span class="d-none d-md-inline-block">
-                            <i class="text-success fas fa fa-newspaper animated swing infinite"></i> Public Page
-                        </span>
-                    </a>
-                    <span class="btn-separator"></span>
-                    <a class="btn-block-option "
-                        [href]="podcast.rssUrl"
-                        title="Open RSS feed in new tab"
-                        data-toggle="tooltip"
-                        target="_blank"
-                        rel="noopener">
-                        <i class="text-warning fas fa fa-rss"></i>
-                        <span class="d-none d-md-inline-block">&nbsp;Rss Url</span>
-                    </a>
-                    <button type="button"
-                        (click)="copyUrl(podcast.rssUrl)"
-                        title="Copy url to clipboard"
-                        data-toggle="tooltip"
-                        class="btn-block-option ">
-                        <i class="fas fa fa-copy"></i>
-                    </button>
-                    <span class="btn-separator"></span>
-                </div>
+                <a [routerLink]="['/podcasts', podcast.slug, 'edit']"
+                    class="btn-block-option">
+                    <i class="fa-solid fa-pencil-alt"></i>
+                </a>
+                <a *ngIf="publicPageEnabled"
+                    [href]="podcast.pagesUrl"
+                    title="Open public podcast page"
+                    data-toggle="tooltip"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-block-option">
+                    <i class="text-success fas fa fa-newspaper animated swing"></i>
+                </a>
+                <a *ngIf="publicPageEnabled"
+                    [href]="podcast.rssUrl"
+                    title="Open RSS feed in new tab"
+                    data-toggle="tooltip"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-block-option">
+                    <i class="text-warning fa-solid fa-rss"></i>
+                </a>
+                <button
+                    (click)="copyUrl(podcast.rssUrl)"
+                    title="Open RSS feed in new tab"
+                    data-toggle="tooltip"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn-block-option">
+                    <i class="fa-solid fa-copy"></i>
+                </button>
+
             </div>
+
         </div>
         <div class="block-content">
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
@@ -147,7 +115,7 @@
             data-class="animated fadeInUp"
             data-timeout="300"
             [routerLink]="['add', { useWizard: 'true' }]">
-            <i class= "fa-solid fa-plus mr-10"></i>
+            <i class="fa-solid fa-plus mr-10"></i>
             Create new podcast
         </a>
     </div>

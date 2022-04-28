@@ -1,66 +1,85 @@
 <div class="podcast-list-wrapper"
     *ngIf="podcast; else loading">
-    <div *ngIf="podcast.podcastEntries.length !== 0; else empty">
-        <app-entry-list-item *ngFor="let entry of podcast.podcastEntries | uniqueId"
-            class="podcast-entry-table-row mt-20"
+    <div *ngIf="podcast.podcastEntries.length !== 0; else empty"
+        class="block-content container">
+
+        <div class="row"
+            *ngFor="let entry of podcast.podcastEntries | uniqueId"
+            app-podcast-entry-item
             draggable="true"
             (dragstart)="dragStart($event, entry)"
             (entryRemoved)='deleteEntry(entry)'
             (entryUpdated)='updateEntry(entry)'
-            [entry]="entry">
-        </app-entry-list-item>
+            [entry]="entry"></div>
+
     </div>
     <ng-template #empty>
-        <div class="row ml-5 mr-5">
-            <div class="col-md-2"></div>
-            <div class="col-lg-2">
-                <a class="block block-link-shadow"
-                    href="javascript:void(0)">
-                    <div class="block-content block-content-full text-center">
-                        <div class="p-20 mb-5">
-                            <i class="fas fa-cloud-download-alt fa-3x text-primary"></i>
-                        </div>
-                        <p class="font-size-sm text-uppercase font-w600 text-muted mb-0">
-                            Click
-                            <b>Add (from URL)</b> to add a remote file from
-                            YouTube, MixCloud, SoundCloud and
-                            many more
-                        </p>
-                    </div>
-                </a>
+        <div class="block block-rounded bg-gd-dusk">
+            <div class="block-content bg-white-5">
+                <div class="py-4 text-center">
+                    <h1 class="h2 fw-bold text-white mb-2">{{podcast.title}}</h1>
+                    <h2 class="h5 fw-medium text-white-75">Welcome to your new podcast, let's add some episodes!</h2>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <a class="block block-link-shadow"
-                    href="javascript:void(0)">
-                    <div class="block-content block-content-full text-center">
-                        <div class="p-20 mb-5">
-                            <i class="fas fa-music fa-3x text-elegance"></i>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="block block-rounded">
+                    <div class="block-content block-content-full">
+                        <div class="py-3 text-center">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-cloud-download-alt  fa-4x text-primary"></i>
+                            </div>
+                            <div class="fs-4 fw-semibold">From URL</div>
+                            <div class="text-muted">YouTube, Mixcloud and many more!</div>
+                            <div class="pt-3">
+                                <a class="btn btn-alt-primary"
+                                    href="javascript:void(0)">
+                                    <i class="fa-solid fa-cloud-download-alt opacity-50 me-1"></i> Add from URL
+                                </a>
+                            </div>
                         </div>
-                        <p class="font-size-lg font-w600 mb-0">
-                            Welcome to your new podcast!
-                        </p>
-                        <p class="font-size-sm text-uppercase font-w600 text-muted mb-0">
-                            Time to add some episodes
-                        </p>
                     </div>
-                </a>
+                </div>
             </div>
-            <div class="col-lg-2">
-                <a class="block block-link-shadow"
-                    href="javascript:void(0)">
-                    <div class="block-content block-content-full text-center">
-                        <div class="p-20 mb-5">
-                            <i class="fas fa-laptop fa-3x text-pulse"></i>
+            <div class="col-md-4">
+                <div class="block block-rounded">
+                    <div class="block-content block-content-full">
+                        <div class="py-3 text-center">
+                            <div class="mb-3">
+                                <i class="fa fab fa-twitter fa-4x text-info"></i>
+                            </div>
+                            <div class="fs-4 fw-semibold">From Provider</div>
+                            <div class="text-muted">Dropbox or box!</div>
+                            <div class="pt-3">
+                                <a class="btn btn-alt-info"
+                                    href="javascript:void(0)">
+                                    <i class="fa fa-users opacity-50 me-1"></i> Add from provider
+                                </a>
+                            </div>
                         </div>
-                        <p class="font-size-sm text-uppercase font-w600 text-muted mb-0">
-                            Click
-                            <b>Upload (from computer)</b>
-                            to add mp3 files from your PC or your Dropbox or Google Drive
-                        </p>
                     </div>
-                </a>
+                </div>
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <div class="block block-rounded">
+                    <div class="block-content block-content-full">
+                        <div class="py-3 text-center">
+                            <div class="mb-3">
+                                <i class="far fa-file-audio fa-4x text-success"></i>
+                            </div>
+                            <div class="fs-4 fw-semibold">From file</div>
+                            <div class="text-muted">Choose a file from your PC</div>
+                            <div class="pt-3">
+                                <a class="btn btn-alt-success"
+                                    href="javascript:void(0)">
+                                    <i class="fa fa-arrow-up opacity-50 me-1"></i> Upload file
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </ng-template>
 </div>
