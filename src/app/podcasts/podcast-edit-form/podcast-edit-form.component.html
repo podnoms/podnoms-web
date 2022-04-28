@@ -5,7 +5,7 @@
                 #nav="ngbNav"
                 [(activeId)]="activeTab"
                 (navChange)="onNavChange($event)"
-                class="nav nav-tabs nav-tabs-alt">
+                class="nav nav-tabs nav-tabs-block align-items-center">
                 <li [ngbNavItem]="'details'">
                     <a ngbNavLink>
                         <i class="fa fa-info text-primary"></i>
@@ -46,7 +46,8 @@
                         </app-notifications>
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="'nerds'">
+                <li [ngbNavItem]="'nerds'"
+                    class="nav-item">
                     <a ngbNavLink>
                         <i class="fa fa-glasses text-primary"></i>
                         <span class="tab-text d-none d-md-inline-block">
@@ -59,20 +60,18 @@
                         </app-podcast-edit-form-advanced>
                     </ng-template>
                 </li>
-                <li class="nav-item ml-auto">
-                    <div class="block-options mr-15 mt-5">
+                <li class="nav-item ms-auto">
+                    <div class="block-options ps-3 pe-2">
                         <button type="button"
-                            class="btn btn-alt-danger mr-5"
+                            class="btn"
                             data-toggle="block-option"
                             (click)="showPodcastDeleteDialog(podcast)">
-                            <i class="fa fa-times"></i>&nbsp;
-                            <span class="d-none d-md-inline-block">Delete</span>
+                            <i class="text-danger fa-solid fa-ban"></i>&nbsp;
                         </button>
                         <button type="submit"
-                            class="btn btn-outline-secondary"
+                            class="btn"
                             (click)="sendSaveEvent()">
-                            <i class="fa fa-save mr-5"></i>
-                            <span class="tab-text d-none d-md-inline-block">Save Podcast</span>
+                            <i class="fa-solid fa-save"></i>
                         </button>
                     </div>
                 </li>

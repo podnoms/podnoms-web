@@ -1,18 +1,19 @@
 @import '~styles/_variables';
 
 body {
-    margin-bottom: 90px;
-    /* Margin bottom by footer height */
+  margin-bottom: 90px;
+  /* Margin bottom by footer height */
 }
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: $footer-height;
+  z-index: 99999;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height;
 }
 
 .foooter-player-wrapper {
-    /* padding: 0 0 0 $sidebar-width - 1; */
-    height: $footer-height;
+  /* padding: 0 0 0 $sidebar-width - 1; */
+  height: $footer-height;
 }

@@ -2,10 +2,7 @@
 // Forms
 // --------------------------------------------------
 
-label {
-    font-weight: 600;
-}
-
-.invalid-feedback {
-    font-size: $font-size-sm;
-}
+@import "forms/form-check";
+@import "forms/form-control";
+@import "forms/form-select";
+@import "forms/input-group";

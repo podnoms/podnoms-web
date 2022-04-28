@@ -16,7 +16,7 @@ import { Podcast } from 'app/core';
                         aria-label="Close"
                         (click)="modal.close()"
                     >
-                        <i class="fa fas fa-times"></i>
+                        <i class= "fa-solid fa-times"></i>
                     </button>
                 </div>
             </div>

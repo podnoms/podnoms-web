@@ -3,9 +3,12 @@
 // --------------------------------------------------
 
 .breadcrumb-item {
-    + .breadcrumb-item::before {
-        font-family: $font-family-fontawesome;
-        font-weight: 900;
-        content: '\f105';
-    }
+  font-weight: $font-weight-medium;
+  
+  + .breadcrumb-item::before {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro";
+    font-weight: 900;
+    content: '\f105';
+    opacity: .5;
+  }
 }
