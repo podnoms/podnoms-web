@@ -37,15 +37,15 @@ export class SignalRService {
             const hub = this.connectionPool[hubName];
             if (!hub) {
                 const connection = new HubConnectionBuilder()
-                    .withUrl(url, {
-                        skipNegotiation: true,
-                        transport: HttpTransportType.WebSockets,
-                        accessTokenFactory: () => token,
-                    })
-                    .configureLogging(
-                        environment.production ? LogLevel.Error : LogLevel.Debug
-                    )
-                    .build();
+                  .withUrl(url, {
+                    skipNegotiation: true,
+                    transport: HttpTransportType.WebSockets,
+                    accessTokenFactory: () => token,
+                  })
+                  .configureLogging(
+                    environment.production ? LogLevel.Error : LogLevel.Error
+                  )
+                  .build();
                 this.connectionPool[hubName] = new HubListener(connection);
             }
             resolve(this);

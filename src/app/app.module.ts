@@ -86,18 +86,22 @@ export class AppModule {
     private logger: NGXLogger
   ) {
     this.profile$ = profileStoreService.entities$;
-    if (environment.production) {
+    if (environment.production || true) {
       console.log(
-        `%c ________________________________________
-< mooooooooooooooooooooooooooooooooooooo >
-<   🦄🧙Looking under the hood🦄?        >
-<  Join us: http://github.com/podnoms    >
-----------------------------------------
+        `%c
+<------------------------------>
+<                              >
+<    🧙 mooooooooooohoo 🦄     >
+< like looking under the hood? >
+<          Join us @           >
+<   http://github.com/podnoms  >
+<------------------------------>
         \\   ^__^
         \\  (oo)\\_______
             (__)\\       )\\/\\
                 ||----w |
-                ||     ||`,
+                ||     ||
+                `,
         'font-family:monospace; color: fuchsia; font-size: x-large'
       );
     }
