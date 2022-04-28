@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'app-spinner-button',
     templateUrl: './spinner-button.component.html',
     styleUrls: ['./spinner-button.component.scss'],
 })
-export class SpinnerButtonComponent implements OnInit {
+export class SpinnerButtonComponent {
     @Input() buttonId: string = 'wait-spinner-id';
     @Input() buttonClass: string = '';
     @Input() iconClass: string = '';
@@ -13,8 +13,6 @@ export class SpinnerButtonComponent implements OnInit {
     @Output() clicked: EventEmitter<any> = new EventEmitter();
     processing: boolean = false;
     constructor() {}
-
-    ngOnInit() {}
 
     click() {
         this.processing = true;

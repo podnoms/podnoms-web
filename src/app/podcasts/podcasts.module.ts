@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { PodcastsRoutingModule } from './podcasts-routing.module';
 import { PodcastComponent } from './podcast/podcast.component';
 import { SharedModule } from '../shared/shared.module';
-import { MomentModule } from 'ngx-moment';
 import {
     NgbModalRef,
     NgbProgressbarModule,
@@ -44,15 +43,16 @@ import { PodcastEditFormAdvancedComponent } from './podcast-edit-form/podcast-ed
 import { PodcastPublicSettingsComponent } from './podcast-public-settings/podcast-public-settings.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { environment } from 'environments/environment';
+import { MomentModule } from 'ngx-moment';
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
         UtilsModule,
         PodcastsRoutingModule,
-        MomentModule,
         QuillModule.forRoot(),
         DropzoneModule,
+        MomentModule,
         NgSelectModule,
         NgbProgressbarModule,
         NgxDatatableModule,
@@ -87,21 +87,15 @@ import { environment } from 'environments/environment';
         PodcastEditFormDetailsComponent,
         PodcastEditFormAdvancedComponent,
     ],
-    entryComponents: [
-        PodcastDeleteComponent,
-        EntryDeleteItemModalComponent,
-        EntryLogsComponent,
-        NotificationItemDeleteComponent,
-    ],
     providers: [
         PodcastStoreService,
         NotificationStoreService,
         NotificationControlService,
-    ],
+    ]
 })
 export class PodcastsModule {
     constructor() {
-        //bring in animations to ng-bootstrap modal
+        //bring in animations to ng-fontawesome modal
         NgbModalRef.prototype['c'] = NgbModalRef.prototype.close;
         NgbModalRef.prototype.close = function (reason: string) {
             document.querySelector('.modal-backdrop').classList.remove('show');

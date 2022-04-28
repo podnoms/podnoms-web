@@ -32,7 +32,7 @@ export class InMemoryDataService {
         if (reqInfo) {
             const body = reqInfo.utils.getJsonBody(reqInfo.req) || {};
             if (body.clear === true) {
-                // tslint:disable-next-line:forin
+                // eslint-disable-next-line guard-for-in
                 for (const coll in this.db) {
                     this.db[coll].length = 0;
                 }

@@ -1,17 +1,17 @@
-import { UiStateService } from './../../../core/ui-state.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
 import { Podcast, PodcastEntry } from '../../../core';
+import { AlertService } from '../../../core/alerts/alert.service';
 import { EntryDataService } from '../../../podcasts/entry-data.service';
 import { PodcastStoreService } from '../../../podcasts/podcast-store.service';
-import { AlertService } from '../../../core/alerts/alert.service';
-import { NGXLogger } from 'ngx-logger';
+import { UiStateService } from './../../../core/ui-state.service';
 
 @Component({
     selector: 'app-sidebar-podcast-item',
     templateUrl: './sidebar-podcast-item.component.html',
     styleUrls: ['./sidebar-podcast-item.component.scss'],
 })
-export class SidebarPodcastItemComponent implements OnInit {
+export class SidebarPodcastItemComponent {
     @Input()
     podcast: Podcast;
 
@@ -24,7 +24,6 @@ export class SidebarPodcastItemComponent implements OnInit {
         protected logger: NGXLogger
     ) {}
 
-    ngOnInit() {}
     dragover($event: DragEvent) {
         $event.preventDefault();
     }

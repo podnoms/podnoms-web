@@ -1,20 +1,16 @@
 import {
-    Component,
-    AfterViewInit,
-    OnDestroy,
-    ViewChild,
-    ElementRef,
     ChangeDetectorRef,
-    OnInit,
+    Component,
     HostListener,
+    OnInit
 } from '@angular/core';
-import { PaymentsService } from '../payments.service';
-import { environment } from '../../../environments/environment';
-import { AlertService } from '../../core/alerts/alert.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ScriptService } from '../../core/scripts/script.service';
-import { AuthService } from '../../auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../auth/auth.service';
+import { AlertService } from '../../core/alerts/alert.service';
+import { ScriptService } from '../../core/scripts/script.service';
+import { PaymentsService } from '../payments.service';
 declare var StripeCheckout: any;
 
 @Component({
@@ -22,7 +18,7 @@ declare var StripeCheckout: any;
     templateUrl: './make-payment.component.html',
     styleUrls: ['./make-payment.component.scss'],
 })
-export class MakePaymentComponent implements AfterViewInit, OnInit {
+export class MakePaymentComponent implements OnInit {
     loadingText: string = 'Loading payment methods';
     errorText: string = '';
     headerText: string = '';
@@ -141,8 +137,6 @@ export class MakePaymentComponent implements AfterViewInit, OnInit {
             amount: this.chargingAmount,
         });
     }
-    ngAfterViewInit() {}
-
     @HostListener('window:popstate')
     onpopstate() {
         this.handler.close();

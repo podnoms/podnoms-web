@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -44,8 +44,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     `,
     styles: [``],
 })
-export class NotificationItemDeleteComponent implements OnInit {
+export class NotificationItemDeleteComponent {
     constructor(public modal: NgbActiveModal) {}
-
-    ngOnInit(): void {}
 }

@@ -2,99 +2,46 @@
 // Buttons
 // --------------------------------------------------
 
-.btn {
-    font-family: $font-family-base;
-    font-weight: 600;
-
-    &.btn-square {
-        border-radius: 0 !important;
-    }
-
-    &.btn-rounded {
-        border-radius: 50px !important;
-    }
-
-    .si {
-        position: relative;
-        top: 1px;
-    }
+// Fix simple icon position
+.btn .si {
+  position: relative;
+  top: 1px;
 }
 
-.btn.btn-hero {
-    @include button-size($btn-hero-padding-y, $btn-hero-padding-x, $font-size-base, $btn-hero-line-height, 3px);
-    height: auto;
-
-    &.btn-sm {
-        @include button-size($btn-hero-padding-y-sm, $btn-hero-padding-x-sm, $font-size-base, $btn-hero-line-height-sm, 3px);
-    }
-
-    &.btn-lg {
-        @include button-size($btn-hero-padding-y-lg, $btn-hero-padding-x-lg, $font-size-md, $btn-hero-line-height-lg, 3px);
-    }
-}
-
-.btn.btn-circle {
-    @include button-size(9px, 0, $font-size-base, 1, inherit);
-    min-width: 34px;
-    height: 34px;
-    text-align: center;
-    border-radius: 50% !important;
-
-    &.btn-sm {
-        @include button-size(6px, 0, $font-size-base, 1, inherit);
-        min-width: 28px;
-        height: 28px;
-    }
-
-    &.btn-lg {
-        @include button-size(12px, 0, $font-size-base, 1, inherit);
-        min-width: 40px;
-        height: 40px;
-    }
-
-    > .si {
-        top: 0;
-    }
-}
-
+// Variant buttons
 .btn-secondary {
-    @include button-variant($body-bg, $body-bg);
+  @include button-variant($primary-dark, $primary-dark);
 }
 
-.btn-outline-secondary {
-    @include button-outline-variant(darken($body-bg-dark, 40%));
-}
-
+// Alternate variant buttons
 .btn-alt-primary {
-    @include button-alt-variant($brand-primary, $brand-lighter);
+  @include button-variant(tint-color($primary, 75%), tint-color($primary, 75%), shade-color($primary, 40%), tint-color($primary, 50%), tint-color($primary, 50%), shade-color($primary, 60%));
 }
 
 .btn-alt-secondary {
-    @include button-alt-variant($body-color, $body-bg-dark);
+  @include button-variant($body-bg, $body-bg, $body-color-dark, shade-color($body-bg, 10%), shade-color($body-bg, 10%), shade-color($body-color-dark, 15%));
 }
 
 .btn-alt-success {
-    @include button-alt-variant($brand-success, $brand-success-light);
+  @include button-variant(tint-color($success, 75%), tint-color($success, 75%), shade-color($success, 40%), tint-color($success, 50%), tint-color($success, 50%), shade-color($success, 60%));
 }
 
 .btn-alt-info {
-    @include button-alt-variant($brand-info, $brand-info-light);
+  @include button-variant(tint-color($info, 75%), tint-color($info, 75%), shade-color($info, 40%), tint-color($info, 50%), tint-color($info, 50%), shade-color($info, 60%));
 }
 
 .btn-alt-warning {
-    @include button-alt-variant($brand-warning, $brand-warning-light);
+  @include button-variant(tint-color($warning, 75%), tint-color($warning, 75%), shade-color($warning, 40%), tint-color($warning, 50%), tint-color($warning, 50%), shade-color($warning, 60%));
 }
 
 .btn-alt-danger {
-    @include button-alt-variant($brand-danger, $brand-danger-light);
+  @include button-variant(tint-color($danger, 75%), tint-color($danger, 75%), shade-color($danger, 40%), tint-color($danger, 50%), tint-color($danger, 50%), shade-color($danger, 60%));
 }
 
-// Used for buttons that adapt to light/dark header and sidebar variations
-.btn-dual-secondary {
-    @include button-dual-variant(darken($body-color, 22%), darken($body-bg, 10%));
-}
-
-.page-header-inverse #page-header .btn-dual-secondary,
-.sidebar-inverse #sidebar .btn-dual-secondary {
-    @include button-dual-variant($white, $brand-darker);
+// Alternate secondary adapts on dark header/sidebar
+.page-header-dark #page-header .btn-alt-secondary,
+.sidebar-dark #sidebar .btn-alt-secondary,
+#sidebar .bg-header-dark .content-header .btn-alt-secondary,
+.page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
+  @include button-variant($header-dark-bg, $header-dark-bg, $white, tint-color($header-dark-bg, 15%), tint-color($header-dark-bg, 15%), $white);
 }

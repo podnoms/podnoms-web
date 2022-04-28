@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Podcast } from 'app/core';
 
@@ -16,7 +16,7 @@ import { Podcast } from 'app/core';
                         aria-label="Close"
                         (click)="modal.close()"
                     >
-                        <i class="fa fas fa-times"></i>
+                        <i class= "fa-solid fa-times"></i>
                     </button>
                 </div>
             </div>
@@ -76,9 +76,7 @@ import { Podcast } from 'app/core';
         `,
     ],
 })
-export class PodcastDeleteComponent implements OnInit {
+export class PodcastDeleteComponent {
     @Input() public podcast: Podcast;
     constructor(public modal: NgbActiveModal) {}
-
-    ngOnInit(): void {}
 }

@@ -3,21 +3,10 @@
 // --------------------------------------------------
 
 .page-link {
-    font-weight: 600;
+  font-weight: $font-weight-semibold;
 
-    &:focus {
-        color: $body-color-dark;
-        background-color: $body-bg-dark;
-        border-color: $body-bg-dark;
-    }
-}
-
-.pagination-sm .page-link {
-    font-size: 1rem;
-    line-height: 16px;
-}
-
-.pagination-lg .page-link {
-    font-size: 1.142857rem;
-    line-height: 20px;
+  &:focus {
+    background-color: $body-bg-dark;
+    border-color: $body-bg-dark;
+  }
 }

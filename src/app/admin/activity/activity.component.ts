@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Profile } from 'app/core';
 
 @Component({
     selector: 'app-activity',
     templateUrl: './activity.component.html',
-    styleUrls: ['./activity.component.scss']
+    styleUrls: ['./activity.component.scss'],
 })
-export class ActivityComponent implements OnInit {
+export class ActivityComponent {
     @ViewChild('userTable') table: any;
     loading: boolean = true;
     sortIsAscending: boolean = false;
@@ -17,13 +15,12 @@ export class ActivityComponent implements OnInit {
     page: any = {
         rowCount: 0,
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
     };
     users: any;
     constructor(private http: HttpClient) {
         this._loadActivityData();
     }
-    ngOnInit() {}
 
     toggleExpandRow(row: any) {
         this.table.rowDetail.toggleExpandRow(row);
@@ -44,7 +41,7 @@ export class ActivityComponent implements OnInit {
                 `${environment.apiHost}/admin/user/activity?currentPage=${this.page.currentPage}` +
                     `&pageSize=10&sortBy=${this.sortField}&ascending=${this.sortIsAscending}`
             )
-            .subscribe(r => {
+            .subscribe((r) => {
                 this.users = r.results;
                 this.page = r;
                 this.loading = false;

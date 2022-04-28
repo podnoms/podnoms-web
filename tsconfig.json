@@ -1,50 +1,29 @@
 {
-    "compileOnSave": false,
-    "enableIvy": true,
-    "compilerOptions": {
-        "baseUrl": "./src",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "module": "es2020",
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "target": "es2015",
-        "typeRoots": ["node_modules/@types"],
-        "lib": ["es2018", "dom"],
-        "noFallthroughCasesInSwitch": true
-    },
-    "angularCompilerOptions": {
-        "fullTemplateTypeCheck": true,
-        "strictInjectionParameters": true
-    }
+  "compileOnSave": false,
+  "enableIvy": true,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "noFallthroughCasesInSwitch": true
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
 }
-
-// {
-//     "compileOnSave": false,
-//     "compilerOptions": {
-//         "baseUrl": "./src",
-//         "paths": {
-//             // workaround for core-js issue
-//             // https://github.com/zloirock/core-js/issues/412
-//             "core-js/es7/reflect": [
-//                 "../node_modules/core-js/proposals/reflect-metadata"
-//             ],
-//             "core-js/es6/*": ["../node_modules/core-js/es/*"],
-//             "jszip": ["../node_modules/jszip/dist/jszip.min.js"]
-//         },
-//         "importHelpers": true,
-//         "outDir": "./dist/out-tsc",
-//         "sourceMap": true,
-//         "declaration": false,
-//         "moduleResolution": "node",
-//         "emitDecoratorMetadata": true,
-//         "experimentalDecorators": true,
-//         "target": "es5",
-//         "typeRoots": ["node_modules/@types"],
-//         "lib": ["es2017", "dom"]
-//     },
-//     "exclude": ["wallabyTest.ts"]
-// }

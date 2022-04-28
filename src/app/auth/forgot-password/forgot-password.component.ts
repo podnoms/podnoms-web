@@ -1,33 +1,25 @@
-import { ConstantsService } from './../../shared/services/constants.service';
 import {
-    Component,
-    OnInit,
-    ViewChild,
-    ElementRef,
     AfterViewInit,
+    Component,
+    ElementRef, ViewChild
 } from '@angular/core';
-import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
-import {
-    FormGroup,
-    FormsModule,
-    FormControl,
-    FormBuilder,
-    Validators,
-} from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PasswordValidation } from '../validators/check-password.validator';
-import { environment } from '../../../environments/environment';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
+import { environment } from '../../../environments/environment';
+import { BasePageComponent } from '../../shared/components/base-page/base-page.component';
+import { AuthService } from '../auth.service';
+import { ConstantsService } from './../../shared/services/constants.service';
 
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
     styleUrls: ['./forgot-password.component.scss'],
 })
-export class ForgotPasswordComponent extends BasePageComponent
-    implements OnInit, AfterViewInit {
+export class ForgotPasswordComponent
+    extends BasePageComponent
+    implements AfterViewInit {
     environment = environment;
     returnTrip: boolean = false;
     errorMessage: string;
@@ -77,7 +69,6 @@ export class ForgotPasswordComponent extends BasePageComponent
         });
     }
 
-    ngOnInit() {}
     ngAfterViewInit() {
         setTimeout(() => {
             this.returnTrip

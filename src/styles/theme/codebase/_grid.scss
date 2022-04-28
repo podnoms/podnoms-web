@@ -3,42 +3,31 @@
 // --------------------------------------------------
 
 // Tiny grid gutters
-.row.gutters-tiny {
-    margin-right: (-($space-row-gutter-tiny / 2));
-    margin-left: (-($space-row-gutter-tiny / 2));
+.row.g-sm {
+  --bs-gutter-x: #{$space-row-gutter-tiny};
 
-    > .col,
-    > [class*="col-"] {
-        padding-left: ($space-row-gutter-tiny / 2);
-        padding-right: ($space-row-gutter-tiny / 2);
-    }
+  > .col,
+  > [class*="col-"] {
+    padding-left: $space-row-gutter-tiny * .5;
+    padding-right: $space-row-gutter-tiny  * .5;
+  }
 
-    .push,
-    .block {
-        margin-bottom: $space-row-gutter-tiny;
-    }
+  .push,
+  .block,
+  &.items-push > div {
+    margin-bottom: $space-row-gutter-tiny;
+  }
 }
 
 // Responsive grid gutters
-@include media-breakpoint-down(sm) {
-    .row:not(.gutters-tiny):not(.no-gutters) {
-        margin-right: (-($space-mobile / 2));
-        margin-left: (-($space-mobile / 2));
+@include media-breakpoint-down(md) {
+  .row:not(.g-sm):not(.g-0) {
+    --bs-gutter-x: #{$space-mobile};
 
-        > .col,
-        > [class*="col-"] {
-            padding-left: ($space-mobile / 2);
-            padding-right: ($space-mobile / 2);
-        }
+    > .col,
+    > [class*="col-"] {
+      padding-left: $space-mobile * .5;
+      padding-right: $space-mobile * .5;
     }
-}
-
-// Equal height of elements inside columns
-.row.row-deck > div {
-    display: flex;
-    align-items: stretch;
-
-    > .block {
-        min-width: 100%;
-    }
+  }
 }

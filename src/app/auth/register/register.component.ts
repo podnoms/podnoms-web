@@ -1,24 +1,24 @@
-import { ProfileDataService } from './../../profile/profile-data.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PasswordValidation } from '../validators/check-password.validator';
+import { UiStateService } from 'app/core/ui-state.service';
+import { ReCaptcha2Component } from 'ngx-captcha';
+import { NGXLogger } from 'ngx-logger';
 import { environment } from '../../../environments/environment';
 import { ConstantsService } from '../../shared/services/constants.service';
-import { ReCaptcha2Component } from 'ngx-captcha';
 import { AuthApiProxyService } from '../auth-api-proxy.service';
+import { AuthService } from '../auth.service';
+import { PasswordValidation } from '../validators/check-password.validator';
 import { checkSlugUniqueValidator } from '../validators/check-slug-unique.validator';
-import { UiStateService } from 'app/core/ui-state.service';
-import { NGXLogger } from 'ngx-logger';
+import { ProfileDataService } from './../../profile/profile-data.service';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
     environment = environment;
-    // tslint:disable-next-line: max-line-length
+    // eslint-disable-next-line max-len
     form: FormGroup;
     signupForm: FormGroup;
 
@@ -41,7 +41,6 @@ export class RegisterComponent implements OnInit {
     ) {
         this._buildForm();
     }
-    ngOnInit() {}
     //#region Form Control Getters
 
     private _buildForm() {

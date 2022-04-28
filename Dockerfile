@@ -1,4 +1,4 @@
-FROM node:14.15.4-buster as builder
+FROM node:16.15.0-buster as builder
 # RUN npm install -g yarn --force
 
 WORKDIR /app
@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 RUN yarn global add @angular/cli
-RUN ng build --prod
+RUN ng build --configuration=production
 
 FROM nginx:1.17.5
 

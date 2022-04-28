@@ -4,9 +4,6 @@
 
 @import 'theme';
 @import 'mixin';
-@import 'include/forms';
-@import 'include/modal';
-@import 'include/icons';
 
 [hidden] {
     display: none !important;
@@ -28,3 +25,6 @@ a:hover {
 }
 
 
+
+/* Importing Bootstrap SCSS file. */
+//@import '~fontawesome/scss/fontawesome';

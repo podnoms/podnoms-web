@@ -20,7 +20,6 @@ import { ProfileDataService } from '../profile-data.service';
 import { ProfileStoreService } from '../profile-store.service';
 import { ImageUploadComponent } from '../../shared/components/image-upload/image-upload.component';
 import { UUID } from 'angular2-uuid';
-import { BaseChartDirective } from 'ng2-charts';
 import { AlertService } from '../../core/alerts/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
@@ -67,8 +66,6 @@ export class ProfileComponent
             },
         },
     };
-    @ViewChild(BaseChartDirective)
-    private _chart: BaseChartDirective;
 
     @ViewChild('imageControl')
     imageControl: ImageUploadComponent;
@@ -184,10 +181,10 @@ export class ProfileComponent
             );
 
             this.chartLabels = [`Used: ${used}`, `Available: ${available}`];
-            if (this._chart) {
-                this._chart.ngOnChanges({} as SimpleChanges);
-                this._chart.chart.update();
-            }
+            // if (this._chart) {
+            //     this._chart.ngOnChanges({} as SimpleChanges);
+            //     this._chart.chart.update();
+            // }
         });
     }
 

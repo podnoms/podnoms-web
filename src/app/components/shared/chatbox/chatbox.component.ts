@@ -1,25 +1,21 @@
 import {
-    Component,
-    OnInit,
-    ViewChild,
-    AfterViewInit,
-    ElementRef,
     ChangeDetectorRef,
+    Component,
     OnChanges,
+    OnInit,
+    ViewChild
 } from '@angular/core';
-import { SupportChatService } from 'app/shared/services/support-chat.service';
+import { Profile } from 'app/core';
+import { AlertService } from 'app/core/alerts/alert.service';
 import { Chat } from 'app/core/model/chat';
 import { ProfileDataService } from 'app/profile/profile-data.service';
-import { Observable } from 'rxjs';
-import { Profile } from 'app/core';
 import { SignalRService } from 'app/shared/services/signal-r.service';
-import { AlertService } from 'app/core/alerts/alert.service';
+import { SupportChatService } from 'app/shared/services/support-chat.service';
+import { NGXLogger } from 'ngx-logger';
 import {
     PerfectScrollbarConfigInterface,
-    PerfectScrollbarComponent,
-    PerfectScrollbarDirective,
+    PerfectScrollbarDirective
 } from 'ngx-perfect-scrollbar';
-import { NGXLogger } from 'ngx-logger';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -27,7 +23,7 @@ import { map } from 'rxjs/operators';
     templateUrl: './chatbox.component.html',
     styleUrls: ['./chatbox.component.scss'],
 })
-export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
+export class ChatboxComponent implements OnInit, OnChanges {
     anonName: string = '';
     anonEmail: string = '';
     currentMessage: string = '';
@@ -78,7 +74,6 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
                 );
             });
     }
-    ngAfterViewInit() {}
     toggleChat() {
         this.showing = !this.showing;
         if (this.showing) {
@@ -141,7 +136,7 @@ export class ChatboxComponent implements OnInit, AfterViewInit, OnChanges {
         this.messages[message.messageId] = message;
         const keys = [];
 
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const key in this.messages) {
             keys[keys.length] = key;
         }

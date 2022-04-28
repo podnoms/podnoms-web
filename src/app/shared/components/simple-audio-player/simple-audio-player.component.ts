@@ -1,15 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-simple-audio-player',
     templateUrl: './simple-audio-player.component.html',
-    styleUrls: ['./simple-audio-player.component.scss']
+    styleUrls: ['./simple-audio-player.component.scss'],
 })
-export class SimpleAudioPlayerComponent implements OnInit {
+export class SimpleAudioPlayerComponent {
     @Input()
     src: string = '';
 
     constructor() {}
-
-    ngOnInit() {}
 }

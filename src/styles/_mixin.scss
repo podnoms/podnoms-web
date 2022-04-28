@@ -1,23 +1,17 @@
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import '~jasny-bootstrap/dist/css/jasny-bootstrap.css';
 
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+//@import '~font-awesome/scss/font-awesome';
 
 @import '~quill/dist/quill.snow.css';
 @import '~quill/dist/quill.bubble.css';
 
 @import '~highlight.js/styles/github.css';
 
-@import '~dropzone/dist/min/dropzone.css';
-
 @import '~dropzone/dist/dropzone.css';
 @import '~@ng-select/ng-select/themes/default.theme.css';
 @import '~@swimlane/ngx-datatable/index.css';
 @import '~@swimlane/ngx-datatable/themes/bootstrap.css';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
-@import '~flag-icon-css/css/flag-icon.min.css';
+@import '~flag-icons/sass/flag-icons'

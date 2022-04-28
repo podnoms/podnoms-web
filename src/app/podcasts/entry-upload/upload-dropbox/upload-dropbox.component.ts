@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { UiStateService } from 'app/core/ui-state.service';
+import { NGXLogger } from 'ngx-logger';
 import { environment } from '../../../../environments/environment';
 import { BaseJsUploadComponent } from '../../base-js-upload.component';
 import { EntryDataService } from '../../entry-data.service';
-import { UiStateService } from 'app/core/ui-state.service';
-import { NGXLogger } from 'ngx-logger';
 declare var Dropbox: any;
 
 @Component({
     selector: 'app-upload-dropbox',
     templateUrl: './upload-dropbox.component.html',
-    styleUrls: ['./upload-dropbox.component.scss']
+    styleUrls: ['./upload-dropbox.component.scss'],
 })
-export class UploadDropboxComponent extends BaseJsUploadComponent
-    implements OnInit {
+export class UploadDropboxComponent extends BaseJsUploadComponent {
     constructor(
         podcastEntryDataService: EntryDataService,
         uiStateService: UiStateService,
@@ -23,12 +22,10 @@ export class UploadDropboxComponent extends BaseJsUploadComponent
             'https://www.dropbox.com/static/api/2/dropins.js',
             'dropboxjs',
             {
-                'data-app-key': environment.dropboxAppKey
+                'data-app-key': environment.dropboxAppKey,
             }
         );
     }
-
-    ngOnInit() {}
 
     browseDropbox() {
         const options = {
@@ -37,7 +34,7 @@ export class UploadDropboxComponent extends BaseJsUploadComponent
             linkType: 'direct', // or "direct"
             multiselect: true, // or true
             extensions: this.getSupportedFileTypes('audio'),
-            folderselect: false // or true
+            folderselect: false, // or true
         };
 
         Dropbox.choose(options);

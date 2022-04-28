@@ -1,15 +1,15 @@
-import { ProfileDataService } from './../../profile-data.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Profile } from 'app/core';
-import { NotificationTypes } from './notification-types.enum';
 import { NGXLogger } from 'ngx-logger';
+import { ProfileDataService } from './../../profile-data.service';
+import { NotificationTypes } from './notification-types.enum';
 
 @Component({
     selector: 'app-user-notifications-settings',
     templateUrl: './user-notifications-settings.component.html',
     styleUrls: ['./user-notifications-settings.component.scss'],
 })
-export class UserNotificationsSettingsComponent implements OnInit {
+export class UserNotificationsSettingsComponent {
     notificationTypes = NotificationTypes;
     @Input() user: Profile;
     constructor(
@@ -17,7 +17,6 @@ export class UserNotificationsSettingsComponent implements OnInit {
         public profileService: ProfileDataService
     ) {}
 
-    ngOnInit() {}
     isEnabled(type: NotificationTypes): Boolean {
         return (this.user.emailNotificationOptions & type) !== 0;
     }
