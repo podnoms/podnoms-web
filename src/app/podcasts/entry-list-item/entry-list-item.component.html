@@ -1,5 +1,5 @@
 <div class="d-flex flex-row bd-highlight mb-3 ">
-    <div class="avatar"
+    <div class="avatar pe-4"
         id="col-left">
         <img [src]="entry.thumbnailUrl"
             class="img-avatar img-avatar48"
@@ -8,8 +8,8 @@
     </div>
 
     <div id="col-middle"
-        class="flex-grow-1 p-2">
-        <div class="font-w600">
+        class="flex-grow-1 px-2">
+        <div class="fw-semibold">
             <span>{{entry.title}}</span>
         </div>
         <div class="font-w600 mb-0">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div id="col-right">
+    <div id="col-right flex-fill">
         <div class="btn-group me-1">
             <button type="button"
                 class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
@@ -71,29 +71,9 @@
                     </i>
                 </div>
             </button>
-
             <button type="button"
                 *ngIf="entry.processingStatus==='Processed'"
                 class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
-                data-toggle="tooltip"
-                title="Show episode logs"
-                (click)="showLogs(entry)">
-                <i class="fa fa-terminal"></i>
-            </button>
-        </div>
-        <div class="btn-group me-1">
-
-            <button type="button"
-                *ngIf="entry.processingStatus==='Processed'"
-                class="btn btn-sm btn-info js-bs-tooltip-enabled"
-                data-toggle="tooltip"
-                title="Share episode"
-                (click)="shareEpisode(entry)">
-                <i class="fa fa-share-alt"></i>
-            </button>
-            <button type="button"
-                *ngIf="entry.processingStatus==='Processed'"
-                class="btn btn-sm  btn-info"
                 (click)="downloadAudio(entry)"
                 data-toggle="tooltip"
                 title="Download episode">
@@ -102,9 +82,27 @@
                 <i *ngIf="preparingDownload"
                     class="fa fa-cog fa-spin text-success"></i>
             </button>
+        </div>
+        <div class="btn-group me-1 d-none d-xl-inline-block"
+            *ngIf="entry.processingStatus==='Processed'">
+
+            <button type="button"
+                class="btn btn-sm btn-info js-bs-tooltip-enabled"
+                data-toggle="tooltip"
+                title="Share episode"
+                (click)="shareEpisode(entry)">
+                <i class="fa fa-share-alt"></i>
+            </button>
+
+            <button type="button"
+                class="btn btn-sm btn-info"
+                data-toggle="tooltip"
+                title="Show episode logs"
+                (click)="showLogs(entry)">
+                <i class="fa fa-terminal"></i>
+            </button>
 
             <a class="btn btn-sm btn-info"
-                *ngIf="entry.processingStatus==='Processed'"
                 [routerLink]="['../entry', entry?.id, 'edit']"
                 data-toggle="tooltip"
                 title="Edit episode">
