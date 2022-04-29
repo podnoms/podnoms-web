@@ -1,88 +1,84 @@
-<div class="podcast-list-wrapper"
-    *ngIf="podcast; else loading">
-    <div *ngIf="podcast.podcastEntries.length !== 0; else empty"
-        class="block-content container">
+<div *ngIf="podcast && podcast.podcastEntries.length !== 0; else empty">
 
-        <div class="row"
-            *ngFor="let entry of podcast.podcastEntries | uniqueId"
-            app-podcast-entry-item
-            draggable="true"
-            (dragstart)="dragStart($event, entry)"
-            (entryRemoved)='deleteEntry(entry)'
-            (entryUpdated)='updateEntry(entry)'
-            [entry]="entry"></div>
+    <div class="row"
+        *ngFor="let entry of podcast.podcastEntries | uniqueId"
+        app-podcast-entry-item
+        draggable="true"
+        (dragstart)="dragStart($event, entry)"
+        (entryRemoved)='deleteEntry(entry)'
+        (entryUpdated)='updateEntry(entry)'
+        [entry]="entry"></div>
 
-    </div>
-    <ng-template #empty>
-        <div class="block block-rounded bg-gd-dusk">
-            <div class="block-content bg-white-5">
-                <div class="py-4 text-center">
-                    <h1 class="h2 fw-bold text-white mb-2">{{podcast.title}}</h1>
-                    <h2 class="h5 fw-medium text-white-75">Welcome to your new podcast, let's add some episodes!</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="block block-rounded">
-                    <div class="block-content block-content-full">
-                        <div class="py-3 text-center">
-                            <div class="mb-3">
-                                <i class="fa-solid fa-cloud-download-alt  fa-4x text-primary"></i>
-                            </div>
-                            <div class="fs-4 fw-semibold">From URL</div>
-                            <div class="text-muted">YouTube, Mixcloud and many more!</div>
-                            <div class="pt-3">
-                                <a class="btn btn-alt-primary"
-                                    href="javascript:void(0)">
-                                    <i class="fa-solid fa-cloud-download-alt opacity-50 me-1"></i> Add from URL
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="block block-rounded">
-                    <div class="block-content block-content-full">
-                        <div class="py-3 text-center">
-                            <div class="mb-3">
-                                <i class="fa fab fa-twitter fa-4x text-info"></i>
-                            </div>
-                            <div class="fs-4 fw-semibold">From Provider</div>
-                            <div class="text-muted">Dropbox or box!</div>
-                            <div class="pt-3">
-                                <a class="btn btn-alt-info"
-                                    href="javascript:void(0)">
-                                    <i class="fa fa-users opacity-50 me-1"></i> Add from provider
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="block block-rounded">
-                    <div class="block-content block-content-full">
-                        <div class="py-3 text-center">
-                            <div class="mb-3">
-                                <i class="far fa-file-audio fa-4x text-success"></i>
-                            </div>
-                            <div class="fs-4 fw-semibold">From file</div>
-                            <div class="text-muted">Choose a file from your PC</div>
-                            <div class="pt-3">
-                                <a class="btn btn-alt-success"
-                                    href="javascript:void(0)">
-                                    <i class="fa fa-arrow-up opacity-50 me-1"></i> Upload file
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-template>
 </div>
+<ng-template #empty>
+    <div class="block block-rounded bg-gd-dusk">
+        <div class="block-content bg-white-5">
+            <div class="py-4 text-center">
+                <h1 class="h2 fw-bold text-white mb-2">{{podcast.title}}</h1>
+                <h2 class="h5 fw-medium text-white-75">Welcome to your new podcast, let's add some episodes!</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="block block-rounded">
+                <div class="block-content block-content-full">
+                    <div class="py-3 text-center">
+                        <div class="mb-3">
+                            <i class="fa-solid fa-cloud-download-alt  fa-4x text-primary"></i>
+                        </div>
+                        <div class="fs-4 fw-semibold">From URL</div>
+                        <div class="text-muted">YouTube, Mixcloud and many more!</div>
+                        <div class="pt-3">
+                            <a class="btn btn-alt-primary"
+                                href="javascript:void(0)">
+                                <i class="fa-solid fa-cloud-download-alt opacity-50 me-1"></i> Add from URL
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-rounded">
+                <div class="block-content block-content-full">
+                    <div class="py-3 text-center">
+                        <div class="mb-3">
+                            <i class="fa fab fa-twitter fa-4x text-info"></i>
+                        </div>
+                        <div class="fs-4 fw-semibold">From Provider</div>
+                        <div class="text-muted">Dropbox or box!</div>
+                        <div class="pt-3">
+                            <a class="btn btn-alt-info"
+                                href="javascript:void(0)">
+                                <i class="fa fa-users opacity-50 me-1"></i> Add from provider
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-rounded">
+                <div class="block-content block-content-full">
+                    <div class="py-3 text-center">
+                        <div class="mb-3">
+                            <i class="far fa-file-audio fa-4x text-success"></i>
+                        </div>
+                        <div class="fs-4 fw-semibold">From file</div>
+                        <div class="text-muted">Choose a file from your PC</div>
+                        <div class="pt-3">
+                            <a class="btn btn-alt-success"
+                                href="javascript:void(0)">
+                                <i class="fa fa-arrow-up opacity-50 me-1"></i> Upload file
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
 <ng-template #loading>
     <app-loader [loadingText]="'Loading....'">
     </app-loader>
