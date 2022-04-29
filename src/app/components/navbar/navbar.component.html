@@ -37,48 +37,43 @@
             </a>
         </div>
 
-        <div class="content-header-section d-md-none">
+        <div class="content-header-section d-none d-md-inline-block">
             <a href="https://blog.podnoms.com/"
                 target="_blank"
                 rel="noopener"
                 class="btn btn-dual-primary">
                 <i class="fas fa-blog"></i>
                 &nbsp;
-                <span class="d-none d-md-inline-block">Blog</span>
+                <span class="d-none d-xl-inline-block">Blog</span>
             </a>
         </div>
-        <div class="content-header-section hidden-md-down d-lg-block">
+        <div class="content-header-section hidden-md-down d-none d-md-inline-block">
             <a [routerLink]="['/_/extension']"
                 target="_blank"
                 rel="noopener"
                 class="btn btn-dual-secondary">
                 <i class="fa-brands fa-chrome"></i>&nbsp;
-                <span class="d-none d-md-inline-block">Extension</span>
+                <span class="d-none d-lg-inline-block">Extension</span>
             </a>
         </div>
-        <div class="content-header-section">
-            <a href="https://patreon.com/podnoms"
-                target="_blank"
-                rel="noopener"
-                class="btn btn-dual-secondary">
-                <i class="text-danger fa-brands fa-patreon"></i>&nbsp;
-                <span class="d-none d-md-inline-block">Patreon</span>
-            </a>
-        </div>
-        <div class="content-header-section">
-            <a [routerLink]="['payments/pay', {type:'Free'}]"
-                class="btn btn-dual-secondary">
-                <i class="text-primary fa fa-beer"></i>&nbsp;
-                <span class="d-none d-md-inline-block">Buy me a beer</span>
-            </a>
-            <a [routerLink]="['payments/pricing']"
-                *ngIf="pricingEnabled"
-                class="btn btn-dual-secondary">
-                <i class="text-primary fa fa-credit-card"></i>&nbsp;
-                <span class="d-none d-md-inline-block">Pricing</span>
-            </a>
-        </div>
-        <!-- <app-header-player></app-header-player> -->
+        <a href="https://patreon.com/podnoms"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-dual-secondary">
+            <i class="text-danger fa-brands fa-patreon"></i>&nbsp;
+            <span class="d-none d-lg-inline-block">Patreon</span>
+        </a>
+        <a [routerLink]="['payments/pay', {type:'Free'}]"
+            class="btn btn-dual-secondary">
+            <i class="text-primary fa fa-beer"></i>&nbsp;
+            <span class="d-none d-lg-inline-block">Buy me a beer</span>
+        </a>
+        <a [routerLink]="['payments/pricing']"
+            *ngIf="pricingEnabled"
+            class="btn btn-dual-secondary">
+            <i class="text-primary fa fa-credit-card"></i>&nbsp;
+            <span class="d-none d-lg-inline-block">Pricing</span>
+        </a>
 
         <div class="content-header-section">
             <img [src]="profile.thumbnailImageUrl"
@@ -91,7 +86,7 @@
                     id="page-header-user-dropdown"
                     data-bs-toggle="dropdown"
                     aria-label="Open menu">
-                    <span class="d-none d-md-inline-block profile-dropdown-button">
+                    <span class="d-none d-xl-inline-block profile-dropdown-button">
                         {{profile.firstName}}
                         {{profile.lastName}}
                     </span>
@@ -165,7 +160,7 @@
                     </a>
                 </div>
             </div>
-            <div class="btn-group"
+            <div class="btn-group "
                 role="group"
                 *ngIf="profile.hasSubscribed">
                 <button type="button"
@@ -216,7 +211,7 @@
                 </div>
             </div>
             <button type="button"
-                class="btn btn-circle btn-dual-secondary"
+                class="btn btn-circle btn-dual-secondary d-none d-md-inline-block"
                 title="Activity stream"
                 data-toggle="tooltip"
                 (click)="toggleOverlay()"

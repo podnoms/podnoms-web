@@ -2,7 +2,7 @@
     <div class="block block-themed block-rounded"
         *ngIf="(podcast$ | async) as podcast">
         <div class="block-header bg-muted">
-            <h3 class="block-title">
+            <h3 class="block-title d-inline-block text-truncate">
                 {{podcast.title}}
             </h3>
             <div class="block-options">
@@ -11,7 +11,7 @@
                     (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none"
                     aria-expanded="false">
                     <i class="fa fa-plus"></i>
-                    Add Entry
+                    <span class="d-none d-md-inline-block">Add</span>
                 </button>
 
                 <div class="dropdown">
@@ -19,7 +19,9 @@
                         class="btn-block-option dropdown-toggle me-2"
                         data-bs-toggle="dropdown"
                         aria-haspopup="true"
-                        aria-expanded="false"><i class="fa fa-plus"></i> Upload Entry</button>
+                        aria-expanded="false"><i class="fa-solid fa-upload me-1"></i>
+                        <span class="d-none d-md-inline-block">Upload</span>
+                    </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item"
                             (click)="startUpload(uploadModes.fromLocalFile)">
@@ -49,7 +51,7 @@
                     data-toggle="tooltip"
                     target="_blank"
                     rel="noopener"
-                    class="btn-block-option">
+                    class="btn-block-option d-none d-md-inline-block">
                     <i class="text-success fas fa fa-newspaper animated swing"></i>
                 </a>
                 <a *ngIf="publicPageEnabled"
@@ -61,18 +63,15 @@
                     class="btn-block-option">
                     <i class="text-warning fa-solid fa-rss"></i>
                 </a>
-                <button
-                    (click)="copyUrl(podcast.rssUrl)"
+                <button (click)="copyUrl(podcast.rssUrl)"
                     title="Open RSS feed in new tab"
                     data-toggle="tooltip"
                     target="_blank"
                     rel="noopener"
-                    class="btn-block-option">
+                    class="btn-block-option d-none d-md-inline-block">
                     <i class="fa-solid fa-copy"></i>
                 </button>
-
             </div>
-
         </div>
         <div class="block-content">
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"

@@ -1,128 +1,123 @@
 <div *ngIf="profile$ | async; let profile; else loading"
-    class="block p-20">
-
+    class="block block-themed block-rounded">
     <ul ngbNav
         #nav="ngbNav"
         [(activeId)]="activeTab"
-        class="nav nav-tabs nav-tabs-alt">
+        class="nav nav-tabs nav-tabs-block align-items-center">
 
         <li [ngbNavItem]="'details'">
             <a ngbNavLink>
                 <i class="fa fa-info text-primary"></i>&nbsp;Details
             </a>
             <ng-template ngbNavContent>
-                <div class="block">
-                    <div class="block-content">
-                        <div class="row">
-                            <div class="col-md-7 pr-20">
-                                <form action=""
-                                    method="post"
-                                    onsubmit="return false;">
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="form-group row">
-                                                <div class="col-6">
-                                                    <label for="first-name">Firstname</label>
-                                                    <input type="text"
-                                                        class="form-control form-control-lg-disabled"
-                                                        id="first-name"
-                                                        name="first-name"
-                                                        [(ngModel)]="profile.firstName">
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="last-name">Lastname</label>
-                                                    <input type="text"
-                                                        class="form-control form-control-lg-disabled"
-                                                        id="last-name"
-                                                        name="last-name"
-                                                        [(ngModel)]="profile.lastName">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="form-group row">
-                                                <div class="col-12">
-                                                    <label for="slug-box">Username</label>
-                                                    <div class="input-group"
-                                                        [ngClass]="slugError ? 'is-invalid' : ''">
-                                                        <input type="text"
-                                                            class="form-control form-control-lg-disabled"
-                                                            id="slug-box"
-                                                            name="slug-box"
-                                                            autocomplete="off"
-                                                            required=""
-                                                            [(ngModel)]="profile.slug"
-                                                            (keyup)="searchTerm$.next($event.target.value)">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text input-group-lg">
-                                                                <i class="fa fa-asterisk"
-                                                                    [ngClass]="slugging ? 'fa-spin' : ''"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invalid-feedback"
-                                                *ngIf="slugError">{{slugError}}</div>
-                                            <div class="form-text text-muted text-danger">
-                                                Changing this will change all your RSS URLs but we will redirect the old
-                                                one to the new one.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-3">
-                                            <label for="twitter-handle">Twitter Handle</label>
-                                            <input type="text"
-                                                class="form-control form-control-lg-disabled"
-                                                id="twitter-handle"
-                                                name="twitter-handle"
-                                                [(ngModel)]="profile.twitterHandle">
-                                            <div class="form-text text-muted text-danger">
-                                                You will need to fill this if you want to create an episode by replying
-                                                to a tweet
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-12">
-                                            <label>Profile Image</label>
-                                            <app-image-upload [imageUrl]="profile.profileImageUrl"
-                                                [allowRandom]="true"
-                                                #imageControl></app-image-upload>
-                                        </div>
-                                    </div>
-                                </form>
+                <div class="row p-2">
+                    <div class="col-md-7 pr-20">
+                        <form action=""
+                            method="post"
+                            onsubmit="return false;">
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <label for="first-name"
+                                        class="form-label">Firstname</label>
+                                    <input type="text"
+                                        class="form-control form-control-lg-disabled"
+                                        id="first-name"
+                                        name="first-name"
+                                        [(ngModel)]="profile.firstName">
+                                </div>
+                                <div class="col-6">
+                                    <label for="surname"
+                                        class="form-label">Surname</label>
+                                    <input type="text"
+                                        class="form-control form-control-lg-disabled"
+                                        id="surname"
+                                        name="surname"
+                                        [(ngModel)]="profile.lastName">
+                                </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="row mb-10">
-                                    <div class="col-md-12">
-                                        <div class="block block-themed">
-                                            <div class="block-header bg-flat-light">
-                                                <div class="block-title">Connected accounts</div>
-                                            </div>
-                                            <div class="block-content">
-                                                <button class="btn btn-outline-info mr-5 mb-5"
-                                                    (click)="connectToPatreon()">
-                                                    <i class="fa-brands fa-patreon"></i>
-                                                    Connect to Patreon
-                                                </button>
-
-                                            </div>
+                            <div class="form-group row mt-3">
+                                <div class="col-6 form-group">
+                                    <label for="slug-box"
+                                        class="form-label">Username</label>
+                                    <div class="input-group"
+                                        [ngClass]="slugError ? 'is-invalid' : ''">
+                                        <input type="text"
+                                            class="form-control form-control-lg-disabled"
+                                            id="slug-box"
+                                            name="slug-box"
+                                            autocomplete="off"
+                                            required=""
+                                            [(ngModel)]="profile.slug"
+                                            (keyup)="searchTerm$.next($event.target.value)">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text input-group-lg">
+                                                <i class="fa fa-asterisk"
+                                                    [ngClass]="slugging ? 'fa-spin' : ''"></i>
+                                            </span>
                                         </div>
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="slugError">{{slugError}}</div>
+                                    <div class="form-text text-muted text-danger">
+                                        Changing this will change all your RSS URLs but we will redirect the old
+                                        one to the new one.
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="block block-themed">
-                                            <div class="block-header bg-flat-light">
-                                                <h3 class="block-title">Disk
-                                                    Quota:
-                                                    {{storageAvailable|bytesToHuman}}</h3>
-                                            </div>
-                                            <div class="block-content">
-                                                <div class="js-pie-chart pie-chart js-pie-chart-enabled">
-                                                    <!-- <canvas baseChart
+                                <div class="form-group col-6">
+                                    <label for="twitter-handle"
+                                        class="form-label">Twitter Handle</label>
+                                    <input type="text"
+                                        class="form-control form-control-lg-disabled"
+                                        id="twitter-handle"
+                                        name="twitter-handle"
+                                        [(ngModel)]="profile.twitterHandle">
+                                    <div class="form-text text-muted text-danger">
+                                        You will need to fill this if you want to create an episode by replying
+                                        to a tweet
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mt-3">
+                                <div class="block">
+                                    <div class="block-title">Profile Image</div>
+                                    <div class="block-content">
+                                        <app-image-upload [imageUrl]="profile.profileImageUrl"
+                                            [allowRandom]="true"
+                                            #imageControl></app-image-upload>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row mb-10">
+                            <div class="col-md-12">
+                                <div class="block block-themed">
+                                    <div class="block-header bg-flat-light">
+                                        <div class="block-title">Connected accounts</div>
+                                    </div>
+                                    <div class="block-content">
+                                        <button class="btn btn-outline-info mr-5 mb-5"
+                                            (click)="connectToPatreon()">
+                                            <i class="fa-brands fa-patreon"></i>
+                                            Connect to Patreon
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="block block-themed">
+                                    <div class="block-header bg-flat-light">
+                                        <h3 class="block-title">Disk
+                                            Quota:
+                                            {{storageAvailable|bytesToHuman}}</h3>
+                                    </div>
+                                    <div class="block-content">
+                                        <div class="js-pie-chart pie-chart js-pie-chart-enabled">
+                                            <!-- <canvas baseChart
                                                             #usageChart
                                                             class="chart"
                                                             [data]="chartData"
@@ -130,8 +125,6 @@
                                                             [chartType]="'doughnut'"
                                                             [options]="chartOptions">
                                                     </canvas> -->
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -165,13 +158,13 @@
                 <app-payment-list></app-payment-list>
             </ng-template>
         </li>
-        <li class="nav-item ml-auto">
-            <div class="block-options mr-15 mt-5">
+        <li class="nav-item ms-auto">
+            <div class="block-options ps-3 pe-2">
                 <button type="submit"
-                    class="btn btn-outline-secondary"
+                    class="btn"
                     (click)="doSave(profile)"
                     [disabled]="slugError">
-                    <i class="fa fa-save mr-5"></i>Update Profile
+                    <i class="fa-solid fa-save"></i>
                 </button>
             </div>
         </li>

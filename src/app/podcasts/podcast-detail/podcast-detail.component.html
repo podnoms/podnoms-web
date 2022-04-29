@@ -1,5 +1,4 @@
-<div *ngIf="podcast && podcast.podcastEntries.length !== 0; else empty"
-    class="block-content">
+<div *ngIf="podcast && podcast.podcastEntries.length !== 0; else empty">
 
     <div class="row"
         *ngFor="let entry of podcast.podcastEntries | uniqueId"
