@@ -3,7 +3,77 @@
         class="bg-gd-lake show">
     </div>
 </div>
-<main *ngIf="loaded">
+<div *ngIf="loaded"
+    id="page-container"
+    class="main-content-boxed bump-top">
+    <main id="main-container">
+        <div class="home-bg">
+            <div class="hero bg-black-50">
+                <div class="hero-inner">
+                    <div class="content content-full">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 py-4 text-center">
+                                <h1 class="display-4 fw-bold text-white mb-2 shadowed">Pod:Noms</h1>
+                                <h2 class="h4 fw-normal text-white-75 pb-4 mb-3 border-white-op-b shadowed">🤖 Robot Powered Podcasts 🤖</h2>
+
+                                <div class="d-flex  border-white-op-b pb-4">
+                                    <div>
+                                        <h3 class="shadowed font-size-h1 font-weight-bold text-black-50">Create</h3>
+                                        <div class="font-size-xs font-w700 text-white-op">Your
+                                            own podcast
+                                            feeds from
+                                            diverse
+                                            sources</div>
+                                    </div>
+                                    <div>
+                                        <h3 class="shadowed font-size-h1 font-weight-bold text-black-50">Curate</h3>
+                                        <div class="font-size-xs font-w700 text-white-op">Add
+                                            YouTube
+                                            videos,
+                                            Mixcloud/Soundcloud
+                                            audio and
+                                            many, many
+                                            more</div>
+                                    </div>
+                                    <div class="d-none d-sm-inline-block">
+                                        <h3 class=" shadowed font-size-h1 font-weight-bold text-black-50">Monitor</h3>
+                                        <div class="font-size-xs font-w700 text-white-op">Automatically
+                                            add new
+                                            episodes as
+                                            they arrive</div>
+                                    </div>
+                                    <div class="d-none d-sm-inline-block">
+                                        <h3 class="shadowed font-size-h1 font-weight-bold text-black-50">Customise</h3>
+                                        <div class="font-size-xs font-w700 text-white-op">Custom
+                                            domains,
+                                            IFTT/Slack
+                                            notifications
+                                            and much
+                                            more!!</div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex m-2 justify-content-center">
+                                    <a class="btn rounded-pill btn-secondary m-2 px-2 px-sm-5"
+                                        [routerLink]="['auth/login']">
+                                        <i class="fas fa fa-rocket mr-10"></i>
+                                        Let's Go
+                                    </a>
+                                    <a class="btn rounded-pill btn-primary m-2 px-2 px-sm-5"
+                                        [routerLink]="['_/about']">
+                                        <i class="fas fa fa-info-circle mr-10"></i>
+                                        Learn More
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<!-- <main *ngIf="loaded">
     <div class="bg-image">
         <div class="hero">
             <div class="hero-inner">
@@ -78,4 +148,4 @@
             </div>
         </div>
     </div>
-</main>
+</main> -->
