@@ -14,7 +14,8 @@
                             <h1 class="h3 fw-bold mt-4 mb-2">Robot powered podcasts</h1>
                         </div>
                         <form (ngSubmit)="doRegister()"
-                            [formGroup]="registerForm">
+                            [formGroup]="registerForm"
+                            novalidate>
                             <div class="block block-themed block-rounded block-fx-shadow">
                                 <div class="block-header bg-gd-dusk">
                                     <h3 class="block-title">Welcome to PodNoms</h3>
@@ -44,21 +45,21 @@
                                     <div class="form-floating mb-4">
                                         <input type="text"
                                             class="form-control"
-                                            [ngClass]="{'is-invalid': submitted && f.username.errors}"
+                                            [ngClass]="{'is-invalid': f.username.errors}"
                                             autocomplete="username"
-                                            id="username"
-                                            name="username"
                                             formControlName="username"
                                             placeholder="Enter your username">
                                         <label class="form-label"
                                             for="username">Username</label>
-                                        <div id="val-username-error"
-                                            *ngIf="submitted && f.username.errors.required"
+                                        <div *ngIf="f.username.errors.required"
                                             class="invalid-feedback animated fadeIn">
-                                            Please enter a valid username (no spaces, no periods, no commas)
+                                            Username is required
                                         </div>
-                                        <div id="val-username-error"
-                                            *ngIf="submitted && f.username.errors.slugTaken"
+                                        <div *ngIf="f.username.errors.pattern"
+                                            class="invalid-feedback animated fadeIn">
+                                            Please enter a valid username (Letters, numbers, periods, underscores & hyphens).
+                                        </div>
+                                        <div *ngIf=" f.username.errors.taken"
                                             class="invalid-feedback animated fadeIn">
                                             This username is already taken
                                         </div>
@@ -66,72 +67,61 @@
                                     <div class="form-floating mb-4">
                                         <input type="text"
                                             class="form-control"
-                                            [ngClass]="{'is-invalid': submitted && f.email.errors}"
+                                            [ngClass]="{'is-invalid':  f.email.errors}"
                                             autocomplete="email"
-                                            #email
-                                            id="email"
-                                            name="email"
                                             formControlName="email"
                                             placeholder="Enter your email">
                                         <label class="form-label"
                                             for="email">Email</label>
-                                        <div id="val-email-error-required"
-                                            *ngIf="submitted && f.email.errors.required"
-                                            class="invalid-feedback animated fadeIn">Please enter your email address</div>
-                                        <div id="val-email-error-duplicate"
-                                            *ngIf="submitted && f.email.errors.other"
-                                            class="invalid-feedback animated fadeIn">Email already in use</div>
+                                        <div *ngIf=" f.email.errors"
+                                            class="text-danger">
+                                            {{f.email.errors.required}}
+                                            <div *ngIf="f.email.errors.required">Email is required.</div>
+                                            <div *ngIf="f.email.errors.pattern">Email seems invalid.</div>
+                                            <div *ngIf="f.email.errors.taken">Email already in use.</div>
+                                        </div>
                                     </div>
                                     <div class="form-floating mb-4">
                                         <input type="password"
                                             class="form-control"
-                                            [ngClass]="{'is-invalid': submitted && f.password.errors}"
+                                            [ngClass]="{'is-invalid':  f.password.errors}"
                                             autocomplete="current-password"
-                                            id="password"
-                                            name="password"
                                             formControlName="password"
                                             placeholder="Enter your password">
                                         <label class="form-label"
                                             for="password">Password</label>
-                                        <div id="val-password-error"
-                                            *ngIf="submitted && f.password.errors"
+                                        <div *ngIf=" f.password.errors"
                                             class="invalid-feedback animated fadeIn">Please enter your password</div>
                                     </div>
                                     <div class="form-floating mb-4">
                                         <input type="password"
                                             class="form-control"
-                                            [ngClass]="{'is-invalid': submitted && (f.confirmPassword.errors || registerForm.errors.matchPassword)}"
+                                            [ngClass]="{'is-invalid':  f.confirmPassword.errors}"
                                             autocomplete="current-password"
-                                            id="confirmPassword"
-                                            name="confirmPassword"
                                             formControlName="confirmPassword"
                                             placeholder="Confirm your password">
                                         <label class="form-label"
                                             for="password">Confirm password</label>
-                                        <div id="val-password-error"
-                                            *ngIf="submitted && f.confirmPassword.errors.required"
+                                        <div *ngIf=" f.confirmPassword.errors.required"
                                             class="invalid-feedback animated fadeIn">
                                             Please confirm your password
                                         </div>
-                                        <div id="val-password-match-error"
-                                            *ngIf="submitted && f.confirmPassword.errors.matchPassword"
+                                        <div *ngIf=" f.confirmPassword.errors.matchPassword"
                                             class="invalid-feedback animated fadeIn">
                                             Passwords do not match
                                         </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="d-flex justify-content-between mb-2 row">
                                         <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
                                             formControlName="recaptcha"
                                             #captchaElem>
                                         </ngx-recaptcha2>
                                     </div>
-                                    <div id="val-recaptcha-error"
-                                        *ngIf="f.recaptcha.errors"
-                                        class="invalid-feedback animated fadeIn">
+                                    <div *ngIf=" f.recaptcha.errors"
+                                        class="text-danger animated fadeIn">
                                         Please verify that you are not a robot
                                     </div>
-
                                     <div class="d-flex justify-content-between mb-2">
                                         <div>
                                             <i *ngIf="isRequesting"
@@ -151,119 +141,5 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="bg-image">
-            <div class="hero-static content content-full bg-white">
-                <div class="py-30 px-5 text-center">
-                    <a class="link-effect font-w700">
-                        <i class="login-fire"></i>
-                        <span class="font-size-xl text-primary-dark">pod</span>
-                        <span class="font-size-xl">noms</span>
-                    </a>
-                    <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
-                    <h2 class="h4 font-w400 text-muted mb-0"
-                        *ngIf="isRequesting">Logging in</h2>
-                </div>
-                <div *ngIf="!isRequesting">
-                    <hr />
-                    <div class="row justify-content-center">
-                        <div class="col-sm-9 col-md-7 col-xl-5">
-                            <form class="js-validation-signin"
-                                action=""
-                                (ngSubmit)="login()"
-                                method="post">
-                                <div class="form-group row gutters-tiny">
-                                    <div class="col-sm-6 mb-5">
-                                        <button type="button"
-                                            class="btn btn-block btn-social btn-facebook"
-                                            (click)="socialLogin('facebook')">
-                                            <span class="fa-brands fa-facebook-f"
-                                                aria-label="Sign in with Facebook"></span> Sign in with Facebook
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-6 mb-5">
-                                        <button type="button"
-                                            class="btn btn-block btn-social btn-google"
-                                            (click)="socialLogin('google-oauth2')"
-                                            aria-label="Sign in with Google">
-                                            <span class="fa-brands fa-google"></span> Sign in with Google
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-material ">
-                                            <input type="text"
-                                                autocomplete="username"
-                                                class="form-control"
-                                                id="username"
-                                                name="username"
-                                                [(ngModel)]="username">
-                                            <label for="username">Email Address</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-material">
-                                            <input type="password"
-                                                autocomplete="current-password"
-                                                class="form-control"
-                                                id="password"
-                                                name="password"
-                                                [(ngModel)]="password">
-                                            <label for="password">Password</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="alert alert-danger"
-                                    *ngIf="errorMessage"
-                                    role="alert"
-                                    [innerHTML]="errorMessage">
-                                </div>
-                                <div class="col-md-12 new-user-alert"
-                                    *ngIf="brandNew">
-                                    <div class="alert alert-success"
-                                        role="alert">
-                                        <strong>Account created!</strong> Please login with your new details
-                                    </div>
-                                </div>
-                                <div class="col-md-12 new-user-alert"
-                                    *ngIf="justReset">
-                                    <div class="alert alert-success"
-                                        role="alert">
-                                        <strong>Password succesfully reset!</strong> Please login with your new details
-                                    </div>
-                                </div>
-                                <div class="form-group row gutters-tiny">
-                                    <div class="col-12 mb-20">
-                                        <button type="submit"
-                                            class="btn btn-block btn-info"
-                                            aria-label="Submit">
-                                            <i class="fa fa-sign-in-alt mr-10"></i> Sign In
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-6 mb-5">
-                                        <a class="btn btn-block btn-outline-secondary"
-                                            [routerLink]="['/auth/register']">
-                                            <i class="fa fa-plus text-muted mr-5"></i> New Account
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-6 mb-5">
-                                        <a class="btn btn-block btn-outline-secondary"
-                                            [routerLink]="['/auth/reset']">
-                                            <i class="fa fa-unlock-alt text-muted mr-5"></i> Forgot password
-                                        </a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center px-5"
-                    *ngIf="isRequesting">
-                    <i class="fas fa fa-4x fa-sun-o fa-spin text-warning"></i>
-                </div>
-            </div>
-        </div> -->
     </main>
 </div>

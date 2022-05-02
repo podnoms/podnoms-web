@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
@@ -8,10 +8,11 @@ import { environment } from '../../../environments/environment';
 import { ConstantsService } from '../../shared/services/constants.service';
 import { AuthApiProxyService } from '../auth-api-proxy.service';
 import { AuthService } from '../auth.service';
-import { PasswordValidation } from '../validators/check-password.validator';
-import { checkSlugUniqueValidator } from '../validators/check-slug-unique.validator';
+import { PasswordValidation } from '../../shared/validators/check-password.validator';
 import { ProfileDataService } from './../../profile/profile-data.service';
 import { UUID } from 'angular2-uuid';
+import { checkSlugUniqueValidator } from 'app/shared/validators/check-slug-unique.validator';
+import { checkEmailUniqueValidator } from 'app/shared/validators/check-email-unique.validator';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,8 +24,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
 
   barLabel: string = 'Password strength';
-  submitted = false;
-  sending = false;
+  sending: boolean = false;
   isRequesting: boolean = false;
   errorMessage: string;
   @ViewChild('captchaElem')
@@ -38,6 +38,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private constants: ConstantsService,
     private logger: NGXLogger,
+    private cdr: ChangeDetectorRef,
     private uiStateService: UiStateService
   ) {
     this._buildForm();
@@ -48,11 +49,11 @@ export class RegisterComponent {
     this.registerForm = this.fb.group(
       {
         username: [
-          'adasdasdas1123',
+          UUID.UUID(),
           {
             validators: [
               Validators.required,
-              Validators.pattern(/^[a-zA-Z 0-9\_\-]*$/),
+              Validators.pattern(/^[a-zA-Z 0-9\_\-\.]*$/),
             ],
             asyncValidators: [
               checkSlugUniqueValidator(this.profileDataService),
@@ -60,12 +61,18 @@ export class RegisterComponent {
           },
         ],
         email: [
-          `fergal.moran+${UUID.UUID()}@gmail.com`,
-          [
-            // this.profileDataService.checkSlug(term)
-            Validators.required,
-            Validators.pattern(this.constants.emailRegex),
-          ],
+          // `fergal.moran+${UUID.UUID()}@gmail.com`,
+          // `fergal.moran@gmail.com`,
+          '',
+          {
+            validators: [
+              Validators.required,
+              Validators.pattern(this.constants.emailRegex),
+            ],
+            asyncValidators: [
+              checkEmailUniqueValidator(this.profileDataService),
+            ],
+          },
         ],
         password: [
           'asdsadsadsa',
@@ -111,9 +118,11 @@ export class RegisterComponent {
   }
 
   doRegister() {
-    this.submitted = true;
     console.log('register.component', 'doRegister', this.registerForm);
     if (this.registerForm.invalid) {
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      });
       return;
     }
     this.isRequesting = true;
@@ -155,15 +164,16 @@ export class RegisterComponent {
               () => {
                 // TODO - remote logging of this error
                 this.isRequesting = false;
+                this.registerForm.setErrors({ email: 'Email already in use' });
                 this.email.setErrors({
-                  other: 'Email already in use',
+                  taken: 'Email already in use',
                 });
               }
             ),
             () => {
               this.isRequesting = false;
               this.email.setErrors({
-                other: 'Email already in use',
+                taken: 'Email already in use',
               });
               this.errorMessage =
                 'Error signing up, have you already signed up with this email?';

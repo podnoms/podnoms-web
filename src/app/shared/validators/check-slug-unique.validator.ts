@@ -11,7 +11,7 @@ export const checkSlugUniqueValidator = (
         return timer(time).pipe(
             switchMap(() => profileDataService.checkSlug(input.value)),
             map(res => {
-                return res ? null : { slugTaken: true };
+                return res ? null : { taken: true };
             })
         );
     };
