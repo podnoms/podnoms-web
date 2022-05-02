@@ -73,12 +73,17 @@
                                             placeholder="Enter your email">
                                         <label class="form-label"
                                             for="email">Email</label>
-                                        <div *ngIf=" f.email.errors"
-                                            class="text-danger">
-                                            {{f.email.errors.required}}
-                                            <div *ngIf="f.email.errors.required">Email is required.</div>
-                                            <div *ngIf="f.email.errors.pattern">Email seems invalid.</div>
-                                            <div *ngIf="f.email.errors.taken">Email already in use.</div>
+                                        <div *ngIf="f.email.errors.required"
+                                            class="invalid-feedback animated fadeIn">
+                                            Email is required
+                                        </div>
+                                        <div *ngIf="f.email.errors.pattern"
+                                            class="invalid-feedback animated fadeIn">
+                                            Please enter a valid email address
+                                        </div>
+                                        <div *ngIf=" f.email.errors.taken"
+                                            class="invalid-feedback animated fadeIn">
+                                            There is already an account with this email
                                         </div>
                                     </div>
                                     <div class="form-floating mb-4">
