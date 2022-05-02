@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -16,15 +16,20 @@ import { AuthService } from './auth.service';
 import { PatreonComponent } from './redirects/patreon/patreon.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        AuthRoutingModule,
-        ComponentsModule,
-        NgxCaptchaModule,
-        LoggerModule.forRoot(environment.logConfig),
-    ],
-    declarations: [LoginComponent, RegisterComponent, ForgotPasswordComponent, PatreonComponent],
-    providers: [AuthService, CookieService],
+  imports: [
+    CommonModule,
+    SharedModule,
+    AuthRoutingModule,
+    ComponentsModule,
+    NgxCaptchaModule,
+    LoggerModule.forRoot(environment.logConfig),
+  ],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    ForgotPasswordComponent,
+    PatreonComponent,
+  ],
+  providers: [{ provide: JsonPipe }, AuthService, CookieService],
 })
 export class AuthModule {}
