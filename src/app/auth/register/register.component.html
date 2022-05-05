@@ -98,6 +98,16 @@
                                             <div *ngIf="f.confirmPassword.errors.matchPassword">Passwords do not match.</div>
                                         </div>
                                     </div>
+                                    <div class="d-flex justify-content-between mb-2 row">
+                                        <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
+                                            formControlName="recaptcha"
+                                            #captchaElem>
+                                        </ngx-recaptcha2>
+                                    </div>
+                                    <div *ngIf="submitted && f.recaptcha.errors"
+                                        class="text-danger animated fadeIn">
+                                        Please verify that you are not a robot
+                                    </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <div>
                                             <i *ngIf="isRequesting"

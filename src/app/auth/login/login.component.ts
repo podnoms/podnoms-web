@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -15,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string = '';
   brandNew: boolean = false;
+  email: string = '';
   justReset: boolean = false;
   isRequesting: boolean = false;
   returnUrl: any;
@@ -28,10 +28,12 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.params['returnUrl'] || '';
-    this.brandNew = this.route.snapshot.params['brandNew'] || false;
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '';
+    this.brandNew =
+      this.route.snapshot.queryParamMap.get('brandNew') === 'true' || false;
+    this.email = this.route.snapshot.queryParamMap.get('email') || '';
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: [this.email, Validators.required],
       password: ['', Validators.required],
     });
   }

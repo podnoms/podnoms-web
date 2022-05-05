@@ -56,7 +56,7 @@ export class RegisterComponent {
     this.registerForm = this.fb.group(
       {
         username: [
-          '',
+          UUID.UUID(),
           [
             Validators.required,
             Validators.pattern(this.constants.usernameRegex),
@@ -64,12 +64,13 @@ export class RegisterComponent {
           [CheckSlugUniqueValidator.createValidator(this.profileDataService)],
         ],
         email: [
-          '',
+          `fergal.moran+${UUID.UUID()}@gmail.com`,
           [Validators.required, Validators.email],
           [CheckEmailUniqueValidator.createValidator(this.profileDataService)],
         ],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required],
+        password: ['secret', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['secret', Validators.required],
+        recaptcha: ['', Validators.required],
       },
       {
         validators: PasswordValidation.matchPassword,
