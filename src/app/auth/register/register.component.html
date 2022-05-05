@@ -13,135 +13,89 @@
                             </a>
                             <h1 class="h3 fw-bold mt-4 mb-2">Robot powered podcasts</h1>
                         </div>
-                        <form (ngSubmit)="doRegister()"
-                            [formGroup]="registerForm"
-                            novalidate>
-                            <div class="block block-themed block-rounded block-fx-shadow">
-                                <div class="block-header bg-gd-dusk">
-                                    <h3 class="block-title">Welcome to PodNoms</h3>
-                                </div>
-                                <div class="d-flex flex-col justify-content-evenly mt-4">
-                                    <button type="button"
-                                        class="btn btn-block btn-social btn-facebook"
-                                        (click)="socialLogin('facebook')">
-                                        <span class="fa-brands fa-facebook-f"
-                                            aria-label="Sign in with Facebook"></span> Register with Facebook
-                                    </button>
-                                    <button type="button"
-                                        class="btn btn-block btn-social btn-google"
-                                        (click)="socialLogin('google-oauth2')"
-                                        aria-label="Sign in with Google">
-                                        <span class="fa-brands fa-google"></span> Register with Google
-                                    </button>
-                                </div>
-                                <div class="alert alert-danger mx-5 mt-3 text-center"
-                                    *ngIf="errorMessage"
-                                    role="alert">
-                                    <p class="mb-0">
-                                        {{errorMessage}}
-                                    </p>
-                                </div>
-                                <div class="block-content">
-                                    <div class="form-floating mb-4">
-                                        <input type="text"
-                                            class="form-control"
-                                            [ngClass]="{'is-invalid': f.username.errors}"
-                                            autocomplete="username"
-                                            formControlName="username"
-                                            placeholder="Enter your username">
-                                        <label class="form-label"
-                                            for="username">Username</label>
-                                        <div *ngIf="f.username.errors.required"
-                                            class="invalid-feedback animated fadeIn">
-                                            Username is required
-                                        </div>
-                                        <div *ngIf="f.username.errors.pattern"
-                                            class="invalid-feedback animated fadeIn">
-                                            Please enter a valid username (Letters, numbers, periods, underscores & hyphens).
-                                        </div>
-                                        <div *ngIf=" f.username.errors.taken"
-                                            class="invalid-feedback animated fadeIn">
-                                            This username is already taken
-                                        </div>
-                                    </div>
-                                    <div class="form-floating mb-4">
-                                        <input type="text"
-                                            class="form-control"
-                                            [ngClass]="{'is-invalid':  f.email.errors}"
-                                            autocomplete="email"
-                                            formControlName="email"
-                                            placeholder="Enter your email">
-                                        <label class="form-label"
-                                            for="email">Email</label>
-                                        <div *ngIf="f.email.errors.required"
-                                            class="invalid-feedback animated fadeIn">
-                                            Email is required
-                                        </div>
-                                        <div *ngIf="f.email.errors.pattern"
-                                            class="invalid-feedback animated fadeIn">
-                                            Please enter a valid email address
-                                        </div>
-                                        <div *ngIf=" f.email.errors.taken"
-                                            class="invalid-feedback animated fadeIn">
-                                            There is already an account with this email
-                                        </div>
-                                    </div>
-                                    <div class="form-floating mb-4">
-                                        <input type="password"
-                                            class="form-control"
-                                            [ngClass]="{'is-invalid':  f.password.errors}"
-                                            autocomplete="current-password"
-                                            formControlName="password"
-                                            placeholder="Enter your password">
-                                        <label class="form-label"
-                                            for="password">Password</label>
-                                        <div *ngIf=" f.password.errors"
-                                            class="invalid-feedback animated fadeIn">Please enter your password</div>
-                                    </div>
-                                    <div class="form-floating mb-4">
-                                        <input type="password"
-                                            class="form-control"
-                                            [ngClass]="{'is-invalid':  f.confirmPassword.errors}"
-                                            autocomplete="current-password"
-                                            formControlName="confirmPassword"
-                                            placeholder="Confirm your password">
-                                        <label class="form-label"
-                                            for="password">Confirm password</label>
-                                        <div *ngIf=" f.confirmPassword.errors.required"
-                                            class="invalid-feedback animated fadeIn">
-                                            Please confirm your password
-                                        </div>
-                                        <div *ngIf=" f.confirmPassword.errors.matchPassword"
-                                            class="invalid-feedback animated fadeIn">
-                                            Passwords do not match
-                                        </div>
-                                    </div>
 
-                                    <div class="d-flex justify-content-between mb-2 row">
-                                        <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
-                                            formControlName="recaptcha"
-                                            #captchaElem>
-                                        </ngx-recaptcha2>
-                                    </div>
-                                    <div *ngIf=" f.recaptcha.errors"
-                                        class="text-danger animated fadeIn">
-                                        Please verify that you are not a robot
-                                    </div>
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <div>
-                                            <i *ngIf="isRequesting"
-                                                class="fas fa fa-2x fa-sun-o fa-spin text-warning"></i>
-                                        </div>
-                                        <button type="submit"
-                                            class="btn btn-lg btn-alt-primary fw-medium">
-                                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Register
-                                        </button>
-                                    </div>
-                                </div>
-
+                        <div class="block block-themed block-rounded block-fx-shadow">
+                            <div class="block-header bg-gd-dusk">
+                                <h3 class="block-title">Welcome to PodNoms</h3>
                             </div>
-                        </form>
-
+                            <div class="d-flex flex-col justify-content-evenly mt-4">
+                                <button type="button"
+                                    class="btn btn-block btn-social btn-facebook"
+                                    (click)="socialLogin('facebook')">
+                                    <span class="fa-brands fa-facebook-f"
+                                        aria-label="Sign in with Facebook"></span> Register with Facebook
+                                </button>
+                                <button type="button"
+                                    class="btn btn-block btn-social btn-google"
+                                    (click)="socialLogin('google-oauth2')"
+                                    aria-label="Sign in with Google">
+                                    <span class="fa-brands fa-google"></span> Register with Google
+                                </button>
+                            </div>
+                            <div class="alert alert-danger mx-5 mt-3 text-center"
+                                *ngIf="errorMessage"
+                                role="alert">
+                                <p class="mb-0">
+                                    {{errorMessage}}
+                                </p>
+                            </div>
+                            <form [formGroup]="registerForm"
+                                (ngSubmit)="onSubmit()">
+                                <div class="form-row">
+                                    <div class="form-group col-5">
+                                        <label>First Name</label>
+                                        <input type="text"
+                                            formControlName="firstName"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                                        <div *ngIf="submitted && f.firstName.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-5">
+                                        <label>Last Name</label>
+                                        <input type="text"
+                                            formControlName="lastName"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                                        <div *ngIf="submitted && f.lastName.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label>Password</label>
+                                        <input type="password"
+                                            formControlName="password"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                        <div *ngIf="submitted && f.password.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.password.errors.required">Password is required</div>
+                                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label>Confirm Password</label>
+                                        <input type="password"
+                                            formControlName="confirmPassword"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                                        <div *ngIf="submitted && f.confirmPassword.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                                            <div *ngIf="f.confirmPassword.errors.matchPassword">Passwords must match</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary mr-1">Register</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

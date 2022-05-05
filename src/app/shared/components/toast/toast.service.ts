@@ -48,6 +48,6 @@ export class ToastService {
         return m;
     }
     clear() {
-        this.subject.next();
+        this.subject.next(null);
     }
 }

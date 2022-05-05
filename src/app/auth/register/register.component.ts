@@ -1,5 +1,12 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
 import { ReCaptcha2Component } from 'ngx-captcha';
@@ -11,8 +18,8 @@ import { AuthService } from '../auth.service';
 import { PasswordValidation } from '../../shared/validators/check-password.validator';
 import { ProfileDataService } from './../../profile/profile-data.service';
 import { UUID } from 'angular2-uuid';
-import { checkSlugUniqueValidator } from 'app/shared/validators/check-slug-unique.validator';
-import { checkEmailUniqueValidator } from 'app/shared/validators/check-email-unique.validator';
+import { CheckSlugUniqueValidator } from 'app/shared/validators/check-slug-unique.validator';
+import { CheckEmailUniqueValidator } from 'app/shared/validators/check-email-unique.validator';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -22,6 +29,7 @@ export class RegisterComponent {
   environment = environment;
   // eslint-disable-next-line max-len
   registerForm: FormGroup;
+  submitted = false;
 
   barLabel: string = 'Password strength';
   sending: boolean = false;
@@ -38,8 +46,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private constants: ConstantsService,
     private logger: NGXLogger,
-    private cdr: ChangeDetectorRef,
-    private uiStateService: UiStateService
+    private cdr: ChangeDetectorRef
   ) {
     this._buildForm();
   }
@@ -48,44 +55,38 @@ export class RegisterComponent {
   private _buildForm() {
     this.registerForm = this.fb.group(
       {
-        username: [
-          UUID.UUID(),
-          {
-            validators: [
-              Validators.required,
-              Validators.pattern(/^[a-zA-Z 0-9\_\-\.]*$/),
-            ],
-            asyncValidators: [
-              checkSlugUniqueValidator(this.profileDataService),
-            ],
-          },
-        ],
-        email: [
-          // `fergal.moran+${UUID.UUID()}@gmail.com`,
-          // `fergal.moran@gmail.com`,
-          '',
-          {
-            validators: [
-              Validators.required,
-              Validators.pattern(this.constants.emailRegex),
-            ],
-            asyncValidators: [
-              checkEmailUniqueValidator(this.profileDataService),
-            ],
-          },
-        ],
-        password: [
-          'asdsadsadsa',
-          Validators.compose([Validators.required, Validators.minLength(4)]),
-        ],
-        confirmPassword: [
-          'asdsadsadsa',
-          Validators.compose([Validators.required, Validators.minLength(4)]),
-        ],
-        recaptcha: ['', Validators.required],
+        title: ['', Validators.required],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
       },
-      { updateOn: 'change', validators: PasswordValidation.matchPassword }
+      {
+        validators: PasswordValidation.matchPassword,
+      }
     );
+  }
+  getFormErrors(form: AbstractControl) {
+    if (form instanceof FormControl) {
+      // Return FormControl errors or null
+      return form.errors ?? null;
+    }
+    if (form instanceof FormGroup) {
+      const groupErrors = form.errors;
+      // Form group can contain errors itself, in that case add'em
+      const formErrors = groupErrors ? { groupErrors } : {};
+      Object.keys(form.controls).forEach((key) => {
+        // Recursive call of the FormGroup fields
+        const error = this.getFormErrors(form.get(key));
+        if (error !== null) {
+          // Only add error if not null
+          formErrors[key] = error;
+        }
+      });
+      // Return FormGroup errors or null
+      return Object.keys(formErrors).length > 0 ? formErrors : null;
+    }
   }
   get f() {
     return this.registerForm.controls;
@@ -117,8 +118,14 @@ export class RegisterComponent {
     );
   }
 
-  doRegister() {
+  onSubmit() {
     console.log('register.component', 'doRegister', this.registerForm);
+    console.log(
+      'register.component',
+      'errors',
+      this.getFormErrors(this.registerForm)
+    );
+    this.submitted = true;
     if (this.registerForm.invalid) {
       setTimeout(() => {
         this.cdr.detectChanges();

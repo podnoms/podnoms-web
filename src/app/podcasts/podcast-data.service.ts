@@ -38,11 +38,11 @@ export class PodcastDataService extends DefaultDataService<Podcast> {
             );
     }
 
-    getById(id: string | number): Observable<Podcast> {
+    override getById(id: string | number): Observable<Podcast> {
         return super.getById(id); // .pipe(map(hero => this.mapHero(hero)));
     }
 
-    getWithQuery(params: string | QueryParams): Observable<Podcast[]> {
+    override getWithQuery(params: string | QueryParams): Observable<Podcast[]> {
         return super.getWithQuery(params); // .pipe(map(heroes => heroes.map(hero => this.mapHero(hero))));
     }
 

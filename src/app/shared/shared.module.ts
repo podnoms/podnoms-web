@@ -41,6 +41,8 @@ import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/
 import { BannerComponent } from './components/banner/banner.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { ErrorComponent } from './error/error.component';
+import { CheckEmailUniqueValidator } from 'app/shared/validators/check-email-unique.validator';
+import { CheckSlugUniqueValidator } from './validators/check-slug-unique.validator';
 
 @NgModule({
   imports: [
