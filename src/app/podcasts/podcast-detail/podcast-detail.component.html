@@ -1,7 +1,7 @@
-<div *ngIf="podcast && podcast.podcastEntries.length !== 0; else empty">
+<div *ngIf="podcast !== undefined && podcast.podcastEntries !== undefined && podcast.podcastEntries.length !== 0; else empty">
 
     <div class="row"
-        *ngFor="let entry of podcast.podcastEntries | uniqueId"
+        *ngFor="let entry of podcast?.podcastEntries | uniqueId"
         app-podcast-entry-item
         draggable="true"
         (dragstart)="dragStart($event, entry)"

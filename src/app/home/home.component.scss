@@ -5,3 +5,11 @@
 .bump-top {
     margin-top: -100px;
 }
+
+.home-bg {
+  background-image: url(https://cdn.podnoms.com/static/images/pn-back.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(2);
+}

@@ -9,7 +9,7 @@
                     <div class="col-12">
                         <label for="public-title">Public title</label>
                         <input class="form-control form-control-lg"
-                            [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.publicTitle.invalid}"
+                            [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['publicTitle'].invalid}"
                             formControlName="publicTitle"
                             id="public-title"
                             name="public-title"
@@ -21,7 +21,7 @@
                     <div class="col-12">
                         <label for="twitter-page">Twitter page</label>
                         <input class="form-control form-control-lg"
-                            [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.twitterUrl.invalid}"
+                            [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['twitterUrl'].invalid}"
                             formControlName="twitterUrl"
                             id="twitter-page"
                             name="twitter-page"
@@ -33,7 +33,7 @@
                     <div class="col-12">
                         <label for="facebook-page">Facebook page</label>
                         <input class="form-control form-control-lg"
-                            [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.facebookUrl.invalid}"
+                            [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['facebookUrl'].invalid}"
                             formControlName="facebookUrl"
                             id="facebook-page"
                             name="facebook-page"
@@ -46,7 +46,7 @@
                         <label for="podcast-domain">Custom Domain </label>
                         <div class="input-group">
                             <input type="text"
-                                [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.customDomain.invalid}"
+                                [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['customDomain'].invalid}"
                                 formControlName="customDomain"
                                 class="form-control"
                                 id="podcast-domain"
@@ -76,7 +76,7 @@
                         <label for="podcast-domain">Custom RSS Feed Domain </label>
                         <div class="input-group">
                             <input type="text"
-                                [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.customRssDomain.invalid}"
+                                [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['customRssDomain'].invalid}"
                                 formControlName="customRssDomain"
                                 class="form-control"
                                 id="podcast-rss-domain"
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="block-content"
-                        [style.visibility]="publicSettingsForm.controls.private.value ? 'visible' : 'hidden'">
+                        [style.visibility]="publicSettingsForm.controls['private'].value ? 'visible' : 'hidden'">
                         <div class="form-group row">
                             <div class="col-12">
                                 <label for="signup-username">Username</label>
@@ -112,7 +112,7 @@
                                     class="form-control"
                                     id="authUserName"
                                     autocomplete="off"
-                                    [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.authUserName.invalid}"
+                                    [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['authUserName'].invalid}"
                                     formControlName="authUserName"
                                     name="authUserName"
                                     placeholder="eg: john_smith">
@@ -124,7 +124,7 @@
                                 <input type="password"
                                     class="form-control"
                                     autocomplete="off"
-                                    [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls.authPassword.invalid}"
+                                    [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['authPassword'].invalid}"
                                     formControlName="authPassword"
                                     id="authPassword"
                                     name="authPassword"

@@ -7,14 +7,14 @@ import {
 import { Observable, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
-export class CheckSlugUniqueValidator {
+export class CheckEmailUniqueValidator {
   static createValidator = (
     profileDataService: ProfileDataService,
     time: number = 500
   ): AsyncValidatorFn => {
     return (input: FormControl): Observable<ValidationErrors> => {
       return timer(time).pipe(
-        switchMap(() => profileDataService.checkSlug(input.value)),
+        switchMap(() => profileDataService.checkEmail(input.value)),
         map((res) => {
           return res ? null : { taken: true };
         })
