@@ -55,10 +55,19 @@ export class RegisterComponent {
   private _buildForm() {
     this.registerForm = this.fb.group(
       {
-        title: ['', Validators.required],
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(this.constants.usernameRegex),
+          ],
+          [CheckSlugUniqueValidator.createValidator(this.profileDataService)],
+        ],
+        email: [
+          '',
+          [Validators.required, Validators.email],
+          [CheckEmailUniqueValidator.createValidator(this.profileDataService)],
+        ],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
       },
@@ -141,13 +150,6 @@ export class RegisterComponent {
     this.podnomsAuthService.validateCaptchaToken(currentResponse).subscribe(
       (r) => {
         if (r && r.isValid === true) {
-          console.log(
-            'register.component',
-            'register',
-            this.username.value,
-            this.email.value,
-            this.password.value
-          );
           this.authService
             .register(
               this.username.value,
@@ -164,6 +166,7 @@ export class RegisterComponent {
                     },
                   });
                 } else {
+                  this.isRequesting = false;
                   this.errorMessage =
                     'Error signing up, please try again later';
                 }
@@ -186,6 +189,7 @@ export class RegisterComponent {
                 'Error signing up, have you already signed up with this email?';
             };
         } else {
+          this.isRequesting = false;
           this.recaptcha.setErrors({
             other:
               'Captcha did not validate, please refresh page and try again',
@@ -195,6 +199,7 @@ export class RegisterComponent {
         }
       },
       () => {
+        this.isRequesting = false;
         this.recaptcha.setErrors({
           other: 'Captcha did not validate, please refresh page and try again',
         });
@@ -202,8 +207,5 @@ export class RegisterComponent {
           'Captcha did not validate, please refresh page and try again.';
       }
     );
-  }
-  onPasswordErrors(errors) {
-    this.errorMessage = errors;
   }
 }
