@@ -78,7 +78,6 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
     };
   }
   wizardFinish(podcast: Podcast) {
-    if (!podcast.id) return;
     this.podcastDataService.addPodcast(podcast).subscribe((p) => {
       if (!p.id) throw 'Invalid podcast - id is missing';
       this.wizardControl.imageControl
