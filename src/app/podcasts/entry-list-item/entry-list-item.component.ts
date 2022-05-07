@@ -27,6 +27,7 @@ import { NowPlaying } from 'app/core/model/now-playing';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EntryLogsComponent } from '../entry-logs/entry-logs.component';
 import { NGXLogger } from 'ngx-logger';
+import { SharingComponent } from 'app/components/sharing/sharing.component';
 declare var $: any;
 @Component({
   selector: 'div[app-podcast-entry-item]',
@@ -127,7 +128,6 @@ export class EntryListItemComponent implements OnInit {
       }
     });
   }
-  deleteEntry() {}
   updateTitle($event: Event) {
     this.podcastEntryDataService
       .updateEntry(this.entry)
@@ -166,20 +166,9 @@ export class EntryListItemComponent implements OnInit {
     this.modalService.dismissAll();
   }
   shareEpisode(entry: PodcastEntry) {
-    this.modalService.open(this.shareDialog, { size: 'lg' }).result.then(
-      (result) =>
-        this.logger.debug(
-          'entry-list-item.component',
-          'shareEpisode-result',
-          result
-        ),
-      (reason) =>
-        this.logger.debug(
-          'entry-list-item.component',
-          'shareEpisode-reason',
-          reason
-        )
-    );
+    const modalRef = this.modalService.open(SharingComponent, { size: 'lg' });
+    modalRef.componentInstance.entry = this.entry;
+    modalRef.componentInstance.shareComplete = this.shareComplete;
   }
   shareComplete(result) {
     this.modalService.dismissAll();

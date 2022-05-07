@@ -1,7 +1,6 @@
-<div class="block block-rounded mb-0 bg-pattern">
-    <div class="block-header justify-content-end">
-        <h3 class="block-title">Sharing
-            Options</h3>
+<div class="block block-rounded">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">{{entry.title}}</h3>
         <div class="block-options">
             <button type="button"
                 class="btn-block-option"
@@ -20,7 +19,7 @@
                 <i class="fa-brands fa-twitter"></i>
             </button>
             <button type="button"
-                class="btn-block-option"
+                class="btn btn-block-option"
                 data-toggle="tooltip"
                 title="Close"
                 (click)="closeModal()"
@@ -29,23 +28,43 @@
             </button>
         </div>
     </div>
-    <div class="block-content block-content-full">
-        <form action="">
-            <div class="form-group row">
+    <div class="block-content">
+        <form>
+            <div class="mb-4">
+                <div class="input-group">
+                    <input type="email"
+                        class="form-control"
+                        #emailAddress
+                        [(ngModel)]="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter an email address to share with..">
+                    <span class="input-group-text">
+                        <i class="far fa-envelope"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <textarea class="form-control"
+                    [(ngModel)]="message"
+                    rows="7"
+                    placeholder="Enter a message for recipient.."></textarea>
+            </div>
+
+            <div class="mb-4">
+                <div *ngIf="error"
+                    class="text-danger  animated fadeIn">{{error}}</div>
+            </div>
+            <!-- <div class="form-group row">
                 <div class="col-12">
                     <div class="form-material floating">
                         <input type="email"
                             #emailAddress
                             [(ngModel)]="email"
                             class="form-control"
+                            placeholder="Email address"
                             id="email"
                             name="email">
-                        <label for="email">Email</label>
-
-                        <button #googleLoginButton
-                            *ngIf="environment.features.googleContactSyncEnabled"
-                            class="btn btn-primary"
-                            aria-label="Login to Google contacts">Google Contact Login</button>
                     </div>
                     <div class="form-group row">
                         <div class="col-12">
@@ -111,7 +130,46 @@
                         (click)="shareToEmail()"
                         aria-label="Share via email">Share</button>
                 </div>
-            </div>
+            </div> -->
         </form>
+    </div>
+    <div class="block-content block-content-full border-top d-flex justify-content-between align-items-center">
+        <div class="d-flex">
+            <app-spinner-button *ngIf="!linkUrl"
+                [iconClass]="'fas fa fa-link'"
+                [buttonClass]="'btn btn-alt-primary'"
+                (clicked)="getSharingLink($event)">
+                Create link
+            </app-spinner-button>
+            <span *ngIf="linkUrl"
+                class="me-2 pt-1">
+                <a [href]="linkUrl"
+                    target="_blank">{{linkUrl}}</a>
+            </span>
+            <div class="btn-group">
+                <button type="button"
+                    *ngIf="linkUrl"
+                    data-toggle="tooltip"
+                    title="Copy link"
+                    (click)="copyUrl(linkUrl)"
+                    class="btn btn-sm  btn-alt-secondary"
+                    aria-label="Copy link">
+                    <i class="fa fa-copy"></i>
+                </button>
+                <button type="button"
+                    class="btn btn-sm  btn-alt-secondary"
+                    *ngIf="linkUrl"
+                    data-toggle="tooltip"
+                    title="Open link"
+                    (click)="openUrl(linkUrl)"
+                    aria-label="Open URL">
+                    <i class="fa fa-external-link-alt"></i>
+                </button>
+            </div>
+        </div>
+        <button class="btn btn-alt-danger"
+            (click)="shareToEmail()">
+            <i class="fa-solid fa-share-from-square me-1"></i>Share
+        </button>
     </div>
 </div>
