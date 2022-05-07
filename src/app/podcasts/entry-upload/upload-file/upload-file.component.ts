@@ -13,36 +13,30 @@ import { AlertService } from '../../../core/alerts/alert.service';
 export class UploadFileComponent implements OnInit {
   @Input() podcast: Podcast;
   @Output() uploadComplete: EventEmitter<any> = new EventEmitter();
-  public config: DropzoneConfigInterface = {
+
+  config: DropzoneConfigInterface = {
+    acceptedFiles: 'audio/*',
     clickable: true,
+    maxFilesize: 4000, // 4Gb
+    timeout: 1000 * (60 * 120), /// 2 hours
     maxFiles: 1,
-    autoReset: null,
-    errorReset: null,
-    cancelReset: null,
+    parallelUploads: 1,
+    autoProcessQueue: true,
+    headers: {
+      Authorization: `Bearer ${this.authService.getAuthToken()}`,
+    },
+    previewTemplate: `<div class="dz-preview dz-file-preview" data-cy="dropzone">
+            <div class="dz-progress">
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
+                     aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                </div>
+            </div>
+            <div class="dz-error-message">
+                <span data-dz-errormessage></span>
+            </div>
+        </div>`,
   };
-  // config: DropzoneConfigInterface = {
-  //   acceptedFiles: 'audio/*',
-  //   clickable: true,
-  //   maxFilesize: 4000, // 4Gb
-  //   timeout: 1000 * (60 * 120), /// 2 hours
-  //   maxFiles: 1,
-  //   parallelUploads: 1,
-  //   autoProcessQueue: true,
-  //   headers: {
-  //     Authorization: `Bearer ${this.authService.getAuthToken()}`,
-  //   },
-  //   previewTemplate: `<div class="dz-preview dz-file-preview" data-cy="dropzone">
-  //           <div class="dz-progress">
-  //               <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
-  //                    aria-valuemax="100" aria-valuenow="0">
-  //                   <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-  //               </div>
-  //           </div>
-  //           <div class="dz-error-message">
-  //               <span data-dz-errormessage></span>
-  //           </div>
-  //       </div>`,
-  // };
   constructor(
     private alertService: AlertService,
     private authService: AuthService
