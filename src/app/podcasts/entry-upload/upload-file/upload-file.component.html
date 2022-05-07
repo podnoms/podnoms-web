@@ -1,9 +1,10 @@
-<div class="block">
-    <div class="block-content block-content-full">
-        <dropzone [config]="config"
-            [message]="'Click or drag audio here to upload'"
-            (error)="onUploadError($event)"
-            (success)="onUploadSuccess($event)">
-        </dropzone>
-    </div>
-</div>
+<dropzone [config]="config"
+    [message]="'Click or drag audio here to upload'"
+    (error)="onUploadError($event)"
+    (success)="onUploadSuccess($event)">
+</dropzone>
+<!-- <div class="dropzone"
+    [dropzone]="config"
+    (message)="'Farts'"
+    (error)="onUploadError($event)"
+    (success)="onUploadSuccess($event)"></div> -->

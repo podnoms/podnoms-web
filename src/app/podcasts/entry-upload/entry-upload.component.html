@@ -5,8 +5,7 @@
         (entryCreateComplete)="onEntryCreateComplete($event)">
     </app-upload-url>
 </div>
-<div class="container-fluid"
-    *ngIf="uploadMode===uploadModes.fromLocalFile">
+<div *ngIf="uploadMode===uploadModes.fromLocalFile">
     <app-upload-file [podcast]="podcast"
         (uploadComplete)="onEntryCreateComplete($event)">
     </app-upload-file>

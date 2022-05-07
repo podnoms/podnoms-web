@@ -73,13 +73,15 @@
                 </button>
             </div>
         </div>
-        <div class="block-content">
+        <div class="block-content h-5">
             <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
                 [(uploadMode)]="uploadMode"
                 [podcast]="podcast"
                 (podcastUpdated)="podcastUpdated()">
             </app-entry-upload>
             <app-podcast-detail #podcastDetail
+                (fromUrlClick)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none"
+                (fromLocalFileClick)="startUpload(uploadModes.fromLocalFile)"
                 [podcast]="podcast"></app-podcast-detail>
         </div>
     </div>
