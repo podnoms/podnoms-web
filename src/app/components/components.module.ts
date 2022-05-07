@@ -14,7 +14,6 @@ import {
   NgbTooltipModule,
   NgbProgressbarModule,
   NgbTypeaheadModule,
-  NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgxAudioplayerModule } from '@podnoms/ngx-audioplayer';
 
@@ -33,10 +32,11 @@ import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HighlightModule } from 'ngx-highlightjs';
 import { OrderModule } from 'ngx-order-pipe';
 import { AppLayoutComponentComponent } from './app-layout-component/app-layout-component.component';
 import { MomentModule } from 'ngx-moment';
+import { ImgFallbackDirective } from './img-fallback/img-fallback.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
@@ -86,6 +86,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     RedirollComponent,
     OpmlComponent,
     AppLayoutComponentComponent,
+    ImgFallbackDirective,
   ],
   exports: [
     SidebarComponent,
@@ -97,6 +98,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     SharingComponent,
     ChatboxComponent,
     OpmlComponent,
+    ImgFallbackDirective,
   ],
 })
 export class ComponentsModule {}
