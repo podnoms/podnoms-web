@@ -19,6 +19,7 @@ import { DragDropService } from '../../shared/services/drag-drop.service';
 import { NGXLogger } from 'ngx-logger';
 import { SignalRService } from 'app/shared/services/signal-r.service';
 import { RealtimeUpdate } from '../../core/model/realtime-update';
+import { UploadMode as UploadMode } from '../upload-mode.enum';
 
 @Component({
   selector: 'app-podcast-detail',
@@ -39,9 +40,12 @@ import { RealtimeUpdate } from '../../core/model/realtime-update';
   ],
 })
 export class PodcastDetailComponent implements OnInit, OnChanges {
+  UPLOADMODE = UploadMode;
   @Input() podcast: Podcast;
   @Output() fromUrlClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() fromLocalFileClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  fromProviderClick: EventEmitter<UploadMode> = new EventEmitter<UploadMode>();
 
   constructor(
     private podcastStore: PodcastStoreService,
@@ -125,6 +129,11 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
   uploadFromFile($event: any) {
     if (this.fromLocalFileClick) {
       this.fromLocalFileClick.emit($event);
+    }
+  }
+  uploadProvider(provider: UploadMode) {
+    if (this.fromProviderClick) {
+      this.fromProviderClick.emit(provider);
     }
   }
 }

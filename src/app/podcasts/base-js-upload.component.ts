@@ -13,6 +13,9 @@ export class BaseJsUploadComponent extends BasePageComponent {
   @Input() podcast: Podcast;
   @Output() entryCreateComplete: EventEmitter<any> = new EventEmitter();
 
+  message: string = 'Click to open browser 👉';
+  subMessage: string =
+    'If you have a popup blocker, you may need to allow popups.';
   errorText: string;
   isPosting: boolean = false;
   extensionLists = {
@@ -79,6 +82,8 @@ export class BaseJsUploadComponent extends BasePageComponent {
     }
   }
   protected parseFileList(files: Array<any>) {
+    this.message = 'Checking file...';
+    this.subMessage = 'Dispatching robot army...';
     this.isPosting = true;
     const that = this;
     files.forEach((file) => {
@@ -90,6 +95,8 @@ export class BaseJsUploadComponent extends BasePageComponent {
     });
   }
   public processPodcast(name: string, url: string): Observable<string> {
+    this.message = 'Processing file...';
+    this.subMessage = 'Assembling robot army...';
     const entry = new PodcastEntry(this.podcast.id, url);
     entry.title = name;
     return Observable.create((observer) => {

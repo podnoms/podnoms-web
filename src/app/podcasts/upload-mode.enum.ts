@@ -1,4 +1,4 @@
-export enum UploadModes {
+export enum UploadMode {
     none,
     fromUrl,
     fromLocalFile,

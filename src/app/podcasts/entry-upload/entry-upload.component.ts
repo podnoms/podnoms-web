@@ -1,35 +1,32 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Podcast, PodcastEntry } from '../../core';
-import { UploadModes } from '../upload-modes.enum';
-import { Subject, Observable } from 'rxjs';
-import { EntityOp } from '@ngrx/data';
-import { map, delay, takeUntil } from 'rxjs/operators';
+import { UploadMode } from '../upload-mode.enum';
 import { PodcastStoreService } from '../podcast-store.service';
 
 @Component({
-    selector: 'app-entry-upload',
-    templateUrl: './entry-upload.component.html',
-    styleUrls: ['./entry-upload.component.scss'],
+  selector: 'app-entry-upload',
+  templateUrl: './entry-upload.component.html',
+  styleUrls: ['./entry-upload.component.scss'],
 })
 export class EntryUploadComponent {
-    uploadModes = UploadModes; // do this so it can be used in the template
+  UPLOADMODE = UploadMode; // do this so it can be used in the template
 
-    @Input() uploadMode: UploadModes;
-    @Output() uploadModeChange = new EventEmitter();
-    @Input() podcast: Podcast;
-    @Output() podcastUpdated = new EventEmitter<Podcast>();
-    constructor(private podcastStore: PodcastStoreService) {}
+  @Input() uploadMode: UploadMode;
+  @Output() uploadModeChange = new EventEmitter();
+  @Input() podcast: Podcast;
+  @Output() podcastUpdated = new EventEmitter<Podcast>();
+  constructor(private podcastStore: PodcastStoreService) {}
 
-    onEntryCreateComplete(entry: PodcastEntry) {
-        this.uploadMode = this.uploadModes.none;
-        if (entry !== null) {
-            this.podcast.podcastEntries.unshift(entry);
-        }
-        this.podcastStore.updateOneInCache(this.podcast);
-        this.uploadModeChange.emit(this.uploadMode);
-        this.podcastUpdated.emit(this.podcast);
+  onEntryCreateComplete(entry: PodcastEntry) {
+    this.uploadMode = this.UPLOADMODE.none;
+    if (entry !== null) {
+      this.podcast.podcastEntries.unshift(entry);
     }
-    processPlaylist() {
-        this.uploadMode = this.uploadModes.none;
-    }
+    this.podcastStore.updateOneInCache(this.podcast);
+    this.uploadModeChange.emit(this.uploadMode);
+    this.podcastUpdated.emit(this.podcast);
+  }
+  processPlaylist() {
+    this.uploadMode = this.UPLOADMODE.none;
+  }
 }

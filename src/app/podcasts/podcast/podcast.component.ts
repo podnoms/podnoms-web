@@ -6,7 +6,7 @@ import { PodcastStoreService } from '../podcast-store.service';
 import { Observable, Subject, EMPTY } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { UploadModes } from '../upload-modes.enum';
+import { UploadMode } from '../upload-mode.enum';
 import { PodcastDataService } from '../podcast-data.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,8 +24,8 @@ import { DataServiceError } from '@ngrx/data';
 export class PodcastComponent
   extends BasePageComponent
   implements OnDestroy, OnInit {
-  uploadModes = UploadModes; // do this so it can be used in the template
-  uploadMode: UploadModes = UploadModes.none; // do this so it can be used in the template
+  UPLOADMODE = UploadMode; // do this so it can be used in the template
+  uploadMode: UploadMode = UploadMode.none; // do this so it can be used in the template
   loading$: Observable<boolean>;
   noPodcasts: boolean = false;
   podcast$: Observable<Podcast> = new Observable();
@@ -34,7 +34,7 @@ export class PodcastComponent
   @ViewChild('podcastDetail')
   podcastDetailComponent: PodcastDetailComponent | undefined;
 
-  mode: UploadModes = UploadModes.fromUrl;
+  mode: UploadMode = UploadMode.fromUrl;
   private _destroyed$: Subject<any>;
 
   constructor(
@@ -111,7 +111,7 @@ export class PodcastComponent
     document.body.removeChild(el);
     this.alertService.success('Success', 'URL copied to clipboard');
   }
-  startUpload(uploadMode: UploadModes) {
+  startUpload(uploadMode: UploadMode) {
     this.uploadMode = uploadMode;
   }
   podcastUpdated() {
