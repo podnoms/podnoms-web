@@ -1,22 +1,20 @@
 import {
   Component,
-  OnInit,
   Input,
   ChangeDetectorRef,
   AfterViewInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Podcast, Category } from '../../core';
+import { Podcast } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
-import { AlertService } from '../../core/alerts/alert.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { validateDomain } from 'app/shared/validators/domain.validator';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { requiredIfValidator } from 'app/shared/validators/required.validator';
 import { urlIsValidValidator } from 'app/shared/validators/valid-url.validator';
 import { Observable, Subject } from 'rxjs';
-import { Logger } from '@ngrx/data';
 import { NGXLogger } from 'ngx-logger';
+import { ConstantsService } from 'app/shared/services/constants.service';
 
 @Component({
   selector: 'app-podcast-public-settings',
@@ -32,8 +30,8 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
 
   constructor(
     private podcastDataService: PodcastDataService,
-    private alertService: AlertService,
     private utilityService: UtilityService,
+    private constants: ConstantsService,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private logger: NGXLogger
@@ -52,14 +50,14 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
       facebookUrl: [podcast.facebookUrl, urlIsValidValidator],
       customDomain: [
         podcast.customDomain,
-        Validators.compose([]),
+        Validators.compose([Validators.pattern(this.constants.domainRegex)]),
         Validators.composeAsync([
           validateDomain(this.utilityService, 'pages.podnoms.com'),
         ]),
       ],
       customRssDomain: [
         podcast.customRssDomain,
-        Validators.compose([]),
+        Validators.compose([Validators.pattern(this.constants.domainRegex)]),
         Validators.composeAsync([
           validateDomain(this.utilityService, 'rss.podnoms.com'),
         ]),
@@ -78,7 +76,6 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
         ),
       ],
     });
-    this.cd.detectChanges();
   }
   runValidation() {
     this.publicSettingsForm.controls['authUserName'].updateValueAndValidity();
@@ -91,6 +88,7 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
     return {
       isValid: this.publicSettingsForm.valid,
       hasChanges: this.publicSettingsForm.dirty,
+      form: this.publicSettingsForm,
     };
   }
   submitForm(): Observable<Podcast> {

@@ -5,7 +5,7 @@ import { Podcast } from 'app/core';
 @Component({
     selector: 'app-podcast-delete-modal',
     template: `
-        <div class="block block-themed block-transparent mb-0">
+        <div class="block block-themed mb-0">
             <div class="block-header bg-primary-dark">
                 <h3 class="block-title">Delete this podcast?</h3>
                 <div class="block-options">

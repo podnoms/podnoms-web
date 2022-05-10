@@ -4,11 +4,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { validateSearch } from 'app/shared/validators/search.validator';
 import { validateDomain } from 'app/shared/validators/domain.validator';
 import { UtilityService } from 'app/shared/services/utility.service';
-import { AlertService } from 'app/core/alerts/alert.service';
 import { PodcastDataService } from 'app/podcasts/podcast-data.service';
 import { Router } from '@angular/router';
 import { PodcastStoreService } from 'app/podcasts/podcast-store.service';
 import { Observable, Observer } from 'rxjs';
+import { ConstantsService } from '../../../shared/services/constants.service';
 
 @Component({
   selector: 'app-podcast-edit-form-advanced',
@@ -24,7 +24,7 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
     private router: Router,
     private fb: FormBuilder,
     private utilityService: UtilityService,
-    private alertService: AlertService,
+    private constants: ConstantsService,
     private podcastStore: PodcastStoreService,
     private podcastDataService: PodcastDataService
   ) {}
@@ -66,20 +66,9 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
       category: [podcast.category, Validators.required],
       slug: [
         podcast.slug,
-        Validators.compose([
-          // Validators.required,
-          // Validators.minLength(5),
-          Validators.maxLength(30),
-        ]),
+        Validators.compose([Validators.maxLength(30)]),
         Validators.composeAsync([
           validateSearch(this.utilityService, 'Podcasts', 'Slug', podcast.slug),
-        ]),
-      ],
-      customDomain: [
-        podcast.customDomain,
-        Validators.compose([]),
-        Validators.composeAsync([
-          validateDomain(this.utilityService, 'rss.podnoms.com'),
         ]),
       ],
     });

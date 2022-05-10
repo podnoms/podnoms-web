@@ -4,41 +4,43 @@ import { Podcast } from '../../../core';
 import { Observable } from 'rxjs';
 import { NotificationDataService } from '../services/notification-data.service';
 import { NGXLogger } from 'ngx-logger';
+import { getNotificationIcon } from '../notifications-utils';
 
 @Component({
-    selector: 'app-notifications',
-    templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.scss'],
+  selector: 'app-notifications',
+  templateUrl: './notifications.component.html',
+  styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-    @Input()
-    podcast: Podcast;
-    @Output()
-    updated: EventEmitter<Podcast> = new EventEmitter();
+  @Input()
+  podcast: Podcast;
+  @Output()
+  updated: EventEmitter<Podcast> = new EventEmitter();
 
-    notifications: Notification[];
-    types$: Observable<string>;
+  notifications: Notification[];
+  types$: Observable<string>;
+  getIcon = (type: string) => getNotificationIcon(type);
 
-    constructor(
-        private nds: NotificationDataService,
-        protected logger: NGXLogger
-    ) {}
-    ngOnInit() {
-        this.types$ = this.nds.getTypes();
-        this.notifications = this.podcast.notifications;
-    }
-    deleteNotification(notification: Notification) {
-        this.logger.debug(
-            'notifications.component',
-            'deleteNotification',
-            notification
-        );
-        this.nds.deleteNotification(notification).subscribe((result) => {
-            this.podcast.notifications = this.podcast.notifications.filter(
-                (r) => r.id !== notification.id
-            );
-            this.notifications = this.podcast.notifications;
-            this.updated.emit(this.podcast);
-        });
-    }
+  constructor(
+    private nds: NotificationDataService,
+    protected logger: NGXLogger
+  ) {}
+  ngOnInit() {
+    this.types$ = this.nds.getTypes();
+    this.notifications = this.podcast.notifications;
+  }
+  deleteNotification(notification: Notification) {
+    this.logger.debug(
+      'notifications.component',
+      'deleteNotification',
+      notification
+    );
+    this.nds.deleteNotification(notification).subscribe((result) => {
+      this.podcast.notifications = this.podcast.notifications.filter(
+        (r) => r.id !== notification.id
+      );
+      this.notifications = this.podcast.notifications;
+      this.updated.emit(this.podcast);
+    });
+  }
 }

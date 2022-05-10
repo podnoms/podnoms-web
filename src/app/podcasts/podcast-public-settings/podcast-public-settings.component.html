@@ -5,9 +5,10 @@
         novalidate>
         <div class="row">
             <div class="col-md-6 pr-50">
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <div class="col-12">
-                        <label for="public-title">Public title</label>
+                        <label class="form-label"
+                            for="public-title">Public title</label>
                         <input class="form-control form-control-lg"
                             [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['publicTitle'].invalid}"
                             formControlName="publicTitle"
@@ -17,9 +18,10 @@
                             type="text">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <div class="col-12">
-                        <label for="twitter-page">Twitter page</label>
+                        <label class="form-label"
+                            for="twitter-page">Twitter page</label>
                         <input class="form-control form-control-lg"
                             [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['twitterUrl'].invalid}"
                             formControlName="twitterUrl"
@@ -29,9 +31,10 @@
                             type="text">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <div class="col-12">
-                        <label for="facebook-page">Facebook page</label>
+                        <label class="form-label"
+                            for="facebook-page">Facebook page</label>
                         <input class="form-control form-control-lg"
                             [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['facebookUrl'].invalid}"
                             formControlName="facebookUrl"
@@ -41,9 +44,12 @@
                             type="text">
                     </div>
                 </div>
-                <div class="form-group row">
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row mb-4">
                     <div class="col-12">
-                        <label for="podcast-domain">Custom Domain </label>
+                        <label class="form-label"
+                            for="podcast-domain">Custom Domain </label>
                         <div class="input-group">
                             <input type="text"
                                 [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['customDomain'].invalid}"
@@ -52,9 +58,8 @@
                                 id="podcast-domain"
                                 placeholder="Custom domain name"
                                 autocomplete="off" />
-                            <div class="input-group-append">
-                                <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
-                            </div>
+                            <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
+
                         </div>
                         <div class="form-text text-muted">
                             This should be a CNAME pointing to pages.podnoms.com
@@ -69,22 +74,18 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group row">
+                <div class="form-group row mb-4">
                     <div class="col-12">
-                        <label for="podcast-domain">Custom RSS Feed Domain </label>
+                        <label class="form-label"
+                            for="podcast-domain">Custom RSS Feed Domain </label>
                         <div class="input-group">
                             <input type="text"
                                 [ngClass]="{'is-invalid': !publicSettingsForm.valid && publicSettingsForm.controls['customRssDomain'].invalid}"
                                 formControlName="customRssDomain"
+                                autocomplete="off"
                                 class="form-control"
-                                id="podcast-rss-domain"
-                                placeholder="Custom RSS Feed domain name"
-                                autocomplete="off" />
-                            <div class="input-group-append">
-                                <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
-                            </div>
+                                placeholder="Custom RSS Feed domain name" />
+                            <span class="input-group-text"> <i class="fa fa-asterisk"></i> </span>
                         </div>
                         <div class="form-text text-muted">
                             This should be a CNAME pointing to rss.podnoms.com
@@ -93,21 +94,23 @@
                 </div>
                 <div class="block">
                     <div class="block-header">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input"
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                type="checkbox"
                                 (change)="runValidation()"
                                 formControlName="private"
                                 id="isPrivate"
-                                name="isPrivate"
-                                type="checkbox"><label class="custom-control-label"
-                                for="isPrivate">Private?</label>
+                                name="isPrivate">
+                            <label class="form-check-label"
+                                for="isPrivate">Private ?</label>
                         </div>
                     </div>
-                    <div class="block-content"
+                    <div class="px-4"
                         [style.visibility]="publicSettingsForm.controls['private'].value ? 'visible' : 'hidden'">
                         <div class="form-group row">
                             <div class="col-12">
-                                <label for="signup-username">Username</label>
+                                <label class="form-label"
+                                    for="signup-username">Username</label>
                                 <input type="text"
                                     class="form-control"
                                     id="authUserName"
@@ -120,7 +123,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-12">
-                                <label for="authPassword">Password</label>
+                                <label class="form-label"
+                                    for="authPassword">Password</label>
                                 <input type="password"
                                     class="form-control"
                                     autocomplete="off"

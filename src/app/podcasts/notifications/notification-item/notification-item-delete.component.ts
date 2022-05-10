@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-notification-delete-modal-content',
     template: `
-        <div class="block block-themed block-transparent mb-0">
+        <div class="block block-themed mb-0">
             <div class="block-header bg-primary-dark">
                 <h3 class="block-title">Delete this notification?</h3>
                 <div class="block-options">
