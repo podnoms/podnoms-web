@@ -1,117 +1,122 @@
 <div id="page-container"
     class="main-content-boxed">
     <main id="main-container">
-        <div class="bg-body-dark">
+        <div class="bg-image">
             <div class="row mx-0 justify-content-center">
-                <div class="hero-static col-xl-5 col-md-8 col-sm-10">
-                    <div class="content content-full overflow-hidden">
+                <div class="hero-static content content-full bg-body-extra-light">
+                    <div class="py-4 px-1 text-center mb-4">
                         <div class="py-4 text-center">
                             <a class="link-fx fw-bold"
                                 href="/">
-                                <i class="fa fa-fire"></i>
+                                <img class="font-image me-1"
+                                    [src]="'/assets/img/logo-icon.png'"
+                                    alt="logo">
                                 <span class="fs-4 text-body-color">pod</span><span class="fs-4">noms</span>
                             </a>
                             <h1 class="h3 fw-bold mt-4 mb-2">Robot powered podcasts</h1>
                         </div>
-                        <form (ngSubmit)="login()"
-                            [formGroup]="loginForm">
-                            <div class="block block-themed block-rounded block-fx-shadow">
-                                <div class="block-header bg-gd-dusk">
-                                    <h3 class="block-title">Please Sign In</h3>
-                                </div>
-                                <div class="d-flex flex-col justify-content-evenly mt-4">
-                                    <button type="button"
-                                        class="btn btn-block btn-social btn-facebook"
-                                        (click)="socialLogin('facebook')">
-                                        <span class="fa-brands fa-facebook-f"
-                                            aria-label="Sign in with Facebook"></span> Sign in with Facebook
-                                    </button>
-                                    <button type="button"
-                                        class="btn btn-block btn-social btn-google"
-                                        (click)="socialLogin('google-oauth2')"
-                                        aria-label="Sign in with Google">
-                                        <span class="fa-brands fa-google"></span> Sign in with Google
-                                    </button>
-                                </div>
-                                <div class="alert alert-danger mx-5 mt-3 text-center"
-                                    *ngIf="errorMessage"
-                                    role="alert">
-                                    <p class="mb-0">
-                                        {{errorMessage}}
-                                    </p>
-                                </div>
-                                <div class="col-md-12 new-user-alert"
-                                    *ngIf="brandNew">
-                                    <div class="alert alert-success"
-                                        role="alert">
-                                        <strong>Account created!</strong> Please login with your new details
-                                    </div>
-                                </div>
-                                <div class="col-md-12 new-user-alert"
-                                    *ngIf="justReset">
-                                    <div class="alert alert-success"
-                                        role="alert">
-                                        <strong>Password succesfully reset!</strong> Please login with your new details
-                                    </div>
-                                </div>
-                                <div class="block-content">
-                                    <div class="form-floating mb-4">
-                                        <input type="text"
-                                            class="form-control"
-                                            [ngClass]="{'is-invalid': submitted && f.username.errors}"
-                                            autocomplete="username"
-                                            id="username"
-                                            name="username"
-                                            formControlName="username"
-                                            placeholder="Enter your username">
-                                        <label class="form-label"
-                                            for="username">Username</label>
-                                        <div id="val-username-error"
-                                            *ngIf="submitted && f.username.errors"
-                                            class="invalid-feedback animated fadeIn">Please enter your username</div>
-                                    </div>
-                                    <div class="form-floating mb-4">
-                                        <input type="password"
-                                            class="form-control"
-                                            [ngClass]="{'is-invalid': submitted && f.password.errors}"
-                                            autocomplete="current-password"
-                                            id="password"
-                                            name="password"
-                                            formControlName="password"
-                                            placeholder="Enter your password">
-                                        <label class="form-label"
-                                            for="password">Password</label>
-                                        <div id="val-password-error"
-                                            *ngIf="submitted && f.password.errors"
-                                            class="invalid-feedback animated fadeIn">Please enter your password</div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <div>
-                                            <i *ngIf="isRequesting"
-                                                class="fas fa fa-2x fa-sun-o fa-spin text-warning"></i>
+                        <div class="row justify-content-center px-1">
+                            <div class="col-sm-8 col-md-6 col-xl-6">
+                                <form (ngSubmit)="login()"
+                                    [formGroup]="loginForm">
+                                    <div class="block block-themed block-rounded block-fx-shadow">
+                                        <div class="block-header bg-gd-dusk">
+                                            <h3 class="block-title">Please Sign In</h3>
                                         </div>
-                                        <button type="submit"
-                                            class="btn btn-lg btn-alt-primary fw-medium">
-                                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
-                                        </button>
+                                        <div class="d-flex flex-col justify-content-evenly mt-4">
+                                            <button type="button"
+                                                class="btn btn-block btn-social btn-facebook"
+                                                (click)="socialLogin('facebook')">
+                                                <span class="fa-brands fa-facebook-f"
+                                                    aria-label="Sign in with Facebook"></span> Sign in with Facebook
+                                            </button>
+                                            <button type="button"
+                                                class="btn btn-block btn-social btn-google"
+                                                (click)="socialLogin('google-oauth2')"
+                                                aria-label="Sign in with Google">
+                                                <span class="fa-brands fa-google"></span> Sign in with Google
+                                            </button>
+                                        </div>
+                                        <div class="alert alert-danger mx-5 mt-3 text-center"
+                                            *ngIf="errorMessage"
+                                            role="alert">
+                                            <p class="mb-0">
+                                                {{errorMessage}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 new-user-alert"
+                                            *ngIf="brandNew">
+                                            <div class="alert alert-success"
+                                                role="alert">
+                                                <strong>Account created!</strong> Please login with your new details
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 new-user-alert"
+                                            *ngIf="justReset">
+                                            <div class="alert alert-success"
+                                                role="alert">
+                                                <strong>Password succesfully reset!</strong> Please login with your new details
+                                            </div>
+                                        </div>
+                                        <div class="block-content">
+                                            <div class="form-floating mb-4">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    [ngClass]="{'is-invalid': submitted && f.username.errors}"
+                                                    autocomplete="username"
+                                                    id="username"
+                                                    name="username"
+                                                    formControlName="username"
+                                                    placeholder="Enter your username">
+                                                <label class="form-label"
+                                                    for="username">Username</label>
+                                                <div id="val-username-error"
+                                                    *ngIf="submitted && f.username.errors"
+                                                    class="invalid-feedback animated fadeIn">Please enter your username</div>
+                                            </div>
+                                            <div class="form-floating mb-4">
+                                                <input type="password"
+                                                    class="form-control"
+                                                    [ngClass]="{'is-invalid': submitted && f.password.errors}"
+                                                    autocomplete="current-password"
+                                                    id="password"
+                                                    name="password"
+                                                    formControlName="password"
+                                                    placeholder="Enter your password">
+                                                <label class="form-label"
+                                                    for="password">Password</label>
+                                                <div id="val-password-error"
+                                                    *ngIf="submitted && f.password.errors"
+                                                    class="invalid-feedback animated fadeIn">Please enter your password</div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <div>
+                                                    <i *ngIf="isRequesting"
+                                                        class="fas fa fa-2x fa-sun-o fa-spin text-warning"></i>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn btn-lg btn-alt-primary fw-medium">
+                                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="block-content block-content-full bg-body-light text-center d-flex justify-content-between">
+                                            <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block"
+                                                [routerLink]="['/auth/register']">
+                                                <i class="fa fa-plus opacity-50 me-1"></i> Create Account
+                                            </a>
+                                            <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block"
+                                                [routerLink]="['/auth/reset']">
+                                                <i class="fa-solid fa-lightbulb opacity-50 me-1"></i>
+                                                Forgot Password
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="block-content block-content-full bg-body-light text-center d-flex justify-content-between">
-                                    <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block"
-                                        [routerLink]="['/auth/register']">
-                                        <i class="fa fa-plus opacity-50 me-1"></i> Create Account
-                                    </a>
-                                    <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block"
-                                        [routerLink]="['/auth/reset']">
-                                        <i class="fa-solid fa-lightbulb opacity-50 me-1"></i>
-                                        Forgot Password
-                                    </a>
-                                </div>
+                                </form>
                             </div>
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>

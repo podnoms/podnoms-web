@@ -11,7 +11,7 @@ import { Notification } from '../../../core/model/notification';
 import { UtilsService } from '../../../utils/utils.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationDataService } from '../services/notification-data.service';
-import { getNotificationIcon } from '../notifications-utils';
+import { NotificationControlService } from '../services/notification-control.service';
 
 @Component({
   selector: 'app-notification-item',
@@ -30,12 +30,10 @@ export class NotificationItemComponent implements AfterViewInit {
   lastRunTime: Date;
   lastRunStatus: string = '';
 
-  getIcon = (type: string) => getNotificationIcon(type);
-
   constructor(
     private modalService: NgbModal,
     private notificationService: NotificationDataService,
-    private utilsService: UtilsService
+    public ncs: NotificationControlService
   ) {}
 
   ngAfterViewInit() {

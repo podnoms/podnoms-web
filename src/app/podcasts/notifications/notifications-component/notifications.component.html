@@ -16,7 +16,7 @@
                     (click)="notificationModal.openModal(type)"
                     *ngFor="let type of types$ | async">
                     <i class="me-1"
-                        [ngClass]="getIcon(type)"></i>{{type}}
+                        [ngClass]="ncs.getNotificationIcon(type)"></i>{{type}}
                 </a>
             </div>
         </div>

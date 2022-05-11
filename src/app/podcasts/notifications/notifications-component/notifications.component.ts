@@ -4,7 +4,7 @@ import { Podcast } from '../../../core';
 import { Observable } from 'rxjs';
 import { NotificationDataService } from '../services/notification-data.service';
 import { NGXLogger } from 'ngx-logger';
-import { getNotificationIcon } from '../notifications-utils';
+import { NotificationControlService } from '../services/notification-control.service';
 
 @Component({
   selector: 'app-notifications',
@@ -19,9 +19,9 @@ export class NotificationsComponent implements OnInit {
 
   notifications: Notification[];
   types$: Observable<string>;
-  getIcon = (type: string) => getNotificationIcon(type);
 
   constructor(
+    public ncs: NotificationControlService,
     private nds: NotificationDataService,
     protected logger: NGXLogger
   ) {}

@@ -1,0 +1,50 @@
+$colour-youtube: #ff0000;
+$colour-twitter: #1DA1F2;
+$colour-iftt: #ff0000;
+$colour-facebook: #ff0000;
+$colour-email: #ff0000;
+$colour-webhook: #ff0000;
+$colour-pushbullet: #ff0000;
+
+.bg-youtube {
+  background-color: $colour-youtube;
+}
+.text-youtube {
+  color: $colour-youtube;
+}
+.bg-twitter {
+  background-color: $colour-twitter;
+}
+.text-twitter {
+  color: $colour-twitter;
+}
+.bg-iftt {
+  background-color: $colour-iftt;
+}
+.text-iftt {
+  color: $colour-iftt;
+}
+.bg-facebook {
+  background-color: $colour-facebook;
+}
+.text-facebook {
+  color: $colour-facebook;
+}
+.bg-email {
+  background-color: $colour-email;
+}
+.text-email {
+  color: $colour-email;
+}
+.bg-webhook {
+  background-color: $colour-webhook;
+}
+.text-webhook {
+  color: $colour-webhook;
+}
+.bg-pushbullet {
+  background-color: $colour-pushbullet;
+}
+.text-pushbullet {
+  color: $colour-pushbullet;
+}

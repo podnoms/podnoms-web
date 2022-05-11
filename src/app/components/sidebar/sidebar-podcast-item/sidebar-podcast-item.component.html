@@ -4,6 +4,7 @@
     (drop)="drop($event)"
     ngbTooltip="{{ podcast.title }}">
     <img class="img-avatar"
+        appImgFallback
         [src]="podcast.thumbnailUrl"
         [alt]="podcast.title">
     <i class="fa fa-circle text-success"
