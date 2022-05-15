@@ -1,10 +1,10 @@
 $colour-youtube: #ff0000;
 $colour-twitter: #1DA1F2;
-$colour-iftt: #ff0000;
-$colour-facebook: #ff0000;
-$colour-email: #ff0000;
-$colour-webhook: #ff0000;
-$colour-pushbullet: #ff0000;
+$colour-ifttt: #FF4400;
+$colour-facebook: #4267B2;
+$colour-email: #282648;
+$colour-webhook: #005A9C;
+$colour-pushbullet: #4AB367;
 
 .bg-youtube {
   background-color: $colour-youtube;
@@ -18,11 +18,11 @@ $colour-pushbullet: #ff0000;
 .text-twitter {
   color: $colour-twitter;
 }
-.bg-iftt {
-  background-color: $colour-iftt;
+.bg-ifttt {
+  background-color: $colour-ifttt;
 }
-.text-iftt {
-  color: $colour-iftt;
+.text-ifttt {
+  color: $colour-ifttt;
 }
 .bg-facebook {
   background-color: $colour-facebook;

@@ -90,11 +90,18 @@ export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
         });
     });
   }
+
   onNavChange(changeEvent: NgbNavChangeEvent) {
     const currentTab: any = this.tabControls[this.activeTab];
     if (currentTab && typeof currentTab.formStatus === 'function') {
       const status = currentTab.formStatus();
       if (!status.isValid) {
+        const errors = currentTab.getFormErrors();
+        console.log(
+          'podcast-edit-form.component',
+          'onNavChange-errors',
+          errors
+        );
         changeEvent.preventDefault();
         this.alertService.warn(
           'Warning',

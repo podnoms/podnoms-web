@@ -7,14 +7,19 @@ import {
 } from '@angular/core';
 import { Podcast } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  FormGroup,
+  ValidationErrors,
+} from '@angular/forms';
 import { validateDomain } from 'app/shared/validators/domain.validator';
 import { UtilityService } from 'app/shared/services/utility.service';
-import { requiredIfValidator } from 'app/shared/validators/required.validator';
 import { urlIsValidValidator } from 'app/shared/validators/valid-url.validator';
 import { Observable, Subject } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
 import { ConstantsService } from 'app/shared/services/constants.service';
+import { RequiredIfValidator } from 'app/shared/validators/required-if.validator';
 
 @Component({
   selector: 'app-podcast-public-settings',
@@ -32,7 +37,6 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
     private podcastDataService: PodcastDataService,
     private utilityService: UtilityService,
     private constants: ConstantsService,
-    private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private logger: NGXLogger
   ) {}
@@ -65,15 +69,19 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
       private: [podcast.private, Validators.required],
       authUserName: [
         podcast.authUserName,
-        requiredIfValidator(
-          () => this.publicSettingsForm.get('private')?.value
-        ),
+        // Validators.compose([
+        //   RequiredIfValidator.createValidator(
+        //     this.publicSettingsForm.get('private')?.value
+        //   ),
+        // ]),
       ],
       authPassword: [
         podcast.authPassword,
-        requiredIfValidator(
-          () => this.publicSettingsForm.get('private')?.value
-        ),
+        // Validators.compose([
+        //   RequiredIfValidator.createValidator(
+        //     this.publicSettingsForm.get('private')?.value
+        //   ),
+        // ]),
       ],
     });
   }
@@ -83,6 +91,20 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
   }
   parentSaveHandler(): Observable<Podcast> {
     return this.submitForm();
+  }
+  getFormErrors() {
+    Object.keys(this.publicSettingsForm.controls).forEach((key) => {
+      const controlErrors: ValidationErrors = this.publicSettingsForm.get(key)
+        .errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach((keyError) => {
+          console.log(
+            'Key control: ' + key + ', keyError: ' + keyError + ', err value: ',
+            controlErrors[keyError]
+          );
+        });
+      }
+    });
   }
   formStatus(): any {
     return {
