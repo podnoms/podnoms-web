@@ -1,10 +1,10 @@
 <div id="page-container"
-    class="page-header-fixed side-scroll side-trans-enabled"
+    class="sidebar-o enable-page-overlay side-scroll page-header-fixed main-content-boxed"
     [class.sidebar-o]="(uiStateService.sidebarOpen$ | async)"
     [class.footer-open]="(uiStateService.footerOpen$ | async)"
     [class.sidebar-o-xs]="(uiStateService.sidebarOpenMobile$ | async)"
     [class.side-overlay-o]="uiStateService.overlayOpen">
-    <!-- <app-side-overlay [profile]="profile"></app-side-overlay> -->
+    <app-side-overlay [profile]="profile"></app-side-overlay>
     <app-sidebar></app-sidebar>
     <app-navbar></app-navbar>
     <main id="main-container">
