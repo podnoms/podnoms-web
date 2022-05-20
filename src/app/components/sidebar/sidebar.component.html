@@ -1,65 +1,69 @@
-<nav id="sidebar"
-    [class.footer-open]="(uiStateService.footerOpen$ | async)">
-    <div class="sidebar-content">
-        <div class="content-header justify-content-lg-center">
+<nav id='sidebar'
+    [class.footer-open]='(uiStateService.footerOpen$ | async)'>
+    <div class='sidebar-content'>
+        <div class='content-header justify-content-lg-center'>
             <div>
-                <span class="smini-visible fw-bold tracking-wide fs-lg">
-                    c<span class="text-primary">b</span>
+                <span class='smini-visible fw-bold tracking-wide fs-lg'>
+                    c<span class='text-primary'>b</span>
                 </span>
-                <a class="link-fx fw-bold tracking-wide mx-auto"
+                <a class='link-fx fw-bold tracking-wide mx-auto'
                     [routerLink]="['/']">
-                    <span class="smini-hidden">
-                        <img src="/assets/img/logo-icon.png"
-                            alt="logo-icon"
-                            class="logo-icon" />
-                        <span class="fs-4 text-dual">pod</span><span class="fs-4 text-primary">noms</span>
+                    <span class='smini-hidden'>
+                        <img src='/assets/img/logo-icon.png'
+                            alt='logo-icon'
+                            class='logo-icon' />
+                        <span class='fs-4 text-dual'>pod</span><span class='fs-4 text-primary'>noms</span>
                     </span>
                 </a>
             </div>
             <div>
-                <button type="button"
-                    class="btn btn-sm btn-alt-danger d-lg-none"
-                    (click)="closeSidebar()"
-                    data-toggle="layout"
-                    data-action="sidebar_close">
-                    <i class="fa fa-fw fa-times"></i>
+                <button type='button'
+                    class='btn btn-sm btn-alt-danger d-lg-none'
+                    (click)='closeSidebar()'
+                    data-toggle='layout'
+                    data-action='sidebar_close'>
+                    <i class='fa fa-fw fa-times'></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="js-sidebar-scroll">
-        <div class="content-side bg-body-light">
-            <button type="button"
-                (click)="doAddPodcast()"
-                class="btn w-100 btn-alt-primary"
-                data-toggle="click-ripple">
-                <i class="fas fa fa-plus opacity-50 me-1"></i> New Podcast
+    <div>
+        <div class='content-side bg-body-light'>
+            <button type='button'
+                (click)='doAddPodcast()'
+                class='btn w-100 btn-alt-primary'
+                data-toggle='click-ripple'>
+                <i class='fas fa fa-plus opacity-50 me-1'></i> New Podcast
             </button>
         </div>
-        <div class="content-side bg-body-light">
-            <ul class="nav-main">
-                <li class="nav-main-item">
-                    <div class="mx-2">
-                        <div class="input-group">
-                            <button type="button"
-                                class="btn btn-primary">
-                                <i class="fa fa-search me-1"></i>
+        <div class='content-side bg-body-light'>
+            <ul class='nav-main'>
+                <li class='nav-main-item'>
+                    <div class='mx-2'>
+                        <div class='input-group'>
+                            <button type='button'
+                                class='btn btn-primary'>
+                                <i class='fa fa-search me-1'></i>
                             </button>
-                            <input type="text"
-                                class="form-control"
+                            <input type='text'
+                                class='form-control'
                                 #filter
-                                placeholder="Search podcasts">
+                                placeholder='Search podcasts'>
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
-        <ul class="nav-podcasts">
-            <li class="nav-main-item"
-                *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField:orderByAscending | filterIf: 'title': filterValue)">
-                <app-sidebar-podcast-item [podcast]="podcast"></app-sidebar-podcast-item>
-            </li>
-        </ul>
+        <ng-scrollbar autoHeightDisabled="false">
+            <ul class='nav-podcasts overflow-hidden'>
+                <!-- style="height: 99%;"
+            [perfectScrollbar]="scrollConfig"> -->
+                <li class='nav-main-item'
+                    *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField:orderByAscending | filterIf: 'title': filterValue)">
+                    <app-sidebar-podcast-item [podcast]='podcast'></app-sidebar-podcast-item>
+                </li>
+            </ul>
+        </ng-scrollbar>
     </div>
 </nav>

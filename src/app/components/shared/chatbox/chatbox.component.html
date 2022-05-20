@@ -37,9 +37,9 @@
                     </button>
                 </div>
             </div>
-            <div #messageList="ngxPerfectScrollbar"
-                [perfectScrollbar]="scrollConfig"
-                class="chat-messages-wrapper">
+            <!-- <div #messageList="ngxPerfectScrollbar"
+                [perfectScrollbar]="scrollConfig" -->
+            <div class="chat-messages-wrapper">
                 <div *ngFor="let message of messages | keyvalue; last as lastItem">
                     <!-- SENT MESSAGES -->
                     <div class="d-flex mb-20"
