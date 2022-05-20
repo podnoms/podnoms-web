@@ -4,15 +4,39 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Injectable()
 export class NotificationControlService {
-    constructor() {}
+  constructor() {}
 
-    toFormGroup(questions: NotificationOptionBase<any>[]) {
-        const group: any = {};
-        questions.forEach(question => {
-            group[question.key] = question.required
-                ? new FormControl(question.value || '', Validators.required)
-                : new FormControl(question.value || '');
-        });
-        return new FormGroup(group);
+  toFormGroup = (questions: NotificationOptionBase<any>[]) => {
+    const group: any = {};
+    questions.forEach((question) => {
+      group[question.key] = question.required
+        ? new FormControl(question.value || '', Validators.required)
+        : new FormControl(question.value || '');
+    });
+    return new FormGroup(group);
+  };
+  getNotificationIcon = (notificationType: string): string => {
+    switch (notificationType) {
+      case 'Twitter':
+        return 'fa-brands fa-twitter';
+      case 'IFTTT':
+        return 'fa-solid fa-house-crack';
+      case 'Slack':
+        return 'fa-brands fa-slack';
+      case 'Email':
+        return 'fa-solid fa-envelope';
+      case 'Facebook':
+        return 'fa-brands fa-facebook';
+      case 'WebHook':
+        return 'fa-solid fa-explosion';
+      case 'PushBullet':
+        return 'fa-solid fa-bullseye';
+      default:
+        return 'fa-solid fa-bolt-lightning';
     }
+  };
+  getNotificationColour = (
+    notificationType: string,
+    prefix: 'bg' | 'text' = 'bg'
+  ): string => `${prefix}-${notificationType.toLowerCase()}`;
 }

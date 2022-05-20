@@ -14,13 +14,9 @@ import {
   NgbTooltipModule,
   NgbProgressbarModule,
   NgbTypeaheadModule,
-  NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgxAudioplayerModule } from '@podnoms/ngx-audioplayer';
 
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { SharingComponent } from './sharing/sharing.component';
 import { HeaderSearchComponent } from './header-search/header-search.component';
 import { ScriptService } from '../core/scripts/script.service';
@@ -33,33 +29,30 @@ import { LoggerModule } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HighlightModule } from 'ngx-highlightjs';
 import { OrderModule } from 'ngx-order-pipe';
 import { AppLayoutComponentComponent } from './app-layout-component/app-layout-component.component';
 import { MomentModule } from 'ngx-moment';
+import { ImgFallbackDirective } from './img-fallback/img-fallback.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
-    PerfectScrollbarModule,
     MomentModule,
     NgxAudioplayerModule,
     NgbTypeaheadModule,
     NgbTooltipModule,
     NgbProgressbarModule,
     LoggerModule.forRoot(environment.logConfig),
+    NgScrollbarModule,
     HighlightModule,
     OrderModule,
   ],
   providers: [
     PodcastStoreService,
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-    },
     // {
     //     provide: HIGHLIGHT_OPTIONS,
     //     useValue: {
@@ -86,6 +79,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     RedirollComponent,
     OpmlComponent,
     AppLayoutComponentComponent,
+    ImgFallbackDirective,
   ],
   exports: [
     SidebarComponent,
@@ -97,6 +91,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     SharingComponent,
     ChatboxComponent,
     OpmlComponent,
+    ImgFallbackDirective,
   ],
 })
 export class ComponentsModule {}

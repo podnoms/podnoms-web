@@ -1,173 +1,131 @@
-<div id="page-container"
+<div
     class="main-content-boxed">
     <main id="main-container">
-        <div class="bg-image"
-            style="background-image: url('https://cdn.podnoms.com/static/images/pn-back.jpg'); background-size: 100% 100%;">
-            <div class="hero-static content content-full bg-white">
-                <div class="py-30 px-5 text-center">
-                    <a class="link-effect font-w700">
-                        <i class="login-fire"></i>
-                        <span class="font-size-xl text-primary-dark">pod</span>
-                        <span class="font-size-xl">noms</span>
-                    </a>
-                    <h1 class="h2 font-w700 mt-50">Robot Powered Podcasts</h1>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-6">
-                        <div class="text-center">
-                            <div class="form-group row gutters-tiny">
-                                <div class="col-sm-6 mb-5">
-                                    <button type="button"
-                                        class="btn btn-block btn-social btn-facebook"
-                                        (click)="socialLogin('facebook')"
-                                        aria-label="Login facebook">
-                                        <span class="fa-brands fa-facebook"></span> Register with Facebook
-                                    </button>
-                                </div>
-                                <div class="col-sm-6 mb-5">
-                                    <button type="button"
-                                        class="btn btn-block btn-social btn-google"
-                                        (click)="socialLogin('google-oauth2')"
-                                        aria-label="Login google">
-                                        <span class="fa-brands fa-google"></span> Register with Google
-                                    </button>
+        <div class="bg-image">
+            <div class="row mx-0 justify-content-center">
+                <div class="hero-static content content-full bg-body-extra-light">
+                    <div class="content content-full overflow-hidden">
+                        <div class="py-4 text-center">
+                            <a class="link-fx fw-bold"
+                                href="/">
+                                <img class="font-image me-1"
+                                    [src]="'/assets/img/logo-icon.png'"
+                                    alt="logo">
+                                <span class="fs-4 text-body-color">pod</span><span class="fs-4">noms</span>
+                            </a>
+                            <h1 class="h3 fw-bold mt-4 mb-2">Robot powered podcasts</h1>
+                        </div>
+                        <div class="row justify-content-center px-1">
+                            <div class="col-sm-8 col-md-6 col-xl-6">
+                                <div class="block block-themed block-rounded block-fx-shadow">
+                                    <div class="block-header bg-gd-dusk">
+                                        <h3 class="block-title">Welcome to PodNoms</h3>
+                                    </div>
+                                    <div class="d-flex flex-col justify-content-evenly mt-4">
+                                        <button type="button"
+                                            class="btn btn-block btn-social btn-facebook"
+                                            (click)="socialLogin('facebook')">
+                                            <span class="fa-brands fa-facebook-f"
+                                                aria-label="Sign in with Facebook"></span> Register with Facebook
+                                        </button>
+                                        <button type="button"
+                                            class="btn btn-block btn-social btn-google"
+                                            (click)="socialLogin('google-oauth2')"
+                                            aria-label="Sign in with Google">
+                                            <span class="fa-brands fa-google"></span> Register with Google
+                                        </button>
+                                    </div>
+                                    <div class="alert alert-danger mx-5 mt-3 text-center"
+                                        *ngIf="errorMessage"
+                                        role="alert">
+                                        <p class="mb-0">
+                                            {{errorMessage}}
+                                        </p>
+                                    </div>
+                                    <div class="block-content">
+                                        <form [formGroup]="registerForm"
+                                            (ngSubmit)="onSubmit()">
+                                            <div class="form-floating mb-4">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    [ngClass]="{'is-invalid': submitted && f.username.errors}"
+                                                    autocomplete="username"
+                                                    formControlName="username"
+                                                    placeholder="Enter your username">
+                                                <label class="form-label">Username</label>
+                                                <div *ngIf="submitted && f.username.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.username.errors.required">Username is required</div>
+                                                    <div *ngIf="f.username.errors.pattern">Please enter a valid username (Letters, numbers, periods, underscores & hyphens).</div>
+                                                    <div *ngIf="f.username.errors.taken">This username is already taken</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-floating mb-4">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    [ngClass]="{'is-invalid': submitted && f.email.errors}"
+                                                    autocomplete="email"
+                                                    formControlName="email"
+                                                    placeholder="Enter your email">
+                                                <label class="form-label">Email</label>
+                                                <div *ngIf="submitted && f.email.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.email.errors.required">Email is required</div>
+                                                    <div *ngIf="f.email.errors.email">Please enter a valid email.</div>
+                                                    <div *ngIf="f.email.errors.taken">This email is already registered.</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-floating mb-4">
+                                                <input type="password"
+                                                    class="form-control"
+                                                    [ngClass]="{'is-invalid': submitted && f.password.errors}"
+                                                    formControlName="password"
+                                                    placeholder="Choose a password">
+                                                <label class="form-label">Choose a password</label>
+                                                <div *ngIf="submitted && f.password.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters.</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-floating mb-4">
+                                                <input type="password"
+                                                    class="form-control"
+                                                    [ngClass]="{'is-invalid': submitted && f.confirmPassword.errors}"
+                                                    formControlName="confirmPassword"
+                                                    placeholder="Enter your password">
+                                                <label class="form-label">Confirm password</label>
+                                                <div *ngIf="submitted && f.confirmPassword.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f.confirmPassword.errors.required">Please confirm your password</div>
+                                                    <div *ngIf="f.confirmPassword.errors.matchPassword">Passwords do not match.</div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2 row">
+                                                <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
+                                                    formControlName="recaptcha"
+                                                    #captchaElem>
+                                                </ngx-recaptcha2>
+                                            </div>
+                                            <div *ngIf="submitted && f.recaptcha.errors"
+                                                class="text-danger animated fadeIn">
+                                                Please verify that you are not a robot
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <div>
+                                                    <i *ngIf="isRequesting"
+                                                        class="fas fa fa-2x fa-sun-o fa-spin text-warning"></i>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn btn-lg btn-alt-primary fw-medium">
+                                                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Register
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-3"></div>
-                </div>
-                <div class="px-5 text-center">
-                    <aside class="text-muted">--or--</aside>
-                    <h2 class="h4 font-w400 text-muted mb-0">Please add your details</h2>
-                </div>
-                <div class="row justify-content-center px-5">
-                    <div class="col-md-6 col-md-offset-3">
-                        <form class="js-validation-signup"
-                            [formGroup]="signupForm"
-                            autocomplete="off"
-                            (ngSubmit)="doRegister()">
-                            <!-- This hooks the autocomplete so it doesn't for our identifier below-->
-                            <input type="text"
-                                id="username"
-                                style="width:0;height:0;visibility:hidden;position:absolute;left:0;top:0" />
-                            <div class="form-group row">
-                                <div class="col-12">
-                                    <div class="form-material">
-                                        <label for="identifier">Username</label>
-                                        <input type="search"
-                                            onfocus="this.removeAttribute('readonly');"
-                                            readonly
-                                            class="form-control"
-                                            id="identifier"
-                                            name="identifier"
-                                            appAutoFocus
-                                            autocomplete="new-identifier"
-                                            formControlName="username"
-                                            required="">
-                                        <div class="form-text text-muted">This is important as it will form part of the URL for your RSS feeds.</div>
-                                        <div class="text-danger animated fadeInDown"
-                                            *ngIf="username.invalid && username.touched">
-                                            <div *ngIf="username.errors['required']">
-                                                Username field can't be blank
-                                            </div>
-                                            <div *ngIf="username.errors['pattern']">
-                                                Only letters, numbers, underscore & hyphen are allowed
-                                            </div>
-                                            <div *ngIf="username.errors['slugTaken']">
-                                                This identifier has already been taken
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-12">
-                                    <div class="form-material">
-                                        <label for="inputEmail">Email</label>
-                                        <input type="text"
-                                            class="form-control"
-                                            id="inputEmail"
-                                            formControlName="email"
-                                            placeholder="Email">
-                                        <div class="text-danger animated fadeInDown"
-                                            *ngIf="email.invalid && email.touched">
-                                            <div *ngIf="email.errors['required']">
-                                                Email field can't be blank
-                                            </div>
-                                            <div *ngIf="email.errors['pattern']">
-                                                The email doesn't seem right
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div formGroupName="passwordGroup">
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-material">
-                                            <label for="password">Password</label>
-                                            <input type="password"
-                                                formControlName="password"
-                                                id="password"
-                                                class="form-control"
-                                                placeholder="Password">
-                                            <div class="text-danger animated fadeInDown"
-                                                *ngIf="password.invalid && password.touched">
-                                                <div *ngIf="password.errors['minlength']">
-                                                    Password needs to be more than 4 characters
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-material">
-                                            <label for="confirmPassword">Confirm Password</label>
-                                            <input type="password"
-                                                formControlName="confirmPassword"
-                                                id="confirmPassword"
-                                                class="form-control"
-                                                placeholder="Repeat password">
-                                            <div class="text-danger animated fadeInDown"
-                                                *ngIf="(confirmPassword.invalid || passwordGroup.invalid) && confirmPassword.touched">
-                                                <div *ngIf="passwordGroup.errors['matchPassword']">
-                                                    Passwords do not match
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row text-center">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8 text-center">
-                                    <span class="d-inline-block">
-                                        <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
-                                            formControlName="recaptcha"
-                                            #captchaElem>
-                                        </ngx-recaptcha2>
-                                    </span>
-                                </div>
-                                <div class="col-md-2"></div>
-                            </div>
-                            <div class="alert alert-danger animated fadeInDown"
-                                *ngIf="errorMessage"
-                                [innerHTML]="errorMessage">
-                            </div>
-                            <div class="form-group row gutters-tiny">
-                                <div class="col-12 mb-10">
-                                    <button [disabled]="!signupForm.valid"
-                                        type="submit"
-                                        class="btn btn-block btn-info"
-                                        aria-label="Submit">
-                                        <i class="si si-user-follow mr-10"></i> Sign Up
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

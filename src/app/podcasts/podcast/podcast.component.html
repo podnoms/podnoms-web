@@ -8,7 +8,7 @@
             <div class="block-options">
                 <button type="button"
                     class="btn-block-option me-2"
-                    (click)="uploadMode = uploadMode === uploadModes.none ? uploadModes.fromUrl : uploadModes.none"
+                    (click)="uploadMode = uploadMode === UPLOADMODE.none ? UPLOADMODE.fromUrl : UPLOADMODE.none"
                     aria-expanded="false">
                     <i class="fa fa-plus"></i>
                     <span class="d-none d-md-inline-block">Add</span>
@@ -24,17 +24,17 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item"
-                            (click)="startUpload(uploadModes.fromLocalFile)">
+                            (click)="startUpload(UPLOADMODE.fromLocalFile)">
                             <i class="fa-solid fa-floppy-disk opacity-50 me-1"></i>
                             Local File
                         </a>
                         <a class="dropdown-item"
-                            (click)="startUpload(uploadModes.fromGoogleDrive)">
-                            <i class="fa-solid fa-google-drive opacity-50 me-1"></i>
+                            (click)="startUpload(UPLOADMODE.fromGoogleDrive)">
+                            <i class="fa-brands fa-google-drive opacity-50 me-1"></i>
                             Google Drive
                         </a>
                         <a class="dropdown-item"
-                            (click)="startUpload(uploadModes.fromDropbox)">
+                            (click)="startUpload(UPLOADMODE.fromDropbox)">
                             <i class="fa-brands fa-dropbox opacity-50 me-1"></i>
                             Dropbox
                         </a>
@@ -73,13 +73,16 @@
                 </button>
             </div>
         </div>
-        <div class="block-content">
-            <app-entry-upload *ngIf="uploadMode !== uploadModes.none"
+        <div class="block-content h-5">
+            <app-entry-upload *ngIf="uploadMode !== UPLOADMODE.none"
                 [(uploadMode)]="uploadMode"
                 [podcast]="podcast"
                 (podcastUpdated)="podcastUpdated()">
             </app-entry-upload>
             <app-podcast-detail #podcastDetail
+                (fromUrlClick)="uploadMode = uploadMode === UPLOADMODE.none ? UPLOADMODE.fromUrl : UPLOADMODE.none"
+                (fromLocalFileClick)="startUpload(UPLOADMODE.fromLocalFile)"
+                (fromProviderClick)="startUpload($event)"
                 [podcast]="podcast"></app-podcast-detail>
         </div>
     </div>

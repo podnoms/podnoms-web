@@ -1,189 +1,172 @@
-<div class="row">
-    <div class="col-md-8 offset-2">
-        <div class="js-wizard-simple block">
-            <ul class="nav nav-tabs nav-tabs-alt nav-fill"
+<div>
+    <div class="block block-rounded block-fx-shadow">
+        <div class="block-content">
+            <ul class="nav nav-tabs nav-tabs-alt nav-fill content-heading"
                 role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link show"
+                    <button class="nav-link fs-sm text-md-start rounded-0"
                         [class.active]="currentStep===0"
-                        href="#wizard-progress-step0"
-                        data-toggle="tab">1. Podcast info</a>
+                        data-bs-toggle="tab"
+                        data-bs-target="wizard-progress-step0">
+                        1. Info
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"
+                    <button class="nav-link fs-sm text-md-start rounded-0"
                         [class.active]="currentStep===1"
-                        href="#wizard-progress-step1"
-                        data-toggle="tab">2. Podcast
-                        description</a>
+                        data-bs-toggle="tab"
+                        data-bs-target="wizard-progress-step1">
+                        2. Description
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"
+                    <button class="nav-link fs-sm text-md-start rounded-0"
                         [class.active]="currentStep===2"
-                        href="#wizard-progress-step2"
-                        data-toggle="tab">3. Podcast image</a>
+                        data-bs-toggle="tab"
+                        data-bs-target="#wizard-progress-step2">3. Artwork</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"
+                    <button class="nav-link fs-sm text-md-start rounded-0"
                         [class.active]="currentStep===3"
-                        href="#wizard-progress-step3"
-                        data-toggle="tab">4. Podcast
-                        category</a>
+                        data-bs-toggle="tab"
+                        data-bs-target="#wizard-progress-step3">
+                        4. Category
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"
+                    <button class="nav-link fs-sm text-md-start rounded-0"
                         [class.active]="currentStep===4"
-                        href="#wizard-progress-step4"
-                        data-toggle="tab">5. Finish up</a>
+                        data-bs-toggle="tab"
+                        data-bs-target="#wizard-progress-step4">
+                        5. Finish up
+                    </button>
                 </li>
             </ul>
-            <form>
-                <div class="block-content block-content-full tab-content"
-                    style="min-height: 265px;">
-                    <div class="tab-pane show"
-                        [class.active]="currentStep===0"
-                        id="wizard-progress-step0"
-                        role="tabpanel">
-                        <div class="nice-copy text-center">
-                            <h3 class="font-w700 mb-10">A
-                                podcast is a collection of
-                                episisodes!</h3>
-                            <p>It's up to you what to call
-                                your podcast but we like to
-                                create one for each of our
-                                interests
-                                <br /> You could have one
-                                for Comedy, another for
-                                Music and another for
-                                Technology.
-                                <br /> It's up to you,
-                                don't worry about it. You
-                                can always change them
-                                later.</p>
-                        </div>
-                        <div class="form-group">
-                            <input id="podcastName"
-                                name="podcast-name"
-                                class="form-control"
-                                placeholder="Podcast title"
-                                #podcastName
-                                [(ngModel)]="podcast.title">
-                        </div>
-                        <div class="alert alert-danger"
-                            *ngIf="errorMessage "
-                            role="alert "
-                            [innerHTML]="errorMessage ">
-                        </div>
-                    </div>
-                    <div class="tab-pane"
-                        [class.active]="currentStep===1"
-                        id="wizard-progress-step1"
-                        role="tabpanel">
-                        <div class="nice-copy text-center">
-                            <p class="mb-10">Here you can
-                                add some information about
-                                your podcast (if you like).
-                                <br />This is what your
-                                podcast player will show in
-                                it's information page. It's
-                                not necessary to
-                                add anything here if you
-                                don't want.</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="podcast-description">Description</label>
-                            <quill-editor name="description"
-                                [style]="{height: '400px'}"
-                                [(ngModel)]="podcast.description"></quill-editor>
 
+            <div class="tab-content">
+                <div class="tab-pane"
+                    [class.active]="currentStep===0"
+                    id="wizard-progress-step0">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <p class="text-muted">
+                                Give your podcast a descriptive title. This is how it will be seen in your listeners' podcatcher.
+                            </p>
                         </div>
-                    </div>
-                    <div class="tab-pane"
-                        [class.active]="currentStep===2"
-                        id="wizard-progress-step2"
-                        role="tabpanel">
-                        <div class="nice-copy text-center">
-                            <p class="mb-10">Please choose a cover image for your podcast</p>
-                            <div class="form-group ">
-                                <app-image-upload [imageUrl]="podcast.imageUrl"
-                                    #imageControl></app-image-upload>
+                        <div class="col-lg-6 offset-lg-1">
+                            <div class="mb-4">
+                                <label class="form-label"
+                                    for="install-db-name">Name</label>
+                                <input id="podcastName"
+                                    name="podcast-name"
+                                    class="form-control"
+                                    placeholder="Podcast title"
+                                    #podcastName
+                                    [(ngModel)]="podcast.title">
+                                <div class="text-danger text-sm"
+                                    *ngIf="errorMessage "
+                                    role="alert "
+                                    [innerHTML]="errorMessage ">
+                                </div>
                             </div>
                         </div>
-                        <div class="alert alert-danger"
-                            *ngIf="errorMessage "
-                            role="alert "
-                            [innerHTML]="errorMessage ">
+                    </div>
+                </div>
+                <div class="tab-pane"
+                    [class.active]="currentStep===1"
+                    id="wizard-progress-step1">
+                    <div class="row"
+                        [style]="{height: '400px'}">
+                        <div class="col-lg-4">
+                            <p class="text-muted">
+                                Add a description for your podcast, you can make this as fancy as you like.
+                            </p>
+                        </div>
+                        <div class="col-lg-8">
+                            <quill-editor name="description"
+                                [styles]="{height: '280px'}"
+                                [(ngModel)]="podcast.description"></quill-editor>
                         </div>
                     </div>
-                    <div class="tab-pane"
-                        [class.active]="currentStep===3"
-                        id="wizard-progress-step3"
-                        role="tabpanel">
-                        <div class="nice-copy text-center col-md-8 offset-1">
-                            <p class="mb-10">Choose a
-                                category (this is required
-                                for iTunes).</p>
+                </div>
+                <div class="tab-pane"
+                    [class.active]="currentStep===2"
+                    id="wizard-progress-step2">
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <p class="text-muted">
+                                Add an image for your podcast, we'll automatically resize it to the required sizes of the various platforms.
+                                We're working on finer grained artwork management, stay tuned!
+                            </p>
                         </div>
-                        <div class="form-group col-md-8 offset-1">
-                            <div class="form-group">
-                                <app-category-selector [subcategoriesVisible]="false"
-                                    [label]="''"
-                                    [(category)]="category"></app-category-selector>
-                            </div>
-                            <div class="alert alert-danger"
+                        <div class="col-lg-8">
+                            <app-image-upload [imageUrl]="podcast.imageUrl"
+                                #imageControl></app-image-upload>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane"
+                    [class.active]="currentStep===3"
+                    id="wizard-progress-step3">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <p class="text-muted">
+                                Choose a category for your podcast. This is kind of important as it determines where it will show up in the various podcast platforms.
+                                iTunes in particular is very fussy about this.
+                            </p>
+                        </div>
+                        <div class="col-lg-6 offset-lg-1">
+                            <app-category-selector [subcategoriesVisible]="false"
+                                [label]="''"
+                                [(category)]="category"></app-category-selector>
+                            <div class="text-danger text-sm"
                                 *ngIf="errorMessage "
                                 role="alert "
                                 [innerHTML]="errorMessage ">
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane"
-                        [class.active]="currentStep===4"
-                        id="wizard-progress-step4"
-                        role="tabpanel">
-                        <div class="nice-copy text-center">
-                            <h3 class="font-w700 mb-10">Woot!
-                                Woot! You're done!</h3>
-                        </div>
-                        <div class="form-group col-md-6 offset-4">
-                            <app-spinner-button (clicked)="finishUp()"
-                                [iconClass]="'fa fa-cog m-5'">
-                                Tap me to continue!
-                            </app-spinner-button>
-                        </div>
-                    </div>
                 </div>
-                <div class="block-content block-content-sm block-content-full bg-body-light">
+                <div class="tab-pane"
+                    [class.active]="currentStep===4"
+                    id="wizard-progress-step4">
                     <div class="row">
-                        <div class="col-6">
-                            <button type="button"
-                                [disabled]="currentStep===0"
-                                class="btn btn-alt-secondary"
-                                data-wizard="prev"
-                                (click)="previous()">
-                                <i class="fa fa-angle-left mr-5"></i>
-                                Previous
-                            </button>
+                        <div class="col-lg-4">
+                            <p class="text-muted">
+                                Looks like you're all done!!<br />
+                                Let's get your podcast ready for publication!
+                            </p>
                         </div>
-                        <div class="col-6 text-right">
-                            <button type="button"
-                                [disabled]="currentStep===4"
-                                class="btn btn-alt-secondary"
-                                (click)="next()"
-                                data-wizard="next">
-                                Next
-                                <i class="fa fa-angle-right ml-5"></i>
-                            </button>
-                            <button type="submit"
-                                class="btn btn-alt-primary d-none"
-                                data-wizard="finish">
-                                <i class="fa fa-check mr-5"></i>
-                                Submit
-                            </button>
+                        <div class="col-lg-6 offset-lg-1">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <app-spinner-button (clicked)="finishUp()"
+                                    [iconClass]="'fa fa-rocket'">
+                                    Let's go!
+                                </app-spinner-button>
+                            </div>
                         </div>
-                        <!-- Step: {{currentStep}} -->
                     </div>
                 </div>
-            </form>
+            </div>
+            <div class="row mb-4">
+                <div class="d-flex flex-row justify-content-between">
+                    <button type="button"
+                        [disabled]="currentStep===0"
+                        class="btn btn-alt-secondary"
+                        (click)="previous()">
+                        <i class="fa fa-angle-left mr-5"></i>
+                        Previous
+                    </button>
+                    <button type="button"
+                        [disabled]="currentStep===4"
+                        class="btn btn-alt-secondary"
+                        (click)="next()"
+                        data-wizard="next">
+                        Next
+                        <i class="fa fa-angle-right ml-5"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

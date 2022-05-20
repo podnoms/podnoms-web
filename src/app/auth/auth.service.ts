@@ -3,11 +3,6 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../core/base.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import {
-    FacebookLoginProvider,
-    GoogleLoginProvider,
-    SocialAuthService,
-} from 'angularx-social-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Profile } from '../core';
 import { AuthApiProxyService } from './auth-api-proxy.service';
@@ -17,6 +12,7 @@ import { NGXLogger } from 'ngx-logger';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'environments/environment.prod';
 import { CookieService } from 'ngx-cookie-service';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Injectable({
     providedIn: 'root',

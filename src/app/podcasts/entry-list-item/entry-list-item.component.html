@@ -1,6 +1,7 @@
   <div class="d-flex h-100 my-2 my-md-4">
       <div>
           <img [src]="entry.thumbnailUrl"
+              appImageFallback="https://cdn.podnoms.com/static/images/default-entry.png"
               class="img-avatar img-avatar48"
               [alt]="">
           <span class="avatar-status badge-success"></span>
@@ -29,13 +30,15 @@
                           <div class="spinner-border spinner-border-sm text-primary"
                               role="status">
                           </div>
-                          <span class="ml-5">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
+                          <span class="ms-2">{{entry.processingStatus || 'Preparing'}}...... {{narrative}}</span>
                       </div>
 
                       <p *ngIf="entry.processingStatus==='Downloading' ||
                               entry.processingStatus==='Uploading' ||
                               entry.processingStatus==='Caching'">
-                          <ngb-progressbar type="warning"
+                          <ngb-progressbar type="danger"
+                              [striped]="true"
+                              class="bg-grey-lighter"
                               [value]="percentageProcessed">
                               {{entry.processingStatus}}:{{currentSpeed}} - {{percentageProcessed}}%
                           </ngb-progressbar>

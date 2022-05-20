@@ -1,4 +1,4 @@
 export class Shareable {
-    id?: string;
-    title?: string;
+  id: string | undefined;
+  title: string | undefined;
 }

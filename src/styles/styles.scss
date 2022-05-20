@@ -1,30 +1,28 @@
-.bg-youtube {
-    background-color: #CC0000!important;
-}
-
+@import 'variables';
 @import 'theme';
 @import 'mixin';
+@import 'vendor-colours';
 
 [hidden] {
-    display: none !important;
+  display: none !important;
 }
 
 a:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
-
+.font-image {
+  width: 22px;
+}
 .bg-image {
-    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
     url('https://cdn.podnoms.com/static/images/pn-back.jpg');
-    background-size: 100% 100%;
+  background-size: 100% 100%;
 }
 
 ::ng-deep .full-modal .modal-dialog {
-    max-width: 80%;
-    width: 80%;
+  max-width: 80%;
+  width: 80%;
 }
-
-
-
-/* Importing Bootstrap SCSS file. */
-//@import '~fontawesome/scss/fontawesome';
+::ng-deep dropzone > .dropzone.dz-wrapper .dz-message {
+  overflow: hidden !important;
+}

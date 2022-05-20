@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SocialLoginModule } from 'angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule, Profile } from './core';
@@ -14,10 +13,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProfileStoreService } from './profile/profile-store.service';
 import { Observable } from 'rxjs';
 import { UpdateService } from './shared/services/update.service';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { registerLocaleData } from '@angular/common';
 import localeIE from '@angular/common/locales/en-IE';
 import { HomeComponent } from './home/home.component';
@@ -29,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
 import authServiceConfig from './auth/auth-config';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
 registerLocaleData(localeIE, 'ie');
 
@@ -43,16 +39,6 @@ registerLocaleData(localeIE, 'ie');
     AppStoreModule,
     AuthModule,
     SharedModule, // import here to make sure that AuthService is a singleton
-    AngularFireModule.initializeApp({
-      apiKey: environment.firebase.apiKey,
-      authDomain: environment.firebase.authDomain,
-      databaseURL: environment.firebase.databaseURL,
-      storageBucket: environment.firebase.storageBucket,
-      messagingSenderId: environment.firebase.messagingSenderId,
-    }),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireMessagingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),

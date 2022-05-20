@@ -26,21 +26,18 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/sitemap.xml",
-              "src/firebase-messaging-sw.js",
               "src/manifest.json"
             ],
             "styles": [
               "src/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
               "node_modules/wavesurfer.js/dist/wavesurfer.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/howler/dist/howler.js",
               "node_modules/quill/dist/quill.js",
               "node_modules/zxcvbn/dist/zxcvbn.js",
               "node_modules/default-passive-events/dist/index.js",
-              "node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.js",
               "node_modules/streamsaver/StreamSaver.js"
             ],
             "vendorChunk": true,
@@ -90,19 +87,6 @@
             }
           }
         },
-        "e2e": {
-          "builder": "@briebug/cypress-schematic:cypress",
-          "options": {
-            "devServerTarget": "app:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "app:serve:production"
-            }
-          }
-        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
@@ -116,30 +100,6 @@
               "src/**/*.ts",
               "src/**/*.html"
             ]
-          }
-        },
-        "cypress-run": {
-          "builder": "@briebug/cypress-schematic:cypress",
-          "options": {
-            "devServerTarget": "app:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "app:serve:production"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@briebug/cypress-schematic:cypress",
-          "options": {
-            "devServerTarget": "app:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "app:serve:production"
-            }
           }
         }
       }

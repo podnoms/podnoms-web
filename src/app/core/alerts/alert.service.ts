@@ -5,7 +5,6 @@ import {
     ToastMessage,
     ToastType,
 } from 'app/shared/components/toast/toast-models';
-import { merge } from 'jquery';
 
 @Injectable()
 export class AlertService {

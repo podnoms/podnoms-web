@@ -5,8 +5,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     styles: [``],
     template: `
-        <div class="block block-themed block-transparent mb-0">
-            <div class="block-header bg-primary-dark">
+        <div class="block block-themed mb-0">
+            <div class="block-header">
                 <h3 class="block-title">Hey there!!!</h3>
             </div>
             <div class="block-content nice-copy-story">

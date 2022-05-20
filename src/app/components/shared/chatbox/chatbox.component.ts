@@ -12,10 +12,7 @@ import { ProfileDataService } from 'app/profile/profile-data.service';
 import { SignalRService } from 'app/shared/services/signal-r.service';
 import { SupportChatService } from 'app/shared/services/support-chat.service';
 import { NGXLogger } from 'ngx-logger';
-import {
-    PerfectScrollbarConfigInterface,
-    PerfectScrollbarDirective
-} from 'ngx-perfect-scrollbar';
+
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -33,9 +30,6 @@ export class ChatboxComponent implements OnInit, OnChanges {
     messages = {};
 
     handshake: boolean = false;
-    @ViewChild('messageList') messageList: PerfectScrollbarDirective;
-
-    public scrollConfig: PerfectScrollbarConfigInterface = {};
 
     constructor(
         private cdRef: ChangeDetectorRef,
@@ -47,7 +41,7 @@ export class ChatboxComponent implements OnInit, OnChanges {
     ) {}
     ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
         if (changes) {
-            this.messageList.scrollToBottom(0, 300);
+            // this.messageList.scrollToBottom(0, 300);
         }
     }
 
@@ -88,11 +82,7 @@ export class ChatboxComponent implements OnInit, OnChanges {
                             )
                         )
                         .subscribe((r) => {
-                            this.logger.debug(
-                                'chatbox.component',
-                                this.messageList
-                            );
-                            this.messageList.scrollToBottom(0, 300);
+                            // this.messageList.scrollToBottom(0, 300);
                             this.logger.debug(
                                 'chatbox.component',
                                 'getAdminMessages',
@@ -155,7 +145,7 @@ export class ChatboxComponent implements OnInit, OnChanges {
         );
         this.cdRef.detectChanges();
         setTimeout(() => {
-            this.messageList.scrollToBottom(0, 100);
+            // this.messageList.scrollToBottom(0, 100);
         });
     }
 }

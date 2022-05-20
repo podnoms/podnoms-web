@@ -1,82 +1,106 @@
-<ng-template #content let-modal>
-    <div class="block block-themed block-transparent mb-0">
-        <div class="block-header bg-primary-dark">
+<ng-template #content
+    let-modal>
+    <div class="block block-themed mb-0">
+        <div class="block-header">
             <h3 class="block-title">{{notification.type}}</h3>
             <div class="block-options">
-                <button type="button" class="btn-block-option"
+                <button type="button"
+                    class="btn-block-option"
                     (click)="modal.dismiss('cancel')"
-                    data-dismiss="modal" aria-label="Close">
+                    data-dismiss="modal"
+                    aria-label="Close">
                     <i class="fa fa-times-circle"></i>
                 </button>
             </div>
         </div>
         <div class="block-content">
             <ul class="nav nav-tabs nav-tabs-alt"
-                data-toggle="tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab"
-                        href="#tab-settings">Settings
+                ngbNav
+                #nav="ngbNav"
+                role="tablist">
+                <li [ngbNavItem]="'tab-settings'">
+                    <a ngbNavLink>
+                        <i class="fa-solid fa-gear text-primary"></i>
+                        <span class="tab-text d-none d-md-inline-block">
+                            Settings
+                        </span>
                     </a>
+                    <ng-template ngbNavContent>
+                        <div id="tab-settings">
+                            <div class="block-content">
+                                <div class="alert alert-warning"
+                                    role="alert">
+                                    <p class="mb-0 fs-sm">
+                                        There is no validation here (yet) - it's up to you to ensure the data are correct
+                                    </p>
+                                </div>
+                                <form *ngIf="form"
+                                    class="mb-4"
+                                    [formGroup]="form">
+                                    <div class="form-group mb-1"
+                                        [formGroup]="form"
+                                        *ngFor="let option of notification.options">
+                                        <label class="form-label"
+                                            [attr.for]="option.key">{{option.label}}</label>
+                                        <div [ngSwitch]="option.controlType">
+                                            <input class="form-control"
+                                                *ngSwitchCase="'textbox'"
+                                                [formControlName]="option.key"
+                                                [id]="option.key"
+                                                [type]="option.controlType">
+                                        </div>
+                                        <div class="form-text text-muted text-end">{{option.description}}</div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </ng-template>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab"
-                        href="#tab-logs">Logs
+                <li [ngbNavItem]="'tab-logs'">
+                    <a ngbNavLink>
+                        <i class="fa-solid fa-chart-simple-horizontal"></i>
+                        <span class="tab-text d-none d-md-inline-block">
+                            Logs
+                        </span>
                     </a>
+                    <ng-template ngbNavContent>
+                        <app-notification-logs id="tab-logs"
+                            [notification]="notification">
+                        </app-notification-logs>
+                    </ng-template>
                 </li>
-                <li class="nav-item ml-auto">
-                    <a class="nav-link" data-toggle="tab"
-                        href="#tab-test">
-                        <i class="fas fa fa-school"></i>
+                <li [ngbNavItem]="'tab-test'">
+                    <a ngbNavLink>
+                        <i class="fa-solid fa-bug"></i>
+                        <span class="tab-text d-none d-md-inline-block">
+                            Test
+                        </span>
                     </a>
+                    <ng-template ngbNavContent>
+                        <div id="tab-test">
+                            <button class="btn btn-alt-primary"
+                                (click)="testNotification()">Test</button>
+                        </div>
+                    </ng-template>
                 </li>
             </ul>
-            <div class="tab-content mt-15">
-                <div class="tab-pane active block block-themed"
-                    id="tab-settings">
-                    <div class="block-header">
-                        <div class="font-w600 mb-5">There
-                            is no
-                            validation here (yet) -
-                            it's up
-                            to you to ensure the data
-                            are
-                            correct.</div>
-                    </div>
-                    <div class="block-content">
-                        <form *ngIf="form" [formGroup]="form">
-                            <div *ngFor="let question of notification.options">
-                                <div class="form-group"
-                                    [formGroup]="form">
-                                    <label [attr.for]="question.key">{{question.label}}</label>
-                                    <div [ngSwitch]="question.controlType">
-                                        <input class="form-control"
-                                            *ngSwitchCase="'textbox'"
-                                            [formControlName]="question.key"
-                                            [id]="question.key"
-                                            [type]="question.controlType">
-                                    </div>
-                                    <div class="errorMessage">{{question.description}}</div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tab-logs">
-                    <app-notification-logs [notification]="notification"></app-notification-logs>
-                </div>
-                <div class="tab-pane" id="tab-test">
-                    <button class="btn btn-alt-primary" (click)="testNotification()">Test</button>
+
+            <div class="block-content">
+                <div [ngbNavOutlet]="nav">
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <div class="modal-footer">
-            <button type="button" class="btn btn-alt-secondary"
-                (click)="modal.dismiss('cancel')">Cancel</button>
-            <button type="button" class="btn btn-alt-success"
+        <div class="block-content block-content-full block-content-sm text-end border-top">
+            <button type="button"
+                class="btn btn-alt-secondary me-1"
+                (click)="modal.dismiss('cancel')">
+                <i class="fa-solid fa-ban"></i>
+                Cancel
+            </button>
+            <button type="button"
+                class="btn btn-alt-success"
                 (click)="modal.dismiss('save')">
-                <i class="fa fa-check"></i>
+                <i class="fa-solid fa-floppy-disk"></i>
                 Save
             </button>
         </div>

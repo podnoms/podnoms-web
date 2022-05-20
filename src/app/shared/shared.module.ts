@@ -40,6 +40,9 @@ import { FilterIfPipe } from './pipes/filter-if.pipe';
 import { UpgradeAccountDialogComponent } from './dialogs/upgrade-account-dialog/upgrade-account-dialog.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
+import { ErrorComponent } from './error/error.component';
+import { CheckEmailUniqueValidator } from 'app/shared/validators/check-email-unique.validator';
+import { CheckSlugUniqueValidator } from './validators/check-slug-unique.validator';
 
 @NgModule({
   imports: [
@@ -74,6 +77,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     CategorySelectorComponent,
     SimpleAudioPlayerComponent,
     FilterIfPipe,
+    ErrorComponent,
   ],
   declarations: [
     OrderByPipe,
@@ -103,6 +107,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     FilterIfPipe,
     UpgradeAccountDialogComponent,
     BannerComponent,
+    ErrorComponent,
   ],
   providers: [
     UtilityService,

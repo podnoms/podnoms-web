@@ -4,9 +4,9 @@ import { PodcastsRoutingModule } from './podcasts-routing.module';
 import { PodcastComponent } from './podcast/podcast.component';
 import { SharedModule } from '../shared/shared.module';
 import {
-    NgbModalRef,
-    NgbProgressbarModule,
-    NgbModule,
+  NgbModalRef,
+  NgbProgressbarModule,
+  NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { QuillModule } from 'ngx-quill';
 
@@ -18,7 +18,11 @@ import { UploadUrlComponent } from './entry-upload/upload-url/upload-url.compone
 import { UploadFileComponent } from './entry-upload/upload-file/upload-file.component';
 import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
 import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import {
+  DropzoneConfigInterface,
+  DropzoneModule,
+  DROPZONE_CONFIG,
+} from 'nxt-dropzone-wrapper';
 import { NotificationsComponent } from './notifications/notifications-component/notifications.component';
 import { NotificationItemComponent } from './notifications/notification-item/notification-item.component';
 import { NotificationControlService } from './notifications/services/notification-control.service';
@@ -44,73 +48,81 @@ import { PodcastPublicSettingsComponent } from './podcast-public-settings/podcas
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { MomentModule } from 'ngx-moment';
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: 'https://httpbin.org/post',
+  maxFilesize: 50,
+  acceptedFiles: 'image/*',
+  clickable: true,
+};
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        UtilsModule,
-        PodcastsRoutingModule,
-        QuillModule.forRoot(),
-        DropzoneModule,
-        MomentModule,
-        NgSelectModule,
-        NgbProgressbarModule,
-        NgxDatatableModule,
-        ComponentsModule,
-        NgbModule,
-        LoggerModule.forRoot(environment.logConfig),
-    ],
-    exports: [PodcastComponent],
-    declarations: [
-        BaseJsUploadComponent,
-        PodcastComponent,
-        PodcastDetailComponent,
-        EntryListItemComponent,
-        EntryDeleteItemModalComponent,
-        EntryUploadComponent,
-        UploadUrlComponent,
-        UploadFileComponent,
-        PodcastAddWizardComponent,
-        PodcastDeleteComponent,
-        PodcastEditFormComponent,
-        NotificationsComponent,
-        NotificationItemComponent,
-        NotificationModalComponent,
-        NotificationItemDeleteComponent,
-        PodcastPublicSettingsComponent,
-        NotificationLogsComponent,
-        EntryEditFormComponent,
-        UploadDropboxComponent,
-        UploadGdriveComponent,
-        RemotePageParserComponent,
-        EntryLogsComponent,
-        PodcastEditFormDetailsComponent,
-        PodcastEditFormAdvancedComponent,
-    ],
-    providers: [
-        PodcastStoreService,
-        NotificationStoreService,
-        NotificationControlService,
-    ]
+  imports: [
+    CommonModule,
+    SharedModule,
+    UtilsModule,
+    PodcastsRoutingModule,
+    QuillModule.forRoot(),
+    DropzoneModule,
+    MomentModule,
+    NgSelectModule,
+    NgbProgressbarModule,
+    NgxDatatableModule,
+    ComponentsModule,
+    NgbModule,
+    LoggerModule.forRoot(environment.logConfig),
+  ],
+  exports: [PodcastComponent],
+  declarations: [
+    BaseJsUploadComponent,
+    PodcastComponent,
+    PodcastDetailComponent,
+    EntryListItemComponent,
+    EntryDeleteItemModalComponent,
+    EntryUploadComponent,
+    UploadUrlComponent,
+    UploadFileComponent,
+    PodcastAddWizardComponent,
+    PodcastDeleteComponent,
+    PodcastEditFormComponent,
+    NotificationsComponent,
+    NotificationItemComponent,
+    NotificationModalComponent,
+    NotificationItemDeleteComponent,
+    PodcastPublicSettingsComponent,
+    NotificationLogsComponent,
+    EntryEditFormComponent,
+    UploadDropboxComponent,
+    UploadGdriveComponent,
+    RemotePageParserComponent,
+    EntryLogsComponent,
+    PodcastEditFormDetailsComponent,
+    PodcastEditFormAdvancedComponent,
+  ],
+  providers: [
+    PodcastStoreService,
+    NotificationStoreService,
+    NotificationControlService,
+    { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG },
+  ],
 })
 export class PodcastsModule {
-    constructor() {
-        //bring in animations to ng-fontawesome modal
-        NgbModalRef.prototype['c'] = NgbModalRef.prototype.close;
-        NgbModalRef.prototype.close = function (reason: string) {
-            document.querySelector('.modal-backdrop').classList.remove('show');
-            document.querySelector('.modal').classList.remove('show');
-            setTimeout(() => {
-                this['c'](reason);
-            }, 500);
-        };
-        NgbModalRef.prototype['d'] = NgbModalRef.prototype.dismiss;
-        NgbModalRef.prototype.dismiss = function (reason: string) {
-            document.querySelector('.modal-backdrop').classList.remove('show');
-            document.querySelector('.modal').classList.remove('show');
-            setTimeout(() => {
-                this['d'](reason);
-            }, 500);
-        };
-    }
+  constructor() {
+    //bring in animations to ng-fontawesome modal
+    NgbModalRef.prototype['c'] = NgbModalRef.prototype.close;
+    NgbModalRef.prototype.close = function (reason: string) {
+      document.querySelector('.modal-backdrop').classList.remove('show');
+      document.querySelector('.modal').classList.remove('show');
+      setTimeout(() => {
+        this['c'](reason);
+      }, 500);
+    };
+    NgbModalRef.prototype['d'] = NgbModalRef.prototype.dismiss;
+    NgbModalRef.prototype.dismiss = function (reason: string) {
+      document.querySelector('.modal-backdrop').classList.remove('show');
+      document.querySelector('.modal').classList.remove('show');
+      setTimeout(() => {
+        this['d'](reason);
+      }, 500);
+    };
+  }
 }
