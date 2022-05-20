@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="d-flex flex-column sidebar-flex h-100">
         <div class='content-side bg-body-light'>
             <button type='button'
                 (click)='doAddPodcast()'
@@ -55,15 +55,18 @@
                 </li>
             </ul>
         </div>
-        <ng-scrollbar autoHeightDisabled="false">
-            <ul class='nav-podcasts overflow-hidden'>
-                <!-- style="height: 99%;"
-            [perfectScrollbar]="scrollConfig"> -->
-                <li class='nav-main-item'
-                    *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField:orderByAscending | filterIf: 'title': filterValue)">
-                    <app-sidebar-podcast-item [podcast]='podcast'></app-sidebar-podcast-item>
-                </li>
-            </ul>
-        </ng-scrollbar>
+        <div class="flex-fill">
+            <ng-scrollbar autoHeightDisabled="false"
+                class="h-100">
+                <ul class='nav-podcasts overflow-hidden'>
+                    <li class='nav-main-item'
+                        *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField:orderByAscending | filterIf: 'title': filterValue)">
+                        <app-sidebar-podcast-item [podcast]='podcast'></app-sidebar-podcast-item>
+                    </li>
+                </ul>
+            </ng-scrollbar>
+        </div>
+        <div class=""
+            *ngIf="false">Bottom stuff can go here</div>
     </div>
 </nav>
