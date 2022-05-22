@@ -52,77 +52,87 @@
           </div>
       </div>
       <div>
-          <div class="btn-group me-1"
-              role="group"
-              aria-label="Action buttons">
-              <button type="button"
-                  class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
-                  *ngIf="entry.processingStatus==='Processed'"
-                  (click)="playAudio()"
-                  aria-label="Play">
-                  <div [ngSwitch]="(playState$ | async)">
-                      <i *ngSwitchCase="playStates.loading"
-                          class="fa fa-cog fa-spin">
-                      </i>
-                      <i *ngSwitchCase="playStates.playing"
-                          class="fa-solid fa-pause">
-                      </i>
-                      <i *ngSwitchDefault
-                          class="fa-solid fa-play">
-                      </i>
+          <div aria-label="Action buttons">
+              <div *ngIf="entry.processingStatus==='Processed'">
+
+                  <div class="btn-group btn-group-sm me-1"
+                      role="group"
+                      aria-label="Action buttons">
+
+                      <button type="button"
+                          class="btn btn-alt-warning"
+                          (click)="playAudio()"
+                          data-toggle="tooltip"
+                          title="Play episode"
+                          aria-label="Play">
+                          <div [ngSwitch]="(playState$ | async)">
+                              <i *ngSwitchCase="playStates.loading"
+                                  class="fa fa-cog fa-spin">
+                              </i>
+                              <i *ngSwitchCase="playStates.playing"
+                                  class="fa-solid fa-pause">
+                              </i>
+                              <i *ngSwitchDefault
+                                  class="fa-solid fa-play">
+                              </i>
+                          </div>
+                      </button>
                   </div>
-              </button>
-              <button type="button"
-                  *ngIf="entry.processingStatus==='Processed'"
-                  class="btn btn-sm btn-secondary js-bs-tooltip-enabled flex-nowrap d-none d-md-inline-block"
-                  (click)="downloadAudio(entry)"
-                  data-toggle="tooltip"
-                  title="Download episode">
-                  <i *ngIf="!preparingDownload"
-                      class="fa-solid fa-cloud-download-alt"></i>
-                  <i *ngIf="preparingDownload"
-                      class="fa fa-cog fa-spin text-success"></i>
-              </button>
-              <div class="btn-group"
-                  role="group"
-                  aria-label="Action buttons">
-                  <button type="button"
-                      class="btn btn-sm btn-info js-bs-tooltip-enabled"
-                      data-toggle="tooltip"
-                      title="Share episode"
-                      (click)="shareEpisode(entry)">
-                      <i class="fa fa-share-alt"></i>
-                  </button>
+                  <div class="btn-group btn-group-sm me-1"
+                      role="group"
+                      aria-label="Action buttons">
+                      <button type="button"
+                          class="btn btn-info"
+                          (click)="downloadAudio(entry)"
+                          data-toggle="tooltip"
+                          title="Download episode">
+                          <i *ngIf="!preparingDownload"
+                              class="fa-solid fa-cloud-download-alt"></i>
+                          <i *ngIf="preparingDownload"
+                              class="fa fa-cog fa-spin text-success"></i>
+                      </button>
+                      <button type="button"
+                          class="btn btn-info"
+                          data-toggle="tooltip"
+                          title="Share episode"
+                          (click)="shareEpisode(entry)">
+                          <i class="fa fa-share-alt"></i>
+                      </button>
 
-                  <button type="button"
-                      class="btn btn-sm btn-info d-none d-lg-inline-block"
-                      data-toggle="tooltip"
-                      title="Show episode logs"
-                      (click)="showLogs(entry)">
-                      <i class="fa fa-terminal"></i>
-                  </button>
-
-                  <a class="btn btn-sm btn-info"
-                      [routerLink]="['../entry', entry?.id, 'edit']"
-                      data-toggle="tooltip"
-                      title="Edit episode">
-                      <i class="fa-solid fa-pencil-alt"></i>
-                  </a>
+                      <button type="button"
+                          class="btn btn-info"
+                          data-toggle="tooltip"
+                          title="Show episode logs"
+                          (click)="showLogs(entry)">
+                          <i class="fa fa-terminal"></i>
+                      </button>
+                  </div>
+                  <div class="btn-group btn-group-sm"
+                      role="group"
+                      aria-label="Change buttons">
+                      <a class="btn btn-alt-success "
+                          [routerLink]="['../entry', entry?.id, 'edit']"
+                          data-toggle="tooltip"
+                          title="Edit episode">
+                          <i class="fa-solid fa-pencil-alt"></i>
+                      </a>
+                      <button type="button"
+                          class="btn btn-danger"
+                          (click)="showEntryDeleteDialog()"
+                          data-toggle="tooltip"
+                          title="Delete episode">
+                          <i class="fa fa-times"></i>
+                      </button>
+                  </div>
               </div>
-              <button type="button"
-                  *ngIf="entry.processingStatus === 'Failed'"
-                  class="btn btn-sm btn-warning"
-                  (click)="retry(entry)"
-                  data-toggle="tooltip"
-                  title="Retry"><i class="fas fa fa-redo"></i>&nbsp;Retry
-              </button>
-              <button type="button"
-                  class="btn btn-sm btn-danger"
-                  (click)="showEntryDeleteDialog()"
-                  data-toggle="tooltip"
-                  title="Delete episode">
-                  <i class="fa fa-times"></i>
-              </button>
+              <div *ngIf="entry.processingStatus==='Failed'">
+                  <button type="button"
+                      class="btn btn-sm btn-warning"
+                      (click)="retry(entry)"
+                      data-toggle="tooltip"
+                      title="Retry"><i class="fas fa fa-redo"></i>&nbsp;Retry
+                  </button>
+              </div>
           </div>
       </div>
   </div>

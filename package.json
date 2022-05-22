@@ -37,7 +37,7 @@
     "@ngrx/entity": "^13.2.0",
     "@ngrx/store": "^13.2.0",
     "@ngrx/store-devtools": "^13.2.0",
-    "@podnoms/ngx-audioplayer": "^1.4.21",
+    "@podnoms/ngx-audioplayer": "^1.5.11",
     "@popperjs/core": "^2.10.2",
     "@swimlane/ngx-datatable": "^20.0.0",
     "angular-resize-event": "^3.1.1",
