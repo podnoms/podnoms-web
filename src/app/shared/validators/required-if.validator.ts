@@ -1,6 +1,6 @@
 import {
   Validators,
-  FormControl,
+  UntypedFormControl,
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
@@ -8,7 +8,7 @@ import { Observable, timer } from 'rxjs';
 
 export class RequiredIfValidator {
   static createValidator = (predicate: string): ValidatorFn => {
-    return (input: FormControl): ValidationErrors => {
+    return (input: UntypedFormControl): ValidationErrors => {
       if (!input.parent) {
         return null;
       }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntriesStoreService } from '../entries-store.service';
 import { PodcastEntry } from '../../core';
@@ -21,14 +21,14 @@ export class EntryEditFormComponent extends BasePageComponent
     imageControl: ImageUploadComponent;
 
     entryId: string;
-    entryEditForm: FormGroup;
+    entryEditForm: UntypedFormGroup;
     entry: PodcastEntry;
     formImageUrl: string;
     sending: boolean = false;
     constructor(
         route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private entriesStore: EntriesStoreService,
         private entryDataService: EntryDataService,
         private alertService: AlertService
@@ -36,7 +36,7 @@ export class EntryEditFormComponent extends BasePageComponent
         super();
         this.entryId = route.snapshot.params['entry'];
     }
-    _createForm(fb: FormBuilder, entry: PodcastEntry): FormGroup {
+    _createForm(fb: UntypedFormBuilder, entry: PodcastEntry): UntypedFormGroup {
         const form = fb.group({
             id: [entry.id],
             title: [entry.title],

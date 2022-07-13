@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
     Validators
 } from '@angular/forms';
 import { NGXLogger } from 'ngx-logger';
@@ -15,7 +15,7 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
     styleUrls: ['./youtube-api-key.component.scss'],
 })
 export class YoutubeApiKeyComponent extends BasePageComponent {
-    public keyForm: FormGroup;
+    public keyForm: UntypedFormGroup;
     reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
     keyText: string;
@@ -23,18 +23,18 @@ export class YoutubeApiKeyComponent extends BasePageComponent {
 
     constructor(
         private apiKeyService: ApiKeyService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         logger: NGXLogger
     ) {
         super();
 
         this.keyForm = this.formBuilder.group({
-            key: new FormControl(this.keyText, [
+            key: new UntypedFormControl(this.keyText, [
                 Validators.required,
                 Validators.minLength(39),
                 Validators.maxLength(39),
             ]),
-            url: new FormControl(this.keyText, [Validators.pattern(this.reg)]),
+            url: new UntypedFormControl(this.keyText, [Validators.pattern(this.reg)]),
         });
     }
 

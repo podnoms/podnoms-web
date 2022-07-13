@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXLogger } from 'ngx-logger';
 import { Podcast } from '../../../core';
@@ -24,7 +24,7 @@ export class NotificationModalComponent {
     content: ElementRef;
 
     notification: Notification;
-    form: FormGroup;
+    form: UntypedFormGroup;
 
     constructor(
         private modalService: NgbModal,

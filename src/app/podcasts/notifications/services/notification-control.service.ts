@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotificationOptionBase } from '../../../core/model/notification-option-base';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormControl, Validators, UntypedFormGroup } from '@angular/forms';
 
 @Injectable()
 export class NotificationControlService {
@@ -10,10 +10,10 @@ export class NotificationControlService {
     const group: any = {};
     questions.forEach((question) => {
       group[question.key] = question.required
-        ? new FormControl(question.value || '', Validators.required)
-        : new FormControl(question.value || '');
+        ? new UntypedFormControl(question.value || '', Validators.required)
+        : new UntypedFormControl(question.value || '');
     });
-    return new FormGroup(group);
+    return new UntypedFormGroup(group);
   };
   getNotificationIcon = (notificationType: string): string => {
     switch (notificationType) {

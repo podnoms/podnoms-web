@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
@@ -22,14 +22,14 @@ export class ForgotPasswordComponent
   successMessage: string;
   token: string;
   username: string;
-  requestForm: FormGroup = this.fb.group({
+  requestForm: UntypedFormGroup = this.fb.group({
     email: [
       '',
       [Validators.required, Validators.pattern(this.constants.emailRegex)],
     ],
     recaptcha: ['', Validators.required],
   });
-  resetForm: FormGroup = this.fb.group({
+  resetForm: UntypedFormGroup = this.fb.group({
     password: [
       '',
       Validators.compose([Validators.required, Validators.minLength(4)]),
@@ -46,7 +46,7 @@ export class ForgotPasswordComponent
     route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private constants: ConstantsService,
     logger: NGXLogger,
     uiStateService: UiStateService

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'app/core/alerts/alert.service';
 import { UiStateService } from 'app/core/ui-state.service';
 import { UrlProcessorService } from 'app/public/services/url-processor.service';
@@ -15,7 +15,7 @@ import { AudioProcessingMessage } from '../../../core/model/audio';
 })
 export class ProcessUrlComponent {
     urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-    form: FormGroup;
+    form: UntypedFormGroup;
     status = '';
     processingStatus: AudioProcessingMessage;
     constructor(
@@ -23,7 +23,7 @@ export class ProcessUrlComponent {
         private uiStateService: UiStateService,
         private signalRService: SignalRService,
         private alertService: AlertService,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private logger: NGXLogger
     ) {
         this.form = this.fb.group({

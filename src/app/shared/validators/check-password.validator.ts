@@ -1,7 +1,7 @@
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup, ValidationErrors } from '@angular/forms';
 
 export class PasswordValidation {
-  static matchPassword(AC: FormGroup): ValidationErrors | null {
+  static matchPassword(AC: UntypedFormGroup): ValidationErrors | null {
     const passwordControl = AC.get('password');
     const confirmPasswordControl = AC.get('confirmPassword');
     if (passwordControl && confirmPasswordControl) {

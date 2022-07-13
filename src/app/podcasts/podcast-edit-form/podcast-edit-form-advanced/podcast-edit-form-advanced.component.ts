@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Podcast } from 'app/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { validateSearch } from 'app/shared/validators/search.validator';
 import { validateDomain } from 'app/shared/validators/domain.validator';
 import { UtilityService } from 'app/shared/services/utility.service';
@@ -18,11 +18,11 @@ import { ConstantsService } from '../../../shared/services/constants.service';
 export class PodcastEditFormAdvancedComponent implements AfterViewInit {
   @Input()
   podcast: Podcast;
-  podcastForm: FormGroup;
+  podcastForm: UntypedFormGroup;
   sslRequestUri: string = '';
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private utilityService: UtilityService,
     private constants: ConstantsService,
     private podcastStore: PodcastStoreService,
@@ -60,7 +60,7 @@ export class PodcastEditFormAdvancedComponent implements AfterViewInit {
       );
     });
   }
-  _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
+  _createForm(fb: UntypedFormBuilder, podcast: Podcast): UntypedFormGroup {
     const form = fb.group({
       id: [podcast.id],
       category: [podcast.category, Validators.required],

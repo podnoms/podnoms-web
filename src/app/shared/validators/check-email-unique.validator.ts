@@ -1,7 +1,7 @@
 import { ProfileDataService } from 'app/profile/profile-data.service';
 import {
   AsyncValidatorFn,
-  FormControl,
+  UntypedFormControl,
   ValidationErrors,
 } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
@@ -12,7 +12,7 @@ export class CheckEmailUniqueValidator {
     profileDataService: ProfileDataService,
     time: number = 500
   ): AsyncValidatorFn => {
-    return (input: FormControl): Observable<ValidationErrors> => {
+    return (input: UntypedFormControl): Observable<ValidationErrors> => {
       return timer(time).pipe(
         switchMap(() => profileDataService.checkEmail(input.value)),
         map((res) => {

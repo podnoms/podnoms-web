@@ -1,9 +1,9 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -28,7 +28,7 @@ import { CheckEmailUniqueValidator } from 'app/shared/validators/check-email-uni
 export class RegisterComponent {
   environment = environment;
   // eslint-disable-next-line max-len
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   submitted = false;
 
   barLabel: string = 'Password strength';
@@ -43,7 +43,7 @@ export class RegisterComponent {
     private podnomsAuthService: AuthApiProxyService,
     private profileDataService: ProfileDataService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private constants: ConstantsService,
     private logger: NGXLogger,
     private cdr: ChangeDetectorRef
@@ -78,11 +78,11 @@ export class RegisterComponent {
     );
   }
   getFormErrors(form: AbstractControl) {
-    if (form instanceof FormControl) {
+    if (form instanceof UntypedFormControl) {
       // Return FormControl errors or null
       return form.errors ?? null;
     }
-    if (form instanceof FormGroup) {
+    if (form instanceof UntypedFormGroup) {
       const groupErrors = form.errors;
       // Form group can contain errors itself, in that case add'em
       const formErrors = groupErrors ? { groupErrors } : {};

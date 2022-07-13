@@ -8,9 +8,9 @@ import {
 import { Podcast } from '../../core';
 import { PodcastDataService } from '../podcast-data.service';
 import {
-  FormBuilder,
+  UntypedFormBuilder,
   Validators,
-  FormGroup,
+  UntypedFormGroup,
   ValidationErrors,
 } from '@angular/forms';
 import { validateDomain } from 'app/shared/validators/domain.validator';
@@ -31,13 +31,13 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
   @Input()
   podcast: Podcast;
   sslRequestUri: string = '';
-  publicSettingsForm: FormGroup;
+  publicSettingsForm: UntypedFormGroup;
 
   constructor(
     private podcastDataService: PodcastDataService,
     private utilityService: UtilityService,
     private constants: ConstantsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private logger: NGXLogger
   ) {}
 
@@ -47,7 +47,7 @@ export class PodcastPublicSettingsComponent implements AfterViewInit {
       this.publicSettingsForm = this._createForm(this.fb, this.podcast);
     });
   }
-  _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
+  _createForm(fb: UntypedFormBuilder, podcast: Podcast): UntypedFormGroup {
     return this.fb.group({
       publicTitle: [podcast.publicTitle, Validators.required],
       twitterUrl: [podcast.twitterUrl, urlIsValidValidator],

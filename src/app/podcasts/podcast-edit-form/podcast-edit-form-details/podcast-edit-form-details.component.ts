@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Podcast, Category } from 'app/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ImageUploadComponent } from 'app/shared/components/image-upload/image-upload.component';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { Observable, Observer, Subject } from 'rxjs';
@@ -41,7 +41,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
     height: 300,
   };
   formLoaded: boolean = false;
-  podcastForm: FormGroup | undefined;
+  podcastForm: UntypedFormGroup | undefined;
   @ViewChild('imageControl')
   imageControl: ImageUploadComponent | undefined;
 
@@ -49,7 +49,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
   public environment = environment;
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private podcastDataService: PodcastDataService,
     private podcastStore: PodcastStoreService,
     private alertService: AlertService,
@@ -83,7 +83,7 @@ export class PodcastEditFormDetailsComponent implements AfterViewInit {
     );
     return this._updatePodcast(podcast);
   }
-  _createForm(fb: FormBuilder, podcast: Podcast): FormGroup {
+  _createForm(fb: UntypedFormBuilder, podcast: Podcast): UntypedFormGroup {
     const form = fb.group({
       id: [podcast.id],
       title: [podcast.title, Validators.required],
