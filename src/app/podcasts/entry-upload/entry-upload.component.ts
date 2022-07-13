@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Podcast, PodcastEntry } from '../../core';
 import { UploadMode } from '../upload-mode.enum';
 import { PodcastStoreService } from '../podcast-store.service';
+import { AlertService } from 'app/core/alerts/alert.service';
 
 @Component({
   selector: 'app-entry-upload',
@@ -15,7 +16,10 @@ export class EntryUploadComponent {
   @Output() uploadModeChange = new EventEmitter();
   @Input() podcast: Podcast;
   @Output() podcastUpdated = new EventEmitter<Podcast>();
-  constructor(private podcastStore: PodcastStoreService) {}
+  constructor(
+    private podcastStore: PodcastStoreService,
+    private alertService: AlertService
+  ) {}
 
   onEntryCreateComplete(entry: PodcastEntry) {
     this.uploadMode = this.UPLOADMODE.none;
@@ -28,5 +32,11 @@ export class EntryUploadComponent {
   }
   processPlaylist() {
     this.uploadMode = this.UPLOADMODE.none;
+    this.uploadModeChange.emit(this.uploadMode);
+    this.podcastUpdated.emit(this.podcast);
+    this.alertService.info(
+      'Success',
+      'Playlist added, check back for updates.'
+    );
   }
 }

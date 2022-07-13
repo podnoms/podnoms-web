@@ -29,23 +29,23 @@
     (pageEntryChosen)="onPageEntryChosen($event)">
 </app-remote-page-parser>
 
-<div class="block block-themed"
-    *ngIf="remoteAudioResult && (remoteFileType === 'Channel' || remoteFileType === 'Playlist' || remoteFileType === 'User')">
-    <div class="block-header bg-danger">
+<div class="block block-themed p-2"
+    *ngIf="remoteFileType === 'Channel' || remoteFileType === 'Playlist' || remoteFileType === 'User'">
+    <div class="block-header bg-elegance-light">
         <h3 class="block-title font-w600">
             This looks like a {{remoteFileType}}?
-            Shall we add all items (please note, this may result in a lot of episodes being downloaded to your device).
+            Playlists are a premium feature, we can add this for you but we'll only add the latest 5 episodes.
         </h3>
         <div class="block-options">
             <button type="button"
-                class="btn btn-sm btn-alt-primary mr-10"
+                class="btn btn-primary me-1 mb-1"
                 (click)="processPlaylist()">
-                <i class="fa fa-check"></i>&nbsp;Yes
+                <i class="fa fa-thumbs-up opacity-50 me-1"></i> Ok
             </button>
             <button type="button"
-                class="btn btn-sm btn-alt-danger"
+                class="btn btn-danger me-1 mb-1"
                 (click)="resetUrl()">
-                <i class="fa fa-times"></i>&nbsp;No
+                <i class="fa fa-times opacity-50 me-1"></i> Nokay
             </button>
         </div>
     </div>
