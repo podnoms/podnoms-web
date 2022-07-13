@@ -75,8 +75,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "ssl": true,
-            "sslKey": "/srv/dev/podnoms/certs/dev.pdnm.be.key",
-            "sslCert": "/srv/dev/podnoms/certs/dev.pdnm.be.crt",
+            "sslKey": "/srv/dev/podnoms/certs/dev.pdnm.be-key.pem",
+            "sslCert": "/srv/dev/podnoms/certs/dev.pdnm.be.pem",
             "disableHostCheck": true,
             "host": "dev.pdnm.be",
             "browserTarget": "app:build"

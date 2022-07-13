@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@abacritt/angularx-social-login@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@abacritt/angularx-social-login/-/angularx-social-login-1.0.2.tgz#9bb5ae9955eb82f0c45233e45c294a51961e601a"
-  integrity sha512-2O7PjxUiiWoHDAjAgKkDRKm+4bOuDWgAPzv3h+FCvSQ5+YZduvjpqBM3Zs+NCc0wd27mLHwxTTP2tOesYPjhSQ==
+"@abacritt/angularx-social-login@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@abacritt/angularx-social-login/-/angularx-social-login-1.2.1.tgz#3c01a770030186215cf3fd79d24cfe6c111d4b37"
+  integrity sha512-z3VNRjjrThdY1lOlQLOxPqFlFc+Q+ajjtPAwA4sNLsUwlPArYrQtTTm5eRcceVHoZ8I1zhP40nhE9CnEGNboCA==
   dependencies:
-    tslib "^2.3.1"
+    tslib "^2.3.1 || ^2.4.0"
 
 "@ampproject/remapping@2.2.0", "@ampproject/remapping@^2.1.0":
   version "2.2.0"
@@ -1794,10 +1794,10 @@
   resolved "https://registry.yarnpkg.com/@microsoft/dynamicproto-js/-/dynamicproto-js-1.1.6.tgz#6fe03468862861f5f88ac4c3959a652b3797f1bc"
   integrity sha512-D1Oivw1A4bIXhzBIy3/BBPn3p2On+kpO2NiYt9shICDK7L/w+cR6FFBUsBZ05l6iqzTeL+Jm8lAYn0g6G7DmDg==
 
-"@microsoft/signalr@^6.0.4":
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/@microsoft/signalr/-/signalr-6.0.5.tgz#219f7fa10e94a75a841d3d7140d939fd2c2657e9"
-  integrity sha512-Y6Mny+z71wv2/FiuoqLcraojQRIbyeF/Ao4y+tcZK28JzGGieoulXBJIVQhoxzeM15Xe8xGOX0/5pVlOpwrI8Q==
+"@microsoft/signalr@^6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@microsoft/signalr/-/signalr-6.0.7.tgz#8651d6807a0430575ce51960c254deab8d682b4c"
+  integrity sha512-CoIz8K0IpaCGbI4rr2W8RHYA8Yq0KqY8DNsJzHw3UEWTJ3KqhWqeVCE8R24czzcsoUrE28xltEQ6qNTXZDHf3g==
   dependencies:
     abort-controller "^3.0.0"
     eventsource "^1.0.7"
@@ -1812,10 +1812,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@ng-select/ng-select@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-8.1.1.tgz#1697d554970b99fc238255709655fb4dd45d1ab1"
-  integrity sha512-CP9Pve3L1aGqej38T9utdd6Waobbybwe9QIEObwicBI5fiIMAXwKT6lFT3fDLTUK/79y5nebiGtwTBfMm71Psg==
+"@ng-select/ng-select@^9.0.2":
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-9.0.2.tgz#15e270c2933423c7eaef6a09a1723db1e5212521"
+  integrity sha512-xdNiz/kgkMWYW1qFtk/337xDk/cmfEbSVtTFxWIM2OnIX1XsQOnTlGiBYces1TsMfqS68HjAvljEkj8QIGN2Lg==
   dependencies:
     tslib "^2.3.1"
 
@@ -1995,10 +1995,10 @@
     node-addon-api "^3.2.1"
     node-gyp-build "^4.3.0"
 
-"@podnoms/ngx-audioplayer@^1.5.11":
-  version "1.5.11"
-  resolved "https://registry.yarnpkg.com/@podnoms/ngx-audioplayer/-/ngx-audioplayer-1.5.11.tgz#bc583d7a162ae86eac3cf661b80253d2f6620fcc"
-  integrity sha512-mJ+4nuiVATNMFUXwgHIaK+HOTBu1yH+A2hw1veMjYJ7qd6J28lA1ZQnhKz/zgVB8+9rsfLsZx6BEn7A2JIWpCw==
+"@podnoms/ngx-audioplayer@^1.5.12":
+  version "1.5.12"
+  resolved "https://registry.yarnpkg.com/@podnoms/ngx-audioplayer/-/ngx-audioplayer-1.5.12.tgz#40e4a6a4e78ae0ed1135c7bca88c946770dc82f1"
+  integrity sha512-/RHZ8n+gKt9ORp7VYgoaMIpTFrPvBNSh7yGc4EG8PZqore9K/wzwT8ZR5XEFxq3BImBMWdNL3Ra+2kYrk2StOg==
   dependencies:
     tslib "^2.0.0"
 
@@ -2078,10 +2078,10 @@
   resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.12.tgz#6b2c510a7ad7039e98e7b8d3d6598f4359e5c080"
   integrity sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==
 
-"@types/datatables.net@^1.10.19":
-  version "1.10.21"
-  resolved "https://registry.yarnpkg.com/@types/datatables.net/-/datatables.net-1.10.21.tgz#dcb0b1c9a0b3051ad04754f7f605ef21e1cdcb3d"
-  integrity sha512-fXtWlm70PUEv0k5NfpI+BmHTTHxU6XMkKF0B2G3ly2g64EUYJc2SuNI9hZ7l/+aComO0IpLv0eLAOHGEfzMFiQ==
+"@types/datatables.net@^1.10.22":
+  version "1.10.22"
+  resolved "https://registry.yarnpkg.com/@types/datatables.net/-/datatables.net-1.10.22.tgz#2f2f03a659d316c70fc719dba0a3bb31c9e54b67"
+  integrity sha512-4VWfa/NrGiP5cZlZCAQ3aQBlPPX5VXSBRfb3C1plrCv3RKEslKp2oBEy/kaS/93OaqgBuFZBh10pOzgPa7ZXgw==
   dependencies:
     "@types/jquery" "*"
 
@@ -5581,7 +5581,7 @@ hdr-histogram-percentiles-obj@^3.0.0:
   resolved "https://registry.yarnpkg.com/hdr-histogram-percentiles-obj/-/hdr-histogram-percentiles-obj-3.0.0.tgz#9409f4de0c2dda78e61de2d9d78b1e9f3cba283c"
   integrity sha512-7kIufnBqdsBGcSZLPJwqHT3yhk1QTsSlFsVD3kx5ixH/AlgBs9yM1q6DPhXZ8f8gtdqgh7N7/5btRLpQsS2gHw==
 
-highlight.js@^11.0.0, highlight.js@~11.5.1:
+highlight.js@^11.5.1, highlight.js@~11.5.1:
   version "11.5.1"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.5.1.tgz#027c24e4509e2f4dcd00b4a6dda542ce0a1f7aea"
   integrity sha512-LKzHqnxr4CrD2YsNoIf/o5nJ09j4yi/GcH5BnYz9UnVpZdS4ucMgvP61TDty5xJcFGRjnH4DpujkS9bHT3hq0Q==
@@ -7462,19 +7462,19 @@ ngx-captcha@^11.0.0:
   dependencies:
     tslib "^2.3.0"
 
-ngx-cookie-service@^13.2.0:
-  version "13.2.1"
-  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-13.2.1.tgz#4b62263b855c4d938f4f0be00ef0bff1c0b251be"
-  integrity sha512-whl7sYcSlAmPa12zoBfBeSn+9ENxRjKAzuwRPRTL6Oe/f9dtSui2lBmOgoPfSD1umiTV38JpJee9nu3WbGsgwg==
+ngx-cookie-service@^14.0.1:
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-14.0.1.tgz#0c0f8a7ba91dbb68d3f8ad0f8808bbde4f6e55aa"
+  integrity sha512-PHjpA/bpp1ZgvQ2AWdXA6oxPQgE9k0WljQ7tvUH/u0Acl6p6akzF8kWlQiWxkgR3hBs7xB3paIsTk6GKdtakMg==
   dependencies:
     tslib "^2.0.0"
 
-ngx-highlightjs@^6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/ngx-highlightjs/-/ngx-highlightjs-6.1.2.tgz#9224e55ac33bc8dc0c1a7e18f80ea9c8f8f8e7a1"
-  integrity sha512-8ANcBBT1Iq2F8kVEhu2O9mOo0au2UTmPkVTMrj/9OY1VwIq3GoJPR0WNdGMD52oWYm1BFKVJCxVl1l1foC2tng==
+ngx-highlightjs@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-highlightjs/-/ngx-highlightjs-7.0.0.tgz#271e488eea4d4d64ae59f3f1f3078261de9cbda4"
+  integrity sha512-po/pBuqH6ROFN0PoNTS98319okmvA6jwhvNnratPnBt9RpXESLQCYYH5hjIpV2RRhFcqAjqiqMipnURvz2jD1Q==
   dependencies:
-    highlight.js "^11.0.0"
+    highlight.js "^11.5.1"
     highlightjs-line-numbers.js "^2.8.0"
     tslib "^2.0.0"
 
@@ -7500,17 +7500,17 @@ ngx-order-pipe@^2.0.4:
   dependencies:
     tslib "^2.0.0"
 
-ngx-quill@^16.2.0:
-  version "16.2.1"
-  resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-16.2.1.tgz#85897a3f5f5d5093b12f13436d75658fda1df548"
-  integrity sha512-gEw9iE6rFmyNMVC+Q3xjbB+GQxfy7F8aqwPoWNPLsbl/UNb187XudlUwV7OjUZdN7rc78oSHZwCYzeEQGtYgrQ==
+ngx-quill@^18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-18.0.0.tgz#a39cc7fa8181b8557263f1d791cf85f01f0344f2"
+  integrity sha512-WDmGeK+KY9vALl+2Rt/ykpCQEKZ7Ktxrc/5J8/ov0uBzchi7Gylf6Uz0CB9WZp4Hxrm9MD2s6IRKIq9rrZi1HQ==
   dependencies:
     tslib "^2.3.0"
 
-ngx-scrollbar@^9.0.2:
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/ngx-scrollbar/-/ngx-scrollbar-9.0.2.tgz#f6d9f2b7dea16ac497b04cecbdc7bdeb96ab0193"
-  integrity sha512-2ID3e5/hbp+r7BhmgVpxE49WQxDrgC4mYFfFQQ3CgWryrJBjbCH7odvmxDnpymXmbonOO8BO1Fl/PVFAkNIsYQ==
+ngx-scrollbar@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-scrollbar/-/ngx-scrollbar-10.0.0.tgz#a442f8c3dcc8233530d2df768b45df57948fde89"
+  integrity sha512-VEaG8nHIBHNieJ+kZ2lbkpkgHxV8M8uucY6WA3TzrXvTwmT5eGUbL+U8bYCtVqysabsy9WIqOhtWwxF8pa0HYg==
   dependencies:
     bezier-easing "^2.1.0"
     tslib "^2.3.1"
@@ -10495,7 +10495,7 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@2.4.0, "tslib@>= 2", tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1:
+tslib@2.4.0, "tslib@>= 2", tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, "tslib@^2.3.1 || ^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
