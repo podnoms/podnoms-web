@@ -45,6 +45,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ) {
     this.podcasts$ = podcastStore.entities$;
     this.loading$ = podcastStore.loading$;
+
+    this.podcasts$.subscribe((r) => {
+      console.log('sidebar.component', 'ctor-sub', r);
+    });
   }
 
   ngOnInit() {
