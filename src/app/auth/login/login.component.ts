@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  GoogleLoginProvider,
+  SocialAuthService,
+} from '@abacritt/angularx-social-login';
 import { NGXLogger } from 'ngx-logger';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +18,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  GoogleLoginProvider = GoogleLoginProvider;
   loginForm: UntypedFormGroup;
 
   errorMessage: string = '';
