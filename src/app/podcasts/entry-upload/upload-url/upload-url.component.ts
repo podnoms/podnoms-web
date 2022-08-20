@@ -85,7 +85,9 @@ export class UploadUrlComponent implements AfterViewInit {
   resetUrl() {
     this.isPosting = false;
     this.remoteAudioResult = null;
+    this.remoteFileType = '';
     this.newEntrySourceUrl = '';
+    this.entryCreateComplete.emit(null);
   }
 
   addEntry() {
