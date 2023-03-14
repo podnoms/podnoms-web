@@ -39,7 +39,7 @@ import { UploadMode as UploadMode } from '../upload-mode.enum';
     ]),
   ],
 })
-export class PodcastDetailComponent implements OnInit, OnChanges {
+export class PodcastDetailComponent implements OnInit {
   UPLOADMODE = UploadMode;
   @Input() podcast: Podcast;
   @Output() fromUrlClick: EventEmitter<any> = new EventEmitter<any>();
@@ -64,15 +64,9 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
         listener
           .on<RealtimeUpdate>('rtd', 'podcast-entry-added')
           .subscribe((message) => {
-            this.logger.debug('podcast-detail.component', 'hub-Sync', message);
             this.podcastEntryDataService
               .getById(message.id)
               .subscribe((entry) => {
-                this.logger.debug(
-                  'podcast-detail.component',
-                  'pushing entry',
-                  entry
-                );
                 setTimeout(() => {
                   this.podcast.podcastEntries.unshift(entry);
                   this.cdRef.detectChanges();
@@ -89,16 +83,12 @@ export class PodcastDetailComponent implements OnInit, OnChanges {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.logger.debug('podcast-detail.component', 'ngOnChanges', changes);
-  }
   // definitely a smell here - change detection
   // seems to have become "not" automatic
   public detectChanges() {
     this.cdRef.detectChanges();
   }
   updateEntry(entry) {
-    this.logger.debug('podcast-detail.component', 'updateEntry', entry);
     this.detectChanges();
   }
   deleteEntry(entry: PodcastEntry) {
