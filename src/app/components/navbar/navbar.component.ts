@@ -46,7 +46,7 @@ export class NavbarComponent {
     protected uiStateService: UiStateService
   ) {
     this.profile$ = this.profileStoreService.entities$.pipe(
-      filter((r) => r !== null && r !== []),
+      filter((r) => r?.length !== 0),
       map((r) => {
         this.logger.debug('navbar.component', 'profilePipe', r);
         return r[0];
