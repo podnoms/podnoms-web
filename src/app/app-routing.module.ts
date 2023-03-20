@@ -83,8 +83,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
     anchorScrolling: 'enabled',
-    enableTracing: false,
-    relativeLinkResolution: 'legacy'
+    enableTracing: false
 }),
     ],
     exports: [RouterModule],

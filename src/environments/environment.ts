@@ -11,10 +11,10 @@ const _logConfig: INGXLoggerConfig = {
 export const environment = {
   production: false,
   publicPageEnabled: true,
-  signalRHost: 'https://dev.pdnm.be:5001',
-  apiHost: 'https://api.podnoms.com',
-  // apiHost: 'https://dev.pdnm.be:5001',
-  radioHost: 'http://localhost:8000',
+  signalRHost: 'https://podnoms.dev.fergl.ie:5001',
+  // apiHost: 'https://api.podnoms.com',
+  apiHost: 'https://podnoms.dev.fergl.ie:5001',
+  radioHost: 'http://podnoms.dev.fergl.ie:8000',
   radioMount: 'podnoms',
   vapidPublicKey:
     'BBKWwHjjCCwZgd9R10Z6iLztljONO5l1ubx609we2t3DkDHyAnytG0CAr8MN5DZRaIbbOBl7JTgDSSqrYziLukU',
@@ -44,7 +44,7 @@ export const environment = {
   patreon: {
     clientId:
       'GNxonPDxsZZHsnbtOy5AnpgUXt5tf84nL8D4Spn9tgyoxhZHjsNpnnNvAuvClueU',
-    redirectUri: 'https://dev.pdnm.be:4200/auth/redir/patreon',
+    redirectUri: 'https://podnoms.dev.fergl.ie:4200/auth/redir/patreon',
   },
   stripeKey: 'pk_test_mGinslLydr5VhY65rgHu3hw7',
   recaptchaKey: '6Ldn-LEZAAAAAKFg1rrLMK4LBUx8hLnCk9GQu5cn',

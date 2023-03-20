@@ -14,9 +14,10 @@ a:hover {
   width: 22px;
 }
 .bg-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
-    url('https://cdn.podnoms.com/static/images/pn-back.jpg');
-  background-size: 100% 100%;
+  background-image: url(https://cdn.podnoms.com/static/images/pn-back.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 ::ng-deep .full-modal .modal-dialog {

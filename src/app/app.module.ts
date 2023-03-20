@@ -72,7 +72,7 @@ export class AppModule {
     private logger: NGXLogger
   ) {
     this.profile$ = profileStoreService.entities$;
-    if (environment.production || true) {
+    if (environment.production) {
       console.log(
         `%c
 <------------------------------>

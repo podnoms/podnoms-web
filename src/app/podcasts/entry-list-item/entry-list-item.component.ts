@@ -5,8 +5,6 @@ import {
   Input,
   EventEmitter,
   Output,
-  SimpleChanges,
-  OnChanges,
   ChangeDetectorRef,
   ElementRef,
   ViewChild,
@@ -16,15 +14,12 @@ import { AudioService, PlayState } from '../../core/audio.service';
 import { SignalRService } from '../../shared/services/signal-r.service';
 import { AudioProcessingMessage } from '../../core/model/audio';
 import { EntriesStoreService } from '../entries-store.service';
-import { PodcastDataService } from '../podcast-data.service';
-import { Router } from '@angular/router';
 import { EntryDataService } from '../entry-data.service';
 import { AudioDownloadService } from '../../shared/services/audio-download.service';
 import { AlertService } from '../../core/alerts/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastService } from '../../shared/components/toast/toast.service';
 import { NowPlaying } from 'app/core/model/now-playing';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { EntryLogsComponent } from '../entry-logs/entry-logs.component';
 import { NGXLogger } from 'ngx-logger';
 import { SharingComponent } from 'app/components/sharing/sharing.component';

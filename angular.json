@@ -75,11 +75,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "ssl": true,
-            "sslKey": "/srv/dev/podnoms/certs/dev.pdnm.be-key.pem",
-            "sslCert": "/srv/dev/podnoms/certs/dev.pdnm.be.pem",
+            "sslKey": "/etc/letsencrypt/live/dev.fergl.ie/privkey.pem",
+            "sslCert": "/etc/letsencrypt/live/dev.fergl.ie/fullchain.pem",
             "disableHostCheck": true,
-            "host": "dev.pdnm.be",
-            "browserTarget": "app:build"
+            "host": "podnoms.dev.fergl.ie",
+            "browserTarget": "app:build",
+            "port": 4200
           },
           "configurations": {
             "production": {
@@ -112,6 +113,12 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
+    },
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
     }
   },
   "cli": {
