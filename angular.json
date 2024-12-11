@@ -78,7 +78,6 @@
             "ssl": true,
             "sslKey": "/etc/letsencrypt/live/dev.fergl.ie/privkey.pem",
             "sslCert": "/etc/letsencrypt/live/dev.fergl.ie/fullchain.pem",
-            "disableHostCheck": true,
             "host": "podnoms.dev.fergl.ie",
             "port": 4200,
             "buildTarget": "app:build"
