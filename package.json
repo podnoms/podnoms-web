@@ -30,7 +30,7 @@
     "@auth0/angular-jwt": "^5.0.1",
     "@microsoft/applicationinsights-web": "^2.5.11",
     "@microsoft/signalr": "^6.0.7",
-    "@ng-bootstrap/ng-bootstrap": "^12.1.1",
+    "@ng-bootstrap/ng-bootstrap": "17.0.1",
     "@ng-select/ng-select": "^9.0.2",
     "@ngrx/data": "^15.4.0",
     "@ngrx/effects": "^15.4.0",
