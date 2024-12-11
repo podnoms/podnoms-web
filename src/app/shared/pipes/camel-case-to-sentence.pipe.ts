@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'camelCaseToSentence'
+    name: 'camelCaseToSentence',
+    standalone: false
 })
 export class CamelCaseToSentencePipe implements PipeTransform {
     transform(value: any, args?: any): any {

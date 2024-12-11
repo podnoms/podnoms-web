@@ -15,6 +15,7 @@ import { NotificationStoreService } from '../services/notification-store.service
     selector: 'app-notification-modal',
     templateUrl: './notification-modal.component.html',
     styleUrls: ['./notification-modal.component.scss'],
+    standalone: false
 })
 export class NotificationModalComponent {
     @Input()

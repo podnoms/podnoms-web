@@ -10,6 +10,7 @@ import { UiStateService } from './../../../core/ui-state.service';
     selector: 'app-sidebar-podcast-item',
     templateUrl: './sidebar-podcast-item.component.html',
     styleUrls: ['./sidebar-podcast-item.component.scss'],
+    standalone: false
 })
 export class SidebarPodcastItemComponent {
     @Input()

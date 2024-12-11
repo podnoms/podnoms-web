@@ -11,6 +11,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-payment-list',
     templateUrl: './payment-list.component.html',
     styleUrls: ['./payment-list.component.scss'],
+    standalone: false
 })
 export class PaymentListComponent implements OnInit {
     @ViewChild('downloader')

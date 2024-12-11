@@ -7,9 +7,10 @@ import { NGXLogger } from 'ngx-logger';
 import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
-  selector: 'app-banner',
-  templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss'],
+    selector: 'app-banner',
+    templateUrl: './banner.component.html',
+    styleUrls: ['./banner.component.scss'],
+    standalone: false
 })
 export class BannerComponent implements OnInit {
   // isOpen: boolean = false;

@@ -14,6 +14,7 @@ import { BasePageComponent } from '../../shared/components/base-page/base-page.c
     selector: 'app-entry-edit-form',
     templateUrl: './entry-edit-form.component.html',
     styleUrls: ['./entry-edit-form.component.scss'],
+    standalone: false
 })
 export class EntryEditFormComponent extends BasePageComponent
     implements OnInit {

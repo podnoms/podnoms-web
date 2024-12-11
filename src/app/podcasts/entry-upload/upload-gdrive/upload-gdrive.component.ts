@@ -9,9 +9,10 @@ declare var gapi: any;
 declare var google: any;
 
 @Component({
-  selector: 'app-upload-gdrive',
-  templateUrl: './upload-gdrive.component.html',
-  styleUrls: ['./upload-gdrive.component.scss'],
+    selector: 'app-upload-gdrive',
+    templateUrl: './upload-gdrive.component.html',
+    styleUrls: ['./upload-gdrive.component.scss'],
+    standalone: false
 })
 export class UploadGdriveComponent
   extends BaseJsUploadComponent

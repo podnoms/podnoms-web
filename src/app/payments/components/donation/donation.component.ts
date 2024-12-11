@@ -7,6 +7,7 @@ declare var BuyWithCrypto: any;
     selector: 'app-donation',
     templateUrl: './donation.component.html',
     styleUrls: ['./donation.component.scss'],
+    standalone: false
 })
 export class DonationComponent implements OnInit {
     constructor(

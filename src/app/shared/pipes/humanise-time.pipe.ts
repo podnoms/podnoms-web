@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import memo from 'memo-decorator';
 
 @Pipe({
-    name: 'humaniseTime'
+    name: 'humaniseTime',
+    standalone: false
 })
 export class HumaniseTimePipe implements PipeTransform {
     @memo()

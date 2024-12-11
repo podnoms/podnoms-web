@@ -3,7 +3,8 @@ import { NGXLogger } from 'ngx-logger';
 
 @Pipe({
     name: 'orderBy',
-    pure: false
+    pure: false,
+    standalone: false
 })
 export class OrderByPipe implements PipeTransform {
     value: string[] = [];

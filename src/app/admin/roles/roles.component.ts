@@ -6,6 +6,7 @@ import { AlertService } from '../../core/alerts/alert.service';
     selector: 'app-roles',
     templateUrl: './roles.component.html',
     styleUrls: ['./roles.component.scss'],
+    standalone: false
 })
 export class RolesComponent {
     user: string = '';

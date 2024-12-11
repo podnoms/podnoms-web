@@ -14,9 +14,10 @@ import { PaymentsService } from '../payments.service';
 declare var StripeCheckout: any;
 
 @Component({
-  selector: 'app-make-payment',
-  templateUrl: './make-payment.component.html',
-  styleUrls: ['./make-payment.component.scss'],
+    selector: 'app-make-payment',
+    templateUrl: './make-payment.component.html',
+    styleUrls: ['./make-payment.component.scss'],
+    standalone: false
 })
 export class MakePaymentComponent implements OnInit {
   loadingText: string = 'Loading payment methods';

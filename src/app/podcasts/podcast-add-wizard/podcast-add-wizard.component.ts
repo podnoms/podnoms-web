@@ -16,6 +16,7 @@ import { UtilityService } from '../../shared/services/utility.service';
     selector: 'app-podcast-add-wizard',
     templateUrl: './podcast-add-wizard.component.html',
     styleUrls: ['./podcast-add-wizard.component.scss'],
+    standalone: false
 })
 export class PodcastAddWizardComponent
     extends BasePageComponent

@@ -20,6 +20,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-password-checker',
     templateUrl: './password-checker.component.html',
     styleUrls: ['./password-checker.component.scss'],
+    standalone: false
 })
 export class PasswordCheckerComponent implements OnInit, OnChanges {
     private _repeatPassword: string;

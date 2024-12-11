@@ -21,6 +21,7 @@ declare var $: any;
     selector: 'app-secret-hider',
     templateUrl: './secret-hider.component.html',
     styleUrls: ['./secret-hider.component.scss'],
+    standalone: false
 })
 export class SecretHiderComponent implements AfterViewInit, OnChanges {
     @Input() secret: ApiKeyRequestModel;

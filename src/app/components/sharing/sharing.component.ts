@@ -15,9 +15,10 @@ import { SharingService } from '../../shared/services/sharing.service';
 import { ConstantsService } from './../../shared/services/constants.service';
 
 @Component({
-  selector: 'app-sharing',
-  templateUrl: './sharing.component.html',
-  styleUrls: ['./sharing.component.scss'],
+    selector: 'app-sharing',
+    templateUrl: './sharing.component.html',
+    styleUrls: ['./sharing.component.scss'],
+    standalone: false
 })
 export class SharingComponent implements AfterViewInit {
   @ViewChild('emailAddress') emailControl;

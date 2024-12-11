@@ -10,6 +10,7 @@ import { BaseComponent } from '../base/base.component';
 @Component({
     selector: 'app-base-page',
     template: '',
+    standalone: false
 })
 export class BasePageComponent extends BaseComponent implements OnDestroy {
     private __loggingService: LoggingService;

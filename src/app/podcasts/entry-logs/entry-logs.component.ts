@@ -12,7 +12,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-entry-logs',
     templateUrl: './entry-logs.component.html',
-    styleUrls: ['./entry-logs.component.scss']
+    styleUrls: ['./entry-logs.component.scss'],
+    standalone: false
 })
 export class EntryLogsComponent implements AfterViewInit {
     @Input() entry: PodcastEntry;

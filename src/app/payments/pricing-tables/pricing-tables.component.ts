@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-pricing-tables',
     templateUrl: './pricing-tables.component.html',
-    styleUrls: ['./pricing-tables.component.scss']
+    styleUrls: ['./pricing-tables.component.scss'],
+    standalone: false
 })
 export class PricingTablesComponent implements OnInit {
     constructor(private paymentsService: PaymentsService) {}

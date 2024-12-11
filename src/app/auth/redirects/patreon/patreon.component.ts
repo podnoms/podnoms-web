@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
     selector: 'app-patreon',
     templateUrl: './patreon.component.html',
     styleUrls: ['./patreon.component.scss'],
+    standalone: false
 })
 export class PatreonComponent implements OnInit {
     constructor(

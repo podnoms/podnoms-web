@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     selector: 'app-boilerplate',
     templateUrl: './boilerplate.component.html',
     styleUrls: ['./boilerplate.component.scss'],
+    standalone: false
 })
 export class BoilerplateComponent implements OnInit {
     boilerplate$: Observable<string>;

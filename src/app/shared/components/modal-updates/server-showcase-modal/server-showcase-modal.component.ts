@@ -6,6 +6,7 @@ import { SiteMessage } from 'app/core';
     selector: 'app-server-showcase-modal',
     templateUrl: './server-showcase-modal.component.html',
     styleUrls: ['./server-showcase-modal.component.scss'],
+    standalone: false
 })
 export class ServerShowcaseModalComponent {
     @Input() showcase: SiteMessage;

@@ -10,6 +10,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-signalr',
     templateUrl: './signalr.component.html',
     styleUrls: ['./signalr.component.scss'],
+    standalone: false
 })
 export class SignalRComponent implements OnInit {
     private _hubConnection: HubConnection;

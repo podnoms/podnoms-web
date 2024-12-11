@@ -6,6 +6,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-debug',
     templateUrl: './debug.component.html',
     styleUrls: ['./debug.component.scss'],
+    standalone: false
 })
 export class DebugComponent {
     constructor(

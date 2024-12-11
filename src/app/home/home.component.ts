@@ -10,9 +10,10 @@ import { AuthService } from '../auth/auth.service';
 import { ProfileStoreService } from '../profile/profile-store.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private _destroyed$: Subject<any>;

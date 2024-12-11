@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 
 @Pipe({
     name: 'sortBy',
+    standalone: false
 })
 export class SortByPipe implements PipeTransform {
     transform(value: any[], field: string, direction: string): any {

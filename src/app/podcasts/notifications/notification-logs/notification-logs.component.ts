@@ -13,9 +13,10 @@ import { NotificationDataService } from '../services/notification-data.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-notification-logs',
-  templateUrl: './notification-logs.component.html',
-  styleUrls: ['./notification-logs.component.scss'],
+    selector: 'app-notification-logs',
+    templateUrl: './notification-logs.component.html',
+    styleUrls: ['./notification-logs.component.scss'],
+    standalone: false
 })
 export class NotificationLogsComponent implements AfterViewInit {
   @Input()

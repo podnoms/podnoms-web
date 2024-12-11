@@ -20,9 +20,10 @@ import { Profile } from '../../core';
 import { BaseComponent } from '../../shared/components/base/base.component';
 
 @Component({
-  selector: 'app-app-layout-component',
-  templateUrl: './app-layout-component.component.html',
-  styleUrls: ['./app-layout-component.component.scss'],
+    selector: 'app-app-layout-component',
+    templateUrl: './app-layout-component.component.html',
+    styleUrls: ['./app-layout-component.component.scss'],
+    standalone: false
 })
 export class AppLayoutComponentComponent
   extends BaseComponent

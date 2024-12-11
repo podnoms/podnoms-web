@@ -21,9 +21,10 @@ import { UUID } from 'angular2-uuid';
 import { CheckSlugUniqueValidator } from 'app/shared/validators/check-slug-unique.validator';
 import { CheckEmailUniqueValidator } from 'app/shared/validators/check-email-unique.validator';
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: false
 })
 export class RegisterComponent {
   environment = environment;

@@ -5,6 +5,7 @@ import { BasePageComponent } from 'app/shared/components/base-page/base-page.com
     selector: 'app-not-found',
     templateUrl: './not-found.component.html',
     styleUrls: ['./not-found.component.scss'],
+    standalone: false
 })
 export class NotFoundComponent extends BasePageComponent {
     constructor() {

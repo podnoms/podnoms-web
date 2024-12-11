@@ -14,9 +14,10 @@ import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
-  selector: 'app-podcast-edit-form-details',
-  templateUrl: './podcast-edit-form-details.component.html',
-  styleUrls: ['./podcast-edit-form-details.component.scss'],
+    selector: 'app-podcast-edit-form-details',
+    templateUrl: './podcast-edit-form-details.component.html',
+    styleUrls: ['./podcast-edit-form-details.component.scss'],
+    standalone: false
 })
 export class PodcastEditFormDetailsComponent implements AfterViewInit {
   @Input()

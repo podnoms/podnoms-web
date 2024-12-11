@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: 'img[appImgFallback]',
+    selector: 'img[appImgFallback]',
+    standalone: false
 })
 export class ImgFallbackDirective {
   @Input() appImageFallback: string;

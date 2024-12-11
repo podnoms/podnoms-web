@@ -6,9 +6,10 @@ import { DropzoneConfig, DropzoneConfigInterface } from 'nxt-dropzone-wrapper';
 import { AlertService } from '../../../core/alerts/alert.service';
 
 @Component({
-  selector: 'app-upload-file',
-  templateUrl: './upload-file.component.html',
-  styleUrls: ['./upload-file.component.scss'],
+    selector: 'app-upload-file',
+    templateUrl: './upload-file.component.html',
+    styleUrls: ['./upload-file.component.scss'],
+    standalone: false
 })
 export class UploadFileComponent implements OnInit {
   @Input() podcast: Podcast;

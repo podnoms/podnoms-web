@@ -17,9 +17,10 @@ import {
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
-  selector: 'app-podcast-edit-form',
-  templateUrl: './podcast-edit-form.component.html',
-  styleUrls: ['./podcast-edit-form.component.scss'],
+    selector: 'app-podcast-edit-form',
+    templateUrl: './podcast-edit-form.component.html',
+    styleUrls: ['./podcast-edit-form.component.scss'],
+    standalone: false
 })
 export class PodcastEditFormComponent implements OnInit, AfterViewChecked {
   podcast$: Observable<Podcast>;
