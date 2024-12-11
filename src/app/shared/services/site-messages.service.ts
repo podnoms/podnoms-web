@@ -6,19 +6,19 @@ import { environment } from 'environments/environment';
 import { SiteMessage } from 'app/core';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class SiteMessagesService {
-    constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-    getShowcase(): Observable<SiteMessage> {
-        return this.httpClient.get<SiteMessage>(
-            `${environment.apiHost}/sitemessages`
-        );
-    }
-    getBanner(): Observable<SiteMessage> {
-        return this.httpClient.get<SiteMessage>(
-            `${environment.apiHost}/sitemessages/banners`
-        );
-    }
+  getShowcase(): Observable<SiteMessage> {
+    return this.httpClient.get<SiteMessage>(
+      `${environment.apiHost}/sitemessages`
+    );
+  }
+  getBanner(): Observable<SiteMessage> {
+    return this.httpClient.get<SiteMessage>(
+      `${environment.apiHost}/sitemessages/banners`
+    );
+  }
 }

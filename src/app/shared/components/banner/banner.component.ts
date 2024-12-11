@@ -7,36 +7,36 @@ import { NGXLogger } from 'ngx-logger';
 import { UiStateService } from 'app/core/ui-state.service';
 
 @Component({
-    selector: 'app-banner',
-    templateUrl: './banner.component.html',
-    styleUrls: ['./banner.component.scss'],
+  selector: 'app-banner',
+  templateUrl: './banner.component.html',
+  styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit {
-    // isOpen: boolean = false;
-    banner$: Observable<SiteMessage>;
+  // isOpen: boolean = false;
+  banner$: Observable<SiteMessage>;
 
-    constructor(
-        private uiStateService: UiStateService,
-        private siteMessagesService: SiteMessagesService,
-        private logger: NGXLogger
-    ) {}
+  constructor(
+    private uiStateService: UiStateService,
+    private siteMessagesService: SiteMessagesService,
+    private logger: NGXLogger
+  ) {}
 
-    ngOnInit(): void {
-        this.uiStateService.footerOpen$.subscribe((r) => {
-            if (r) {
-                this.banner$ = of(null);
-            }
-        });
-
-        this.banner$ = this.siteMessagesService.getBanner().pipe(
-            tap((r) => {
-                // this.isOpen = r !== null;
-                this.logger.debug('banner.component', 'got-banner', r);
-            })
-        );
-    }
-    closeMe() {
-        // this.isOpen = false;
+  ngOnInit(): void {
+    this.uiStateService.footerOpen$.subscribe((r) => {
+      if (r) {
         this.banner$ = of(null);
-    }
+      }
+    });
+
+    this.banner$ = this.siteMessagesService.getBanner().pipe(
+      tap((r) => {
+        // this.isOpen = r !== null;
+        this.logger.debug('banner.component', 'got-banner', r);
+      })
+    );
+  }
+  closeMe() {
+    // this.isOpen = false;
+    this.banner$ = of(null);
+  }
 }
