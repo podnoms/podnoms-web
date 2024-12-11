@@ -79,19 +79,19 @@
             "sslCert": "/etc/letsencrypt/live/dev.fergl.ie/fullchain.pem",
             "disableHostCheck": true,
             "host": "podnoms.dev.fergl.ie",
-            "browserTarget": "app:build",
-            "port": 4200
+            "port": 4200,
+            "buildTarget": "app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "app:build:production"
+              "buildTarget": "app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           }
         },
         "lint": {
