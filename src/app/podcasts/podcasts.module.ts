@@ -59,7 +59,9 @@ import { MomentModule } from 'ngx-moment';
     NgxDatatableModule,
     ComponentsModule,
     NgbModule,
-    LoggerModule.forRoot(environment.logConfig),
+    LoggerModule.forRoot({
+      level: environment.production ? NgxLoggerLevel.ERROR : NgxLoggerLevel.DEBUG
+    }),
   ],
   exports: [PodcastComponent],
   declarations: [
