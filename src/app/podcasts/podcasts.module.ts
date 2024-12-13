@@ -18,11 +18,7 @@ import { UploadUrlComponent } from './entry-upload/upload-url/upload-url.compone
 import { UploadFileComponent } from './entry-upload/upload-file/upload-file.component';
 import { PodcastEditFormComponent } from './podcast-edit-form/podcast-edit-form.component';
 import { PodcastAddWizardComponent } from './podcast-add-wizard/podcast-add-wizard.component';
-import {
-  DropzoneConfigInterface,
-  DropzoneModule,
-  DROPZONE_CONFIG,
-} from 'nxt-dropzone-wrapper';
+import { DropzoneModule, DropzoneConfig } from 'nxt-dropzone-wrapper';
 import { NotificationsComponent } from './notifications/notifications-component/notifications.component';
 import { NotificationItemComponent } from './notifications/notification-item/notification-item.component';
 import { NotificationControlService } from './notifications/services/notification-control.service';
@@ -48,13 +44,7 @@ import { PodcastPublicSettingsComponent } from './podcast-public-settings/podcas
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { environment } from 'environments/environment';
 import { MomentModule } from 'ngx-moment';
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-  // Change this to your upload POST address:
-  url: 'https://httpbin.org/post',
-  maxFilesize: 50,
-  acceptedFiles: 'image/*',
-  clickable: true,
-};
+
 @NgModule({
   imports: [
     CommonModule,
@@ -102,7 +92,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     PodcastStoreService,
     NotificationStoreService,
     NotificationControlService,
-    { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG },
   ],
 })
 export class PodcastsModule {

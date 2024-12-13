@@ -60,7 +60,7 @@
                 class="h-100">
                 <ul class='nav-podcasts overflow-hidden'>
                     <li class='nav-main-item'
-                        *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField:orderByAscending | filterIf: 'title': filterValue)">
+                        *ngFor="let podcast of (podcasts$ | async | orderBy: orderByField | filterIf: 'title': filterValue)">
                         <app-sidebar-podcast-item [podcast]='podcast'></app-sidebar-podcast-item>
                     </li>
                 </ul>

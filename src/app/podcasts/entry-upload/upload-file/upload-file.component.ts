@@ -2,20 +2,20 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Podcast } from '../../../core';
 import { AuthService } from '../../../auth/auth.service';
 import { environment } from '../../../../environments/environment';
-import { DropzoneConfig, DropzoneConfigInterface } from 'nxt-dropzone-wrapper';
+import { DropzoneConfig } from 'nxt-dropzone-wrapper';
 import { AlertService } from '../../../core/alerts/alert.service';
 
 @Component({
-    selector: 'app-upload-file',
-    templateUrl: './upload-file.component.html',
-    styleUrls: ['./upload-file.component.scss'],
-    standalone: false
+  selector: 'app-upload-file',
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.scss'],
+  standalone: false,
 })
 export class UploadFileComponent implements OnInit {
   @Input() podcast: Podcast;
   @Output() uploadComplete: EventEmitter<any> = new EventEmitter();
 
-  config: DropzoneConfigInterface = {
+  config: DropzoneConfig = {
     acceptedFiles: 'audio/*',
     clickable: true,
     maxFilesize: 4000, // 4Gb
@@ -40,7 +40,7 @@ export class UploadFileComponent implements OnInit {
   };
   constructor(
     private alertService: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
   ngOnInit() {
     this.config.url = `${environment.apiHost}/podcast/${this.podcast.slug}/audioupload?ngsw-bypass`;
