@@ -11,8 +11,11 @@ COPY . .
 
 RUN ng build --configuration=production
 
-FROM nginx:1.27.3-alpine
+# FROM nginx:1.27.3-alpine
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder  /app/dist/app/ /app
-CMD nginx -g 'daemon off;'
+# COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+# COPY --from=builder  /app/dist/app/ /app
+# CMD nginx -g 'daemon off;'
+FROM nginx:latest
+COPY --from=builder /app/dist/app/browser /usr/share/nginx/html
+EXPOSE 80

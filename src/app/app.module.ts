@@ -12,7 +12,6 @@ import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProfileStoreService } from './profile/profile-store.service';
 import { Observable } from 'rxjs';
-import { UpdateService } from './shared/services/update.service';
 import { registerLocaleData } from '@angular/common';
 import localeIE from '@angular/common/locales/en-IE';
 import { HomeComponent } from './home/home.component';
@@ -43,12 +42,6 @@ registerLocaleData(localeIE, 'ie');
         LoggerModule.forRoot(environment.logConfig),
         SocialLoginModule,
         NgbModule], providers: [
-        UpdateService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true,
-        },
         { provide: LOCALE_ID, useValue: 'en-IE' },
         {
             provide: 'SocialAuthServiceConfig',

@@ -18,7 +18,15 @@
             "tsConfig": "tsconfig.app.json",
             "polyfills": ["src/polyfills.ts"],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles"],
+              "sass": {
+                "silenceDeprecations": [
+                  "mixed-decls",
+                  "color-functions",
+                  "global-builtin",
+                  "import"
+                ]
+              }
             },
             "assets": [
               "src/assets",

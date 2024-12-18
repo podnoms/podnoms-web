@@ -5,7 +5,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { SignalRService } from '../../shared/services/signal-r.service';
 import { UtilityService } from '../../shared/services/utility.service';
 import { Router } from '@angular/router';
-import { UpdateService } from '../../shared/services/update.service';
 import { ProfileStoreService } from '../../profile/profile-store.service';
 import { environment } from '../../../environments/environment';
 import { SwPush } from '@angular/service-worker';
@@ -37,7 +36,6 @@ export class AppLayoutComponentComponent
   constructor(
     private utilityService: UtilityService,
     private alertService: AlertService,
-    updateService: UpdateService,
     private router: Router,
     private swPush: SwPush,
     private pushRegistrationService: PushRegistrationService,
@@ -51,7 +49,6 @@ export class AppLayoutComponentComponent
   ) {
     super();
     this.logger.debug('app.component', 'constructor');
-    updateService.checkForUpdates();
   }
   ngOnInit() {
     if (!this.authService.isLoggedIn()) {
