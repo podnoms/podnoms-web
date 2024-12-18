@@ -1,21 +1,28 @@
+@use "sass:color";
+@use "../bootstrap/mixins/breakpoints";
+@use "../bootstrap/mixins/lists";
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "variables" as codebase-variables;
+@use "variables-bootstrap";
+
 //
 // Main Navigation
 // --------------------------------------------------
 
 .nav-main {
-  @include list-unstyled;
-  margin-left: -$space-side;
-  margin-right: -$space-side;
+  @include lists.list-unstyled;
+  margin-left: -(codebase-variables.$space-side);
+  margin-right: -(codebase-variables.$space-side);
 }
 
 // Headings
 .nav-main-heading {
-  padding: 1.5rem $space-side 0.375rem;
+  padding: 1.5rem codebase-variables.$space-side 0.375rem;
   font-size: .75rem;
-  font-weight: $font-weight-semibold;
+  font-weight: variables-bootstrap.$font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: .0625em;
-  color: lighten($body-color, 25%);
+  color: color.adjust(bootstrap-variables.$body-color, $lightness: 25%);
 }
 
 // Default links
@@ -23,13 +30,13 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: .5rem $space-side;
+  padding: .5rem codebase-variables.$space-side;
   min-height: 2.5rem;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
+  font-size: bootstrap-variables.$font-size-sm;
+  font-weight: variables-bootstrap.$font-weight-medium;
   line-height: 1.25rem;
   letter-spacing: .0125em;
-  color: lighten($body-color, 5%);
+  color: color.adjust(bootstrap-variables.$body-color, $lightness: 5%);
 
   .nav-main-link-icon {
     flex: 0 0 auto;
@@ -38,7 +45,7 @@
     min-width: 1.25rem;
     font-size: 1rem;
     text-align: center;
-    color: lighten($body-color, 40%);
+    color: color.adjust(bootstrap-variables.$body-color, $lightness: 40%);
   }
 
   .nav-main-link-name {
@@ -59,10 +66,10 @@
   &:hover,
   &:focus,
   &.active {
-    color: darken($body-color, 25%);
+    color: color.adjust(bootstrap-variables.$body-color, $lightness: -25%);
 
     .nav-main-link-icon {
-      color: $primary;
+      color: bootstrap-variables.$primary;
     }
   }
 
@@ -84,7 +91,7 @@
     font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro";
     font-weight: 900;
     font-size: .75rem;
-    transition: opacity $main-nav-transition, transform $main-nav-transition;
+    transition: opacity codebase-variables.$main-nav-transition, transform codebase-variables.$main-nav-transition;
   }
 
   &.nav-main-link-submenu::before {
@@ -101,15 +108,15 @@
 
 // Sub menus
 .nav-main-submenu {
-  padding-left: 1.875rem + $space-side;
+  padding-left: 1.875rem + codebase-variables.$space-side;
   list-style: none;
   height: 0;
   overflow: hidden;
-  background-color: $body-bg-light;
+  background-color: codebase-variables.$body-bg-light;
 
   > .nav-main-item {
     opacity: 0;
-    transition: opacity $main-nav-transition, transform $main-nav-transition;
+    transition: opacity codebase-variables.$main-nav-transition, transform codebase-variables.$main-nav-transition;
     transform: translateY(-1rem);
   }
 
@@ -124,12 +131,12 @@
     padding-bottom: 0.375rem;
     min-height: 2.125rem;
     font-size: .875rem;
-    color: lighten($body-color, 25%);
+    color: color.adjust(bootstrap-variables.$body-color, $lightness: 25%);
 
     &:hover,
     &:focus,
     &.active {
-      color: darken($body-color, 15%);
+      color: color.adjust(bootstrap-variables.$body-color, $lightness: -15%);
     }
   }
 
@@ -141,10 +148,10 @@
 // Active sub menu
 .nav-main-item.open {
   > .nav-main-link-submenu {
-    color: $black;
+    color: bootstrap-variables.$black;
 
     > .nav-main-link-icon {
-      color: $primary;
+      color: bootstrap-variables.$primary;
     }
 
     &::before {
@@ -175,7 +182,7 @@
   margin: 0;
 }
 
-@include media-breakpoint-up(lg) {
+@include breakpoints.media-breakpoint-up(lg) {
   .nav-main-horizontal {
     display: flex;
     flex-wrap: wrap;
@@ -214,8 +221,8 @@
       left: 0;
       width: 230px;
       padding-left: 0;
-      z-index: $zindex-dropdown - 5;
-      background-color: $body-bg;
+      z-index: bootstrap-variables.$zindex-dropdown - 5;
+      background-color: bootstrap-variables.$body-bg;
       box-shadow: 0 0.25rem 2rem rgba(0, 0, 0, 0.08);
 
       &.nav-main-submenu-right {
@@ -278,10 +285,10 @@
       .nav-main-item:hover {
         > .nav-main-link-submenu {
           opacity: 1;
-          color: $black;
+          color: bootstrap-variables.$black;
 
           > .nav-main-link-icon {
-            color: $black;
+            color: bootstrap-variables.$black;
           }
 
           &::before {
@@ -322,35 +329,35 @@
 .page-header-dark #page-header {
   // Default links
   .nav-main-link {
-    color: rgba($body-color-light, .75);
-    font-weight: $font-weight-normal;
+    color: rgba(codebase-variables.$body-color-light, .75);
+    font-weight: bootstrap-variables.$font-weight-normal;
 
     > .nav-main-link-icon {
-      color: rgba($white, .3);
+      color: rgba(bootstrap-variables.$white, .3);
     }
 
     &:hover,
     &:focus,
     &.active {
-      color: $white;
+      color: bootstrap-variables.$white;
 
       > .nav-main-link-icon {
-        color: $white;
+        color: bootstrap-variables.$white;
       }
     }
   }
 
   // Sub menus
   .nav-main-submenu {
-    background-color: darken($sidebar-dark-bg, 3%);
+    background-color: color.adjust(codebase-variables.$sidebar-dark-bg, $lightness: -3%);
 
     .nav-main-link {
-      color: rgba($body-color-light, .5);
+      color: rgba(codebase-variables.$body-color-light, .5);
 
       &:hover,
       &:focus,
       &.active {
-        color: $white;
+        color: bootstrap-variables.$white;
         background-color: transparent;
       }
     }
@@ -360,7 +367,7 @@
   .nav-main-item.open {
     > .nav-main-link-submenu,
     > .nav-main-link-submenu > .nav-main-link-icon {
-      color: $white;
+      color: bootstrap-variables.$white;
     }
 
     > .nav-main-submenu {
@@ -373,22 +380,22 @@
   }
 }
 
-@include media-breakpoint-up(lg) {
+@include breakpoints.media-breakpoint-up(lg) {
   .nav-main-dark.nav-main-horizontal,
   .sidebar-dark #sidebar .nav-main-horizontal,
   .page-header-dark #page-header .nav-main-horizontal {
     .nav-main-submenu {
-      background-color: darken($sidebar-dark-bg, 3%) !important;
+      background-color: color.adjust(codebase-variables.$sidebar-dark-bg, $lightness: -3%) !important;
       box-shadow: none;
     }
 
     &.nav-main-hover {
       .nav-main-item:hover {
         > .nav-main-link-submenu {
-          color: $white;
+          color: bootstrap-variables.$white;
 
           > .nav-main-link-icon {
-            color: $white;
+            color: bootstrap-variables.$white;
           }
         }
       }

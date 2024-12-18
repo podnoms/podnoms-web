@@ -5,9 +5,10 @@ import { PodcastStoreService } from '../podcast-store.service';
 import { AlertService } from 'app/core/alerts/alert.service';
 
 @Component({
-  selector: 'app-entry-upload',
-  templateUrl: './entry-upload.component.html',
-  styleUrls: ['./entry-upload.component.scss'],
+    selector: 'app-entry-upload',
+    templateUrl: './entry-upload.component.html',
+    styleUrls: ['./entry-upload.component.scss'],
+    standalone: false
 })
 export class EntryUploadComponent {
   UPLOADMODE = UploadMode; // do this so it can be used in the template

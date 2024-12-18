@@ -1,17 +1,21 @@
+@use "../bootstrap/mixins/breakpoints";
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "variables" as codebase-variables;
+
 //
 // Reboot
 // --------------------------------------------------
 
 b,
 strong {
-  font-weight: $font-weight-bold;
+  font-weight: bootstrap-variables.$font-weight-bold;
 }
 
 // Links
 a {
   transition: color .12s ease-out;
 
-  @include media-breakpoint-up(sm) {
+  @include breakpoints.media-breakpoint-up(sm) {
     &.link-fx {
       position: relative;
 
@@ -22,7 +26,7 @@ a {
         width: 100%;
         height: 2px;
         content: '';
-        background-color: $link-color;
+        background-color: bootstrap-variables.$link-color;
         visibility: hidden;
         transform: translateY(.375rem);
         transform-origin: 50% 50%;
@@ -43,17 +47,17 @@ a {
 
 // Paragraphs
 p {
-  line-height: $paragraph-line-height;
+  line-height: codebase-variables.$paragraph-line-height;
 }
 
 .story p,
 p.story {
-  line-height: $paragraph-line-height;
-  font-size: $font-size-lg;
-  color: $gray-700;
+  line-height: codebase-variables.$paragraph-line-height;
+  font-size: bootstrap-variables.$font-size-lg;
+  color: bootstrap-variables.$gray-700;
 
-  @include media-breakpoint-up(sm) {
-    line-height: $paragraph-line-height-lg;
+  @include breakpoints.media-breakpoint-up(sm) {
+    line-height: codebase-variables.$paragraph-line-height-lg;
   }
 }
 

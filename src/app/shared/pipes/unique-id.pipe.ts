@@ -3,8 +3,9 @@ import * as _ from 'lodash';
 import { NGXLogger } from 'ngx-logger';
 
 @Pipe({
-  name: 'uniqueId',
-  pure: false,
+    name: 'uniqueId',
+    pure: false,
+    standalone: false
 })
 export class UniqueIdPipe implements PipeTransform {
   transform(value: unknown, ...args: any[]): any {

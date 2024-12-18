@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
     selector: 'app-toast',
     templateUrl: './toast.component.html',
     styleUrls: ['./toast.component.scss'],
+    standalone: false
 })
 export class ToastComponent implements OnInit {
     toasts: ToastMessage[] = [];

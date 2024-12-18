@@ -3,143 +3,142 @@
 // --------------------------------------------------
 
 // Bootstrap functions
-@import 'bootstrap/functions';
+@use 'bootstrap/functions';
 
 // User variables (your own variable overrides)
-@import 'custom/variables';
+@use 'custom/variables';
 
 // Custom Bootstrap variables overrides
-@import 'codebase/variables-bootstrap';
+@use 'codebase/variables-bootstrap';
 
 // Bootstrap variables
-@import 'bootstrap/variables';
+@use 'bootstrap/variables' as variables2;
 
 // Bootstrap mixins
-@import 'bootstrap/mixins';
+@use 'bootstrap/mixins';
 
 // Custom mixins and Bootstrap overrides
-@import 'codebase/mixins';
+@use 'codebase/mixins' as mixins2;
 
 // Bootstrap Utilities
-@import 'bootstrap/utilities';
+@use 'bootstrap/utilities';
 
 // Custom utilities and Bootstrap overrides
-@import 'codebase/utilities';
+@use 'codebase/utilities' as utilities2;
 
 // Bootstrap components (original)
-@import 'bootstrap/root';
-@import 'bootstrap/reboot';
-@import 'bootstrap/type';
-@import 'bootstrap/images';
-@import 'bootstrap/containers';
-@import 'bootstrap/grid';
-@import 'bootstrap/tables';
-@import 'bootstrap/forms';
-@import 'bootstrap/buttons';
-@import 'bootstrap/transitions';
-@import 'bootstrap/dropdown';
-@import 'bootstrap/button-group';
-@import 'bootstrap/nav';
-@import 'bootstrap/navbar';
-@import 'bootstrap/card';
-@import 'bootstrap/accordion';
-@import 'bootstrap/breadcrumb';
-@import 'bootstrap/pagination';
-@import 'bootstrap/badge';
-@import 'bootstrap/alert';
-@import 'bootstrap/progress';
-@import 'bootstrap/list-group';
-@import 'bootstrap/close';
-@import 'bootstrap/toasts';
-@import 'bootstrap/modal';
-@import 'bootstrap/tooltip';
-@import 'bootstrap/popover';
-@import 'bootstrap/carousel';
-@import 'bootstrap/spinners';
-@import 'bootstrap/placeholders';
+@use 'bootstrap/root';
+@use 'bootstrap/reboot';
+@use 'bootstrap/type';
+@use 'bootstrap/images';
+@use 'bootstrap/containers';
+@use 'bootstrap/grid';
+@use 'bootstrap/tables';
+@use 'bootstrap/forms';
+@use 'bootstrap/buttons';
+@use 'bootstrap/transitions';
+@use 'bootstrap/dropdown';
+@use 'bootstrap/button-group';
+@use 'bootstrap/nav';
+@use 'bootstrap/navbar';
+@use 'bootstrap/card';
+@use 'bootstrap/accordion';
+@use 'bootstrap/breadcrumb';
+@use 'bootstrap/pagination';
+@use 'bootstrap/badge';
+@use 'bootstrap/alert';
+@use 'bootstrap/progress';
+@use 'bootstrap/list-group';
+@use 'bootstrap/close';
+@use 'bootstrap/toasts';
+@use 'bootstrap/modal';
+@use 'bootstrap/tooltip';
+@use 'bootstrap/popover';
+@use 'bootstrap/carousel';
+@use 'bootstrap/spinners';
+@use 'bootstrap/placeholders';
 
 // Bootstrap Helpers
-@import 'bootstrap/helpers';
+@use 'bootstrap/helpers';
 
 // Bootstrap Utilities
-@import 'bootstrap/utilities/api';
+@use 'bootstrap/utilities/api';
 
 // Custom variables
-@import 'codebase/variables';
-@import 'codebase/variables-themes';
+@use 'codebase/variables' as variables3;
+@use 'codebase/variables-themes';
 
 // Extend Bootstrap styles and override the ones..
 // ..we can't alter with the provided variables
-@import 'codebase/reboot';
-@import 'codebase/type';
-@import 'codebase/grid';
-@import 'codebase/tables';
-@import 'codebase/forms';
-@import 'codebase/buttons';
-@import 'codebase/transitions';
-@import 'codebase/dropdown';
-@import 'codebase/nav';
-@import 'codebase/breadcrumb';
-@import 'codebase/pagination';
-@import 'codebase/modal';
-@import 'codebase/print';
+@use 'codebase/reboot' as reboot2;
+@use 'codebase/type' as type2;
+@use 'codebase/grid' as grid2;
+@use 'codebase/tables' as tables2;
+@use 'codebase/forms' as forms2;
+@use 'codebase/buttons' as buttons2;
+@use 'codebase/transitions' as transitions2;
+@use 'codebase/dropdown' as dropdown2;
+@use 'codebase/nav' as nav2;
+@use 'codebase/breadcrumb' as breadcrumb2;
+@use 'codebase/pagination' as pagination2;
+@use 'codebase/modal' as modal2;
+@use 'codebase/print';
 
 // Codebase layout
-@import 'codebase/layout';
-@import 'codebase/header';
-@import 'codebase/sidebar';
-@import 'codebase/side-overlay';
-@import 'codebase/layout-variations';
-@import 'codebase/hero';
-@import 'codebase/block';
+@use 'codebase/layout';
+@use 'codebase/header';
+@use 'codebase/sidebar';
+@use 'codebase/side-overlay';
+@use 'codebase/layout-variations';
+@use 'codebase/hero';
+@use 'codebase/block';
 
 // Codebase components
-@import 'codebase/page-loader';
-@import 'codebase/nav-main';
-@import 'codebase/images';
-@import 'codebase/lists';
-@import 'codebase/item';
-@import 'codebase/overlay';
-@import 'codebase/timeline';
-@import 'codebase/ribbon';
+@use 'codebase/page-loader';
+@use 'codebase/nav-main';
+@use 'codebase/images' as images2;
+@use 'codebase/lists';
+@use 'codebase/item';
+@use 'codebase/overlay';
+@use 'codebase/timeline';
+@use 'codebase/ribbon';
 
 // Helpers
-@import 'codebase/helpers';
+@use 'codebase/helpers' as helpers2;
 
 // Third party components
-@import 'vendor/animate';
-@import 'vendor/fontawesome/fontawesome';
-@import 'vendor/fontawesome/regular';
-@import 'vendor/fontawesome/solid';
-@import 'vendor/fontawesome/brands';
-@import 'vendor/simple-line-icons';
-@import 'vendor/simplebar';
+@use 'vendor/animate';
+@use 'vendor/fontawesome/fontawesome';
+@use 'vendor/fontawesome/regular';
+@use 'vendor/fontawesome/solid';
+@use 'vendor/fontawesome/brands';
+@use 'vendor/simple-line-icons';
+@use 'vendor/simplebar';
 
 // Third party plugins (style overrides)
-@import 'vendor/bootstrap-colorpicker';
-@import 'vendor/bootstrap-datepicker';
-@import 'vendor/ckeditor';
-@import 'vendor/dropzone';
-@import 'vendor/datatables';
-@import 'vendor/easy-pie-chart';
-@import 'vendor/fullcalendar';
-@import 'vendor/highlightjs';
-@import 'vendor/ion-range-slider';
-@import 'vendor/jvector-map';
-@import 'vendor/pw-strength';
-@import 'vendor/select2';
-@import 'vendor/simplemde';
-@import 'vendor/slick';
-@import 'vendor/simplebar';
-@import 'vendor/nestable2';
-@import 'vendor/flatpickr';
+@use 'vendor/bootstrap-colorpicker';
+@use 'vendor/bootstrap-datepicker';
+@use 'vendor/ckeditor';
+@use 'vendor/dropzone';
+@use 'vendor/easy-pie-chart';
+@use 'vendor/fullcalendar';
+@use 'vendor/highlightjs';
+@use 'vendor/ion-range-slider';
+@use 'vendor/jvector-map';
+@use 'vendor/pw-strength';
+@use 'vendor/select2';
+@use 'vendor/simplemde';
+@use 'vendor/slick';
+@use 'vendor/simplebar';
+@use 'vendor/nestable2';
+@use 'vendor/flatpickr';
 
 // RTL Support
-@import 'codebase/rtl-support';
+@use 'codebase/rtl-support';
 
 // Dark mode
-@import 'codebase/dark-mode';
+@use 'codebase/dark-mode';
 
 // User styles (your own styles/overrides)
-@import 'custom/main';
-@import 'codebase/themes/corporate';
+@use 'custom/main';
+@use 'codebase/themes/corporate';

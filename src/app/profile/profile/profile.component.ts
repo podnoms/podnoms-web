@@ -27,9 +27,10 @@ import { NGXLogger } from 'ngx-logger';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    standalone: false
 })
 export class ProfileComponent
   extends BasePageComponent

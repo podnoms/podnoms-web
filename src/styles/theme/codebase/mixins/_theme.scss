@@ -1,3 +1,15 @@
+@use "sass:color";
+@use "../../bootstrap/functions";
+@use "../../bootstrap/mixins/alert";
+@use "../../bootstrap/mixins/breakpoints";
+@use "../../bootstrap/mixins/buttons";
+@use "../../bootstrap/mixins/forms";
+@use "../../bootstrap/mixins/table-variants";
+@use "../../bootstrap/variables";
+@use "background-variant";
+@use "ribbon";
+@use "text-emphasis";
+
 //
 // Theme
 // --------------------------------------------------
@@ -71,47 +83,47 @@
   }
 
   // Contextual text colors
-  @include text-emphasis-variant(".text-primary", $primary);
-  @include text-emphasis-variant(".text-primary-dark", $primary-dark);
-  @include text-emphasis-variant(".text-primary-darker", $primary-darker);
-  @include text-emphasis-variant(".text-primary-light", $primary-light);
-  @include text-emphasis-variant(".text-primary-lighter", $primary-lighter);
+  @include text-emphasis.text-emphasis-variant(".text-primary", $primary);
+  @include text-emphasis.text-emphasis-variant(".text-primary-dark", $primary-dark);
+  @include text-emphasis.text-emphasis-variant(".text-primary-darker", $primary-darker);
+  @include text-emphasis.text-emphasis-variant(".text-primary-light", $primary-light);
+  @include text-emphasis.text-emphasis-variant(".text-primary-lighter", $primary-lighter);
 
-  @include text-emphasis-variant(".text-body-bg", $body-bg);
-  @include text-emphasis-variant(".text-body-bg-light", $body-bg-light);
-  @include text-emphasis-variant(".text-body-bg-dark", $body-bg-dark);
+  @include text-emphasis.text-emphasis-variant(".text-body-bg", $body-bg);
+  @include text-emphasis.text-emphasis-variant(".text-body-bg-light", $body-bg-light);
+  @include text-emphasis.text-emphasis-variant(".text-body-bg-dark", $body-bg-dark);
 
-  @include text-emphasis-variant(".text-body-color", $body-color);
-  @include text-emphasis-variant(".text-body-color-dark", $body-color-dark);
-  @include text-emphasis-variant(".text-body-color-light", $body-color-light);
+  @include text-emphasis.text-emphasis-variant(".text-body-color", $body-color);
+  @include text-emphasis.text-emphasis-variant(".text-body-color-dark", $body-color-dark);
+  @include text-emphasis.text-emphasis-variant(".text-body-color-light", $body-color-light);
 
   // Contextual dual text colors (for dark header/sidebar)
-  @include text-emphasis-variant(".text-dual", $primary-dark);
+  @include text-emphasis.text-emphasis-variant(".text-dual", $primary-dark);
 
   .page-header-dark #page-header,
   .sidebar-dark #sidebar {
-    @include text-emphasis-variant(".text-dual", $body-color-light);
+    @include text-emphasis.text-emphasis-variant(".text-dual", $body-color-light);
   }
 
   // Contextual background colors
-  @include bg-variant(".bg-primary", $primary);
-  @include bg-variant(".bg-primary-op", rgba($primary, 0.75));
-  @include bg-variant(".bg-primary-dark", $primary-dark);
-  @include bg-variant(".bg-primary-dark-op", rgba($primary-dark, 0.8));
-  @include bg-variant(".bg-primary-darker", $primary-darker);
-  @include bg-variant(".bg-primary-light", $primary-light);
-  @include bg-variant(".bg-primary-lighter", $primary-lighter);
-  @include bg-variant(".bg-body", $body-bg);
-  @include bg-variant(".bg-body-light", $body-bg-light);
-  @include bg-variant(".bg-body-dark", $body-bg-dark);
-  @include bg-gradient-variant('.bg-gd-primary', 135deg, darken($primary, 15%), lighten($primary, 5%));
+  @include background-variant.bg-variant(".bg-primary", $primary);
+  @include background-variant.bg-variant(".bg-primary-op", rgba($primary, 0.75));
+  @include background-variant.bg-variant(".bg-primary-dark", $primary-dark);
+  @include background-variant.bg-variant(".bg-primary-dark-op", rgba($primary-dark, 0.8));
+  @include background-variant.bg-variant(".bg-primary-darker", $primary-darker);
+  @include background-variant.bg-variant(".bg-primary-light", $primary-light);
+  @include background-variant.bg-variant(".bg-primary-lighter", $primary-lighter);
+  @include background-variant.bg-variant(".bg-body", $body-bg);
+  @include background-variant.bg-variant(".bg-body-light", $body-bg-light);
+  @include background-variant.bg-variant(".bg-body-dark", $body-bg-dark);
+  @include background-variant.bg-gradient-variant('.bg-gd-primary', 135deg, color.adjust($primary, $lightness: -15%), color.adjust($primary, $lightness: 5%));
 
   // Elements
-  @include bg-variant(".bg-header-light", $header-bg);
-  @include bg-variant(".bg-header-dark", $header-dark-bg);
+  @include background-variant.bg-variant(".bg-header-light", $header-bg);
+  @include background-variant.bg-variant(".bg-header-dark", $header-dark-bg);
 
-  @include bg-variant(".bg-sidebar-light", $sidebar-bg);
-  @include bg-variant(".bg-sidebar-dark", $sidebar-dark-bg);
+  @include background-variant.bg-variant(".bg-sidebar-light", $sidebar-bg);
+  @include background-variant.bg-variant(".bg-sidebar-dark", $sidebar-dark-bg);
 
   // Buttons
   .btn-link {
@@ -123,23 +135,23 @@
   }
 
   .btn-primary {
-    @include button-variant($primary, $primary);
+    @include buttons.button-variant($primary, $primary);
   }
 
   .btn-secondary {
-    @include button-variant($primary-dark, $primary-dark);
+    @include buttons.button-variant($primary-dark, $primary-dark);
   }
 
   .btn-outline-primary {
-    @include button-outline-variant($primary);
+    @include buttons.button-outline-variant($primary);
   }
 
   .btn-alt-primary {
-    @include button-variant(tint-color($primary, 75%), tint-color($primary, 75%), shade-color($primary, 40%), tint-color($primary, 50%), tint-color($primary, 50%), shade-color($primary, 60%));
+    @include buttons.button-variant(functions.tint-color($primary, 75%), functions.tint-color($primary, 75%), functions.shade-color($primary, 40%), functions.tint-color($primary, 50%), functions.tint-color($primary, 50%), functions.shade-color($primary, 60%));
   }
   
   .btn-alt-secondary {
-    @include button-variant($body-bg, $body-bg, $body-color-dark, shade-color($body-bg, 10%), shade-color($body-bg, 10%), shade-color($body-color-dark, 15%));
+    @include buttons.button-variant($body-bg, $body-bg, $body-color-dark, functions.shade-color($body-bg, 10%), functions.shade-color($body-bg, 10%), functions.shade-color($body-color-dark, 15%));
   }
 
   // Used for buttons that adapt to light/dark header and sidebar variations
@@ -147,12 +159,12 @@
   .sidebar-dark #sidebar .btn-alt-secondary,
   #sidebar .bg-header-dark .content-header .btn-alt-secondary,
   .page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
-    @include button-variant($header-dark-bg, $header-dark-bg, $white, tint-color($header-dark-bg, 15%), tint-color($header-dark-bg, 15%), $white);
+    @include buttons.button-variant($header-dark-bg, $header-dark-bg, variables.$white, functions.tint-color($header-dark-bg, 15%), functions.tint-color($header-dark-bg, 15%), variables.$white);
   }
 
   // Alerts
   .alert-primary {
-    @include alert-variant($primary-lighter, $primary-lighter, $primary-dark);
+    @include alert.alert-variant($primary-lighter, $primary-lighter, $primary-dark);
   }
 
   // Progress Bars
@@ -183,7 +195,7 @@
 
     .nav-link.active,
     .show > .nav-link {
-      color: $white;
+      color: variables.$white;
       background-color: $primary;
     }
   }
@@ -201,7 +213,7 @@
 
     .nav-link.active,
     .nav-item.show .nav-link {
-      border-color: $body-bg-dark $body-bg-dark $white;
+      border-color: $body-bg-dark $body-bg-dark variables.$white;
     }
   }
 
@@ -224,7 +236,7 @@
     .nav-link.active,
     .nav-item.show .nav-link {
       color: $body-color;
-      background-color: $white;
+      background-color: variables.$white;
       border-color: transparent;
     }
   }
@@ -259,7 +271,7 @@
   // Pagination
   .page-item {
     &.active .page-link {
-      color: $white;
+      color: variables.$white;
       background-color: $primary;
       border-color: $primary;
     }
@@ -272,8 +284,8 @@
 
 
     &:hover {
-      background-color: darken($body-bg, 10%);
-      border-color: darken($body-bg, 10%);
+      background-color: color.adjust($body-bg, $lightness: -10%);
+      border-color: color.adjust($body-bg, $lightness: -10%);
     }
 
     &:focus {
@@ -302,7 +314,7 @@
     border-color: $body-bg-dark;
 
     &.active {
-      color: $white;
+      color: variables.$white;
       background-color: $primary;
       border-color: $primary;
     }
@@ -315,41 +327,41 @@
 
   .bs-popover-top {
     .popover-arrow::before {
-      border-top-color: fade-in($body-bg-dark, 0.05);
+      border-top-color: color.adjust($body-bg-dark, $alpha: 0.05);
     }
 
     .popover-arrow::after {
-      border-top-color: $white;
+      border-top-color: variables.$white;
     }
   }
 
   .bs-popover-end {
     .popover-arrow::before {
-      border-right-color: fade-in($body-bg-dark, 0.05);
+      border-right-color: color.adjust($body-bg-dark, $alpha: 0.05);
     }
 
     .popover-arrow::after {
-      border-right-color: $white;
+      border-right-color: variables.$white;
     }
   }
 
   .bs-popover-bottom {
     .popover-arrow::before {
-      border-bottom-color: fade-in($body-bg-dark, 0.05);
+      border-bottom-color: color.adjust($body-bg-dark, $alpha: 0.05);
     }
 
     .popover-arrow::after {
-      border-bottom-color: $white;
+      border-bottom-color: variables.$white;
     }
   }
 
   .bs-popover-start {
     .popover-arrow::before {
-      border-left-color: fade-in($body-bg-dark, 0.05);
+      border-left-color: color.adjust($body-bg-dark, $alpha: 0.05);
     }
 
     .popover-arrow::after {
-      border-left-color: $white;
+      border-left-color: variables.$white;
     }
   }
 
@@ -408,9 +420,9 @@
 
   // Tables
   .table {
-    --#{$variable-prefix}table-striped-bg: #{lighten($body-bg, 1.5%)};
-    --#{$variable-prefix}table-active-bg: #{$body-bg};
-    --#{$variable-prefix}table-hover-bg: #{darken($body-bg, 1.5%)};
+    --#{variables.$variable-prefix}table-striped-bg: #{color.adjust($body-bg, $lightness: 1.5%)};
+    --#{variables.$variable-prefix}table-active-bg: #{$body-bg};
+    --#{variables.$variable-prefix}table-hover-bg: #{color.adjust($body-bg, $lightness: -1.5%)};
     
     border-color: $body-bg-dark;
   }
@@ -419,7 +431,7 @@
     border-bottom-color: $body-bg-dark;
   }
 
-  @include table-variant("primary", $primary-lighter);
+  @include table-variants.table-variant("primary", $primary-lighter);
 
   // Forms
   .form-control,
@@ -437,7 +449,7 @@
 
     &:disabled,
     &[readonly] {
-      background-color: $input-disabled-bg;
+      background-color: variables.$input-disabled-bg;
     }
   }
 
@@ -460,8 +472,8 @@
     }
   }
 
-  @include form-validation-state("valid", $success, $form-feedback-icon-valid);
-  @include form-validation-state("invalid", $danger, $form-feedback-icon-invalid);
+  @include forms.form-validation-state("valid", variables.$success, variables.$form-feedback-icon-valid);
+  @include forms.form-validation-state("invalid", variables.$danger, variables.$form-feedback-icon-invalid);
 
   .input-group-text {
     color: $input-color;
@@ -475,7 +487,7 @@
   }
 
   .form-check-input {
-    border-color: darken($body-bg, 10%);
+    border-color: color.adjust($body-bg, $lightness: -10%);
 
     &:focus {
       border-color: $primary;
@@ -489,10 +501,10 @@
   }
 
   .form-switch .form-check-input {
-    background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{darken($body-bg, 10%)}'/></svg>"));
+    background-image: functions.escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{color.adjust($body-bg, $lightness: -10%)}'/></svg>"));
 
     &:focus {
-      background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$primary}'/></svg>"));
+      background-image: functions.escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$primary}'/></svg>"));
     }
 
     &:checked {
@@ -505,7 +517,7 @@
       border: 2px solid $body-bg-dark;
   
       &:hover {
-        border-color: darken($body-bg-dark, 5%);
+        border-color: color.adjust($body-bg-dark, $lightness: -5%);
       }
   
       &::before {
@@ -545,7 +557,7 @@
     border-left-color: $body-bg-dark !important;
   }
 
-  @each $color, $value in $theme-colors {
+  @each $color, $value in variables.$theme-colors {
     .border-#{$color} {
       border-color: $value !important;
     }
@@ -555,22 +567,22 @@
     border-color: $primary !important;
   }
   .border-white {
-    border-color: $white !important;
+    border-color: variables.$white !important;
   }
   .border-white-op {
-    border-color: rgba($white, 0.1) !important;
+    border-color: rgba(variables.$white, 0.1) !important;
   }
   .border-black-op {
-    border-color: rgba($black, 0.1) !important;
+    border-color: rgba(variables.$black, 0.1) !important;
   }
 
   // Main Structure
   #page-overlay {
-    background: rgba(darken($primary, 45%), .4);
-    background: linear-gradient(to right, rgba(darken($primary, 45%), 0), rgba(darken($primary, 45%), .6));
+    background: rgba(color.adjust($primary, $lightness: -45%), .4);
+    background: linear-gradient(to right, rgba(color.adjust($primary, $lightness: -45%), 0), rgba(color.adjust($primary, $lightness: -45%), .6));
 
     .sidebar-r & {
-      background: linear-gradient(to right, rgba(darken($primary, 45%),.6), rgba(darken($primary, 45%),0));
+      background: linear-gradient(to right, rgba(color.adjust($primary, $lightness: -45%),.6), rgba(color.adjust($primary, $lightness: -45%),0));
     }
   }
 
@@ -599,14 +611,14 @@
   // Layout/Style variations based on #page-container classes
   #page-container {
     // Page header
-    @include media-breakpoint-up(lg) {
+    @include breakpoints.media-breakpoint-up(lg) {
       &.page-header-modern #page-header {
         background-color: $body-bg;
       }
     }
 
     &.page-header-dark #page-header {
-      color: darken($body-color-light, 8%);
+      color: color.adjust($body-color-light, $lightness: -8%);
       background-color: $header-dark-bg;
     }
 
@@ -627,7 +639,7 @@
     }
 
     // Sidebar and side overlay related
-    @include media-breakpoint-up(lg) {
+    @include breakpoints.media-breakpoint-up(lg) {
       &.page-header-modern:not(.sidebar-dark) #sidebar {
         box-shadow: 5px 0 10px $body-bg-dark;
       }
@@ -643,14 +655,14 @@
       background-color: $sidebar-dark-bg;
   
       .content-side.content-side-user {
-        background-color: darken($sidebar-dark-bg, 2.5%);
+        background-color: color.adjust($sidebar-dark-bg, $lightness: -2.5%);
       }
     }
   }
 
   // Blocks
   .block {
-    box-shadow: 0 1px 2px rgba(darken($body-bg-dark, 2.5%), .5), 0 1px 2px rgba(darken($body-bg-dark, 2.5%), .5);
+    box-shadow: 0 1px 2px rgba(color.adjust($body-bg-dark, $lightness: -2.5%), .5), 0 1px 2px rgba(color.adjust($body-bg-dark, $lightness: -2.5%), .5);
 
     &.block-transparent {
       box-shadow: none;
@@ -687,7 +699,7 @@
       }
 
       &.block-mode-loading-dark::after {
-        box-shadow: 0 0 1rem 1rem rgba($white,.5);
+        box-shadow: 0 0 1rem 1rem rgba(variables.$white,.5);
       }
     }
   }
@@ -703,21 +715,21 @@
 
     &.block-link-pop {
       &:hover {
-        box-shadow: 0 .125rem 2rem darken($body-bg, 8%);
+        box-shadow: 0 .125rem 2rem color.adjust($body-bg, $lightness: -8%);
       }
 
       &:active {
-        box-shadow: 0 .125rem .625rem darken($body-bg, 1%);
+        box-shadow: 0 .125rem .625rem color.adjust($body-bg, $lightness: -1%);
       }
     }
 
     &.block-link-shadow {
       &:hover {
-        box-shadow: 0 0 2.125rem darken($body-bg, 8%);
+        box-shadow: 0 0 2.125rem color.adjust($body-bg, $lightness: -8%);
       }
 
       &:active {
-        box-shadow: 0 0 .625rem darken($body-bg, 4%);
+        box-shadow: 0 0 .625rem color.adjust($body-bg, $lightness: -4%);
       }
     }
   }
@@ -725,32 +737,32 @@
   // Block Effects
   .block {
     &.block-fx-pop {
-      box-shadow: 0 .125rem 1rem darken($body-bg, 8%);
+      box-shadow: 0 .125rem 1rem color.adjust($body-bg, $lightness: -8%);
     }
 
     &.block-fx-shadow {
-      box-shadow: 0 0 2.125rem darken($body-bg, 8%);
+      box-shadow: 0 0 2.125rem color.adjust($body-bg, $lightness: -8%);
     }
   }
 
   // Main Navigation   
   // Headings
   .nav-main-heading {
-    color: lighten($body-color, 25%);
+    color: color.adjust($body-color, $lightness: 25%);
   }
   
   // Default links
   .nav-main-link {
-    color: lighten($body-color, 5%);
+    color: color.adjust($body-color, $lightness: 5%);
   
     .nav-main-link-icon {
-      color: lighten($body-color, 40%);
+      color: color.adjust($body-color, $lightness: 40%);
     }
   
     &:hover,
     &:focus,
     &.active {
-      color: darken($body-color, 25%);
+      color: color.adjust($body-color, $lightness: -25%);
   
       .nav-main-link-icon {
         color: $primary;
@@ -763,12 +775,12 @@
     background-color: $body-bg-light;
   
     .nav-main-link {
-      color: lighten($body-color, 25%);
+      color: color.adjust($body-color, $lightness: 25%);
   
       &:hover,
       &:focus,
       &.active {
-        color: darken($body-color, 15%);
+        color: color.adjust($body-color, $lightness: -15%);
       }
     }
   }
@@ -776,7 +788,7 @@
   // Active sub menu
   .nav-main-item.open {
     > .nav-main-link-submenu {
-      color: $black;
+      color: variables.$black;
   
       > .nav-main-link-icon {
         color: $primary;
@@ -785,7 +797,7 @@
   }
   
   // Nav Main Horizontal  
-  @include media-breakpoint-up(lg) {
+  @include breakpoints.media-breakpoint-up(lg) {
     .nav-main-horizontal {
       // Sub menus
       .nav-main-submenu {
@@ -795,10 +807,10 @@
       &.nav-main-hover {
         .nav-main-item:hover {
           > .nav-main-link-submenu {
-            color: $black;
+            color: variables.$black;
   
             > .nav-main-link-icon {
-              color: $black;
+              color: variables.$black;
             }
           }
         }
@@ -815,23 +827,23 @@
       color: rgba($body-color-light, .75);
   
       > .nav-main-link-icon {
-        color: rgba($white, .3);
+        color: rgba(variables.$white, .3);
       }
   
       &:hover,
       &:focus,
       &.active {
-        color: $white;
+        color: variables.$white;
   
         > .nav-main-link-icon {
-          color: $white;
+          color: variables.$white;
         }
       }
     }
   
     // Sub menus
     .nav-main-submenu {
-      background-color: darken($sidebar-dark-bg, 3%);
+      background-color: color.adjust($sidebar-dark-bg, $lightness: -3%);
   
       .nav-main-link {
         color: rgba($body-color-light, .5);
@@ -839,7 +851,7 @@
         &:hover,
         &:focus,
         &.active {
-          color: $white;
+          color: variables.$white;
           background-color: transparent;
         }
       }
@@ -849,7 +861,7 @@
     .nav-main-item.open {
       > .nav-main-link-submenu,
       > .nav-main-link-submenu > .nav-main-link-icon {
-        color: $white;
+        color: variables.$white;
       }
   
       > .nav-main-submenu {
@@ -862,21 +874,21 @@
     }
   }
   
-  @include media-breakpoint-up(lg) {
+  @include breakpoints.media-breakpoint-up(lg) {
     .nav-main-dark.nav-main-horizontal,
     .sidebar-dark #sidebar .nav-main-horizontal,
     .page-header-dark #page-header .nav-main-horizontal {
       .nav-main-submenu {
-        background-color: darken($sidebar-dark-bg, 3%) !important;
+        background-color: color.adjust($sidebar-dark-bg, $lightness: -3%) !important;
       }
   
       &.nav-main-hover {
         .nav-main-item:hover {
           > .nav-main-link-submenu {
-            color: $white;
+            color: variables.$white;
   
             > .nav-main-link-icon {
-              color: $white;
+              color: variables.$white;
             }
           }
         }
@@ -930,7 +942,7 @@
     }
   }
   
-  @include media-breakpoint-up(md) {
+  @include breakpoints.media-breakpoint-up(md) {
     .timeline-modern {
       &::before {
         background-color: $body-bg-light;
@@ -944,7 +956,7 @@
 
   // Ribbons
   .ribbon-primary {
-    @include ribbon-variation($primary, $white);
+    @include ribbon.ribbon-variation($primary, variables.$white);
   }
 
   // Bootstrap Datepicker
@@ -1024,7 +1036,7 @@
     }
 
     &:hover {
-      background-color: $white;
+      background-color: variables.$white;
       border-color: $primary;
 
       .dz-message {
@@ -1149,7 +1161,7 @@
 
   // Simple Bar
   .simplebar-scrollbar::before {
-    background: rgba(darken($primary-darker, 10%), 0.75);
+    background: rgba(color.adjust($primary-darker, $lightness: -10%), 0.75);
   }
 
   // Slick

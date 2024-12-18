@@ -1,11 +1,18 @@
+@use "sass:color";
+@use "../bootstrap/mixins/breakpoints";
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "mixins/content";
+@use "variables" as codebase-variables;
+@use "variables-bootstrap";
+
 //
 // Blocks
 // --------------------------------------------------
 
 .block {
-  margin-bottom: $space-base;
-  background-color: $white;
-  box-shadow: 0 1px 2px rgba(darken($body-bg-dark, 2.5%), .5), 0 1px 2px rgba(darken($body-bg-dark, 2.5%), .5);
+  margin-bottom: codebase-variables.$space-base;
+  background-color: bootstrap-variables.$white;
+  box-shadow: 0 1px 2px rgba(color.adjust(codebase-variables.$body-bg-dark, $lightness: -2.5%), .5), 0 1px 2px rgba(color.adjust(codebase-variables.$body-bg-dark, $lightness: -2.5%), .5);
 
   & &,
   .content-side & {
@@ -18,7 +25,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: .875rem $space-block;
+  padding: .875rem codebase-variables.$space-block;
   transition: opacity .2s ease-out;
 
   &.block-header-rtl {
@@ -29,13 +36,13 @@
     }
 
     .block-options {
-      padding-right: $space-block;
+      padding-right: codebase-variables.$space-block;
       padding-left: 0;
     }
   }
 
   &-default {
-    background-color: $body-bg-light;
+    background-color: codebase-variables.$body-bg-light;
   }
 }
 
@@ -44,12 +51,12 @@
   min-height: 1.75rem;
   margin: 0;
   font-size: 1rem;
-  font-weight: $font-weight-medium;
+  font-weight: variables-bootstrap.$font-weight-medium;
   line-height: 1.75;
 
   small {
     font-size: .875rem;
-    font-weight: $font-weight-normal;
+    font-weight: bootstrap-variables.$font-weight-normal;
     line-height: 1.375rem;
     opacity: .75;
   }
@@ -57,24 +64,24 @@
 
 .block-content {
   transition: opacity .2s ease-out;
-  @include content-layout($space-block, $space-block);
+  @include content.content-layout(codebase-variables.$space-block, codebase-variables.$space-block);
 
   &.block-content-sm {
-    padding-top: ($space-block * .5);
+    padding-top: (codebase-variables.$space-block * .5);
 
     .pull-t,
     .pull-t-b,
     .pull-all {
-      margin-top: -($space-block * .5);
+      margin-top: -(codebase-variables.$space-block * .5);
     }
 
     &.block-content-full {
-      padding-bottom: ($space-block * .5);
+      padding-bottom: (codebase-variables.$space-block * .5);
 
       .pull-b,
       .pull-y,
       .pull {
-        margin-bottom: -($space-block * .5);
+        margin-bottom: -(codebase-variables.$space-block * .5);
       }
     }
   }
@@ -83,7 +90,7 @@
 // Block Variations
 .block {
   &.block-bordered {
-    border: 1px solid $body-bg-dark;
+    border: 1px solid codebase-variables.$body-bg-dark;
     box-shadow: none;
   }
 
@@ -121,14 +128,14 @@
 
   &.block-themed > .block-header {
     border-bottom: none;
-    color: $white;
-    background-color: $primary;
+    color: bootstrap-variables.$white;
+    background-color: bootstrap-variables.$primary;
 
     > .block-title {
-      color: rgba($white, .9);
+      color: rgba(bootstrap-variables.$white, .9);
 
       small {
-        color: rgba($white, .7);
+        color: rgba(bootstrap-variables.$white, .7);
       }
     }
   }
@@ -164,7 +171,7 @@
       display: block;
       z-index: 9;
       content: " ";
-      background-color: rgba($white, .85);
+      background-color: rgba(bootstrap-variables.$white, .85);
     }
 
     &::after {
@@ -175,7 +182,7 @@
       width: 3rem;
       height: 3rem;
       line-height: 3rem;
-      color: $primary-dark;
+      color: codebase-variables.$primary-dark;
       font-family: Simple-Line-Icons;
       font-size: 1.125rem;
       text-align: center;
@@ -183,7 +190,7 @@
       content: '\e09a';
       animation: fa-spin 1.75s infinite linear;
       border-radius: 1.5rem;
-      box-shadow: 0 0 1rem 1rem rgba($primary-dark, .05);
+      box-shadow: 0 0 1rem 1rem rgba(codebase-variables.$primary-dark, .05);
     }
 
     &.block-mode-hidden::after {
@@ -191,17 +198,17 @@
       width: 2rem;
       height: 2rem;
       line-height: 2rem;
-      box-shadow: 0 0 .5rem .5rem rgba($primary-dark, .05);
+      box-shadow: 0 0 .5rem .5rem rgba(codebase-variables.$primary-dark, .05);
     }
 
     &.block-mode-loading-dark {
       &::before {
-        background-color: rgba($black, .85);
+        background-color: rgba(bootstrap-variables.$black, .85);
       }
 
       &::after {
-        color: $white;
-        box-shadow: 0 0 1rem 1rem rgba($white,.5);
+        color: bootstrap-variables.$white;
+        box-shadow: 0 0 1rem 1rem rgba(bootstrap-variables.$white,.5);
       }
     }
 
@@ -238,7 +245,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: $zindex-block-fullscreen;
+    z-index: codebase-variables.$zindex-block-fullscreen;
     margin-bottom: 0;
     overflow-y: auto;
     backface-visibility: hidden;
@@ -253,7 +260,7 @@
     }
 
     &.block-transparent {
-      background-color: $white;
+      background-color: bootstrap-variables.$white;
     }
   }
 
@@ -264,8 +271,8 @@
     margin-bottom: 0 !important;
     width: 100%;
     max-width: 300px;
-    z-index: $zindex-block-pinned;
-    box-shadow: 0 0 30px rgba($black, .1);
+    z-index: codebase-variables.$zindex-block-pinned;
+    box-shadow: 0 0 30px rgba(bootstrap-variables.$black, .1);
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 
@@ -279,7 +286,7 @@
       overflow-y: auto;
     }
 
-    @include media-breakpoint-up(sm) {
+    @include breakpoints.media-breakpoint-up(sm) {
       max-width: 400px;
     }
   }
@@ -288,12 +295,12 @@
 // Block Links
 a.block {
   display: block;
-  color: $body-color;
+  color: bootstrap-variables.$body-color;
   font-weight: normal;
   transition: all .12s ease-out;
 
   &:hover {
-    color: $body-color;
+    color: bootstrap-variables.$body-color;
     opacity: .65;
   }
 
@@ -314,25 +321,25 @@ a.block {
 
   &.block-link-pop {
     &:hover {
-      box-shadow: 0 .125rem 2rem darken($body-bg, 8%);
+      box-shadow: 0 .125rem 2rem color.adjust(bootstrap-variables.$body-bg, $lightness: -8%);
       transform: translateY(-3px);
       opacity: 1;
     }
 
     &:active {
-      box-shadow: 0 .125rem .625rem darken($body-bg, 1%);
+      box-shadow: 0 .125rem .625rem color.adjust(bootstrap-variables.$body-bg, $lightness: -1%);
       transform: translateY(0);
     }
   }
 
   &.block-link-shadow {
     &:hover {
-      box-shadow: 0 0 2.125rem darken($body-bg, 8%);
+      box-shadow: 0 0 2.125rem color.adjust(bootstrap-variables.$body-bg, $lightness: -8%);
       opacity: 1;
     }
 
     &:active {
-      box-shadow: 0 0 .625rem darken($body-bg, 4%);
+      box-shadow: 0 0 .625rem color.adjust(bootstrap-variables.$body-bg, $lightness: -4%);
     }
   }
 }
@@ -345,13 +352,13 @@ a.block {
   }
 
   &.block-fx-pop {
-    box-shadow: 0 .125rem 1rem darken($body-bg, 8%);
+    box-shadow: 0 .125rem 1rem color.adjust(bootstrap-variables.$body-bg, $lightness: -8%);
     transform: translateY(-3px);
     opacity: 1;
   }
 
   &.block-fx-shadow {
-    box-shadow: 0 0 2.125rem darken($body-bg, 8%);
+    box-shadow: 0 0 2.125rem color.adjust(bootstrap-variables.$body-bg, $lightness: -8%);
     opacity: 1;
   }
 }
@@ -359,14 +366,14 @@ a.block {
 // Block Options
 .block-options {
   flex: 0 0 auto;
-  padding-left: $space-block;
+  padding-left: codebase-variables.$space-block;
 
   .block-options-item {
     padding: 0 .25rem;
     line-height: 1.2;
 
     .block.block-themed > .block-header & {
-      color: $white;
+      color: bootstrap-variables.$white;
     }
   }
 
@@ -382,11 +389,11 @@ a.block {
   .block-options {
     position: absolute;
     top: .875rem;
-    right: $space-block;
+    right: codebase-variables.$space-block;
 
     &.block-options-left {
       right: auto;
-      left: $space-block;
+      left: codebase-variables.$space-block;
       padding-right: .625rem;
       padding-left: 0;
     }
@@ -397,7 +404,7 @@ a.block {
   display: inline-block;
   padding: .375rem .25rem;
   line-height: 1;
-  color: $gray-600;
+  color: bootstrap-variables.$gray-600;
   background: none;
   border: none;
   cursor: pointer;
@@ -414,7 +421,7 @@ a.block {
 
   &:hover {
     text-decoration: none;
-    color: $gray-900;
+    color: bootstrap-variables.$gray-900;
   }
 
   @at-root {
@@ -422,25 +429,25 @@ a.block {
     .active > a#{&},
     .show > button#{&} {
       text-decoration: none;
-      color: $gray-900;
+      color: bootstrap-variables.$gray-900;
     }
   }
 
   &:focus {
     outline: none !important;
-    color: $black;
+    color: bootstrap-variables.$black;
   }
 
   &:active {
-    color: $gray-600;
+    color: bootstrap-variables.$gray-600;
   }
 
   .block.block-themed & {
-    color: $white;
+    color: bootstrap-variables.$white;
     opacity: .7;
 
     &:hover {
-      color: $white;
+      color: bootstrap-variables.$white;
       opacity: 1;
     }
 
@@ -448,18 +455,18 @@ a.block {
       a#{&}:focus,
       .active > a#{&},
       .show > button#{&} {
-        color: $white;
+        color: bootstrap-variables.$white;
         opacity: 1;
       }
     }
 
     &:focus {
-      color: $white;
+      color: bootstrap-variables.$white;
       opacity: 1;
     }
 
     &:active {
-      color: $white;
+      color: bootstrap-variables.$white;
       opacity: .6;
     }
   }

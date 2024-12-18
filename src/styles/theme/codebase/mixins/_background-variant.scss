@@ -1,3 +1,4 @@
+@use "sass:color";
 //
 // Backgrounds
 // --------------------------------------------------
@@ -12,7 +13,7 @@
   button#{$parent} {
     &:hover,
     &:focus {
-      background-color: darken($color, 10%) !important;
+      background-color: color.adjust($color, $lightness: -10%) !important;
     }
   }
 }

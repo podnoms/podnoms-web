@@ -37,76 +37,50 @@ import { NGXLogger } from 'ngx-logger';
                 style({ opacity: 1 }),
                 animate('300ms ease-in-out'),
             ]),
-
             // Enter from top
             state('fromTop', style({ opacity: 1, transform: 'translateY(0)' })),
             transition('* => fromTop', [
                 style({ opacity: 0, transform: 'translateY(-5%)' }),
                 animate('400ms ease-in-out'),
             ]),
-            state(
-                'fromTopOut',
-                style({ opacity: 0, transform: 'translateY(5%)' })
-            ),
+            state('fromTopOut', style({ opacity: 0, transform: 'translateY(5%)' })),
             transition('fromTop => fromTopOut', [
                 style({ opacity: 1, transform: 'translateY(0)' }),
                 animate('300ms ease-in-out'),
             ]),
-
             // Enter from right
-            state(
-                'fromRight',
-                style({ opacity: 1, transform: 'translateX(0)' })
-            ),
+            state('fromRight', style({ opacity: 1, transform: 'translateX(0)' })),
             transition('* => fromRight', [
                 style({ opacity: 0, transform: 'translateX(5%)' }),
                 animate('400ms ease-in-out'),
             ]),
-            state(
-                'fromRightOut',
-                style({ opacity: 0, transform: 'translateX(-5%)' })
-            ),
+            state('fromRightOut', style({ opacity: 0, transform: 'translateX(-5%)' })),
             transition('fromRight => fromRightOut', [
                 style({ opacity: 1, transform: 'translateX(0)' }),
                 animate('300ms ease-in-out'),
             ]),
-
             // Enter from bottom
-            state(
-                'fromBottom',
-                style({ opacity: 1, transform: 'translateY(0)' })
-            ),
+            state('fromBottom', style({ opacity: 1, transform: 'translateY(0)' })),
             transition('* => fromBottom', [
                 style({ opacity: 0, transform: 'translateY(5%)' }),
                 animate('400ms ease-in-out'),
             ]),
-            state(
-                'fromBottomOut',
-                style({ opacity: 0, transform: 'translateY(-5%)' })
-            ),
+            state('fromBottomOut', style({ opacity: 0, transform: 'translateY(-5%)' })),
             transition('fromBottom => fromBottomOut', [
                 style({ opacity: 1, transform: 'translateY(0)' }),
                 animate('300ms ease-in-out'),
             ]),
-
             // Enter from left
-            state(
-                'fromLeft',
-                style({ opacity: 1, transform: 'translateX(0)' })
-            ),
+            state('fromLeft', style({ opacity: 1, transform: 'translateX(0)' })),
             transition('* => fromLeft', [
                 style({ opacity: 0, transform: 'translateX(-5%)' }),
                 animate('400ms ease-in-out'),
             ]),
-            state(
-                'fromLeftOut',
-                style({ opacity: 0, transform: 'translateX(5%)' })
-            ),
+            state('fromLeftOut', style({ opacity: 0, transform: 'translateX(5%)' })),
             transition('fromLeft => fromLeftOut', [
                 style({ opacity: 1, transform: 'translateX(0)' }),
                 animate('300ms ease-in-out'),
             ]),
-
             // Rotate
             state('scale', style({ opacity: 1, transform: 'scale(1)' })),
             transition('* => scale', [
@@ -118,17 +92,13 @@ import { NGXLogger } from 'ngx-logger';
                 style({ opacity: 1, transform: 'scale(1)' }),
                 animate('400ms ease-in-out'),
             ]),
-
             // Scale
             state('rotate', style({ opacity: 1, transform: 'rotate(0deg)' })),
             transition('* => rotate', [
                 style({ opacity: 0, transform: 'rotate(5deg)' }),
                 animate('400ms ease-in-out'),
             ]),
-            state(
-                'rotateOut',
-                style({ opacity: 0, transform: 'rotate(-5deg)' })
-            ),
+            state('rotateOut', style({ opacity: 0, transform: 'rotate(-5deg)' })),
             transition('rotate => rotateOut', [
                 style({ opacity: 1, transform: 'rotate(0deg)' }),
                 animate('400ms ease-in-out'),
@@ -138,6 +108,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-toast-item',
     templateUrl: './toast-item.component.html',
     styleUrls: ['./toast-item.component.scss'],
+    standalone: false
 })
 export class ToastItemComponent implements OnInit {
     @Input() toast: ToastMessage;

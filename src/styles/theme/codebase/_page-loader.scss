@@ -1,3 +1,5 @@
+@use "../bootstrap/variables";
+
 //
 // Page Loader
 // --------------------------------------------------
@@ -8,7 +10,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: $primary;
+  background-color: variables.$primary;
   z-index: 999998;
   transition: transform .35s ease-out;
   transform: translateY(-100%);
@@ -34,8 +36,8 @@
     margin-left: -100px;
     width: 200px;
     height: 200px;
-    background-color: rgba($white, .5);
-    border: 3px solid rgba($white, .75);
+    background-color: rgba(variables.$white, .5);
+    border: 3px solid rgba(variables.$white, .75);
     animation: page-loader-inner 1.5s infinite ease-out;
   }
 
@@ -44,7 +46,7 @@
     margin-left: -30px;
     width: 60px;
     height: 60px;
-    background-color: rgba($white, 1);
+    background-color: rgba(variables.$white, 1);
     animation: page-loader-outer 1.5s infinite ease-in;
   }
 }

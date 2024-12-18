@@ -8,6 +8,7 @@ import { Observable, timer } from 'rxjs';
     selector: 'app-api-keys',
     templateUrl: './api-keys.component.html',
     styleUrls: ['./api-keys.component.scss'],
+    standalone: false
 })
 export class ApiKeysComponent implements OnInit {
     @Input()

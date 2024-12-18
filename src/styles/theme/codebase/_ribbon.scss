@@ -1,3 +1,8 @@
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "mixins/ribbon";
+@use "variables" as codebase-variables;
+@use "variables-bootstrap";
+
 //
 // Ribbon
 // --------------------------------------------------
@@ -15,9 +20,9 @@
   height: 2rem;
   line-height: 2rem;
   z-index: 5;
-  font-weight: $font-weight-medium;
-  border-top-left-radius: $border-radius;
-  border-bottom-left-radius: $border-radius;
+  font-weight: variables-bootstrap.$font-weight-medium;
+  border-top-left-radius: bootstrap-variables.$border-radius;
+  border-bottom-left-radius: bootstrap-variables.$border-radius;
 
   &::before {
     position: absolute;
@@ -52,7 +57,7 @@
     right: -.5rem;
     padding-left: .75rem;
     padding-right: .75rem;
-    border-radius: $border-radius !important;
+    border-radius: bootstrap-variables.$border-radius !important;
   }
 
   .ribbon-box::before {
@@ -66,8 +71,8 @@
     right: auto;
     left: 0;
     border-radius: 0;
-    border-top-right-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    border-top-right-radius: bootstrap-variables.$border-radius;
+    border-bottom-right-radius: bootstrap-variables.$border-radius;
   }
 
   &.ribbon-bookmark {
@@ -100,36 +105,36 @@
 
 // Color variation
 .ribbon-light {
-  @include ribbon-variation($body-bg-dark, $body-color);
+  @include ribbon.ribbon-variation(codebase-variables.$body-bg-dark, bootstrap-variables.$body-color);
 }
 
 .ribbon-dark {
-  @include ribbon-variation($dark, $white);
+  @include ribbon.ribbon-variation(bootstrap-variables.$dark, bootstrap-variables.$white);
 }
 
 .ribbon-primary {
-  @include ribbon-variation($primary, $white);
+  @include ribbon.ribbon-variation(bootstrap-variables.$primary, bootstrap-variables.$white);
 }
 
 .ribbon-success {
-  @include ribbon-variation($success, $white);
+  @include ribbon.ribbon-variation(bootstrap-variables.$success, bootstrap-variables.$white);
 }
 
 .ribbon-info {
-  @include ribbon-variation($info, $white);
+  @include ribbon.ribbon-variation(bootstrap-variables.$info, bootstrap-variables.$white);
 }
 
 .ribbon-warning {
-  @include ribbon-variation($warning, $white);
+  @include ribbon.ribbon-variation(bootstrap-variables.$warning, bootstrap-variables.$white);
 }
 
 .ribbon-danger {
-  @include ribbon-variation($danger, $white);
+  @include ribbon.ribbon-variation(bootstrap-variables.$danger, bootstrap-variables.$white);
 }
 
 .ribbon-glass {
   .ribbon-box {
-    color: $white;
+    color: bootstrap-variables.$white;
     background-color: rgba(255,255,255,.4);
   }
 

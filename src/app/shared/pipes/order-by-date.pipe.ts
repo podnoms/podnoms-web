@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'orderByDate'
+    name: 'orderByDate',
+    standalone: false
 })
 export class OrderByDatePipe implements PipeTransform {
     transform(array: Array<string>, args: string): Array<any> {

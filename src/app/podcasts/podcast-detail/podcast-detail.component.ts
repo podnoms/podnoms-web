@@ -22,22 +22,23 @@ import { RealtimeUpdate } from '../../core/model/realtime-update';
 import { UploadMode as UploadMode } from '../upload-mode.enum';
 
 @Component({
-  selector: 'app-podcast-detail',
-  templateUrl: './podcast-detail.component.html',
-  styleUrls: ['./podcast-detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fade', [
-      transition('void => *', [
-        style({ opacity: '0' }),
-        animate('1s ease-out', style({ opacity: '1' })),
-      ]),
-      transition('* => void', [
-        style({ opacity: '1' }),
-        animate('.2s ease-in', style({ opacity: '0' })),
-      ]),
-    ]),
-  ],
+    selector: 'app-podcast-detail',
+    templateUrl: './podcast-detail.component.html',
+    styleUrls: ['./podcast-detail.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger('fade', [
+            transition('void => *', [
+                style({ opacity: '0' }),
+                animate('1s ease-out', style({ opacity: '1' })),
+            ]),
+            transition('* => void', [
+                style({ opacity: '1' }),
+                animate('.2s ease-in', style({ opacity: '0' })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class PodcastDetailComponent implements OnInit {
   UPLOADMODE = UploadMode;

@@ -25,6 +25,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-header-search',
     templateUrl: './header-search.component.html',
     styleUrls: ['./header-search.component.scss'],
+    standalone: false
 })
 export class HeaderSearchComponent implements AfterViewInit {
     @ViewChild('search', { static: false }) searchElement: ElementRef;

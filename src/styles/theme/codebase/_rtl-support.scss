@@ -1,3 +1,6 @@
+@use "../bootstrap/mixins/breakpoints";
+@use "variables";
+
 //
 // RTL Support
 // --------------------------------------------------
@@ -17,11 +20,11 @@
   }
 
   // Mini Sidebar
-  @include media-breakpoint-up(lg) {
+  @include breakpoints.media-breakpoint-up(lg) {
     &.sidebar-mini.sidebar-o.sidebar-r #sidebar {
       .content-side,
       .content-header {
-        transform: translateX(-($sidebar-width - $sidebar-mini-width)) translateY(0) translateZ(0);
+        transform: translateX(-(variables.$sidebar-width - variables.$sidebar-mini-width)) translateY(0) translateZ(0);
       }
 
       &:hover {
@@ -33,7 +36,7 @@
 
       &:not(:hover) {
         .nav-main {
-          transform: translateX($space-side);
+          transform: translateX(variables.$space-side);
 
           .nav-main-link-icon {
             transform: translateX(-1rem);
@@ -64,7 +67,7 @@
     }
 
     &.nav-main-link-submenu {
-      padding-right: $space-side;
+      padding-right: variables.$space-side;
       padding-left: 2rem;
 
       &::before,
@@ -108,7 +111,7 @@
   }
 
   // Nav Main Horizontal
-  @include media-breakpoint-up(lg) {
+  @include breakpoints.media-breakpoint-up(lg) {
     .nav-main-horizontal {
       // Link
       .nav-main-link-submenu::before {

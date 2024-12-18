@@ -1,7 +1,7 @@
-@import 'variables';
-@import 'theme';
-@import 'mixin';
-@import 'vendor-colours';
+@use 'variables';
+@use 'theme';
+@use 'mixin';
+@use 'vendor-colours';
 
 [hidden] {
   display: none !important;

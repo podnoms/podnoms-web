@@ -1,3 +1,4 @@
+@use "sass:color";
 //
 // Text emphasis
 // --------------------------------------------------
@@ -14,7 +15,7 @@
 
     &:hover,
     &:focus {
-      color: darken($color, 10%) !important;
+      color: color.adjust($color, $lightness: -10%) !important;
     }
   }
 }

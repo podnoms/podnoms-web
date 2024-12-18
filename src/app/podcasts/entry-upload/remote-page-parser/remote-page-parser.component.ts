@@ -5,6 +5,7 @@ import { NGXLogger } from 'ngx-logger';
     selector: 'app-remote-page-parser',
     templateUrl: './remote-page-parser.component.html',
     styleUrls: ['./remote-page-parser.component.scss'],
+    standalone: false
 })
 export class RemotePageParserComponent {
     @Input()

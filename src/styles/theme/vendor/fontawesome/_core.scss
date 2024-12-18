@@ -1,12 +1,15 @@
+@use "mixins";
+@use "variables";
+
 // base icon class definition
 // -------------------------
 
-.#{$fa-css-prefix} {
-  font-family: var(--#{$fa-css-prefix}-style-family, '#{$fa-style-family}');
-  font-weight: var(--#{$fa-css-prefix}-style, #{$fa-style});
+.#{variables.$fa-css-prefix} {
+  font-family: var(--#{variables.$fa-css-prefix}-style-family, '#{variables.$fa-style-family}');
+  font-weight: var(--#{variables.$fa-css-prefix}-style, #{variables.$fa-style});
 }
 
-.#{$fa-css-prefix},
+.#{variables.$fa-css-prefix},
 .fas,
 .fa-solid,
 .far,
@@ -21,7 +24,7 @@
 .fa-brands {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  display: var(--#{$fa-css-prefix}-display, #{$fa-display});
+  display: var(--#{variables.$fa-css-prefix}-display, #{variables.$fa-display});
   font-style: normal;
   font-variant: normal;
   line-height: 1;
@@ -29,5 +32,5 @@
 }
 
 %fa-icon {
-  @include fa-icon;
+  @include mixins.fa-icon;
 }

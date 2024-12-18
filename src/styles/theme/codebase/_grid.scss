@@ -1,33 +1,36 @@
+@use "../bootstrap/mixins/breakpoints";
+@use "variables";
+
 //
 // Grid
 // --------------------------------------------------
 
 // Tiny grid gutters
 .row.g-sm {
-  --bs-gutter-x: #{$space-row-gutter-tiny};
+  --bs-gutter-x: #{variables.$space-row-gutter-tiny};
 
   > .col,
   > [class*="col-"] {
-    padding-left: $space-row-gutter-tiny * .5;
-    padding-right: $space-row-gutter-tiny  * .5;
+    padding-left: variables.$space-row-gutter-tiny * .5;
+    padding-right: variables.$space-row-gutter-tiny  * .5;
   }
 
   .push,
   .block,
   &.items-push > div {
-    margin-bottom: $space-row-gutter-tiny;
+    margin-bottom: variables.$space-row-gutter-tiny;
   }
 }
 
 // Responsive grid gutters
-@include media-breakpoint-down(md) {
+@include breakpoints.media-breakpoint-down(md) {
   .row:not(.g-sm):not(.g-0) {
-    --bs-gutter-x: #{$space-mobile};
+    --bs-gutter-x: #{variables.$space-mobile};
 
     > .col,
     > [class*="col-"] {
-      padding-left: $space-mobile * .5;
-      padding-right: $space-mobile * .5;
+      padding-left: variables.$space-mobile * .5;
+      padding-right: variables.$space-mobile * .5;
     }
   }
 }

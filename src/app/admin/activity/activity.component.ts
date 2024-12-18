@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
     selector: 'app-activity',
     templateUrl: './activity.component.html',
     styleUrls: ['./activity.component.scss'],
+    standalone: false
 })
 export class ActivityComponent {
     @ViewChild('userTable') table: any;

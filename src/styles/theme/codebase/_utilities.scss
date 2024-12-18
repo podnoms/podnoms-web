@@ -1,39 +1,44 @@
+@use "sass:map";
+@use "../bootstrap/utilities";
+@use "../bootstrap/variables";
+@use "variables-bootstrap";
+
 //
 // Utilities
 // --------------------------------------------------
 
-$font-sizes: map-merge(
-  $font-sizes,
+variables.$font-sizes: map.merge(
+  variables.$font-sizes,
   (
-    'base': $font-size-base,
-    'xs': $font-size-xs,
-    'sm': $font-size-sm,
-    'lg': $font-size-lg
+    'base': variables.$font-size-base,
+    'xs': variables-bootstrap.$font-size-xs,
+    'sm': variables.$font-size-sm,
+    'lg': variables.$font-size-lg
   )
 );
 
 // Override utilities map to add new classes
-$utilities: map-merge(
-  $utilities,
+utilities.$utilities: map.merge(
+  utilities.$utilities,
   (
     "font-weight": (
       property: font-weight,
       class: fw,
       values: (
-        light: $font-weight-light,
-        lighter: $font-weight-lighter,
-        normal: $font-weight-normal,
-        medium: $font-weight-medium,
-        semibold: $font-weight-semibold,
-        bold: $font-weight-bold,
-        bolder: $font-weight-bolder
+        light: variables.$font-weight-light,
+        lighter: variables.$font-weight-lighter,
+        normal: variables.$font-weight-normal,
+        medium: variables-bootstrap.$font-weight-medium,
+        semibold: variables-bootstrap.$font-weight-semibold,
+        bold: variables.$font-weight-bold,
+        bolder: variables.$font-weight-bolder
       )
     ),
     "font-size": (
       rfs: true,
       property: font-size,
       class: fs,
-      values: $font-sizes
+      values: variables.$font-sizes
     ),
     "letter-spacing": (
       property: letter-spacing,

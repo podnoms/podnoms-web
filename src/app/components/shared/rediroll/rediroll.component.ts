@@ -5,6 +5,7 @@ import { DOCUMENT } from '@angular/common';
     selector: 'app-rediroll',
     templateUrl: './rediroll.component.html',
     styleUrls: ['./rediroll.component.scss'],
+    standalone: false
 })
 export class RedirollComponent implements OnInit {
     constructor(@Inject(DOCUMENT) private document: Document) {}

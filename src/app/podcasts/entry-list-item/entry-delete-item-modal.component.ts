@@ -3,16 +3,16 @@ import { Input, Component } from '@angular/core';
 import { PodcastEntry } from 'app/core';
 
 @Component({
-  selector: 'app-entry-delete-modal-content',
-  styles: [
-    `
+    selector: 'app-entry-delete-modal-content',
+    styles: [
+        `
       .modal-entry-image {
         width: 64px;
         height: 64px;
       }
     `,
-  ],
-  template: `
+    ],
+    template: `
     <div class="block block-themed  mb-0">
       <div class="block-header">
         <h3 class="block-title">Delete this episode?</h3>
@@ -73,6 +73,7 @@ import { PodcastEntry } from 'app/core';
       </div>
     </div>
   `,
+    standalone: false
 })
 export class EntryDeleteItemModalComponent {
   @Input() public entry: PodcastEntry;

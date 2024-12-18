@@ -1,3 +1,7 @@
+@use "../bootstrap/mixins/breakpoints";
+@use "../bootstrap/variables";
+@use "variables-bootstrap";
+
 //
 // Dropdown
 // --------------------------------------------------
@@ -5,7 +9,7 @@
 .dropdown-menu {
   padding-right: .5rem;
   padding-left: .5rem;
-  box-shadow: $dropdown-box-shadow;
+  box-shadow: variables.$dropdown-box-shadow;
 
   &.dropdown-menu-md {
     min-width: 200px;
@@ -17,7 +21,7 @@
     min-width: 300px;
   }
 
-  @include media-breakpoint-up(xl) {
+  @include breakpoints.media-breakpoint-up(xl) {
     &.dropdown-menu-xl {
       min-width: 450px;
     }
@@ -30,9 +34,9 @@
 
 .dropdown-item {
   margin-bottom: .25rem;
-  border-radius: $border-radius;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
+  border-radius: variables.$border-radius;
+  font-size: variables.$font-size-sm;
+  font-weight: variables-bootstrap.$font-weight-medium;
 }
 
 .dropdown-header {

@@ -43,6 +43,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         </div>
     `,
     styles: [``],
+    standalone: false
 })
 export class NotificationItemDeleteComponent {
     constructor(public modal: NgbActiveModal) {}

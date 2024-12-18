@@ -1,3 +1,5 @@
+@use "../bootstrap/variables";
+
 //
 // Bootstrap Datepicker
 //
@@ -5,7 +7,7 @@
 // --------------------------------------------------
 
 .datepicker {
-  z-index: $zindex-modal + 1 !important;
+  z-index: variables.$zindex-modal + 1 !important;
 }
 
 .datepicker table thead th,
@@ -61,6 +63,6 @@
 .open .dropdown-toggle.datepicker table tr td span.active:hover,
 .open .dropdown-toggle.datepicker table tr td span.active.disabled,
 .open .dropdown-toggle.datepicker table tr td span.active.disabled:hover {
-  background-color: $primary;
-  border-color: $primary;
+  background-color: variables.$primary;
+  border-color: variables.$primary;
 }

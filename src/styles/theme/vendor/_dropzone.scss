@@ -1,3 +1,6 @@
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "../codebase/variables" as codebase-variables;
+
 //
 // DropzoneJS
 //
@@ -6,24 +9,24 @@
 
 .dropzone {
   min-height: 200px;
-  background-color: $body-bg-light;
-  border: .125rem dashed $input-border-color;
-  border-radius: $border-radius-lg;
+  background-color: codebase-variables.$body-bg-light;
+  border: .125rem dashed bootstrap-variables.$input-border-color;
+  border-radius: bootstrap-variables.$border-radius-lg;
 
   .dz-message {
     margin: 4rem 0;
     font-size: 1rem;
     font-style: italic;
-    font-weight: $font-weight-bold;
-    color: $body-color;
+    font-weight: bootstrap-variables.$font-weight-bold;
+    color: bootstrap-variables.$body-color;
   }
 
   &:hover {
-    background-color: $white;
-    border-color: $primary;
+    background-color: bootstrap-variables.$white;
+    border-color: bootstrap-variables.$primary;
 
     .dz-message {
-      color: $primary;
+      color: bootstrap-variables.$primary;
     }
   }
 }

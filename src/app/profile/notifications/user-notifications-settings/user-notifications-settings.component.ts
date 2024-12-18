@@ -8,6 +8,7 @@ import { NotificationTypes } from './notification-types.enum';
     selector: 'app-user-notifications-settings',
     templateUrl: './user-notifications-settings.component.html',
     styleUrls: ['./user-notifications-settings.component.scss'],
+    standalone: false
 })
 export class UserNotificationsSettingsComponent {
     notificationTypes = NotificationTypes;

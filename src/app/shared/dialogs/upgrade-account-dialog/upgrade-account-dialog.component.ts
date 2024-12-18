@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     selector: 'app-upgrade-account-dialog',
     templateUrl: './upgrade-account-dialog.component.html',
     styleUrls: ['./upgrade-account-dialog.component.scss'],
+    standalone: false
 })
 export class UpgradeAccountDialogComponent {
     @Input() public extraText: string;

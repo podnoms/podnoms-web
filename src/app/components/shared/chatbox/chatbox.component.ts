@@ -19,6 +19,7 @@ import { map } from 'rxjs/operators';
     selector: 'app-chatbox',
     templateUrl: './chatbox.component.html',
     styleUrls: ['./chatbox.component.scss'],
+    standalone: false
 })
 export class ChatboxComponent implements OnInit, OnChanges {
     anonName: string = '';

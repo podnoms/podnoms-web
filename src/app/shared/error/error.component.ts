@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-print-error',
-  templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss'],
+    selector: 'app-print-error',
+    templateUrl: './error.component.html',
+    styleUrls: ['./error.component.scss'],
+    standalone: false
 })
 export class ErrorComponent implements AfterViewInit {
   @Input()

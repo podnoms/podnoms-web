@@ -17,9 +17,10 @@ import { BasePageComponent } from 'app/shared/components/base-page/base-page.com
 import { DataServiceError } from '@ngrx/data';
 
 @Component({
-  selector: 'app-podcast',
-  templateUrl: './podcast.component.html',
-  styleUrls: ['./podcast.component.scss'],
+    selector: 'app-podcast',
+    templateUrl: './podcast.component.html',
+    styleUrls: ['./podcast.component.scss'],
+    standalone: false
 })
 export class PodcastComponent
   extends BasePageComponent

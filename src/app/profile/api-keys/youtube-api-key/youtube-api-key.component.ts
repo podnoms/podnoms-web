@@ -13,6 +13,7 @@ import { BasePageComponent } from '../../../shared/components/base-page/base-pag
     selector: 'app-youtube-api-key',
     templateUrl: './youtube-api-key.component.html',
     styleUrls: ['./youtube-api-key.component.scss'],
+    standalone: false
 })
 export class YoutubeApiKeyComponent extends BasePageComponent {
     public keyForm: UntypedFormGroup;

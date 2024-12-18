@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: 'img[appImgFallback]',
+    selector: 'img[appImgFallback]',
+    standalone: false
 })
 export class ImgFallbackDirective {
   @Input() appImageFallback: string;
@@ -17,6 +18,6 @@ export class ImgFallbackDirective {
   @HostListener('error')
   loadFallbackOnError() {
     const el: HTMLImageElement = <HTMLImageElement>this.ref.nativeElement;
-    el.src = this.appImageFallback || 'https://placekitten.com/64/64';
+    el.src = this.appImageFallback || 'https://picsum.photos/64/64';
   }
 }

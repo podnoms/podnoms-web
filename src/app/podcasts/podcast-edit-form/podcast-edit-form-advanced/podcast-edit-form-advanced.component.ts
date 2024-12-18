@@ -11,9 +11,10 @@ import { Observable, Observer } from 'rxjs';
 import { ConstantsService } from '../../../shared/services/constants.service';
 
 @Component({
-  selector: 'app-podcast-edit-form-advanced',
-  templateUrl: './podcast-edit-form-advanced.component.html',
-  styleUrls: ['./podcast-edit-form-advanced.component.scss'],
+    selector: 'app-podcast-edit-form-advanced',
+    templateUrl: './podcast-edit-form-advanced.component.html',
+    styleUrls: ['./podcast-edit-form-advanced.component.scss'],
+    standalone: false
 })
 export class PodcastEditFormAdvancedComponent implements AfterViewInit {
   @Input()

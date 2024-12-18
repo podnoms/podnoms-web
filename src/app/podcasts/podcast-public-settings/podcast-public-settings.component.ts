@@ -22,10 +22,11 @@ import { ConstantsService } from 'app/shared/services/constants.service';
 import { RequiredIfValidator } from 'app/shared/validators/required-if.validator';
 
 @Component({
-  selector: 'app-podcast-public-settings',
-  changeDetection: ChangeDetectionStrategy.Default,
-  templateUrl: './podcast-public-settings.component.html',
-  styleUrls: ['./podcast-public-settings.component.scss'],
+    selector: 'app-podcast-public-settings',
+    changeDetection: ChangeDetectionStrategy.Default,
+    templateUrl: './podcast-public-settings.component.html',
+    styleUrls: ['./podcast-public-settings.component.scss'],
+    standalone: false
 })
 export class PodcastPublicSettingsComponent implements AfterViewInit {
   @Input()

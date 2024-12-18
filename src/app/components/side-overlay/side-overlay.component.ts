@@ -9,7 +9,8 @@ import { AlertService } from 'app/core/alerts/alert.service';
 @Component({
     selector: 'app-side-overlay',
     templateUrl: './side-overlay.component.html',
-    styleUrls: ['./side-overlay.component.scss']
+    styleUrls: ['./side-overlay.component.scss'],
+    standalone: false
 })
 export class SideOverlayComponent implements OnInit {
     @Input() profile: Profile;

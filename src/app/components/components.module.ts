@@ -49,7 +49,6 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     LoggerModule.forRoot(environment.logConfig),
     NgScrollbarModule,
     HighlightModule,
-    OrderModule,
   ],
   providers: [
     PodcastStoreService,

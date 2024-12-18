@@ -1,19 +1,18 @@
-FROM node:16.13.2-buster as builder
+FROM node:22 AS builder
 # RUN npm install -g yarn --force
+RUN npm install -g bun
+RUN npm install -g @angular/cli
 
 WORKDIR /app
 COPY package.json package.json
-COPY yarn.lock yarn.lock
-RUN yarn install --frozen-lockfile
+COPY bun.lockb bun.lockb
+RUN bun install
 COPY . .
 
-RUN yarn global add @angular/cli
 RUN ng build --configuration=production
 
-FROM nginx:1.21.6
+FROM nginx:1.27.3-alpine
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder  /app/dist/app/ /app
-RUN chown www-data:www-data /app -R && \
-    chmod 755 /app -R
 CMD nginx -g 'daemon off;'

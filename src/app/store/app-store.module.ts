@@ -23,7 +23,7 @@ import { LoggerModule } from 'ngx-logger';
             }
         ),
         EffectsModule.forRoot([]),
-        environment.production ? [] : StoreDevtoolsModule.instrument(),
+        environment.production ? [] : StoreDevtoolsModule.instrument({connectInZone: true}),
         EntityStoreModule,
         LoggerModule.forRoot(environment.logConfig),
     ],

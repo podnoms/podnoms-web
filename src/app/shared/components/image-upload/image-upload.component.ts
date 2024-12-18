@@ -9,6 +9,7 @@ import { ImageService } from '../../services/image.service';
     selector: 'app-image-upload',
     templateUrl: './image-upload.component.html',
     styleUrls: ['./image-upload.component.scss'],
+    standalone: false
 })
 export class ImageUploadComponent implements OnInit {
     private _imageFileBuffer: File;
