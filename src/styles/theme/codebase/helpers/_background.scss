@@ -1,3 +1,10 @@
+@use "sass:color";
+@use "../../bootstrap/mixins/breakpoints";
+@use "../../bootstrap/variables" as bootstrap-variables;
+@use "../mixins/background-variant";
+@use "../variables" as codebase-variables;
+@use "../variables-themes";
+
 //
 // Background
 // --------------------------------------------------
@@ -66,7 +73,7 @@
     background-position-y: 100%;
   }
 
-  @include media-breakpoint-up(xl) {
+  @include breakpoints.media-breakpoint-up(xl) {
     &-fixed {
       background-attachment: fixed;
     }
@@ -85,126 +92,126 @@
 }
 
 // Contextual colors
-@include bg-variant('.bg-primary-op', rgba($primary, .75));
-@include bg-variant(".bg-primary", $primary);
-@include bg-variant('.bg-primary-dark', $primary-dark);
-@include bg-variant('.bg-primary-dark-op', rgba($primary-dark, .8));
-@include bg-variant('.bg-primary-darker', $primary-darker);
-@include bg-variant('.bg-primary-light', $primary-light);
-@include bg-variant('.bg-primary-lighter', $primary-lighter);
+@include background-variant.bg-variant('.bg-primary-op', rgba(bootstrap-variables.$primary, .75));
+@include background-variant.bg-variant(".bg-primary", bootstrap-variables.$primary);
+@include background-variant.bg-variant('.bg-primary-dark', codebase-variables.$primary-dark);
+@include background-variant.bg-variant('.bg-primary-dark-op', rgba(codebase-variables.$primary-dark, .8));
+@include background-variant.bg-variant('.bg-primary-darker', codebase-variables.$primary-darker);
+@include background-variant.bg-variant('.bg-primary-light', codebase-variables.$primary-light);
+@include background-variant.bg-variant('.bg-primary-lighter', codebase-variables.$primary-lighter);
 
-@include bg-variant(".bg-success", $success);
-@include bg-variant(".bg-success-light", $success-light);
-@include bg-variant(".bg-warning", $warning);
-@include bg-variant(".bg-warning-light", $warning-light);
-@include bg-variant(".bg-info", $info);
-@include bg-variant(".bg-info-light", $info-light);
-@include bg-variant(".bg-danger", $danger);
-@include bg-variant(".bg-danger-light", $danger-light);
+@include background-variant.bg-variant(".bg-success", bootstrap-variables.$success);
+@include background-variant.bg-variant(".bg-success-light", codebase-variables.$success-light);
+@include background-variant.bg-variant(".bg-warning", bootstrap-variables.$warning);
+@include background-variant.bg-variant(".bg-warning-light", codebase-variables.$warning-light);
+@include background-variant.bg-variant(".bg-info", bootstrap-variables.$info);
+@include background-variant.bg-variant(".bg-info-light", codebase-variables.$info-light);
+@include background-variant.bg-variant(".bg-danger", bootstrap-variables.$danger);
+@include background-variant.bg-variant(".bg-danger-light", codebase-variables.$danger-light);
 
-@include bg-variant(".bg-success-op", rgba($success-light, 0.95));
-@include bg-variant(".bg-warning-op", rgba($warning-light, 0.95));
-@include bg-variant(".bg-info-op", rgba($info-light, 0.95));
-@include bg-variant(".bg-danger-op ", rgba($danger-light, 0.95));
+@include background-variant.bg-variant(".bg-success-op", rgba(codebase-variables.$success-light, 0.95));
+@include background-variant.bg-variant(".bg-warning-op", rgba(codebase-variables.$warning-light, 0.95));
+@include background-variant.bg-variant(".bg-info-op", rgba(codebase-variables.$info-light, 0.95));
+@include background-variant.bg-variant(".bg-danger-op ", rgba(codebase-variables.$danger-light, 0.95));
 
-@include bg-variant(".bg-body", $body-bg);
-@include bg-variant(".bg-body-light", $body-bg-light);
-@include bg-variant(".bg-body-dark", $body-bg-dark);
-@include bg-variant(".bg-body-extra-light", $white);
-@include bg-variant(".bg-muted", $gray-600);
+@include background-variant.bg-variant(".bg-body", bootstrap-variables.$body-bg);
+@include background-variant.bg-variant(".bg-body-light", codebase-variables.$body-bg-light);
+@include background-variant.bg-variant(".bg-body-dark", codebase-variables.$body-bg-dark);
+@include background-variant.bg-variant(".bg-body-extra-light", bootstrap-variables.$white);
+@include background-variant.bg-variant(".bg-muted", bootstrap-variables.$gray-600);
 
-@include bg-variant('.bg-white', $white);
-@include bg-variant('.bg-black', $black);
+@include background-variant.bg-variant('.bg-white', bootstrap-variables.$white);
+@include background-variant.bg-variant('.bg-black', bootstrap-variables.$black);
 
-@include bg-variant(".bg-gray", $gray-400);
-@include bg-variant(".bg-gray-dark", $gray-600);
-@include bg-variant(".bg-gray-darker", $gray-800);
-@include bg-variant(".bg-gray-light", $gray-200);
-@include bg-variant(".bg-gray-lighter", $gray-100);
+@include background-variant.bg-variant(".bg-gray", bootstrap-variables.$gray-400);
+@include background-variant.bg-variant(".bg-gray-dark", bootstrap-variables.$gray-600);
+@include background-variant.bg-variant(".bg-gray-darker", bootstrap-variables.$gray-800);
+@include background-variant.bg-variant(".bg-gray-light", bootstrap-variables.$gray-200);
+@include background-variant.bg-variant(".bg-gray-lighter", bootstrap-variables.$gray-100);
 
 // Elements
-@include bg-variant('.bg-header-light', $header-bg);
-@include bg-variant('.bg-header-dark', $header-dark-bg);
+@include background-variant.bg-variant('.bg-header-light', codebase-variables.$header-bg);
+@include background-variant.bg-variant('.bg-header-dark', codebase-variables.$header-dark-bg);
 
-@include bg-variant('.bg-sidebar-light', $sidebar-bg);
-@include bg-variant('.bg-sidebar-dark', $sidebar-dark-bg);
+@include background-variant.bg-variant('.bg-sidebar-light', codebase-variables.$sidebar-bg);
+@include background-variant.bg-variant('.bg-sidebar-dark', codebase-variables.$sidebar-dark-bg);
 
 // Gradients
-@include bg-gradient-variant('.bg-gd-primary', 135deg, darken($primary, 15%), lighten($primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-primary', 135deg, color.adjust(bootstrap-variables.$primary, $lightness: -15%), color.adjust(bootstrap-variables.$primary, $lightness: 5%));
 
-@include bg-gradient-variant('.bg-gd-dusk', 135deg, $theme-elegance-primary, $primary);
-@include bg-gradient-variant('.bg-gd-cherry', 135deg, lighten($theme-pulse-primary, 5%), darken($theme-pulse-primary, 10%));
-@include bg-gradient-variant('.bg-gd-aqua', 135deg, $theme-corporate-primary, $theme-flat-primary);
-@include bg-gradient-variant('.bg-gd-emerald', 135deg, $theme-earth-primary, $theme-corporate-primary);
-@include bg-gradient-variant('.bg-gd-sea', 135deg, darken($primary, 7%), $info);
-@include bg-gradient-variant('.bg-gd-leaf', 135deg, $warning, $success);
-@include bg-gradient-variant('.bg-gd-lake', 135deg, $info, $success);
-@include bg-gradient-variant('.bg-gd-sun', 135deg, $danger, $warning);
+@include background-variant.bg-gradient-variant('.bg-gd-dusk', 135deg, variables-themes.$theme-elegance-primary, bootstrap-variables.$primary);
+@include background-variant.bg-gradient-variant('.bg-gd-cherry', 135deg, color.adjust(variables-themes.$theme-pulse-primary, $lightness: 5%), color.adjust(variables-themes.$theme-pulse-primary, $lightness: -10%));
+@include background-variant.bg-gradient-variant('.bg-gd-aqua', 135deg, variables-themes.$theme-corporate-primary, variables-themes.$theme-flat-primary);
+@include background-variant.bg-gradient-variant('.bg-gd-emerald', 135deg, variables-themes.$theme-earth-primary, variables-themes.$theme-corporate-primary);
+@include background-variant.bg-gradient-variant('.bg-gd-sea', 135deg, color.adjust(bootstrap-variables.$primary, $lightness: -7%), bootstrap-variables.$info);
+@include background-variant.bg-gradient-variant('.bg-gd-leaf', 135deg, bootstrap-variables.$warning, bootstrap-variables.$success);
+@include background-variant.bg-gradient-variant('.bg-gd-lake', 135deg, bootstrap-variables.$info, bootstrap-variables.$success);
+@include background-variant.bg-gradient-variant('.bg-gd-sun', 135deg, bootstrap-variables.$danger, bootstrap-variables.$warning);
 
-@include bg-gradient-variant('.bg-gd-light', 0deg, $body-bg-light, $white);
+@include background-variant.bg-gradient-variant('.bg-gd-light', 0deg, codebase-variables.$body-bg-light, bootstrap-variables.$white);
 
 // Default Color Theme
-@include bg-variant('.bg-default', $primary);
-@include bg-variant('.bg-default-op', rgba($primary, .75));
-@include bg-variant('.bg-default-dark', $primary-dark);
-@include bg-variant('.bg-default-dark-op', rgba($primary-dark, .83));
-@include bg-variant('.bg-default-darker', $primary-darker);
-@include bg-variant('.bg-default-light', $primary-light);
-@include bg-variant('.bg-default-lighter', $primary-lighter);
+@include background-variant.bg-variant('.bg-default', bootstrap-variables.$primary);
+@include background-variant.bg-variant('.bg-default-op', rgba(bootstrap-variables.$primary, .75));
+@include background-variant.bg-variant('.bg-default-dark', codebase-variables.$primary-dark);
+@include background-variant.bg-variant('.bg-default-dark-op', rgba(codebase-variables.$primary-dark, .83));
+@include background-variant.bg-variant('.bg-default-darker', codebase-variables.$primary-darker);
+@include background-variant.bg-variant('.bg-default-light', codebase-variables.$primary-light);
+@include background-variant.bg-variant('.bg-default-lighter', codebase-variables.$primary-lighter);
 
-@include bg-gradient-variant('.bg-gd-default', 135deg, darken($primary, 15%), lighten($primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-default', 135deg, color.adjust(bootstrap-variables.$primary, $lightness: -15%), color.adjust(bootstrap-variables.$primary, $lightness: 5%));
 
 // Elegance Color Theme
-@include bg-variant('.bg-elegance', $theme-elegance-primary);
-@include bg-variant('.bg-elegance-op', rgba($theme-elegance-primary, .75));
-@include bg-variant('.bg-elegance-dark', $theme-elegance-dark);
-@include bg-variant('.bg-elegance-dark-op', rgba($theme-elegance-dark, .83));
-@include bg-variant('.bg-elegance-darker', $theme-elegance-darker);
-@include bg-variant('.bg-elegance-light', $theme-elegance-light);
-@include bg-variant('.bg-elegance-lighter', $theme-elegance-lighter);
+@include background-variant.bg-variant('.bg-elegance', variables-themes.$theme-elegance-primary);
+@include background-variant.bg-variant('.bg-elegance-op', rgba(variables-themes.$theme-elegance-primary, .75));
+@include background-variant.bg-variant('.bg-elegance-dark', variables-themes.$theme-elegance-dark);
+@include background-variant.bg-variant('.bg-elegance-dark-op', rgba(variables-themes.$theme-elegance-dark, .83));
+@include background-variant.bg-variant('.bg-elegance-darker', variables-themes.$theme-elegance-darker);
+@include background-variant.bg-variant('.bg-elegance-light', variables-themes.$theme-elegance-light);
+@include background-variant.bg-variant('.bg-elegance-lighter', variables-themes.$theme-elegance-lighter);
 
-@include bg-gradient-variant('.bg-gd-elegance', 135deg, darken($theme-elegance-primary, 15%), lighten($theme-elegance-primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-elegance', 135deg, color.adjust(variables-themes.$theme-elegance-primary, $lightness: -15%), color.adjust(variables-themes.$theme-elegance-primary, $lightness: 5%));
 
 // Pulse Color Theme
-@include bg-variant('.bg-pulse', $theme-pulse-primary);
-@include bg-variant('.bg-pulse-op', rgba($theme-pulse-primary, .75));
-@include bg-variant('.bg-pulse-dark', $theme-pulse-dark);
-@include bg-variant('.bg-pulse-dark-op', rgba($theme-pulse-dark, .83));
-@include bg-variant('.bg-pulse-darker', $theme-pulse-darker);
-@include bg-variant('.bg-pulse-light', $theme-pulse-light);
-@include bg-variant('.bg-pulse-lighter', $theme-pulse-lighter);
+@include background-variant.bg-variant('.bg-pulse', variables-themes.$theme-pulse-primary);
+@include background-variant.bg-variant('.bg-pulse-op', rgba(variables-themes.$theme-pulse-primary, .75));
+@include background-variant.bg-variant('.bg-pulse-dark', variables-themes.$theme-pulse-dark);
+@include background-variant.bg-variant('.bg-pulse-dark-op', rgba(variables-themes.$theme-pulse-dark, .83));
+@include background-variant.bg-variant('.bg-pulse-darker', variables-themes.$theme-pulse-darker);
+@include background-variant.bg-variant('.bg-pulse-light', variables-themes.$theme-pulse-light);
+@include background-variant.bg-variant('.bg-pulse-lighter', variables-themes.$theme-pulse-lighter);
 
-@include bg-gradient-variant('.bg-gd-pulse', 135deg, darken($theme-pulse-primary, 15%), lighten($theme-pulse-primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-pulse', 135deg, color.adjust(variables-themes.$theme-pulse-primary, $lightness: -15%), color.adjust(variables-themes.$theme-pulse-primary, $lightness: 5%));
 
 // Flat Color Theme
-@include bg-variant('.bg-flat', $theme-flat-primary);
-@include bg-variant('.bg-flat-op', rgba($theme-flat-primary, .75));
-@include bg-variant('.bg-flat-dark', $theme-flat-dark);
-@include bg-variant('.bg-flat-dark-op', rgba($theme-flat-dark, .83));
-@include bg-variant('.bg-flat-darker', $theme-flat-darker);
-@include bg-variant('.bg-flat-light', $theme-flat-light);
-@include bg-variant('.bg-flat-lighter', $theme-flat-lighter);
+@include background-variant.bg-variant('.bg-flat', variables-themes.$theme-flat-primary);
+@include background-variant.bg-variant('.bg-flat-op', rgba(variables-themes.$theme-flat-primary, .75));
+@include background-variant.bg-variant('.bg-flat-dark', variables-themes.$theme-flat-dark);
+@include background-variant.bg-variant('.bg-flat-dark-op', rgba(variables-themes.$theme-flat-dark, .83));
+@include background-variant.bg-variant('.bg-flat-darker', variables-themes.$theme-flat-darker);
+@include background-variant.bg-variant('.bg-flat-light', variables-themes.$theme-flat-light);
+@include background-variant.bg-variant('.bg-flat-lighter', variables-themes.$theme-flat-lighter);
 
-@include bg-gradient-variant('.bg-gd-flat', 135deg, darken($theme-flat-primary, 15%), lighten($theme-flat-primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-flat', 135deg, color.adjust(variables-themes.$theme-flat-primary, $lightness: -15%), color.adjust(variables-themes.$theme-flat-primary, $lightness: 5%));
 
 // Corporate Color Theme
-@include bg-variant('.bg-corporate', $theme-corporate-primary);
-@include bg-variant('.bg-corporate-op', rgba($theme-corporate-primary, .75));
-@include bg-variant('.bg-corporate-dark', $theme-corporate-dark);
-@include bg-variant('.bg-corporate-dark-op', rgba($theme-corporate-dark, .83));
-@include bg-variant('.bg-corporate-darker', $theme-corporate-darker);
-@include bg-variant('.bg-corporate-light', $theme-corporate-light);
-@include bg-variant('.bg-corporate-lighter', $theme-corporate-lighter);
+@include background-variant.bg-variant('.bg-corporate', variables-themes.$theme-corporate-primary);
+@include background-variant.bg-variant('.bg-corporate-op', rgba(variables-themes.$theme-corporate-primary, .75));
+@include background-variant.bg-variant('.bg-corporate-dark', variables-themes.$theme-corporate-dark);
+@include background-variant.bg-variant('.bg-corporate-dark-op', rgba(variables-themes.$theme-corporate-dark, .83));
+@include background-variant.bg-variant('.bg-corporate-darker', variables-themes.$theme-corporate-darker);
+@include background-variant.bg-variant('.bg-corporate-light', variables-themes.$theme-corporate-light);
+@include background-variant.bg-variant('.bg-corporate-lighter', variables-themes.$theme-corporate-lighter);
 
-@include bg-gradient-variant('.bg-gd-corporate', 135deg, darken($theme-corporate-primary, 15%), lighten($theme-corporate-primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-corporate', 135deg, color.adjust(variables-themes.$theme-corporate-primary, $lightness: -15%), color.adjust(variables-themes.$theme-corporate-primary, $lightness: 5%));
 
 // Earth Color Theme
-@include bg-variant('.bg-earth', $theme-earth-primary);
-@include bg-variant('.bg-earth-op', rgba($theme-earth-primary, .75));
-@include bg-variant('.bg-earth-dark', $theme-earth-dark);
-@include bg-variant('.bg-earth-dark-op', rgba($theme-earth-dark, .83));
-@include bg-variant('.bg-earth-darker', $theme-earth-darker);
-@include bg-variant('.bg-earth-light', $theme-earth-light);
-@include bg-variant('.bg-earth-lighter', $theme-earth-lighter);
+@include background-variant.bg-variant('.bg-earth', variables-themes.$theme-earth-primary);
+@include background-variant.bg-variant('.bg-earth-op', rgba(variables-themes.$theme-earth-primary, .75));
+@include background-variant.bg-variant('.bg-earth-dark', variables-themes.$theme-earth-dark);
+@include background-variant.bg-variant('.bg-earth-dark-op', rgba(variables-themes.$theme-earth-dark, .83));
+@include background-variant.bg-variant('.bg-earth-darker', variables-themes.$theme-earth-darker);
+@include background-variant.bg-variant('.bg-earth-light', variables-themes.$theme-earth-light);
+@include background-variant.bg-variant('.bg-earth-lighter', variables-themes.$theme-earth-lighter);
 
-@include bg-gradient-variant('.bg-gd-earth', 135deg, darken($theme-earth-primary, 15%), lighten($theme-earth-primary, 5%));
+@include background-variant.bg-gradient-variant('.bg-gd-earth', 135deg, color.adjust(variables-themes.$theme-earth-primary, $lightness: -15%), color.adjust(variables-themes.$theme-earth-primary, $lightness: 5%));

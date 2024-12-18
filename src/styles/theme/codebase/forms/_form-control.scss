@@ -1,40 +1,44 @@
+@use "sass:color";
+@use "../../bootstrap/variables" as bootstrap-variables;
+@use "../variables" as codebase-variables;
+
 //
 // Textual form controls
 //
 
 .form-control {
-  font-family: $font-family-base;
+  font-family: bootstrap-variables.$font-family-base;
 
   // Alternative Style
   &.form-control-alt {
-    border-color: $body-bg;
-    background-color: $body-bg;
+    border-color: bootstrap-variables.$body-bg;
+    background-color: bootstrap-variables.$body-bg;
     transition: none;
 
     &:focus {
-      border-color: $body-bg-dark;
-      background-color: $body-bg-dark;
+      border-color: codebase-variables.$body-bg-dark;
+      background-color: codebase-variables.$body-bg-dark;
       box-shadow: none;
     }
 
     &.is-valid {
-      border-color: $success-light;
-      background-color: $success-light;
+      border-color: codebase-variables.$success-light;
+      background-color: codebase-variables.$success-light;
 
       &:focus {
-        border-color: darken($success-light, 5%);
-        background-color: darken($success-light, 5%);
+        border-color: color.adjust(codebase-variables.$success-light, $lightness: -5%);
+        background-color: color.adjust(codebase-variables.$success-light, $lightness: -5%);
       }
     }
 
     &.is-invalid {
-      border-color: $danger-light;
-      background-color: $danger-light;
+      border-color: codebase-variables.$danger-light;
+      background-color: codebase-variables.$danger-light;
 
 
       &:focus {
-        border-color: darken($danger-light, 5%);
-        background-color: darken($danger-light, 5%);
+        border-color: color.adjust(codebase-variables.$danger-light, $lightness: -5%);
+        background-color: color.adjust(codebase-variables.$danger-light, $lightness: -5%);
       }
     }
   }

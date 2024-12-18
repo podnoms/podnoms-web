@@ -1,3 +1,5 @@
+@use "../bootstrap/variables";
+
 //
 // Ion Range Slider
 //
@@ -14,23 +16,23 @@
   .irs-max,
   .irs-line,
   .irs-grid-pol {
-    background: $body-bg;
+    background: variables.$body-bg;
   }
 
   .irs-handle {
-    border-color: $primary;
+    border-color: variables.$primary;
   }
 
   .irs-from:before,
   .irs-to:before,
   .irs-single:before {
-    border-top-color: $primary;
+    border-top-color: variables.$primary;
   }
 
   .irs-bar,
   .irs-from,
   .irs-to,
   .irs-single {
-    background: $primary;
+    background: variables.$primary;
   }
 }

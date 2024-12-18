@@ -1,3 +1,6 @@
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "../codebase/variables" as codebase-variables;
+
 //
 // Slick
 //
@@ -27,7 +30,7 @@
 
   &.slick-dotted.slick-dotted-white {
     .slick-dots li button::before {
-      color: $white;
+      color: bootstrap-variables.$white;
     }
   }
 
@@ -48,7 +51,7 @@
       font-weight: 600;
       font-size: 28px;
       line-height: 28px;
-      color: $primary-dark;
+      color: codebase-variables.$primary-dark;
     }
   }
 
@@ -78,7 +81,7 @@
       }
 
       &:before {
-        color: $black;
+        color: bootstrap-variables.$black;
       }
     }
   }
@@ -93,7 +96,7 @@
       }
 
       &::before {
-        color: $white;
+        color: bootstrap-variables.$white;
       }
     }
   }

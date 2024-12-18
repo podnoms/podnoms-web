@@ -1,10 +1,13 @@
+@use "../mixins/transition";
+@use "../variables";
+
 .form-floating {
   position: relative;
 
   > .form-control,
   > .form-select {
-    height: $form-floating-height;
-    line-height: $form-floating-line-height;
+    height: variables.$form-floating-height;
+    line-height: variables.$form-floating-line-height;
   }
 
   > label {
@@ -12,16 +15,16 @@
     top: 0;
     left: 0;
     height: 100%; // allow textareas
-    padding: $form-floating-padding-y $form-floating-padding-x;
+    padding: variables.$form-floating-padding-y variables.$form-floating-padding-x;
     pointer-events: none;
-    border: $input-border-width solid transparent; // Required for aligning label's text with the input as it affects inner box model
+    border: variables.$input-border-width solid transparent; // Required for aligning label's text with the input as it affects inner box model
     transform-origin: 0 0;
-    @include transition($form-floating-transition);
+    @include transition.transition(variables.$form-floating-transition);
   }
 
   // stylelint-disable no-duplicate-selectors
   > .form-control {
-    padding: $form-floating-padding-y $form-floating-padding-x;
+    padding: variables.$form-floating-padding-y variables.$form-floating-padding-x;
 
     &::placeholder {
       color: transparent;
@@ -29,34 +32,34 @@
 
     &:focus,
     &:not(:placeholder-shown) {
-      padding-top: $form-floating-input-padding-t;
-      padding-bottom: $form-floating-input-padding-b;
+      padding-top: variables.$form-floating-input-padding-t;
+      padding-bottom: variables.$form-floating-input-padding-b;
     }
     // Duplicated because `:-webkit-autofill` invalidates other selectors when grouped
     &:-webkit-autofill {
-      padding-top: $form-floating-input-padding-t;
-      padding-bottom: $form-floating-input-padding-b;
+      padding-top: variables.$form-floating-input-padding-t;
+      padding-bottom: variables.$form-floating-input-padding-b;
     }
   }
 
   > .form-select {
-    padding-top: $form-floating-input-padding-t;
-    padding-bottom: $form-floating-input-padding-b;
+    padding-top: variables.$form-floating-input-padding-t;
+    padding-bottom: variables.$form-floating-input-padding-b;
   }
 
   > .form-control:focus,
   > .form-control:not(:placeholder-shown),
   > .form-select {
     ~ label {
-      opacity: $form-floating-label-opacity;
-      transform: $form-floating-label-transform;
+      opacity: variables.$form-floating-label-opacity;
+      transform: variables.$form-floating-label-transform;
     }
   }
   // Duplicated because `:-webkit-autofill` invalidates other selectors when grouped
   > .form-control:-webkit-autofill {
     ~ label {
-      opacity: $form-floating-label-opacity;
-      transform: $form-floating-label-transform;
+      opacity: variables.$form-floating-label-opacity;
+      transform: variables.$form-floating-label-transform;
     }
   }
   // stylelint-enable no-duplicate-selectors

@@ -1,3 +1,7 @@
+@use "sass:meta";
+@use "functions";
+@use "variables";
+
 :root {
   // Note: Custom variable values only support SassScript inside `#{}`.
 
@@ -5,50 +9,50 @@
   //
   // Generate palettes for full colors, grays, and theme colors.
 
-  @each $color, $value in $colors {
-    --#{$variable-prefix}#{$color}: #{$value};
+  @each $color, $value in variables.$colors {
+    --#{variables.$variable-prefix}#{$color}: #{$value};
   }
 
-  @each $color, $value in $grays {
-    --#{$variable-prefix}gray-#{$color}: #{$value};
+  @each $color, $value in variables.$grays {
+    --#{variables.$variable-prefix}gray-#{$color}: #{$value};
   }
 
-  @each $color, $value in $theme-colors {
-    --#{$variable-prefix}#{$color}: #{$value};
+  @each $color, $value in variables.$theme-colors {
+    --#{variables.$variable-prefix}#{$color}: #{$value};
   }
 
-  @each $color, $value in $theme-colors-rgb {
-    --#{$variable-prefix}#{$color}-rgb: #{$value};
+  @each $color, $value in variables.$theme-colors-rgb {
+    --#{variables.$variable-prefix}#{$color}-rgb: #{$value};
   }
 
-  --#{$variable-prefix}white-rgb: #{to-rgb($white)};
-  --#{$variable-prefix}black-rgb: #{to-rgb($black)};
-  --#{$variable-prefix}body-color-rgb: #{to-rgb($body-color)};
-  --#{$variable-prefix}body-bg-rgb: #{to-rgb($body-bg)};
+  --#{variables.$variable-prefix}white-rgb: #{functions.to-rgb(variables.$white)};
+  --#{variables.$variable-prefix}black-rgb: #{functions.to-rgb(variables.$black)};
+  --#{variables.$variable-prefix}body-color-rgb: #{functions.to-rgb(variables.$body-color)};
+  --#{variables.$variable-prefix}body-bg-rgb: #{functions.to-rgb(variables.$body-bg)};
 
   // Fonts
 
   // Note: Use `inspect` for lists so that quoted items keep the quotes.
   // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
-  --#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
-  --#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
-  --#{$variable-prefix}gradient: #{$gradient};
+  --#{variables.$variable-prefix}font-sans-serif: #{meta.inspect(variables.$font-family-sans-serif)};
+  --#{variables.$variable-prefix}font-monospace: #{meta.inspect(variables.$font-family-monospace)};
+  --#{variables.$variable-prefix}gradient: #{variables.$gradient};
 
   // Root and body
   // stylelint-disable custom-property-empty-line-before
   // scss-docs-start root-body-variables
-  @if $font-size-root != null {
-    --#{$variable-prefix}root-font-size: #{$font-size-root};
+  @if variables.$font-size-root != null {
+    --#{variables.$variable-prefix}root-font-size: #{variables.$font-size-root};
   }
-  --#{$variable-prefix}body-font-family: #{$font-family-base};
-  --#{$variable-prefix}body-font-size: #{$font-size-base};
-  --#{$variable-prefix}body-font-weight: #{$font-weight-base};
-  --#{$variable-prefix}body-line-height: #{$line-height-base};
-  --#{$variable-prefix}body-color: #{$body-color};
-  @if $body-text-align != null {
-    --#{$variable-prefix}body-text-align: #{$body-text-align};
+  --#{variables.$variable-prefix}body-font-family: #{variables.$font-family-base};
+  --#{variables.$variable-prefix}body-font-size: #{variables.$font-size-base};
+  --#{variables.$variable-prefix}body-font-weight: #{variables.$font-weight-base};
+  --#{variables.$variable-prefix}body-line-height: #{variables.$line-height-base};
+  --#{variables.$variable-prefix}body-color: #{variables.$body-color};
+  @if variables.$body-text-align != null {
+    --#{variables.$variable-prefix}body-text-align: #{variables.$body-text-align};
   }
-  --#{$variable-prefix}body-bg: #{$body-bg};
+  --#{variables.$variable-prefix}body-bg: #{variables.$body-bg};
   // scss-docs-end root-body-variables
   // stylelint-enable custom-property-empty-line-before
 }

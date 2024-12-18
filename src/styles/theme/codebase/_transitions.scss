@@ -1,14 +1,17 @@
+@use "../bootstrap/mixins/transition";
+@use "../bootstrap/variables";
+
 //
 // Transitions
 // --------------------------------------------------
 
 .fade {
-  @include transition($transition-fade);
+  @include transition.transition(variables.$transition-fade);
 
   &.fade-up,
   &.fade-right,
   &.fade-left {
-    @include transition(opacity .25s ease-out, transform .25s ease-out);
+    @include transition.transition(opacity .25s ease-out, transform .25s ease-out);
   }
 
   &.fade-up:not(.show) {

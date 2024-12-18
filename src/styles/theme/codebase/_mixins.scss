@@ -3,11 +3,11 @@
 // --------------------------------------------------
 
 // Codebase mixins and Bootstrap overrides
-@import 'mixins/text-emphasis';
+@use 'mixins/text-emphasis';
 
 // Codebase mixins
-@import 'mixins/background-variant';
-@import 'mixins/content';
-@import 'mixins/theme';
-@import "mixins/theme-dark";
-@import 'mixins/ribbon';
+@use 'mixins/background-variant';
+@use 'mixins/content';
+@use 'mixins/theme';
+@use "mixins/theme-dark";
+@use 'mixins/ribbon';

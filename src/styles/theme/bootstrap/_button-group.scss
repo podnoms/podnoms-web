@@ -1,3 +1,7 @@
+@use "mixins/border-radius";
+@use "mixins/box-shadow";
+@use "variables";
+
 // Make the div behave like a button
 .btn-group,
 .btn-group-vertical {
@@ -37,13 +41,13 @@
   // Prevent double borders when buttons are next to each other
   > .btn:not(:first-child),
   > .btn-group:not(:first-child) {
-    margin-left: -$btn-border-width;
+    margin-left: -(variables.$btn-border-width);
   }
 
   // Reset rounded corners
   > .btn:not(:last-child):not(.dropdown-toggle),
   > .btn-group:not(:last-child) > .btn {
-    @include border-end-radius(0);
+    @include border-radius.border-end-radius(0);
   }
 
   // The left radius should be 0 if the button is:
@@ -53,7 +57,7 @@
   > .btn:nth-child(n + 3),
   > :not(.btn-check) + .btn,
   > .btn-group:not(:first-child) > .btn {
-    @include border-start-radius(0);
+    @include border-radius.border-start-radius(0);
   }
 }
 
@@ -70,8 +74,8 @@
 //
 
 .dropdown-toggle-split {
-  padding-right: $btn-padding-x * .75;
-  padding-left: $btn-padding-x * .75;
+  padding-right: variables.$btn-padding-x * .75;
+  padding-left: variables.$btn-padding-x * .75;
 
   &::after,
   .dropup &::after,
@@ -85,24 +89,24 @@
 }
 
 .btn-sm + .dropdown-toggle-split {
-  padding-right: $btn-padding-x-sm * .75;
-  padding-left: $btn-padding-x-sm * .75;
+  padding-right: variables.$btn-padding-x-sm * .75;
+  padding-left: variables.$btn-padding-x-sm * .75;
 }
 
 .btn-lg + .dropdown-toggle-split {
-  padding-right: $btn-padding-x-lg * .75;
-  padding-left: $btn-padding-x-lg * .75;
+  padding-right: variables.$btn-padding-x-lg * .75;
+  padding-left: variables.$btn-padding-x-lg * .75;
 }
 
 
 // The clickable button for toggling the menu
 // Set the same inset shadow as the :active state
 .btn-group.show .dropdown-toggle {
-  @include box-shadow($btn-active-box-shadow);
+  @include box-shadow.box-shadow(variables.$btn-active-box-shadow);
 
   // Show no shadow for `.btn-link` since it has no other button styles.
   &.btn-link {
-    @include box-shadow(none);
+    @include box-shadow.box-shadow(none);
   }
 }
 
@@ -123,17 +127,17 @@
 
   > .btn:not(:first-child),
   > .btn-group:not(:first-child) {
-    margin-top: -$btn-border-width;
+    margin-top: -(variables.$btn-border-width);
   }
 
   // Reset rounded corners
   > .btn:not(:last-child):not(.dropdown-toggle),
   > .btn-group:not(:last-child) > .btn {
-    @include border-bottom-radius(0);
+    @include border-radius.border-bottom-radius(0);
   }
 
   > .btn ~ .btn,
   > .btn-group:not(:first-child) > .btn {
-    @include border-top-radius(0);
+    @include border-radius.border-top-radius(0);
   }
 }

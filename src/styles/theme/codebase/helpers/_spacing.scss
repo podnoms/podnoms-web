@@ -1,14 +1,16 @@
+@use "../../bootstrap/variables";
+
 //
 // Spacing
 // --------------------------------------------------
 
-@each $name, $value in $spacers {
+@each $name, $value in variables.$spacers {
   .space-x-#{$name} > * + * {
     margin-left: $value;
   }
 }
 
-@each $name, $value in $spacers {
+@each $name, $value in variables.$spacers {
   .space-y-#{$name} > * + * {
     margin-top: $value;
   }

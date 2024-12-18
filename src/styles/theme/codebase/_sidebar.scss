@@ -1,3 +1,6 @@
+@use "../bootstrap/mixins/breakpoints";
+@use "variables";
+
 //
 // Sidebar
 // --------------------------------------------------
@@ -14,7 +17,7 @@
 
 .smini-show,
 .smini-hide {
-  transition: opacity $side-transition;
+  transition: opacity variables.$side-transition;
 }
 
 // Sidebar
@@ -23,17 +26,17 @@
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: $zindex-sidebar;
+  z-index: variables.$zindex-sidebar;
   width: 100%;
   height: 100%;
-  background-color: $sidebar-bg;
+  background-color: variables.$sidebar-bg;
   overflow-y: visible;
   transform: translateX(-100%) translateY(0) translateZ(0);
   -webkit-overflow-scrolling: touch;
   will-change: transform;
 
   .side-trans-enabled & {
-    transition: transform $side-transition;
+    transition: transform variables.$side-transition;
   }
 
   .sidebar-r & {
@@ -43,7 +46,7 @@
   }
 
   .js-sidebar-scroll {
-    height: calc(100vh - #{$header-height});
+    height: calc(100vh - #{variables.$header-height});
     overflow-y: auto;
 
     &.full-height {
@@ -51,14 +54,14 @@
     }
   }
 
-  @include media-breakpoint-down(lg) {
+  @include breakpoints.media-breakpoint-down(lg) {
     .sidebar-o-xs & {
       transform: translateX(0) translateY(0) translateZ(0);
     }
   }
 
-  @include media-breakpoint-up(lg) {
-    width: $sidebar-width;
+  @include breakpoints.media-breakpoint-up(lg) {
+    width: variables.$sidebar-width;
 
     .sidebar-o & {
       transform: translateX(0) translateY(0) translateZ(0);
@@ -67,19 +70,19 @@
     // Mini Sidebar
     .sidebar-mini.sidebar-o & {
       overflow-x: hidden;
-      transform: translateX(-($sidebar-width - $sidebar-mini-width)) translateY(0) translateZ(0);
-      transition: transform $side-transition;
+      transform: translateX(-(variables.$sidebar-width - variables.$sidebar-mini-width)) translateY(0) translateZ(0);
+      transition: transform variables.$side-transition;
     }
 
     .sidebar-mini.sidebar-o.sidebar-r & {
-      transform: translateX($sidebar-width - $sidebar-mini-width) translateY(0) translateZ(0);
+      transform: translateX(variables.$sidebar-width - variables.$sidebar-mini-width) translateY(0) translateZ(0);
     }
 
     .sidebar-mini.sidebar-o & .content-side,
     .sidebar-mini.sidebar-o & .content-header {
-      width: $sidebar-width;
-      transform: translateX(($sidebar-width - $sidebar-mini-width)) translateY(0) translateZ(0);
-      transition: transform $side-transition;
+      width: variables.$sidebar-width;
+      transform: translateX((variables.$sidebar-width - variables.$sidebar-mini-width)) translateY(0) translateZ(0);
+      transition: transform variables.$side-transition;
       will-change: transform;
     }
 
@@ -103,13 +106,13 @@
       .nav-main {
         &,
         .nav-main-link-icon {
-          transition: transform $side-transition;
+          transition: transform variables.$side-transition;
         }
 
         .nav-main-heading,
         .nav-main-link-name,
         .nav-main-link-badge {
-          transition: opacity $side-transition;
+          transition: opacity variables.$side-transition;
         }
       }
     }

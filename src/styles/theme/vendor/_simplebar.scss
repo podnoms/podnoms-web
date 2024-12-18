@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "../bootstrap/variables" as bootstrap-variables;
+@use "../codebase/variables" as codebase-variables;
+
 //
 // Simplebar - https://github.com/Grsmto/simplebar
 // --------------------------------------------------
@@ -225,9 +229,9 @@
 .simplebar-scrollbar::before {
   left: 0;
   right: 0;
-  background: rgba(darken($primary-darker, 10%), 0.75);
+  background: rgba(color.adjust(codebase-variables.$primary-darker, $lightness: -10%), 0.75);
 
   .sidebar-dark #sidebar & {
-    background: $white;
+    background: bootstrap-variables.$white;
   }
 }

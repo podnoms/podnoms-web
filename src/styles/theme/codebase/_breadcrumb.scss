@@ -1,9 +1,11 @@
+@use "variables-bootstrap";
+
 //
 // Breadcrumb
 // --------------------------------------------------
 
 .breadcrumb-item {
-  font-weight: $font-weight-medium;
+  font-weight: variables-bootstrap.$font-weight-medium;
   
   + .breadcrumb-item::before {
     font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro";

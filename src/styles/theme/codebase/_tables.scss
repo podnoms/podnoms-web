@@ -1,3 +1,5 @@
+@use "../bootstrap/variables";
+
 //
 // Tables
 // --------------------------------------------------
@@ -6,7 +8,7 @@
   thead th {
     text-transform: uppercase;
     letter-spacing: .0625em;
-    font-size: $font-size-sm;
+    font-size: variables.$font-size-sm;
   }
 }
 
