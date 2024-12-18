@@ -3,55 +3,50 @@
 // --------------------------------------------------
 
 // Include base files
-@use 'base';
-@use "../mixins/theme";
-@use "../mixins/theme-dark";
-@use "../variables-themes";
-
+@import 'base';
 
 // Generate color theme
-@include theme.color-theme(
-  variables-themes.$theme-corporate-primary,
-  variables-themes.$theme-corporate-light,
-  variables-themes.$theme-corporate-lighter,
-  variables-themes.$theme-corporate-dark,
-  variables-themes.$theme-corporate-darker,
-  variables-themes.$theme-corporate-body-bg,
-  variables-themes.$theme-corporate-body-bg-dark,
-  variables-themes.$theme-corporate-body-bg-light,
-  variables-themes.$theme-corporate-body-color,
-  variables-themes.$theme-corporate-body-color-dark,
-  variables-themes.$theme-corporate-body-color-light,
-  variables-themes.$theme-corporate-link-color,
-  variables-themes.$theme-corporate-link-hover-color,
-  variables-themes.$theme-corporate-headings-color,
-  variables-themes.$theme-corporate-input-btn-focus-color,
-  variables-themes.$theme-corporate-input-btn-focus-box-shadow,
-  variables-themes.$theme-corporate-input-bg,
-  variables-themes.$theme-corporate-input-color,
-  variables-themes.$theme-corporate-input-border-color,
-  variables-themes.$theme-corporate-input-focus-bg,
-  variables-themes.$theme-corporate-input-focus-color,
-  variables-themes.$theme-corporate-input-focus-border-color,
-  variables-themes.$theme-corporate-header-bg,
-  variables-themes.$theme-corporate-header-dark-bg,
-  variables-themes.$theme-corporate-sidebar-bg,
-  variables-themes.$theme-corporate-sidebar-dark-bg,
-  variables-themes.$theme-corporate-side-overlay-bg
+@include color-theme(
+  $theme-corporate-primary,
+  $theme-corporate-light,
+  $theme-corporate-lighter,
+  $theme-corporate-dark,
+  $theme-corporate-darker,
+  $theme-corporate-body-bg,
+  $theme-corporate-body-bg-dark,
+  $theme-corporate-body-bg-light,
+  $theme-corporate-body-color,
+  $theme-corporate-body-color-dark,
+  $theme-corporate-body-color-light,
+  $theme-corporate-link-color,
+  $theme-corporate-link-hover-color,
+  $theme-corporate-input-btn-focus-color,
+  $theme-corporate-input-btn-focus-box-shadow,
+  $theme-corporate-input-bg,
+  $theme-corporate-input-color,
+  $theme-corporate-input-border-color,
+  $theme-corporate-input-focus-bg,
+  $theme-corporate-input-focus-color,
+  $theme-corporate-input-focus-border-color,
+  $theme-corporate-header-bg,
+  $theme-corporate-header-dark-bg,
+  $theme-corporate-sidebar-bg,
+  $theme-corporate-sidebar-dark-bg,
+  $theme-corporate-side-overlay-bg
 );
 
-@include theme-dark.color-theme-dark(
-  variables-themes.$theme-corporate-primary,
-  variables-themes.$theme-corporate-light,
-  variables-themes.$theme-corporate-lighter,
-  variables-themes.$theme-corporate-dark,
-  variables-themes.$theme-corporate-darker,
-  variables-themes.$theme-corporate-body-bg,
-  variables-themes.$theme-corporate-body-bg-dark,
-  variables-themes.$theme-corporate-body-bg-light,
-  variables-themes.$theme-corporate-body-color,
-  variables-themes.$theme-corporate-body-color-dark,
-  variables-themes.$theme-corporate-body-color-light,
-  variables-themes.$theme-corporate-link-color,
-  variables-themes.$theme-corporate-link-hover-color
+@include color-theme-dark(
+  $theme-corporate-primary,
+  $theme-corporate-light,
+  $theme-corporate-lighter,
+  $theme-corporate-dark,
+  $theme-corporate-darker,
+  $theme-corporate-body-bg,
+  $theme-corporate-body-bg-dark,
+  $theme-corporate-body-bg-light,
+  $theme-corporate-body-color,
+  $theme-corporate-body-color-dark,
+  $theme-corporate-body-color-light,
+  $theme-corporate-link-color,
+  $theme-corporate-link-hover-color
 );

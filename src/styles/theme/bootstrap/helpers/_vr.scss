@@ -1,10 +1,8 @@
-@use "../variables";
-
 .vr {
   display: inline-block;
   align-self: stretch;
-  width: 1px;
+  width: $vr-border-width;
   min-height: 1em;
-  background-color: currentColor;
-  opacity: variables.$hr-opacity;
+  background-color: currentcolor;
+  opacity: $hr-opacity;
 }

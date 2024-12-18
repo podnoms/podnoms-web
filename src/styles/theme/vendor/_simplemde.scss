@@ -1,6 +1,3 @@
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "../codebase/variables" as codebase-variables;
-
 //
 // SimpleMDE Markdown Editor
 //
@@ -10,18 +7,18 @@
 .CodeMirror-fullscreen,
 .editor-toolbar.fullscreen,
 .editor-preview-side {
-  z-index: bootstrap-variables.$zindex-modal + 2;
+  z-index: $zindex-modal + 2;
 }
 
 .editor-preview {
-  z-index: bootstrap-variables.$zindex-modal + 1;
+  z-index: $zindex-modal + 1;
 }
 
 .editor-toolbar {
-  border-color: codebase-variables.$body-bg-dark;
-  background-color: codebase-variables.$body-bg-light;
+  border-color: $body-bg-dark;
+  background-color: $body-bg-light;
 }
 
 .CodeMirror {
-  border-color: codebase-variables.$body-bg-dark;
+  border-color: $body-bg-dark;
 }

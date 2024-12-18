@@ -1,5 +1,3 @@
-@use "../bootstrap/mixins/breakpoints";
-
 //
 // Options Overlay
 // --------------------------------------------------
@@ -43,7 +41,7 @@
     }
   }
 
-  @include breakpoints.media-breakpoint-down(md) {
+  @include media-breakpoint-down(md) {
     .options-overlay {
       display: none;
     }

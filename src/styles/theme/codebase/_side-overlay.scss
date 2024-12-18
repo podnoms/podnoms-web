@@ -1,7 +1,3 @@
-@use "../bootstrap/mixins/breakpoints";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "variables" as codebase-variables;
-
 //
 // Side Overlay
 // --------------------------------------------------
@@ -11,10 +7,10 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: codebase-variables.$zindex-side-overlay;
+  z-index: $zindex-side-overlay;
   width: 100%;
   height: 100%;
-  background-color: codebase-variables.$side-overlay-bg;
+  background-color: $side-overlay-bg;
   overflow-y: auto;
   transform: translateX(100%) translateY(0) translateZ(0);
   opacity: 0;
@@ -22,7 +18,7 @@
   will-change: transform;
 
   .side-trans-enabled & {
-    transition: transform codebase-variables.$side-transition, opacity codebase-variables.$side-transition;
+    transition: transform $side-transition, opacity $side-transition;
   }
 
   .sidebar-r & {
@@ -36,9 +32,9 @@
     opacity: 1;
   }
 
-  @include breakpoints.media-breakpoint-up(lg) {
-    width: codebase-variables.$side-overlay-width;
-    box-shadow: 0 0 1.5rem rgba(bootstrap-variables.$black, .15);
+  @include media-breakpoint-up(lg) {
+    width: $side-overlay-width;
+    box-shadow: 0 0 1.5rem rgba($black, .15);
     transform: translateX(110%) translateY(0) translateZ(0);
 
     .sidebar-r & {
@@ -46,19 +42,19 @@
     }
 
     .side-overlay-hover & {
-      transform: translateX(codebase-variables.$side-overlay-width - 16px) translateY(0) translateZ(0);
+      transform: translateX($side-overlay-width - 16px) translateY(0) translateZ(0);
       opacity: 1;
     }
 
     .sidebar-r.side-overlay-hover & {
-      transform: translateX(-(codebase-variables.$side-overlay-width - 16px)) translateY(0) translateZ(0);
+      transform: translateX(-($side-overlay-width - 16px)) translateY(0) translateZ(0);
       opacity: 1;
     }
 
     .side-overlay-hover &:hover,
     .side-overlay-o &,
     .side-overlay-o.side-overlay-hover & {
-      box-shadow: 0 0 1.25rem rgba(bootstrap-variables.$black, .15);
+      box-shadow: 0 0 1.25rem rgba($black, .15);
       transform: translateX(0) translateY(0) translateZ(0);
       opacity: 1;
     }

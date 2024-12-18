@@ -1,5 +1,3 @@
-@use "../bootstrap/variables";
-
 //
 // Item
 // --------------------------------------------------
@@ -61,7 +59,7 @@
   }
 
   &.item-rounded {
-    border-radius: variables.$border-radius;
+    border-radius: $border-radius;
   }
 
   &.item-rounded-lg {

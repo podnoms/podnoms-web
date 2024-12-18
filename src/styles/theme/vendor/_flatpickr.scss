@@ -1,5 +1,3 @@
-@use "../bootstrap/variables";
-
 //
 // Flatpickr
 //
@@ -10,9 +8,9 @@
 .flatpickr-input.form-control[readonly],
 .input.form-control:disabled,
 .input.form-control[readonly] {
-  color: variables.$input-color;
-  background-color: variables.$input-bg;
-  border-color: variables.$input-border-color;
+  color: $input-color;
+  background-color: $input-bg;
+  border-color: $input-border-color;
 }
 
 .flatpickr-weekdays {
@@ -38,11 +36,11 @@
 .flatpickr-day.selected.nextMonthDay,
 .flatpickr-day.startRange.nextMonthDay,
 .flatpickr-day.endRange.nextMonthDay {
-  border-color: variables.$primary;
-  background: variables.$primary;
+  border-color: $primary;
+  background: $primary;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
-  fill: variables.$primary;
+  fill: $primary;
 }

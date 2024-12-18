@@ -1,20 +1,17 @@
-@use "sass:list";
-@use "../variables";
-
 @mixin box-shadow($shadow...) {
-  @if variables.$enable-shadows {
+  @if $enable-shadows {
     $result: ();
 
     @each $value in $shadow {
       @if $value != null {
-        $result: list.append($result, $value, "comma");
+        $result: append($result, $value, "comma");
       }
-      @if $value == none and list.length($shadow) > 1 {
+      @if $value == none and length($shadow) > 1 {
         @warn "The keyword 'none' must be used as a single argument.";
       }
     }
 
-    @if (list.length($result) > 0) {
+    @if (length($result) > 0) {
       box-shadow: $result;
     }
   }

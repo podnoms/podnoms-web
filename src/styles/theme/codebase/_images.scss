@@ -1,5 +1,3 @@
-@use "../bootstrap/variables";
-
 //
 // Image (links and hover options)
 // --------------------------------------------------
@@ -58,7 +56,7 @@
 // Image Thumb
 .img-thumb {
   padding: .375rem;
-  background-color: variables.$white;
+  background-color: $white;
   border-radius: .25rem;
 }
 

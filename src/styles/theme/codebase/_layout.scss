@@ -1,9 +1,3 @@
-@use "sass:color";
-@use "../bootstrap/mixins/breakpoints";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "mixins/content";
-@use "variables" as codebase-variables;
-
 //
 // Layout
 // --------------------------------------------------
@@ -16,6 +10,7 @@
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
+  background-color: $light;
 }
 
 #page-overlay {
@@ -25,19 +20,19 @@
   bottom: 0;
   left: 0;
   content: "";
-  background: rgba(color.adjust(bootstrap-variables.$primary, $lightness: -45%), .4);
-  background: linear-gradient(to right, rgba(color.adjust(bootstrap-variables.$primary, $lightness: -45%),0), rgba(color.adjust(bootstrap-variables.$primary, $lightness: -45%),.6));
-  z-index: codebase-variables.$zindex-page-overlay;
+  background: rgba(darken($primary, 45%), .4);
+  background: linear-gradient(to right, rgba(darken($primary, 45%),0), rgba(darken($primary, 45%),.6));
+  z-index: $zindex-page-overlay;
   opacity: 0;
-  transition: opacity codebase-variables.$side-transition, transform codebase-variables.$side-transition;
+  transition: opacity $side-transition, transform $side-transition;
   transform: translateX(100%);
 
   .sidebar-r & {
-    background: linear-gradient(to right, rgba(color.adjust(bootstrap-variables.$primary, $lightness: -45%),.6), rgba(color.adjust(bootstrap-variables.$primary, $lightness: -45%),0));
+    background: linear-gradient(to right, rgba(darken($primary, 45%),.6), rgba(darken($primary, 45%),0));
     transform: translateX(-100%);
   }
 
-  @include breakpoints.media-breakpoint-up(lg) {
+  @include media-breakpoint-up(lg) {
     .side-overlay-o.enable-page-overlay & {
       transform: translateX(0);
       opacity: 1;
@@ -54,47 +49,48 @@
 
 // Main Content
 .content {
-  @include content.content-layout(codebase-variables.$space-mobile, codebase-variables.$space-mobile);
+  @include content-layout($space-mobile, $space-mobile);
 
-  @include breakpoints.media-breakpoint-up(md) {
-    @include content.content-layout(codebase-variables.$space-base, codebase-variables.$space-base);
+  @include media-breakpoint-up(md) {
+    @include content-layout($space-base, $space-base);
   }
 
-  @include breakpoints.media-breakpoint-up(xl) {
-    &.content-narrow { width: codebase-variables.$space-narrow; }
+  @include media-breakpoint-up(xl) {
+    &.content-narrow { width: $space-narrow; }
   }
 
-  &.content-boxed { max-width: codebase-variables.$space-boxed; }
+  &.content-boxed { max-width: $space-boxed; }
 
   &.content-top {
-    padding-top: codebase-variables.$header-height + codebase-variables.$space-mobile;
+    padding-top: $header-height + $space-mobile;
 
-    @include breakpoints.media-breakpoint-up(lg) {
-      padding-top: codebase-variables.$header-height + codebase-variables.$space-base;
+    @include media-breakpoint-up(lg) {
+      padding-top: $header-height + $space-base;
     }
   }
 }
 
 .content-section-top {
-  padding-top: codebase-variables.$header-height;
+  padding-top: $header-height;
 }
 
 .content-max-width {
-  max-width: codebase-variables.$space-main-max-width;
+  max-width: $space-main-max-width;
 }
 
 // Side Content
 .content-side {
-  @include content.content-layout(codebase-variables.$space-side, codebase-variables.$space-side, hidden);
+  @include content-layout($space-side, $space-side, hidden);
 
   &.content-side-user {
     display: flex;
     align-items: center;
     min-height: 9rem;
-    background-color: codebase-variables.$body-bg-light;
+    background-color: $body-bg-light;
   }
 }
 
-.sidebar-dark .content-side.content-side-user {
-  background-color: color.adjust(codebase-variables.$sidebar-dark-bg, $lightness: -2.5%);
+.sidebar-dark .content-side.content-side-user,
+html.dark .content-side.content-side-user {
+  background-color: darken($sidebar-dark-bg, 2.5%);
 }

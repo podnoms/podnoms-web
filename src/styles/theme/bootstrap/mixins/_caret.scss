@@ -1,46 +1,49 @@
-@use "../variables";
-
 // scss-docs-start caret-mixins
-@mixin caret-down {
-  border-top: variables.$caret-width solid;
-  border-right: variables.$caret-width solid transparent;
+@mixin caret-down($width: $caret-width) {
+  border-top: $width solid;
+  border-right: $width solid transparent;
   border-bottom: 0;
-  border-left: variables.$caret-width solid transparent;
+  border-left: $width solid transparent;
 }
 
-@mixin caret-up {
+@mixin caret-up($width: $caret-width) {
   border-top: 0;
-  border-right: variables.$caret-width solid transparent;
-  border-bottom: variables.$caret-width solid;
-  border-left: variables.$caret-width solid transparent;
+  border-right: $width solid transparent;
+  border-bottom: $width solid;
+  border-left: $width solid transparent;
 }
 
-@mixin caret-end {
-  border-top: variables.$caret-width solid transparent;
+@mixin caret-end($width: $caret-width) {
+  border-top: $width solid transparent;
   border-right: 0;
-  border-bottom: variables.$caret-width solid transparent;
-  border-left: variables.$caret-width solid;
+  border-bottom: $width solid transparent;
+  border-left: $width solid;
 }
 
-@mixin caret-start {
-  border-top: variables.$caret-width solid transparent;
-  border-right: variables.$caret-width solid;
-  border-bottom: variables.$caret-width solid transparent;
+@mixin caret-start($width: $caret-width) {
+  border-top: $width solid transparent;
+  border-right: $width solid;
+  border-bottom: $width solid transparent;
 }
 
-@mixin caret($direction: down) {
-  @if variables.$enable-caret {
+@mixin caret(
+  $direction: down,
+  $width: $caret-width,
+  $spacing: $caret-spacing,
+  $vertical-align: $caret-vertical-align
+) {
+  @if $enable-caret {
     &::after {
       display: inline-block;
-      margin-left: variables.$caret-spacing;
-      vertical-align: variables.$caret-vertical-align;
+      margin-left: $spacing;
+      vertical-align: $vertical-align;
       content: "";
       @if $direction == down {
-        @include caret-down();
+        @include caret-down($width);
       } @else if $direction == up {
-        @include caret-up();
+        @include caret-up($width);
       } @else if $direction == end {
-        @include caret-end();
+        @include caret-end($width);
       }
     }
 
@@ -51,10 +54,10 @@
 
       &::before {
         display: inline-block;
-        margin-right: variables.$caret-spacing;
-        vertical-align: variables.$caret-vertical-align;
+        margin-right: $spacing;
+        vertical-align: $vertical-align;
         content: "";
-        @include caret-start();
+        @include caret-start($width);
       }
     }
 

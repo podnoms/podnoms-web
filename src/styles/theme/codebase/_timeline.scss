@@ -1,16 +1,11 @@
-@use "../bootstrap/mixins/breakpoints";
-@use "../bootstrap/mixins/lists";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "variables" as codebase-variables;
-
 //
 // Timeline
 // --------------------------------------------------
 
 .timeline {
   position: relative;
-  padding-top: codebase-variables.$space-block;
-  @include lists.list-unstyled;
+  padding-top: $space-block;
+  @include list-unstyled;
 
   .timeline-event {
     position: relative;
@@ -25,10 +20,10 @@
     padding: .625rem 1.25rem;
     min-height: 50px;
     text-align: right;
-    color: bootstrap-variables.$gray-600;
+    color: $gray-600;
     line-height: 30px;
-    font-size: bootstrap-variables.$font-size-sm;
-    background-color: codebase-variables.$body-bg-light;
+    font-size: $font-size-sm;
+    background-color: $body-bg-light;
     border-radius: 1rem;
   }
 
@@ -39,7 +34,7 @@
     width: 2.125rem;
     height: 2.125rem;
     line-height: 2.125rem;
-    color: bootstrap-variables.$white;
+    color: $white;
     text-align: center;
     border-radius: .625rem;
   }
@@ -53,7 +48,7 @@
   }
 }
 
-@include breakpoints.media-breakpoint-up(md) {
+@include media-breakpoint-up(md) {
   .timeline-modern {
     margin-bottom: 0;
 
@@ -65,7 +60,7 @@
       display: block;
       width: 6px;
       content: '';
-      background-color: codebase-variables.$body-bg-light;
+      background-color: $body-bg-light;
       z-index: 1;
     }
 

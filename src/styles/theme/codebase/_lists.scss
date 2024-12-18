@@ -1,13 +1,10 @@
-@use "../bootstrap/mixins/lists";
-@use "../bootstrap/variables";
-
 //
 // Lists
 // --------------------------------------------------
 
 // Base List
 .list {
-  @include lists.list-unstyled;
+  @include list-unstyled;
 
   > li {
     position: relative;
@@ -49,7 +46,7 @@
   }  
 
   > li:not(:last-child) {
-    border-bottom: 1px solid variables.$body-bg;
+    border-bottom: 1px solid $light;
   }
 }
 
@@ -60,7 +57,7 @@
   }
 
   .js-event {
-    background-color: variables.$info;
+    background-color: $info;
     transition: transform .3s ease-out;
 
     &::before {
@@ -70,7 +67,7 @@
       left: auto;
       transform: translateX(0) translateY(-50%);
       display: inline-block;
-      color: rgba(variables.$white,.5);
+      color: rgba($white,.5);
       font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro";
       font-weight: 900;
       content: '\f073';

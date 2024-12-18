@@ -1,15 +1,12 @@
-@use "variables";
-@use "variables-bootstrap";
-
 //
 // Pagination
 // --------------------------------------------------
 
 .page-link {
-  font-weight: variables-bootstrap.$font-weight-semibold;
+  font-weight: $font-weight-semibold;
+}
 
-  &:focus {
-    background-color: variables.$body-bg-dark;
-    border-color: variables.$body-bg-dark;
-  }
+.page-item:not(.active) > .page-link:focus {
+  background-color: $body-bg-dark;
+  border-color: $body-bg-dark;
 }

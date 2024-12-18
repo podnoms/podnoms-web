@@ -1,7 +1,3 @@
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "../codebase/variables" as codebase-variables;
-@use "../codebase/variables-bootstrap";
-
 //
 // Nestable2
 //
@@ -18,13 +14,13 @@
 .dd-handle {
   height: 2.25rem;
   padding: .5rem .75rem;
-  font-weight: variables-bootstrap.$font-weight-medium;
-  color: bootstrap-variables.$body-color;
-  background: codebase-variables.$body-bg-light;
-  border-color: codebase-variables.$body-bg-dark;
+  font-weight: $font-weight-medium;
+  color: $body-color;
+  background: $body-bg-light;
+  border-color: $body-bg-dark;
 
   &:hover {
-    color: codebase-variables.$body-color-dark;
+    color: $body-color-dark;
   }
 }
 
@@ -34,7 +30,7 @@
 
 .dd-empty,
 .dd-placeholder {
-  border-color: codebase-variables.$primary-darker;
-  background: codebase-variables.$primary-lighter;
+  border-color: $primary-darker;
+  background: $primary-lighter;
   opacity: .25;
 }

@@ -1,25 +1,20 @@
-@use "sass:color";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "mixins/theme-dark";
-@use "variables" as codebase-variables;
-
 //
 // Dark Mode
 // --------------------------------------------------
 
 // Default Dark mode
-@include theme-dark.color-theme-dark(
-  bootstrap-variables.$primary,
-  codebase-variables.$primary-light,
-  codebase-variables.$primary-lighter,
-  codebase-variables.$sidebar-dark-bg,
-  color.adjust(codebase-variables.$sidebar-dark-bg, $lightness: -5%),
-  bootstrap-variables.$body-bg,
-  codebase-variables.$body-bg-dark,
-  codebase-variables.$body-bg-light,
-  bootstrap-variables.$body-color,
-  codebase-variables.$body-color-dark,
-  codebase-variables.$body-color-light,
-  bootstrap-variables.$link-color,
-  bootstrap-variables.$link-hover-color,
+@include color-theme-dark(
+  $primary,
+  $primary-light,
+  $primary-lighter,
+  $sidebar-dark-bg,
+  darken($sidebar-dark-bg, 5%),
+  $light,
+  $body-bg-dark,
+  $body-bg-light,
+  $body-color,
+  $body-color-dark,
+  $body-color-light,
+  $link-color,
+  $link-hover-color,
 );

@@ -1,6 +1,3 @@
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "../codebase/variables" as codebase-variables;
-
 //
 // jVectorMap
 //
@@ -9,8 +6,8 @@
 
 .jvectormap-tip {
   padding: .375rem .5rem;
-  font-family: bootstrap-variables.$font-family-base;
-  background: codebase-variables.$primary-dark;
+  font-family: $font-family-base;
+  background: $primary-dark;
   border: none;
   border-radius: 0;
 }
@@ -21,7 +18,7 @@
   left: 1rem;
   padding: .25rem;
   line-height: 1rem;
-  background: codebase-variables.$primary-dark;
+  background: $primary-dark;
 }
 
 .jvectormap-zoomin,

@@ -1,29 +1,24 @@
-@use "../bootstrap/mixins/breakpoints";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "variables" as codebase-variables;
-@use "variables-bootstrap";
-
 //
 // Typography
 // --------------------------------------------------
 
 .content-heading {
-  margin-bottom: codebase-variables.$space-mobile;
+  margin-bottom: $space-mobile;
   padding-top: 2rem;
   padding-bottom: .5rem;
   font-size: 1.125rem;
-  font-weight: variables-bootstrap.$font-weight-medium;
+  font-weight: $font-weight-medium;
   line-height: 1.75;
-  border-bottom: 1px solid codebase-variables.$body-bg-dark;
+  border-bottom: 1px solid $body-bg-dark;
 
   small {
     margin-top: .25rem;
     font-size: 1rem;
-    font-weight: bootstrap-variables.$font-weight-normal;
-    color: bootstrap-variables.$gray-600;
+    font-weight: $font-weight-normal;
+    color: $gray-600;
   }
 
-  @include breakpoints.media-breakpoint-up(md) {
+  @include media-breakpoint-up(md) {
     margin-bottom: 1.5rem;
     padding-top: 2.5rem;
 
@@ -38,7 +33,7 @@
   }
 
   .dropdown {
-    line-height: bootstrap-variables.$line-height-base;
+    line-height: $line-height-base;
   }
 }
 

@@ -1,5 +1,4 @@
-@use "../functions";
-@use "../variables";
+@include deprecate("`list-group-item-variant()`", "v5.3.0", "v6.0.0");
 
 // List Groups
 
@@ -13,11 +12,11 @@
       &:hover,
       &:focus {
         color: $color;
-        background-color: functions.shade-color($background, 10%);
+        background-color: shade-color($background, 10%);
       }
 
       &.active {
-        color: variables.$white;
+        color: $white;
         background-color: $color;
         border-color: $color;
       }

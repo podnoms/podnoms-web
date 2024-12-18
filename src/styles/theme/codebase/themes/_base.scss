@@ -3,23 +3,23 @@
 // --------------------------------------------------
 
 // Bootstrap functions
-@use '../../bootstrap/functions';
+@import '../../bootstrap/functions';
 
 // User variables (your own variable overrides)
-@use '../../custom/variables';
+@import '../../custom/variables';
 
 // Custom Bootstrap variables overrides
-@use '../variables-bootstrap';
+@import '../variables-bootstrap';
 
 // Bootstrap variables
-@use '../../bootstrap/variables' as variables2;
+@import '../../bootstrap/variables';
 
 // Bootstrap mixins
-@use '../../bootstrap/mixins';
+@import '../../bootstrap/mixins';
 
 // Custom mixins and Bootstrap overrides
-@use '../mixins' as mixins2;
+@import '../mixins';
 
 // Custom variables
-@use '../variables' as variables3;
-@use '../variables-themes';
+@import '../variables';
+@import '../variables-themes';

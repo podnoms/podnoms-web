@@ -1,7 +1,3 @@
-@use "../bootstrap/mixins/breakpoints";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "variables" as codebase-variables;
-
 //
 // Header
 // --------------------------------------------------
@@ -10,7 +6,7 @@
   position: relative;
   margin: 0 auto;
   width: 100%;
-  background-color: codebase-variables.$header-bg;
+  background-color: $header-bg;
 }
 
 // Header overlay (used for various reasons eg: loading or search)
@@ -20,7 +16,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: bootstrap-variables.$white;
+  background-color: $white;
   opacity: 0;
   transition: transform .2s ease-in-out, opacity .2s ease-in-out;
   transform: translateY(-100%);
@@ -40,21 +36,21 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  height: codebase-variables.$header-height;
+  height: $header-height;
 
   @at-root #page-header & {
-    padding-left: codebase-variables.$space-mobile;
-    padding-right: codebase-variables.$space-mobile;
+    padding-left: $space-mobile;
+    padding-right: $space-mobile;
 
-    @include breakpoints.media-breakpoint-up(md) {
-      padding-left: codebase-variables.$space-base;
-      padding-right: codebase-variables.$space-base;
+    @include media-breakpoint-up(md) {
+      padding-left: $space-base;
+      padding-right: $space-base;
     }
   }
 
   @at-root #sidebar &,
   #side-overlay & {
-    padding-left: codebase-variables.$space-side;
-    padding-right: codebase-variables.$space-side;
+    padding-left: $space-side;
+    padding-right: $space-side;
   }
 }

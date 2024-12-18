@@ -1,40 +1,36 @@
-@use "../bootstrap/mixins/breakpoints";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "../codebase/variables" as codebase-variables;
-
 //
 // FullCalendar
 //
 // Overwrite/Extend styles
 // --------------------------------------------------
 
-.fc-theme-standard {
+.fc.fc-theme-standard {
   a {
-    color: bootstrap-variables.$body-color;
+    color: $body-color;
   }
 
   .fc-button-primary {
-    color: bootstrap-variables.$body-color;
-    background-color: codebase-variables.$body-bg-dark;
-    border-color: codebase-variables.$body-bg-dark;
+    color: $body-color;
+    background-color: $body-bg-dark;
+    border-color: $body-bg-dark;
 
     &:not(:disabled):hover {
-      color: bootstrap-variables.$body-color;
-      background-color: bootstrap-variables.$body-bg;
-      border-color: bootstrap-variables.$body-bg;
+      color: $body-color;
+      background-color: $light;
+      border-color: $light;
     }
 
     &:not(:disabled).fc-button-active,
     &:not(:disabled):active {
-      color: bootstrap-variables.$body-color;
-      background-color: codebase-variables.$body-bg-light;
-      border-color: codebase-variables.$body-bg-light;
+      color: $body-color;
+      background-color: $body-bg-light;
+      border-color: $body-bg-light;
     }
 
     &:focus,
     &:not(:disabled).fc-button-active:focus,
     &:not(:disabled):active:focus {
-      box-shadow: 0 0 0 .2rem rgba(bootstrap-variables.$primary, .4)
+      box-shadow: 0 0 0 .2rem rgba($primary, .4)
     }
   }
 
@@ -42,28 +38,28 @@
   td,
   .fc-scrollgrid,
   .fc-list {
-    border-color: codebase-variables.$body-bg-dark;
+    border-color: $body-bg-dark;
   }
 
   .fc-h-event {
-    background-color: bootstrap-variables.$primary;
-    border: bootstrap-variables.$primary;
+    background-color: $primary;
+    border: $primary;
   }
 
   .fc-col-header-cell {
     padding-top: 0.375rem;
     padding-bottom: 0.375rem;
-    font-size: bootstrap-variables.$font-size-sm;
+    font-size: $font-size-sm;
     font-weight: 600;
     text-transform: uppercase;
-    background-color: codebase-variables.$body-bg-light;
+    background-color: $body-bg-light;
   }
 
   .fc-list-day-cushion {
-    background-color: codebase-variables.$body-bg-light;
+    background-color: $body-bg-light;
   }
 
-  @include breakpoints.media-breakpoint-down(xl) {
+  @include media-breakpoint-down(xl) {
     .fc-toolbar.fc-header-toolbar {
       display: block;
 

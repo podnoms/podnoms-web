@@ -1,8 +1,3 @@
-@use "../bootstrap/functions";
-@use "../bootstrap/mixins/buttons";
-@use "../bootstrap/variables" as bootstrap-variables;
-@use "variables" as codebase-variables;
-
 //
 // Buttons
 // --------------------------------------------------
@@ -15,38 +10,42 @@
 
 // Variant buttons
 .btn-secondary {
-  @include buttons.button-variant(codebase-variables.$primary-dark, codebase-variables.$primary-dark);
+  @include button-variant($primary-dark, $primary-dark);
 }
 
 // Alternate variant buttons
 .btn-alt-primary {
-  @include buttons.button-variant(functions.tint-color(bootstrap-variables.$primary, 75%), functions.tint-color(bootstrap-variables.$primary, 75%), functions.shade-color(bootstrap-variables.$primary, 40%), functions.tint-color(bootstrap-variables.$primary, 50%), functions.tint-color(bootstrap-variables.$primary, 50%), functions.shade-color(bootstrap-variables.$primary, 60%));
+  @include button-variant(tint-color($primary, 75%), tint-color($primary, 75%), shade-color($primary, 40%), tint-color($primary, 50%), tint-color($primary, 50%), shade-color($primary, 60%));
 }
 
 .btn-alt-secondary {
-  @include buttons.button-variant(bootstrap-variables.$body-bg, bootstrap-variables.$body-bg, codebase-variables.$body-color-dark, functions.shade-color(bootstrap-variables.$body-bg, 10%), functions.shade-color(bootstrap-variables.$body-bg, 10%), functions.shade-color(codebase-variables.$body-color-dark, 15%));
+  @include button-variant($light, $light, $body-color-dark, shade-color($light, 10%), shade-color($light, 10%), shade-color($body-color-dark, 15%));
 }
 
 .btn-alt-success {
-  @include buttons.button-variant(functions.tint-color(bootstrap-variables.$success, 75%), functions.tint-color(bootstrap-variables.$success, 75%), functions.shade-color(bootstrap-variables.$success, 40%), functions.tint-color(bootstrap-variables.$success, 50%), functions.tint-color(bootstrap-variables.$success, 50%), functions.shade-color(bootstrap-variables.$success, 60%));
+  @include button-variant(tint-color($success, 75%), tint-color($success, 75%), shade-color($success, 40%), tint-color($success, 50%), tint-color($success, 50%), shade-color($success, 60%));
 }
 
 .btn-alt-info {
-  @include buttons.button-variant(functions.tint-color(bootstrap-variables.$info, 75%), functions.tint-color(bootstrap-variables.$info, 75%), functions.shade-color(bootstrap-variables.$info, 40%), functions.tint-color(bootstrap-variables.$info, 50%), functions.tint-color(bootstrap-variables.$info, 50%), functions.shade-color(bootstrap-variables.$info, 60%));
+  @include button-variant(tint-color($info, 75%), tint-color($info, 75%), shade-color($info, 40%), tint-color($info, 50%), tint-color($info, 50%), shade-color($info, 60%));
 }
 
 .btn-alt-warning {
-  @include buttons.button-variant(functions.tint-color(bootstrap-variables.$warning, 75%), functions.tint-color(bootstrap-variables.$warning, 75%), functions.shade-color(bootstrap-variables.$warning, 40%), functions.tint-color(bootstrap-variables.$warning, 50%), functions.tint-color(bootstrap-variables.$warning, 50%), functions.shade-color(bootstrap-variables.$warning, 60%));
+  @include button-variant(tint-color($warning, 75%), tint-color($warning, 75%), shade-color($warning, 40%), tint-color($warning, 50%), tint-color($warning, 50%), shade-color($warning, 60%));
 }
 
 .btn-alt-danger {
-  @include buttons.button-variant(functions.tint-color(bootstrap-variables.$danger, 75%), functions.tint-color(bootstrap-variables.$danger, 75%), functions.shade-color(bootstrap-variables.$danger, 40%), functions.tint-color(bootstrap-variables.$danger, 50%), functions.tint-color(bootstrap-variables.$danger, 50%), functions.shade-color(bootstrap-variables.$danger, 60%));
+  @include button-variant(tint-color($danger, 75%), tint-color($danger, 75%), shade-color($danger, 40%), tint-color($danger, 50%), tint-color($danger, 50%), shade-color($danger, 60%));
 }
 
 // Alternate secondary adapts on dark header/sidebar
 .page-header-dark #page-header .btn-alt-secondary,
 .sidebar-dark #sidebar .btn-alt-secondary,
 #sidebar .bg-header-dark .content-header .btn-alt-secondary,
-.page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
-  @include buttons.button-variant(codebase-variables.$header-dark-bg, codebase-variables.$header-dark-bg, bootstrap-variables.$white, functions.tint-color(codebase-variables.$header-dark-bg, 15%), functions.tint-color(codebase-variables.$header-dark-bg, 15%), bootstrap-variables.$white);
+.page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary,
+html.dark #page-header .btn-alt-secondary,
+html.dark #sidebar .btn-alt-secondary,
+html.dark #sidebar .content-header .btn-alt-secondary,
+html.dark .page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
+  @include button-variant($header-dark-bg, $header-dark-bg, $white, tint-color($header-dark-bg, 15%), tint-color($header-dark-bg, 15%), $white);
 }
