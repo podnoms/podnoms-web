@@ -16,13 +16,9 @@
             },
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
+              "includePaths": ["src/styles"]
             },
             "assets": [
               "src/assets",
@@ -31,9 +27,7 @@
               "src/sitemap.xml",
               "src/manifest.json"
             ],
-            "styles": [
-              "src/styles/styles.scss"
-            ],
+            "styles": ["src/styles/styles.scss"],
             "scripts": [
               "node_modules/wavesurfer.js/dist/wavesurfer.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -68,7 +62,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "serviceWorker": true
+              "serviceWorker": "ngsw-config.json"
             }
           }
         },
@@ -97,10 +91,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -122,9 +113,7 @@
     }
   },
   "cli": {
-    "packageManager": "bun",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "packageManager": "yarn",
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }
