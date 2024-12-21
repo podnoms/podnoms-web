@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as _ from 'lodash';
-import { NGXLogger } from 'ngx-logger';
 
 @Pipe({
     name: 'uniqueId',
