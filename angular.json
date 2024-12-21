@@ -121,7 +121,7 @@
     }
   },
   "cli": {
-    "packageManager": "yarn",
+    "packageManager": "bun",
     "schematicCollections": ["@angular-eslint/schematics"]
   }
 }
