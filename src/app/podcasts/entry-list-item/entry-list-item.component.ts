@@ -25,7 +25,7 @@ import { NGXLogger } from 'ngx-logger';
 import { SharingComponent } from 'app/components/sharing/sharing.component';
 declare var $: any;
 @Component({
-    selector: 'div[app-podcast-entry-item]',
+    selector: '[app-podcast-entry-item]',
     templateUrl: './entry-list-item.component.html',
     styleUrls: ['./entry-list-item.component.scss'],
     standalone: false
