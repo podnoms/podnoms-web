@@ -37,7 +37,6 @@
             ],
             "styles": ["src/styles/styles.scss"],
             "scripts": [
-              "node_modules/wavesurfer.js/dist/wavesurfer.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/howler/dist/howler.js",
               "node_modules/quill/dist/quill.js",
