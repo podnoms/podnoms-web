@@ -17,7 +17,7 @@ export class AuthApiProxyService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
-    withCredentials: true,
+    // withCredentials: true,
   };
 
   constructor(private http: HttpClient) {}

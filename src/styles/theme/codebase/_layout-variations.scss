@@ -34,7 +34,7 @@
   // Page header related
   @include media-breakpoint-up(lg) {
     &.page-header-modern #page-header {
-      background-color: $body-bg;
+      background-color: $light;
       box-shadow: none !important;
 
       > .content-header {
@@ -43,7 +43,8 @@
     }
   }
 
-  &.page-header-dark #page-header {
+  &.page-header-dark #page-header,
+  html.dark & #page-header {
     color: darken($body-color-light, 8%);
     background-color: $header-dark-bg;
   }
@@ -51,6 +52,10 @@
   &.page-header-glass {
     #page-header {
       position: absolute;
+      background-color: transparent;
+    }
+
+    html.dark & #page-header {
       background-color: transparent;
     }
 
@@ -66,7 +71,8 @@
         box-shadow: 0 5px 10px rgba(0,0,0,.02);
       }
 
-      &.page-header-scroll.page-header-dark #page-header {
+      &.page-header-scroll.page-header-dark #page-header,
+      html.dark &.page-header-scroll #page-header {
         background-color: $header-dark-bg;
         box-shadow: none;
       }
@@ -84,7 +90,8 @@
       box-shadow: 0 .25rem .625rem rgba($black, .02);
     }
 
-    &.page-header-dark #page-header {
+    &.page-header-dark #page-header,
+    html.dark & #page-header {
       box-shadow: none;
     }
 
@@ -147,16 +154,17 @@
 
   // Sidebar and Side Overlay
   @include media-breakpoint-up(lg) {
-    &.page-header-modern:not(.sidebar-dark) #sidebar {
+    html:not(.dark) &.page-header-modern:not(.sidebar-dark) #sidebar {
       box-shadow: .25rem 0 .625rem $body-bg-dark;
     }
 
-    &.page-header-modern.sidebar-r:not(.sidebar-dark) #sidebar {
+    html:not(.dark) &.page-header-modern.sidebar-r:not(.sidebar-dark) #sidebar {
       box-shadow: -.25rem 0 .625rem $body-bg-dark;
     }
   }
 
-  &.sidebar-dark #sidebar {
+  &.sidebar-dark #sidebar,
+  html.dark & #sidebar {
     color: $body-color-light;
     background-color: $sidebar-dark-bg;
     box-shadow: none;
@@ -174,6 +182,13 @@
         .content-header,
         .content-side {
           width: $sidebar-width !important;
+        }
+      }
+
+      #sidebar.with-mini-nav {
+        .content-header,
+        .content-side {
+          width: $sidebar-width - $sidebar-mini-nav-width !important;
         }
       }
 

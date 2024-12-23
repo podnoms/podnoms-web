@@ -7,7 +7,8 @@ import { UiStateService } from 'app/core/ui-state.service';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export class BaseJsUploadComponent extends BasePageComponent {
   @Input() podcast: Podcast;

@@ -25,7 +25,7 @@ $success:                   #65a30d !default;
 $info:                      #0891b2 !default;
 $warning:                   #d97706 !default;
 $danger:                    #dc2626 !default;
-$light:                     $gray-100 !default;
+$light:                     #f0f2f5 !default;
 $dark:                      $gray-800 !default;
 
 $theme-colors: (
@@ -49,6 +49,8 @@ $min-contrast-ratio: 3 !default;
 // Quickly modify global styling by enabling or disabling optional features.
 
 $enable-validation-icons: false !default;
+$enable-negative-margins: true !default;
+$enable-dark-mode: false !default;
 
 
 // Spacing
@@ -77,8 +79,11 @@ $spacers: (
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   #f0f2f5 !default;
-$body-color:                tint-color($gray-800, 5%) !default;
+$body-bg:                   $white !default;
+$body-color:                tint-color($gray-900, 5%) !default;
+
+$body-bg-dark:              darken($light, 4%) !default;
+$body-color-dark:           #171717 !default;
 
 
 // Links
@@ -109,7 +114,7 @@ $grid-gutter-width:           1.75rem !default;
 //
 // Define common padding and border radius sizes and more.
 
-$border-color:                darken($body-bg, 4%) !default;
+$border-color:                darken($light, 4%) !default;
 
 $transition-fade:             opacity .15s ease-out !default;
 
@@ -118,7 +123,7 @@ $transition-fade:             opacity .15s ease-out !default;
 //
 // Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:      "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif:      "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 
@@ -161,11 +166,11 @@ $table-color:                 $body-color !default;
 
 $table-th-font-weight:        $font-weight-semibold !default;
 
-$table-striped-bg:            lighten($body-bg, 1.5%) !default;
+$table-striped-bg:            lighten($light, 1.5%) !default;
 
-$table-active-bg:             $body-bg !default;
+$table-active-bg:             $light !default;
 
-$table-hover-bg:              darken($body-bg, 1.5%) !default;
+$table-hover-bg:              darken($light, 1.5%) !default;
 
 $table-border-color:          $border-color !default;
 
@@ -183,7 +188,7 @@ $input-btn-font-size-lg:      $font-size-base !default;
 //
 // For each of Bootstrap's buttons, define text, background and border color.
 
-$btn-font-weight:             $font-weight-medium !default;
+$btn-font-weight:             $font-weight-semibold !default;
 
 $btn-hover-bg-shade-amount:       20% !default;
 $btn-hover-bg-tint-amount:        20% !default;
@@ -201,17 +206,17 @@ $form-label-font-weight:            $font-weight-medium !default;
 $input-bg:                          $white !default;
 
 $input-color:                       $body-color !default;
-$input-border-color:                darken($body-bg, 8%) !default;
+$input-border-color:                darken($light, 8%) !default;
 
 $input-group-addon-color:           $input-color !default;
-$input-group-addon-bg:              $body-bg !default;
+$input-group-addon-bg:              $light !default;
 $input-group-addon-border-color:    $input-border-color !default;
 
 $form-feedback-font-size:           $font-size-sm !default;
 
-$form-check-input-border:           1px solid darken($body-bg, 10%) !default;
+$form-check-input-border:           1px solid darken($light, 10%) !default;
 
-$form-switch-color:                 darken($body-bg, 10%) !default;
+$form-switch-color:                 darken($light, 10%) !default;
 $form-switch-width:                 2.5em !default;
 
 
@@ -238,10 +243,10 @@ $dropdown-box-shadow:               0 1rem 2rem rgba($black, .1) !default;
 
 $dropdown-link-color:               $body-color !default;
 $dropdown-link-hover-color:         $body-color !default;
-$dropdown-link-hover-bg:            $body-bg !default;
+$dropdown-link-hover-bg:            $light !default;
 
 $dropdown-link-active-color:        $body-color !default;
-$dropdown-link-active-bg:           darken($body-bg, 4%) !default;
+$dropdown-link-active-bg:           darken($light, 4%) !default;
 
 $dropdown-item-padding-y:           .375rem !default;
 $dropdown-item-padding-x:           .75rem !default;
@@ -250,18 +255,34 @@ $dropdown-item-padding-x:           .75rem !default;
 // Pagination
 
 $pagination-color:                  $body-color !default;
-$pagination-bg:                     $body-bg !default;
-$pagination-border-color:           $body-bg !default;
+$pagination-bg:                     $light !default;
+$pagination-border-color:           $light !default;
 
 $pagination-focus-box-shadow:       none !default;
 
 $pagination-hover-color:            $body-color !default;
-$pagination-hover-bg:               darken($body-bg, 10%) !default;
-$pagination-hover-border-color:     darken($body-bg, 10%) !default;
+$pagination-hover-bg:               darken($light, 10%) !default;
+$pagination-hover-border-color:     darken($light, 10%) !default;
 
 $pagination-disabled-color:         $gray-500 !default;
 $pagination-disabled-bg:            $white !default;
 $pagination-disabled-border-color:  $white !default;
+
+
+// Cards
+
+$card-spacer-y:                     1.625rem !default;
+$card-spacer-x:                     1.625rem !default;
+$card-title-spacer-y:               .875rem !default;
+$card-border-width:                 1px !default;
+$card-border-color:                 darken($light, 4%) !default;
+$card-border-radius:                .875rem 1rem !default;
+$card-inner-border-radius:          subtract(.875rem, $card-border-width) !default;
+$card-cap-padding-y:                .875rem !default;
+$card-cap-padding-x:                $card-spacer-x !default;
+$card-cap-bg:                       lighten($light, 2%) !default;
+$card-img-overlay-padding:          $card-spacer-y !default;
+$card-group-margin:                 $card-spacer-y !default;
 
 
 // Popovers
@@ -316,7 +337,7 @@ $list-group-border-color:           $border-color !default;
 $list-group-item-padding-y:         .75rem !default;
 $list-group-item-padding-x:         1.25rem !default;
 
-$list-group-hover-bg:               lighten($body-bg, 1.5%) !default;
+$list-group-hover-bg:               lighten($light, 1.5%) !default;
 
 $list-group-action-color:           $body-color !default;
 $list-group-action-hover-color:     $body-color !default;

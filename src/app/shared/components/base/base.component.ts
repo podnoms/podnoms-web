@@ -8,6 +8,7 @@ import { AppInjector } from 'app/services/app-injector.service';
     selector: 'app-base',
     templateUrl: './base.component.html',
     styleUrls: ['./base.component.scss'],
+    standalone: false
 })
 export class BaseComponent {
     protected logger: NGXLogger;

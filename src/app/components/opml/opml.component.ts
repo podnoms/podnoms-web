@@ -9,6 +9,7 @@ import { UtilityService } from 'app/shared/services/utility.service';
     selector: 'app-opml',
     templateUrl: './opml.component.html',
     styleUrls: ['./opml.component.scss'],
+    standalone: false
 })
 export class OpmlComponent implements OnInit {
     publicOpmlUrl$: Observable<string>;

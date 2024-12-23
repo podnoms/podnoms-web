@@ -20,7 +20,7 @@
 
     &:hover,
     &:focus {
-      background-color: $body-bg;
+      background-color: $light;
     }
   }
 
@@ -108,7 +108,7 @@
     display: block;
     min-height: 62px;
     font-weight: 600;
-    border-bottom: 1px solid $body-bg;
+    border-bottom: 1px solid $light;
 
     > img {
       position: absolute;
@@ -148,11 +148,44 @@
     }
 
     &:active {
-      background-color: $body-bg;
+      background-color: $light;
     }
   }
 
   > li:not(:last-child) > a {
-    border-bottom: 1px solid $body-bg;
+    border-bottom: 1px solid $light;
+  }
+}
+
+// Sidebar Mini Nav
+.mini-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $sidebar-mini-nav-width;
+  height: $sidebar-mini-nav-width;
+  color: darken($body-bg-dark, 15%);
+  font-size: 1rem;
+
+  i {
+    transition: transform 0.2s ease-out;
+  }
+
+  &.active {
+    background-color: lighten($sidebar-dark-bg, 6%);
+    color: $white;
+  }
+
+  &:hover {
+    color: $white;
+    background-color: lighten($sidebar-dark-bg, 6%);
+  }
+
+  &:active {
+    color: darken($body-bg-dark, 15%);
+
+    i {
+      transform: scale(0.9);
+    }
   }
 }

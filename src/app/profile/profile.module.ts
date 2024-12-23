@@ -13,22 +13,22 @@ import { OpmlPageComponent } from './opml-page/opml-page.component';
 import { YoutubeApiKeyComponent } from './api-keys/youtube-api-key/youtube-api-key.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        ComponentsModule,
-        ProfileRoutingModule,
-        PaymentsModule,
-        NgbModule,
-    ],
-    exports: [],
-    declarations: [
-        ProfileComponent,
-        UserNotificationsSettingsComponent,
-        ApiKeysComponent,
-        OpmlPageComponent,
-        YoutubeApiKeyComponent,
-    ],
-    providers: [AuthService],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ComponentsModule,
+    ProfileRoutingModule,
+    PaymentsModule,
+    NgbModule,
+  ],
+  exports: [],
+  declarations: [
+    ProfileComponent,
+    UserNotificationsSettingsComponent,
+    ApiKeysComponent,
+    OpmlPageComponent,
+    YoutubeApiKeyComponent,
+  ],
+  providers: [AuthService],
 })
 export class ProfileModule {}

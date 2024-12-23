@@ -15,9 +15,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpgradeAccountDialogComponent } from 'app/shared/dialogs/upgrade-account-dialog/upgrade-account-dialog.component';
 
 @Component({
-  selector: 'app-upload-url',
-  templateUrl: './upload-url.component.html',
-  styleUrls: ['./upload-url.component.scss'],
+    selector: 'app-upload-url',
+    templateUrl: './upload-url.component.html',
+    styleUrls: ['./upload-url.component.scss'],
+    standalone: false
 })
 export class UploadUrlComponent implements AfterViewInit {
   @Input()

@@ -36,15 +36,44 @@
     transition: transform $side-transition;
   }
 
+  &.with-mini-nav {
+    padding-left: $sidebar-mini-nav-width;
+
+    .sidebar-mini-nav {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: $sidebar-mini-nav-width;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      color: $body-color-light;
+      background-color: lighten($sidebar-dark-bg, 3%);
+    }
+  }
+
   .sidebar-r & {
     right: 0;
     left: auto;
     transform: translateX(100%) translateY(0) translateZ(0);
+    
+    &.with-mini-nav {
+      padding-right: $sidebar-mini-nav-width;
+      padding-left: 0;
+    }
+
+    .sidebar-mini-nav {
+      left: auto;
+      right: 0;
+    }
   }
 
   .js-sidebar-scroll {
     height: calc(100vh - #{$header-height});
     overflow-y: auto;
+    overflow-x: hidden;
 
     &.full-height {
       height: 100%;

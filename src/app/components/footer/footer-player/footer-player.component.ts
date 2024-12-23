@@ -12,6 +12,7 @@ import { AudioService, PlayState } from '../../../core/audio.service';
     selector: 'app-footer-player',
     templateUrl: './footer-player.component.html',
     styleUrls: ['./footer-player.component.scss'],
+    standalone: false
 })
 export class FooterPlayerComponent implements AfterViewInit, OnDestroy {
     @ViewChild('player')

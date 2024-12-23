@@ -45,7 +45,7 @@
 
   // Nav Main
   .nav-main {
-    padding-left: auto;
+    padding-left: 0;
     padding-right: 0;
   }
 
@@ -131,7 +131,7 @@
       .nav-main-submenu {
         left: auto;
         right: 0;
-        padding-left: auto;
+        padding-left: 0;
         padding-right: 0;
 
         &.nav-main-submenu-left {

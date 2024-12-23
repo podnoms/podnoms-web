@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
     name: 'filterIf',
+    standalone: false
 })
 export class FilterIfPipe implements PipeTransform {
     transform(items: any, field: string, filter: string): unknown {

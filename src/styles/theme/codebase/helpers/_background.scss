@@ -107,7 +107,7 @@
 @include bg-variant(".bg-info-op", rgba($info-light, 0.95));
 @include bg-variant(".bg-danger-op ", rgba($danger-light, 0.95));
 
-@include bg-variant(".bg-body", $body-bg);
+@include bg-variant(".bg-body", $light);
 @include bg-variant(".bg-body-light", $body-bg-light);
 @include bg-variant(".bg-body-dark", $body-bg-dark);
 @include bg-variant(".bg-body-extra-light", $white);

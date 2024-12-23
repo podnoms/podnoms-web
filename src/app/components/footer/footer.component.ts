@@ -4,7 +4,8 @@ import { AudioService, PlayState } from '../../core/audio.service';
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.scss']
+    styleUrls: ['./footer.component.scss'],
+    standalone: false
 })
 export class FooterComponent implements OnInit {
     showPlayer: boolean = false;

@@ -30,11 +30,9 @@ import { environment } from 'environments/environment';
 import { RedirollComponent } from './shared/rediroll/rediroll.component';
 import { OpmlComponent } from './opml/opml.component';
 import { HighlightModule } from 'ngx-highlightjs';
-import { OrderModule } from 'ngx-order-pipe';
 import { AppLayoutComponentComponent } from './app-layout-component/app-layout-component.component';
 import { MomentModule } from 'ngx-moment';
 import { ImgFallbackDirective } from './img-fallback/img-fallback.component';
-import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   imports: [
@@ -47,9 +45,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     NgbTooltipModule,
     NgbProgressbarModule,
     LoggerModule.forRoot(environment.logConfig),
-    NgScrollbarModule,
     HighlightModule,
-    OrderModule,
   ],
   providers: [
     PodcastStoreService,

@@ -17,9 +17,10 @@
   $link-color,
   $link-hover-color
 ) {
-  .dark-mode {
+  html.dark {
     // Main Structure
     &,
+    #page-container,
     #side-overlay,
     #page-loader {
       background-color: darken($primary-darker, 3%);
@@ -28,7 +29,8 @@
 
     // Page header
     @include media-breakpoint-up(lg) {
-      &.page-header-modern.page-header-dark #page-header {
+      & .page-header-modern.page-header-dark #page-header,
+      & .page-header-modern #page-header {
         background-color: darken($primary-darker, 3%) !important;
       }
     }
@@ -67,11 +69,11 @@
     }
 
     // Links
-    a:not(.badge):not(.btn):not(.btn-block-option):not(.block):not(.dropdown-item):not(.nav-link):not(.page-link):not(.alert-link):not(.nav-main-link):not(.list-group-item-action):not(.close):not(.fc-event):not(.text-success-light):not(.text-danger-light):not(.text-warning-light):not(.text-info-light) {
-      color: lighten($primary, 10%);
+    a:not(.mini-nav-item):not(.badge):not(.btn):not(.btn-block-option):not(.block):not(.dropdown-item):not(.nav-link):not(.page-link):not(.alert-link):not(.nav-main-link):not(.list-group-item-action):not(.close):not(.fc-event):not(.text-success-light):not(.text-danger-light):not(.text-warning-light):not(.text-info-light) {
+      color: lighten($primary, 12%);
 
       &.link-fx::before {
-        background-color: lighten($primary, 10%);
+        background-color: lighten($primary, 12%);
       }
 
       &:hover {
@@ -87,7 +89,7 @@
     @include bg-variant(".bg-muted", darken($body-bg-light, 30%));
 
     // Contextual text colors
-    @include text-emphasis-variant(".text-primary", lighten($primary, 5%));
+    @include text-emphasis-variant(".text-primary", lighten($primary, 12%));
 
     @include text-emphasis-variant(".text-success", lighten($success, 5%));
     @include text-emphasis-variant(".text-warning", lighten($warning, 5%));
@@ -209,6 +211,36 @@
       }
     }
 
+    // Cards
+    .card {
+      background-color: $primary-darker;
+
+      &.card-borderless {
+        box-shadow: 0 1px 2px rgba(darken($primary-darker, 4%), .5), 0 1px 2px rgba(darken($primary-darker, 4%), .5);
+      }
+  
+      > .card-header:not(.bg-transparent),
+      > .card-footer:not(.bg-transparent) {
+        background-color: lighten($primary-darker, 6%);
+      }
+  
+      > .card-header:not(.border-bottom-0),
+      > .card-footer:not(.border-top-0) {
+        border-color: lighten($primary-darker, 6%);
+      }
+  
+      &:not(.card-borderless) {
+        &,
+        > .card-header {
+          border-color: lighten($primary-darker, 6%);
+        }
+      }
+
+      > .card-header .block-title small {
+        color: darken($body-bg-light, 30%);
+      }
+    }
+
     // Pagination
     .page-item {
       &.active .page-link {
@@ -222,6 +254,11 @@
         background-color: transparent;
         border-color: transparent;
       }
+    }
+
+    .page-item:not(.active) > .page-link:focus {
+      background-color: darken($primary-darker, 6%);
+      border-color: darken($primary-darker, 6%);
     }
     
     .page-link {
@@ -388,12 +425,14 @@
 
     // Tables
     .table {
-      --#{$variable-prefix}table-striped-color: #{$body-bg-light};
-      --#{$variable-prefix}table-striped-bg: #{darken($primary-darker, 1.5%)};
-      --#{$variable-prefix}table-active-color: #{$body-bg-light};
-      --#{$variable-prefix}table-active-bg: #{lighten($primary-darker, 6%)};
-      --#{$variable-prefix}table-hover-color: #{$body-bg-light};
-      --#{$variable-prefix}table-hover-bg: #{darken($primary-darker, 2.5%)};
+      --#{$prefix}table-color: #{lighten($primary-dark, 45%)};
+      --#{$prefix}table-bg: #{$primary-darker};
+      --#{$prefix}table-striped-color: #{$body-bg-light};
+      --#{$prefix}table-striped-bg: #{darken($primary-darker, 1.5%)};
+      --#{$prefix}table-active-color: #{$body-bg-light};
+      --#{$prefix}table-active-bg: #{lighten($primary-darker, 6%)};
+      --#{$prefix}table-hover-color: #{$body-bg-light};
+      --#{$prefix}table-hover-bg: #{darken($primary-darker, 2.5%)};
       
       color: $body-bg-light;
       border-color: darken($primary-darker, 6%);
@@ -416,11 +455,7 @@
     }
 
     .form-control::placeholder {
-      color: lighten($primary-dark, 30%);
-    }
-
-    .form-floating > .form-control::placeholder {
-      color: transparent;
+      color: tint-color($body-color, 30%);
     }
     
     .form-control,
@@ -435,8 +470,7 @@
         border-color: $primary;
       }
 
-      &:disabled,
-      &[readonly] {
+      &:disabled {
         background-color: lighten($primary-darker, 2%);
         border-color: lighten($primary-darker, 2%);
       }
@@ -561,6 +595,24 @@
       }
     }
 
+    .form-floating > .form-control::placeholder {
+      color: transparent;
+    }
+  
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label,
+    .form-floating > .form-control-plaintext ~ label,
+    .form-floating > .form-select ~ label {
+      color: tint-color($body-color, 50%);
+    }
+  
+    .form-floating > .form-control:focus ~ label::after,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+    .form-floating > .form-control-plaintext ~ label::after,
+    .form-floating > .form-select ~ label::after {
+      background-color: darken($primary-darker, 4.5%);
+    }
+
     // Breadcrumb
     .breadcrumb-item + .breadcrumb-item::before {
       color: rgba($white, .25);
@@ -570,6 +622,10 @@
       .breadcrumb-item + .breadcrumb-item::before {
         color: rgba($white, .25);
       }
+    }
+
+    .breadcrumb-item.active {
+      color: $white;
     }
 
     // Alerts
@@ -875,9 +931,9 @@
     }
 
     // FullCalendar
-    .fc-theme-standard {
+    .fc.fc-theme-standard {
       a {
-        color: darken($body-bg-dark, 15%);
+        color: darken($body-bg-dark, 15%) !important;
       }
 
       .fc-button-primary {
@@ -1141,6 +1197,11 @@
     .dd-placeholder {
       border-color: $primary-lighter;
       background: $primary-darker;
+    }
+
+    // DataTables
+    table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+      box-shadow: inset 0 0 0 9999px darken($primary-darker, 1.5%);
     }
   }
 }

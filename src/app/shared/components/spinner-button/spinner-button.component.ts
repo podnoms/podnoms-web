@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     selector: 'app-spinner-button',
     templateUrl: './spinner-button.component.html',
     styleUrls: ['./spinner-button.component.scss'],
+    standalone: false
 })
 export class SpinnerButtonComponent {
     @Input() buttonId: string = 'wait-spinner-id';

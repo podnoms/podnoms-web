@@ -4,62 +4,66 @@
 // Overwrite/Extend styles
 // --------------------------------------------------
 
-table.dataTable {
-  td,
-  th {
-    box-sizing: border-box;
+table.table.dataTable {
+  &.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: inset 0 0 0 9999px lighten($light, 1.5%);
   }
 
-  thead {
-    > tr > th.sorting_asc,
-    > tr > th.sorting_desc,
-    > tr > th.sorting,
-    > tr > td.sorting_asc,
-    > tr > td.sorting_desc,
-    > tr > td.sorting {
-      padding-right: 1.25rem;
-    }
+  & thead > tr > th.dt-orderable-asc:hover,
+  & thead > tr > th.dt-orderable-desc:hover,
+  & thead > tr > td.dt-orderable-asc:hover,
+  & thead > tr > td.dt-orderable-desc:hover {
+    outline: none;
+  }
 
-    .sorting:before,
-    .sorting_asc:before,
-    .sorting_desc:before,
-    .sorting_asc_disabled:before,
-    .sorting_desc_disabled:before {
+  thead > tr {
+    > th.dt-orderable-asc span.dt-column-order:before,
+    > th.dt-orderable-desc span.dt-column-order:before, 
+    > th.dt-ordering-asc span.dt-column-order:before, 
+    > th.dt-ordering-desc span.dt-column-order:before,
+    > td.dt-orderable-asc span.dt-column-order:before,
+    > td.dt-orderable-desc span.dt-column-order:before,
+    > td.dt-ordering-asc span.dt-column-order:before,
+    > td.dt-ordering-desc span.dt-column-order:before {
       display: none;
     }
-
-    .sorting:after,
-    .sorting_asc:after,
-    .sorting_desc:after,
-    .sorting_asc_disabled:after,
-    .sorting_desc_disabled:after {
+    
+    > th.dt-orderable-asc span.dt-column-order:after, 
+    > th.dt-orderable-desc span.dt-column-order:after, 
+    > th.dt-ordering-asc span.dt-column-order:after, 
+    > th.dt-ordering-desc span.dt-column-order:after,
+    > td.dt-orderable-asc span.dt-column-order:after,
+    > td.dt-orderable-desc span.dt-column-order:after,
+    > td.dt-ordering-asc span.dt-column-order:after,
+    > td.dt-ordering-desc span.dt-column-order:after {
       right: .375rem;
-      bottom: .75rem;
+      margin-top: -0.25rem;
       font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro";
       font-weight: $font-weight-semibold;
       opacity: .4;
     }
 
-    .sorting:after {
+    > th.dt-orderable-asc span.dt-column-order:after,
+    > th.dt-orderable-dec span.dt-column-order:after {
       content: "\f0dc";
     }
 
-    .sorting_asc:after {
+    > th.dt-ordering-asc span.dt-column-order:after {
       content: "\f106";
     }
 
-    .sorting_desc:after {
+    > th.dt-ordering-desc span.dt-column-order:after {
       content: "\f107";
     }
   }
 }
 
-div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-  margin-top: .75rem;
-  justify-content: center;
+.dt-container.dt-bootstrap5 > div.row.mt-2:first-child {
+  margin-top: 0 !important;
+}
 
-  @include media-breakpoint-up(md) {
-    margin-top: .125rem;
-    justify-content: flex-end;
+@include media-breakpoint-down(md) {
+  div.dt-container div.dt-search input {
+    margin-left: 0 !important;
   }
 }

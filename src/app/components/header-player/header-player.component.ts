@@ -12,6 +12,7 @@ import { tap } from 'rxjs/operators';
     selector: 'app-header-player',
     templateUrl: './header-player.component.html',
     styleUrls: ['./header-player.component.scss'],
+    standalone: false
 })
 export class HeaderPlayerComponent implements OnInit {
     title: string = '';

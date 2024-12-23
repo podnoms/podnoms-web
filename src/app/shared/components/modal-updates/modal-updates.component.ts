@@ -17,6 +17,7 @@ import { ServerShowcaseModalComponent } from './server-showcase-modal/server-sho
     selector: 'app-modal-updates',
     template: '',
     styleUrls: ['./modal-updates.component.scss'],
+    standalone: false
 })
 export class ModalUpdatesComponent implements AfterViewInit {
     @Input() action$: Observable<any>;

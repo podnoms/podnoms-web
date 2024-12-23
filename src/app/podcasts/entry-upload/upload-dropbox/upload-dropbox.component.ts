@@ -7,9 +7,10 @@ import { EntryDataService } from '../../entry-data.service';
 declare var Dropbox: any;
 
 @Component({
-  selector: 'app-upload-dropbox',
-  templateUrl: './upload-dropbox.component.html',
-  styleUrls: ['./upload-dropbox.component.scss'],
+    selector: 'app-upload-dropbox',
+    templateUrl: './upload-dropbox.component.html',
+    styleUrls: ['./upload-dropbox.component.scss'],
+    standalone: false
 })
 export class UploadDropboxComponent
   extends BaseJsUploadComponent

@@ -19,7 +19,7 @@
 }
 
 .btn-alt-secondary {
-  @include button-variant($body-bg, $body-bg, $body-color-dark, shade-color($body-bg, 10%), shade-color($body-bg, 10%), shade-color($body-color-dark, 15%));
+  @include button-variant($light, $light, $body-color-dark, shade-color($light, 10%), shade-color($light, 10%), shade-color($body-color-dark, 15%));
 }
 
 .btn-alt-success {
@@ -42,6 +42,10 @@
 .page-header-dark #page-header .btn-alt-secondary,
 .sidebar-dark #sidebar .btn-alt-secondary,
 #sidebar .bg-header-dark .content-header .btn-alt-secondary,
-.page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
+.page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary,
+html.dark #page-header .btn-alt-secondary,
+html.dark #sidebar .btn-alt-secondary,
+html.dark #sidebar .content-header .btn-alt-secondary,
+html.dark .page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
   @include button-variant($header-dark-bg, $header-dark-bg, $white, tint-color($header-dark-bg, 15%), tint-color($header-dark-bg, 15%), $white);
 }

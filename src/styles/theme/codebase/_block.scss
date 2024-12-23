@@ -88,33 +88,33 @@
   }
 
   &.block-rounded {
-    border-radius: .875rem 1rem;
+    border-radius: .75rem;
 
     > .block-header,
     > .nav-tabs {
-      border-top-right-radius: .875rem 1rem;
-      border-top-left-radius: .875rem 1rem;
+      border-top-right-radius: .75rem;
+      border-top-left-radius: .75rem;
 
       &:last-child {
-        border-bottom-right-radius: .875rem 1rem;
-        border-bottom-left-radius: .875rem 1rem;
+        border-bottom-right-radius: .75rem;
+        border-bottom-left-radius: .75rem;
       }
     }
 
     &.block-mode-hidden > .block-header.block-header-default {
-      border-bottom-right-radius: .875rem 1rem;
-      border-bottom-left-radius: .875rem 1rem;
+      border-bottom-right-radius: .75rem;
+      border-bottom-left-radius: .75rem;
     }
 
     > .block-content {
       &:first-child {
-        border-top-right-radius: .875rem 1rem;
-        border-top-left-radius: .875rem 1rem;
+        border-top-right-radius: .75rem;
+        border-top-left-radius: .75rem;
       }
 
       &:last-child {
-        border-bottom-right-radius: .875rem 1rem;
-        border-bottom-left-radius: .875rem 1rem;
+        border-bottom-right-radius: .75rem;
+        border-bottom-left-radius: .75rem;
       }
     }
   }
@@ -314,25 +314,25 @@ a.block {
 
   &.block-link-pop {
     &:hover {
-      box-shadow: 0 .125rem 2rem darken($body-bg, 8%);
+      box-shadow: 0 .125rem 2rem darken($light, 8%);
       transform: translateY(-3px);
       opacity: 1;
     }
 
     &:active {
-      box-shadow: 0 .125rem .625rem darken($body-bg, 1%);
+      box-shadow: 0 .125rem .75rem darken($light, 1%);
       transform: translateY(0);
     }
   }
 
   &.block-link-shadow {
     &:hover {
-      box-shadow: 0 0 2.125rem darken($body-bg, 8%);
+      box-shadow: 0 0 2.125rem darken($light, 8%);
       opacity: 1;
     }
 
     &:active {
-      box-shadow: 0 0 .625rem darken($body-bg, 4%);
+      box-shadow: 0 0 .75rem darken($light, 4%);
     }
   }
 }
@@ -345,13 +345,13 @@ a.block {
   }
 
   &.block-fx-pop {
-    box-shadow: 0 .125rem 1rem darken($body-bg, 8%);
+    box-shadow: 0 .125rem 1rem darken($light, 8%);
     transform: translateY(-3px);
     opacity: 1;
   }
 
   &.block-fx-shadow {
-    box-shadow: 0 0 2.125rem darken($body-bg, 8%);
+    box-shadow: 0 0 2.125rem darken($light, 8%);
     opacity: 1;
   }
 }
@@ -387,7 +387,7 @@ a.block {
     &.block-options-left {
       right: auto;
       left: $space-block;
-      padding-right: .625rem;
+      padding-right: .75rem;
       padding-left: 0;
     }
   }

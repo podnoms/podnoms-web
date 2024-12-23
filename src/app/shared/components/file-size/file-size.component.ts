@@ -4,7 +4,8 @@ import { UtilityService } from '../../services/utility.service';
 @Component({
     selector: 'app-file-size',
     templateUrl: './file-size.component.html',
-    styleUrls: ['./file-size.component.scss']
+    styleUrls: ['./file-size.component.scss'],
+    standalone: false
 })
 export class FileSizeComponent implements OnInit {
     @Input()

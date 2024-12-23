@@ -2,6 +2,11 @@
 // Text
 // --------------------------------------------------
 
+// Transformation
+.text-normal {
+  text-transform: none !important;
+}
+
 // Helpers
 .text-back {
   position: absolute;
@@ -9,7 +14,7 @@
   right: 0;
   font-size: 500%;
   font-weight: 700;
-  opacity: .05;
+  opacity: 0.05;
   z-index: 0;
 }
 
@@ -31,7 +36,7 @@
 @include text-emphasis-variant(".text-danger", $danger);
 @include text-emphasis-variant(".text-danger-light", $danger-light);
 
-@include text-emphasis-variant(".text-body-bg", $body-bg);
+@include text-emphasis-variant(".text-body-bg", $light);
 @include text-emphasis-variant(".text-body-bg-dark", $body-bg-dark);
 @include text-emphasis-variant(".text-body-bg-light", $body-bg-light);
 @include text-emphasis-variant(".text-body-color", $body-color);
@@ -58,7 +63,9 @@
 @include text-emphasis-variant(".text-dual", $primary-dark);
 
 .page-header-dark #page-header,
-.sidebar-dark #sidebar {
+.sidebar-dark #sidebar,
+html.dark #page-header,
+html.dark #sidebar {
   @include text-emphasis-variant(".text-dual", $body-color-light);
 }
 

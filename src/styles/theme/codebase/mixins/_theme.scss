@@ -16,7 +16,6 @@
   $body-color-light,
   $link-color,
   $link-hover-color,
-  $headings-color,
   $input-btn-focus-color,
   $input-btn-focus-box-shadow,
   $input-bg,
@@ -51,21 +50,10 @@
   }
 
   // Typography
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  .h1,
-  .h2,
-  .h3,
-  .h4,
-  .h5,
-  .h6 {
-    color: inherit;
+  .content-heading {
+    border-bottom-color: $body-bg-dark;
   }
-
+  
   hr {
     border-top-color: $body-bg-dark;
   }
@@ -89,7 +77,9 @@
   @include text-emphasis-variant(".text-dual", $primary-dark);
 
   .page-header-dark #page-header,
-  .sidebar-dark #sidebar {
+  .sidebar-dark #sidebar,
+  html.dark #page-header,
+  html.dark #sidebar {
     @include text-emphasis-variant(".text-dual", $body-color-light);
   }
 
@@ -146,7 +136,11 @@
   .page-header-dark #page-header .btn-alt-secondary,
   .sidebar-dark #sidebar .btn-alt-secondary,
   #sidebar .bg-header-dark .content-header .btn-alt-secondary,
-  .page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
+  .page-header-dark.page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary,
+  html.dark #page-header .btn-alt-secondary,
+  html.dark #sidebar .btn-alt-secondary,
+  html.dark #sidebar .content-header .btn-alt-secondary,
+  html.dark .page-header-glass:not(.page-header-scroll) #page-header .btn-alt-secondary {
     @include button-variant($header-dark-bg, $header-dark-bg, $white, tint-color($header-dark-bg, 15%), tint-color($header-dark-bg, 15%), $white);
   }
 
@@ -253,6 +247,30 @@
       background-color: transparent;
       border-color: transparent;
       box-shadow: inset 0 -3px $primary;
+    }
+  }
+
+  // Cards
+  .card {
+    &.card-borderless {
+      box-shadow: 0 1px 2px rgba(darken($body-bg-dark, 2.5%), .5), 0 1px 2px rgba(darken($body-bg-dark, 2.5%), .5);
+    }
+
+    > .card-header:not(.bg-transparent),
+    > .card-footer:not(.bg-transparent) {
+      background-color: $body-bg-light;
+    }
+
+    > .card-header:not(.border-bottom-0),
+    > .card-footer:not(.border-top-0) {
+      border-color: $body-bg-dark;
+    }
+
+    &:not(.card-borderless) {
+      &,
+      > .card-header {
+        border-color: $body-bg-dark;
+      }
     }
   }
 
@@ -402,10 +420,6 @@
     }
   }
 
-  .dropdown-header {
-    color: $headings-color;
-  }
-
   // Tables
   .table {
     --#{$variable-prefix}table-striped-bg: #{lighten($body-bg, 1.5%)};
@@ -435,10 +449,13 @@
       box-shadow: $input-btn-focus-box-shadow;
     }
 
-    &:disabled,
-    &[readonly] {
+    &:disabled {
       background-color: $input-disabled-bg;
     }
+  }
+
+  .form-control::placeholder {
+    color: tint-color($body-color, 50%);
   }
 
   .form-select {
@@ -528,6 +545,17 @@
     }
   }
 
+  .form-floating > .form-control::placeholder {
+    color: transparent;
+  }
+
+  .form-floating > .form-control:focus ~ label::after,
+  .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+  .form-floating > .form-control-plaintext ~ label::after,
+  .form-floating > .form-select ~ label::after {
+    background-color: $input-bg;
+  }
+
   // Borders
   .border {
     border-color: $body-bg-dark !important;
@@ -598,6 +626,8 @@
 
   // Layout/Style variations based on #page-container classes
   #page-container {
+    background-color: $body-bg;
+    
     // Page header
     @include media-breakpoint-up(lg) {
       &.page-header-modern #page-header {
@@ -605,7 +635,8 @@
       }
     }
 
-    &.page-header-dark #page-header {
+    &.page-header-dark #page-header,
+    html.dark & #page-header {
       color: darken($body-color-light, 8%);
       background-color: $header-dark-bg;
     }
@@ -620,7 +651,8 @@
           background-color: $header-bg;
         }
 
-        &.page-header-scroll.page-header-dark #page-header {
+        &.page-header-scroll.page-header-dark #page-header,
+        html.dark &.page-header-scroll #page-header {
           background-color: $header-dark-bg;
         }
       }
@@ -628,23 +660,32 @@
 
     // Sidebar and side overlay related
     @include media-breakpoint-up(lg) {
-      &.page-header-modern:not(.sidebar-dark) #sidebar {
+      html:not(.dark) &.page-header-modern:not(.sidebar-dark) #sidebar {
         box-shadow: 5px 0 10px $body-bg-dark;
       }
 
-      &.page-header-modern.sidebar-r:not(.sidebar-dark) #sidebar {
+      html:not(.dark) &.page-header-modern.sidebar-r:not(.sidebar-dark) #sidebar {
         box-shadow: -5px 0 10px $body-bg-dark;
       }
     }
 
     // Sidebar and Side Overlay  
-    &.sidebar-dark #sidebar {
+    &.sidebar-dark #sidebar,
+    html.dark & #sidebar {
       color: $body-color-light;
       background-color: $sidebar-dark-bg;
   
       .content-side.content-side-user {
         background-color: darken($sidebar-dark-bg, 2.5%);
       }
+    }
+  }
+
+  // Sidebar
+  #sidebar.with-mini-nav {
+    .sidebar-mini-nav {
+      color: $body-color-light;
+      background-color: lighten($sidebar-dark-bg, 3%);
     }
   }
 
@@ -736,7 +777,7 @@
   // Main Navigation   
   // Headings
   .nav-main-heading {
-    color: lighten($body-color, 25%);
+    color: tint-color($body-color, 35%);
   }
   
   // Default links
@@ -806,10 +847,14 @@
     }
   }
   
-  // Dark Sidebar Variation
+  // Dark Variation
   .nav-main-dark,
   .sidebar-dark #sidebar,
-  .page-header-dark #page-header {
+  .page-header-dark #page-header,
+  html.dark #sidebar,
+  html.dark #page-header,
+  html.dark #side-overlay,
+  html.dark #main-container {
     // Default links
     .nav-main-link {
       color: rgba($body-color-light, .75);
@@ -865,7 +910,10 @@
   @include media-breakpoint-up(lg) {
     .nav-main-dark.nav-main-horizontal,
     .sidebar-dark #sidebar .nav-main-horizontal,
-    .page-header-dark #page-header .nav-main-horizontal {
+    .page-header-dark #page-header .nav-main-horizontal,
+    html.dark #sidebar .nav-main-horizontal,
+    html.dark #page-header .nav-main-horizontal,
+    html.dark #main-container .nav-main-horizontal {
       .nav-main-submenu {
         background-color: darken($sidebar-dark-bg, 3%) !important;
       }
@@ -913,6 +961,25 @@
 
     > li:not(:last-child) > a {
       border-bottom-color: $body-bg;
+    }
+  }
+
+  // Sidebar Mini Nav
+  .mini-nav-item {
+    color: darken($body-bg-dark, 15%);
+
+    &.active {
+      background-color: lighten($sidebar-dark-bg, 6%);
+      color: $white;
+    }
+
+    &:hover {
+      color: $white;
+      background-color: lighten($sidebar-dark-bg, 6%);
+    }
+
+    &:active {
+      color: darken($body-bg-dark, 15%);
     }
   }
 
@@ -1034,7 +1101,7 @@
   }
 
   // Full Calendar
-  .fc-theme-standard {
+  .fc.fc-theme-standard {
     a {
       color: $body-color;
     }
@@ -1235,5 +1302,10 @@
   .jvectormap-zoomout,
   .jvectormap-goback {
     background: $primary-dark;
+  }
+
+  // DataTables
+  table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: inset 0 0 0 9999px lighten($body-bg, 1.5%);
   }
 }

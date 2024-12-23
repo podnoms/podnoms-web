@@ -4,7 +4,7 @@
 // Overwrite/Extend styles
 // --------------------------------------------------
 
-.fc-theme-standard {
+.fc.fc-theme-standard {
   a {
     color: $body-color;
   }
@@ -16,8 +16,8 @@
 
     &:not(:disabled):hover {
       color: $body-color;
-      background-color: $body-bg;
-      border-color: $body-bg;
+      background-color: $light;
+      border-color: $light;
     }
 
     &:not(:disabled).fc-button-active,

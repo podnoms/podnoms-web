@@ -10,6 +10,7 @@
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
+  background-color: $light;
 }
 
 #page-overlay {
@@ -89,6 +90,7 @@
   }
 }
 
-.sidebar-dark .content-side.content-side-user {
+.sidebar-dark .content-side.content-side-user,
+html.dark .content-side.content-side-user {
   background-color: darken($sidebar-dark-bg, 2.5%);
 }

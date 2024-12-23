@@ -75,6 +75,7 @@ import { Podcast } from 'app/core';
             }
         `,
     ],
+    standalone: false
 })
 export class PodcastDeleteComponent {
     @Input() public podcast: Podcast;

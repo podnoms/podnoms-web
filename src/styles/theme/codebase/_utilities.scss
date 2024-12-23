@@ -26,7 +26,9 @@ $utilities: map-merge(
         medium: $font-weight-medium,
         semibold: $font-weight-semibold,
         bold: $font-weight-bold,
-        bolder: $font-weight-bolder
+        bolder: $font-weight-bolder,
+        extrabold: 800,
+        black: 900,
       )
     ),
     "font-size": (

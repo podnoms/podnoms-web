@@ -24,3 +24,7 @@
   border-top-color: $body-bg-dark !important;
   background: $body-bg-light !important;
 }
+
+.ck-editor .ck-editor__editable_inline {
+  min-height: 400px;
+}

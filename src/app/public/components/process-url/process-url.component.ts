@@ -12,6 +12,7 @@ import { AudioProcessingMessage } from '../../../core/model/audio';
     selector: 'app-process-url',
     templateUrl: './process-url.component.html',
     styleUrls: ['./process-url.component.scss'],
+    standalone: false
 })
 export class ProcessUrlComponent {
     urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;

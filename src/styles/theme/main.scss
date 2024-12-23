@@ -14,6 +14,9 @@
 // Bootstrap variables
 @import 'bootstrap/variables';
 
+// Bootstrap maps
+@import 'bootstrap/maps';
+
 // Bootstrap mixins
 @import 'bootstrap/mixins';
 
@@ -56,6 +59,7 @@
 @import 'bootstrap/popover';
 @import 'bootstrap/carousel';
 @import 'bootstrap/spinners';
+@import 'bootstrap/offcanvas';
 @import 'bootstrap/placeholders';
 
 // Bootstrap Helpers
@@ -79,6 +83,7 @@
 @import 'codebase/transitions';
 @import 'codebase/dropdown';
 @import 'codebase/nav';
+@import 'codebase/card';
 @import 'codebase/breadcrumb';
 @import 'codebase/pagination';
 @import 'codebase/modal';
@@ -108,15 +113,9 @@
 
 // Third party components
 @import 'vendor/animate';
-@import 'vendor/fontawesome/fontawesome';
-@import 'vendor/fontawesome/regular';
-@import 'vendor/fontawesome/solid';
-@import 'vendor/fontawesome/brands';
-@import 'vendor/simple-line-icons';
 @import 'vendor/simplebar';
 
 // Third party plugins (style overrides)
-@import 'vendor/bootstrap-colorpicker';
 @import 'vendor/bootstrap-datepicker';
 @import 'vendor/ckeditor';
 @import 'vendor/dropzone';
@@ -125,6 +124,7 @@
 @import 'vendor/fullcalendar';
 @import 'vendor/highlightjs';
 @import 'vendor/ion-range-slider';
+@import 'vendor/jquery-sparkline';
 @import 'vendor/jvector-map';
 @import 'vendor/pw-strength';
 @import 'vendor/select2';
@@ -142,4 +142,3 @@
 
 // User styles (your own styles/overrides)
 @import 'custom/main';
-@import 'codebase/themes/corporate';

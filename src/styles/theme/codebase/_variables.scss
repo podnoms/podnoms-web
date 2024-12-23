@@ -15,8 +15,8 @@ $info-light:              #e3f4fc;
 $warning-light:           #fcf7e6;
 $danger-light:            #fae9e8;
 
-$body-bg-dark:              darken($body-bg, 4%);
-$body-bg-light:             lighten($body-bg, 2%);
+$body-bg-dark:              darken($light, 4%);
+$body-bg-light:             lighten($light, 2%);
 
 $body-color-dark:           #171717 !default;
 $body-color-light:          $body-bg-dark !default;
@@ -48,8 +48,11 @@ $header-dark-bg:            shade-color($gray-800, 5%) !default;
 
 $sidebar-bg:                $white !default;
 $sidebar-dark-bg:           shade-color($gray-800, 5%) !default;
-$sidebar-width:             240px !default;
+$sidebar-width:             250px !default;
+
 $sidebar-mini-width:        64px !default;
+
+$sidebar-mini-nav-width:    46px !default;
 
 $side-overlay-bg:           $white !default;
 $side-overlay-width:        320px !default;
@@ -82,6 +85,3 @@ $space-narrow:              92% !default;                       // Narrow conten
 $space-main-max-width:      1920px !default;                    // Main content max width
 
 // Third Party
-
-$fa-font-path:                "../fonts/fontawesome/" !default;
-$simple-line-font-path:       "../vendor/fonts/simple-line-icons/" !default;
