@@ -10,6 +10,20 @@
 <td class="d-none d-sm-table-cell">
   <div class="btn-group">
     <button
+    type="button"
+    class="btn btn-sm btn-secondary js-bs-tooltip-enabled"
+    (click)="playAudio()"
+    data-toggle="tooltip"
+    title="Play episode"
+    aria-label="Play"
+  >
+    <div [ngSwitch]="playState$ | async">
+      <i *ngSwitchCase="playStates.loading" class="fa fa-cog fa-spin"> </i>
+      <i *ngSwitchCase="playStates.playing" class="fa-solid fa-pause"> </i>
+      <i *ngSwitchDefault class="fa-solid fa-play"> </i>
+    </div>
+  </button>
+    <button
       type="button"
       class="btn btn-info"
       (click)="downloadAudio(entry)"
@@ -21,15 +35,10 @@
       aria-label="Download episode"
       (click)="downloadAudio(entry)"
     >
-    <i
-    *ngIf="!preparingDownload"
-    class="fa-solid fa-cloud-download-alt"
-  ></i>
-  <i
-    *ngIf="preparingDownload"
-    class="fa fa-cog fa-spin text-success"
-  ></i>
+      <i *ngIf="!preparingDownload" class="fa-solid fa-cloud-download-alt"></i>
+      <i *ngIf="preparingDownload" class="fa fa-cog fa-spin text-success"></i>
     </button>
+
     <button
       type="button"
       class="btn btn-sm btn-secondary js-bs-tooltip-enabled"

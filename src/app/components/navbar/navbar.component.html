@@ -1,223 +1,255 @@
-<header id="page-header"
-    *ngIf="profile$ | async as profile">
-    <div class="content-header">
-        <div class="content-header-section">
-            <button type="button"
-                (click)="toggleSidebar()"
-                class="btn btn-circle btn-dual-secondary"
-                aria-label="Toggle sidebar">
-                <i class="fas fa fa-bars"
-                    aria-label="Toggle sidebar"></i>
-            </button>
-            <button type="button"
-                class="btn btn-circle btn-dual-secondary"
-                data-bs-toggle="layout"
-                data-action="header_search_on"
-                (click)="searchActive = true"
-                aria-label="Toggle search">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-        <div class="content-header-section">
-            <a href="https://facebook.com/podnoms"
-                rel="noopener"
-                target="_blank"
-                rel="noopener"
-                class="btn btn-circle btn-dual-secondary btn-facebook"
-                aria-label="See us on Facebook">
-                <i class="text-primary fa-brands fa-facebook"></i>
-            </a>
-            <a href="https://twitter.com/podnoms"
-                rel="noopener"
-                target="_blank"
-                rel="noopener"
-                class="btn btn-circle btn-dual-secondary btn-twitter"
-                aria-label="See us on Twitter">
-                <i class="text-primary fa-brands fa-twitter"></i>
-            </a>
-        </div>
-
-        <div class="content-header-section hidden-md-down d-none d-md-inline-block">
-            <a [routerLink]="['/_/extension']"
-                target="_blank"
-                rel="noopener"
-                class="btn btn-dual-secondary">
-                <i class="fa-brands fa-chrome"></i>&nbsp;
-                <span class="d-none d-lg-inline-block">Extension</span>
-            </a>
-        </div>
-        <a [href]="helpUrl"
-            target="_blank"
-            rel="noopener"
-            class="btn btn-dual-secondary">
-            <i class="text-primary fa-solid fa-circle-question"></i>&nbsp;
-            <span class="d-none d-lg-inline-block">Support</span>
-        </a>
-        <a href="https://patreon.com/podnoms"
-            target="_blank"
-            rel="noopener"
-            class="btn btn-dual-secondary">
-            <i class="text-danger fa-brands fa-patreon"></i>&nbsp;
-            <span class="d-none d-lg-inline-block">Patreon</span>
-        </a>
-        <a [routerLink]="['payments/pay', {type:'Free'}]"
-            class="btn btn-dual-secondary">
-            <i class="text-primary fa fa-beer"></i>&nbsp;
-            <span class="d-none d-lg-inline-block">Buy me a beer</span>
-        </a>
-        <a [routerLink]="['payments/pricing']"
-            *ngIf="pricingEnabled"
-            class="btn btn-dual-secondary">
-            <i class="text-primary fa fa-credit-card"></i>&nbsp;
-            <span class="d-none d-lg-inline-block">Pricing</span>
-        </a>
-
-        <div class="content-header-section">
-            <img [src]="profile.thumbnailImageUrl"
-                appImgFallback
-                class="rounded-circle profile-img"
-                alt="profile-image">
-            <div class="btn-group"
-                role="group">
-                <button type="button"
-                    class="btn btn-rounded btn-dual-secondary"
-                    id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown"
-                    aria-label="Open menu">
-                    <span class="d-none d-xl-inline-block profile-dropdown-button">
-                        {{profile.firstName}}
-                        {{profile.lastName}}
-                    </span>
-                    <i class="fa fa-angle-down ml-5"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0">
-                    <div class="px-2 py-3 bg-body-light rounded-top">
-                        <h5 class="h6 text-center mb-0">
-                            User Admin
-                        </h5>
-                    </div>
-
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        [routerLink]="['/profile']">
-                        <span>Edit Profile</span>
-                        <i class="fa fa-fw fa-user opacity-25"></i>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        *ngIf="profileHasAdmin"
-                        [routerLink]="['/admin']">
-                        <span>Admin</span>
-                        <i class="fa fa-flag mr-5 opacity-50"></i>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        *ngIf="profileHasAdmin"
-                        [routerLink]="['/debug']">
-                        <i class="fa fa-bug mr-5 opacity-50"></i>
-                        Debug
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        *ngIf="profileHasAdmin"
-                        [routerLink]="['/debug/signalr']">
-                        <span>SignalR</span>
-                        <i class="fa fa-chalkboard-teacher mr-5 opacity-50"></i>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        *ngIf="profileHasAdmin"
-                        (click)="about()">
-                        <span>Software Versions</span>
-                        <i class="fas fa-info-circle mr-5 opacity-50"></i>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        [routerLink]="['/_/privacy']">
-                        <span>Privacy</span>
-                        <i class="fa-solid fa-user-shield mr-5 opacity-50"></i>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        [routerLink]="['/_/terms']">
-                        <span>Terms</span>
-                        <i class="fa-solid fa-balance-scale mr-5 opacity-50"></i>
-                    </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        [routerLink]="['/_/about']">
-                        <span>About</span>
-                        <i class="fa-solid fa-question-circle mr-5 opacity-50"></i>
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        [routerLink]="['/profile/opml']">
-                        <span>OPML</span>
-                        <i class="fa-solid fa-rss mr-5 opacity-50"></i>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                        (click)="logout()">
-                        <span>Logout</span>
-                        <i class="fa fa-sign-out-alt mr-5 opacity-50"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="btn-group "
-                role="group"
-                *ngIf="profile.hasSubscribed">
-                <button type="button"
-                    class="btn btn-rounded btn-dual-secondary"
-                    id="page-header-notifications"
-                    data-toggle="dropdown"
-                    title="Payment Info"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    aria-label="Subscriptions">
-                    <i class="text-primary fa fa-shopping-cart swing"
-                        [ngClass]="profile.subscriptionValid ? 'text-primary' : 'text-primary'"></i>
-                    <!-- <span class="badge badge-primary badge-pill">5</span> -->
-                </button>
-                <div class="dropdown-menu dropdown-menu-right min-width-300"
-                    aria-labelledby="page-header-notifications"
-                    x-placement="bottom-end"
-                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-231px, 34px, 0px);">
-                    <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Payment
-                        Log</h5>
-                    <ul class="list-unstyled my-20">
-                        <li *ngFor="let invoice of invoices$ | async">
-                            <a class="text-body-color-dark media mb-15"
-                                href="javascript:void(0)">
-                                <div class="ml-5 mr-15">
-                                    <i class="text-primary fa fa-fw fa-check text-primary"></i>
-                                </div>
-                                <div class="media-body pr-10">
-                                    <p class="mb-0">Payment for
-                                        {{invoice.type}}</p>
-                                    <p class="mb-0">{{invoice.startDate
-                                        | date:'dd/MM/yyyy'}}
-                                        to {{invoice.endDate
-                                        |date:'dd/MM/yyyy'}}</p>
-                                    <div class="text-muted font-size-sm font-italic">{{invoice.createDate
-                                        | amFromUtc | amLocal | amTimeAgo}}</div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-center mb-0"
-                        [routerLink]="['profile', {view: 'invoices'}]"
-                        href="javascript:void(0)">
-                        <i class="text-primary fa fa-flag mr-5"></i> View All
-                        Invoices
-                    </a>
-                </div>
-            </div>
-            <button type="button"
-                class="btn btn-circle btn-dual-secondary d-none d-md-inline-block"
-                title="Activity stream"
-                data-toggle="tooltip"
-                (click)="toggleOverlay()"
-                aria-label="Open activity stream">
-                <i class="fa fa-ellipsis-v"></i>
-            </button>
-        </div>
+<header id="page-header" *ngIf="profile$ | async as profile">
+  <div class="content-header">
+    <div class="content-header-section">
+      <button
+        type="button"
+        (click)="toggleSidebar()"
+        class="btn btn-circle btn-dual-secondary"
+        aria-label="Toggle sidebar"
+      >
+        <i class="fas fa fa-bars" aria-label="Toggle sidebar"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-circle btn-dual-secondary"
+        data-bs-toggle="layout"
+        data-action="header_search_on"
+        (click)="searchActive = true"
+        aria-label="Toggle search"
+      >
+        <i class="fa fa-search"></i>
+      </button>
     </div>
-    <app-header-search (closeSearch)="searchActive = false"
-        *ngIf="searchActive"></app-header-search>
+    <div class="content-header-section" *ngIf="false">
+      <a
+        href="https://facebook.com/podnoms"
+        rel="noopener"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-circle btn-dual-secondary btn-facebook"
+        aria-label="See us on Facebook"
+      >
+        <i class="text-primary fa-brands fa-facebook"></i>
+      </a>
+      <a
+        href="https://twitter.com/podnoms"
+        rel="noopener"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-circle btn-dual-secondary btn-twitter"
+        aria-label="See us on Twitter"
+      >
+        <i class="text-primary fa-brands fa-twitter"></i>
+      </a>    <a
+      [href]="helpUrl"
+      target="_blank"
+      rel="noopener"
+      class="btn btn-dual-secondary"
+    >
+      <i class="text-primary fa-solid fa-circle-question"></i>&nbsp;
+    </a>
+    </div>
+
+    <a
+      href="https://patreon.com/podnoms"
+      target="_blank"
+      rel="noopener"
+      class="btn btn-dual-secondary"
+      *ngIf="false"
+    >
+      <i class="text-danger fa-brands fa-patreon"></i>&nbsp;
+      <span class="d-none d-lg-inline-block">Patreon</span>
+    </a>
+    <a
+      [routerLink]="['payments/pay', { type: 'Free' }]"
+      class="btn btn-dual-secondary"
+      *ngIf="false"
+    >
+      <i class="text-primary fa fa-beer"></i>&nbsp;
+      <span class="d-none d-lg-inline-block">Buy me a beer</span>
+    </a>
+    <a
+      [routerLink]="['payments/pricing']"
+      *ngIf="pricingEnabled"
+      class="btn btn-dual-secondary"
+    >
+      <i class="text-primary fa fa-credit-card"></i>&nbsp;
+      <span class="d-none d-lg-inline-block">Pricing</span>
+    </a>
+
+    <div class="content-header-section">
+      <img
+        [src]="profile.thumbnailImageUrl"
+        appImgFallback
+        class="rounded-circle profile-img"
+        alt="profile-image"
+      />
+      <div class="btn-group" role="group">
+        <button
+          type="button"
+          class="btn btn-rounded btn-dual-secondary"
+          id="page-header-user-dropdown"
+          data-bs-toggle="dropdown"
+          aria-label="Open menu"
+        >
+          <span class="d-none d-xl-inline-block profile-dropdown-button">
+            {{ profile.firstName }}
+            {{ profile.lastName }}
+          </span>
+          <i class="fa fa-angle-down ml-5"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0">
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            [routerLink]="['/profile']"
+          >
+            <span>Edit Profile</span>
+            <i class="fa fa-fw fa-user opacity-25"></i>
+          </a>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            *ngIf="profileHasAdmin"
+            [routerLink]="['/admin']"
+          >
+            <span>Admin</span>
+            <i class="fa fa-flag mr-5 opacity-50"></i>
+          </a>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            *ngIf="profileHasAdmin"
+            [routerLink]="['/debug']"
+          >
+            <i class="fa fa-bug mr-5 opacity-50"></i>
+            Debug
+          </a>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            *ngIf="profileHasAdmin"
+            [routerLink]="['/debug/signalr']"
+          >
+            <span>SignalR</span>
+            <i class="fa fa-chalkboard-teacher mr-5 opacity-50"></i>
+          </a>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            *ngIf="profileHasAdmin"
+            (click)="about()"
+          >
+            <span>Software Versions</span>
+            <i class="fas fa-info-circle mr-5 opacity-50"></i>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            [routerLink]="['/_/privacy']"
+          >
+            <span>Privacy</span>
+            <i class="fa-solid fa-user-shield mr-5 opacity-50"></i>
+          </a>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            [routerLink]="['/_/terms']"
+          >
+            <span>Terms</span>
+            <i class="fa-solid fa-balance-scale mr-5 opacity-50"></i>
+          </a>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            [routerLink]="['/_/about']"
+          >
+            <span>About</span>
+            <i class="fa-solid fa-question-circle mr-5 opacity-50"></i>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            [routerLink]="['/profile/opml']"
+          >
+            <span>OPML</span>
+            <i class="fa-solid fa-rss mr-5 opacity-50"></i>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a
+            class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
+            (click)="logout()"
+          >
+            <span>Logout</span>
+            <i class="fa fa-sign-out-alt mr-5 opacity-50"></i>
+          </a>
+        </div>
+      </div>
+      <div class="btn-group" role="group" *ngIf="profile.hasSubscribed">
+        <button
+          type="button"
+          class="btn btn-rounded btn-dual-secondary"
+          id="page-header-notifications"
+          data-toggle="dropdown"
+          title="Payment Info"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-label="Subscriptions"
+        >
+          <i
+            class="text-primary fa fa-shopping-cart swing"
+            [ngClass]="
+              profile.subscriptionValid ? 'text-primary' : 'text-primary'
+            "
+          ></i>
+          <!-- <span class="badge badge-primary badge-pill">5</span> -->
+        </button>
+        <div
+          class="dropdown-menu dropdown-menu-right min-width-300"
+          aria-labelledby="page-header-notifications"
+          x-placement="bottom-end"
+          style="
+            position: absolute;
+            will-change: transform;
+            top: 0px;
+            left: 0px;
+            transform: translate3d(-231px, 34px, 0px);
+          "
+        >
+          <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">
+            Payment Log
+          </h5>
+          <ul class="list-unstyled my-20">
+            <li *ngFor="let invoice of invoices$ | async">
+              <a
+                class="text-body-color-dark media mb-15"
+                href="javascript:void(0)"
+              >
+                <div class="ml-5 mr-15">
+                  <i class="text-primary fa fa-fw fa-check text-primary"></i>
+                </div>
+                <div class="media-body pr-10">
+                  <p class="mb-0">Payment for {{ invoice.type }}</p>
+                  <p class="mb-0">
+                    {{ invoice.startDate | date: 'dd/MM/yyyy' }} to
+                    {{ invoice.endDate | date: 'dd/MM/yyyy' }}
+                  </p>
+                  <div class="text-muted font-size-sm font-italic">
+                    {{ invoice.createDate | amFromUtc | amLocal | amTimeAgo }}
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div class="dropdown-divider"></div>
+          <a
+            class="dropdown-item text-center mb-0"
+            [routerLink]="['profile', { view: 'invoices' }]"
+            href="javascript:void(0)"
+          >
+            <i class="text-primary fa fa-flag mr-5"></i> View All Invoices
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-header-search
+    (closeSearch)="searchActive = false"
+    *ngIf="searchActive"
+  ></app-header-search>
 </header>
