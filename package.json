@@ -1,6 +1,6 @@
 {
   "name": "podnoms-web",
-  "version": "1.2.393",
+  "version": "1.2.395",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
