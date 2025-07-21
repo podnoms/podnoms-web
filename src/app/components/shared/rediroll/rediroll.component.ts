@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Inject, DOCUMENT } from '@angular/core';
+
 
 @Component({
     selector: 'app-rediroll',
