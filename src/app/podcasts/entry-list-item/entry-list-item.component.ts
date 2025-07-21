@@ -112,9 +112,7 @@ export class EntryListItemComponent implements OnInit {
       }
     });
   }
-  __fixTitleEdit() {
-    $('.fa-remove').removeClass('fa-remove').addClass('fa-times');
-  }
+
   showEntryDeleteDialog() {
     const modalRef = this.modalService.open(EntryDeleteItemModalComponent);
     modalRef.componentInstance.entry = this.entry;

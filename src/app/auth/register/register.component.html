@@ -98,10 +98,11 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2 row">
-                                        <ngx-recaptcha2 [siteKey]="environment.recaptchaKey"
+                                        <re-captcha [siteKey]="environment.recaptchaKey"
                                             formControlName="recaptcha"
+                                            (resolved)="onCaptchaResolved($event)"
                                             #captchaElem>
-                                        </ngx-recaptcha2>
+                                        </re-captcha>
                                     </div>
                                     <div *ngIf="submitted && f.recaptcha.errors"
                                         class="text-danger animated fadeIn">

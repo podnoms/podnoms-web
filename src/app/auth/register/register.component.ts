@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UiStateService } from 'app/core/ui-state.service';
-import { ReCaptcha2Component } from 'ngx-captcha';
+import { RecaptchaComponent } from 'ng-recaptcha-2';
 import { NGXLogger } from 'ngx-logger';
 import { environment } from '../../../environments/environment';
 import { ConstantsService } from '../../shared/services/constants.service';
@@ -36,8 +36,9 @@ export class RegisterComponent {
   sending: boolean = false;
   isRequesting: boolean = false;
   errorMessage: string;
+  captchaResponse: string | null = null;
   @ViewChild('captchaElem')
-  captchaElem: ReCaptcha2Component;
+  captchaElem: RecaptchaComponent;
 
   constructor(
     private authService: AuthService,
@@ -129,6 +130,10 @@ export class RegisterComponent {
     );
   }
 
+  onCaptchaResolved(captchaResponse: string | null) {
+    this.captchaResponse = captchaResponse;
+  }
+
   onSubmit() {
     console.log('register.component', 'doRegister', this.registerForm);
     console.log(
@@ -145,7 +150,7 @@ export class RegisterComponent {
     }
     this.isRequesting = true;
     // first check recaptcha server side
-    const currentResponse = this.captchaElem.getCurrentResponse();
+    const currentResponse = this.captchaResponse || this.recaptcha.value;
     if (!currentResponse) {
       alert("Don't do this");
     }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { NgxCaptchaModule } from 'ngx-captcha';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha-2';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -21,7 +21,8 @@ import { PatreonComponent } from './redirects/patreon/patreon.component';
     SharedModule,
     AuthRoutingModule,
     ComponentsModule,
-    NgxCaptchaModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
     LoggerModule.forRoot(environment.logConfig),
   ],
   declarations: [

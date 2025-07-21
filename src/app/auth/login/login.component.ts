@@ -13,10 +13,10 @@ import {
 } from '@angular/forms';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
   GoogleLoginProvider = GoogleLoginProvider;
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
-    private logger: NGXLogger
+    private logger: NGXLogger,
   ) {}
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(
         this.loginForm.get('username').value,
-        this.loginForm.get('password').value
+        this.loginForm.get('password').value,
       )
       .subscribe(
         () => {
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
         },
         () => {
           this.errorMessage = 'Unable to log you in - have you registered?';
-        }
+        },
       );
   }
   _routePostLogin() {

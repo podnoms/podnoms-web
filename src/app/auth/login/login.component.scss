@@ -6,7 +6,35 @@
 
 .btn-social {
     color: white !important;
+    min-height: 44px; // Ensure minimum touch target size
+    font-size: 0.875rem; // Slightly smaller font for better fit
+
+    // Responsive font sizing
+    @media (max-width: 575.98px) {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    // Ensure proper spacing for icons
+    .fa-brands {
+        font-size: 1.1em;
+        flex-shrink: 0; // Prevent icon from shrinking
+    }
 }
+
 .btn-social > span {
     color: white !important;
+}
+
+// Additional responsive improvements
+@media (max-width: 575.98px) {
+    .col-lg-6.col-xl-4 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .block-content {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
